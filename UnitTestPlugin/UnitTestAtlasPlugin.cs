@@ -57,6 +57,18 @@ namespace UnitTestPlugin
                         });
                 }));
 
+            //This is a test to make all the geometry in the scene one large object to test batching reduction, initial tests show huge improvement, only works under open gl.
+            standaloneController.TaskController.addTask(new CallbackTask("UnitTest.StaticTest", "Static Test", CommonResources.NoIcon, "Unit Test", (item) =>
+                {
+                    var scene = standaloneController.MedicalController.CurrentScene;
+                    var sceneManager = scene.getSimElementManager("Ogre") as OgrePlugin.OgreSceneManager;
+                    var ogreScene = sceneManager.SceneManager;
+                    var staticGeo = ogreScene.createStaticGeometry("Test");
+                    staticGeo.addSceneNode(ogreScene.getRootSceneNode());
+                    ogreScene.getRootSceneNode().setVisible(false);
+                    staticGeo.build();
+                }));
+
             standaloneController.TaskController.addTask(new MDIDialogOpenTask(testSoundRecord, "UnitTestPlugin.TestSoundRecord", "Sound Record", CommonResources.NoIcon, "Unit Test", true));
             standaloneController.TaskController.addTask(new MDIDialogOpenTask(testTextureSceneView, "UnitTestPlugin.TestTextureSceneView", "Texture Scene View", CommonResources.NoIcon, "Unit Test", true));
         }
