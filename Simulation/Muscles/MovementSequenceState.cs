@@ -77,7 +77,6 @@ namespace Medical.Muscles
             }
             MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
             MuscleController.MovingTarget.Offset = targetState.movingTargetPosition;
-            //MuscleController.MovingTarget.Offset = movingTargetPosition.lerp(ref targetState.movingTargetPosition, ref blendFactor);
 
             ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
             float delta = targetState.leftCPPosition - leftCPPosition;
