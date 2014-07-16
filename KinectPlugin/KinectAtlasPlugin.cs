@@ -62,7 +62,7 @@ namespace KinectPlugin
             kinectGui = new KinectGui(ikController, sensorManager, kinectDebugger);
             standaloneController.GUIManager.addManagedDialog(kinectGui);
 
-            sequenceRecorder = new MovementSequenceRecorder(standaloneController.MedicalController);
+            sequenceRecorder = new MovementSequenceRecorder(standaloneController.MedicalController, standaloneController.MovementSequenceController);
             standaloneController.GUIManager.addManagedDialog(sequenceRecorder);
             
             var taskController = standaloneController.TaskController;

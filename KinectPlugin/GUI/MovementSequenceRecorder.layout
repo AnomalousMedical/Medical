@@ -1,10 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="19 33 333 419" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="19 33 295 148" layer="Overlapped">
         <Property key="Caption" value="Kinect Movement Recorder"/>
-        <Widget type="Button" skin="Button" position="15 33 137 37" name="Record">
+        <Widget type="Button" skin="Button" position="0 5 137 37" name="Record">
             <Property key="Caption" value="Record"/>
         </Widget>
+        <Widget type="Button" skin="Button" position="144 5 137 37" name="Play">
+            <Property key="Caption" value="Play"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="144 48 137 37" name="Save">
+            <Property key="Caption" value="Save"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 48 137 37" name="Clear">
+            <Property key="Caption" value="Clear"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="0 90 115 25">
+            <Property key="Caption" value="Capture Frame Rate"/>
+            <Property key="TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="115 90 73 25" name="CaptureRate"/>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>
