@@ -161,7 +161,17 @@ namespace KinectPlugin
                 if (localSensor != null)
                 {
                     // Turn on the skeleton stream to receive skeleton frames
-                    localSensor.SkeletonStream.Enable();
+
+                    TransformSmoothParameters smoothParam = new TransformSmoothParameters()
+                    {
+                        Correction = 0.5f,
+                        JitterRadius = 0.1f,
+                        MaxDeviationRadius = 0.04f,
+                        Prediction = 0.0f,
+                        Smoothing = 0.5f,
+                    };
+
+                    localSensor.SkeletonStream.Enable(smoothParam);
 
                     // Add an event handler to be called whenever there is new skeleton frame data
                     localSensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
