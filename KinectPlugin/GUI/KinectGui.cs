@@ -19,7 +19,9 @@ namespace KinectPlugin
         CheckButton enableMotionButton;
         CheckButton showIkSkeleton;
         CheckButton showSensorSkeleton;
+        CheckButton enableVideoFeed;
         TextBox statusLabel;
+        ImageBox colorSensorImage;
 
         KinectIkController ikController;
         KinectSensorManager sensorManager;
@@ -50,35 +52,20 @@ namespace KinectPlugin
             showSensorSkeleton.Checked = debugVisualizer.DebugVisible;
             showSensorSkeleton.CheckedChanged += showSensorSkeleton_CheckedChanged;
 
+            enableVideoFeed = new CheckButton((Button)window.findWidget("EnableVideoFeed"));
+            enableVideoFeed.Checked = sensorManager.UseColorFeed;
+            enableVideoFeed.CheckedChanged += enableVideoFeed_CheckedChanged;
+
             statusLabel = (TextBox)window.findWidget("StatusLabel");
             statusLabel.Caption = sensorManager.CurrentStatus.ToString();
 
-            sensorManager.SensorColorFrameReady += sensorManager_SensorColorFrameReady;
-            //Create a texture, this is a rendertarget because nothing else will work (maybe not a good idea).
-            colorTexture = TextureManager.getInstance().createManual("KinectColorSensor", "MyGUI", TextureType.TEX_TYPE_2D, 640, 480, 1, 1, PixelFormat.PF_X8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
-            hwBuffer = colorTexture.Value.getBuffer();
-            pixelBox = new PixelBox(0, 0, 640, 480, PixelFormat.PF_X8R8G8B8);
-            ImageBox imageBox = (ImageBox)window.findWidget("ColorSensorImageBox");
-            imageBox.setImageTexture(colorTexture.Value.getName());
-            imageBox.setImageCoord(new IntCoord(0, 0, 640, 480));
-        }
-
-        unsafe void sensorManager_SensorColorFrameReady(byte[] obj)
-        {
-            fixed(byte* data = obj)
-            {
-                pixelBox.Data = data;
-                hwBuffer.Value.blitFromMemory(pixelBox);
-                pixelBox.Data = null;
-            }
+            colorSensorImage = (ImageBox)window.findWidget("ColorSensorImageBox");
         }
 
         public override void Dispose()
         {
             sensorManager.StatusChanged -= sensorManager_StatusChanged;
-            pixelBox.Dispose();
-            hwBuffer.Dispose();
-            colorTexture.Dispose();
+            destroyColorTexture();
             base.Dispose();
         }
 
@@ -97,6 +84,19 @@ namespace KinectPlugin
             ikController.DebugVisible = showIkSkeleton.Checked;
         }
 
+        void enableVideoFeed_CheckedChanged(Widget source, EventArgs e)
+        {
+            sensorManager.UseColorFeed = enableVideoFeed.Checked;
+            if (enableVideoFeed.Checked)
+            {
+                createColorTexture();
+            }
+            else
+            {
+                destroyColorTexture();
+            }
+        }
+
         void sensorManager_StatusChanged(KinectSensorManager sensorManager)
         {
             statusLabel.Caption = sensorManager.CurrentStatus.ToString();
@@ -105,6 +105,51 @@ namespace KinectPlugin
         void ikController_AllowMovementChanged(KinectIkController ikController)
         {
             enableMotionButton.Checked = ikController.AllowMovement;
+        }
+
+        private void createColorTexture()
+        {
+            if (colorTexture == null)
+            {
+                sensorManager.SensorColorFrameReady += sensorManager_SensorColorFrameReady;
+                //This is an ok example of how to do video textuers, but its really only good enough for development right now
+                //We are having to create the texture as a rendertarget when we should probably use a dynamic texture instead, however,
+                //the D3D11 plugin will crash if we use any other kind of texture, so for now we are just using this.
+                //If putting the texture in mygui it is important to tell its render manager to destroy the texture also (like the RocketWidget does).
+                colorTexture = TextureManager.getInstance().createManual("KinectColorSensor", "MyGUI", TextureType.TEX_TYPE_2D, 640, 480, 1, 1, PixelFormat.PF_X8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+                hwBuffer = colorTexture.Value.getBuffer();
+                pixelBox = new PixelBox(0, 0, 640, 480, PixelFormat.PF_X8R8G8B8);
+                colorSensorImage.setItemResource(null); //Clear the "ItemResource" first since we are setting texture directly
+                colorSensorImage.setImageTexture(colorTexture.Value.getName());
+                colorSensorImage.setImageCoord(new IntCoord(0, 0, 640, 480));
+            }
+        }
+
+        private void destroyColorTexture()
+        {
+            if (colorTexture != null)
+            {
+                sensorManager.SensorColorFrameReady -= sensorManager_SensorColorFrameReady;
+                colorSensorImage.setItemResource(CommonResources.NoIcon);
+                RenderManager.Instance.destroyTexture(colorTexture.Value.getName());
+                pixelBox.Dispose();
+                hwBuffer.Dispose();
+                colorTexture.Dispose();
+                colorTexture = null;
+            }
+        }
+
+        unsafe void sensorManager_SensorColorFrameReady(byte[] obj)
+        {
+            if (colorTexture != null)
+            {
+                fixed (byte* data = obj)
+                {
+                    pixelBox.Data = data;
+                    hwBuffer.Value.blitFromMemory(pixelBox);
+                    pixelBox.Data = null;
+                }
+            }
         }
     }
 }

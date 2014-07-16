@@ -15,6 +15,7 @@ namespace KinectPlugin
     {
         private KinectSensor sensor;
         private KinectStatus currentStatus;
+        private bool useColorFeed = false;
 
         /// <summary>
         /// Called when a skeleton frame is ready, this event will fire on the main application thread.
@@ -67,6 +68,38 @@ namespace KinectPlugin
             }
         }
 
+        public bool UseColorFeed
+        {
+            get
+            {
+                return useColorFeed;
+            }
+            set
+            {
+                if(useColorFeed != value)
+                {
+                    useColorFeed = true;
+                    if(sensor != null)
+                    {
+                        ThreadPool.QueueUserWorkItem((state) =>
+                            {
+                                if (sensor != null)
+                                {
+                                    if (useColorFeed)
+                                    {
+                                        sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+                                    }
+                                    else
+                                    {
+                                        sensor.ColorStream.Disable();
+                                    }
+                                }
+                            });
+                    }
+                }
+            }
+        }
+
         void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             //This happens on its own thread
@@ -97,19 +130,21 @@ namespace KinectPlugin
 
         void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
         {
-            CurrentStatus = e.Status;
-            Log.Info("Kinect sensor {0}", currentStatus);
-            switch (currentStatus)
+            if (CurrentStatus != e.Status)
             {
-                case KinectStatus.Disconnected:
-                    if (e.Sensor == sensor)
-                    {
-                        disconnectSensor();
-                    }
-                    break;
-                case KinectStatus.Connected:
-                    findSensor();
-                    break;
+                CurrentStatus = e.Status;
+                switch (currentStatus)
+                {
+                    case KinectStatus.Disconnected:
+                        if (e.Sensor == sensor)
+                        {
+                            disconnectSensor();
+                        }
+                        break;
+                    case KinectStatus.Connected:
+                        findSensor();
+                        break;
+                }
             }
         }
 
@@ -117,51 +152,53 @@ namespace KinectPlugin
         {
             if (sensor == null)
             {
+                KinectSensor localSensor = null;
                 // Look through all sensors and start the first connected one.
                 foreach (var potentialSensor in KinectSensor.KinectSensors)
                 {
                     if (potentialSensor.Status == KinectStatus.Connected)
                     {
-                        sensor = potentialSensor;
+                        localSensor = potentialSensor;
                         break;
                     }
                 }
 
                 //If a sensor was found start it and enable its skeleton listening.
-                if (sensor != null)
+                if (localSensor != null)
                 {
                     // Turn on the skeleton stream to receive skeleton frames
-                    sensor.SkeletonStream.Enable();
+                    localSensor.SkeletonStream.Enable();
 
                     // Add an event handler to be called whenever there is new skeleton frame data
-                    sensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
+                    localSensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
 
-                    sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                    sensor.ColorFrameReady += sensor_ColorFrameReady;
+                    if (useColorFeed)
+                    {
+                        localSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+                    }
+                    localSensor.ColorFrameReady += sensor_ColorFrameReady;
 
                     // Start the sensor!
                     try
                     {
-                        sensor.Start();
+                        localSensor.Start();
                         CurrentStatus = KinectStatus.Connected;
                     }
                     catch (IOException)
                     {
-                        sensor = null;
+                        localSensor = null;
                     }
-                }
 
-                if (sensor == null)
-                {
-                    Log.ImportantInfo("No Kinect Sensor found");
+                    sensor = localSensor; //Make the class aware of the sensor
                 }
             }
         }
 
         void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
         {
+            KinectSensor sensor = sender as KinectSensor;
             //This happens on its own thread
-            if (SensorColorFrameReady != null)
+            if (SensorColorFrameReady != null && sensor != null)
             {
                 byte[] colorPixels = new byte[sensor.ColorStream.FramePixelDataLength]; //Yea this is a lot of allocation, just being lazy with the stack for now, should make a pool of these, or invoke and wait
 
@@ -188,12 +225,13 @@ namespace KinectPlugin
         {
             if (sensor != null)
             {
-                sensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
-                sensor.ColorFrameReady -= sensor_ColorFrameReady;
-                sensor.Stop();
-                sensor.Dispose();
+                KinectSensor localSensor = sensor;
                 sensor = null;
                 CurrentStatus = KinectStatus.Disconnected;
+                localSensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
+                localSensor.ColorFrameReady -= sensor_ColorFrameReady;
+                localSensor.Stop();
+                localSensor.Dispose();
             }
         }
     }
