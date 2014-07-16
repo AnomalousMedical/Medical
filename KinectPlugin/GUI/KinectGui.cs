@@ -16,12 +16,16 @@ namespace KinectPlugin
 {
     class KinectGui : MDIDialog
     {
+        static readonly int ColorIconSize = ScaleHelper.Scaled(32);
+
         CheckButton enableMotionButton;
         CheckButton showIkSkeleton;
         CheckButton showSensorSkeleton;
         CheckButton enableVideoFeed;
         TextBox statusLabel;
         ImageBox colorSensorImage;
+        IntCoord colorSensorImageOriginalPos;
+        IntCoord colorSensorImageIconPos;
 
         KinectIkController ikController;
         KinectSensorManager sensorManager;
@@ -60,6 +64,9 @@ namespace KinectPlugin
             statusLabel.Caption = sensorManager.CurrentStatus.ToString();
 
             colorSensorImage = (ImageBox)window.findWidget("ColorSensorImageBox");
+            colorSensorImageOriginalPos = new IntCoord(colorSensorImage.Left, colorSensorImage.Top, colorSensorImage.Width, colorSensorImage.Height);
+            colorSensorImageIconPos = new IntCoord(colorSensorImageOriginalPos.width / 2 - ColorIconSize / 2, colorSensorImageOriginalPos.height / 2 - ColorIconSize / 2, ColorIconSize, ColorIconSize);
+            setColorImageIcon();
         }
 
         public override void Dispose()
@@ -133,6 +140,7 @@ namespace KinectPlugin
                 hwBuffer = colorTexture.Value.getBuffer();
                 pixelBox = new PixelBox(0, 0, 640, 480, PixelFormat.PF_X8R8G8B8);
                 colorSensorImage.setItemResource(null); //Clear the "ItemResource" first since we are setting texture directly
+                colorSensorImage.setCoord(colorSensorImageOriginalPos.left, colorSensorImageOriginalPos.top, colorSensorImageOriginalPos.width, colorSensorImageOriginalPos.height);
                 colorSensorImage.setImageTexture(colorTexture.Value.getName());
                 colorSensorImage.setImageCoord(new IntCoord(0, 0, 640, 480));
             }
@@ -143,7 +151,7 @@ namespace KinectPlugin
             if (colorTexture != null)
             {
                 sensorManager.SensorColorFrameReady -= sensorManager_SensorColorFrameReady;
-                colorSensorImage.setItemResource(CommonResources.NoIcon); //Because we set this to something with an actual texture, it will replace the texture set when created.
+                setColorImageIcon(); //Because we set this to something with an actual texture, it will replace the texture set when created (that happens in the function called).
                 RenderManager.Instance.destroyTexture(colorTexture.Value.getName());
                 pixelBox.Dispose();
                 hwBuffer.Dispose();
@@ -163,6 +171,12 @@ namespace KinectPlugin
                     pixelBox.Data = null;
                 }
             }
+        }
+
+        private void setColorImageIcon()
+        {
+            colorSensorImage.setItemResource("KinectPlugin.VideoStream");
+            colorSensorImage.setCoord(colorSensorImageIconPos.left, colorSensorImageIconPos.top, colorSensorImageIconPos.width, colorSensorImageIconPos.height);
         }
     }
 }
