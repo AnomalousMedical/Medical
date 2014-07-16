@@ -130,7 +130,7 @@ namespace KinectPlugin
             if (colorTexture != null)
             {
                 sensorManager.SensorColorFrameReady -= sensorManager_SensorColorFrameReady;
-                colorSensorImage.setItemResource(CommonResources.NoIcon);
+                colorSensorImage.setItemResource(CommonResources.NoIcon); //Because we set this to something with an actual texture, it will replace the texture set when created.
                 RenderManager.Instance.destroyTexture(colorTexture.Value.getName());
                 pixelBox.Dispose();
                 hwBuffer.Dispose();

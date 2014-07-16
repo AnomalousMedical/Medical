@@ -13,9 +13,10 @@ namespace KinectPlugin
 {
     class KinectSensorManager : IDisposable
     {
-        private KinectSensor sensor;
+        private KinectSensor activeSensor;
         private KinectStatus currentStatus;
         private bool useColorFeed = false;
+        private byte[] colorPixels;
 
         /// <summary>
         /// Called when a skeleton frame is ready, this event will fire on the main application thread.
@@ -79,20 +80,13 @@ namespace KinectPlugin
                 if(useColorFeed != value)
                 {
                     useColorFeed = true;
-                    if(sensor != null)
+                    if(activeSensor != null)
                     {
                         ThreadPool.QueueUserWorkItem((state) =>
                             {
-                                if (sensor != null)
+                                if (activeSensor != null)
                                 {
-                                    if (useColorFeed)
-                                    {
-                                        sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                                    }
-                                    else
-                                    {
-                                        sensor.ColorStream.Disable();
-                                    }
+                                    setColorFeedEnabled(useColorFeed, activeSensor);
                                 }
                             });
                     }
@@ -136,7 +130,7 @@ namespace KinectPlugin
                 switch (currentStatus)
                 {
                     case KinectStatus.Disconnected:
-                        if (e.Sensor == sensor)
+                        if (e.Sensor == activeSensor)
                         {
                             disconnectSensor();
                         }
@@ -150,7 +144,7 @@ namespace KinectPlugin
 
         private void findSensor()
         {
-            if (sensor == null)
+            if (activeSensor == null)
             {
                 KinectSensor localSensor = null;
                 // Look through all sensors and start the first connected one.
@@ -174,7 +168,7 @@ namespace KinectPlugin
 
                     if (useColorFeed)
                     {
-                        localSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+                        setColorFeedEnabled(true, localSensor);
                     }
                     localSensor.ColorFrameReady += sensor_ColorFrameReady;
 
@@ -189,19 +183,19 @@ namespace KinectPlugin
                         localSensor = null;
                     }
 
-                    sensor = localSensor; //Make the class aware of the sensor
+                    activeSensor = localSensor; //Make the class aware of the sensor
                 }
             }
         }
 
+        bool processedLastColorFrame = true;
         void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
         {
-            KinectSensor sensor = sender as KinectSensor;
             //This happens on its own thread
-            if (SensorColorFrameReady != null && sensor != null)
+            KinectSensor sensor = sender as KinectSensor;
+            if (processedLastColorFrame && useColorFeed && SensorColorFrameReady != null && sensor != null)
             {
-                byte[] colorPixels = new byte[sensor.ColorStream.FramePixelDataLength]; //Yea this is a lot of allocation, just being lazy with the stack for now, should make a pool of these, or invoke and wait
-
+                processedLastColorFrame = false;
                 using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
                 {
                     if (colorFrame != null)
@@ -217,21 +211,36 @@ namespace KinectPlugin
                     {
                         SensorColorFrameReady.Invoke(colorPixels);
                     }
+                    processedLastColorFrame = true;
                 });
             }
         }
 
         private void disconnectSensor()
         {
-            if (sensor != null)
+            if (activeSensor != null)
             {
-                KinectSensor localSensor = sensor;
-                sensor = null;
+                KinectSensor localSensor = activeSensor;
+                activeSensor = null;
                 CurrentStatus = KinectStatus.Disconnected;
                 localSensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
                 localSensor.ColorFrameReady -= sensor_ColorFrameReady;
                 localSensor.Stop();
                 localSensor.Dispose();
+            }
+        }
+
+        private void setColorFeedEnabled(bool enabled, KinectSensor sensor)
+        {
+            if (enabled)
+            {
+                sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+                colorPixels = new byte[sensor.ColorStream.FramePixelDataLength];
+            }
+            else
+            {
+                sensor.ColorStream.Disable();
+                colorPixels = null;
             }
         }
     }
