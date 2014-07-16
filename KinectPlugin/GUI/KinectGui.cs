@@ -99,7 +99,20 @@ namespace KinectPlugin
 
         void sensorManager_StatusChanged(KinectSensorManager sensorManager)
         {
-            statusLabel.Caption = sensorManager.CurrentStatus.ToString();
+            var status = sensorManager.CurrentStatus;
+            statusLabel.Caption = status.ToString();
+            if (sensorManager.UseColorFeed)
+            {
+                switch (status)
+                {
+                    case Microsoft.Kinect.KinectStatus.Connected:
+                        createColorTexture();
+                        break;
+                    case Microsoft.Kinect.KinectStatus.Disconnected:
+                        destroyColorTexture();
+                        break;
+                }
+            }
         }
 
         void ikController_AllowMovementChanged(KinectIkController ikController)
