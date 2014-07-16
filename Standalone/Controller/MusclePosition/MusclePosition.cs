@@ -199,8 +199,11 @@ namespace Medical
             info.AddValue(MUSCLE_FORCE, muscleForce);
             info.AddValue(PELIVS_CHAIN_STATE, pelvisChainState);
             info.AddValue(EASING_FUNCTION, easingFunction);
-            //When you remove the conversion you need to set the version by uncommenting the line below.
-            //info.Version = 1;
+            //When you remove the conversion you need to set the version always by getting rid of the if statement
+            if (SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion)
+            {
+                info.Version = 1;
+            }
         }
 
         #endregion

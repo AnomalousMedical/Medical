@@ -15,6 +15,8 @@ namespace Medical.Muscles
         private Vector3 movingTargetPosition;
         private float muscleForce;
         private float startTime;
+        private FKChainState pelvisChainState;
+        private FKChainState interpolatedPelvisChainState = new FKChainState(); //Pooled pelvis chain state used for interpolation, prevents garbage generation. Part of instance state, not saved.
 
         public MovementSequenceState()
         {
@@ -29,6 +31,18 @@ namespace Medical.Muscles
             ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
             leftCPPosition = leftCP.CurrentLocation;
             rightCPPosition = rightCP.CurrentLocation;
+
+            //Setup the pelvis fk chain if available
+            FKRoot pelvis;
+            if (PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvis))
+            {
+                pelvisChainState = new FKChainState();
+                pelvis.addToChainState(pelvisChainState);
+            }
+            else
+            {
+                pelvisChainState = null;
+            }
         }
 
         public void reverseSides()
@@ -72,6 +86,13 @@ namespace Medical.Muscles
             ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
             delta = targetState.rightCPPosition - rightCPPosition;
             rightCP.setLocation(rightCPPosition + delta * blendFactor);
+
+            FKRoot pelvis;
+            if (pelvisChainState != null && targetState.pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvis))
+            {
+                interpolatedPelvisChainState.interpolateFrom(pelvisChainState, targetState.pelvisChainState, blendFactor);
+                pelvis.applyChainState(interpolatedPelvisChainState);
+            }
         }
 
         /// <summary>
@@ -97,6 +118,7 @@ namespace Medical.Muscles
         private const String MOVING_TARGET_POSITION = "movingTargetPosition";
         private const String MUSCLE_FORCE = "muscleForce";
         private const String START_TIME = "startTime";
+        private const String PELIVS_CHAIN_STATE = "pelvisChainState";
 
         protected MovementSequenceState(LoadInfo info)
         {
@@ -105,6 +127,7 @@ namespace Medical.Muscles
             movingTargetPosition = info.GetVector3(MOVING_TARGET_POSITION);
             muscleForce = info.GetFloat(MUSCLE_FORCE);
             startTime = info.GetFloat(START_TIME);
+            pelvisChainState = info.GetValue<FKChainState>(PELIVS_CHAIN_STATE, null);
             //Can keep this around, but get rid of the simulation version checks
             //Be sure to set the version to 1 in the getInfo when you commit to this scene.
             if(info.Version == 0 && SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion)
@@ -121,8 +144,12 @@ namespace Medical.Muscles
             info.AddValue(MOVING_TARGET_POSITION, movingTargetPosition);
             info.AddValue(MUSCLE_FORCE, muscleForce);
             info.AddValue(START_TIME, startTime);
-            //When you remove the conversion you need to set the version by uncommenting the line below.
-            //info.Version = 1;
+            info.AddValue(PELIVS_CHAIN_STATE, pelvisChainState);
+            //When you remove the conversion you need to set the version always by getting rid of the if statement
+            if (SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion)
+            {
+                info.Version = 1;
+            }
         }
 
         /// <summary>
