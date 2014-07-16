@@ -24,6 +24,7 @@ namespace KinectPlugin
         private KinectSensorManager sensorManager;
 
         private KinectGui kinectGui;
+        private MovementSequenceRecorder sequenceRecorder;
 
         public KinectAtlasPlugin()
         {
@@ -36,6 +37,12 @@ namespace KinectPlugin
             if(sensorManager != null)
             {
                 sensorManager.Dispose();
+                sensorManager = null;
+            }
+            if(sequenceRecorder != null)
+            {
+                sequenceRecorder.Dispose();
+                sequenceRecorder = null;
             }
         }
 
@@ -54,10 +61,14 @@ namespace KinectPlugin
 
             kinectGui = new KinectGui(ikController, sensorManager, kinectDebugger);
             standaloneController.GUIManager.addManagedDialog(kinectGui);
+
+            sequenceRecorder = new MovementSequenceRecorder(standaloneController.MedicalController);
+            standaloneController.GUIManager.addManagedDialog(sequenceRecorder);
             
             var taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(kinectGui, "KinectPlugin.KinectGui", "Kinect", "KinectPlugin.Kinect", "Kinect"));
+            taskController.addTask(new MDIDialogOpenTask(sequenceRecorder, "KinectPlugin.KinectMovementSequenceRecorder", "Record Sequence", CommonResources.NoIcon, "Kinect"));
         }
 
         void sensorManager_StatusChanged(KinectSensorManager obj)
