@@ -55,7 +55,7 @@ namespace KinectPlugin
             captureRate = new SingleNumericEdit((EditBox)window.findWidget("CaptureRate"));
             captureRate.MinValue = 1.0f;
             captureRate.MaxValue = 60.0f;
-            captureRate.Value = 30.0f;
+            captureRate.Value = 15.0f;
         }
 
         public override void Dispose()

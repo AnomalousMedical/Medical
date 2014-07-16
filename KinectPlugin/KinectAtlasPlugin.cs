@@ -68,7 +68,7 @@ namespace KinectPlugin
             var taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(kinectGui, "KinectPlugin.KinectGui", "Kinect", "KinectPlugin.Kinect", "Kinect"));
-            taskController.addTask(new MDIDialogOpenTask(sequenceRecorder, "KinectPlugin.KinectMovementSequenceRecorder", "Record Sequence", CommonResources.NoIcon, "Kinect"));
+            taskController.addTask(new MDIDialogOpenTask(sequenceRecorder, "KinectPlugin.KinectMovementSequenceRecorder", "Record Sequence", "KinectPlugin.Record", "Kinect"));
         }
 
         void sensorManager_StatusChanged(KinectSensorManager obj)

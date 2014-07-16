@@ -9,10 +9,18 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="KinectPlugin.VideoStream">
+  <Resource type="ResourceImageSet" name="KinectPlugin.Record">
     <Group name="Icons" texture="KinectPlugin.Resources.KinectIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="KinectPlugin.VideoStream">
+    <Group name="Icons" texture="KinectPlugin.Resources.KinectIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="128 0"/>
       </Index>
     </Group>
   </Resource>
