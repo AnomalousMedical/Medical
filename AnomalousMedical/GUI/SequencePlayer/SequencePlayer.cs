@@ -15,12 +15,15 @@ namespace Medical
         private Button playButton;
         private Button stopButton;
         private EditBox nowPlaying;
+        private MusclePositionController musclePositionController;
 
-        public SequencePlayer(MovementSequenceController sequenceController)
+        public SequencePlayer(MovementSequenceController sequenceController, MusclePositionController musclePositionController)
             :base("Medical.GUI.SequencePlayer.SequencePlayer.layout")
         {
             this.sequenceController = sequenceController;
             sequenceMenu = new SequenceMenu(sequenceController);
+
+            this.musclePositionController = musclePositionController;
 
             Button sequenceButton = window.findWidget("Sequence") as Button;
             sequenceButton.MouseButtonClick += new MyGUIEvent(sequenceButton_MouseButtonClick);
@@ -46,7 +49,8 @@ namespace Medical
 
         void stopButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            sequenceController.stopPlayback();
+            sequenceController.pausePlayback(); //We pause here because that does not attempt to reset the sequence. This makes a nicer transition back to neutral with the timed blend below
+            musclePositionController.timedBlend(musclePositionController.BindPosition, MedicalConfig.CameraTransitionTime);
         }
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)

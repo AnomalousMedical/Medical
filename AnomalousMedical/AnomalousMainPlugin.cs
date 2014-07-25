@@ -394,7 +394,7 @@ namespace Medical.GUI
 
         void MovementSequenceController_GroupAdded(MovementSequenceController controller, MovementSequenceGroup group)
         {
-            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
+            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController, standaloneController.MusclePositionController);
             guiManager.addManagedDialog(sequencePlayer);
 
             MDIDialogOpenTask sequencePlayerTask = new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Tools);
