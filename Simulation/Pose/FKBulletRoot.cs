@@ -15,6 +15,8 @@ namespace Medical
     /// </summary>
     public class FKBulletRoot : Interface, FKRoot
     {
+        private const float FullBlend = 0.99999f;
+
         [DoNotCopy]
         [DoNotSave]
         private BulletScene bulletScene;
@@ -91,11 +93,39 @@ namespace Medical
             {
                 FKLinkState linkState = chain[Owner.Name];
 
-                this.updatePosition(ref linkState.LocalTranslation, ref linkState.LocalRotation);
+                Vector3 trans = linkState.LocalTranslation;
+                Quaternion rot = linkState.LocalRotation;
+
+                this.updatePosition(ref trans, ref rot);
 
                 foreach (var child in children)
                 {
                     child.applyChainState(chain);
+                }
+            });
+        }
+
+        public void blendChainStates(FKChainState start, FKChainState end, float blend)
+        {
+            //Since blending has to go through this root make sure we aren't just trying to get to the end.
+            if (blend > FullBlend)
+            {
+                blend = 1.0f;
+            }
+
+            bulletScene.addPreSynchronizeTask(() =>
+            {
+                FKLinkState startState = start[Owner.Name];
+                FKLinkState endState = end[Owner.Name];
+
+                Vector3 trans = startState.getBlendedLocalTranslation(endState, blend);
+                Quaternion rot = startState.getBlendedLocalRotation(endState, blend);
+
+                this.updatePosition(ref trans, ref rot);
+
+                foreach (var child in children)
+                {
+                    child.blendChainStates(start, end, blend);
                 }
             });
         }

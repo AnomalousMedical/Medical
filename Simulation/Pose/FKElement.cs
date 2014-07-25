@@ -45,5 +45,13 @@ namespace Medical
         /// </summary>
         /// <param name="chain">The chain to apply.</param>
         void applyChainState(FKChainState chain);
+
+        /// <summary>
+        /// Set the element position based on a start and end chain and a blend factor between them.
+        /// </summary>
+        /// <param name="start">The start chain state.</param>
+        /// <param name="end">The end chain state.</param>
+        /// <param name="blend">The blend factor between 0 and 1.</param>
+        void blendChainStates(FKChainState start, FKChainState end, float blend);
     }
 }

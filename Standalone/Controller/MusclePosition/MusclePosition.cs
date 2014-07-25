@@ -17,7 +17,6 @@ namespace Medical
         private float muscleForce;
         private FKChainState pelvisChainState;
         private EasingFunction easingFunction = EasingFunction.EaseInOutQuadratic;
-        private FKChainState interpolatedPelvisChainState = new FKChainState(); //Pooled pelvis chain state used for interpolation, prevents garbage generation. Part of instance state, not saved.
 
         public MusclePosition()
         {
@@ -95,8 +94,7 @@ namespace Medical
             FKRoot pelvis;
             if (pelvisChainState != null && targetState.pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvis))
             {
-                interpolatedPelvisChainState.interpolateFrom(pelvisChainState, targetState.pelvisChainState, modifiedBlendFactor);
-                pelvis.applyChainState(interpolatedPelvisChainState);
+                pelvis.blendChainStates(pelvisChainState, targetState.pelvisChainState, modifiedBlendFactor);
             }
         }
 
