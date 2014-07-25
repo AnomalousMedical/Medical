@@ -41,14 +41,6 @@ namespace Medical.Controller
             controller.SceneUnloading += controller_SceneUnloading;
             sceneViewController = controller.SceneViewController;
             anatomyController = controller.AnatomyController;
-
-            //Scene version management
-            SimulationVersionManager.OnSceneChanged += SimulationVersionManager_OnSceneChanged;
-        }
-
-        void SimulationVersionManager_OnSceneChanged(SimulationScene obj)
-        {
-            AllowPosing = obj.AllowIK;
         }
 
         public bool AllowPosing
@@ -126,6 +118,9 @@ namespace Medical.Controller
 
         void controller_SceneLoaded(SimScene scene)
         {
+            var simScene = scene.getDefaultSubScene().getSimElementManager<SimulationScene>();
+            AllowPosing = simScene.AllowIK;
+
             ikScene = scene.getDefaultSubScene().getSimElementManager<BEPUikScene>();
             togglePicking();
         }

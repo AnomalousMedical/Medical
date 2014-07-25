@@ -166,7 +166,6 @@
     <Compile Include="Plugin\SimulationScene.cs" />
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
-    <Compile Include="Plugin\SimulationVersionManager.cs" />
     <Compile Include="Pose\FKBulletRoot.cs" />
     <Compile Include="Pose\FKChainState.cs" />
     <Compile Include="Pose\FKElement.cs" />

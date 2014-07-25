@@ -56,9 +56,6 @@ namespace Medical
         [Editable]
         private int eminanceStart = 12;
 
-        [Editable]
-        private SplineType splineType = SplineType.Natural;
-
         [DoNotSave]
         [DoNotCopy]
         private List<Vector3> basePoints = new List<Vector3>();
@@ -97,25 +94,9 @@ namespace Medical
 
         private ControlPointBehavior controlPoint;
 
-        [SingleEnum]
-        enum SplineType
-        {
-            Natural,
-            CatmullRom
-        }
-
         protected override void constructed()
         {
-            switch(splineType)
-            {
-                case SplineType.CatmullRom:
-                    curve = new CatmullRomSpline3d();
-                    break;
-                case SplineType.Natural:
-                default:
-                    curve = new NaturalSplineSet3d();
-                    break;
-            }
+            curve = new CatmullRomSpline3d();
 
             FossaController.add(this);
             SimObject eminanceSimObject = Owner.getOtherSimObject(eminanceName);

@@ -127,9 +127,7 @@ namespace Medical.Muscles
             muscleForce = info.GetFloat(MUSCLE_FORCE);
             startTime = info.GetFloat(START_TIME);
             pelvisChainState = info.GetValue<FKChainState>(PELIVS_CHAIN_STATE, null);
-            //Can keep this around, but get rid of the simulation version checks
-            //Be sure to set the version to 1 in the getInfo when you commit to this scene.
-            if(info.Version == 0 && SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion)
+            if(info.Version == 0)
             {
                 leftCPPosition = UpgradeCpPosition(leftCPPosition);
                 rightCPPosition = UpgradeCpPosition(rightCPPosition);
@@ -138,17 +136,14 @@ namespace Medical.Muscles
 
         public void getInfo(SaveInfo info)
         {
+            info.Version = 1;
+
             info.AddValue(LEFT_CP_POSITION, leftCPPosition);
             info.AddValue(RIGHT_CP_POSITION, rightCPPosition);
             info.AddValue(MOVING_TARGET_POSITION, movingTargetPosition);
             info.AddValue(MUSCLE_FORCE, muscleForce);
             info.AddValue(START_TIME, startTime);
             info.AddValue(PELIVS_CHAIN_STATE, pelvisChainState);
-            //When you remove the conversion you need to set the version always by getting rid of the if statement
-            if (SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion)
-            {
-                info.Version = 1;
-            }
         }
 
         /// <summary>

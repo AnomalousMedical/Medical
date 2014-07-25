@@ -130,8 +130,6 @@ namespace Medical
 
             OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "AnomalousCore", true);
             OgreResourceGroupManager.getInstance().initializeResourceGroup("AnomalousCore");
-
-            SimulationVersionManager.OnSceneChanged += SimulationVersionManager_OnSceneChanged;
         }
 
         public void Dispose()
@@ -680,7 +678,6 @@ namespace Medical
                     OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
 
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-                    SimulationVersionManager.sceneChanged(medicalScene);
                     sceneViewController.createFromPresets(medicalScene.WindowPresets.Default, false);
 
                     sceneViewController.createCameras(medicalController.CurrentScene);
@@ -785,14 +782,6 @@ namespace Medical
         void mainWindow_Closed(OSWindow sender)
         {
             exit();
-        }
-
-        void SimulationVersionManager_OnSceneChanged(SimulationScene obj)
-        {
-            if (obj.Version == SimulationVersionManager.IkCatmullRomSplineRigidTeethVersion)
-            {
-                NotificationManager.showNotification("Do not create content with this scene.\nIt is using a work in progress Simulation.", MessageBoxIcons.Warning, 10);
-            }
         }
     }
 }

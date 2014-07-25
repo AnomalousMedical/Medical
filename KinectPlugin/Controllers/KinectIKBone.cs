@@ -13,9 +13,6 @@ namespace KinectPlugin
 {
     class KinectIKBone
     {
-        private static GenericSimObjectDefinition dragSimObjectDefinition;
-        private static BEPUikDragControlDefinition dragControl;
-
         private List<KinectIKBone> children = new List<KinectIKBone>();
         private JointType jointType;
         private float distanceToParent;

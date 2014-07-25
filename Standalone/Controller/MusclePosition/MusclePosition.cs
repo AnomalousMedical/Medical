@@ -182,9 +182,7 @@ namespace Medical
             muscleForce = info.GetFloat(MUSCLE_FORCE);
             pelvisChainState = info.GetValue<FKChainState>(PELIVS_CHAIN_STATE, null);
             easingFunction = info.GetValue(EASING_FUNCTION, EasingFunction.None); //We use no easing for older muscle positions because this is how they were originally created, the new default is to use InOutQuadratic, however.
-            //Can keep this around, but get rid of the simulation version checks
-            //Be sure to set the version to 1 in the getInfo when you commit to this scene.
-            if (info.Version == 0 && SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion)
+            if (info.Version == 0)
             {
                 leftCPPosition = MovementSequenceState.UpgradeCpPosition(leftCPPosition);
                 rightCPPosition = MovementSequenceState.UpgradeCpPosition(rightCPPosition);
@@ -193,17 +191,14 @@ namespace Medical
 
         public void getInfo(SaveInfo info)
         {
+            info.Version = 1;
+
             info.AddValue(LEFT_CP_POSITION, leftCPPosition);
             info.AddValue(RIGHT_CP_POSITION, rightCPPosition);
             info.AddValue(MOVING_TARGET_POSITION, movingTargetPosition);
             info.AddValue(MUSCLE_FORCE, muscleForce);
             info.AddValue(PELIVS_CHAIN_STATE, pelvisChainState);
             info.AddValue(EASING_FUNCTION, easingFunction);
-            //When you remove the conversion you need to set the version always by getting rid of the if statement
-            if (SimulationVersionManager.LoadedVersion > SimulationVersionManager.OriginalVersion)
-            {
-                info.Version = 1;
-            }
         }
 
         #endregion
