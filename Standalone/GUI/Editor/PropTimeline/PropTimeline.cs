@@ -95,7 +95,15 @@ namespace Medical.GUI
             this.propData = showProp;
             if (propData != null)
             {
-                actionFactory.addTracksForAction(showProp, timelineView);
+                ShowPropTrackInfo propTrackInfo;
+                if(actionFactory.tryGetTrackInfo(showProp.PropType, out propTrackInfo))
+                {
+                    foreach (ShowPropSubActionPrototype prototype in propTrackInfo.Tracks)
+                    {
+                        timelineView.addTrack(prototype.TypeName, prototype);
+                    }
+                }
+
                 foreach (ShowPropSubAction action in showProp.SubActions)
                 {
                     addSubActionData(action, false);
@@ -159,9 +167,10 @@ namespace Medical.GUI
             addSubActionData(subAction, true);
         }
 
-        void trackFilter_AddTrackItem(string name)
+        void trackFilter_AddTrackItem(string name, Object trackUserObject)
         {
-            ShowPropSubAction subAction = actionFactory.createSubAction(propData, name);
+            ShowPropSubActionPrototype actionPrototype = (ShowPropSubActionPrototype)trackUserObject;
+            ShowPropSubAction subAction = actionPrototype.createSubAction();
             subAction.StartTime = timelineView.MarkerTime;
             if (subAction is MovePropAction)
             {

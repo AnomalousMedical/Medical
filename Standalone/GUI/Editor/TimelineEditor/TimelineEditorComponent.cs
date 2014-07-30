@@ -157,7 +157,7 @@ namespace Medical.GUI
             }
         }
 
-        void actionFilter_AddTrackItem(string name)
+        void actionFilter_AddTrackItem(string name, Object trackUserObject)
         {
             TimelineAction action = actionDataManager.createAction(name);
             action.StartTime = timelineView.MarkerTime;

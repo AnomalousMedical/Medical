@@ -235,7 +235,7 @@ namespace Medical.GUI
             timelineView.MarkerTime = controller.CurrentTime;
         }
 
-        void trackFilter_AddTrackItem(string name)
+        void trackFilter_AddTrackItem(string name, Object trackUserObject)
         {
             if (movementSequence != null)
             {

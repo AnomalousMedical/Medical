@@ -7,6 +7,10 @@ using MyGUIPlugin;
 
 namespace Medical
 {
+    /// <summary>
+    /// A collection of track prototypes for a given prop type. Determines what appears on a given prop's prop
+    /// timeline.
+    /// </summary>
     sealed class ShowPropTrackInfo
     {
         private List<ShowPropSubActionPrototype> trackData = new List<ShowPropSubActionPrototype>();
@@ -19,18 +23,6 @@ namespace Medical
         public void addTrack(ShowPropSubActionPrototype prototype)
         {
             trackData.Add(prototype);
-        }
-
-        public ShowPropSubAction createSubAction(string name)
-        {
-            foreach (ShowPropSubActionPrototype data in trackData)
-            {
-                if (data.TypeName == name)
-                {
-                    return data.createSubAction();
-                }
-            }
-            return null;
         }
 
         public IEnumerable<ShowPropSubActionPrototype> Tracks

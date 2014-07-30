@@ -128,21 +128,9 @@ namespace Medical.GUI
             clearData();
         }
 
-        public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView)
+        public bool tryGetTrackInfo(String propTypeName, out ShowPropTrackInfo propTrackInfo)
         {
-            ShowPropTrackInfo propTrackInfo;
-            if(trackInfo.TryGetValue(showProp.PropType, out propTrackInfo))
-            {
-                foreach (ShowPropSubActionPrototype data in propTrackInfo.Tracks)
-                {
-                    timelineView.addTrack(data.TypeName);
-                }
-            }
-        }
-
-        public ShowPropSubAction createSubAction(ShowPropAction showProp, String name)
-        {
-            return trackInfo[showProp.PropType].createSubAction(name);
+            return trackInfo.TryGetValue(propTypeName, out propTrackInfo);
         }
 
         public PropTimelineData createData(ShowPropAction showProp, ShowPropSubAction subAction, PropEditController propEditController)
