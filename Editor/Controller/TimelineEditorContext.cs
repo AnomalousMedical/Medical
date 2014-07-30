@@ -37,7 +37,7 @@ namespace Medical
         private TimelineTypeController timelineTypeController;
         private PropEditController propEditController;
 
-        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, PropEditController propEditController, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
+        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, PropEditController propEditController, PropFactory propFactory, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
         {
             this.currentTimeline = timeline;
             this.currentFile = path;
@@ -60,7 +60,7 @@ namespace Medical
             genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             mvcContext.Views.add(genericEditor);
             
-            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController);
+            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController, propFactory);
             propTimelineView.Buttons.add(new CloseButtonDefinition("Close", "PropTimeline/Close"));
             mvcContext.Views.add(propTimelineView);
 

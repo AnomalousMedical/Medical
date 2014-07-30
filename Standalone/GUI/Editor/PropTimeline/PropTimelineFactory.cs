@@ -20,7 +20,8 @@ namespace Medical.GUI
         {
             if (view is PropTimelineView)
             {
-                PropTimeline propTimeline = new PropTimeline(clipboard, ((PropTimelineView)view).PropEditController, viewHost);
+                var propView = (PropTimelineView)view;
+                PropTimeline propTimeline = new PropTimeline(clipboard, propView.PropEditController, propView.PropFactory, viewHost);
                 return propTimeline;
             }
             else if (view is OpenPropManagerView)

@@ -41,6 +41,14 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             arrowSimObject.addElement(propFadeBehaviorDef);
             propFactory.addDefinition(DefinitionName, arrowSimObject);
+
+            //Arrow
+            ShowPropTrackInfo tracks = new ShowPropTrackInfo();
+            tracks.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            tracks.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            tracks.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowColorAction), "Change Color"));
+            tracks.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowShapeAction), "Change Arrow Shape"));
+            propFactory.addTrackInfo(Arrow.DefinitionName, tracks);
         }
 
         public Arrow()

@@ -37,6 +37,12 @@ namespace Medical
             pen.addElement(penBehaviorDef);
 
             propFactory.addDefinition(DefinitionName, pen);
+
+            ShowPropTrackInfo penData = new ShowPropTrackInfo();
+            penData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            penData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            penData.addTrack(new ShowPropSubActionPrototype(typeof(ClickPenAction), "Click Pen"));
+            propFactory.addTrackInfo(Pen.DefinitionName, penData);
         }
 
         private Entity penEntity;

@@ -40,6 +40,12 @@ namespace Medical
             caliper.addElement(caliperBehaviorDef);
 
             propFactory.addDefinition(DefinitionName, caliper);
+
+            ShowPropTrackInfo caliperData = new ShowPropTrackInfo();
+            caliperData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            caliperData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            caliperData.addTrack(new ShowPropSubActionPrototype(typeof(SetCaliperMeasurement), "Set Measurement"));
+            propFactory.addTrackInfo(Caliper.DefinitionName, caliperData);
         }
 
         private Entity entity;

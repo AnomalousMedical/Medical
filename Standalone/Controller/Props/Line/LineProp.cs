@@ -29,6 +29,12 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             simObject.addElement(propFadeBehaviorDef);
             propFactory.addDefinition(DefinitionName, simObject);
+
+            ShowPropTrackInfo lineData = new ShowPropTrackInfo();
+            lineData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            lineData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            lineData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeLinePropSettings), "Settings"));
+            propFactory.addTrackInfo(LineProp.DefinitionName, lineData);
         }
 
         private ManualObject manualObject;

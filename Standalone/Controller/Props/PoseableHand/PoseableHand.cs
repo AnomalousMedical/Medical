@@ -47,6 +47,14 @@ namespace Medical
             hand.addElement(detachableFollowerDef);
 
             propFactory.addDefinition(definitionName, hand);
+
+            //Poseable Hand Left
+            ShowPropTrackInfo trackData = new ShowPropTrackInfo();
+            trackData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            trackData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            trackData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeHandPosition), "Hand Position"));
+            trackData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
+            propFactory.addTrackInfo(definitionName, trackData);
         }
 
         private Entity entity;

@@ -206,7 +206,7 @@ namespace Lecture
                 timeline = editorController.loadFile<Timeline>(timelineFilePath); //By loading after creating we ensure this is in the cached resources
 
                 propEditController.removeAllOpenProps();
-                timelineEditorContext = new TimelineEditorContext(timeline, slide, String.Format("Slide {0} - {1}", slideshow.indexOf(slide) + 1, text), this, propEditController, editorController, uiCallback, timelineController);
+                timelineEditorContext = new TimelineEditorContext(timeline, slide, String.Format("Slide {0} - {1}", slideshow.indexOf(slide) + 1, text), this, propEditController, standaloneController.PropFactory, editorController, uiCallback, timelineController);
                 timelineEditorContext.Focus += obj =>
                 {
                     timelineEditorContext = obj;

@@ -29,6 +29,12 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             simObject.addElement(propFadeBehaviorDef);
             propFactory.addDefinition(DefinitionName, simObject);
+
+            ShowPropTrackInfo circularHighlightData = new ShowPropTrackInfo();
+            circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeCircularHighlightSettings), "Settings"));
+            propFactory.addTrackInfo(CircularHighlight.DefinitionName, circularHighlightData);
         }
 
         private Ellipse innerEllipse;

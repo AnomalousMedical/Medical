@@ -41,7 +41,7 @@ namespace Lecture
         private PropEditController propEditController;
         private Slide slide;
 
-        public TimelineEditorContext(Timeline timeline, Slide slide, String name, SlideshowEditController slideshowEditController, PropEditController propEditController, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
+        public TimelineEditorContext(Timeline timeline, Slide slide, String name, SlideshowEditController slideshowEditController, PropEditController propEditController, PropFactory propFactory, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
         {
             this.slide = slide;
             this.currentTimeline = timeline;
@@ -67,7 +67,7 @@ namespace Lecture
             };
             mvcContext.Views.add(genericEditor);
             
-            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController);
+            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController, propFactory);
             propTimelineView.Buttons.add(new CloseButtonDefinition("Close", "PropTimeline/Close"));
             mvcContext.Views.add(propTimelineView);
 

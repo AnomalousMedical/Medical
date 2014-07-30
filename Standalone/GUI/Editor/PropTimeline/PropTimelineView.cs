@@ -11,7 +11,7 @@ namespace Medical.GUI
 {
     public class PropTimelineView : MyGUIView
     {
-        public PropTimelineView(String name, PropEditController propEditController)
+        public PropTimelineView(String name, PropEditController propEditController, PropFactory propFactory)
             : base(name)
         {
             ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top)
@@ -19,9 +19,12 @@ namespace Medical.GUI
                 AllowedDockLocations = DockLocation.Top | DockLocation.Bottom | DockLocation.Floating
             };
             this.PropEditController = propEditController;
+            this.PropFactory = propFactory;
         }
 
-        public PropEditController PropEditController { get; set; }
+        public PropEditController PropEditController { get; private set; }
+
+        public PropFactory PropFactory { get; private set; }
 
         public PropTimelineView(LoadInfo info)
             :base(info)

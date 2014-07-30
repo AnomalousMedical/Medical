@@ -29,6 +29,11 @@ namespace Medical
             rangeOfMotion.addElement(propFadeBehaviorDef);
 
             propFactory.addDefinition(DefinitionName, rangeOfMotion);
+
+            ShowPropTrackInfo rangeOfMotionScale = new ShowPropTrackInfo();
+            rangeOfMotionScale.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            rangeOfMotionScale.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            propFactory.addTrackInfo(RangeOfMotionScale.DefinitionName, rangeOfMotionScale);
         }
     }
 }

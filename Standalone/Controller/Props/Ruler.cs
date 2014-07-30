@@ -25,6 +25,11 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rulerSimObject.addElement(propFadeBehaviorDef);
             propFactory.addDefinition(DefinitionName, rulerSimObject);
+
+            ShowPropTrackInfo rulerData = new ShowPropTrackInfo();
+            rulerData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            rulerData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            propFactory.addTrackInfo(Ruler.DefinitionName, rulerData);
         }
     }
 }

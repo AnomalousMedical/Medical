@@ -21,13 +21,15 @@ namespace Medical.GUI
 
         private SaveableClipboard clipboard;
         private PropEditController propEditController;
+        private PropFactory propFactory;
         private PropTimelineData propTimelineData = null;
 
-        public PropTimeline(SaveableClipboard clipboard, PropEditController propEditController, MyGUIViewHost viewHost)
+        public PropTimeline(SaveableClipboard clipboard, PropEditController propEditController, PropFactory propFactory, MyGUIViewHost viewHost)
             : base("Medical.GUI.Editor.PropTimeline.PropTimeline.layout", viewHost)
         {
             this.clipboard = clipboard;
             this.propEditController = propEditController;
+            this.propFactory = propFactory;
             propEditController.ShowPropActionChanged += propEditController_ShowPropActionChanged;
             propEditController.DurationChanged += propEditController_DurationChanged;
             propEditController.MarkerMoved += propEditController_MarkerMoved;
@@ -96,7 +98,7 @@ namespace Medical.GUI
             if (propData != null)
             {
                 ShowPropTrackInfo propTrackInfo;
-                if(actionFactory.tryGetTrackInfo(showProp.PropType, out propTrackInfo))
+                if(propFactory.tryGetTrackInfo(showProp.PropType, out propTrackInfo))
                 {
                     foreach (ShowPropSubActionPrototype prototype in propTrackInfo.Tracks)
                     {

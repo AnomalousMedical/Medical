@@ -47,6 +47,12 @@ namespace Medical
             BehaviorDefinition syringeBehavior = new BehaviorDefinition(BehaviorName, new Syringe());
             syringe.addElement(syringeBehavior);
             propFactory.addDefinition(DefinitionName, syringe);
+
+            ShowPropTrackInfo syringeData = new ShowPropTrackInfo();
+            syringeData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            syringeData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            syringeData.addTrack(new ShowPropSubActionPrototype(typeof(PushPlungerAction), "Push Plunger"));
+            propFactory.addTrackInfo(Syringe.DefinitionName, syringeData);
         }
 
         protected override void constructed()

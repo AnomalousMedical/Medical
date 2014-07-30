@@ -25,6 +25,11 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             doppler.addElement(propFadeBehaviorDef);
             propFactory.addDefinition(DefinitionName, doppler);
+
+            ShowPropTrackInfo dopplerData = new ShowPropTrackInfo();
+            dopplerData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            dopplerData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            propFactory.addTrackInfo(Doppler.DefinitionName, dopplerData);
         }
     }
 }

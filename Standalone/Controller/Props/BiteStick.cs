@@ -29,6 +29,11 @@ namespace Medical
             biteStick.addElement(propFadeBehaviorDef);
 
             propFactory.addDefinition(DefinitionName, biteStick);
+
+            ShowPropTrackInfo biteStickData = new ShowPropTrackInfo();
+            biteStickData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            biteStickData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            propFactory.addTrackInfo(BiteStick.DefinitionName, biteStickData);
         }
     }
 }

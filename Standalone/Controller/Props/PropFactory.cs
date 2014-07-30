@@ -19,6 +19,7 @@ namespace Medical
         public const String RigidBodyName = "RigidBody";
 
         private Dictionary<String, SimObjectDefinition> prototypes = new Dictionary<String, SimObjectDefinition>();
+        Dictionary<String, ShowPropTrackInfo> prototypeTrackInfo = new Dictionary<string, ShowPropTrackInfo>();
         private SimSubScene subScene;
         private SimScene scene;
         private MedicalController medicalController;
@@ -34,6 +35,16 @@ namespace Medical
         public void addDefinition(String name, SimObjectDefinition definition)
         {
             prototypes.Add(name, definition);
+        }
+
+        public void addTrackInfo(String name, ShowPropTrackInfo trackInfo)
+        {
+            prototypeTrackInfo.Add(name, trackInfo);
+        }
+
+        public bool tryGetTrackInfo(String propTypeName, out ShowPropTrackInfo propTrackInfo)
+        {
+            return prototypeTrackInfo.TryGetValue(propTypeName, out propTrackInfo);
         }
 
         public SimObjectBase createProp(String propName, Vector3 translation, Quaternion rotation)

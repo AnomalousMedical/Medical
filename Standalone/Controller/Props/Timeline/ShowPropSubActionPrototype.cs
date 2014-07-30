@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical
 {
-    sealed class ShowPropSubActionPrototype
+    public sealed class ShowPropSubActionPrototype
     {
         private Type type;
 

@@ -27,6 +27,13 @@ namespace Medical
             leftPointingHand.addElement(propFadeBehaviorDef);
             propFactory.addDefinition(LeftHandName, leftPointingHand);
 
+            //PointingHandLeft
+            ShowPropTrackInfo pointingHandLeftData = new ShowPropTrackInfo();
+            pointingHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            pointingHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            pointingHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
+            propFactory.addTrackInfo(PointingHand.LeftHandName, pointingHandLeftData);
+
             GenericSimObjectDefinition rightPointingHand = new GenericSimObjectDefinition("PointingHandRight");
             rightPointingHand.Enabled = true;
             entityDefinition = new EntityDefinition(PropFactory.EntityName);
@@ -38,6 +45,13 @@ namespace Medical
             propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rightPointingHand.addElement(propFadeBehaviorDef);
             propFactory.addDefinition(RightHandName, rightPointingHand);
+
+            //PointingHandRight
+            ShowPropTrackInfo pointingRightHandData = new ShowPropTrackInfo();
+            pointingRightHandData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
+            pointingRightHandData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
+            pointingRightHandData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
+            propFactory.addTrackInfo(PointingHand.RightHandName, pointingRightHandData);
         }
     }
 }
