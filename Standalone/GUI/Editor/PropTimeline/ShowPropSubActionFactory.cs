@@ -147,7 +147,7 @@ namespace Medical.GUI
 
         public PropTimelineData createData(ShowPropAction showProp, ShowPropSubAction subAction, PropEditController propEditController)
         {
-            PropTimelineData timelineData = trackInfo[showProp.PropType].createData(subAction, propEditController);
+            PropTimelineData timelineData = new PropTimelineData(subAction, propEditController);
             actionDataBindings.Add(subAction, timelineData);
             return timelineData;
         }

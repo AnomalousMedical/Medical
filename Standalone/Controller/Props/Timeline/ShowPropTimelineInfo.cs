@@ -33,18 +33,6 @@ namespace Medical
             return null;
         }
 
-        public PropTimelineData createData(ShowPropSubAction subAction, PropEditController propEditController)
-        {
-            foreach (ShowPropSubActionPrototype data in trackData)
-            {
-                if (data.TypeName == subAction.TypeName)
-                {
-                    return data.createData(subAction, propEditController);
-                }
-            }
-            return null;
-        }
-
         public IEnumerable<ShowPropSubActionPrototype> Tracks
         {
             get

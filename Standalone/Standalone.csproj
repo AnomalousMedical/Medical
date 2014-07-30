@@ -353,7 +353,7 @@
     <Compile Include="GUI\Editor\PropertyEditor.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimelineClipboardContainer.cs" />
-    <Compile Include="Controller\Props\Timeline\PropTimelineData.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\PropTimelineData.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimelineFactory.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimelineView.cs" />
     <Compile Include="GUI\Editor\PropTimeline\ShowPropSubActionFactory.cs" />

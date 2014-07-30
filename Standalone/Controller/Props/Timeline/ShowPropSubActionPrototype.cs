@@ -21,11 +21,6 @@ namespace Medical
             return (ShowPropSubAction)Activator.CreateInstance(type);
         }
 
-        public PropTimelineData createData(ShowPropSubAction action, PropEditController propEditController)
-        {
-            return new PropTimelineData(action, propEditController);
-        }
-
         public String TypeName { get; private set; }
     }
 }
