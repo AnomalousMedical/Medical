@@ -7,11 +7,11 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    sealed class ShowPropTimelineInfo
+    sealed class ShowPropTrackInfo
     {
         private List<ShowPropSubActionPrototype> trackData = new List<ShowPropSubActionPrototype>();
 
-        public ShowPropTimelineInfo()
+        public ShowPropTrackInfo()
         {
 
         }

@@ -9,7 +9,7 @@ namespace Medical.GUI
 {
     class ShowPropSubActionFactory : IDisposable
     {
-        Dictionary<String, ShowPropTimelineInfo> trackInfo = new Dictionary<string, ShowPropTimelineInfo>();
+        Dictionary<String, ShowPropTrackInfo> trackInfo = new Dictionary<string, ShowPropTrackInfo>();
 
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
@@ -19,7 +19,7 @@ namespace Medical.GUI
             ShowPropSubActionPrototype transparencyPrototype = new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency");
 
             //Arrow
-            ShowPropTimelineInfo arrowData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo arrowData = new ShowPropTrackInfo();
             arrowData.addTrack(movePropPrototype);
             arrowData.addTrack(transparencyPrototype);
             arrowData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowColorAction), "Change Color"));
@@ -27,47 +27,47 @@ namespace Medical.GUI
             trackInfo.Add(Arrow.DefinitionName, arrowData);
 
             //Doppler
-            ShowPropTimelineInfo dopplerData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo dopplerData = new ShowPropTrackInfo();
             dopplerData.addTrack(movePropPrototype);
             dopplerData.addTrack(transparencyPrototype);
             trackInfo.Add(Doppler.DefinitionName, dopplerData);
 
             //PointingHandLeft
-            ShowPropTimelineInfo pointingHandLeftData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo pointingHandLeftData = new ShowPropTrackInfo();
             pointingHandLeftData.addTrack(movePropPrototype);
             pointingHandLeftData.addTrack(transparencyPrototype);
             pointingHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
             trackInfo.Add(PointingHand.LeftHandName, pointingHandLeftData);
 
             //PointingHandRight
-            ShowPropTimelineInfo pointingRightHandData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo pointingRightHandData = new ShowPropTrackInfo();
             pointingRightHandData.addTrack(movePropPrototype);
             pointingRightHandData.addTrack(transparencyPrototype);
             pointingRightHandData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
             trackInfo.Add(PointingHand.RightHandName, pointingRightHandData);
 
             //Ruler
-            ShowPropTimelineInfo rulerData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo rulerData = new ShowPropTrackInfo();
             rulerData.addTrack(movePropPrototype);
             rulerData.addTrack(transparencyPrototype);
             trackInfo.Add(Ruler.DefinitionName, rulerData);
 
             //Syringe
-            ShowPropTimelineInfo syringeData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo syringeData = new ShowPropTrackInfo();
             syringeData.addTrack(movePropPrototype);
             syringeData.addTrack(transparencyPrototype);
             syringeData.addTrack(new ShowPropSubActionPrototype(typeof(PushPlungerAction), "Push Plunger"));
             trackInfo.Add(Syringe.DefinitionName, syringeData);
 
             //Circular Highlight
-            ShowPropTimelineInfo circularHighlightData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo circularHighlightData = new ShowPropTrackInfo();
             circularHighlightData.addTrack(movePropPrototype);
             circularHighlightData.addTrack(transparencyPrototype);
             circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeCircularHighlightSettings), "Settings"));
             trackInfo.Add(CircularHighlight.DefinitionName, circularHighlightData);
 
             //Poseable Hand Left
-            ShowPropTimelineInfo poseableHandLeftData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo poseableHandLeftData = new ShowPropTrackInfo();
             poseableHandLeftData.addTrack(movePropPrototype);
             poseableHandLeftData.addTrack(transparencyPrototype);
             poseableHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeHandPosition), "Hand Position"));
@@ -75,7 +75,7 @@ namespace Medical.GUI
             trackInfo.Add(PoseableHand.LeftDefinitionName, poseableHandLeftData);
 
             //Poseable Hand Right
-            ShowPropTimelineInfo poseableHandRightData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo poseableHandRightData = new ShowPropTrackInfo();
             poseableHandRightData.addTrack(movePropPrototype);
             poseableHandRightData.addTrack(transparencyPrototype);
             poseableHandRightData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeHandPosition), "Hand Position"));
@@ -83,40 +83,40 @@ namespace Medical.GUI
             trackInfo.Add(PoseableHand.RightDefinitionName, poseableHandRightData);
 
             //Bite Stick
-            ShowPropTimelineInfo biteStickData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo biteStickData = new ShowPropTrackInfo();
             biteStickData.addTrack(movePropPrototype);
             biteStickData.addTrack(transparencyPrototype);
             trackInfo.Add(BiteStick.DefinitionName, biteStickData);
 
             //Range of MotionScale
-            ShowPropTimelineInfo rangeOfMotionScale = new ShowPropTimelineInfo();
+            ShowPropTrackInfo rangeOfMotionScale = new ShowPropTrackInfo();
             rangeOfMotionScale.addTrack(movePropPrototype);
             rangeOfMotionScale.addTrack(transparencyPrototype);
             trackInfo.Add(RangeOfMotionScale.DefinitionName, rangeOfMotionScale);
 
             //Pen
-            ShowPropTimelineInfo penData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo penData = new ShowPropTrackInfo();
             penData.addTrack(movePropPrototype);
             penData.addTrack(transparencyPrototype);
             penData.addTrack(new ShowPropSubActionPrototype(typeof(ClickPenAction), "Click Pen"));
             trackInfo.Add(Pen.DefinitionName, penData);
 
             //Caliper
-            ShowPropTimelineInfo caliperData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo caliperData = new ShowPropTrackInfo();
             caliperData.addTrack(movePropPrototype);
             caliperData.addTrack(transparencyPrototype);
             caliperData.addTrack(new ShowPropSubActionPrototype(typeof(SetCaliperMeasurement), "Set Measurement"));
             trackInfo.Add(Caliper.DefinitionName, caliperData);
 
             //Plane
-            ShowPropTimelineInfo planeData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo planeData = new ShowPropTrackInfo();
             planeData.addTrack(movePropPrototype);
             planeData.addTrack(transparencyPrototype);
             planeData.addTrack(new ShowPropSubActionPrototype(typeof(ChangePlaneSettings), "Settings"));
             trackInfo.Add(Plane.DefinitionName, planeData);
 
             //Line
-            ShowPropTimelineInfo lineData = new ShowPropTimelineInfo();
+            ShowPropTrackInfo lineData = new ShowPropTrackInfo();
             lineData.addTrack(movePropPrototype);
             lineData.addTrack(transparencyPrototype);
             lineData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeLinePropSettings), "Settings"));
@@ -130,7 +130,7 @@ namespace Medical.GUI
 
         public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView)
         {
-            ShowPropTimelineInfo propTrackInfo;
+            ShowPropTrackInfo propTrackInfo;
             if(trackInfo.TryGetValue(showProp.PropType, out propTrackInfo))
             {
                 foreach (ShowPropSubActionPrototype data in propTrackInfo.Tracks)
