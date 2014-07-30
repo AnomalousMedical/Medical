@@ -7,11 +7,15 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ShowPropSubActionFactory : IDisposable
+    /// <summary>
+    /// This class manages the PropTimelineData for the prop timeline since those object have a
+    /// dispose lifecycle.
+    /// </summary>
+    class PropTimelineDataManager : IDisposable
     {
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
-        public ShowPropSubActionFactory()
+        public PropTimelineDataManager()
         {
 
         }

@@ -356,7 +356,7 @@
     <Compile Include="GUI\Editor\PropTimeline\PropTimelineData.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimelineFactory.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimelineView.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\ShowPropSubActionFactory.cs" />
+    <Compile Include="GUI\Editor\PropTimeline\PropTimelineDataManager.cs" />
     <Compile Include="Controller\Props\Timeline\ShowPropSubActionPrototype.cs" />
     <Compile Include="Controller\Props\Timeline\ShowPropTrackInfo.cs" />
     <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />

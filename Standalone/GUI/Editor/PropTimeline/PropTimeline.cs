@@ -16,7 +16,7 @@ namespace Medical.GUI
         private TrackFilter trackFilter;
         private TimelineView timelineView;
         private NumberLine numberLine;
-        private ShowPropSubActionFactory actionFactory;
+        private PropTimelineDataManager timelineDataManager;
         private ShowPropAction propData;
 
         private SaveableClipboard clipboard;
@@ -45,7 +45,7 @@ namespace Medical.GUI
             timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
 
             //Properties
-            actionFactory = new ShowPropSubActionFactory();
+            timelineDataManager = new PropTimelineDataManager();
 
             //Timeline filter
             ScrollView timelineFilterScrollView = widget.findWidget("ActionFilter") as ScrollView;
@@ -62,7 +62,7 @@ namespace Medical.GUI
         public override void Dispose()
         {
             ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).removeMenuProvider(this);
-            actionFactory.Dispose();
+            timelineDataManager.Dispose();
             propEditController.MarkerMoved -= propEditController_MarkerMoved;
             propEditController.ShowPropActionChanged -= propEditController_ShowPropActionChanged;
             propEditController.DurationChanged -= propEditController_DurationChanged;
@@ -93,7 +93,7 @@ namespace Medical.GUI
                 propData.ActionRemoved -= propData_ActionRemoved;
             }
             timelineView.clearTracks();
-            actionFactory.clearData();
+            timelineDataManager.clearData();
             this.propData = showProp;
             if (propData != null)
             {
@@ -160,8 +160,8 @@ namespace Medical.GUI
 
         void propData_ActionRemoved(ShowPropAction showProp, ShowPropSubAction subAction)
         {
-            timelineView.removeData(actionFactory[subAction]);
-            actionFactory.destroyData(subAction);
+            timelineView.removeData(timelineDataManager[subAction]);
+            timelineDataManager.destroyData(subAction);
         }
 
         void propData_ActionAdded(ShowPropAction showProp, ShowPropSubAction subAction)
@@ -197,7 +197,7 @@ namespace Medical.GUI
 
         private void addSubActionData(ShowPropSubAction subAction, bool clearSelection)
         {
-            timelineView.addData(actionFactory.createData(propData, subAction, propEditController), clearSelection);
+            timelineView.addData(timelineDataManager.createData(propData, subAction, propEditController), clearSelection);
         }
 
         private void removeCurrentData()
