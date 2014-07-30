@@ -5,9 +5,9 @@ using System.Text;
 using Engine;
 using MyGUIPlugin;
 
-namespace Medical.GUI
+namespace Medical
 {
-    class ShowPropTimelineInfo
+    sealed class ShowPropTimelineInfo
     {
         private List<ShowPropSubActionPrototype> trackData = new List<ShowPropSubActionPrototype>();
 
@@ -19,14 +19,6 @@ namespace Medical.GUI
         public void addTrack(ShowPropSubActionPrototype prototype)
         {
             trackData.Add(prototype);
-        }
-
-        public void addTracksToTimeline(TimelineView timeline)
-        {
-            foreach (ShowPropSubActionPrototype data in trackData)
-            {
-                timeline.addTrack(data.TypeName);
-            }
         }
 
         public ShowPropSubAction createSubAction(string name)
@@ -51,6 +43,14 @@ namespace Medical.GUI
                 }
             }
             return null;
+        }
+
+        public IEnumerable<ShowPropSubActionPrototype> Tracks
+        {
+            get
+            {
+                return trackData;
+            }
         }
     }
 }

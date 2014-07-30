@@ -23,30 +23,6 @@ namespace Medical
         private SimScene scene;
         private MedicalController medicalController;
 
-        /// <summary>
-        /// Create a generic prop with an mesh and a propFadeBehavior.
-        /// </summary>
-        /// <param name="definitionName">The name of the prop definition.</param>
-        /// <param name="meshName">The name of the mesh for the prop.</param>
-        /// <returns>A SimObjectDefinition with the entity specified.</returns>
-        public static GenericSimObjectDefinition createGenericProp(String definitionName, String meshName)
-        {
-            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition(definitionName);
-            simObject.Enabled = true;
-            
-            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
-            entityDefinition.MeshName = meshName;
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(entityDefinition);
-            simObject.addElement(nodeDefinition);
-            
-            PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            simObject.addElement(propFadeBehaviorDef);
-
-            return simObject;
-        }
-
         public PropFactory(StandaloneController standaloneController)
         {
             this.medicalController = standaloneController.MedicalController;

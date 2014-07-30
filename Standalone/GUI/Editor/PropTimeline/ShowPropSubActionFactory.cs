@@ -130,10 +130,13 @@ namespace Medical.GUI
 
         public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView)
         {
-            ShowPropTimelineInfo track;
-            if(trackInfo.TryGetValue(showProp.PropType, out track))
+            ShowPropTimelineInfo propTrackInfo;
+            if(trackInfo.TryGetValue(showProp.PropType, out propTrackInfo))
             {
-                track.addTracksToTimeline(timelineView);
+                foreach (ShowPropSubActionPrototype data in propTrackInfo.Tracks)
+                {
+                    timelineView.addTrack(data.TypeName);
+                }
             }
         }
 
