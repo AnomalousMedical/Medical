@@ -43,7 +43,7 @@ namespace Medical.GUI
             timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
 
             //Properties
-            actionFactory = new ShowPropSubActionFactory(propEditController);
+            actionFactory = new ShowPropSubActionFactory();
 
             //Timeline filter
             ScrollView timelineFilterScrollView = widget.findWidget("ActionFilter") as ScrollView;
@@ -186,7 +186,7 @@ namespace Medical.GUI
 
         private void addSubActionData(ShowPropSubAction subAction, bool clearSelection)
         {
-            timelineView.addData(actionFactory.createData(propData, subAction), clearSelection);
+            timelineView.addData(actionFactory.createData(propData, subAction, propEditController), clearSelection);
         }
 
         private void removeCurrentData()

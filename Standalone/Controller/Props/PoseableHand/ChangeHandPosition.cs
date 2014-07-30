@@ -46,7 +46,7 @@ namespace Medical
             finished = timelineTime > EndTime;
         }
 
-        public override void editing()
+        public override void editing(PropEditController propEditController)
         {
             findHandBehavior();
             Thumb.apply();

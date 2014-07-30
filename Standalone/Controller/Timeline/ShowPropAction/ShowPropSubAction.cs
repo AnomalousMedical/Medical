@@ -51,9 +51,9 @@ namespace Medical
 
         public abstract void update(float timelineTime, Clock clock);
 
-        public abstract void editing();
+        public abstract void editing(PropEditController propEditController);
 
-        public virtual void editingCompleted()
+        public virtual void editingCompleted(PropEditController propEditController)
         {
 
         }

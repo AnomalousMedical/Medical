@@ -6,13 +6,15 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class PropTimelineData : TimelineData, IDisposable
+    sealed class PropTimelineData : TimelineData, IDisposable
     {
         private ShowPropSubAction action;
+        private PropEditController propEditController;
 
-        public PropTimelineData(ShowPropSubAction action)
+        public PropTimelineData(ShowPropSubAction action, PropEditController propEditController)
         {
             this.action = action;
+            this.propEditController = propEditController;
             action.StartTimeChanged += action_StartTimeChanged;
             action.DurationChanged += action_DurationChanged;
         }
@@ -25,12 +27,12 @@ namespace Medical.GUI
 
         public override void editingStarted()
         {
-            action.editing();
+            action.editing(propEditController);
         }
 
         public override void editingCompleted()
         {
-            action.editingCompleted();
+            action.editingCompleted(propEditController);
         }
 
         public ShowPropSubAction Action

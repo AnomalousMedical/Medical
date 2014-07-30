@@ -41,7 +41,7 @@ namespace Medical
             
         }
 
-        public override void editing()
+        public override void editing(PropEditController propEditController)
         {
             if (PropSimObject != null)
             {
@@ -50,7 +50,7 @@ namespace Medical
             }
         }
 
-        public override void editingCompleted()
+        public override void editingCompleted(PropEditController propEditController)
         {
             caliper = null;
         }

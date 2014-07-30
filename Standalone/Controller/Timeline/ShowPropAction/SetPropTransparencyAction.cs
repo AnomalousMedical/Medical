@@ -58,7 +58,7 @@ namespace Medical
             finished = timelineTime >= StartTime + Duration;
         }
 
-        public override void editing()
+        public override void editing(PropEditController propEditController)
         {
             //movePreviewProp(Translation, Rotation);
         }

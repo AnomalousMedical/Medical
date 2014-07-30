@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ShowPropSubActionPrototype
+    sealed class ShowPropSubActionPrototype
     {
         private Type type;
 
@@ -16,14 +16,14 @@ namespace Medical.GUI
             this.TypeName = typeName;
         }
 
-        public virtual ShowPropSubAction createSubAction()
+        public ShowPropSubAction createSubAction()
         {
             return (ShowPropSubAction)Activator.CreateInstance(type);
         }
 
-        public virtual PropTimelineData createData(ShowPropSubAction action)
+        public PropTimelineData createData(ShowPropSubAction action, PropEditController propEditController)
         {
-            return new PropTimelineData(action);
+            return new PropTimelineData(action, propEditController);
         }
 
         public String TypeName { get; private set; }

@@ -359,8 +359,6 @@
     <Compile Include="GUI\Editor\PropTimeline\ShowPropSubActionFactory.cs" />
     <Compile Include="GUI\Editor\PropTimeline\ShowPropSubActionPrototype.cs" />
     <Compile Include="GUI\Editor\PropTimeline\ShowPropTimelineInfo.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\MovePropPrototype.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\MovePropTimelineData.cs" />
     <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\Editor\QuickSoundRecorder\QuickSoundRecorder.cs" />

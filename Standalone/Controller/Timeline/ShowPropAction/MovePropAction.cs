@@ -62,9 +62,18 @@ namespace Medical
             finished = timelineTime >= StartTime + Duration;
         }
 
-        public override void editing()
+        public override void editing(PropEditController propEditController)
         {
             movePreviewProp(Translation, Rotation);
+            propEditController.CurrentMovePropAction = this;
+            propEditController.ShowTools = true;
+        }
+
+        public override void editingCompleted(PropEditController propEditController)
+        {
+            propEditController.CurrentMovePropAction = null;
+            propEditController.ShowTools = false;
+            base.editingCompleted(propEditController);
         }
 
         public override void reverseSides()

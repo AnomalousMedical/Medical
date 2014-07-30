@@ -41,13 +41,13 @@ namespace Medical.GUI
             return null;
         }
 
-        public PropTimelineData createData(ShowPropSubAction subAction)
+        public PropTimelineData createData(ShowPropSubAction subAction, PropEditController propEditController)
         {
             foreach (ShowPropSubActionPrototype data in trackData)
             {
                 if (data.TypeName == subAction.TypeName)
                 {
-                    return data.createData(subAction);
+                    return data.createData(subAction, propEditController);
                 }
             }
             return null;

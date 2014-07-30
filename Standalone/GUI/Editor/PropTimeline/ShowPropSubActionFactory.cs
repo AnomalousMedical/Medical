@@ -13,9 +13,9 @@ namespace Medical.GUI
 
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
-        public ShowPropSubActionFactory(PropEditController propEditController)
+        public ShowPropSubActionFactory()
         {
-            MovePropPrototype movePropPrototype = new MovePropPrototype(typeof(MovePropAction), "Move", propEditController);
+            ShowPropSubActionPrototype movePropPrototype = new ShowPropSubActionPrototype(typeof(MovePropAction), "Move");
             ShowPropSubActionPrototype transparencyPrototype = new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency");
 
             //Arrow
@@ -142,9 +142,9 @@ namespace Medical.GUI
             return trackInfo[showProp.PropType].createSubAction(name);
         }
 
-        public PropTimelineData createData(ShowPropAction showProp, ShowPropSubAction subAction)
+        public PropTimelineData createData(ShowPropAction showProp, ShowPropSubAction subAction, PropEditController propEditController)
         {
-            PropTimelineData timelineData = trackInfo[showProp.PropType].createData(subAction);
+            PropTimelineData timelineData = trackInfo[showProp.PropType].createData(subAction, propEditController);
             actionDataBindings.Add(subAction, timelineData);
             return timelineData;
         }
