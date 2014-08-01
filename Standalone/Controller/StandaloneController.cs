@@ -73,6 +73,7 @@ namespace Medical
         private MainWindow mainWindow;
         private StandaloneApp app;
         private AtlasPluginManager atlasPluginManager;
+        private AtlasDependencyManager atlasDependencyManager;
 		private bool shuttingDown = false;
         private MedicalConfig medicalConfig;
 
@@ -150,6 +151,7 @@ namespace Medical
             }
 			IDisposableUtil.DisposeIfNotNull(touchController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
+            IDisposableUtil.DisposeIfNotNull(atlasDependencyManager);
             IDisposableUtil.DisposeIfNotNull(notificationManager);
             IDisposableUtil.DisposeIfNotNull(guiManager);
 			IDisposableUtil.DisposeIfNotNull(measurementGrid);
@@ -192,6 +194,9 @@ namespace Medical
             atlasPluginManager = new AtlasPluginManager(this);
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             atlasPluginManager.manageInstalledPlugins();
+
+            atlasDependencyManager = new AtlasDependencyManager(this);
+            //Handle errors
 
             clipboard = new SaveableClipboard();
 
@@ -504,6 +509,14 @@ namespace Medical
             get
             {
                 return atlasPluginManager;
+            }
+        }
+
+        public AtlasDependencyManager AtlasDependencyManager
+        {
+            get
+            {
+                return atlasDependencyManager;
             }
         }
 

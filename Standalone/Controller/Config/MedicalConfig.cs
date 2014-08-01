@@ -116,12 +116,12 @@ namespace Medical
             }
 
             //Configure plugins
-            pluginConfig = new PluginConfig(Path.Combine(localDataFileFolder, "Plugins"));
+            pluginConfig = new PluginConfig(Path.Combine(localDataFileFolder, "Plugins"), Path.Combine(localDataFileFolder, "Dependencies"));
 
 #if ALLOW_OVERRIDE
             if (overrideSettings != null)
             {
-                pluginConfig.readPlugins(overrideSettings);
+                pluginConfig.readPluginsAndDependencies(overrideSettings);
             }
 #endif
 

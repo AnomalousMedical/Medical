@@ -93,12 +93,12 @@ namespace Medical
                     {
                         try
                         {
-                            DDAtlasDependency plugin = SharedXmlSaver.Load<DDAtlasDependency>(stream);
-                            if (plugin != null)
+                            DDAtlasDependency dependency = SharedXmlSaver.Load<DDAtlasDependency>(stream);
+                            if (dependency != null)
                             {
-                                plugin.Location = fullPath;
-                                plugin.RootFolder = dependencyDirectory;
-                                addDependency(plugin);
+                                dependency.Location = fullPath;
+                                dependency.RootFolder = dependencyDirectory;
+                                addDependency(dependency);
                                 loadedDependency = true;
                             }
                             else

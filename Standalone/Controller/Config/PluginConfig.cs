@@ -12,31 +12,33 @@ namespace Medical
         private List<String> plugins = new List<string>();
         private String defaultPluginsFolder;
 
-        public PluginConfig(String defaultPluginsFolder)
+        private List<String> dependencies = new List<string>();
+        private String defaultDependenciesFolder;
+
+        public PluginConfig(String defaultPluginsFolder, String defaultDependenciesFolder)
         {
             this.defaultPluginsFolder = defaultPluginsFolder;
             if (!Directory.Exists(defaultPluginsFolder))
             {
                 Directory.CreateDirectory(defaultPluginsFolder);
             }
+
+            this.defaultDependenciesFolder = defaultDependenciesFolder;
+            if(!Directory.Exists(defaultDependenciesFolder))
+            {
+                Directory.CreateDirectory(defaultDependenciesFolder);
+            }
+
             ManagePluginsFile = Path.Combine(defaultPluginsFolder, "ManagePlugins.xml");
         }
 
-        public void findRegularPlugins()
+        public void findRegularPluginsAndDependencies()
         {
-            String[] pluginFiles = Directory.GetFiles(defaultPluginsFolder, "*.dat", SearchOption.TopDirectoryOnly);
-            foreach (String plugin in pluginFiles)
-            {
-                plugins.Add(plugin);
-            }
-            pluginFiles = Directory.GetFiles(defaultPluginsFolder, "*.dll", SearchOption.TopDirectoryOnly);
-            foreach (String plugin in pluginFiles)
-            {
-                plugins.Add(plugin);
-            }
+            plugins.AddRange(findLoadableFiles(defaultPluginsFolder));
+            dependencies.AddRange(findLoadableFiles(defaultDependenciesFolder));
         }
 
-        public void readPlugins(ConfigFile configFile)
+        public void readPluginsAndDependencies(ConfigFile configFile)
         {
             String[] args = Environment.GetCommandLineArgs();
             for (int i = 0; i < args.Length; ++i)
@@ -55,6 +57,13 @@ namespace Medical
             {
                 plugins.Add(iter.next());
             }
+
+            section = configFile.createOrRetrieveConfigSection("Dependencies");
+            iter = new ConfigIterator(section, "Dependency");
+            while (iter.hasNext())
+            {
+                dependencies.Add(iter.next());
+            }
         }
 
         public void addAdditionalPluginFile(String file)
@@ -70,6 +79,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<String> Dependencies
+        {
+            get
+            {
+                return dependencies;
+            }
+        }
+
         public String PluginsFolder
         {
             get
@@ -78,6 +95,26 @@ namespace Medical
             }
         }
 
+        public String DependenciesFolder
+        {
+            get
+            {
+                return defaultDependenciesFolder;
+            }
+        }
+
         public String ManagePluginsFile { get; private set; }
+
+        private IEnumerable<String> findLoadableFiles(String path)
+        {
+            foreach (String result in Directory.EnumerateFiles(path, "*.dat", SearchOption.TopDirectoryOnly))
+            {
+                yield return result;
+            }
+            foreach (String result in Directory.EnumerateFiles(path, "*.dll", SearchOption.TopDirectoryOnly))
+            {
+                yield return result;
+            }
+        }
     }
 }
