@@ -151,6 +151,7 @@ namespace Medical
             {
                 if(!dependency.Initialized)
                 {
+                    Log.ImportantInfo("Initializing dependency '{0}'", dependency.Name);
                     dependency.initialize(standaloneController);
                 }
             }
