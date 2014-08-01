@@ -17,7 +17,9 @@ namespace Medical
 
         public bool canReadFile(string filename)
         {
-            return Directory.Exists(filename) && Directory.EnumerateFiles(filename, "*.mvc", SearchOption.AllDirectories).FirstOrDefault() != null;
+            return Directory.Exists(filename) && 
+                (Directory.EnumerateFiles(filename, "*.mvc", SearchOption.AllDirectories).FirstOrDefault() != null ||
+                Directory.EnumerateFiles(filename, "*.ddd", SearchOption.AllDirectories).FirstOrDefault() != null);
         }
 
         public bool processFile(string filename)

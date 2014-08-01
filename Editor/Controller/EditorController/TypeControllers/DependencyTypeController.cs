@@ -26,9 +26,9 @@ namespace Medical
 
         public override ProjectItemTemplate createItemTemplate()
         {
-            return new ProjectItemTemplateFixedNameDelegate("Plugin Definition", Icon, "File", delegate(String path, EditorController editorController)
+            return new ProjectItemTemplateFixedNameDelegate("Dependency Definition", Icon, "File", delegate(String path, EditorController editorController)
             {
-                String filePath = Path.Combine(path, "Plugin.ddp");
+                String filePath = Path.Combine(path, "Dependency.ddd");
                 if (EditorController.ResourceProvider.exists(filePath))
                 {
                     MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle result)
@@ -48,7 +48,10 @@ namespace Medical
 
         private void createNewPlugin(String filePath)
         {
-            DDAtlasDependency newDep = new DDAtlasDependency();
+            DDAtlasDependency newDep = new DDAtlasDependency()
+                {
+                    VersionString = "1.0.0.0"
+                };
             creatingNewFile(filePath);
             saveObject(filePath, newDep);
             openEditor(filePath);
