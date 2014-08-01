@@ -85,7 +85,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EditorController\TypeControllers\DependencyTypeController.cs" />
     <Compile Include="Controller\EditorFilesystemWatcher.cs" />
+    <Compile Include="Controller\DependencyEditorContext.cs" />
+    <Compile Include="Controller\Project\DependencyProjectTemplate.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\XmlTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\MovementSequenceTypeController.cs" />
@@ -116,7 +119,6 @@
     <Compile Include="Controller\TypeControllerManager.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarView.cs" />
@@ -160,7 +162,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\DDAtlasPluginEditor\DDAtlasPluginEditor.layout" />
     <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbar.layout">
       <SubType>Designer</SubType>

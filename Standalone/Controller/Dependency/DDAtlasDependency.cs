@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class DDAtlasDependency : AtlasDependency, Saveable
+    public partial class DDAtlasDependency : AtlasDependency, Saveable
     {
         public DDAtlasDependency()
         {
@@ -83,6 +83,24 @@ namespace Medical
             info.AddValue("BrandingImageKey", BrandingImageKey);
             info.AddValue("VersionString", VersionString);
             info.AddValue("DependencyNamespace", DependencyNamespace);
+        }
+
+    }
+
+    partial class DDAtlasDependency
+    {
+        private EditInterface editInterface = null;
+
+        public EditInterface EditInterface
+        {
+            get
+            {
+                if (editInterface == null)
+                {
+                    editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "DDAtlasDependency", null);
+                }
+                return editInterface;
+            }
         }
     }
 }

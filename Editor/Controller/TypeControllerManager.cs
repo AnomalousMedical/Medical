@@ -19,6 +19,7 @@ namespace Medical
         private MvcEditorContext mvcEditorContext;
         private MovementSequenceEditorContext movementSequenceEditorContext;
         private PluginEditorContext pluginEditorContext;
+        private DependencyEditorContext dependencyEditorContext;
         private TimelineEditorContext timelineEditorContext;
         private RmlEditorContext rmlEditorContext;
         private RcssEditorContext rcssEditorContext;
@@ -132,6 +133,25 @@ namespace Medical
                     editorController.runEditorContext(pluginEditorContext.MvcContext);
                 };
 
+            //Dependency type controller
+            DependencyTypeController dependencyTypeController = new DependencyTypeController(editorController);
+            dependencyTypeController.OpenEditor += (file, ddDep) =>
+                {
+                    dependencyEditorContext = new DependencyEditorContext(ddDep, file, dependencyTypeController, plugin.EditorController, plugin.UICallback);
+                    dependencyEditorContext.Focus += obj =>
+                    {
+                        dependencyEditorContext = obj;
+                    };
+                    dependencyEditorContext.Blur += obj =>
+                    {
+                        if (dependencyEditorContext == obj)
+                        {
+                            dependencyEditorContext = null;
+                        }
+                    };
+                    editorController.runEditorContext(dependencyEditorContext.MvcContext);
+                };
+
             //Movement Sequence type controller
             MovementSequenceTypeController movementSequenceTypeController = new MovementSequenceTypeController(editorController);
             movementSequenceTypeController.OpenEditor += (file, movementSequence) =>
@@ -223,6 +243,7 @@ namespace Medical
             editorController.addTypeController(rcssTypeController);
             editorController.addTypeController(mvcTypeController);
             editorController.addTypeController(pluginTypeController);
+            editorController.addTypeController(dependencyTypeController);
             editorController.addTypeController(xmlTypeController);
 
             //Add any final item templates
@@ -242,6 +263,10 @@ namespace Medical
             if (pluginEditorContext != null)
             {
                 pluginEditorContext.close();
+            }
+            if(dependencyEditorContext != null)
+            {
+                dependencyEditorContext.close();
             }
             if (timelineEditorContext != null)
             {

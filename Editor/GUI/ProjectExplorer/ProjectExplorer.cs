@@ -92,6 +92,7 @@ namespace Medical.GUI
             browse.DefaultSelection = appNode;
             browse.addNode(null, null, new BrowserNode("Question App", new QuestionAppProjectTemplate()));
             browse.addNode(null, null, new BrowserNode("Empty", new EmptyProjectTemplate()));
+            browse.addNode(null, null, new BrowserNode("Dependency Project", new DependencyProjectTemplate()));
 
             NewProjectDialog.ShowDialog(browse, (projectDialog) =>
             {
