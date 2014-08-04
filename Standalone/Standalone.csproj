@@ -169,6 +169,7 @@
     <Compile Include="Controller\Config\EditorConfig.cs" />
     <Compile Include="Controller\Dependency\AtlasDependency.cs" />
     <Compile Include="Controller\Dependency\AtlasDependencyManager.cs" />
+    <Compile Include="Controller\Dependency\AtlasDependencyResource.cs" />
     <Compile Include="Controller\Dependency\DDAtlasDependency.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditablePropAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableElementNameAttribute.cs" />
@@ -910,7 +911,9 @@
     <EmbeddedResource Include="GUI\Editor\DragAndDrop\DragAndDropComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.layout" />
     <EmbeddedResource Include="GUI\Editor\GenericEditor\ExpandingGenericEditor.layout" />
-    <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorComponent.layout" />
+    <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorComponent.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorVerticalComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\InputBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\MovementSequence\MovementKeyframeProperties.layout" />

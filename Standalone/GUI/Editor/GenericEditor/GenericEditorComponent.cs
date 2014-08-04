@@ -18,6 +18,8 @@ namespace Medical.GUI
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
 
+        private AddRemoveButtons addRemoveButtons;
+        private ScrollView tableScroller;
         private ResizingTable table;
         private PropertiesTable propTable;
 
@@ -26,18 +28,24 @@ namespace Medical.GUI
         private String name;
 
         private EditorController editorController;
+        private EditUICallback uiCallback;
 
         public GenericEditorComponent(MyGUIViewHost viewHost, GenericEditorView view, bool horizontalAlignment = true)
             : base(horizontalAlignment ? "Medical.GUI.Editor.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.Editor.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
         {
             this.name = view.Name;
             this.editorController = view.EditorController;
+            this.uiCallback = view.EditUICallback;
 
             tree = new Tree((ScrollView)widget.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, view.EditUICallback);
 
-            table = new ResizingTable((ScrollView)widget.findWidget("TableScroller"));
-            propTable = new PropertiesTable(table, view.EditUICallback);
+            tableScroller = (ScrollView)widget.findWidget("TableScroller");
+            table = new ResizingTable(tableScroller);
+
+            addRemoveButtons = new AddRemoveButtons((Button)widget.findWidget("Add"), (Button)widget.findWidget("Remove"), widget.findWidget("AddRemovePanel"));
+            addRemoveButtons.VisibilityChanged += addRemoveButtons_VisibilityChanged;
+            propTable = new PropertiesTable(table, view.EditUICallback, addRemoveButtons);
 
             objectEditor = new ObjectEditor(editTreeView, propTable, view.EditUICallback);
 
@@ -110,6 +118,18 @@ namespace Medical.GUI
             if (rfea.Focus)
             {
                 ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+            }
+        }
+
+        void addRemoveButtons_VisibilityChanged(AddRemoveButtons source, bool visible)
+        {
+            if (visible)
+            {
+                tableScroller.setSize(tableScroller.Width, widget.Height - addRemoveButtons.Height);
+            }
+            else
+            {
+                tableScroller.setSize(tableScroller.Width, widget.Height);
             }
         }
     }

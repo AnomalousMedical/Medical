@@ -1,4 +1,5 @@
 ﻿using Engine.Editing;
+using Engine.Resources;
 using Engine.Saving;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace Medical
 {
     public partial class DDAtlasDependency : AtlasDependency, Saveable
     {
+        private List<AtlasDependencyResource> resources = new List<AtlasDependencyResource>();
+
         public DDAtlasDependency()
         {
 
@@ -27,7 +30,33 @@ namespace Medical
 
         public void initialize(StandaloneController standaloneController)
         {
+            if (resources.Count > 0)
+            {
+                var ogreResourceManager = OgreWrapper.OgreResourceGroupManager.getInstance();
+                foreach (var resource in resources)
+                {
+                    ogreResourceManager.addResourceLocation(resource.Path, "EngineArchive", DependencyNamespace, true);
+                }
+                ogreResourceManager.initializeResourceGroup(DependencyNamespace);
+            }
+
             Initialized = true;
+        }
+
+        /// <summary>
+        /// Add a resource directly to this group.
+        /// </summary>
+        /// <param name="resource">The resource to add.</param>
+        public void addResource(AtlasDependencyResource resource)
+        {
+            resources.Add(resource);
+            onResourceAdded(resource);
+        }
+
+        private void removeResource(AtlasDependencyResource resource)
+        {
+            resources.Remove(resource);
+            onResourceRemoved(resource);
         }
 
         [Editable]
@@ -74,6 +103,7 @@ namespace Medical
             BrandingImageKey = info.GetString("BrandingImageKey");
             VersionString = info.GetString("VersionString");
             DependencyNamespace = info.GetString("DependencyNamespace");
+            info.RebuildList("Resource", resources);
         }
 
         public void getInfo(SaveInfo info)
@@ -83,6 +113,7 @@ namespace Medical
             info.AddValue("BrandingImageKey", BrandingImageKey);
             info.AddValue("VersionString", VersionString);
             info.AddValue("DependencyNamespace", DependencyNamespace);
+            info.ExtractList("Resource", resources);
         }
 
     }
@@ -90,6 +121,7 @@ namespace Medical
     partial class DDAtlasDependency
     {
         private EditInterface editInterface = null;
+        private EditInterface resourceLocationsEdit;
 
         public EditInterface EditInterface
         {
@@ -99,8 +131,46 @@ namespace Medical
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "DDAtlasDependency", null);
                 }
+
+                resourceLocationsEdit = new EditInterface("Resource Locations", addResource, removeResource);
+                resourceLocationsEdit.setPropertyInfo(AtlasDependencyResource.Info);
+                foreach (var resource in resources)
+                {
+                    resourceLocationsEdit.addEditableProperty(resource);
+                }
+                editInterface.addSubInterface(resourceLocationsEdit);
+
                 return editInterface;
             }
+        }
+
+        /// <summary>
+        /// Callback to add a resource.
+        /// </summary>
+        /// <param name="callback"></param>
+        private void addResource(EditUICallback callback)
+        {
+            addResource(new AtlasDependencyResource());
+        }
+
+        /// <summary>
+        /// Callback to remove a resource.
+        /// </summary>
+        /// <param name="callback"></param>
+        /// <param name="property"></param>
+        private void removeResource(EditUICallback callback, EditableProperty property)
+        {
+            removeResource(((AtlasDependencyResource)property));
+        }
+
+        private void onResourceAdded(AtlasDependencyResource resource)
+        {
+            resourceLocationsEdit.addEditableProperty(resource);
+        }
+
+        private void onResourceRemoved(AtlasDependencyResource resource)
+        {
+            resourceLocationsEdit.removeEditableProperty(resource);
         }
     }
 }

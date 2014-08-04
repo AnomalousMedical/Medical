@@ -4,8 +4,17 @@
         <Widget type="ScrollView" skin="ScrollView" position="0 1 230 278" align="HRelative VStretch" name="TreeScroller">
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="230 1 230 278" align="HRelative VStretch" name="TableScroller">
+        <Widget type="ScrollView" skin="ScrollView" position="230 1 230 241" align="HRelative VStretch" name="TableScroller">
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="231 243 228 34" align="Right Bottom" name="AddRemovePanel">
+            <Widget type="Button" skin="Button" position="3 3 82 27" name="Add">
+                <Property key="Caption" value="Add"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="89 3 82 27" name="Remove">
+                <Property key="Caption" value="Remove"/>
+            </Widget>
+        </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>
