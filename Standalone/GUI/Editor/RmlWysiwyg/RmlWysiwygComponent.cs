@@ -439,47 +439,50 @@ namespace Medical.GUI
         {
             get
             {
-                Element document = rocketWidget.Context.GetDocument(0);
-                if (document != null)
+                if(rocketWidget == null)
                 {
-                    if (!String.IsNullOrEmpty(contentId))
-                    {
-                        Element contentElement = document.GetElementById(contentId);
-                        if (contentElement != null)
-                        {
-                            return contentElement;
-                        }
-                    }
+                    return null;
+                }
 
-                    Variant templateName = document.GetAttribute("template");
-                    if (templateName == null)
+                Element document = rocketWidget.Context.GetDocument(0);
+                if(document == null)
+                {
+                    return null;
+                }
+
+                if (!String.IsNullOrEmpty(contentId))
+                {
+                    Element contentElement = document.GetElementById(contentId);
+                    if (contentElement != null)
                     {
-                        return document;
+                        return contentElement;
                     }
-                    else
+                }
+
+                Variant templateName = document.GetAttribute("template");
+                if (templateName == null)
+                {
+                    return document;
+                }
+                else
+                {
+                    Template template = TemplateCache.GetTemplate(templateName.StringValue);
+                    if (template != null)
                     {
-                        Template template = TemplateCache.GetTemplate(templateName.StringValue);
-                        if (template != null)
+                        Element contentDocument = document.GetElementById(template.Content);
+                        if (contentDocument != null)
                         {
-                            Element contentDocument = document.GetElementById(template.Content);
-                            if (contentDocument != null)
-                            {
-                                return contentDocument;
-                            }
-                            else
-                            {
-                                return document;
-                            }
+                            return contentDocument;
                         }
                         else
                         {
                             return document;
                         }
                     }
-                }
-                else
-                {
-                    return null;
+                    else
+                    {
+                        return document;
+                    }
                 }
             }
         }
