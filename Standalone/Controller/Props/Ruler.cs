@@ -14,7 +14,7 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition rulerSimObject = new GenericSimObjectDefinition("RulerPrototype");
+            GenericSimObjectDefinition rulerSimObject = new GenericSimObjectDefinition(DefinitionName);
             rulerSimObject.Enabled = true;
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "Ruler.mesh";
@@ -24,12 +24,12 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rulerSimObject.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(DefinitionName, rulerSimObject);
+            PropDefinition propDefinition = new PropDefinition(rulerSimObject);
 
-            ShowPropTrackInfo rulerData = new ShowPropTrackInfo();
+            ShowPropTrackInfo rulerData = propDefinition.TrackInfo;
             rulerData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             rulerData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            propFactory.addTrackInfo(Ruler.DefinitionName, rulerData);
+            propFactory.addDefinition(propDefinition);
         }
     }
 }

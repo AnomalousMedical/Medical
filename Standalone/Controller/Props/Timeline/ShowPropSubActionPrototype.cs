@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Engine.Saving;
 
 namespace Medical
 {
-    public sealed class ShowPropSubActionPrototype
+    public sealed class ShowPropSubActionPrototype : Saveable
     {
         private Type type;
 
-        public ShowPropSubActionPrototype(Type type, String typeName)
+        public ShowPropSubActionPrototype(Type type, String trackName)
         {
             this.type = type;
-            this.TypeName = typeName;
+            this.TrackName = trackName;
         }
 
         public ShowPropSubAction createSubAction()
@@ -21,6 +22,18 @@ namespace Medical
             return (ShowPropSubAction)Activator.CreateInstance(type);
         }
 
-        public String TypeName { get; private set; }
+        public String TrackName { get; private set; }
+
+        private ShowPropSubActionPrototype(LoadInfo info)
+        {
+            TrackName = info.GetString("TrackName");
+            type = DefaultTypeFinder.FindType(info.GetString("TypeName"));
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.AddValue("TrackName", TrackName);
+            info.AddValue("TypeName", DefaultTypeFinder.CreateShortTypeString(type));
+        }
     }
 }

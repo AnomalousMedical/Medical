@@ -28,7 +28,7 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             dentalFloss.addElement(propFadeBehaviorDef);
 
-            propFactory.addDefinition(DefinitionName, dentalFloss);
+            propFactory.addDefinition(new PropDefinition(dentalFloss));
         }
     }
 }

@@ -102,7 +102,7 @@ namespace Medical.GUI
                 {
                     foreach (ShowPropSubActionPrototype prototype in propTrackInfo.Tracks)
                     {
-                        timelineView.addTrack(prototype.TypeName, prototype);
+                        timelineView.addTrack(prototype.TrackName, prototype);
                     }
                 }
 

@@ -16,7 +16,7 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition("PlanePrototype");
+            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition(DefinitionName);
             simObject.Enabled = true;
             ManualObjectDefinition manualObjectDefinition = new ManualObjectDefinition(PropFactory.ManualObjectName);
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
@@ -28,13 +28,13 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             simObject.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(DefinitionName, simObject);
+            PropDefinition propDefinition = new PropDefinition(simObject);
 
-            ShowPropTrackInfo planeData = new ShowPropTrackInfo();
+            ShowPropTrackInfo planeData = propDefinition.TrackInfo;
             planeData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             planeData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             planeData.addTrack(new ShowPropSubActionPrototype(typeof(ChangePlaneSettings), "Settings"));
-            propFactory.addTrackInfo(Plane.DefinitionName, planeData);
+            propFactory.addDefinition(propDefinition);
         }
 
         private Size2 size;

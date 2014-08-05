@@ -16,7 +16,7 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition("LinePrototype");
+            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition(DefinitionName);
             simObject.Enabled = true;
             ManualObjectDefinition manualObjectDefinition = new ManualObjectDefinition(PropFactory.ManualObjectName);
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
@@ -28,13 +28,13 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             simObject.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(DefinitionName, simObject);
+            PropDefinition propDefinition = new PropDefinition(simObject);
 
-            ShowPropTrackInfo lineData = new ShowPropTrackInfo();
+            ShowPropTrackInfo lineData = propDefinition.TrackInfo;
             lineData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             lineData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             lineData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeLinePropSettings), "Settings"));
-            propFactory.addTrackInfo(LineProp.DefinitionName, lineData);
+            propFactory.addDefinition(propDefinition);
         }
 
         private ManualObject manualObject;

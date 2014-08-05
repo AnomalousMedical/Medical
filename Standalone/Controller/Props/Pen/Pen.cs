@@ -36,13 +36,13 @@ namespace Medical
             BehaviorDefinition penBehaviorDef = new BehaviorDefinition(PenBehaviorName, penBehavior);
             pen.addElement(penBehaviorDef);
 
-            propFactory.addDefinition(DefinitionName, pen);
+            PropDefinition propDefinition = new PropDefinition(pen);
 
-            ShowPropTrackInfo penData = new ShowPropTrackInfo();
+            ShowPropTrackInfo penData = propDefinition.TrackInfo;
             penData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             penData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             penData.addTrack(new ShowPropSubActionPrototype(typeof(ClickPenAction), "Click Pen"));
-            propFactory.addTrackInfo(Pen.DefinitionName, penData);
+            propFactory.addDefinition(propDefinition);
         }
 
         private Entity penEntity;

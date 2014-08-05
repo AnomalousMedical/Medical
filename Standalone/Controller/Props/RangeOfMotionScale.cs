@@ -28,12 +28,12 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rangeOfMotion.addElement(propFadeBehaviorDef);
 
-            propFactory.addDefinition(DefinitionName, rangeOfMotion);
+            PropDefinition propDefinition = new PropDefinition(rangeOfMotion);
 
-            ShowPropTrackInfo rangeOfMotionScale = new ShowPropTrackInfo();
+            ShowPropTrackInfo rangeOfMotionScale = propDefinition.TrackInfo;
             rangeOfMotionScale.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             rangeOfMotionScale.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            propFactory.addTrackInfo(RangeOfMotionScale.DefinitionName, rangeOfMotionScale);
+            propFactory.addDefinition(propDefinition);
         }
     }
 }

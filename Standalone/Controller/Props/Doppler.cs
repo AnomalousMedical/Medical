@@ -14,7 +14,7 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition doppler = new GenericSimObjectDefinition("Doppler");
+            GenericSimObjectDefinition doppler = new GenericSimObjectDefinition(DefinitionName);
             doppler.Enabled = true;
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "DopplerWand.mesh";
@@ -24,12 +24,12 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             doppler.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(DefinitionName, doppler);
+            PropDefinition propDefinition = new PropDefinition(doppler);
 
-            ShowPropTrackInfo dopplerData = new ShowPropTrackInfo();
+            ShowPropTrackInfo dopplerData = propDefinition.TrackInfo;
             dopplerData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             dopplerData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            propFactory.addTrackInfo(Doppler.DefinitionName, dopplerData);
+            propFactory.addDefinition(propDefinition);
         }
     }
 }

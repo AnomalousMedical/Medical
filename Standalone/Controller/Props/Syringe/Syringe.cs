@@ -34,7 +34,7 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition syringe = new GenericSimObjectDefinition("Syringe");
+            GenericSimObjectDefinition syringe = new GenericSimObjectDefinition(DefinitionName);
             syringe.Enabled = true;
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "Syringe.mesh";
@@ -46,13 +46,13 @@ namespace Medical
             syringe.addElement(propFadeBehaviorDef);
             BehaviorDefinition syringeBehavior = new BehaviorDefinition(BehaviorName, new Syringe());
             syringe.addElement(syringeBehavior);
-            propFactory.addDefinition(DefinitionName, syringe);
+            PropDefinition propDefinition = new PropDefinition(syringe);
 
-            ShowPropTrackInfo syringeData = new ShowPropTrackInfo();
+            ShowPropTrackInfo syringeData = propDefinition.TrackInfo;
             syringeData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             syringeData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             syringeData.addTrack(new ShowPropSubActionPrototype(typeof(PushPlungerAction), "Push Plunger"));
-            propFactory.addTrackInfo(Syringe.DefinitionName, syringeData);
+            propFactory.addDefinition(propDefinition);
         }
 
         protected override void constructed()

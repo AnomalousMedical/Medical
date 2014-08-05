@@ -28,12 +28,12 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             biteStick.addElement(propFadeBehaviorDef);
 
-            propFactory.addDefinition(DefinitionName, biteStick);
+            PropDefinition propDefinition = new PropDefinition(biteStick);
 
-            ShowPropTrackInfo biteStickData = new ShowPropTrackInfo();
+            ShowPropTrackInfo biteStickData = propDefinition.TrackInfo;
             biteStickData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             biteStickData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            propFactory.addTrackInfo(BiteStick.DefinitionName, biteStickData);
+            propFactory.addDefinition(propDefinition);
         }
     }
 }

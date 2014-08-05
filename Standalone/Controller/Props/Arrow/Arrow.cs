@@ -27,7 +27,7 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition arrowSimObject = new GenericSimObjectDefinition("ArrowPrototype");
+            GenericSimObjectDefinition arrowSimObject = new GenericSimObjectDefinition(DefinitionName);
             arrowSimObject.Enabled = true;
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "Arrow.mesh";
@@ -40,15 +40,15 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             arrowSimObject.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(DefinitionName, arrowSimObject);
+            PropDefinition propDefinition = new PropDefinition(arrowSimObject);
 
             //Arrow
-            ShowPropTrackInfo tracks = new ShowPropTrackInfo();
+            ShowPropTrackInfo tracks = propDefinition.TrackInfo;
             tracks.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             tracks.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             tracks.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowColorAction), "Change Color"));
             tracks.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowShapeAction), "Change Arrow Shape"));
-            propFactory.addTrackInfo(Arrow.DefinitionName, tracks);
+            propFactory.addDefinition(propDefinition);
         }
 
         public Arrow()

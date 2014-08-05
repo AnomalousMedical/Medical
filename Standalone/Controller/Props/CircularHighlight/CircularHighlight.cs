@@ -16,7 +16,7 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition("CircularHighlightPrototype");
+            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition(DefinitionName);
             simObject.Enabled = true;
             ManualObjectDefinition manualObjectDefinition = new ManualObjectDefinition(PropFactory.ManualObjectName);
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
@@ -28,13 +28,13 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             simObject.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(DefinitionName, simObject);
+            PropDefinition propDefinition = new PropDefinition(simObject);
 
-            ShowPropTrackInfo circularHighlightData = new ShowPropTrackInfo();
+            ShowPropTrackInfo circularHighlightData = propDefinition.TrackInfo;
             circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeCircularHighlightSettings), "Settings"));
-            propFactory.addTrackInfo(CircularHighlight.DefinitionName, circularHighlightData);
+            propFactory.addDefinition(propDefinition);
         }
 
         private Ellipse innerEllipse;

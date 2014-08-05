@@ -46,15 +46,15 @@ namespace Medical
             BehaviorDefinition detachableFollowerDef = new BehaviorDefinition(PropFactory.DetachableFollowerName, detachableFollower);
             hand.addElement(detachableFollowerDef);
 
-            propFactory.addDefinition(definitionName, hand);
+            PropDefinition propDefinition = new PropDefinition(hand);
 
             //Poseable Hand Left
-            ShowPropTrackInfo trackData = new ShowPropTrackInfo();
+            ShowPropTrackInfo trackData = propDefinition.TrackInfo;
             trackData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             trackData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             trackData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeHandPosition), "Hand Position"));
             trackData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
-            propFactory.addTrackInfo(definitionName, trackData);
+            propFactory.addDefinition(propDefinition);
         }
 
         private Entity entity;

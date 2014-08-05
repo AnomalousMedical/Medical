@@ -39,13 +39,13 @@ namespace Medical
             BehaviorDefinition caliperBehaviorDef = new BehaviorDefinition(BehaviorName, caliperBehavior);
             caliper.addElement(caliperBehaviorDef);
 
-            propFactory.addDefinition(DefinitionName, caliper);
+            PropDefinition propDefinition = new PropDefinition(caliper);
 
-            ShowPropTrackInfo caliperData = new ShowPropTrackInfo();
+            ShowPropTrackInfo caliperData = propDefinition.TrackInfo;
             caliperData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             caliperData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             caliperData.addTrack(new ShowPropSubActionPrototype(typeof(SetCaliperMeasurement), "Set Measurement"));
-            propFactory.addTrackInfo(Caliper.DefinitionName, caliperData);
+            propFactory.addDefinition(propDefinition);
         }
 
         private Entity entity;

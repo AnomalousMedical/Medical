@@ -15,7 +15,7 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition leftPointingHand = new GenericSimObjectDefinition("PointingHandLeft");
+            GenericSimObjectDefinition leftPointingHand = new GenericSimObjectDefinition(LeftHandName);
             leftPointingHand.Enabled = true;
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "PointerLeftHand.mesh";
@@ -25,16 +25,16 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             leftPointingHand.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(LeftHandName, leftPointingHand);
+            PropDefinition propDefinition = new PropDefinition(leftPointingHand);
 
             //PointingHandLeft
-            ShowPropTrackInfo pointingHandLeftData = new ShowPropTrackInfo();
+            ShowPropTrackInfo pointingHandLeftData = propDefinition.TrackInfo;
             pointingHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             pointingHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             pointingHandLeftData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
-            propFactory.addTrackInfo(PointingHand.LeftHandName, pointingHandLeftData);
+            propFactory.addDefinition(propDefinition);
 
-            GenericSimObjectDefinition rightPointingHand = new GenericSimObjectDefinition("PointingHandRight");
+            GenericSimObjectDefinition rightPointingHand = new GenericSimObjectDefinition(RightHandName);
             rightPointingHand.Enabled = true;
             entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "PointerRightHand.mesh";
@@ -44,14 +44,14 @@ namespace Medical
             propFadeBehavior = new PropFadeBehavior();
             propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rightPointingHand.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(RightHandName, rightPointingHand);
+            propDefinition = new PropDefinition(rightPointingHand);
 
             //PointingHandRight
-            ShowPropTrackInfo pointingRightHandData = new ShowPropTrackInfo();
+            ShowPropTrackInfo pointingRightHandData = propDefinition.TrackInfo;
             pointingRightHandData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
             pointingRightHandData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
             pointingRightHandData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
-            propFactory.addTrackInfo(PointingHand.RightHandName, pointingRightHandData);
+            propFactory.addDefinition(propDefinition);
         }
     }
 }

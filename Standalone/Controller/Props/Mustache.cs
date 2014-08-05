@@ -13,14 +13,14 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition mustache = new GenericSimObjectDefinition("Mustache");
+            GenericSimObjectDefinition mustache = new GenericSimObjectDefinition(DefinitionName);
             mustache.Enabled = true;
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "Mustache.mesh";
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             mustache.addElement(nodeDefinition);
-            propFactory.addDefinition(DefinitionName, mustache);
+            propFactory.addDefinition(new PropDefinition(mustache));
         }
     }
 }

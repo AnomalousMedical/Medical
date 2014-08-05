@@ -24,71 +24,71 @@ namespace Medical
             //-------Maxillary------
             //MaxillaryFullCoverageFlatPlane
             splitDefinition = createSplitDefinition("MaxillaryFullCoverageFlatPlane", "MaxillaryFullCoverageFlatPlane.mesh", "MaxillaryFullCoverageFlatPlaneCollision", TOP_TEETH_SPLINT_FILTER, 0.0f, new Vector3(-2.3913E-07f, -9.86613f, 8.14113f), new Quaternion(0f, 0f, 0f, 1f));
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MaxillaryFullCoverage
             splitDefinition = createSplitDefinition("MaxillaryFullCoverage", "MaxillaryFullCoverage.mesh", "MaxillaryFullCoverageCollision", TOP_TEETH_SPLINT_FILTER, 0.0f, new Vector3(0f, -9.65886f, 8.20467f), new Quaternion(0f, 0f, 0f, 1f));
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //NTI
             splitDefinition = createSplitDefinition("NTI", "NTI.mesh", "NTICollision", TOP_TEETH_SPLINT_FILTER, 0.0f, new Vector3(0f, -9.85379f, 10.9718f), new Quaternion(0f, 0f, 0f, 1f));
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MaxillaryFullCoverageDualShelfTripod
             splitDefinition = createSplitDefinition("MaxillaryFullCoverageDualShelfTripod", "MaxillaryFullCoverageDualShelfTripod.mesh", "MaxillaryFullCoverageDualShelfTripodCollision", TOP_TEETH_SPLINT_FILTER, 0.0f, new Vector3(0f, -9.70508f, 8.18003f), new Quaternion(0f, 0f, 0f, 1f));
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //AnteriorDeprogrammer
             splitDefinition = createSplitDefinition("AnteriorDeprogrammer", "AnteriorDeprogrammer.mesh", "AnteriorDeprogrammerCollision", TOP_TEETH_SPLINT_FILTER, 0.0f, new Vector3(0f, -10.0156f, 9.91062f), new Quaternion(0f, 0f, 0f, 1f));
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MaxillaryFullCoverageEquilibrated
             splitDefinition = createSplitDefinition("MaxillaryFullCoverageEquilibrated", "MaxillaryFullCoverageEquilibrated.mesh", "MaxillaryFullCoverageEquilibratedCollision", TOP_TEETH_SPLINT_FILTER, 0.0f, new Vector3(0f, -9.80841f, 8.19537f), new Quaternion(0f, 0f, 0f, 1f));
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MaxillaryFullCoverageDualFlatPlane
             splitDefinition = createSplitDefinition("MaxillaryFullCoverageDualFlatPlane", "MaxillaryFullCoverageDualFlatPlane.mesh", "MaxillaryFullCoverageDualFlatPlaneCollision", TOP_TEETH_SPLINT_FILTER, 0.0f, new Vector3(2.37629E-07f, -9.69486f, 8.11088f), new Quaternion(0f, 0f, 0f, 1f));
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MaxillaryFullCoverageDualShelf
             splitDefinition = createSplitDefinition("MaxillaryFullCoverageDualShelf", "MaxillaryFullCoverageDualShelf.mesh", "MaxillaryFullCoverageDualShelfCollision", TOP_TEETH_SPLINT_FILTER, 0.0f, new Vector3(0f, -9.76966f, 8.35717f), new Quaternion(0f, 0f, 0f, 1f));
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //-------Mandibular------
             //MandibularFullCoverage
             splitDefinition = createSplitDefinition("MandibularFullCoverage", "MandibularFullCoverage.mesh", "MandibularFullCoverageCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(-2.14577E-06f, -10.1296f, 8.09898f), new Quaternion(1.490118E-08f, -4.511825E-08f, 6.723153E-16f, 1f));
             jointToMandible(splitDefinition);
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MandibularFullCoverageDualFlatPlane
             splitDefinition = createSplitDefinition("MandibularFullCoverageDualFlatPlane", "MandibularFullCoverageDualFlatPlane.mesh", "MandibularFullCoverageDualFlatPlaneCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(0f, -10.2264f, 8.31641f), new Quaternion(2.980228E-08f, 0f, 0f, 1f));
             jointToMandible(splitDefinition);
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MandibularFullCoverageDualBall
             splitDefinition = createSplitDefinition("MandibularFullCoverageDualBall", "MandibularFullCoverageDualBall.mesh", "MandibularFullCoverageDualBallCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(0f, -10.1498f, 8.11417f), new Quaternion(2.980228E-08f, 0f, 0f, 1f));
             jointToMandible(splitDefinition);
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MandibularFullCoverageDualBallTripod
             splitDefinition = createSplitDefinition("MandibularFullCoverageDualBallTripod", "MandibularFullCoverageDualBallTripod.mesh", "MandibularFullCoverageDualBallTripodCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(0f, -10.1498f, 8.11417f), new Quaternion(2.980228E-08f, 0f, 0f, 1f));
             jointToMandible(splitDefinition);
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //PivotAppliance
             splitDefinition = createSplitDefinition("PivotAppliance", "PivotAppliance.mesh", "PivotApplianceCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(0f, -10.1558f, 7.77287f), new Quaternion(2.980228E-08f, -3.574548E-08f, 3.574548E-08f, 1f));
             jointToMandible(splitDefinition);
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //PartialPosteriorSplint
             splitDefinition = createSplitDefinition("PartialPosteriorSplint", "PartialPosteriorSplint.mesh", "PivotApplianceCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(0f, -10.1558f, 7.77287f), new Quaternion(2.980228E-08f, -3.574548E-08f, 3.574548E-08f, 1f));
             jointToMandible(splitDefinition);
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
 
             //MandibularFullCoverageFlatPlane
             splitDefinition = createSplitDefinition("MandibularFullCoverageFlatPlane", "MandibularFullCoverageFlatPlane.mesh", "MandibularFullCoverageFlatPlaneCollision", BOTTOM_TEETH_SPLINT_FILTER, 5.0f, new Vector3(0f, -10.1154f, 8.15084f), new Quaternion(0f, 0f, 0f, 1f));
             jointToMandible(splitDefinition);
-            propFactory.addDefinition(splitDefinition.Name, splitDefinition);
+            propFactory.addDefinition(new PropDefinition(splitDefinition));
         }
 
         private static GenericSimObjectDefinition createSplitDefinition(String definitionName, String meshName, String collisionName, short mask, float mass, Vector3 startTranslation, Quaternion startRotation)

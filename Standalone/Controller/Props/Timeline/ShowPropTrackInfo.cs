@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using MyGUIPlugin;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -11,7 +12,7 @@ namespace Medical
     /// A collection of track prototypes for a given prop type. Determines what appears on a given prop's prop
     /// timeline.
     /// </summary>
-    public sealed class ShowPropTrackInfo
+    public sealed class ShowPropTrackInfo : Saveable
     {
         private List<ShowPropSubActionPrototype> trackData = new List<ShowPropSubActionPrototype>();
 
@@ -25,12 +26,27 @@ namespace Medical
             trackData.Add(prototype);
         }
 
+        public void removeTrack(ShowPropSubActionPrototype prototype)
+        {
+            trackData.Remove(prototype);
+        }
+
         public IEnumerable<ShowPropSubActionPrototype> Tracks
         {
             get
             {
                 return trackData;
             }
+        }
+
+        private ShowPropTrackInfo(LoadInfo info)
+        {
+            info.RebuildList("Track", trackData);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.ExtractList("Track", trackData);
         }
     }
 }

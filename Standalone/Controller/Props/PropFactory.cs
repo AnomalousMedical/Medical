@@ -18,8 +18,7 @@ namespace Medical
         public const String DetachableFollowerName = "DetachableFollower";
         public const String RigidBodyName = "RigidBody";
 
-        private Dictionary<String, SimObjectDefinition> prototypes = new Dictionary<String, SimObjectDefinition>();
-        Dictionary<String, ShowPropTrackInfo> prototypeTrackInfo = new Dictionary<string, ShowPropTrackInfo>();
+        private Dictionary<String, PropDefinition> prototypes = new Dictionary<String, PropDefinition>();
         private SimSubScene subScene;
         private SimScene scene;
         private MedicalController medicalController;
@@ -32,28 +31,32 @@ namespace Medical
             standaloneController.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
         }
 
-        public void addDefinition(String name, SimObjectDefinition definition)
+        public void addDefinition(PropDefinition definition)
         {
-            prototypes.Add(name, definition);
-        }
-
-        public void addTrackInfo(String name, ShowPropTrackInfo trackInfo)
-        {
-            prototypeTrackInfo.Add(name, trackInfo);
+            prototypes.Add(definition.Name, definition);
         }
 
         public bool tryGetTrackInfo(String propTypeName, out ShowPropTrackInfo propTrackInfo)
         {
-            return prototypeTrackInfo.TryGetValue(propTypeName, out propTrackInfo);
+            PropDefinition propDef;
+            bool found = false;
+            propTrackInfo = null;
+            if(prototypes.TryGetValue(propTypeName, out propDef))
+            {
+                found = true;
+                propTrackInfo = propDef.TrackInfo;
+            }
+            return found;
         }
 
         public SimObjectBase createProp(String propName, Vector3 translation, Quaternion rotation)
         {
             if (subScene != null)
             {
-                SimObjectDefinition definition;
-                if (prototypes.TryGetValue(propName, out definition))
+                PropDefinition propDef;
+                if (prototypes.TryGetValue(propName, out propDef))
                 {
+                    SimObjectDefinition definition = propDef.SimObject;
                     Vector3 originalTranslation = definition.Translation;
                     Quaternion originalRotation = definition.Rotation;
 
@@ -82,9 +85,10 @@ namespace Medical
 
         public void getInitialPosition(String propName, ref Vector3 translation, ref Quaternion rotation)
         {
-            SimObjectDefinition definition;
-            if (prototypes.TryGetValue(propName, out definition))
+            PropDefinition propDef;
+            if (prototypes.TryGetValue(propName, out propDef))
             {
+                SimObjectDefinition definition = propDef.SimObject;
                 translation = definition.Translation;
                 rotation = definition.Rotation;
             }
