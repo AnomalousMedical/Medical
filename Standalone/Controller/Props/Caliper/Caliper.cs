@@ -39,7 +39,10 @@ namespace Medical
             BehaviorDefinition caliperBehaviorDef = new BehaviorDefinition(BehaviorName, caliperBehavior);
             caliper.addElement(caliperBehaviorDef);
 
-            PropDefinition propDefinition = new PropDefinition(caliper);
+            PropDefinition propDefinition = new PropDefinition(caliper)
+            {
+                BrowserPath = "Tools"
+            };
 
             ShowPropTrackInfo caliperData = propDefinition.TrackInfo;
             caliperData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));

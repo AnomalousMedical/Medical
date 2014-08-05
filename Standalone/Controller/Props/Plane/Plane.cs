@@ -28,7 +28,10 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             simObject.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(simObject);
+            PropDefinition propDefinition = new PropDefinition(simObject)
+                {
+                    BrowserPath = "Shapes"
+                };
 
             ShowPropTrackInfo planeData = propDefinition.TrackInfo;
             planeData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));

@@ -17,11 +17,11 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            createHand(propFactory, LeftDefinitionName, "HandPoseable.mesh", "");
-            createHand(propFactory, RightDefinitionName, "HandPoseableRight.mesh", "Right");
+            createHand(propFactory, LeftDefinitionName, "HandPoseable.mesh", "", "Poseable Left Hand");
+            createHand(propFactory, RightDefinitionName, "HandPoseableRight.mesh", "Right", "Poseable Right Hand");
         }
 
-        private static void createHand(PropFactory propFactory, String definitionName, String meshName, String boneSuffix)
+        private static void createHand(PropFactory propFactory, String definitionName, String meshName, String boneSuffix, String prettyName)
         {
             GenericSimObjectDefinition hand = new GenericSimObjectDefinition(definitionName);
             hand.Enabled = true;
@@ -46,7 +46,11 @@ namespace Medical
             BehaviorDefinition detachableFollowerDef = new BehaviorDefinition(PropFactory.DetachableFollowerName, detachableFollower);
             hand.addElement(detachableFollowerDef);
 
-            PropDefinition propDefinition = new PropDefinition(hand);
+            PropDefinition propDefinition = new PropDefinition(hand)
+                {
+                    BrowserPath = "Hands",
+                    PrettyName = prettyName
+                };
 
             //Poseable Hand Left
             ShowPropTrackInfo trackData = propDefinition.TrackInfo;

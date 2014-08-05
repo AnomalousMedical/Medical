@@ -20,7 +20,10 @@ namespace Medical
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             mustache.addElement(nodeDefinition);
-            propFactory.addDefinition(new PropDefinition(mustache));
+            propFactory.addDefinition(new PropDefinition(mustache)
+            {
+                BrowserPath = "Jokes"
+            });
         }
     }
 }

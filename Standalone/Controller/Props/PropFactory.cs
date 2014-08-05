@@ -94,11 +94,11 @@ namespace Medical
             }
         }
 
-        public IEnumerable<String> PropNames
+        public IEnumerable<PropDefinition> PropDefinitions
         {
             get
             {
-                return prototypes.Keys;
+                return prototypes.Values;
             }
         }
 

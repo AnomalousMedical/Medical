@@ -28,7 +28,11 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rangeOfMotion.addElement(propFadeBehaviorDef);
 
-            PropDefinition propDefinition = new PropDefinition(rangeOfMotion);
+            PropDefinition propDefinition = new PropDefinition(rangeOfMotion)
+            {
+                BrowserPath = "Tools",
+                PrettyName = "Range of Motion Scale"
+            };
 
             ShowPropTrackInfo rangeOfMotionScale = propDefinition.TrackInfo;
             rangeOfMotionScale.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));

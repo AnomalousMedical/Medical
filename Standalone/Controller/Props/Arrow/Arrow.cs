@@ -40,7 +40,10 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             arrowSimObject.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(arrowSimObject);
+            PropDefinition propDefinition = new PropDefinition(arrowSimObject)
+            {
+                BrowserPath = "Shapes"
+            };
 
             //Arrow
             ShowPropTrackInfo tracks = propDefinition.TrackInfo;

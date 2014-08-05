@@ -16,13 +16,19 @@ namespace Medical
 
         public PropDefinition(SimObjectDefinition simObject)
         {
-            Name = simObject.Name;
+            PrettyName = Name = simObject.Name;
             this.simObject = simObject;
             trackInfo = new ShowPropTrackInfo();
         }
 
         [Editable]
         public String Name { get; set; }
+
+        [Editable]
+        public String PrettyName { get; set; }
+
+        [Editable]
+        public String BrowserPath { get; set; }
 
         [Editable]
         public long? PropLicenseId { get; set; }
@@ -69,6 +75,8 @@ namespace Medical
         protected PropDefinition(LoadInfo info)
         {
             Name = info.GetString("Name");
+            PrettyName = info.GetString("PrettyName");
+            BrowserPath = info.GetString("BrowserPath");
             simObject = info.GetValue<SimObjectDefinition>("SimObject");
             trackInfo = info.GetValue<ShowPropTrackInfo>("TrackInfo");
             if (info.hasValue("PropLicenseId"))
@@ -80,6 +88,8 @@ namespace Medical
         public void getInfo(SaveInfo info)
         {
             info.AddValue("Name", Name);
+            info.AddValue("PrettyName", PrettyName);
+            info.AddValue("BrowserPath", BrowserPath);
             info.AddValue("SimObject", simObject);
             info.AddValue("TrackInfo", trackInfo);
             if (PropLicenseId.HasValue)

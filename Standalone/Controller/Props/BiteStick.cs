@@ -28,7 +28,11 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             biteStick.addElement(propFadeBehaviorDef);
 
-            PropDefinition propDefinition = new PropDefinition(biteStick);
+            PropDefinition propDefinition = new PropDefinition(biteStick)
+            {
+                BrowserPath = "Tools",
+                PrettyName = "Bite Stick"
+            };
 
             ShowPropTrackInfo biteStickData = propDefinition.TrackInfo;
             biteStickData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));

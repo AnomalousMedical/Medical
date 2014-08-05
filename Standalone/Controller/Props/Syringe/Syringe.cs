@@ -46,7 +46,10 @@ namespace Medical
             syringe.addElement(propFadeBehaviorDef);
             BehaviorDefinition syringeBehavior = new BehaviorDefinition(BehaviorName, new Syringe());
             syringe.addElement(syringeBehavior);
-            PropDefinition propDefinition = new PropDefinition(syringe);
+            PropDefinition propDefinition = new PropDefinition(syringe)
+                {
+                    BrowserPath = "Tools"
+                };
 
             ShowPropTrackInfo syringeData = propDefinition.TrackInfo;
             syringeData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));

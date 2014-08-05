@@ -24,7 +24,11 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             doppler.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition(new PropDefinition(doppler));
+            propFactory.addDefinition(new PropDefinition(doppler)
+            {
+                BrowserPath = "Tools",
+                PrettyName = "JVA Headphones"
+            });
         }
     }
 }

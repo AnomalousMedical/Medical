@@ -28,7 +28,11 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             simObject.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(simObject);
+            PropDefinition propDefinition = new PropDefinition(simObject)
+                {
+                    BrowserPath = "Shapes",
+                    PrettyName = "Circular Highlight"
+                };
 
             ShowPropTrackInfo circularHighlightData = propDefinition.TrackInfo;
             circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));

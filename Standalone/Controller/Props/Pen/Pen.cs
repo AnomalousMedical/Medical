@@ -36,7 +36,10 @@ namespace Medical
             BehaviorDefinition penBehaviorDef = new BehaviorDefinition(PenBehaviorName, penBehavior);
             pen.addElement(penBehaviorDef);
 
-            PropDefinition propDefinition = new PropDefinition(pen);
+            PropDefinition propDefinition = new PropDefinition(pen)
+                {
+                    BrowserPath = "Tools"
+                };
 
             ShowPropTrackInfo penData = propDefinition.TrackInfo;
             penData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));

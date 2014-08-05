@@ -24,7 +24,10 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rulerSimObject.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(rulerSimObject);
+            PropDefinition propDefinition = new PropDefinition(rulerSimObject)
+            {
+                BrowserPath = "Tools"
+            };
 
             ShowPropTrackInfo rulerData = propDefinition.TrackInfo;
             rulerData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));

@@ -146,10 +146,10 @@ namespace Medical
 
             this.addSyncCustomQuery<Browser>(PropBrowserEditableProperty.CustomQueries.BuildBrowser, () =>
             {
-                Browser browser = new Browser("Models", "Choose Model");
-                foreach (String propName in standaloneController.TimelineController.PropFactory.PropNames)
+                Browser browser = new Browser("Props", "Choose Prop");
+                foreach (var propDef in standaloneController.TimelineController.PropFactory.PropDefinitions)
                 {
-                    browser.addNode(null, null, new BrowserNode(propName, propName));
+                    browser.addNode(propDef.BrowserPath, new BrowserNode(propDef.PrettyName, propDef.Name));
                 }
                 return browser;
             });

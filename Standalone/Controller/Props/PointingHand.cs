@@ -25,7 +25,11 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             leftPointingHand.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(leftPointingHand);
+            PropDefinition propDefinition = new PropDefinition(leftPointingHand)
+            {
+                BrowserPath = "Hands",
+                PrettyName = "Pointing Left Hand"
+            };
 
             //PointingHandLeft
             ShowPropTrackInfo pointingHandLeftData = propDefinition.TrackInfo;
@@ -44,7 +48,11 @@ namespace Medical
             propFadeBehavior = new PropFadeBehavior();
             propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rightPointingHand.addElement(propFadeBehaviorDef);
-            propDefinition = new PropDefinition(rightPointingHand);
+            propDefinition = new PropDefinition(rightPointingHand)
+            {
+                BrowserPath = "Hands",
+                PrettyName = "Pointing Right Hand"
+            };
 
             //PointingHandRight
             ShowPropTrackInfo pointingRightHandData = propDefinition.TrackInfo;
