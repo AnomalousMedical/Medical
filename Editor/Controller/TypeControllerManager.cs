@@ -25,6 +25,7 @@ namespace Medical
         private RcssEditorContext rcssEditorContext;
         private TRmlEditorContext trmlEditorContext;
         private XmlEditorContext xmlEditorContext;
+        private PropEditorContext propEditorContext;
 
         private PropEditController propEditController;
         private StandaloneController standaloneController;
@@ -231,6 +232,25 @@ namespace Medical
                 editorController.runEditorContext(xmlEditorContext.MvcContext);
             };
 
+            //Prop type controller
+            PropTypeController propTypeController = new PropTypeController(editorController);
+            propTypeController.OpenEditor += (file, propDefinition) =>
+            {
+                propEditorContext = new PropEditorContext(propDefinition, file, propTypeController, plugin.EditorController, plugin.UICallback);
+                propEditorContext.Focus += obj =>
+                {
+                    propEditorContext = obj;
+                };
+                propEditorContext.Blur += obj =>
+                {
+                    if (propEditorContext == obj)
+                    {
+                        propEditorContext = null;
+                    }
+                };
+                editorController.runEditorContext(propEditorContext.MvcContext);
+            };
+
             //Add item templates
             editorController.addItemTemplate(new EmptyViewItemTemplate(rmlTypeController, mvcTypeController));
             editorController.addItemTemplate(new ViewWithTimelineItemTemplate(rmlTypeController, mvcTypeController, timelineTypeController));
@@ -245,6 +265,7 @@ namespace Medical
             editorController.addTypeController(pluginTypeController);
             editorController.addTypeController(dependencyTypeController);
             editorController.addTypeController(xmlTypeController);
+            editorController.addTypeController(propTypeController);
 
             //Add any final item templates
             editorController.addItemTemplate(new PluginBrandingResourceItemTemplate());
@@ -283,6 +304,14 @@ namespace Medical
             if (trmlEditorContext != null)
             {
                 trmlEditorContext.close();
+            }
+            if(xmlEditorContext != null)
+            {
+                xmlEditorContext.close();
+            }
+            if(propEditorContext != null)
+            {
+                propEditorContext.close();
             }
 
             if (editorController.ResourceProvider != null)

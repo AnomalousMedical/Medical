@@ -219,6 +219,7 @@
     <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
     <Compile Include="Controller\Props\Line\ChangeLinePropSettings.cs" />
     <Compile Include="Controller\Props\Line\LineProp.cs" />
+    <Compile Include="Controller\Props\PropDefinition.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />
     <Compile Include="Controller\Resources\ZipResourceProvider.cs" />
     <Compile Include="Controller\SceneViews\CameraPositioner.cs" />

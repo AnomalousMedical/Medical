@@ -86,8 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\EditorController\TypeControllers\DependencyTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\PropTypeController.cs" />
     <Compile Include="Controller\EditorFilesystemWatcher.cs" />
     <Compile Include="Controller\DependencyEditorContext.cs" />
+    <Compile Include="Controller\PropEditorContext.cs" />
     <Compile Include="Controller\Project\DependencyProjectTemplate.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\XmlTypeController.cs" />
