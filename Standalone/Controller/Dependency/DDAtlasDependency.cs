@@ -1,4 +1,5 @@
-﻿using Engine.Editing;
+﻿using Engine;
+using Engine.Editing;
 using Engine.Resources;
 using Engine.Saving;
 using System;
@@ -32,12 +33,18 @@ namespace Medical
         {
             if (resources.Count > 0)
             {
-                var ogreResourceManager = OgreWrapper.OgreResourceGroupManager.getInstance();
-                foreach (var resource in resources)
+                var resourceManager = PluginManager.Instance.createEmptyResourceManager();
+                foreach(var subsystemResources in resourceManager.getSubsystemEnumerator())
                 {
-                    ogreResourceManager.addResourceLocation(resource.Path, "EngineArchive", DependencyNamespace, true);
+                    var resourceGroup = subsystemResources.addResourceGroup(DependencyNamespace);
+                    foreach (var resource in resources)
+                    {
+                        var engineResource = resourceGroup.addResource(resource.Path, resource.Recursive);
+                    }
                 }
-                ogreResourceManager.initializeResourceGroup(DependencyNamespace);
+
+                PluginManager.Instance.PersistentResourceManager.addResources(resourceManager);
+                PluginManager.Instance.PersistentResourceManager.forceResourceRefresh();
             }
 
             Initialized = true;

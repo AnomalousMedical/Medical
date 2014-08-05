@@ -61,8 +61,8 @@ namespace Medical
         public void loadScene(ScenePackage scenePackage)
         {
             currentScenePackage = scenePackage;
-            pluginManager.PrimaryResourceManager.changeResourcesToMatch(scenePackage.ResourceManager);
-            pluginManager.PrimaryResourceManager.forceResourceRefresh();
+            pluginManager.SceneResourceManager.changeResourcesToMatch(scenePackage.ResourceManager);
+            pluginManager.SceneResourceManager.forceResourceRefresh();
             currentScene = scenePackage.SceneDefinition.createScene();
             if (OnSceneLoading != null)
             {
@@ -101,7 +101,7 @@ namespace Medical
         public ScenePackage saveSceneToPackage()
         {
             ScenePackage package = new ScenePackage();
-            package.ResourceManager = pluginManager.createSecondaryResourceManager();
+            package.ResourceManager = pluginManager.cloneSceneResourceManager();
             package.SceneDefinition = currentScene.createDefinition();
             package.SimObjectManagerDefinition = currentSimObjects.saveToDefinition();
             return package;
