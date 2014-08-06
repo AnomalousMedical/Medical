@@ -21,7 +21,8 @@ namespace Developer
 
         public DataPublishController()
         {
-            
+            Compress = true;
+            Obfuscate = true;
         }
 
         public String SignatureFile { get; set; }
@@ -32,7 +33,11 @@ namespace Developer
 
         public String CounterSignaturePassword { get; set; }
 
-        public void publishDataFile(String dataDefinitionPath, String outDirectory)
+        public bool Compress { get; set; }
+
+        public bool Obfuscate { get; set; }
+
+        public void publishDataFile(String dataDefinitionPath, String outputPath)
         {
             try
             {
@@ -47,7 +52,7 @@ namespace Developer
 
                         if (plugin != null)
                         {
-                            findFiles(dataDefinitionPath, "Plugins", outDirectory, plugin.PluginNamespace);
+                            findFiles(dataDefinitionPath, "Plugins", outputPath, plugin.PluginNamespace);
                         }
                         break;
                     case ".ddd":
@@ -59,7 +64,7 @@ namespace Developer
 
                         if (dependency != null)
                         {
-                            findFiles(dataDefinitionPath, "Dependencies", outDirectory, dependency.DependencyNamespace);
+                            findFiles(dataDefinitionPath, "Dependencies", outputPath, dependency.DependencyNamespace);
                         }
                         break;
                 }
@@ -70,7 +75,7 @@ namespace Developer
             }
         }
 
-        private void findFiles(String dataFileDefinitionPath, String destinationBasePath, String outDirectory, String dataNamespace)
+        private void findFiles(String dataFileDefinitionPath, String destinationBasePath, String outputPath, String dataNamespace)
         {
             String dataBasePath = Path.GetDirectoryName(dataFileDefinitionPath);
 
@@ -82,20 +87,20 @@ namespace Developer
             }
 
             //Copy Files, build data file
-            if (!Directory.Exists(outDirectory))
+            if (!Directory.Exists(outputPath))
             {
-                Directory.CreateDirectory(outDirectory);
+                Directory.CreateDirectory(outputPath);
             }
-            copyResources(dataNamespace, dataBasePath, destinationBasePath, outDirectory, true, true);
+            copyResources(dataNamespace, dataBasePath, destinationBasePath, outputPath);
         }
 
-        private void copyResources(String dataNamespace, String originalBasePath, String destinationBasePath, String targetDirectory, bool compress, bool obfuscate)
+        private void copyResources(String dataNamespace, String originalBasePath, String destinationBasePath, String outputPath)
         {
             String archiveName = dataNamespace;
             originalBasePath = Path.GetFullPath(originalBasePath) + Path.DirectorySeparatorChar;
-            String originalDirectory = targetDirectory;
+            String targetDirectory = outputPath;
             String zipTempDirectory = null;
-            if (compress)
+            if (Compress)
             {
                 targetDirectory += "/zipTemp";
                 zipTempDirectory = targetDirectory;
@@ -121,9 +126,9 @@ namespace Developer
             }
 
             //Compress
-            if (compress)
+            if (Compress)
             {
-                String zipFileName = originalDirectory + "\\" + archiveName + ".zip";
+                String zipFileName = String.Format("{0}\\{1}.zip", outputPath, archiveName);
                 Log.Info("Starting compression to {0}", zipFileName);
                 if (File.Exists(zipFileName))
                 {
@@ -139,9 +144,9 @@ namespace Developer
                 Log.Info("Finished compression to {0}", zipFileName);
                 Directory.Delete(zipTempDirectory, true);
 
-                if (obfuscate)
+                if (Obfuscate)
                 {
-                    String obfuscateFileName = originalDirectory + "\\" + archiveName + ".dat";
+                    String obfuscateFileName = String.Format("{0}\\{1}.dat", outputPath, archiveName);
                     obfuscateZipFile(zipFileName, obfuscateFileName);
                     File.Delete(zipFileName);
 
