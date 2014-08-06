@@ -33,7 +33,13 @@ namespace Medical.GUI
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, genericEditorView.EditUICallback);
 
-            propertiesForm = new ScrollablePropertiesForm((ScrollView)window.findWidget("TableScroller"), genericEditorView.EditUICallback);
+            //This class does not use the add / remove buttons from the layout, so hide them
+            Widget addRemovePanel = widget.findWidget("AddRemovePanel");
+            addRemovePanel.Visible = false;
+            ScrollView tableScroller = (ScrollView)widget.findWidget("TableScroller");
+            tableScroller.Height = widget.Height - tableScroller.Top;
+
+            propertiesForm = new ScrollablePropertiesForm(tableScroller, genericEditorView.EditUICallback);
 
             objectEditor = new ObjectEditor(editTreeView, propertiesForm, genericEditorView.EditUICallback);
 

@@ -5,6 +5,7 @@ using System.Text;
 using Engine;
 using MyGUIPlugin;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -47,6 +48,23 @@ namespace Medical
         public void getInfo(SaveInfo info)
         {
             info.ExtractList("Track", trackData);
+        }
+
+        private EditInterface editInterface;
+        public EditInterface EditInterface
+        {
+            get
+            {
+                if(editInterface == null)
+                {
+                    editInterface = new EditInterface("Timeline Tracks");
+                    foreach(var track in trackData)
+                    {
+                        editInterface.addSubInterface(track.EditInterface);
+                    }
+                }
+                return editInterface;
+            }
         }
     }
 }

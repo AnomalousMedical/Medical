@@ -125,11 +125,11 @@ namespace Medical.GUI
         {
             if (visible)
             {
-                tableScroller.setSize(tableScroller.Width, widget.Height - addRemoveButtons.Height);
+                tableScroller.Height = widget.Height - addRemoveButtons.Height;
             }
             else
             {
-                tableScroller.setSize(tableScroller.Width, widget.Height);
+                tableScroller.Height = widget.Height - tableScroller.Top;
             }
         }
     }

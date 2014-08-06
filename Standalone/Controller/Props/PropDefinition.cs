@@ -67,6 +67,7 @@ namespace Medical
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, "Prop Definition");
                     editInterface.addSubInterface(simObject.getEditInterface());
+                    editInterface.addSubInterface(trackInfo.EditInterface);
                 }
                 return editInterface;
             }

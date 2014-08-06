@@ -1,11 +1,20 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="19 33 348 313" layer="Overlapped">
-        <Widget type="ScrollView" skin="ScrollView" position_real="0 0 1 0.5" align="VRelative HStretch" name="TreeScroller">
+        <Widget type="ScrollView" skin="ScrollView" position="0 0 348 156" align="VRelative HStretch" name="TreeScroller">
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position_real="0 0.5 1 0.5" align="VRelative HStretch" name="TableScroller">
+        <Widget type="ScrollView" skin="ScrollView" position="0 156 348 122" align="VRelative HStretch" name="TableScroller">
             <Property key="CanvasAlign" value="Left Top"/>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="0 279 228 33" align="Right Bottom" name="AddRemovePanel">
+            <Widget type="Button" skin="Button" position="3 3 82 27" name="Add">
+                <Property key="Caption" value="Add"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="89 3 82 27" name="Remove">
+                <Property key="Caption" value="Remove"/>
+            </Widget>
         </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

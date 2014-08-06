@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -22,7 +23,7 @@ namespace Medical
             return (ShowPropSubAction)Activator.CreateInstance(type);
         }
 
-        public String TrackName { get; private set; }
+        public String TrackName { get; set; }
 
         private ShowPropSubActionPrototype(LoadInfo info)
         {
@@ -34,6 +35,19 @@ namespace Medical
         {
             info.AddValue("TrackName", TrackName);
             info.AddValue("TypeName", DefaultTypeFinder.CreateShortTypeString(type));
+        }
+
+        private EditInterface editInterface;
+        public EditInterface EditInterface
+        {
+            get
+            {
+                if(editInterface == null)
+                {
+                    editInterface = new EditInterface(TrackName);// ReflectedEditInterface.createEditInterface(this, TrackName);
+                }
+                return editInterface;
+            }
         }
     }
 }
