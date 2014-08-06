@@ -37,11 +37,11 @@ namespace Medical
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
 
-        private PluginVerifier pluginVerifier;
+        private DataFileVerifier dataFileVerifier;
 
-        public AtlasPluginManager(StandaloneController standaloneController, PluginVerifier pluginVerifier)
+        public AtlasPluginManager(StandaloneController standaloneController, DataFileVerifier dataFileVerifier)
         {
-            this.pluginVerifier = pluginVerifier;
+            this.dataFileVerifier = dataFileVerifier;
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
@@ -132,7 +132,7 @@ namespace Medical
                 String dllFileName = Path.GetFileNameWithoutExtension(fullPath);
                 if (!loadedPluginNames.Contains(dllFileName))
                 {
-                    if (pluginVerifier.isSafeDll(fullPath))
+                    if (dataFileVerifier.isSafeDll(fullPath))
                     {
                         try
                         {
@@ -198,7 +198,7 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
-                if (pluginVerifier.isSafeDataFile(fullPath))
+                if (dataFileVerifier.isSafeDataFile(fullPath))
                 {
                     String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
                     try

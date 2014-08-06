@@ -12,16 +12,19 @@ using System.Text;
 
 namespace Medical
 {
-    public class PluginVerifier
+    /// <summary>
+    /// This class can check signatures on data files and dlls.
+    /// </summary>
+    public class DataFileVerifier
     {
         CertificateStore certificateStore;
 
-        internal PluginVerifier(CertificateStore certificateStore)
+        public DataFileVerifier(CertificateStore certificateStore)
         {
             this.certificateStore = certificateStore;
         }
 
-        internal bool isSafeDataFile(String file)
+        public bool isSafeDataFile(String file)
         {
 #if ALLOW_OVERRIDE
             if (MedicalConfig.AllowUnsignedDataFilePlugins)
@@ -77,7 +80,7 @@ namespace Medical
             return valid;
         }
 
-        internal bool isSafeDll(String path)
+        public bool isSafeDll(String path)
         {
 #if ALLOW_OVERRIDE
             if (MedicalConfig.AllowUnsignedDllPlugins)

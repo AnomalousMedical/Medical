@@ -19,9 +19,9 @@ namespace Medical
         private String additionalSearchPath;
         private HashSet<String> loadedDependencyNames = new HashSet<string>();
 
-        private PluginVerifier dataFileVerifier;
+        private DataFileVerifier dataFileVerifier;
 
-        public AtlasDependencyManager(StandaloneController standaloneController, PluginVerifier dataFileVerifier)
+        public AtlasDependencyManager(StandaloneController standaloneController, DataFileVerifier dataFileVerifier)
         {
             this.dataFileVerifier = dataFileVerifier;
             this.standaloneController = standaloneController;
