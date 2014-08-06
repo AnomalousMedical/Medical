@@ -41,7 +41,7 @@ namespace Medical
                 }
                 else
                 {
-                    MessageBox.show("Error running slideshow {0}. It was created in a different version of Anomalous Medical.\nPlease make sure everything is up to date on your computer.", "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                    MessageBox.show(String.Format("Cannot run slideshow \"{0}.\" It was created in a different version of Anomalous Medical.\nYou will need to download an updated version.", Name), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                     InlineRmlUpgradeCache.removeSlideshowPanels(slideshow);
                 }
             }
