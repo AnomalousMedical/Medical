@@ -15,7 +15,6 @@ namespace Developer
     {
         private ExamViewer examViewer;
         private DataFilePublisher dataFilePublisher;
-        private DataPublishController pluginPublishController;
         private DeveloperRenderPropertiesDialog developerRenderer;
         private DiscControl discControl;
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
@@ -54,8 +53,6 @@ namespace Developer
 
         public void initialize(StandaloneController standaloneController)
         {
-            pluginPublishController = new DataPublishController();
-
             GUIManager guiManager = standaloneController.GUIManager;
 
             //UI Helpers
@@ -65,7 +62,7 @@ namespace Developer
             examViewer = new ExamViewer(standaloneController.ExamController);
             guiManager.addManagedDialog(examViewer);
 
-            dataFilePublisher = new DataFilePublisher(pluginPublishController);
+            dataFilePublisher = new DataFilePublisher();
             guiManager.addManagedDialog(dataFilePublisher);
 
             developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, guiManager, standaloneController.NotificationManager);

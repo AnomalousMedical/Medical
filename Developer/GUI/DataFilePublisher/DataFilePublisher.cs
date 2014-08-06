@@ -22,13 +22,9 @@ namespace Developer.GUI
         private EditBox counterSignatureFileEdit;
         private EditBox counterSignaturePassword;
 
-        private DataPublishController dataPublishController;
-
-        public DataFilePublisher(DataPublishController dataPublishController)
+        public DataFilePublisher()
             : base("Developer.GUI.DataFilePublisher.DataFilePublisher.layout")
         {
-            this.dataPublishController = dataPublishController;
-
             pluginFileEdit = (EditBox)window.findWidget("PluginFileEdit");
             signatureFileEdit = (EditBox)window.findWidget("SignatureFileEdit");
             signatureFileEdit.Caption = DeveloperConfig.LastPluginKey;
@@ -97,7 +93,14 @@ namespace Developer.GUI
         {
             try
             {
-                dataPublishController.publishDataFile(dataDefinitionPath, signatureFileEdit.OnlyText, certPasswordEdit.OnlyText, counterSignatureFileEdit.OnlyText, counterSignaturePassword.OnlyText, outDirEdit.OnlyText);
+                var dataPublishController = new DataPublishController()
+                    {
+                        SignatureFile = signatureFileEdit.OnlyText,
+                        SignatureFilePassword = certPasswordEdit.OnlyText,
+                        CounterSignatureFile = counterSignatureFileEdit.OnlyText,
+                        CounterSignaturePassword = counterSignaturePassword.OnlyText
+                    };
+                dataPublishController.publishDataFile(dataDefinitionPath, outDirEdit.OnlyText);
             }
             catch (Exception ex)
             {

@@ -24,7 +24,15 @@ namespace Developer
             
         }
 
-        public void publishDataFile(String dataDefinitionPath, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, String outDirectory)
+        public String SignatureFile { get; set; }
+
+        public String SignatureFilePassword { get; set; }
+
+        public String CounterSignatureFile { get; set; }
+
+        public String CounterSignaturePassword { get; set; }
+
+        public void publishDataFile(String dataDefinitionPath, String outDirectory)
         {
             try
             {
@@ -39,7 +47,7 @@ namespace Developer
 
                         if (plugin != null)
                         {
-                            findFiles(dataDefinitionPath, "Plugins", certFile, certFilePassword, counterSignatureFile, counterSignaturePassword, outDirectory, plugin.PluginNamespace);
+                            findFiles(dataDefinitionPath, "Plugins", outDirectory, plugin.PluginNamespace);
                         }
                         break;
                     case ".ddd":
@@ -51,7 +59,7 @@ namespace Developer
 
                         if (dependency != null)
                         {
-                            findFiles(dataDefinitionPath, "Dependencies", certFile, certFilePassword, counterSignatureFile, counterSignaturePassword, outDirectory, dependency.DependencyNamespace);
+                            findFiles(dataDefinitionPath, "Dependencies", outDirectory, dependency.DependencyNamespace);
                         }
                         break;
                 }
@@ -62,7 +70,7 @@ namespace Developer
             }
         }
 
-        private void findFiles(String dataFileDefinitionPath, String destinationBasePath, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, String outDirectory, String dataNamespace)
+        private void findFiles(String dataFileDefinitionPath, String destinationBasePath, String outDirectory, String dataNamespace)
         {
             String dataBasePath = Path.GetDirectoryName(dataFileDefinitionPath);
 
@@ -78,10 +86,10 @@ namespace Developer
             {
                 Directory.CreateDirectory(outDirectory);
             }
-            copyResources(dataNamespace, dataBasePath, destinationBasePath, outDirectory, certFile, certFilePassword, counterSignatureFile, counterSignaturePassword, true, true);
+            copyResources(dataNamespace, dataBasePath, destinationBasePath, outDirectory, true, true);
         }
 
-        private void copyResources(String dataNamespace, String originalBasePath, String destinationBasePath, String targetDirectory, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, bool compress, bool obfuscate)
+        private void copyResources(String dataNamespace, String originalBasePath, String destinationBasePath, String targetDirectory, bool compress, bool obfuscate)
         {
             String archiveName = dataNamespace;
             originalBasePath = Path.GetFullPath(originalBasePath) + Path.DirectorySeparatorChar;
@@ -138,15 +146,15 @@ namespace Developer
                     File.Delete(zipFileName);
 
                     //Sign the file
-                    signDataFile(obfuscateFileName, certFile, certFilePassword, counterSignatureFile, counterSignaturePassword);
+                    signDataFile(obfuscateFileName);
                 }
             }
         }
 
-        private static void signDataFile(String dataFile, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword)
+        private void signDataFile(String dataFile)
         {
             String signedFile = Path.Combine(Path.GetDirectoryName(dataFile), "Signed_" + Path.GetFileName(dataFile));
-            SignedDataFile.SignDataFile(dataFile, signedFile, CryptoHelper.LoadPkcs12(certFile, certFilePassword), CryptoHelper.LoadPkcs12(counterSignatureFile, counterSignaturePassword));
+            SignedDataFile.SignDataFile(dataFile, signedFile, CryptoHelper.LoadPkcs12(SignatureFile, SignatureFilePassword), CryptoHelper.LoadPkcs12(CounterSignatureFile, CounterSignaturePassword));
             File.Delete(dataFile);
             File.Move(signedFile, dataFile);
         }
