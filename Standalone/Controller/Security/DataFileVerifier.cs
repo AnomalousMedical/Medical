@@ -22,16 +22,20 @@ namespace Medical
         public DataFileVerifier(CertificateStore certificateStore)
         {
             this.certificateStore = certificateStore;
+            AllowUnsignedDataFiles = false;
+            AllowUnsignedDlls = false;
         }
+
+        public bool AllowUnsignedDataFiles { get; set; }
+
+        public bool AllowUnsignedDlls { get; set; }
 
         public bool isSafeDataFile(String file)
         {
-#if ALLOW_OVERRIDE
-            if (MedicalConfig.AllowUnsignedDataFilePlugins)
+            if (AllowUnsignedDataFiles)
             {
                 return true;
             }
-#endif
 
             bool valid = false;
             SignedDataFile signedFile = new SignedDataFile(certificateStore);
@@ -82,12 +86,10 @@ namespace Medical
 
         public bool isSafeDll(String path)
         {
-#if ALLOW_OVERRIDE
-            if (MedicalConfig.AllowUnsignedDllPlugins)
+            if (AllowUnsignedDlls)
             {
                 return true;
             }
-#endif
 
             bool safe = false;
             AuthenticodeDeformatter ad = new AuthenticodeDeformatter();

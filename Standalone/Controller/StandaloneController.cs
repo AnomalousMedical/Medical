@@ -192,6 +192,10 @@ namespace Medical
             this.background = background;
 
             var dataFileVerifier = new DataFileVerifier(CertificateStoreManager.CertificateStore);
+#if ALLOW_OVERRIDE
+            dataFileVerifier.AllowUnsignedDataFiles = MedicalConfig.AllowUnsignedDataFilePlugins;
+            dataFileVerifier.AllowUnsignedDlls = MedicalConfig.AllowUnsignedDllPlugins;
+#endif
 
             atlasPluginManager = new AtlasPluginManager(this, dataFileVerifier);
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
