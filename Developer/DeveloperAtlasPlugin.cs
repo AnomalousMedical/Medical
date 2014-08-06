@@ -14,7 +14,7 @@ namespace Developer
     class DeveloperAtlasPlugin : AtlasPlugin
     {
         private ExamViewer examViewer;
-        private PluginPublisher pluginPublisher;
+        private DataFilePublisher dataFilePublisher;
         private DataPublishController pluginPublishController;
         private DeveloperRenderPropertiesDialog developerRenderer;
         private DiscControl discControl;
@@ -40,7 +40,7 @@ namespace Developer
             measurementGUI.Dispose();
             advancedMandibleMovement.Dispose();
             examViewer.Dispose();
-            pluginPublisher.Dispose();
+            dataFilePublisher.Dispose();
             developerRenderer.Dispose();
             discControl.Dispose();
             gridProperties.Dispose();
@@ -65,8 +65,8 @@ namespace Developer
             examViewer = new ExamViewer(standaloneController.ExamController);
             guiManager.addManagedDialog(examViewer);
 
-            pluginPublisher = new PluginPublisher(pluginPublishController);
-            guiManager.addManagedDialog(pluginPublisher);
+            dataFilePublisher = new DataFilePublisher(pluginPublishController);
+            guiManager.addManagedDialog(dataFilePublisher);
 
             developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, guiManager, standaloneController.NotificationManager);
             guiManager.addManagedDialog(developerRenderer);
@@ -95,7 +95,7 @@ namespace Developer
 
             taskController.addTask(new MDIDialogOpenTask(examViewer, "Medical.ExamViewer", "Exam Viewer", "Developer.ExamIcon", TaskMenuCategories.Developer, 4));
 
-            taskController.addTask(new MDIDialogOpenTask(pluginPublisher, "Developer.PluginPublisher", "Plugin Publisher", "Developer.PublisherIcon", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(dataFilePublisher, "Developer.DataFilePublisher", "Data File Publisher", "Developer.PublisherIcon", TaskMenuCategories.Developer));
 
             taskController.addTask(new MDIDialogOpenTask(developerRenderer, "Developer.DeveloperRender", "Developer Renderer", "Developer.RenderIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "Developer.DiscEditorIcon", TaskMenuCategories.Developer));

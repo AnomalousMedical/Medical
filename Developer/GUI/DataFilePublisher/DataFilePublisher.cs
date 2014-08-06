@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Developer.GUI
 {
-    class PluginPublisher : MDIDialog
+    class DataFilePublisher : MDIDialog
     {
         private const String PLUGIN_WILDCARD = "Data Driven Definition|*.ddp;*.ddd";
         private const String SIGNATURE_WILDCARD = "Personal Information Exchange (*.p12)|*.p12|All Files|*.*";
@@ -24,8 +24,8 @@ namespace Developer.GUI
 
         private DataPublishController dataPublishController;
 
-        public PluginPublisher(DataPublishController dataPublishController)
-            :base("Developer.GUI.PluginPublisher.PluginPublisher.layout")
+        public DataFilePublisher(DataPublishController dataPublishController)
+            : base("Developer.GUI.DataFilePublisher.DataFilePublisher.layout")
         {
             this.dataPublishController = dataPublishController;
 

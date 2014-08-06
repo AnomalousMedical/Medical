@@ -105,7 +105,7 @@
     <Compile Include="GUI\GridPropertiesDialog\GridPropertiesDialog.cs" />
     <Compile Include="GUI\Measurement\MeasurementGUI.cs" />
     <Compile Include="GUI\Performance\PerformanceGui.cs" />
-    <Compile Include="GUI\PluginPublisher\PluginPublisher.cs" />
+    <Compile Include="GUI\DataFilePublisher\DataFilePublisher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\ChangeRenderingMode.cs" />
     <Compile Include="Tasks\DisablePhysicsTask.cs" />
@@ -131,7 +131,7 @@
     <EmbeddedResource Include="Resources\DeveloperImagesets.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\PluginPublisher\PluginPublisher.layout" />
+    <EmbeddedResource Include="GUI\DataFilePublisher\DataFilePublisher.layout" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
