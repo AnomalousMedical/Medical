@@ -24,8 +24,7 @@ namespace Developer.GUI
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
 
-        private ResizingTable table;
-        private PropertiesTable propTable;
+        private PropertiesForm propertiesForm;
 
         private ObjectEditor objectEditor;
 
@@ -42,10 +41,9 @@ namespace Developer.GUI
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);
 
-            table = new ResizingTable((ScrollView)window.findWidget("TableScroller"));
-            propTable = new PropertiesTable(table);
+            propertiesForm = new ScrollablePropertiesForm((ScrollView)window.findWidget("TableScroller"), uiCallback);
 
-            objectEditor = new ObjectEditor(editTreeView, propTable, uiCallback);
+            objectEditor = new ObjectEditor(editTreeView, propertiesForm, uiCallback);
 
             this.Resized += DebugVisualizer_Resized;
 
@@ -55,8 +53,7 @@ namespace Developer.GUI
         public override void Dispose()
         {
             objectEditor.Dispose();
-            propTable.Dispose();
-            table.Dispose();
+            propertiesForm.Dispose();
             editTreeView.Dispose();
             tree.Dispose();
             base.Dispose();
@@ -132,7 +129,7 @@ namespace Developer.GUI
         void DebugVisualizer_Resized(object sender, EventArgs e)
         {
             tree.layout();
-            table.layout();
+            propertiesForm.layout();
         }
 
         bool canParseBool(String str)
