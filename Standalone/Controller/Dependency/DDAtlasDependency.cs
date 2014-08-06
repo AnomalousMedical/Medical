@@ -42,7 +42,7 @@ namespace Medical
                     var resourceGroup = subsystemResources.addResourceGroup(DependencyNamespace);
                     foreach (var resource in resources)
                     {
-                        var engineResource = resourceGroup.addResource(resource.Path, resource.Recursive);
+                        var engineResource = resourceGroup.addResource(Path.Combine(dependencyPath, resource.Path), resource.Recursive);
                     }
                 }
 
