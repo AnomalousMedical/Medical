@@ -25,11 +25,13 @@ namespace Medical
         public void addTrack(ShowPropSubActionPrototype prototype)
         {
             trackData.Add(prototype);
+            onTrackAdded(prototype);
         }
 
         public void removeTrack(ShowPropSubActionPrototype prototype)
         {
             trackData.Remove(prototype);
+            onTrackRemoved(prototype);
         }
 
         public IEnumerable<ShowPropSubActionPrototype> Tracks
@@ -50,6 +52,7 @@ namespace Medical
             info.ExtractList("Track", trackData);
         }
 
+        private EditInterfaceManager<ShowPropSubActionPrototype> trackPrototypeManager;
         private EditInterface editInterface;
         public EditInterface EditInterface
         {
@@ -58,12 +61,57 @@ namespace Medical
                 if(editInterface == null)
                 {
                     editInterface = new EditInterface("Timeline Tracks");
+                    editInterface.addCommand(new EditInterfaceCommand("Add Track", addTrack));
+                    trackPrototypeManager = new EditInterfaceManager<ShowPropSubActionPrototype>(editInterface);
                     foreach(var track in trackData)
                     {
-                        editInterface.addSubInterface(track.EditInterface);
+                        onTrackAdded(track);
                     }
                 }
                 return editInterface;
+            }
+        }
+
+        private void addTrack(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            callback.getInputString("Enter a name for the track.", delegate(String trackName, ref String trackErrorPrompt)
+            {
+                if (String.IsNullOrEmpty(trackName))
+                {
+                    trackErrorPrompt = "You must enter a name for the track.";
+                    return false;
+                }
+
+                TypeBrowser browser = new TypeBrowser("Track Types", "Choose a track type", typeof(ShowPropSubAction));
+                callback.showBrowser(browser, delegate(Type resultType, ref String typeBrowseErrorPrompt)
+                {
+                    addTrack(new ShowPropSubActionPrototype(resultType, trackName));
+                    return true;
+                });
+
+                return true;
+            });
+        }
+
+        private void removeTrack(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            removeTrack(trackPrototypeManager.resolveSourceObject(callback.getSelectedEditInterface()));
+        }
+
+        private void onTrackAdded(ShowPropSubActionPrototype prototype)
+        {
+            if (editInterface != null)
+            {
+                trackPrototypeManager.addSubInterface(prototype, prototype.EditInterface);
+                prototype.EditInterface.addCommand(new EditInterfaceCommand("Remove", removeTrack));
+            }
+        }
+
+        private void onTrackRemoved(ShowPropSubActionPrototype prototype)
+        {
+            if(editInterface != null)
+            {
+                trackPrototypeManager.removeSubInterface(prototype);
             }
         }
     }
