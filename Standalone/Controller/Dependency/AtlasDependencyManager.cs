@@ -19,8 +19,11 @@ namespace Medical
         private String additionalSearchPath;
         private HashSet<String> loadedDependencyNames = new HashSet<string>();
 
-        public AtlasDependencyManager(StandaloneController standaloneController)
+        private PluginVerifier dataFileVerifier;
+
+        public AtlasDependencyManager(StandaloneController standaloneController, PluginVerifier dataFileVerifier)
         {
+            this.dataFileVerifier = dataFileVerifier;
             this.standaloneController = standaloneController;
             additionalSearchPath = FolderFinder.ExecutableFolder;
         }
@@ -51,8 +54,45 @@ namespace Medical
             }
 
             //put file load code here
+            if (File.Exists(fullPath))
+            {
+                if (dataFileVerifier.isSafeDataFile(fullPath))
+                {
+                    String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
+                    try
+                    {
+                        if (!loadedDependencyNames.Contains(dataFileName))
+                        {
+                            //Add the archive to the VirtualFileSystem if needed
+                            if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
+                            {
+                                VirtualFileSystem.Instance.addArchive(fullPath);
+                            }
+                            dependencyDirectory = String.Format("Dependencies/{0}/", Path.GetFileNameWithoutExtension(path));
 
-            if (Directory.Exists(fullPath))
+                            loadedDependencyNames.Add(dataFileName);
+                        }
+                        else
+                        {
+                            Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
+                        }
+                    }
+                    catch (ZipAccess.ZipIOException e)
+                    {
+                        fireLoadError(String.Format("There was an error loading the plugin '{0}'.", dataFileName));
+                        Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
+                        try
+                        {
+                            File.Delete(fullPath);
+                        }
+                        catch (Exception deleteEx)
+                        {
+                            Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
+                        }
+                    }
+                }
+            }
+            else if (Directory.Exists(fullPath))
             {
                 String directoryName = Path.GetFileName(Path.GetDirectoryName(fullPath));
                 if (!loadedDependencyNames.Contains(directoryName))

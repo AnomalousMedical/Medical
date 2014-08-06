@@ -37,15 +37,11 @@ namespace Medical
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
 
-        private PluginVerifier pluginVerifier = new PluginVerifier(CertificateStoreManager.CertificateStore);
+        private PluginVerifier pluginVerifier;
 
-        static AtlasPluginManager()
+        public AtlasPluginManager(StandaloneController standaloneController, PluginVerifier pluginVerifier)
         {
-            
-        }
-
-        public AtlasPluginManager(StandaloneController standaloneController)
-        {
+            this.pluginVerifier = pluginVerifier;
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;

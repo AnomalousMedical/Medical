@@ -12,7 +12,7 @@ namespace Developer.GUI
 {
     class PluginPublisher : MDIDialog
     {
-        private const String PLUGIN_WILDCARD = "Data Driven Plugin (*.ddp)|*.ddp";
+        private const String PLUGIN_WILDCARD = "Data Driven Definition|*.ddp;*.ddd";
         private const String SIGNATURE_WILDCARD = "Personal Information Exchange (*.p12)|*.p12|All Files|*.*";
 
         private EditBox pluginFileEdit;
@@ -22,12 +22,12 @@ namespace Developer.GUI
         private EditBox counterSignatureFileEdit;
         private EditBox counterSignaturePassword;
 
-        private PluginPublishController pluginPublishController;
+        private DataPublishController dataPublishController;
 
-        public PluginPublisher(PluginPublishController pluginPublishController)
+        public PluginPublisher(DataPublishController dataPublishController)
             :base("Developer.GUI.PluginPublisher.PluginPublisher.layout")
         {
-            this.pluginPublishController = pluginPublishController;
+            this.dataPublishController = dataPublishController;
 
             pluginFileEdit = (EditBox)window.findWidget("PluginFileEdit");
             signatureFileEdit = (EditBox)window.findWidget("SignatureFileEdit");
@@ -59,19 +59,27 @@ namespace Developer.GUI
         {
             try
             {
-                String pluginName = pluginFileEdit.OnlyText;
-                if (File.Exists(pluginName))
+                String dataDefinitionName = pluginFileEdit.OnlyText;
+                if (File.Exists(dataDefinitionName))
                 {
-                    doPublish(pluginName);
+                    doPublish(dataDefinitionName);
                 }
-                else if(Directory.Exists(pluginName))
+                else if(Directory.Exists(dataDefinitionName))
                 {
-                    foreach (String directory in Directory.GetDirectories(pluginName))
+                    foreach (String directory in Directory.GetDirectories(dataDefinitionName))
                     {
-                        String ddpPath = Path.Combine(directory, "Plugin.ddp");
-                        if (File.Exists(ddpPath))
+                        String defPath = Path.Combine(directory, "Plugin.ddp");
+                        if (File.Exists(defPath))
                         {
-                            doPublish(ddpPath);
+                            doPublish(defPath);
+                        }
+                        else
+                        {
+                            defPath = Path.Combine(directory, "Dependency.ddd");
+                            if (File.Exists(defPath))
+                            {
+                                doPublish(defPath);
+                            }
                         }
                     }
                 }
@@ -85,11 +93,11 @@ namespace Developer.GUI
             }
         }
 
-        void doPublish(String pluginName)
+        void doPublish(String dataDefinitionPath)
         {
             try
             {
-                pluginPublishController.publishPlugin(pluginName, signatureFileEdit.OnlyText, certPasswordEdit.OnlyText, counterSignatureFileEdit.OnlyText, counterSignaturePassword.OnlyText, outDirEdit.OnlyText);
+                dataPublishController.publishDataFile(dataDefinitionPath, signatureFileEdit.OnlyText, certPasswordEdit.OnlyText, counterSignatureFileEdit.OnlyText, counterSignaturePassword.OnlyText, outDirEdit.OnlyText);
             }
             catch (Exception ex)
             {

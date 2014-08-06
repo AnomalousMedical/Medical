@@ -12,43 +12,48 @@ using Anomalous.Security;
 
 namespace Developer
 {
-    class PluginPublishController
+    /// <summary>
+    /// This class can publish data files, either dependency (.ddd) files or plugin (.ddp) files.
+    /// </summary>
+    class DataPublishController
     {
-        private AtlasPluginManager pluginManager;
         private List<FileInfo> files = new List<FileInfo>();
 
-        public PluginPublishController(AtlasPluginManager pluginManager)
+        public DataPublishController()
         {
-            this.pluginManager = pluginManager;
+            
         }
 
-        public void publishPlugin(String pluginFile, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, String outDirectory)
+        public void publishDataFile(String dataDefinitionPath, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, String outDirectory)
         {
             try
             {
-                DDAtlasPlugin plugin = null;
-                using (Stream stream = File.Open(pluginFile, FileMode.Open))
-                {
-                    plugin = SharedXmlSaver.Load<DDAtlasPlugin>(stream);
-                }
+                switch(Path.GetExtension(dataDefinitionPath).ToLowerInvariant())
+                { 
+                    case ".ddp":
+                        DDAtlasPlugin plugin = null;
+                        using (Stream stream = File.Open(dataDefinitionPath, FileMode.Open))
+                        {
+                            plugin = SharedXmlSaver.Load<DDAtlasPlugin>(stream);
+                        }
 
-                if (plugin != null)
-                {
-                    String pluginPath = Path.GetDirectoryName(pluginFile);
+                        if (plugin != null)
+                        {
+                            findFiles(dataDefinitionPath, "Plugins", certFile, certFilePassword, counterSignatureFile, counterSignaturePassword, outDirectory, plugin.PluginNamespace);
+                        }
+                        break;
+                    case ".ddd":
+                        DDAtlasDependency dependency = null;
+                        using (Stream stream = File.Open(dataDefinitionPath, FileMode.Open))
+                        {
+                            dependency = SharedXmlSaver.Load<DDAtlasDependency>(stream);
+                        }
 
-                    //Scan files
-                    String[] pluginFiles = Directory.GetFiles(pluginPath, "*", SearchOption.AllDirectories);
-                    foreach (String file in pluginFiles)
-                    {
-                        addFile(new FileInfo(file));
-                    }
-
-                    //Copy Files, build plugin
-                    if (!Directory.Exists(outDirectory))
-                    {
-                        Directory.CreateDirectory(outDirectory);
-                    }
-                    copyResources(plugin, Path.GetDirectoryName(pluginFile), outDirectory, pluginFile, certFile, certFilePassword, counterSignatureFile, counterSignaturePassword, true, true);
+                        if (dependency != null)
+                        {
+                            findFiles(dataDefinitionPath, "Dependencies", certFile, certFilePassword, counterSignatureFile, counterSignaturePassword, outDirectory, dependency.DependencyNamespace);
+                        }
+                        break;
                 }
             }
             finally
@@ -57,24 +62,47 @@ namespace Developer
             }
         }
 
-        private void copyResources(DDAtlasPlugin plugin, String basePath, String targetDirectory, String pluginFile, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, bool compress, bool obfuscate)
+        private void findFiles(String dataFileDefinitionPath, String destinationBasePath, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, String outDirectory, String dataNamespace)
         {
-            String archiveName = plugin.PluginNamespace;
-            basePath = Path.GetFullPath(basePath) + Path.DirectorySeparatorChar;
+            String dataBasePath = Path.GetDirectoryName(dataFileDefinitionPath);
+
+            //Scan files
+            String[] pluginFiles = Directory.GetFiles(dataBasePath, "*", SearchOption.AllDirectories);
+            foreach (String file in pluginFiles)
+            {
+                addFile(new FileInfo(file));
+            }
+
+            //Copy Files, build data file
+            if (!Directory.Exists(outDirectory))
+            {
+                Directory.CreateDirectory(outDirectory);
+            }
+            copyResources(dataNamespace, dataBasePath, destinationBasePath, outDirectory, certFile, certFilePassword, counterSignatureFile, counterSignaturePassword, true, true);
+        }
+
+        private void copyResources(String dataNamespace, String originalBasePath, String destinationBasePath, String targetDirectory, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword, bool compress, bool obfuscate)
+        {
+            String archiveName = dataNamespace;
+            originalBasePath = Path.GetFullPath(originalBasePath) + Path.DirectorySeparatorChar;
             String originalDirectory = targetDirectory;
             String zipTempDirectory = null;
             if (compress)
             {
                 targetDirectory += "/zipTemp";
                 zipTempDirectory = targetDirectory;
+                if(Directory.Exists(targetDirectory))
+                {
+                    Directory.Delete(targetDirectory, true);
+                }
             }
 
-            targetDirectory = Path.Combine(targetDirectory, "Plugins", plugin.PluginNamespace);
+            targetDirectory = Path.Combine(targetDirectory, destinationBasePath, dataNamespace);
 
             Log.Info("Starting file copy to {0}", targetDirectory);
             foreach (FileInfo sourceFile in files)
             {
-                String destination = Path.Combine(targetDirectory, sourceFile.FullName.Replace(basePath, ""));
+                String destination = Path.Combine(targetDirectory, sourceFile.FullName.Replace(originalBasePath, ""));
                 String directory = Path.GetDirectoryName(destination);
                 if (!Directory.Exists(directory))
                 {
@@ -110,12 +138,12 @@ namespace Developer
                     File.Delete(zipFileName);
 
                     //Sign the file
-                    signPluginFile(obfuscateFileName, certFile, certFilePassword, counterSignatureFile, counterSignaturePassword);
+                    signDataFile(obfuscateFileName, certFile, certFilePassword, counterSignatureFile, counterSignaturePassword);
                 }
             }
         }
 
-        private static void signPluginFile(String dataFile, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword)
+        private static void signDataFile(String dataFile, String certFile, String certFilePassword, String counterSignatureFile, String counterSignaturePassword)
         {
             String signedFile = Path.Combine(Path.GetDirectoryName(dataFile), "Signed_" + Path.GetFileName(dataFile));
             SignedDataFile.SignDataFile(dataFile, signedFile, CryptoHelper.LoadPkcs12(certFile, certFilePassword), CryptoHelper.LoadPkcs12(counterSignatureFile, counterSignaturePassword));

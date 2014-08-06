@@ -15,7 +15,7 @@ namespace Developer
     {
         private ExamViewer examViewer;
         private PluginPublisher pluginPublisher;
-        private PluginPublishController pluginPublishController;
+        private DataPublishController pluginPublishController;
         private DeveloperRenderPropertiesDialog developerRenderer;
         private DiscControl discControl;
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
@@ -54,7 +54,7 @@ namespace Developer
 
         public void initialize(StandaloneController standaloneController)
         {
-            pluginPublishController = new PluginPublishController(standaloneController.AtlasPluginManager);
+            pluginPublishController = new DataPublishController();
 
             GUIManager guiManager = standaloneController.GUIManager;
 

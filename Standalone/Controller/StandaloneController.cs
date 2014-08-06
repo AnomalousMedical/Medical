@@ -191,11 +191,13 @@ namespace Medical
             //Background
             this.background = background;
 
-            atlasPluginManager = new AtlasPluginManager(this);
+            var pluginVerifier = new PluginVerifier(CertificateStoreManager.CertificateStore);
+
+            atlasPluginManager = new AtlasPluginManager(this, pluginVerifier);
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             atlasPluginManager.manageInstalledPlugins();
 
-            atlasDependencyManager = new AtlasDependencyManager(this);
+            atlasDependencyManager = new AtlasDependencyManager(this, pluginVerifier);
             //Handle errors
 
             clipboard = new SaveableClipboard();
