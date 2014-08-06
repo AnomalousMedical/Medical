@@ -15,6 +15,12 @@ namespace Medical.GUI
         private EditInterfaceTreeView editTreeView;
 
         private PropertiesForm propertiesForm;
+        private AddRemoveButtons addRemoveButtons;
+        private ScrollView tableScroller;
+        private ResizingTable table;
+        private PropertiesTable propTable;
+
+        private ContextualPropertiesEditor contextualProperties;
 
         private ObjectEditor objectEditor;
 
@@ -36,12 +42,19 @@ namespace Medical.GUI
             //This class does not use the add / remove buttons from the layout, so hide them
             Widget addRemovePanel = widget.findWidget("AddRemovePanel");
             addRemovePanel.Visible = false;
-            ScrollView tableScroller = (ScrollView)widget.findWidget("TableScroller");
-            tableScroller.Height = widget.Height - tableScroller.Top;
+
+            tableScroller = (ScrollView)widget.findWidget("TableScroller");
+            table = new ResizingTable(tableScroller);
+            addRemoveButtons = new AddRemoveButtons((Button)widget.findWidget("Add"), (Button)widget.findWidget("Remove"), widget.findWidget("AddRemovePanel"));
+            addRemoveButtons.VisibilityChanged += addRemoveButtons_VisibilityChanged;
+            addRemoveButtons_VisibilityChanged(addRemoveButtons, addRemoveButtons.Visible);
+            propTable = new PropertiesTable(table, genericEditorView.EditUICallback, addRemoveButtons);
 
             propertiesForm = new ScrollablePropertiesForm(tableScroller, genericEditorView.EditUICallback);
 
-            objectEditor = new ObjectEditor(editTreeView, propertiesForm, genericEditorView.EditUICallback);
+            contextualProperties = new ContextualPropertiesEditor(propertiesForm, propTable);
+
+            objectEditor = new ObjectEditor(editTreeView, contextualProperties, genericEditorView.EditUICallback);
 
             EditInterfaceHandler editInterfaceHandler = viewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
             if (editInterfaceHandler != null)
@@ -63,6 +76,8 @@ namespace Medical.GUI
             }
             objectEditor.Dispose();
             propertiesForm.Dispose();
+            propTable.Dispose();
+            table.Dispose();
             editTreeView.Dispose();
             tree.Dispose();
             base.Dispose();
@@ -84,7 +99,14 @@ namespace Medical.GUI
         {
             base.topLevelResized();
             tree.layout();
-            propertiesForm.layout();
+            if(contextualProperties.CurrentEditor == propertiesForm)
+            {
+                propertiesForm.layout();
+            }
+            else
+            {
+                table.layout();
+            }
         }
 
         public void cut()
@@ -117,6 +139,18 @@ namespace Medical.GUI
                 {
                     editMenuManager.setMenuProvider(this);
                 }
+            }
+        }
+
+        void addRemoveButtons_VisibilityChanged(AddRemoveButtons source, bool visible)
+        {
+            if (visible)
+            {
+                tableScroller.Height = widget.Height - addRemoveButtons.Height;
+            }
+            else
+            {
+                tableScroller.Height = widget.Height - tableScroller.Top;
             }
         }
     }

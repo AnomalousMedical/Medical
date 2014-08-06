@@ -161,15 +161,15 @@ namespace Medical
                 if (editInterface == null)
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "DDAtlasDependency", null);
-                }
 
-                resourceLocationsEdit = new EditInterface("Resource Locations", addResource, removeResource);
-                resourceLocationsEdit.setPropertyInfo(AtlasDependencyResource.Info);
-                foreach (var resource in resources)
-                {
-                    resourceLocationsEdit.addEditableProperty(resource);
+                    resourceLocationsEdit = new EditInterface("Resource Locations", addResource, removeResource);
+                    resourceLocationsEdit.setPropertyInfo(AtlasDependencyResource.Info);
+                    foreach (var resource in resources)
+                    {
+                        resourceLocationsEdit.addEditableProperty(resource);
+                    }
+                    editInterface.addSubInterface(resourceLocationsEdit);
                 }
-                editInterface.addSubInterface(resourceLocationsEdit);
 
                 return editInterface;
             }

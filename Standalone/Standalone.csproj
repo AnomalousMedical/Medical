@@ -294,6 +294,7 @@
     <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplate.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplateAdapter.cs" />
     <Compile Include="GUI\Editor\CommonEditorResources.cs" />
+    <Compile Include="GUI\Editor\ContextualPropertiesEditor.cs" />
     <Compile Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropTaskManager.cs" />
     <Compile Include="GUI\Editor\ImageBrowserWindow.cs" />

@@ -117,6 +117,10 @@ namespace Medical.GUI
                 {
                     currentPropInfo = null;
                     currentEditInterface = null;
+                    if (addRemoveButtons != null)
+                    {
+                        addRemoveButtons.Visible = false;
+                    }
                 }
                 allowValidation = true;
             }

@@ -42,7 +42,7 @@ namespace Medical
 
             mvcContext.Models.add(new EditMenuManager());
 
-            GenericEditorView genericPropertiesView = new GenericEditorView("MvcContext", plugin.EditInterface, uiCallback, editorController, true);
+            GenericPropertiesFormView genericPropertiesView = new GenericPropertiesFormView("MvcContext", plugin.EditInterface, editorController, uiCallback, true);
             genericPropertiesView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left);
             mvcContext.Views.add(genericPropertiesView);
 
