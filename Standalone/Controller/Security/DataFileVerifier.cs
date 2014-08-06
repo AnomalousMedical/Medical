@@ -32,12 +32,7 @@ namespace Medical
 
         public bool isSafeDataFile(String file)
         {
-            if (AllowUnsignedDataFiles)
-            {
-                return true;
-            }
-
-            bool valid = false;
+            bool valid = AllowUnsignedDataFiles;
             SignedDataFile signedFile = new SignedDataFile(certificateStore);
             switch (signedFile.isTrustedFile(file))
             {
@@ -86,12 +81,7 @@ namespace Medical
 
         public bool isSafeDll(String path)
         {
-            if (AllowUnsignedDlls)
-            {
-                return true;
-            }
-
-            bool safe = false;
+            bool safe = AllowUnsignedDlls;
             AuthenticodeDeformatter ad = new AuthenticodeDeformatter();
             ad.SetupX509Chains += ad_SetupX509Chains;
             ad.FileName = path; //Must do this here because it does the check when the file is set.
