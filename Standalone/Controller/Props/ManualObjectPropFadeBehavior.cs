@@ -15,9 +15,8 @@ namespace Medical
     {
         private ManualObject entity;
         private ManualObjectSection subEntity;
-        private String entityName = PropFactory.ManualObjectName;
 
-        protected override void constructed()
+        protected override void link()
         {
             SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
             if (sceneNode == null)
@@ -31,7 +30,7 @@ namespace Medical
             }
             if (subEntityIndex >= entity.getNumSections())
             {
-                blacklist("Entity {0} only has {1} SubEntities. Index {3} is invalid.", entity.getName(), entity.getNumSections(), subEntityIndex);
+                blacklist("Entity {0} only has {1} SubEntities. Index {2} is invalid.", entity.getName(), entity.getNumSections(), subEntityIndex);
             }
             subEntity = entity.getSection(subEntityIndex);
             baseMaterialName = subEntity.getMaterialName();

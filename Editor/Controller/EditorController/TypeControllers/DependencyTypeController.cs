@@ -50,7 +50,8 @@ namespace Medical
         {
             DDAtlasDependency newDep = new DDAtlasDependency()
                 {
-                    VersionString = "1.0.0.0"
+                    VersionString = "1.0.0.0",
+                    PropDefinitionDirectory = "PropDefinitions"
                 };
             creatingNewFile(filePath);
             saveObject(filePath, newDep);

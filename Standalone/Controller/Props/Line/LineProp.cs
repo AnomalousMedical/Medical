@@ -25,7 +25,10 @@ namespace Medical
             LineProp behavior = new LineProp();
             BehaviorDefinition behaviorDef = new BehaviorDefinition(BehaviorName, behavior);
             simObject.addElement(behaviorDef);
-            PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior();
+            PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior()
+            {
+                EntityName = PropFactory.ManualObjectName
+            };
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             simObject.addElement(propFadeBehaviorDef);
             PropDefinition propDefinition = new PropDefinition(simObject)

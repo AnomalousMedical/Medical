@@ -4,6 +4,7 @@ using Engine.Resources;
 using Engine.Saving;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Medical
 
         public DDAtlasDependency()
         {
-
+            
         }
 
         public void Dispose()
@@ -31,6 +32,8 @@ namespace Medical
 
         public void initialize(StandaloneController standaloneController)
         {
+            String dependencyPath = Path.Combine("Dependencies", DependencyNamespace);
+
             if (resources.Count > 0)
             {
                 var resourceManager = PluginManager.Instance.createEmptyResourceManager();
@@ -45,6 +48,22 @@ namespace Medical
 
                 PluginManager.Instance.PersistentResourceManager.addResources(resourceManager);
                 PluginManager.Instance.PersistentResourceManager.forceResourceRefresh();
+            }
+
+            if (PropDefinitionDirectory != null)
+            {
+                String fullPropPath = Path.Combine(dependencyPath, PropDefinitionDirectory);
+                if (VirtualFileSystem.Instance.exists(fullPropPath))
+                {
+                    foreach (var propPath in VirtualFileSystem.Instance.listFiles(fullPropPath, "*.prop", false))
+                    {
+                        using (var stream = VirtualFileSystem.Instance.openStream(propPath, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        {
+                            var propDefinition = SharedXmlSaver.Load<PropDefinition>(stream);
+                            standaloneController.PropFactory.addDefinition(propDefinition);
+                        }
+                    }
+                }
             }
 
             Initialized = true;
@@ -74,6 +93,9 @@ namespace Medical
 
         [Editable]
         public string BrandingImageKey { get; set; }
+
+        [Editable]
+        public String PropDefinitionDirectory { get; set; }
 
         public string Location { get; internal set; }
 
@@ -110,6 +132,7 @@ namespace Medical
             BrandingImageKey = info.GetString("BrandingImageKey");
             VersionString = info.GetString("VersionString");
             DependencyNamespace = info.GetString("DependencyNamespace");
+            PropDefinitionDirectory = info.GetString("PropDefinitionDirectory");
             info.RebuildList("Resource", resources);
         }
 
@@ -120,6 +143,7 @@ namespace Medical
             info.AddValue("BrandingImageKey", BrandingImageKey);
             info.AddValue("VersionString", VersionString);
             info.AddValue("DependencyNamespace", DependencyNamespace);
+            info.AddValue("PropDefinitionDirectory", PropDefinitionDirectory);
             info.ExtractList("Resource", resources);
         }
 

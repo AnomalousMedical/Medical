@@ -13,7 +13,7 @@ namespace Medical
     class PropFadeBehavior : Behavior
     {
         protected String nodeName = PropFactory.NodeName;
-        private String entityName = PropFactory.EntityName;
+        protected String entityName = PropFactory.EntityName;
         protected String alphaSuffix = "Alpha";
         protected uint subEntityIndex = 0;
         protected bool disableOnHidden = true;
@@ -42,7 +42,7 @@ namespace Medical
 
         }
 
-        protected override void constructed()
+        protected override void link()
         {
             SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
             if (sceneNode == null)
@@ -100,6 +100,19 @@ namespace Medical
                 targetOpacity = value;
                 changingOpacity = false;
                 applyAlphaToMaterial(workingAlpha);
+            }
+        }
+
+        [DoNotCopy]
+        public String EntityName
+        {
+            get
+            {
+                return entityName;
+            }
+            set
+            {
+                entityName = value;
             }
         }
 

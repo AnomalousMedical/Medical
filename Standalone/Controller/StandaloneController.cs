@@ -258,23 +258,23 @@ namespace Medical
 
             //Props
             propFactory = new PropFactory(this);
-            Arrow.createPropDefinition(propFactory);
-            LineProp.createPropDefinition(propFactory);
-            Ruler.createPropDefinition(propFactory);
-            PointingHand.createPropDefinition(propFactory);
-            Doppler.createPropDefinition(propFactory);
-            Syringe.createPropDefinition(propFactory);
-            JVAProp.createPropDefinition(propFactory);
-            Mustache.createPropDefinition(propFactory);
-            CircularHighlight.createPropDefinition(propFactory);
-            Plane.createPropDefinition(propFactory);
-            PoseableHand.createPropDefinition(propFactory);
-            BiteStick.createPropDefinition(propFactory);
-            RangeOfMotionScale.createPropDefinition(propFactory);
-            Pen.createPropDefinition(propFactory);
-            Caliper.createPropDefinition(propFactory);
-            SplintDefiner.createPropDefinition(propFactory);
-            DentalFloss.createPropDefinition(propFactory);
+            //Arrow.createPropDefinition(propFactory);
+            //LineProp.createPropDefinition(propFactory);
+            //Ruler.createPropDefinition(propFactory);
+            //PointingHand.createPropDefinition(propFactory);
+            //Doppler.createPropDefinition(propFactory);
+            //Syringe.createPropDefinition(propFactory);
+            //JVAProp.createPropDefinition(propFactory);
+            //Mustache.createPropDefinition(propFactory);
+            //CircularHighlight.createPropDefinition(propFactory);
+            //Plane.createPropDefinition(propFactory);
+            //PoseableHand.createPropDefinition(propFactory);
+            //BiteStick.createPropDefinition(propFactory);
+            //RangeOfMotionScale.createPropDefinition(propFactory);
+            //Pen.createPropDefinition(propFactory);
+            //Caliper.createPropDefinition(propFactory);
+            //SplintDefiner.createPropDefinition(propFactory);
+            //DentalFloss.createPropDefinition(propFactory);
 
             //Timeline
             timelineController = new TimelineController(this);
@@ -334,6 +334,9 @@ namespace Medical
             ResourceManager.Instance.load("Medical.Resources.LockedFeature.xml");
             ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
             ResourceManager.Instance.load("Medical.Resources.SlideshowIcons.xml");
+
+            //DEPENDENCY_HACK
+            atlasDependencyManager.initializeDependency(0);
 
             atlasPluginManager.initialzePlugins();
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
