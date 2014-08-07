@@ -267,25 +267,6 @@ namespace Medical
             }
         }
 
-        public void saveScene(String filename)
-        {
-            ScenePackage package = medicalScene.saveSceneToPackage();
-            XmlTextWriter textWriter = null;
-            try
-            {
-                textWriter = new XmlTextWriter(filename, Encoding.Unicode);
-                textWriter.Formatting = Formatting.Indented;
-                xmlSaver.saveObject(package, textWriter);
-            }
-            finally
-            {
-                if (textWriter != null)
-                {
-                    textWriter.Close();
-                }
-            }
-        }
-
         public void addSimObject(SimObjectBase simObject)
         {
             medicalScene.addSimObject(simObject);

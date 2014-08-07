@@ -24,7 +24,7 @@ namespace Medical
         /// Initialize the dependency and load whatever resources it contains.
         /// </summary>
         /// <param name="standaloneController"></param>
-        void initialize(StandaloneController standaloneController);
+        void initialize(StandaloneController standaloneController, AtlasDependencyManager dependencyManager);
 
         /// <summary>
         /// The id of the dependency

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.ObjectManagement;
 using Engine;
+using Engine.Resources;
 
 namespace Medical
 {
@@ -20,6 +21,7 @@ namespace Medical
         private SimObjectManager currentSimObjects;
         private ScenePackage currentScenePackage;
         private PluginManager pluginManager;
+        private ResourceManager sceneResourceManager;
 
         #region Events
 
@@ -52,6 +54,7 @@ namespace Medical
         public MedicalSceneController(PluginManager pluginManager)
         {
             this.pluginManager = pluginManager;
+            sceneResourceManager = pluginManager.createLiveResourceManager();
         }
 
         /// <summary>
@@ -61,8 +64,8 @@ namespace Medical
         public void loadScene(ScenePackage scenePackage)
         {
             currentScenePackage = scenePackage;
-            pluginManager.SceneResourceManager.changeResourcesToMatch(scenePackage.ResourceManager);
-            pluginManager.SceneResourceManager.initializeResources();
+            sceneResourceManager.changeResourcesToMatch(scenePackage.ResourceManager);
+            sceneResourceManager.initializeResources();
             currentScene = scenePackage.SceneDefinition.createScene();
             if (OnSceneLoading != null)
             {
@@ -96,15 +99,6 @@ namespace Medical
                     OnSceneUnloaded.Invoke(this, null);
                 }
             }
-        }
-
-        public ScenePackage saveSceneToPackage()
-        {
-            ScenePackage package = new ScenePackage();
-            package.ResourceManager = pluginManager.cloneSceneResourceManager();
-            package.SceneDefinition = currentScene.createDefinition();
-            package.SimObjectManagerDefinition = currentSimObjects.saveToDefinition();
-            return package;
         }
 
         public void addSimObject(SimObjectBase simObject)

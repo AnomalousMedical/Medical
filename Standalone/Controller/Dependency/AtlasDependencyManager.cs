@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.Resources;
 using Logging;
 using System;
 using System.Collections.Generic;
@@ -21,11 +22,14 @@ namespace Medical
 
         private DataFileVerifier dataFileVerifier;
 
+        private ResourceManager dependencyResourceManager;
+
         public AtlasDependencyManager(StandaloneController standaloneController, DataFileVerifier dataFileVerifier)
         {
             this.dataFileVerifier = dataFileVerifier;
             this.standaloneController = standaloneController;
             additionalSearchPath = FolderFinder.ExecutableFolder;
+            dependencyResourceManager = PluginManager.Instance.createLiveResourceManager();
         }
 
         public void Dispose()
@@ -192,12 +196,20 @@ namespace Medical
                 if(!dependency.Initialized)
                 {
                     Log.ImportantInfo("Initializing dependency '{0}'", dependency.Name);
-                    dependency.initialize(standaloneController);
+                    dependency.initialize(standaloneController, this);
                 }
             }
             else
             {
                 Log.Warning("Attempted to initialize dependency id {0}, but it has not been loaded.", dependencyId);
+            }
+        }
+
+        public ResourceManager DependencyResourceManager
+        {
+            get
+            {
+                return dependencyResourceManager;
             }
         }
 

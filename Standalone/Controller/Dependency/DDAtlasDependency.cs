@@ -30,13 +30,13 @@ namespace Medical
             
         }
 
-        public void initialize(StandaloneController standaloneController)
+        public void initialize(StandaloneController standaloneController, AtlasDependencyManager dependencyManager)
         {
             String dependencyPath = Path.Combine("Dependencies", DependencyNamespace);
 
             if (resources.Count > 0)
             {
-                var resourceManager = PluginManager.Instance.createEmptyResourceManager();
+                var resourceManager = dependencyManager.DependencyResourceManager;
                 foreach(var subsystemResources in resourceManager.getSubsystemEnumerator())
                 {
                     var resourceGroup = subsystemResources.addResourceGroup(DependencyNamespace);
@@ -46,8 +46,7 @@ namespace Medical
                     }
                 }
 
-                PluginManager.Instance.PersistentResourceManager.addResources(resourceManager);
-                PluginManager.Instance.PersistentResourceManager.initializeResources();
+                resourceManager.initializeResources();
             }
 
             if (PropDefinitionDirectory != null)
