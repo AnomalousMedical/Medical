@@ -54,7 +54,7 @@ namespace Medical
         public MedicalSceneController(PluginManager pluginManager)
         {
             this.pluginManager = pluginManager;
-            sceneResourceManager = pluginManager.createLiveResourceManager();
+            sceneResourceManager = pluginManager.createLiveResourceManager("Scene");
         }
 
         /// <summary>

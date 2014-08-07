@@ -29,7 +29,7 @@ namespace Medical
             this.dataFileVerifier = dataFileVerifier;
             this.standaloneController = standaloneController;
             additionalSearchPath = FolderFinder.ExecutableFolder;
-            dependencyResourceManager = PluginManager.Instance.createLiveResourceManager();
+            dependencyResourceManager = PluginManager.Instance.createLiveResourceManager("Dependencies");
         }
 
         public void Dispose()
