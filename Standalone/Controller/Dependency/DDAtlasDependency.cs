@@ -47,7 +47,7 @@ namespace Medical
                 }
 
                 PluginManager.Instance.PersistentResourceManager.addResources(resourceManager);
-                PluginManager.Instance.PersistentResourceManager.forceResourceRefresh();
+                PluginManager.Instance.PersistentResourceManager.initializeResources();
             }
 
             if (PropDefinitionDirectory != null)

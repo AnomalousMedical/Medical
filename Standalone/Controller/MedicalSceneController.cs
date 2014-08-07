@@ -62,7 +62,7 @@ namespace Medical
         {
             currentScenePackage = scenePackage;
             pluginManager.SceneResourceManager.changeResourcesToMatch(scenePackage.ResourceManager);
-            pluginManager.SceneResourceManager.forceResourceRefresh();
+            pluginManager.SceneResourceManager.initializeResources();
             currentScene = scenePackage.SceneDefinition.createScene();
             if (OnSceneLoading != null)
             {

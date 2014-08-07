@@ -107,7 +107,7 @@ namespace Medical
             var ogreResources = PluginManager.Instance.PersistentResourceManager.getSubsystemResource("Ogre");
             var shaderGroup = ogreResources.addResourceGroup("Medical.Shaders");
             shaderGroup.addResource("Shaders/Articulometrics", true);
-            PluginManager.Instance.PersistentResourceManager.forceResourceRefresh();
+            PluginManager.Instance.PersistentResourceManager.initializeResources();
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
