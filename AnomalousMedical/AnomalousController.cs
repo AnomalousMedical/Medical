@@ -201,6 +201,8 @@ namespace Medical
 
         private void addPlugins()
         {
+            //DEPENDENCY_HACK
+            MedicalConfig.PluginConfig.addAdditionalDependencyFile("Utilities.dat");
             MedicalConfig.PluginConfig.addAdditionalPluginFile("IntroductionTutorial.dat");
             controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(LicenseManager, this));
             MedicalConfig.PluginConfig.findRegularPluginsAndDependencies();

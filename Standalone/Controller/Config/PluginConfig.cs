@@ -66,6 +66,11 @@ namespace Medical
             }
         }
 
+        public void addAdditionalDependencyFile(String file)
+        {
+            dependencies.Add(file);
+        }
+
         public void addAdditionalPluginFile(String file)
         {
             plugins.Add(file);
