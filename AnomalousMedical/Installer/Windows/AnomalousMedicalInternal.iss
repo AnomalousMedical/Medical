@@ -70,6 +70,7 @@ Source: S:\Medical\Release\DotNetZip.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Mono.Anomalous.Security.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\Utilities.dat; DestDir: {app}; Flags: ignoreversion
 
 ;Microcode Caches
 Source: S:\Medical\Release\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion

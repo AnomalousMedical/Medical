@@ -103,6 +103,12 @@ namespace Medical
             controller.initializeControllers(createBackground());
             licenseDisplay.setSceneViewController(controller.SceneViewController);
 
+            //Setup shader resources
+            var ogreResources = PluginManager.Instance.PersistentResourceManager.getSubsystemResource("Ogre");
+            var shaderGroup = ogreResources.addResourceGroup("Medical.Shaders");
+            shaderGroup.addResource("Shaders/Articulometrics", true);
+            PluginManager.Instance.PersistentResourceManager.forceResourceRefresh();
+
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
             yield return IdleStatus.Ok;
