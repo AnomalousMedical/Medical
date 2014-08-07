@@ -162,10 +162,10 @@ namespace Medical
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "DDAtlasDependency", null);
 
                     resourceLocationsEdit = new EditInterface("Resource Locations", addResource, removeResource);
-                    resourceLocationsEdit.setPropertyInfo(AtlasDependencyResource.Info);
+                    resourceLocationsEdit.setPropertyInfo(AtlasDependencyResourceEditableProperty.Info);
                     foreach (var resource in resources)
                     {
-                        resourceLocationsEdit.addEditableProperty(resource);
+                        onResourceAdded(resource);
                     }
                     editInterface.addSubInterface(resourceLocationsEdit);
                 }
@@ -190,12 +190,12 @@ namespace Medical
         /// <param name="property"></param>
         private void removeResource(EditUICallback callback, EditableProperty property)
         {
-            removeResource(((AtlasDependencyResource)property));
+            removeResource(resourceLocationsEdit.getKeyObjectForProperty<AtlasDependencyResource>(property));
         }
 
         private void onResourceAdded(AtlasDependencyResource resource)
         {
-            resourceLocationsEdit.addEditableProperty(resource);
+            resourceLocationsEdit.addEditableProperty(resource, new AtlasDependencyResourceEditableProperty(resource));
         }
 
         private void onResourceRemoved(AtlasDependencyResource resource)
