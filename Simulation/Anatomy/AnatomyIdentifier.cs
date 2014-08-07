@@ -326,7 +326,7 @@ namespace Medical
 
             //Tags
             tagEditInterface = new EditInterface("Tags", addTag, removeTag, validateTag);
-            tagEditInterface.setPropertyInfo(AnatomyTag.Info);
+            tagEditInterface.setPropertyInfo(AnatomyTag.Property.Info);
             foreach (AnatomyTag tag in anatomyIdentifier.Tags)
             {
                 addTagProperty(tag);
@@ -405,7 +405,7 @@ namespace Medical
         /// <param name="property"></param>
         private void removeTag(EditUICallback callback, EditableProperty property)
         {
-            anatomyIdentifier.removeTag((AnatomyTag)property);
+            anatomyIdentifier.removeTag(tagEditInterface.getKeyObjectForProperty<AnatomyTag>(property));
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Medical
 
         internal void addTagProperty(AnatomyTag tag)
         {
-            tagEditInterface.addEditableProperty(tag);
+            tagEditInterface.addEditableProperty(tag, new AnatomyTag.Property(tag));
         }
 
         internal void removeTagProperty(AnatomyTag tag)
