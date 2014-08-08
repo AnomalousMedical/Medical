@@ -33,24 +33,28 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             int index = 0;
             String name;
             String value;
+            RmlEditableProperty.CreateBrowser createBrowserCallback = null;
             while (element.IterateAttributes(ref index, out name, out value))
             {
+                createBrowserCallback = null;
                 RmlEditableProperty property;
                 switch (name.ToLowerInvariant())
                 {
                     case "onclick":
-                        property = new RmlEditableProperty(name, value, callback =>
+                        if (uiCallback.hasCustomQuery(CustomQueries.BuildActionBrowser))
                         {
-                            return uiCallback.runSyncCustomQuery<Browser>(CustomQueries.BuildActionBrowser);
-                        });
+                            createBrowserCallback = callback => uiCallback.runSyncCustomQuery<Browser>(CustomQueries.BuildActionBrowser);
+                        }
+                        property = new RmlEditableProperty(name, value, createBrowserCallback);
                         break;
                     case "src":
                         if (element.TagName == "img")
                         {
-                            property = new RmlEditableProperty(name, value, callback =>
+                            if (uiCallback.hasCustomQuery(CustomQueries.BuildFileBrowser))
                             {
-                                return uiCallback.runSyncCustomQuery<Browser, IEnumerable<String>, String, String>(CustomQueries.BuildFileBrowser, new String[] { "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp" }, "Images", "/");
-                            });
+                                createBrowserCallback = callback => uiCallback.runSyncCustomQuery<Browser, IEnumerable<String>, String, String>(CustomQueries.BuildFileBrowser, new String[] { "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp" }, "Images", "/");
+                            }
+                            property = new RmlEditableProperty(name, value, createBrowserCallback);
                         }
                         else
                         {
