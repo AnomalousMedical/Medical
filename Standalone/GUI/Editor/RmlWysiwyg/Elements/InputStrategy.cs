@@ -18,10 +18,10 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         }
 
-        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
+        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
         {
             textEditor = new ElementTextEditor(element.InnerRml);
-            attributeEditor = new ElementAttributeEditor(element, uiCallback, browserProvider);
+            attributeEditor = new ElementAttributeEditor(element, uiCallback);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(attributeEditor);

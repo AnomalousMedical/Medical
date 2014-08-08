@@ -41,7 +41,7 @@ namespace Lecture
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
         private Slide slide;
-        private EditorUICallback uiCallback;
+        private LectureUICallback uiCallback;
         private UndoRedoBuffer undoBuffer;
         private SlideshowEditController slideEditorController;
         private ImageRenderer imageRenderer;
@@ -61,7 +61,7 @@ namespace Lecture
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
 
-        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, EditorUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, NotificationGUIManager notificationManager, Action<String, String> wysiwygUndoCallback)
+        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, NotificationGUIManager notificationManager, Action<String, String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
@@ -607,7 +607,7 @@ namespace Lecture
             {
                 SlideInstanceLayoutStrategy instanceLayout = slide.LayoutStrategy.createLayoutStrategy(displayManager);
                 String editorViewName = panel.createViewName("RmlView");
-                RmlWysiwygView rmlView = new RmlWysiwygView(editorViewName, this.uiCallback, this.uiCallback, this.undoBuffer);
+                RmlWysiwygView rmlView = new RmlWysiwygView(editorViewName, this.uiCallback, this.undoBuffer);
                 rmlView.ElementName = panel.ElementName;
                 rmlView.RmlFile = panel.getRmlFilePath(slide);
                 rmlView.ContentId = "Content";

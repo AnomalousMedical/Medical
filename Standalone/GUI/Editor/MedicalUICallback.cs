@@ -8,8 +8,6 @@ using Logging;
 
 namespace Medical.GUI
 {
-
-
     public class MedicalUICallback : EditUICallback
     {
         private Dictionary<Object, Delegate> customQueries = new Dictionary<object, Delegate>();

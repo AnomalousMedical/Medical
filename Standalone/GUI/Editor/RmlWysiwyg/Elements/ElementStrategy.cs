@@ -58,7 +58,7 @@ namespace Medical.GUI
             return new Rect();
         }
 
-        public virtual RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
+        public virtual RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
         {
             return null;
         }

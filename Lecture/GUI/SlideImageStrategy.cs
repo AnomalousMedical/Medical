@@ -26,11 +26,11 @@ namespace Lecture.GUI
             ResizeHandles = ResizeType.Width | ResizeType.Left | ResizeType.Top;
         }
 
-        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
+        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
         {
             appearance = new ImageElementStyle(element);
             appearance.Changed += appearance_Changed;
-            appearanceEditor = new EditInterfaceEditor("Appearance", appearance.getEditInterface(), uiCallback, browserProvider);
+            appearanceEditor = new EditInterfaceEditor("Appearance", appearance.getEditInterface(), uiCallback);
             slideImageEditor = new SlideImageComponent(editorResourceProvider, subdirectory, element.GetAttributeString("src"));
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(slideImageEditor);

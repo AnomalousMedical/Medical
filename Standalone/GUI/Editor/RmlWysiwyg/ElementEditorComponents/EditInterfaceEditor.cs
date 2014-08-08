@@ -14,7 +14,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private ScrollView propertiesScroll;
         private ScrollingExpandingEditInterfaceViewer propertiesForm;
 
-        public EditInterfaceEditor(String title, EditInterface editInterface, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider)
+        public EditInterfaceEditor(String title, EditInterface editInterface, MedicalUICallback uiCallback)
             : base("Medical.GUI.Editor.RmlWysiwyg.ElementEditorComponents.EditInterfaceEditor.layout", title)
         {
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");

@@ -17,9 +17,9 @@ namespace Lecture
         private SlideshowEditController editorController;
         private EditInterface editInterface;
         private List<Pair<String, String>> unprocessedFiles = new List<Pair<String, String>>();
-        private EditorUICallback uiCallback;
+        private LectureUICallback uiCallback;
 
-        public SlideshowStyleManager(SlideshowEditController editorController, EditorUICallback uiCallback)
+        public SlideshowStyleManager(SlideshowEditController editorController, LectureUICallback uiCallback)
         {
             this.editorController = editorController;
             this.uiCallback = uiCallback;

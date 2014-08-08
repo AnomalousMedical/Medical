@@ -45,7 +45,7 @@ namespace Lecture.GUI
             ResizeHandles = ResizeType.Top | ResizeType.Height;
         }
 
-        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
+        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
         {
             elementStyle = new TextElementStyle(element, false);
             elementStyle.Changed += elementStyle_Changed;
@@ -69,8 +69,8 @@ namespace Lecture.GUI
             SlideAction editingAction = CopySaver.Default.copy(action);
 
             EditInterface editInterface = setupEditInterface(editingAction, slide);
-            actionEditor = new EditInterfaceEditor("Action", editInterface, uiCallback, browserProvider);
-            appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback, browserProvider);
+            actionEditor = new EditInterfaceEditor("Action", editInterface, uiCallback);
+            appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(actionEditor);

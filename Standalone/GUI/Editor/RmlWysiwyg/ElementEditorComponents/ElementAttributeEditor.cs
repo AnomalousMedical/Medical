@@ -1,6 +1,7 @@
 ﻿using Engine;
 using Engine.Editing;
 using libRocketPlugin;
+using Medical.Editor;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,17 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
     public class ElementAttributeEditor : ElementEditorComponent
     {
+        public enum CustomQueries
+        {
+            BuildActionBrowser,
+            BuildFileBrowser
+        }
+
         private ScrollView propertiesScroll;
         private ScrollablePropertiesForm propertiesForm;
         private List<RmlEditableProperty> originalProperties;
 
-        public ElementAttributeEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider)
+        public ElementAttributeEditor(Element element, MedicalUICallback uiCallback)
             : base("Medical.GUI.Editor.RmlWysiwyg.ElementEditorComponents.ElementAttributeEditor.layout", "Attributes")
         {
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");
@@ -34,7 +41,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                     case "onclick":
                         property = new RmlEditableProperty(name, value, callback =>
                         {
-                            return browserProvider.createActionBrowser();
+                            return uiCallback.runSyncCustomQuery<Browser>(CustomQueries.BuildActionBrowser);
                         });
                         break;
                     case "src":
@@ -42,7 +49,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
                         {
                             property = new RmlEditableProperty(name, value, callback =>
                             {
-                                return browserProvider.createFileBrowser(new String[] { "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp" }, "Images", "/");
+                                return uiCallback.runSyncCustomQuery<Browser, IEnumerable<String>, String, String>(CustomQueries.BuildFileBrowser, new String[] { "*.png", "*.jpg", "*jpeg", "*.gif", "*.bmp" }, "Images", "/");
                             });
                         }
                         else

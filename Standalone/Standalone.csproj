@@ -393,7 +393,6 @@
     <Compile Include="GUI\Editor\RmlWysiwyg\PreviewElement.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\RawRmlWysiwygView.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygBrowserProvider.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygView.cs" />

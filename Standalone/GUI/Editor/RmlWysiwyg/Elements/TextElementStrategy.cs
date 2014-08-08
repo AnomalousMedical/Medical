@@ -52,13 +52,13 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             ResizeHandles = ResizeType.Top | ResizeType.Height;
         }
 
-        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
+        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
         {
             elementStyle = new TextElementStyle(element, true);
             elementStyle.Changed += elementStyle_Changed;
             String rml = DecodeFromHtml(element.InnerRml);
             textEditor = new ElementTextEditor(rml);
-            appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback, browserProvider);
+            appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
             editor.addElementEditor(textEditor);
             editor.addElementEditor(appearanceEditor);

@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Lecture
 {
-    public class LectureUICallback : EditorUICallback
+    public class LectureUICallback : CommonUICallback
     {
         private String currentDirectory = "";
 
@@ -31,24 +31,6 @@ namespace Lecture
                 });
         }
 
-        public override Browser createFileBrowser(String searchPattern, String prompt)
-        {
-            int dirLength = GetDirLength();
-            Browser browser = new Browser("Files", prompt);
-            if (editorController.ResourceProvider != null)
-            {
-                foreach (String timeline in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
-                {
-                    browser.addNode(null, null, new BrowserNode(timeline.Substring(dirLength), timeline));
-                }
-            }
-            else
-            {
-                Log.Warning("No resources loaded.");
-            }
-            return browser;
-        }
-
         public override Browser createFileBrowser(IEnumerable<string> searchPatterns, string prompt)
         {
             int dirLength = GetDirLength();
@@ -60,27 +42,6 @@ namespace Lecture
                     foreach (String file in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
                     {
                         browser.addNode(null, null, new BrowserNode(file.Substring(dirLength), file));
-                    }
-                }
-            }
-            else
-            {
-                Log.Warning("No resources loaded.");
-            }
-            return browser;
-        }
-
-        public override Browser createFileBrowser(IEnumerable<string> searchPatterns, String prompt, String leadingPath)
-        {
-            int dirLength = GetDirLength();
-            Browser browser = new Browser("Files", prompt);
-            if (editorController.ResourceProvider != null)
-            {
-                foreach (String searchPattern in searchPatterns)
-                {
-                    foreach (String file in thumbFilter(editorController.ResourceProvider.listFiles(searchPattern, currentDirectory, true)))
-                    {
-                        browser.addNode(null, null, new BrowserNode(file.Substring(dirLength), Path.Combine(leadingPath, file)));
                     }
                 }
             }

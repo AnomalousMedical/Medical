@@ -68,7 +68,6 @@ namespace Medical.GUI
         private String documentEnd = "</body>";
         private bool disposed = false;
         private MedicalUICallback uiCallback;
-        private RmlWysiwygBrowserProvider browserProvider;
         private RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;
@@ -123,7 +122,6 @@ namespace Medical.GUI
             : this(context, viewHost, view)
         {
             this.uiCallback = view.UICallback;
-            this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
             this.contentId = view.ContentId;
             rocketWidget.Context.ZoomLevel = view.ZoomLevel;
@@ -160,7 +158,6 @@ namespace Medical.GUI
             }
 
             this.uiCallback = view.UICallback;
-            this.browserProvider = view.BrowserProvider;
             this.undoBuffer = view.UndoBuffer;
             this.contentId = view.ContentId;
             rocketWidget.Context.ZoomLevel = view.ZoomLevel;
@@ -668,7 +665,7 @@ namespace Medical.GUI
             if (currentEditor == null || selectedElementManager.SelectedElement != element)
             {
                 cancelAndHideEditor();
-                RmlElementEditor editor = strategy.openEditor(element, uiCallback, browserProvider, 0, 0);
+                RmlElementEditor editor = strategy.openEditor(element, uiCallback, 0, 0);
                 if (editor == null)
                 {
                     //The editor was null, which means editing is not supported so just clear the selection.

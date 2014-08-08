@@ -14,7 +14,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         }
 
-        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, RmlWysiwygBrowserProvider browserProvider, int left, int top)
+        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
         {
             return null;
         }
