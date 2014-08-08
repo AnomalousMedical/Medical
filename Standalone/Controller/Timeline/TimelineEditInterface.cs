@@ -50,19 +50,6 @@ namespace Medical
             }
         }
 
-        [Editable]
-        public bool Fullscreen
-        {
-            get
-            {
-                return timeline.Fullscreen;
-            }
-            set
-            {
-                timeline.Fullscreen = value;
-            }
-        }
-
         private void reverseSides(EditUICallback callback, EditInterfaceCommand caller)
         {
             timeline.reverseSides();
