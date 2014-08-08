@@ -73,14 +73,13 @@ namespace Medical
 
     partial class AnatomyOrganizer
     {
-        [DoNotCopy]
-        private EditInterfaceManager<AnatomyTagProperties> propertyManager;
+        private EditInterface tagPropertiesInterface;
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            EditInterface tagPropertiesInterface = ReflectedEditInterface.createUnscannedEditInterface("Tag Properties", null);
+            tagPropertiesInterface = ReflectedEditInterface.createUnscannedEditInterface("Tag Properties", null);
             tagPropertiesInterface.addCommand(new EditInterfaceCommand("Add Tag Property", addProperty));
-            propertyManager = new EditInterfaceManager<AnatomyTagProperties>(tagPropertiesInterface);
+            var propertyManager = tagPropertiesInterface.createEditInterfaceManager<AnatomyTagProperties>();
             propertyManager.addCommand(new EditInterfaceCommand("Remove", removeProperty));
             propertyManager.addCommand(new EditInterfaceCommand("Rename", renameProperty));
             foreach (AnatomyTagProperties prop in tagPropertiesList)
@@ -111,23 +110,23 @@ namespace Medical
 
         void onPropertyAdded(AnatomyTagProperties prop)
         {
-            if (propertyManager != null)
+            if (tagPropertiesInterface != null)
             {
-                propertyManager.addSubInterface(prop, prop.EditInterface);
+                tagPropertiesInterface.addSubInterface(prop, prop.EditInterface);
             }
         }
 
         void removeProperty(EditUICallback callback, EditInterfaceCommand caller)
         {
-            AnatomyTagProperties prop = propertyManager.resolveSourceObject(callback.getSelectedEditInterface());
+            AnatomyTagProperties prop = tagPropertiesInterface.resolveSourceObject<AnatomyTagProperties>(callback.getSelectedEditInterface());
             removeProperty(prop);
         }
 
         void onPropertyRemoved(AnatomyTagProperties prop)
         {
-            if (propertyManager != null)
+            if (tagPropertiesInterface != null)
             {
-                propertyManager.removeSubInterface(prop);
+                tagPropertiesInterface.removeSubInterface(prop);
             }
         }
 
@@ -143,8 +142,10 @@ namespace Medical
                         return false;
                     }
                 }
-                AnatomyTagProperties oldProp = propertyManager.resolveSourceObject(callback.getSelectedEditInterface());
+                var selectedEditInterface = callback.getSelectedEditInterface();
+                AnatomyTagProperties oldProp = tagPropertiesInterface.resolveSourceObject<AnatomyTagProperties>(selectedEditInterface);
                 oldProp.Name = result;
+                selectedEditInterface.setName(oldProp.Name);
                 return true;
             });
         }

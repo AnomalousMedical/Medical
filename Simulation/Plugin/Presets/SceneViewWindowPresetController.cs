@@ -97,9 +97,6 @@ namespace Medical
         [DoNotSave]
         private EditInterface editInterface;
 
-        [DoNotSave]
-        private EditInterfaceManager<SceneViewWindowPresetSet> itemEdits;
-
         public EditInterface getEditInterface()
         {
             if (editInterface == null)
@@ -108,7 +105,7 @@ namespace Medical
                 editInterface.addSubInterface(defaultPreset.getEditInterface());
                 editInterface.addCommand(new EditInterfaceCommand("Add", createNewItem));
 
-                itemEdits = new EditInterfaceManager<SceneViewWindowPresetSet>(editInterface);
+                var itemEdits = editInterface.createEditInterfaceManager<SceneViewWindowPresetSet>();
                 itemEdits.addCommand(new EditInterfaceCommand("Remove", removeItem));
 
                 foreach (SceneViewWindowPresetSet set in presetSets)
@@ -121,25 +118,25 @@ namespace Medical
 
         private void itemAdded(SceneViewWindowPresetSet preset)
         {
-            if (itemEdits != null)
+            if (editInterface != null)
             {
-                itemEdits.addSubInterface(preset, preset.getEditInterface());
+                editInterface.addSubInterface(preset, preset.getEditInterface());
             }
         }
 
         private void itemRemoved(SceneViewWindowPresetSet preset)
         {
-            if (itemEdits != null)
+            if (editInterface != null)
             {
-                itemEdits.removeSubInterface(preset);
+                editInterface.removeSubInterface(preset);
             }
         }
 
         private void itemsCleared()
         {
-            if (itemEdits != null)
+            if (editInterface != null)
             {
-                itemEdits.clearSubInterfaces();
+                editInterface.getEditInterfaceManager<SceneViewWindowPresetSet>().clearSubInterfaces();
             }
         }
 
@@ -160,7 +157,7 @@ namespace Medical
 
         private void removeItem(EditUICallback callback, EditInterfaceCommand command)
         {
-            SceneViewWindowPresetSet item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            SceneViewWindowPresetSet item = editInterface.resolveSourceObject<SceneViewWindowPresetSet>(callback.getSelectedEditInterface());
             removePresetSet(item);
         }
 

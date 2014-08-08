@@ -65,12 +65,10 @@ namespace Medical.GUI.AnomalousMvc
 
     partial class NotesView
     {
-        private EditInterfaceManager<NotesThumbnail> dataFieldEdits;
-
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             editInterface.addCommand(new EditInterfaceCommand("Add Thumbnail", addThumbnail));
-            dataFieldEdits = new EditInterfaceManager<NotesThumbnail>(editInterface);
+            var dataFieldEdits = editInterface.createEditInterfaceManager<NotesThumbnail>();
             dataFieldEdits.addCommand(new EditInterfaceCommand("Remove", removeThumbnail));
             foreach (NotesThumbnail thumb in thumbnails)
             {
@@ -86,23 +84,23 @@ namespace Medical.GUI.AnomalousMvc
 
         private void removeThumbnail(EditUICallback callback, EditInterfaceCommand command)
         {
-            NotesThumbnail thumb = dataFieldEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            NotesThumbnail thumb = editInterface.resolveSourceObject<NotesThumbnail>(callback.getSelectedEditInterface());
             removeThumbnail(thumb);
         }
 
         private void onThumbnailAdded(NotesThumbnail notesThumbnail)
         {
-            if (dataFieldEdits != null)
+            if (editInterface != null)
             {
-                dataFieldEdits.addSubInterface(notesThumbnail, notesThumbnail.EditInterface);
+                editInterface.addSubInterface(notesThumbnail, notesThumbnail.EditInterface);
             }
         }
 
         private void onThumbnailRemoved(NotesThumbnail notesThumbnail)
         {
-            if (dataFieldEdits != null)
+            if (editInterface != null)
             {
-                dataFieldEdits.removeSubInterface(notesThumbnail);
+                editInterface.removeSubInterface(notesThumbnail);
             }
         }
     }

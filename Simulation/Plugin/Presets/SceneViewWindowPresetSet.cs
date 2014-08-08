@@ -73,9 +73,6 @@ namespace Medical
         [DoNotSave]
         private EditInterface editInterface;
 
-        [DoNotSave]
-        private EditInterfaceManager<SceneViewWindowPreset> itemEdits;
-
         public EditInterface getEditInterface()
         {
             if (editInterface == null)
@@ -83,7 +80,7 @@ namespace Medical
                 editInterface = ReflectedEditInterface.createEditInterface(this, String.Format("{0} - Preset Set", Name));
                 editInterface.addCommand(new EditInterfaceCommand("Add", createNewItem));
 
-                itemEdits = new EditInterfaceManager<SceneViewWindowPreset>(editInterface);
+                var itemEdits = editInterface.createEditInterfaceManager<SceneViewWindowPreset>();
                 itemEdits.addCommand(new EditInterfaceCommand("Remove", removeItem));
 
                 foreach (SceneViewWindowPreset set in presets)
@@ -96,17 +93,17 @@ namespace Medical
 
         private void itemAdded(SceneViewWindowPreset preset)
         {
-            if (itemEdits != null)
+            if (editInterface != null)
             {
-                itemEdits.addSubInterface(preset, preset.getEditInterface());
+                editInterface.addSubInterface(preset, preset.getEditInterface());
             }
         }
 
         private void itemRemoved(SceneViewWindowPreset preset)
         {
-            if (itemEdits != null)
+            if (editInterface != null)
             {
-                itemEdits.removeSubInterface(preset);
+                editInterface.removeSubInterface(preset);
             }
         }
 
@@ -127,7 +124,7 @@ namespace Medical
 
         private void removeItem(EditUICallback callback, EditInterfaceCommand command)
         {
-            SceneViewWindowPreset item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            SceneViewWindowPreset item = editInterface.resolveSourceObject<SceneViewWindowPreset>(callback.getSelectedEditInterface());
             removePreset(item);
         }
 

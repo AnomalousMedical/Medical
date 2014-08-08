@@ -52,7 +52,6 @@ namespace Medical
             info.ExtractList("Track", trackData);
         }
 
-        private EditInterfaceManager<ShowPropSubActionPrototype> trackPrototypeManager;
         private EditInterface editInterface;
         public EditInterface EditInterface
         {
@@ -62,7 +61,8 @@ namespace Medical
                 {
                     editInterface = new EditInterface("Timeline Tracks");
                     editInterface.addCommand(new EditInterfaceCommand("Add Track", addTrack));
-                    trackPrototypeManager = new EditInterfaceManager<ShowPropSubActionPrototype>(editInterface);
+                    var trackPrototypeManager = editInterface.createEditInterfaceManager<ShowPropSubActionPrototype>();
+                    trackPrototypeManager.addCommand(new EditInterfaceCommand("Remove", removeTrack));
                     foreach(var track in trackData)
                     {
                         onTrackAdded(track);
@@ -95,15 +95,14 @@ namespace Medical
 
         private void removeTrack(EditUICallback callback, EditInterfaceCommand caller)
         {
-            removeTrack(trackPrototypeManager.resolveSourceObject(callback.getSelectedEditInterface()));
+            removeTrack(editInterface.resolveSourceObject<ShowPropSubActionPrototype>(callback.getSelectedEditInterface()));
         }
 
         private void onTrackAdded(ShowPropSubActionPrototype prototype)
         {
             if (editInterface != null)
             {
-                trackPrototypeManager.addSubInterface(prototype, prototype.EditInterface);
-                prototype.EditInterface.addCommand(new EditInterfaceCommand("Remove", removeTrack));
+                editInterface.addSubInterface(prototype, prototype.EditInterface);
             }
         }
 
@@ -111,7 +110,7 @@ namespace Medical
         {
             if(editInterface != null)
             {
-                trackPrototypeManager.removeSubInterface(prototype);
+                editInterface.removeSubInterface(prototype);
             }
         }
     }

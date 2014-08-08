@@ -100,9 +100,6 @@ namespace Medical.Editor
         [DoNotSave]
         private EditInterface editInterface;
 
-        [DoNotSave]
-        private EditInterfaceManager<ItemType> itemEdits;
-
         public EditInterface getEditInterface(String editInterfaceName)
         {
             if (editInterface == null)
@@ -113,7 +110,7 @@ namespace Medical.Editor
                 propertyInfo.addColumn(new EditablePropertyColumn("Value", false));
                 editInterface.setPropertyInfo(propertyInfo);
 
-                itemEdits = new EditInterfaceManager<ItemType>(editInterface);
+                var itemEdits = editInterface.createEditInterfaceManager<ItemType>();
                 itemEdits.addCommand(new EditInterfaceCommand("Remove", deleteAction));
                 itemEdits.addCommand(new EditInterfaceCommand("Rename", renameAction));
 
@@ -134,9 +131,9 @@ namespace Medical.Editor
         /// </summary>
         protected void addItemMovementCommands()
         {
-            itemEdits.addCommand(new EditInterfaceCommand("Move Up", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            editInterface.addCommand(new EditInterfaceCommand("Move Up", delegate(EditUICallback callback, EditInterfaceCommand caller)
             {
-                ItemType item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+                ItemType item = editInterface.resolveSourceObject<ItemType>(callback.getSelectedEditInterface());
                 int index = items.IndexOf(item) - 1;
                 if (index < 0)
                 {
@@ -146,9 +143,9 @@ namespace Medical.Editor
                 insert(index, item);
             }));
 
-            itemEdits.addCommand(new EditInterfaceCommand("Move Down", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            editInterface.addCommand(new EditInterfaceCommand("Move Down", delegate(EditUICallback callback, EditInterfaceCommand caller)
             {
-                ItemType item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+                ItemType item = editInterface.resolveSourceObject<ItemType>(callback.getSelectedEditInterface());
                 int index = items.IndexOf(item) + 1;
                 if (index < items.Count)
                 {
@@ -185,7 +182,7 @@ namespace Medical.Editor
 
         private void deleteAction(EditUICallback callback, EditInterfaceCommand command)
         {
-            ItemType item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            ItemType item = editInterface.resolveSourceObject<ItemType>(callback.getSelectedEditInterface());
             remove(item);
         }
 
@@ -196,10 +193,10 @@ namespace Medical.Editor
                 if (!hasItem(input))
                 {
                     //This works, but need to update the EditInterface
-                    EditInterface editInterface = callback.getSelectedEditInterface();
-                    ItemType item = itemEdits.resolveSourceObject(editInterface);
+                    EditInterface selectedEditInterface = callback.getSelectedEditInterface();
+                    ItemType item = editInterface.resolveSourceObject<ItemType>(selectedEditInterface);
                     item.Name = input;
-                    editInterface.setName(String.Format("{0}", input));
+                    selectedEditInterface.setName(String.Format("{0}", input));
                     return true;
                 }
                 errorPrompt = String.Format("An item named {0} already exists. Please input another name.", input);
@@ -209,21 +206,21 @@ namespace Medical.Editor
 
         private void addItemDefinition(ItemType item)
         {
-            itemEdits.addSubInterface(item, item.getEditInterface());
+            editInterface.addSubInterface(item, item.getEditInterface());
         }
 
         private void removeItemDefinition(ItemType item)
         {
-            itemEdits.removeSubInterface(item);
+            editInterface.removeSubInterface(item);
         }
 
         private void refreshItemDefinitions()
         {
-            itemEdits.clearSubInterfaces();
+            editInterface.getEditInterfaceManager<ItemType>().clearSubInterfaces();
             foreach (ItemType item in items)
             {
                 item.getEditInterface().clearCommands();
-                itemEdits.addSubInterface(item, item.getEditInterface());
+                editInterface.addSubInterface(item, item.getEditInterface());
             }
         }
 

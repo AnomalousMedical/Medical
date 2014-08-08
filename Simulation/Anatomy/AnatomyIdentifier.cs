@@ -335,7 +335,7 @@ namespace Medical
 
             //Commands
             mainEditInterface.addCommand(new EditInterfaceCommand("Add Command", createCommand));
-            commandEditInterfaces = new EditInterfaceManager<AnatomyCommand>(mainEditInterface);
+            var commandEditInterfaces = mainEditInterface.createEditInterfaceManager<AnatomyCommand>();
             foreach (AnatomyCommand command in anatomyIdentifier.Commands)
             {
                 createCommandEditInterface(command);
@@ -343,8 +343,6 @@ namespace Medical
         }
 
         #region Command EditInterface
-
-        private EditInterfaceManager<AnatomyCommand> commandEditInterfaces;
 
         private void createCommand(EditUICallback callback, EditInterfaceCommand caller)
         {
@@ -366,19 +364,19 @@ namespace Medical
 
         private void destroyCommand(EditUICallback callback, EditInterfaceCommand caller)
         {
-            anatomyIdentifier.removeCommand(commandEditInterfaces.resolveSourceObject(callback.getSelectedEditInterface()));
+            anatomyIdentifier.removeCommand(mainEditInterface.resolveSourceObject<AnatomyCommand>(callback.getSelectedEditInterface()));
         }
 
         public void createCommandEditInterface(AnatomyCommand command)
         {
             EditInterface commandEdit = command.createEditInterface();
             commandEdit.addCommand(new EditInterfaceCommand("Remove", destroyCommand));
-            commandEditInterfaces.addSubInterface(command, commandEdit);
+            mainEditInterface.addSubInterface(command, commandEdit);
         }
 
         public void removeCommandEditInterface(AnatomyCommand command)
         {
-            commandEditInterfaces.removeSubInterface(command);
+            mainEditInterface.removeSubInterface(command);
         }
 
         #endregion

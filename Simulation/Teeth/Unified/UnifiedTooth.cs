@@ -636,16 +636,12 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private EditInterfaceManager<UnifiedToothSection> sectionManager;
-
-        [DoNotCopy]
-        [DoNotSave]
         private EditInterface editInterface;
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             this.editInterface = editInterface;
-            sectionManager = new EditInterfaceManager<UnifiedToothSection>(editInterface);
+            var sectionManager = editInterface.createEditInterfaceManager<UnifiedToothSection>();
             sectionManager.addCommand(new EditInterfaceCommand("Remove", removeSectionCallback));
             ToothEditRenderer toothEditRenderer = new ToothEditRenderer();
             editInterface.Renderer = toothEditRenderer;
@@ -685,7 +681,7 @@ namespace Medical
         private void removeSectionCallback(EditUICallback callback, EditInterfaceCommand command)
         {
             EditInterface edit = callback.getSelectedEditInterface();
-            UnifiedToothSection section = sectionManager.resolveSourceObject(edit);
+            UnifiedToothSection section = editInterface.resolveSourceObject<UnifiedToothSection>(edit);
             toothSections.Remove(section);
             onToothSectionRemoved(section, edit);
         }
@@ -694,13 +690,13 @@ namespace Medical
         {
             EditInterface edit = section.getEditInterface(section.Name, BehaviorEditMemberScanner.Scanner);
             ((ToothEditRenderer)editInterface.Renderer).addSubRenderer(edit.Renderer);
-            sectionManager.addSubInterface(section, edit);
+            editInterface.addSubInterface(section, edit);
         }
 
         private void onToothSectionRemoved(UnifiedToothSection section, EditInterface edit)
         {
             ((ToothEditRenderer)editInterface.Renderer).removeSubRenderer(edit.Renderer);
-            sectionManager.removeSubInterface(section);
+            editInterface.removeSubInterface(section);
         }
 
         #endregion

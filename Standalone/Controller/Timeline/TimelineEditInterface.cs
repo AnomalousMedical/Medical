@@ -71,11 +71,19 @@ namespace Medical
 
     public class TimelinePreActionEditInterface
     {
+        private static Browser browser;
+
+        static TimelinePreActionEditInterface()
+        {
+            String[] seps = { "." };
+            browser = new Browser("Pre Actions", "Choose Pre Action");
+            browser.addNode(null, seps, new BrowserNode("Change Scene", typeof(OpenNewSceneAction)));
+            browser.addNode(null, seps, new BrowserNode("Show Skip To Post Actions Prompt", typeof(SkipToPostActions)));
+            browser.addNode(null, seps, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
+        }
+
         private Timeline timeline;
         private EditInterface editInterface;
-        private Browser browser;
-        private EditInterfaceManager<TimelineInstantAction> actionManager;
-        private static String[] SEPS = { "." };
 
         public TimelinePreActionEditInterface(Timeline timeline)
         {
@@ -86,15 +94,10 @@ namespace Medical
         {
             if (editInterface == null)
             {
-                browser = new Browser("Pre Actions", "Choose Pre Action");
-                browser.addNode(null, SEPS, new BrowserNode("Change Scene", typeof(OpenNewSceneAction)));
-                browser.addNode(null, SEPS, new BrowserNode("Show Skip To Post Actions Prompt", typeof(SkipToPostActions)));
-                browser.addNode(null, SEPS, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
-
                 editInterface = ReflectedEditInterface.createUnscannedEditInterface("Pre Actions", null);
                 editInterface.addCommand(new EditInterfaceCommand("Add Pre Action", addAction));
 
-                actionManager = new EditInterfaceManager<TimelineInstantAction>(editInterface);
+                var actionManager = editInterface.createEditInterfaceManager<TimelineInstantAction>();
                 actionManager.addCommand(new EditInterfaceCommand("Remove", removeAction));
 
                 foreach (TimelineInstantAction action in timeline.PreActions)
@@ -107,12 +110,12 @@ namespace Medical
 
         public void preActionAdded(TimelineInstantAction action)
         {
-            actionManager.addSubInterface(action, action.getEditInterface());
+            editInterface.addSubInterface(action, action.getEditInterface());
         }
 
         public void preActionRemoved(TimelineInstantAction action)
         {
-            actionManager.removeSubInterface(action);
+            editInterface.removeSubInterface(action);
         }
 
         private void addAction(EditUICallback callback, EditInterfaceCommand caller)
@@ -128,18 +131,25 @@ namespace Medical
 
         private void removeAction(EditUICallback callback, EditInterfaceCommand caller)
         {
-            EditInterface editInterface = callback.getSelectedEditInterface();
-            timeline.removePreAction(actionManager.resolveSourceObject(editInterface));
+            timeline.removePreAction(editInterface.resolveSourceObject<TimelineInstantAction>(callback.getSelectedEditInterface()));
         }
     }
 
     public class TimelinePostActionEditInterface
     {
+        private static Browser browser;
+
+        static TimelinePostActionEditInterface()
+        {
+            String[] seps = { "." };
+            browser = new Browser("Post Actions", "Choose Post Action");
+            browser.addNode(null, seps, new BrowserNode("Load Another Timeline", typeof(LoadAnotherTimeline)));
+            browser.addNode(null, seps, new BrowserNode("Repeat Previous", typeof(RepeatPreviousPostActions)));
+            browser.addNode(null, seps, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
+        }
+
         private Timeline timeline;
         private EditInterface editInterface;
-        private Browser browser;
-        private static String[] SEPS = { "." };
-        private EditInterfaceManager<TimelineInstantAction> actionManager;
 
         public TimelinePostActionEditInterface(Timeline timeline)
         {
@@ -150,15 +160,10 @@ namespace Medical
         {
             if (editInterface == null)
             {
-                browser = new Browser("Post Actions", "Choose Post Action");
-                browser.addNode(null, SEPS, new BrowserNode("Load Another Timeline", typeof(LoadAnotherTimeline)));
-                browser.addNode(null, SEPS, new BrowserNode("Repeat Previous", typeof(RepeatPreviousPostActions)));
-                browser.addNode(null, SEPS, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
-
                 editInterface = ReflectedEditInterface.createUnscannedEditInterface("Post Actions", null);
                 editInterface.addCommand(new EditInterfaceCommand("Add Post Action", addAction));
 
-                actionManager = new EditInterfaceManager<TimelineInstantAction>(editInterface);
+                var actionManager = editInterface.createEditInterfaceManager<TimelineInstantAction>();
                 actionManager.addCommand(new EditInterfaceCommand("Remove", removeAction));
 
                 foreach (TimelineInstantAction action in timeline.PostActions)
@@ -171,12 +176,12 @@ namespace Medical
 
         public void postActionAdded(TimelineInstantAction action)
         {
-            actionManager.addSubInterface(action, action.getEditInterface());
+            editInterface.addSubInterface(action, action.getEditInterface());
         }
 
         public void postActionRemoved(TimelineInstantAction action)
         {
-            actionManager.removeSubInterface(action);
+            editInterface.removeSubInterface(action);
         }
 
         private void addAction(EditUICallback callback, EditInterfaceCommand caller)
@@ -192,8 +197,7 @@ namespace Medical
 
         private void removeAction(EditUICallback callback, EditInterfaceCommand caller)
         {
-            EditInterface editInterface = callback.getSelectedEditInterface();
-            timeline.removePostAction(actionManager.resolveSourceObject(editInterface));
+            timeline.removePostAction(editInterface.resolveSourceObject<TimelineInstantAction>(callback.getSelectedEditInterface()));
         }
     }
 }

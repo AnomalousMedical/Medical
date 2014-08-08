@@ -641,16 +641,12 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private EditInterfaceManager<ToothSection> sectionManager;
-
-        [DoNotCopy]
-        [DoNotSave]
         private EditInterface editInterface;
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             this.editInterface = editInterface;
-            sectionManager = new EditInterfaceManager<ToothSection>(editInterface);
+            var sectionManager = editInterface.createEditInterfaceManager<ToothSection>();
             sectionManager.addCommand(new EditInterfaceCommand("Remove", removeSectionCallback));
             ToothEditRenderer toothEditRenderer = new ToothEditRenderer();
             editInterface.Renderer = toothEditRenderer;
@@ -690,7 +686,7 @@ namespace Medical
         private void removeSectionCallback(EditUICallback callback, EditInterfaceCommand command)
         {
             EditInterface edit = callback.getSelectedEditInterface();
-            ToothSection section = sectionManager.resolveSourceObject(edit);
+            ToothSection section = editInterface.resolveSourceObject<ToothSection>(edit);
             toothSections.Remove(section);
             onToothSectionRemoved(section, edit);
         }
@@ -699,13 +695,13 @@ namespace Medical
         {
             EditInterface edit = section.getEditInterface(section.Name, BehaviorEditMemberScanner.Scanner);
             ((ToothEditRenderer)editInterface.Renderer).addSubRenderer(edit.Renderer);
-            sectionManager.addSubInterface(section, edit);
+            editInterface.addSubInterface(section, edit);
         }
 
         private void onToothSectionRemoved(ToothSection section, EditInterface edit)
         {
             ((ToothEditRenderer)editInterface.Renderer).removeSubRenderer(edit.Renderer);
-            sectionManager.removeSubInterface(section);
+            editInterface.removeSubInterface(section);
         }
 
         #endregion

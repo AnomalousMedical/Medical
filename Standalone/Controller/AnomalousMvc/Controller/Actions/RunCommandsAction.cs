@@ -75,8 +75,7 @@ namespace Medical.Controller.AnomalousMvc
 
     partial class RunCommandsAction
     {
-        [DoNotSave]
-        private EditInterfaceManager<ActionCommand> editInterfaceManager = null;
+        private EditInterface editInterface;
 
         public enum CustomQueries
         {
@@ -85,7 +84,7 @@ namespace Medical.Controller.AnomalousMvc
 
         protected override EditInterface createEditInterface()
         {
-            EditInterface editInterface = new EditInterface(Name, null);
+            editInterface = new EditInterface(Name, null);
             editInterface.IconReferenceTag = "MvcContextEditor/RunCommandsIcon";
 
             editInterface.addCommand(new EditInterfaceCommand("Add Command", delegate(EditUICallback callback, EditInterfaceCommand command)
@@ -97,7 +96,7 @@ namespace Medical.Controller.AnomalousMvc
                 });
             }));
 
-            editInterfaceManager = new EditInterfaceManager<ActionCommand>(editInterface);
+            var editInterfaceManager = editInterface.createEditInterfaceManager<ActionCommand>();
             editInterfaceManager.addCommand(new EditInterfaceCommand("Remove", removeCommand));
 
             foreach (ActionCommand command in commands)
@@ -110,30 +109,30 @@ namespace Medical.Controller.AnomalousMvc
 
         private void removeCommand(EditUICallback callback, EditInterfaceCommand caller)
         {
-            removeCommand(editInterfaceManager.resolveSourceObject(callback.getSelectedEditInterface()));
+            removeCommand(editInterface.resolveSourceObject<ActionCommand>(callback.getSelectedEditInterface()));
         }
 
         void commandAdded(ActionCommand command)
         {
-            if (editInterfaceManager != null)
+            if (editInterface != null)
             {
-                editInterfaceManager.addSubInterface(command, command.EditInterface);
+                editInterface.addSubInterface(command, command.EditInterface);
             }
         }
 
         void commandRemoved(ActionCommand command)
         {
-            if (editInterfaceManager != null)
+            if (editInterface != null)
             {
-                editInterfaceManager.removeSubInterface(command);
+                editInterface.removeSubInterface(command);
             }
         }
 
         void commandsCleared()
         {
-            if (editInterfaceManager != null)
+            if (editInterface != null)
             {
-                editInterfaceManager.clearSubInterfaces();
+                editInterface.getEditInterfaceManager<ActionCommand>().clearSubInterfaces();
             }
         }
 

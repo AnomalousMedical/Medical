@@ -92,8 +92,6 @@ namespace Medical
     {
         [DoNotCopy]
         private EditInterface editInterface;
-        [DoNotCopy]
-        private EditInterfaceManager<AnatomyTreeNode> childNodeManager;
 
         public EditInterface EditInterface
         {
@@ -103,7 +101,7 @@ namespace Medical
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, name, null);
                     editInterface.addCommand(new EditInterfaceCommand("Add Child", addChild));
-                    childNodeManager = new EditInterfaceManager<AnatomyTreeNode>(editInterface);
+                    var childNodeManager = editInterface.createEditInterfaceManager<AnatomyTreeNode>();
                     childNodeManager.addCommand(new EditInterfaceCommand("Remove", removeChild));
                     childNodeManager.addCommand(new EditInterfaceCommand("Rename", renameChild));
                     foreach (AnatomyTreeNode child in children)
@@ -136,13 +134,13 @@ namespace Medical
         {
             if (editInterface != null)
             {
-                childNodeManager.addSubInterface(child, child.EditInterface);
+                editInterface.addSubInterface(child, child.EditInterface);
             }
         }
 
         void removeChild(EditUICallback callback, EditInterfaceCommand caller)
         {
-            AnatomyTreeNode child = childNodeManager.resolveSourceObject(callback.getSelectedEditInterface());
+            AnatomyTreeNode child = editInterface.resolveSourceObject<AnatomyTreeNode>(callback.getSelectedEditInterface());
             removeChild(child);
         }
 
@@ -150,7 +148,7 @@ namespace Medical
         {
             if (editInterface != null)
             {
-                childNodeManager.removeSubInterface(child);
+                editInterface.removeSubInterface(child);
             }
         }
 
@@ -166,8 +164,10 @@ namespace Medical
                         return false;
                     }
                 }
-                AnatomyTreeNode oldChild = childNodeManager.resolveSourceObject(callback.getSelectedEditInterface());
+                var selectedEditInterface = callback.getSelectedEditInterface();
+                AnatomyTreeNode oldChild = editInterface.resolveSourceObject<AnatomyTreeNode>(selectedEditInterface);
                 oldChild.Name = result;
+                selectedEditInterface.setName(oldChild.Name);
                 return true;
             });
         }

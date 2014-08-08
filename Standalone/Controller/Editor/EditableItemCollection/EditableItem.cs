@@ -18,7 +18,7 @@ namespace Medical.Editor
         public abstract String Name { get; set; }
 
         [DoNotSave]
-        private EditInterface editInterface;
+        protected EditInterface editInterface;
 
         public EditInterface getEditInterface()
         {

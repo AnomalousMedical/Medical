@@ -172,8 +172,6 @@ namespace Medical
     partial class ScratchAreaFolder
     {
         private EditInterface editInterface;
-        private EditInterfaceManager<ScratchAreaFolder> folderEdits;
-        private EditInterfaceManager<ScratchAreaItem> itemEdits;
 
         public EditInterface EditInterface
         {
@@ -185,10 +183,10 @@ namespace Medical
                     editInterface.addCommand(new EditInterfaceCommand("Add Folder", addFolderCallback));
                     editInterface.addCommand(new EditInterfaceCommand("Paste", pasteCallback));
 
-                    folderEdits = new EditInterfaceManager<ScratchAreaFolder>(editInterface);
+                    var folderEdits = editInterface.createEditInterfaceManager<ScratchAreaFolder>();
                     folderEdits.addCommand(new EditInterfaceCommand("Remove", removeFolderCallback));
 
-                    itemEdits = new EditInterfaceManager<ScratchAreaItem>(editInterface);
+                    var itemEdits = editInterface.createEditInterfaceManager<ScratchAreaItem>();
                     itemEdits.addCommand(new EditInterfaceCommand("Rename", renameItemCallback));
                     itemEdits.addCommand(new EditInterfaceCommand("Remove", removeItemCallback));
 
@@ -221,7 +219,7 @@ namespace Medical
 
         private void removeFolderCallback(EditUICallback callback, EditInterfaceCommand caller)
         {
-            ScratchAreaFolder folder = folderEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            ScratchAreaFolder folder = editInterface.resolveSourceObject<ScratchAreaFolder>(callback.getSelectedEditInterface());
             removeFolder(folder);
         }
 
@@ -254,7 +252,7 @@ namespace Medical
             {
                 if (!hasItem(input))
                 {
-                    ScratchAreaItem item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+                    ScratchAreaItem item = editInterface.resolveSourceObject<ScratchAreaItem>(callback.getSelectedEditInterface());
                     item.renameFile(input);
                     removeItem(item);
                     addExistingItem(input);
@@ -267,7 +265,7 @@ namespace Medical
 
         private void removeItemCallback(EditUICallback callback, EditInterfaceCommand caller)
         {
-            ScratchAreaItem item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            ScratchAreaItem item = editInterface.resolveSourceObject<ScratchAreaItem>(callback.getSelectedEditInterface());
             removeItem(item);
         }
 
@@ -275,7 +273,7 @@ namespace Medical
         {
             if (editInterface != null)
             {
-                folderEdits.addSubInterface(folder, folder.EditInterface);
+                editInterface.addSubInterface(folder, folder.EditInterface);
             }
         }
 
@@ -283,7 +281,7 @@ namespace Medical
         {
             if (editInterface != null)
             {
-                folderEdits.removeSubInterface(folder);
+                editInterface.removeSubInterface(folder);
             }
         }
 
@@ -291,7 +289,7 @@ namespace Medical
         {
             if (editInterface != null)
             {
-                itemEdits.addSubInterface(item, item.EditInterface);
+                editInterface.addSubInterface(item, item.EditInterface);
             }
         }
 
@@ -299,7 +297,7 @@ namespace Medical
         {
             if (editInterface != null)
             {
-                itemEdits.removeSubInterface(item);
+                editInterface.removeSubInterface(item);
             }
         }
     }

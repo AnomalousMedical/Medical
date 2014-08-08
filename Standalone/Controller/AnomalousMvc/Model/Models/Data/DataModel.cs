@@ -87,13 +87,11 @@ namespace Medical.Controller.AnomalousMvc
 
     partial class DataModel
     {
-        private EditInterfaceManager<DataModelItem> itemEdits;
-
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             editInterface.addCommand(new EditInterfaceCommand("Add Data", addData));
 
-            itemEdits = new EditInterfaceManager<DataModelItem>(editInterface);
+            var itemEdits = editInterface.createEditInterfaceManager<DataModelItem>();
             itemEdits.addCommand(new EditInterfaceCommand("Remove", removeItem));
 
             foreach (DataModelItem link in items.Values)
@@ -121,23 +119,23 @@ namespace Medical.Controller.AnomalousMvc
 
         private void removeItem(EditUICallback callback, EditInterfaceCommand command)
         {
-            DataModelItem item = itemEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            DataModelItem item = editInterface.resolveSourceObject<DataModelItem>(callback.getSelectedEditInterface());
             removeItem(item);
         }
 
         private void addItemDefinition(DataModelItem item)
         {
-            if (itemEdits != null)
+            if (editInterface != null)
             {
-                itemEdits.addSubInterface(item, item.getEditInterface());
+                editInterface.addSubInterface(item, item.getEditInterface());
             }
         }
 
         private void removeItemDefinition(DataModelItem item)
         {
-            if (itemEdits != null)
+            if (editInterface != null)
             {
-                itemEdits.removeSubInterface(item);
+                editInterface.removeSubInterface(item);
             }
         }
     }

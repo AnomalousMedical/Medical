@@ -232,7 +232,6 @@ namespace Medical
     partial class DDAtlasPlugin
     {
         private EditInterface editInterface;
-        private EditInterfaceManager<DDPluginTask> taskManager;
 
         public EditInterface EditInterface
         {
@@ -242,7 +241,7 @@ namespace Medical
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "DDAtlasPlugin", null);
                     editInterface.addCommand(new EditInterfaceCommand("Add Start Mvc Context Task", addStartMvcContextTask));
-                    taskManager = new EditInterfaceManager<DDPluginTask>(editInterface);
+                    var taskManager = editInterface.createEditInterfaceManager<DDPluginTask>();
                     taskManager.addCommand(new EditInterfaceCommand("Remove", removeDDPluginTask));
                     foreach (DDPluginTask task in tasks)
                     {
@@ -269,23 +268,23 @@ namespace Medical
 
         private void onTaskAdded(DDPluginTask task)
         {
-            if (taskManager != null)
+            if (editInterface != null)
             {
-                taskManager.addSubInterface(task, task.EditInterface);
+                editInterface.addSubInterface(task, task.EditInterface);
             }
         }
 
         private void removeDDPluginTask(EditUICallback callback, EditInterfaceCommand caller)
         {
-            DDPluginTask task = taskManager.resolveSourceObject(callback.getSelectedEditInterface());
+            DDPluginTask task = editInterface.resolveSourceObject<DDPluginTask>(callback.getSelectedEditInterface());
             removeTask(task);
         }
 
         private void onTaskRemoved(DDPluginTask task)
         {
-            if (taskManager != null)
+            if (editInterface != null)
             {
-                taskManager.removeSubInterface(task);
+                editInterface.removeSubInterface(task);
             }
         }
     }

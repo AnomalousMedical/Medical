@@ -192,13 +192,11 @@ namespace Medical.Controller.AnomalousMvc
 
     partial class NavigationModel
     {
-        private EditInterfaceManager<NavigationLink> linkEdits;
-
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             editInterface.addCommand(new EditInterfaceCommand("Add Link", addLink));
 
-            linkEdits = new EditInterfaceManager<NavigationLink>(editInterface);
+            var linkEdits = editInterface.createEditInterfaceManager<NavigationLink>();
             linkEdits.addCommand(new EditInterfaceCommand("Remove", removeLink));
             linkEdits.addCommand(new EditInterfaceCommand("Move Up", moveUp));
             linkEdits.addCommand(new EditInterfaceCommand("Move Down", moveDown));
@@ -217,13 +215,13 @@ namespace Medical.Controller.AnomalousMvc
 
         private void removeLink(EditUICallback callback, EditInterfaceCommand command)
         {
-            NavigationLink link = linkEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            NavigationLink link = editInterface.resolveSourceObject<NavigationLink>(callback.getSelectedEditInterface());
             removeNavigationLink(link);
         }
 
         private void moveUp(EditUICallback callback, EditInterfaceCommand command)
         {
-            NavigationLink link = linkEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            NavigationLink link = editInterface.resolveSourceObject<NavigationLink>(callback.getSelectedEditInterface());
             int index = links.IndexOf(link) - 1;
             if (index >= 0)
             {
@@ -234,7 +232,7 @@ namespace Medical.Controller.AnomalousMvc
 
         private void moveDown(EditUICallback callback, EditInterfaceCommand command)
         {
-            NavigationLink link = linkEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            NavigationLink link = editInterface.resolveSourceObject<NavigationLink>(callback.getSelectedEditInterface());
             int index = links.IndexOf(link) + 1;
             if (index < links.Count)
             {
@@ -245,7 +243,7 @@ namespace Medical.Controller.AnomalousMvc
 
         private void insert(EditUICallback callback, EditInterfaceCommand command)
         {
-            NavigationLink link = linkEdits.resolveSourceObject(callback.getSelectedEditInterface());
+            NavigationLink link = editInterface.resolveSourceObject<NavigationLink>(callback.getSelectedEditInterface());
             int index = links.IndexOf(link);
             if (index < links.Count)
             {
@@ -255,29 +253,29 @@ namespace Medical.Controller.AnomalousMvc
 
         private void addLinkDefinition(NavigationLink link)
         {
-            if (linkEdits != null)
+            if (editInterface != null)
             {
-                linkEdits.addSubInterface(link, link.getEditInterface());
+                editInterface.addSubInterface(link, link.getEditInterface());
             }
         }
 
         private void removeLinkDefinition(NavigationLink link)
         {
-            if (linkEdits != null)
+            if (editInterface != null)
             {
-                linkEdits.removeSubInterface(link);
+                editInterface.removeSubInterface(link);
             }
         }
 
         private void refreshLinkDefinitions()
         {
-            if (linkEdits != null)
+            if (editInterface != null)
             {
-                linkEdits.clearSubInterfaces();
+                editInterface.getEditInterfaceManager<NavigationLink>().clearSubInterfaces();
                 foreach (NavigationLink link in links)
                 {
                     link.getEditInterface().clearCommands();
-                    linkEdits.addSubInterface(link, link.getEditInterface());
+                    editInterface.addSubInterface(link, link.getEditInterface());
                 }
             }
         }
