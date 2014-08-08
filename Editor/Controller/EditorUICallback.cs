@@ -2,6 +2,7 @@
 using Logging;
 using Medical.Controller.AnomalousMvc;
 using Medical.Editor;
+using Medical.GUI;
 using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
 using MyGUIPlugin;
 using System;
@@ -87,6 +88,21 @@ namespace Medical
             this.addSyncCustomQuery<Browser, IEnumerable<String>, String, String>(ElementAttributeEditor.CustomQueries.BuildFileBrowser, (searchPatterns, prompt, leadingPath) =>
             {
                 return createFileBrowser(searchPatterns, prompt, leadingPath);
+            });
+
+            addCustomQuery<String, String>(PlaySoundAction.CustomQueries.Record, (queryResult, soundFile) =>
+            {
+                this.getInputString("Enter a name for the sound file.", delegate(String result, ref String errorMessage)
+                {
+                    String finalSoundFile = Path.ChangeExtension(result, ".ogg");
+                    String error = null;
+                    QuickSoundRecorder.ShowDialog(standaloneController.MedicalController, finalSoundFile, editorController.ResourceProvider.openWriteStream,
+                    newSoundFile =>
+                    {
+                        queryResult.Invoke(newSoundFile, ref error);
+                    });
+                    return true;
+                });
             });
         }
 
