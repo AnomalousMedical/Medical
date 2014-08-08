@@ -193,7 +193,7 @@
     <Compile Include="Controller\Editor\EditorResourceProvider\SaveableObjectStream.cs" />
     <Compile Include="Controller\Editor\EditorResourceProvider\TextCachedResource.cs" />
     <Compile Include="Controller\Editor\EditorTypeController.cs" />
-    <Compile Include="Controller\Editor\EditorUICallback.cs" />
+    <Compile Include="Controller\Editor\CommonUICallback.cs" />
     <Compile Include="Controller\Editor\ProjectItemTemplate.cs" />
     <Compile Include="Controller\Editor\ProjectItemTemplateDelegate.cs" />
     <Compile Include="Controller\Editor\ProjectItemTemplateFixedNameDelegate.cs" />
