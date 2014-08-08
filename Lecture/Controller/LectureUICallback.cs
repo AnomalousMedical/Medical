@@ -20,15 +20,15 @@ namespace Lecture
             : base(standaloneController, editorController, propEditController)
         {
             addCustomQuery<String, String>(PlaySoundAction.CustomQueries.Record, (queryResult, soundFile) =>
+            {
+                String finalSoundFile = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString("D") + ".ogg");
+                String error = null;
+                QuickSoundRecorder.ShowDialog(standaloneController.MedicalController, finalSoundFile, editorController.ResourceProvider.openWriteStream,
+                newSoundFile =>
                 {
-                    String finalSoundFile = Path.Combine(CurrentDirectory, Guid.NewGuid().ToString("D") + ".ogg");
-                    String error = null;
-                    QuickSoundRecorder.ShowDialog(standaloneController.MedicalController, finalSoundFile, editorController.ResourceProvider.openWriteStream,
-                    newSoundFile =>
-                    {
-                        queryResult.Invoke(newSoundFile, ref error);
-                    });
+                    queryResult.Invoke(newSoundFile, ref error);
                 });
+            });
         }
 
         public override Browser createFileBrowser(IEnumerable<string> searchPatterns, string prompt)

@@ -58,15 +58,12 @@ namespace Medical
 
     public class TimelinePreActionEditInterface
     {
-        private static Browser browser;
-
-        static TimelinePreActionEditInterface()
+        public enum CustomQueries
         {
-            String[] seps = { "." };
-            browser = new Browser("Pre Actions", "Choose Pre Action");
-            browser.addNode(null, seps, new BrowserNode("Change Scene", typeof(OpenNewSceneAction)));
-            browser.addNode(null, seps, new BrowserNode("Show Skip To Post Actions Prompt", typeof(SkipToPostActions)));
-            browser.addNode(null, seps, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
+            /// <summary>
+            /// Sync custom query, returns browser of types that extend TimelineInstantAction
+            /// </summary>
+            BuildActionBrowser
         }
 
         private Timeline timeline;
@@ -107,13 +104,17 @@ namespace Medical
 
         private void addAction(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.showBrowser(browser, delegate(Object result, ref String errorMessage)
+            var browser = callback.runSyncCustomQuery<Browser>(CustomQueries.BuildActionBrowser);
+            if (browser != null)
             {
-                Type createType = (Type)result;
-                TimelineInstantAction action = (TimelineInstantAction)Activator.CreateInstance(createType);
-                timeline.addPreAction(action);
-                return true;
-            });
+                callback.showBrowser(browser, delegate(Object result, ref String errorMessage)
+                {
+                    Type createType = (Type)result;
+                    TimelineInstantAction action = (TimelineInstantAction)Activator.CreateInstance(createType);
+                    timeline.addPreAction(action);
+                    return true;
+                });
+            }
         }
 
         private void removeAction(EditUICallback callback, EditInterfaceCommand caller)
@@ -124,15 +125,12 @@ namespace Medical
 
     public class TimelinePostActionEditInterface
     {
-        private static Browser browser;
-
-        static TimelinePostActionEditInterface()
+        public enum CustomQueries
         {
-            String[] seps = { "." };
-            browser = new Browser("Post Actions", "Choose Post Action");
-            browser.addNode(null, seps, new BrowserNode("Load Another Timeline", typeof(LoadAnotherTimeline)));
-            browser.addNode(null, seps, new BrowserNode("Repeat Previous", typeof(RepeatPreviousPostActions)));
-            browser.addNode(null, seps, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
+            /// <summary>
+            /// Sync custom query, returns browser of types that extend TimelineInstantAction
+            /// </summary>
+            BuildActionBrowser
         }
 
         private Timeline timeline;
@@ -173,13 +171,17 @@ namespace Medical
 
         private void addAction(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.showBrowser(browser, delegate(Object result, ref String errorMessage)
+            var browser = callback.runSyncCustomQuery<Browser>(CustomQueries.BuildActionBrowser);
+            if (browser != null)
             {
-                Type createType = (Type)result;
-                TimelineInstantAction action = (TimelineInstantAction)Activator.CreateInstance(createType);
-                timeline.addPostAction(action);
-                return true;
-            });
+                callback.showBrowser(browser, delegate(Object result, ref String errorMessage)
+                {
+                    Type createType = (Type)result;
+                    TimelineInstantAction action = (TimelineInstantAction)Activator.CreateInstance(createType);
+                    timeline.addPostAction(action);
+                    return true;
+                });
+            }
         }
 
         private void removeAction(EditUICallback callback, EditInterfaceCommand caller)

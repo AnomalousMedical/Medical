@@ -90,7 +90,7 @@ namespace Medical
                 return createFileBrowser(searchPatterns, prompt, leadingPath);
             });
 
-            addCustomQuery<String, String>(PlaySoundAction.CustomQueries.Record, (queryResult, soundFile) =>
+            this.addCustomQuery<String, String>(PlaySoundAction.CustomQueries.Record, (queryResult, soundFile) =>
             {
                 this.getInputString("Enter a name for the sound file.", delegate(String result, ref String errorMessage)
                 {
@@ -103,6 +103,24 @@ namespace Medical
                     });
                     return true;
                 });
+            });
+
+            this.addSyncCustomQuery<Browser>(TimelinePreActionEditInterface.CustomQueries.BuildActionBrowser, () =>
+            {
+                var browser = new Browser("Pre Actions", "Choose Pre Action");
+                browser.addNode(null, null, new BrowserNode("Change Scene", typeof(OpenNewSceneAction)));
+                browser.addNode(null, null, new BrowserNode("Show Skip To Post Actions Prompt", typeof(SkipToPostActions)));
+                browser.addNode(null, null, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
+                return browser;
+            });
+
+            this.addSyncCustomQuery<Browser>(TimelinePostActionEditInterface.CustomQueries.BuildActionBrowser, () =>
+            {
+                var browser = new Browser("Post Actions", "Choose Post Action");
+                browser.addNode(null, null, new BrowserNode("Load Another Timeline", typeof(LoadAnotherTimeline)));
+                browser.addNode(null, null, new BrowserNode("Repeat Previous", typeof(RepeatPreviousPostActions)));
+                browser.addNode(null, null, new BrowserNode("Run Mvc Action", typeof(RunMvcAction)));
+                return browser;
             });
         }
 

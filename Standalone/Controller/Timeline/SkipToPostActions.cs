@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class SkipToPostActions : TimelineInstantAction
+    public class SkipToPostActions : TimelineInstantAction
     {
         public SkipToPostActions()
         {
