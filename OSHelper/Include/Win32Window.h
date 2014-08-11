@@ -13,8 +13,6 @@ public:
     
     virtual void setTitle(String title);
     
-    virtual void showFullScreen();
-    
     virtual void setSize(int width, int height);
     
     virtual int getWidth();
@@ -35,7 +33,7 @@ public:
 
 	virtual float getWindowScaling();
 
-	void toggleBorderlessFullscreen();
+	virtual void toggleFullscreen();
 
 	void activateCursor()
 	{

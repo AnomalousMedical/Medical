@@ -28,12 +28,6 @@ void Win32Window::setTitle(String title)
 	SetWindowText(window, title);
 }
 
-void Win32Window::showFullScreen()
-{
-	SetWindowLong(window, GWL_STYLE, WS_VISIBLE | WS_CLIPCHILDREN | WS_POPUP);
-	SetWindowPos(window, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
-}
-
 void Win32Window::setSize(int width, int height)
 {
 	SetWindowPos(window, NULL, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
@@ -60,29 +54,40 @@ void* Win32Window::getHandle()
 
 void Win32Window::show()
 {
-	WINDOWPLACEMENT placement;
-	GetWindowPlacement(window, &placement);
-	ShowWindow(window, placement.showCmd);
-	UpdateWindow(window);
-}
-
-void Win32Window::toggleBorderlessFullscreen()
-{
-	DWORD dwStyle = GetWindowLong(window, GWL_STYLE);
-	if (dwStyle & WS_OVERLAPPEDWINDOW)
+	if (exclusiveFullscreen)
 	{
-		MONITORINFO mi = { sizeof(mi) };
-		if (GetWindowPlacement(window, &previousWindowPlacement) && GetMonitorInfo(MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY), &mi))
-		{
-			SetWindowLong(window, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW | WS_POPUP);
-			SetWindowPos(window, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
-		}
+		SetWindowLong(window, GWL_STYLE, WS_VISIBLE | WS_CLIPCHILDREN | WS_POPUP);
+		SetWindowPos(window, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 	}
 	else
 	{
-		SetWindowLong(window, GWL_STYLE, dwStyle & ~WS_POPUP | WS_OVERLAPPEDWINDOW);
-		SetWindowPlacement(window, &previousWindowPlacement);
-		SetWindowPos(window, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+		WINDOWPLACEMENT placement;
+		GetWindowPlacement(window, &placement);
+		ShowWindow(window, placement.showCmd);
+		UpdateWindow(window);
+	}
+}
+
+void Win32Window::toggleFullscreen()
+{
+	if (!exclusiveFullscreen)
+	{
+		DWORD dwStyle = GetWindowLong(window, GWL_STYLE);
+		if (dwStyle & WS_OVERLAPPEDWINDOW)
+		{
+			MONITORINFO mi = { sizeof(mi) };
+			if (GetWindowPlacement(window, &previousWindowPlacement) && GetMonitorInfo(MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY), &mi))
+			{
+				SetWindowLong(window, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW | WS_POPUP);
+				SetWindowPos(window, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+			}
+		}
+		else
+		{
+			SetWindowLong(window, GWL_STYLE, dwStyle & ~WS_POPUP | WS_OVERLAPPEDWINDOW);
+			SetWindowPlacement(window, &previousWindowPlacement);
+			SetWindowPos(window, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+		}
 	}
 }
 

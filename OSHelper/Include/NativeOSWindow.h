@@ -40,8 +40,6 @@ public:
     
     virtual void setTitle(String title) = 0;
     
-    virtual void showFullScreen() = 0;
-    
     virtual void setSize(int width, int height) = 0;
     
     virtual int getWidth() = 0;
@@ -63,7 +61,19 @@ public:
     virtual void setupMultitouch(MultiTouch* multiTouch) = 0;
 
 	virtual float getWindowScaling() = 0;
+
+	virtual void toggleFullscreen() = 0;
     
+	void setExclusiveFullscreen(bool exclusiveFullscreen)
+	{
+		this->exclusiveFullscreen = exclusiveFullscreen;
+	}
+
+	bool getExclusiveFullscreen()
+	{
+		return exclusiveFullscreen;
+	}
+
     void fireSized()
 	{
 		sizedCB();
@@ -161,6 +171,9 @@ public:
             mouseWheelCB(relZ);
         }
     }
+
+protected:
+	bool exclusiveFullscreen;
     
 private:
 	DeleteDelegate deleteCB;

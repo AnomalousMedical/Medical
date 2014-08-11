@@ -12,7 +12,8 @@ keyUpCB(0),
 mouseButtonDownCB(0),
 mouseButtonUpCB(0),
 mouseMoveCB(0),
-mouseWheelCB(0)
+mouseWheelCB(0),
+exclusiveFullscreen(false)
 {
 
 }
@@ -31,11 +32,6 @@ extern "C" _AnomalousExport void NativeOSWindow_destroy(NativeOSWindow* nativeWi
 extern "C" _AnomalousExport void NativeOSWindow_setTitle(NativeOSWindow* nativeWindow, String title)
 {
 	nativeWindow->setTitle(title);
-}
-
-extern "C" _AnomalousExport void NativeOSWindow_showFullScreen(NativeOSWindow* nativeWindow)
-{
-    nativeWindow->showFullScreen();
 }
 
 extern "C" _AnomalousExport void NativeOSWindow_setSize(NativeOSWindow* nativeWindow, int width, int height)
@@ -78,6 +74,16 @@ extern "C" _AnomalousExport bool NativeOSWindow_getMaximized(NativeOSWindow* nat
 	return nativeWindow->getMaximized();
 }
 
+extern "C" _AnomalousExport void NativeOSWindow_setExclusiveFullscreen(NativeOSWindow* nativeWindow, bool exclusiveFullscreen)
+{
+	nativeWindow->setExclusiveFullscreen(exclusiveFullscreen);
+}
+
+extern "C" _AnomalousExport bool NativeOSWindow_getExclusiveFullscreen(NativeOSWindow* nativeWindow)
+{
+	return nativeWindow->getExclusiveFullscreen();
+}
+
 extern "C" _AnomalousExport void NativeOSWindow_setCursor(NativeOSWindow* nativeWindow, CursorType cursor)
 {
 	nativeWindow->setCursor(cursor);
@@ -86,4 +92,9 @@ extern "C" _AnomalousExport void NativeOSWindow_setCursor(NativeOSWindow* native
 extern "C" _AnomalousExport float NativeOSWindow_getWindowScaling(NativeOSWindow* nativeWindow)
 {
 	return nativeWindow->getWindowScaling();
+}
+
+extern "C" _AnomalousExport void NativeOSWindow_toggleFullscreen(NativeOSWindow* nativeWindow)
+{
+	return nativeWindow->toggleFullscreen();
 }

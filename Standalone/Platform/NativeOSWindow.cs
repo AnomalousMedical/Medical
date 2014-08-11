@@ -89,11 +89,6 @@ namespace Medical
 
         }
 
-        public void showFullScreen()
-        {
-            NativeOSWindow_showFullScreen(nativeWindow);
-        }
-
         public void setSize(int width, int height)
         {
             NativeOSWindow_setSize(nativeWindow, width, height);
@@ -112,6 +107,11 @@ namespace Medical
         public void setCursor(CursorType cursor)
         {
             NativeOSWindow_setCursor(nativeWindow, cursor);
+        }
+
+        public void toggleFullscreen()
+        {
+            NativeOSWindow_toggleFullscreen(nativeWindow);
         }
 
         public String Title
@@ -136,6 +136,18 @@ namespace Medical
             set
             {
                 NativeOSWindow_setMaximized(nativeWindow, value);
+            }
+        }
+
+        public bool ExclusiveFullscreen
+        {
+            get
+            {
+                return NativeOSWindow_getExclusiveFullscreen(nativeWindow);
+            }
+            set
+            {
+                NativeOSWindow_setExclusiveFullscreen(nativeWindow, value);
             }
         }
 
@@ -259,9 +271,6 @@ namespace Medical
         private static extern void NativeOSWindow_setTitle(IntPtr nativeWindow, [MarshalAs(UnmanagedType.LPWStr)] String title);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
-        private static extern void NativeOSWindow_showFullScreen(IntPtr nativeWindow);
-
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_setSize(IntPtr nativeWindow, int width, int height);
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
@@ -294,6 +303,16 @@ namespace Medical
 
         [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
         private static extern float NativeOSWindow_getWindowScaling(IntPtr nativeWindow);
+
+        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        private static extern void NativeOSWindow_setExclusiveFullscreen(IntPtr nativeWindow, bool exclusiveFullscreen);
+
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static extern bool NativeOSWindow_getExclusiveFullscreen(IntPtr nativeWindow);
+
+        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void NativeOSWindow_toggleFullscreen(IntPtr nativeWindow);
 
         #endregion
     }

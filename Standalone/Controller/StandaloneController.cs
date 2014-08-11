@@ -773,13 +773,13 @@ namespace Medical
             if (MedicalConfig.EngineConfig.Fullscreen)
             {
                 mainWindow.setSize(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
-                mainWindow.showFullScreen();
+                mainWindow.ExclusiveFullscreen = true;
             }
             else
             {
                 mainWindow.Maximized = true;
-                mainWindow.show();
             }
+            mainWindow.show();
         }
 
         void medicalController_OnLoopUpdate(Clock time)
