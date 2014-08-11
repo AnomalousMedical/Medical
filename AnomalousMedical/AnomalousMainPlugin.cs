@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Xml;
 using Engine.Saving.XMLSaver;
 using System.IO;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -233,6 +234,14 @@ namespace Medical.GUI
                     guiTaskManager.addPinnedTask(bookmarkTask);
                 }
             }
+
+            var toggleFullscreenMessageEvent = new MessageEvent("ToggleFullscreen", frameUp: (evtMgr) =>
+                {
+                    MainWindow.Instance.toggleFullscreen();
+                });
+            toggleFullscreenMessageEvent.addButton(KeyboardButtonCode.KC_RETURN);
+            toggleFullscreenMessageEvent.addButton(KeyboardButtonCode.KC_LMENU);
+            standaloneController.MedicalController.EventManager.addEvent(toggleFullscreenMessageEvent);
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)
