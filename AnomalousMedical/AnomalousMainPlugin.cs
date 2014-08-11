@@ -194,6 +194,12 @@ namespace Medical.GUI
             exitTaskItem.OnClicked += new CallbackTask.ClickedCallback(exitTaskItem_OnClicked);
             taskController.addTask(exitTaskItem);
 
+            CallbackTask toggleFullscreen = new CallbackTask("Medical.ToggleFullscreen", "Toggle Fullscreen", CommonResources.NoIcon, TaskMenuCategories.System, int.MaxValue - 2, false, (item) =>
+            {
+                MainWindow.Instance.toggleFullscreen();
+            });
+            taskController.addTask(toggleFullscreen);
+
             //Tools Section
             MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Tools);
             renderTask.ShowOnTimelineTaskbar = true;
