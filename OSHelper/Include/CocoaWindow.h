@@ -24,8 +24,6 @@ public:
     
     virtual void setTitle(String title);
     
-    virtual void showFullScreen();
-    
     virtual void setSize(int width, int height);
     
     virtual int getWidth();
@@ -52,6 +50,8 @@ public:
     virtual void setupMultitouch(MultiTouch* multiTouch);
     
     virtual float getWindowScaling();
+    
+    virtual void toggleFullscreen();
     
 private:
     NSWindow* window;

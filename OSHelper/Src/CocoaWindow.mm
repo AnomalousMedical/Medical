@@ -74,13 +74,6 @@ void CocoaWindow::setTitle(String title)
     [window setTitle: [NSString stringWithFormat:@"%S", title]];
 }
 
-void CocoaWindow::showFullScreen()
-{
-    //NOT IMPLEMENTED
-    //Only 10.7+
-    //[window toggleFullScreen:nil];
-}
-
 void CocoaWindow::setSize(int width, int height)
 {
     NSRect frame = window.frame;
@@ -181,6 +174,11 @@ float CocoaWindow::getWindowScaling()
 void CocoaWindow::setupMultitouch(MultiTouch *multiTouch)
 {
     [view setupMultitouch:multiTouch];
+}
+
+void CocoaWindow::toggleFullscreen()
+{
+    [window toggleFullScreen:nil];
 }
 
 //PInvoke
