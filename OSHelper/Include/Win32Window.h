@@ -35,6 +35,8 @@ public:
 
 	virtual float getWindowScaling();
 
+	void toggleBorderlessFullscreen();
+
 	void activateCursor()
 	{
 		SetCursor(hCursor);
@@ -58,4 +60,5 @@ private:
 	static WNDCLASSEX wndclass;
 	HCURSOR hCursor;
 	bool mouseDown[MouseButtonCode::NUM_BUTTONS];
+	WINDOWPLACEMENT previousWindowPlacement;
 };
