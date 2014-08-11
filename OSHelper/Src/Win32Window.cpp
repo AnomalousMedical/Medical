@@ -29,7 +29,7 @@ void Win32Window::setTitle(String title)
     
 void Win32Window::showFullScreen()
 {
-	SetWindowLong(window, GWL_STYLE, WS_POPUP | WS_EX_TOPMOST);
+	SetWindowLong(window, GWL_STYLE, WS_VISIBLE | WS_CLIPCHILDREN | WS_POPUP);
 	SetWindowPos(window, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 }
     

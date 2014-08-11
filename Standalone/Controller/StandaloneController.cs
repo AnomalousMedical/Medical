@@ -772,8 +772,8 @@ namespace Medical
 
             if (MedicalConfig.EngineConfig.Fullscreen)
             {
-                mainWindow.showFullScreen();
                 mainWindow.setSize(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
+                mainWindow.showFullScreen();
             }
             else
             {
