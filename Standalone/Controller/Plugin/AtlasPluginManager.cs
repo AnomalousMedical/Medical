@@ -340,7 +340,7 @@ namespace Medical
                 Type pluginType = plugin.GetType();
                 Assembly assembly = pluginType.Assembly;
                 artworkPluginAssemblies.Add(assembly.FullName, assembly);
-                OgreResourceGroupManager.getInstance().addResourceLocation(pluginType.AssemblyQualifiedName, "EmbeddedScalableResource", "MyGUI", true);
+                MyGUIInterface.Instance.CommonResourceGroup.addResource(pluginType.AssemblyQualifiedName, "EmbeddedScalableResource", true);
             }
         }
 
@@ -361,13 +361,13 @@ namespace Medical
             //If we already added the plugins folder to MyGUI, remove it.
             if (addedPluginsToMyGUIResourceGroup)
             {
-                OgreResourceGroupManager.getInstance().removeResourceLocation("Plugins", "MyGUI");
+                MyGUIInterface.Instance.CommonResourceGroup.removeResource("Plugins");
             }
 
             //If a plugins folder exists in the virtual file system add it to the MyGUI group.
             if (VirtualFileSystem.Instance.exists("Plugins"))
             {
-                OgreResourceGroupManager.getInstance().addResourceLocation("Plugins", "ScalableEngineArchive", "MyGUI", true);
+                MyGUIInterface.Instance.CommonResourceGroup.addResource("Plugins", "ScalableEngineArchive", true);
                 addedPluginsToMyGUIResourceGroup = true;
             }
 

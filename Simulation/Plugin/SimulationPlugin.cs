@@ -28,6 +28,11 @@ namespace Medical
             pluginManager.addCreateSimElementManagerCommand(new AddSimElementManagerCommand("Create Simulation Scene Definition", SimulationSceneDefinition.Create));
         }
 
+        public void link(PluginManager pluginManager)
+        {
+
+        }
+
         public void setPlatformInfo(UpdateTimer mainTimer, EventManager eventManager)
         {
             

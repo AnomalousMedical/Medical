@@ -65,7 +65,7 @@ namespace Medical.GUI
         {
             Gui gui = Gui.Instance;
 
-            OgreResourceGroupManager.getInstance().addResourceLocation(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedScalableResource", "MyGUI", true);
+            MyGUIInterface.Instance.CommonResourceGroup.addResource(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedScalableResource", true);
 
             screenLayoutManager = new ScreenLayoutManager(window);
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);

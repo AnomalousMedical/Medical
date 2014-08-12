@@ -1,5 +1,6 @@
 ﻿using Engine.Platform;
 using Engine.Renderer;
+using MyGUIPlugin;
 using OgrePlugin;
 using OgreWrapper;
 using System;
@@ -27,7 +28,7 @@ namespace Medical.Controller
             :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
         {
             this.TextureName = name;
-            texture = TextureManager.getInstance().createManual(name, "MyGUI", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
+            texture = TextureManager.getInstance().createManual(name, MyGUIInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
 
             pixelBuffer = texture.Value.getBuffer();
             renderTexture = pixelBuffer.Value.getRenderTarget();

@@ -14,7 +14,7 @@ namespace UnitTestPlugin.GUI
 {
     class TestImageAtlas : MDIDialog
     {
-        private PagedImageAtlas imageAtlas = new PagedImageAtlas("Test", "MyGUI");
+        private PagedImageAtlas imageAtlas = new PagedImageAtlas("Test", MyGUIInterface.Instance.CommonResourceGroup.FullName);
 
         public TestImageAtlas()
             : base("UnitTestPlugin.GUI.TestImageAtlas.TestImageAtlas.layout")
