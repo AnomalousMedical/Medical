@@ -28,31 +28,3 @@ abstract material WatermarkBase
 		}
 	}
 }
-
-abstract material LogoBase
-{
-	technique
-	{
-		pass Draw
-		{ 
-			vertex_program_ref BasicWorldTexturedNoLightVP
-			{
-				
-			}	
-
-			fragment_program_ref BasicTexturedNoLightPS
-			{
-			
-			}
-
-			iteration once
-			
-			scene_blend alpha_blend
-
-			texture_unit Watermark
-			{
-				
-			}
-		}
-	}
-}

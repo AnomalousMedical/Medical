@@ -128,9 +128,6 @@ namespace Medical
             PointerManager.Instance.Visible = false;
 
             ((RenderWindow)OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget).DeactivateOnFocusChange = false;
-
-            OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "AnomalousCore", true);
-            OgreResourceGroupManager.getInstance().initializeResourceGroup("AnomalousCore");
         }
 
         public void Dispose()
