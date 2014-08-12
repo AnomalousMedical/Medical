@@ -8,6 +8,7 @@ using Engine.Platform;
 using Engine.ObjectManagement;
 using OgreWrapper;
 using OgrePlugin;
+using Engine.Resources;
 
 namespace Medical.Controller
 {
@@ -20,9 +21,16 @@ namespace Medical.Controller
         private bool visible = false;
         private Color color = new Color(0f, 0.5019608f, 0f, 1f);
         private Vector3 origin = Vector3.Zero;
+        private ResourceManager gridResources;
 
         public MeasurementGrid(String name, SceneViewController sceneViewController)
         {
+            gridResources = PluginManager.Instance.createLiveResourceManager("Grid");
+            var rendererResources = gridResources.getSubsystemResource("Ogre");
+            var materials = rendererResources.addResourceGroup("Materials");
+            materials.addResource(String.Format("{0}||Medical.Controller.Grid.", GetType().AssemblyQualifiedName), "EmbeddedResource", true);
+            gridResources.initializeResources();
+
             this.name = name;
             this.sceneViewController = sceneViewController;
             sceneViewController.WindowCreated += new SceneViewWindowEvent(sceneViewController_WindowCreated);

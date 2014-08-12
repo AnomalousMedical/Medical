@@ -858,6 +858,7 @@
     <EmbeddedResource Include="GUI\Taskbar\ClosingTaskbar.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
+    <EmbeddedResource Include="Controller\Grid\Grid.material" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

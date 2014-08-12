@@ -1,0 +1,20 @@
+material Grid
+{
+	technique
+	{
+		pass
+		{ 
+			depth_check off
+			depth_write off
+			vertex_program_ref colorvertex\vs
+			{
+				param_named_auto worldViewProj worldviewproj_matrix
+			}	
+
+			fragment_program_ref colorvertex\fs
+			{
+			
+			}
+		}
+	}
+}

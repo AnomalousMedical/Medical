@@ -216,11 +216,6 @@ namespace Medical
             sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
             lightManager = PluginManager.Instance.RendererPlugin.createSceneViewLightManager();
 
-            //Watermark
-            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
-            OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
-            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-
             //Measurement grid
             measurementGrid = new MeasurementGrid("MeasurementGrid", sceneViewController);
             SceneUnloading += measurementGrid.sceneUnloading;

@@ -22,7 +22,8 @@ namespace Medical
     /// </summary>
     public class ImageRenderer
     {
-        private static readonly String TRANSPARENCY_STATE = "ImageRenderer";
+        private const String TransparencyStateName = "ImageRenderer";
+        private const String RenderTextureResourceGroup = "__ImageRendererTextureGroup";
 
         /// <summary>
         /// Called before the image is rendered or any modifications for
@@ -50,7 +51,8 @@ namespace Medical
             this.controller = controller;
             this.sceneViewController = sceneViewController;
             this.idleHandler = idleHandler;
-            TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
+            TransparencyController.createTransparencyState(TransparencyStateName);
+            OgreResourceGroupManager.getInstance().createResourceGroup(RenderTextureResourceGroup);
         }
 
         /// <summary>
@@ -130,7 +132,7 @@ namespace Medical
                 String activeTransparencyState = TransparencyController.ActiveTransparencyState;
                 if (properties.OverrideLayers)
                 {
-                    TransparencyController.ActiveTransparencyState = TRANSPARENCY_STATE;
+                    TransparencyController.ActiveTransparencyState = TransparencyStateName;
                     if (properties.LayerState != null)
                     {
                         properties.LayerState.instantlyApply();
@@ -248,7 +250,7 @@ namespace Medical
                 //Try to create a texture at the large size specified
                 try
                 {
-                    backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)largeWidth, (uint)largeHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+                    backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", RenderTextureResourceGroup, TextureType.TEX_TYPE_2D, (uint)largeWidth, (uint)largeHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
                     backBufferWidth = largeWidth;
                     backBufferHeight = largeHeight;
                     gridRender = false;
@@ -278,7 +280,7 @@ namespace Medical
             backBufferPow2Size /= 2; //We go one extra step to divide back down
             try
             {
-                backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)backBufferPow2Size, (uint)backBufferPow2Size, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+                backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", RenderTextureResourceGroup, TextureType.TEX_TYPE_2D, (uint)backBufferPow2Size, (uint)backBufferPow2Size, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
                 backBufferWidth = backBufferPow2Size;
                 backBufferHeight = backBufferPow2Size;
             }
