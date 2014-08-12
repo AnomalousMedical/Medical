@@ -107,7 +107,7 @@ namespace Medical
             var resourceManager = PluginManager.Instance.createLiveResourceManager("GlobalShaders"); //We don't ever unload the shaders, so this can be garbage collected after its done here.
             var ogreResources = resourceManager.getSubsystemResource("Ogre");
             var shaderGroup = ogreResources.addResourceGroup("Medical.Shaders");
-            shaderGroup.addResource("Shaders/Articulometrics", true);
+            shaderGroup.addResource("Shaders/Articulometrics", "EngineArchive", true);
             resourceManager.initializeResources();
 
             //GUI
