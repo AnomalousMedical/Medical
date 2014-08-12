@@ -1,6 +1,30 @@
-import WatermarkBase from "Medical.Resources.Watermark.material"
-
-material BodyAtlasBackground : WatermarkBase
+material BodyAtlasBackground
 {
-	set_texture_alias Watermark Medical.Resources.Background.AnomalousMedicalWatermark.png
+	technique
+	{
+		pass Draw
+		{ 
+			vertex_program_ref BasicWorldTexturedNoLightVP
+			{
+				
+			}	
+
+			fragment_program_ref BasicTexturedNoLightColoredPS
+			{
+				param_named_auto bgColor viewport_background_colour
+			}
+
+			iteration once
+			
+			scene_blend alpha_blend
+			cull_hardware none
+			cull_software none
+			depth_write off
+
+			texture_unit Watermark
+			{
+				texture Medical.Resources.Background.AnomalousMedicalWatermark.png
+			}
+		}
+	}
 }

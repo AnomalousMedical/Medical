@@ -189,7 +189,6 @@
     <EmbeddedResource Include="Resources\Bookmarks\Bookmark3.bmk" />
     <EmbeddedResource Include="Resources\Bookmarks\Bookmark4.bmk" />
     <EmbeddedResource Include="Resources\Bookmarks\Bookmark5.bmk" />
-    <EmbeddedResource Include="Resources\Watermark.material" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
