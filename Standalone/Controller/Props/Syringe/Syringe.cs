@@ -16,7 +16,6 @@ namespace Medical
     public class Syringe : Behavior
     {
         public const String BehaviorName = "Behavior";
-        public const String DefinitionName = "Syringe";
 
         [Editable] private String nodeName = PropFactory.NodeName;
         [Editable] private String entityName = PropFactory.EntityName;
@@ -31,32 +30,6 @@ namespace Medical
         [DoNotCopy][DoNotSave] private float timeCounter = 0.0f;
         [DoNotCopy][DoNotSave] private float currentBonePercent = 0.0f;
         [DoNotCopy][DoNotSave] private float startingBonePercent = 0.0f;
-
-        public static void createPropDefinition(PropFactory propFactory)
-        {
-            GenericSimObjectDefinition syringe = new GenericSimObjectDefinition(DefinitionName);
-            syringe.Enabled = true;
-            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
-            entityDefinition.MeshName = "Syringe.mesh";
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(entityDefinition);
-            syringe.addElement(nodeDefinition);
-            PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            syringe.addElement(propFadeBehaviorDef);
-            BehaviorDefinition syringeBehavior = new BehaviorDefinition(BehaviorName, new Syringe());
-            syringe.addElement(syringeBehavior);
-            PropDefinition propDefinition = new PropDefinition(syringe)
-                {
-                    BrowserPath = "Tools"
-                };
-
-            ShowPropTrackInfo syringeData = propDefinition.TrackInfo;
-            syringeData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
-            syringeData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            syringeData.addTrack(new ShowPropSubActionPrototype(typeof(PushPlungerAction), "Push Plunger"));
-            propFactory.addDefinition(propDefinition);
-        }
 
         protected override void constructed()
         {

@@ -594,11 +594,9 @@
     <Compile Include="Controller\Plugin\DataDrivenPlugin\DDAtlasPlugin.cs" />
     <Compile Include="Controller\Plugin\DataDrivenPlugin\DDPluginTask.cs" />
     <Compile Include="Controller\Plugin\ManagePluginInstructions.cs" />
-    <Compile Include="Controller\Props\BiteStick.cs" />
     <Compile Include="Controller\Props\Caliper\Caliper.cs" />
     <Compile Include="Controller\Props\Caliper\SetCaliperMeasurement.cs" />
     <Compile Include="Controller\Props\CircularHighlight\CircularHighlight.cs" />
-    <Compile Include="Controller\Props\DentalFloss.cs" />
     <Compile Include="Controller\Props\DetachableFollowerToggleAction.cs" />
     <Compile Include="Controller\Props\ManualObjectPropFadeBehavior.cs" />
     <Compile Include="Controller\Props\Pen\ClickPenAction.cs" />
@@ -608,12 +606,9 @@
     <Compile Include="Controller\Props\Plane\ChangePlaneSettings.cs" />
     <Compile Include="Controller\Props\Plane\Plane.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableFinger.cs" />
-    <Compile Include="Controller\Props\JVAProp.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableFingerSection.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableHand.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableThumb.cs" />
-    <Compile Include="Controller\Props\RangeOfMotionScale.cs" />
-    <Compile Include="Controller\Props\SplintDefiner.cs" />
     <Compile Include="Controller\StandaloneApp.cs" />
     <Compile Include="Controller\TaskController\CallbackTask.cs" />
     <Compile Include="Controller\TaskController\DialogOpenTask.cs" />
@@ -723,12 +718,8 @@
     <Compile Include="Platform\MultiTouch\MultiFingerScrollGesture.cs" />
     <Compile Include="Platform\MultiTouch\MultiTouch.cs" />
     <Compile Include="Controller\Props\Arrow\Arrow.cs" />
-    <Compile Include="Controller\Props\Doppler.cs" />
-    <Compile Include="Controller\Props\Mustache.cs" />
-    <Compile Include="Controller\Props\PointingHand.cs" />
     <Compile Include="Controller\Props\PropFadeBehavior.cs" />
     <Compile Include="Controller\Props\PropFactory.cs" />
-    <Compile Include="Controller\Props\Ruler.cs" />
     <Compile Include="Controller\Props\Syringe\Syringe.cs" />
     <Compile Include="Controller\Timeline\ActionSequencer.cs" />
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />

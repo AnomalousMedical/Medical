@@ -11,38 +11,7 @@ namespace Medical
 {
     public class CircularHighlight : Interface
     {
-        public const String DefinitionName = "CircularHighlight";
         public const String BehaviorName = "Behavior";
-
-        public static void createPropDefinition(PropFactory propFactory)
-        {
-            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition(DefinitionName);
-            simObject.Enabled = true;
-            ManualObjectDefinition manualObjectDefinition = new ManualObjectDefinition(PropFactory.ManualObjectName);
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(manualObjectDefinition);
-            simObject.addElement(nodeDefinition);
-            CircularHighlight behavior = new CircularHighlight();
-            BehaviorDefinition behaviorDef = new BehaviorDefinition(BehaviorName, behavior);
-            simObject.addElement(behaviorDef);
-            PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior()
-            {
-                EntityName = PropFactory.ManualObjectName
-            };
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            simObject.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(simObject)
-                {
-                    BrowserPath = "Shapes",
-                    PrettyName = "Circular Highlight"
-                };
-
-            ShowPropTrackInfo circularHighlightData = propDefinition.TrackInfo;
-            circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
-            circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            circularHighlightData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeCircularHighlightSettings), "Settings"));
-            propFactory.addDefinition(propDefinition);
-        }
 
         private Ellipse innerEllipse;
         private Ellipse outerEllipse;

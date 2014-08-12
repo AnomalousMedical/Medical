@@ -13,7 +13,6 @@ namespace Medical
 {
     public class Arrow : Interface
     {
-        public const String DefinitionName = "Arrow";
         public const string ArrowBehaviorName = "Behavior";
 
         private Entity entity;
@@ -24,35 +23,6 @@ namespace Medical
         private Bone bottomBone;
         private float tailLength;
         private float scale = 1.0f;
-
-        public static void createPropDefinition(PropFactory propFactory)
-        {
-            GenericSimObjectDefinition arrowSimObject = new GenericSimObjectDefinition(DefinitionName);
-            arrowSimObject.Enabled = true;
-            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
-            entityDefinition.MeshName = "Arrow.mesh";
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(entityDefinition);
-            arrowSimObject.addElement(nodeDefinition);
-            Arrow arrowBehavior = new Arrow();
-            BehaviorDefinition arrowBehaviorDef = new BehaviorDefinition(ArrowBehaviorName, arrowBehavior);
-            arrowSimObject.addElement(arrowBehaviorDef);
-            PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            arrowSimObject.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(arrowSimObject)
-            {
-                BrowserPath = "Shapes"
-            };
-
-            //Arrow
-            ShowPropTrackInfo tracks = propDefinition.TrackInfo;
-            tracks.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
-            tracks.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            tracks.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowColorAction), "Change Color"));
-            tracks.addTrack(new ShowPropSubActionPrototype(typeof(ChangeArrowShapeAction), "Change Arrow Shape"));
-            propFactory.addDefinition(propDefinition);
-        }
 
         public Arrow()
         {

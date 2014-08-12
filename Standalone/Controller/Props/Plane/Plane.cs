@@ -11,37 +11,7 @@ namespace Medical
 {
     public class Plane : Interface
     {
-        public const String DefinitionName = "Plane";
         public const String BehaviorName = "Behavior";
-
-        public static void createPropDefinition(PropFactory propFactory)
-        {
-            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition(DefinitionName);
-            simObject.Enabled = true;
-            ManualObjectDefinition manualObjectDefinition = new ManualObjectDefinition(PropFactory.ManualObjectName);
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(manualObjectDefinition);
-            simObject.addElement(nodeDefinition);
-            Plane behavior = new Plane();
-            BehaviorDefinition behaviorDef = new BehaviorDefinition(BehaviorName, behavior);
-            simObject.addElement(behaviorDef);
-            PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior()
-            {
-                EntityName = PropFactory.ManualObjectName
-            };
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            simObject.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(simObject)
-                {
-                    BrowserPath = "Shapes"
-                };
-
-            ShowPropTrackInfo planeData = propDefinition.TrackInfo;
-            planeData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
-            planeData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            planeData.addTrack(new ShowPropSubActionPrototype(typeof(ChangePlaneSettings), "Settings"));
-            propFactory.addDefinition(propDefinition);
-        }
 
         private Size2 size;
         private ManualObject manualObject;

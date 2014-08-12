@@ -11,37 +11,7 @@ namespace Medical
 {
     public class LineProp : Interface
     {
-        public const String DefinitionName = "Line";
         public const String BehaviorName = "Behavior";
-
-        public static void createPropDefinition(PropFactory propFactory)
-        {
-            GenericSimObjectDefinition simObject = new GenericSimObjectDefinition(DefinitionName);
-            simObject.Enabled = true;
-            ManualObjectDefinition manualObjectDefinition = new ManualObjectDefinition(PropFactory.ManualObjectName);
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(manualObjectDefinition);
-            simObject.addElement(nodeDefinition);
-            LineProp behavior = new LineProp();
-            BehaviorDefinition behaviorDef = new BehaviorDefinition(BehaviorName, behavior);
-            simObject.addElement(behaviorDef);
-            PropFadeBehavior propFadeBehavior = new ManualObjectPropFadeBehavior()
-            {
-                EntityName = PropFactory.ManualObjectName
-            };
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            simObject.addElement(propFadeBehaviorDef);
-            PropDefinition propDefinition = new PropDefinition(simObject)
-                {
-                    BrowserPath = "Shapes"
-                };
-
-            ShowPropTrackInfo lineData = propDefinition.TrackInfo;
-            lineData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
-            lineData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            lineData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeLinePropSettings), "Settings"));
-            propFactory.addDefinition(propDefinition);
-        }
 
         private ManualObject manualObject;
         private float length = 6.0f;

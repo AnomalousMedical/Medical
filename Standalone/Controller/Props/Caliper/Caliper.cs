@@ -13,43 +13,10 @@ namespace Medical
 {
     public class Caliper : Behavior
     {
-        public const String DefinitionName = "Caliper";
         public const String BehaviorName = "CaliperBehavior";
 
         private const float CALIPER_MAX_MM = 100;
         private const float PLUNGE_RANGE = 11.86f;//Shoud be able to do CALIPER_MAX_MM / SimulationConfig.UnitsToMM;, but this gives 11.8105, which is too small caliper may not be correct size, but close enough.
-
-        public static void createPropDefinition(PropFactory propFactory)
-        {
-            GenericSimObjectDefinition caliper = new GenericSimObjectDefinition(DefinitionName);
-            caliper.Enabled = true;
-
-            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
-            entityDefinition.MeshName = "Caliper.mesh";
-
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(entityDefinition);
-            caliper.addElement(nodeDefinition);
-
-            PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            caliper.addElement(propFadeBehaviorDef);
-
-            Caliper caliperBehavior = new Caliper();
-            BehaviorDefinition caliperBehaviorDef = new BehaviorDefinition(BehaviorName, caliperBehavior);
-            caliper.addElement(caliperBehaviorDef);
-
-            PropDefinition propDefinition = new PropDefinition(caliper)
-            {
-                BrowserPath = "Tools"
-            };
-
-            ShowPropTrackInfo caliperData = propDefinition.TrackInfo;
-            caliperData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
-            caliperData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            caliperData.addTrack(new ShowPropSubActionPrototype(typeof(SetCaliperMeasurement), "Set Measurement"));
-            propFactory.addDefinition(propDefinition);
-        }
 
         private Entity entity;
         private SubEntity subEntity;

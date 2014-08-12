@@ -13,40 +13,7 @@ namespace Medical
 {
     public class Pen : Behavior
     {
-        public const String DefinitionName = "Pen";
         public const String PenBehaviorName = "PenBehavior";
-
-        public static void createPropDefinition(PropFactory propFactory)
-        {
-            GenericSimObjectDefinition pen = new GenericSimObjectDefinition(DefinitionName);
-            pen.Enabled = true;
-
-            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
-            entityDefinition.MeshName = "Pen.mesh";
-
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(entityDefinition);
-            pen.addElement(nodeDefinition);
-
-            PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            pen.addElement(propFadeBehaviorDef);
-
-            Pen penBehavior = new Pen();
-            BehaviorDefinition penBehaviorDef = new BehaviorDefinition(PenBehaviorName, penBehavior);
-            pen.addElement(penBehaviorDef);
-
-            PropDefinition propDefinition = new PropDefinition(pen)
-                {
-                    BrowserPath = "Tools"
-                };
-
-            ShowPropTrackInfo penData = propDefinition.TrackInfo;
-            penData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
-            penData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            penData.addTrack(new ShowPropSubActionPrototype(typeof(ClickPenAction), "Click Pen"));
-            propFactory.addDefinition(propDefinition);
-        }
 
         private Entity penEntity;
         private AnimationState clickOnAnim;

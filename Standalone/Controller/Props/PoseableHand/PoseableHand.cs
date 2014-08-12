@@ -11,55 +11,7 @@ namespace Medical
 {
     public class PoseableHand : Interface
     {
-        public const String LeftDefinitionName = "PoseableHandLeft";
-        public const String RightDefinitionName = "PoseableHandRight";
         public const String PoseableHandBehavior = "PoseableHandBehavior";
-
-        public static void createPropDefinition(PropFactory propFactory)
-        {
-            createHand(propFactory, LeftDefinitionName, "HandPoseable.mesh", "", "Poseable Left Hand");
-            createHand(propFactory, RightDefinitionName, "HandPoseableRight.mesh", "Right", "Poseable Right Hand");
-        }
-
-        private static void createHand(PropFactory propFactory, String definitionName, String meshName, String boneSuffix, String prettyName)
-        {
-            GenericSimObjectDefinition hand = new GenericSimObjectDefinition(definitionName);
-            hand.Enabled = true;
-
-            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
-            entityDefinition.MeshName = meshName;
-
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
-            nodeDefinition.addMovableObjectDefinition(entityDefinition);
-            hand.addElement(nodeDefinition);
-
-            PoseableHand poseableHand = new PoseableHand();
-            poseableHand.BoneSuffix = boneSuffix;
-            BehaviorDefinition poseableHandBehaviorDef = new BehaviorDefinition(PoseableHandBehavior, poseableHand);
-            hand.addElement(poseableHandBehaviorDef);
-
-            PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
-            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
-            hand.addElement(propFadeBehaviorDef);
-
-            DetachableSimObjectFollower detachableFollower = new DetachableSimObjectFollower();
-            BehaviorDefinition detachableFollowerDef = new BehaviorDefinition(PropFactory.DetachableFollowerName, detachableFollower);
-            hand.addElement(detachableFollowerDef);
-
-            PropDefinition propDefinition = new PropDefinition(hand)
-                {
-                    BrowserPath = "Hands",
-                    PrettyName = prettyName
-                };
-
-            //Poseable Hand Left
-            ShowPropTrackInfo trackData = propDefinition.TrackInfo;
-            trackData.addTrack(new ShowPropSubActionPrototype(typeof(MovePropAction), "Move"));
-            trackData.addTrack(new ShowPropSubActionPrototype(typeof(SetPropTransparencyAction), "Set Transparency"));
-            trackData.addTrack(new ShowPropSubActionPrototype(typeof(ChangeHandPosition), "Hand Position"));
-            trackData.addTrack(new ShowPropSubActionPrototype(typeof(DetachableFollowerToggleAction), "Attach To Object"));
-            propFactory.addDefinition(propDefinition);
-        }
 
         private Entity entity;
         private SubEntity subEntity;
