@@ -868,7 +868,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Standalone.manifest" />
-    <None Include="Resources\AnomalousMedical.png" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecoratorTransparent.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\SidePanelDecoratorTransparent.layout">
