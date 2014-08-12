@@ -65,7 +65,7 @@ namespace Medical.GUI
             sceneManager = Root.getSingleton().createSceneManager(SceneType.ST_GENERIC, "__libRocketScene_" + name);
             camera = sceneManager.createCamera("libRocketCamera");
 
-            texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)currentTextureWidth, (uint)currentTextureHeight, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
+            texture = TextureManager.getInstance().createManual(textureName, RocketInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, (uint)currentTextureWidth, (uint)currentTextureHeight, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
 
             pixelBuffer = texture.Value.getBuffer();
             renderTexture = pixelBuffer.Value.getRenderTarget();
@@ -171,7 +171,7 @@ namespace Medical.GUI
 
                     generateTextureName();
 
-                    texture = TextureManager.getInstance().createManual(textureName, "Rocket", TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
+                    texture = TextureManager.getInstance().createManual(textureName, RocketInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, (uint)textureWidth, (uint)textureHeight, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);
 
                     pixelBuffer = texture.Value.getBuffer();
                     renderTexture = pixelBuffer.Value.getRenderTarget();
