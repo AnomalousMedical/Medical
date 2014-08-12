@@ -22,6 +22,7 @@ namespace Medical
         private BorderLayoutChainLink editorBorder;
         private BorderLayoutChainLink contentArea;
         private LicenseDisplayManager licenseDisplay = new LicenseDisplayManager();
+        private Engine.Resources.ResourceGroup commonResources;
 
         public override bool OnInit()
         {
@@ -100,15 +101,17 @@ namespace Medical
 
             controller.addWorkingArchive();
 
+            var resourceManager = PluginManager.Instance.createLiveResourceManager("AnomalousMedical"); //We don't ever unload the shaders, so this can be garbage collected after its done here.
+            var ogreResources = resourceManager.getSubsystemResource("Ogre");
+            commonResources = ogreResources.addResourceGroup("Common");
+
             controller.initializeControllers(createBackground());
             licenseDisplay.setSceneViewController(controller.SceneViewController);
 
             //Setup shader resources
-            var resourceManager = PluginManager.Instance.createLiveResourceManager("GlobalShaders"); //We don't ever unload the shaders, so this can be garbage collected after its done here.
-            var ogreResources = resourceManager.getSubsystemResource("Ogre");
-            var shaderGroup = ogreResources.addResourceGroup("Medical.Shaders");
+            var shaderGroup = ogreResources.addResourceGroup("Shaders");
             shaderGroup.addResource("Shaders/Articulometrics", "EngineArchive", true);
-            resourceManager.initializeResources();
+            shaderGroup.initialize();
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
@@ -192,8 +195,8 @@ namespace Medical
         /// </summary>
         private BackgroundScene createBackground()
         {
-            OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "Background", true);
-            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+            commonResources.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedResource", true);
+            commonResources.initialize();
             BackgroundScene background = new BackgroundScene("SourceBackground", "BodyAtlasBackground", 900, 5000, 5000, 50, 50);
             background.setVisible(true);
             return background;
