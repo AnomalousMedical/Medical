@@ -10,6 +10,7 @@ using System.Drawing.Drawing2D;
 using Engine;
 using Logging;
 using Medical.Controller;
+using FreeImageAPI;
 
 namespace Medical
 {
@@ -93,7 +94,7 @@ namespace Medical
                 imageRendererProgress.update(0, "Rendering Image");
             }
 
-            Bitmap bitmap = null;
+            FreeImageBitmap bitmap = null;
             SceneViewWindow sceneWindow = sceneViewController.ActiveWindow;
             if (sceneWindow != null)
             {
@@ -179,7 +180,8 @@ namespace Medical
                 imageRendererProgress.Visible = false;
             }
 
-            renderingCompletedCallback(bitmap);
+            renderingCompletedCallback(bitmap.ToBitmap());
+            bitmap.Dispose();
             yield break;
         }
 
@@ -200,24 +202,27 @@ namespace Medical
         {
             if (Logo != null)
             {
-                using (Graphics g = Graphics.FromImage(bitmap))
+                using (Bitmap bmpLogo = Logo.ToBitmap())
                 {
-                    ColorMatrix colorMatrix = new ColorMatrix();
-                    colorMatrix.Matrix00 = colorMatrix.Matrix11 = colorMatrix.Matrix22 = colorMatrix.Matrix44 = 1;
-                    colorMatrix.Matrix33 = 0.30f;
-                    using (ImageAttributes ia = new ImageAttributes())
+                    using (Graphics g = Graphics.FromImage(bitmap))
                     {
-                        ia.SetColorMatrix(colorMatrix);
-
-                        float sizeRatio = (float)bitmap.Width / Logo.Width;
-                        int finalLogoWidth = (int)(Logo.Width * sizeRatio);
-                        int finalLogoHeight = (int)(Logo.Height * sizeRatio);
-                        int currentHeight = 0;
-                        int imageHeight = bitmap.Height;
-                        while (currentHeight < imageHeight)
+                        ColorMatrix colorMatrix = new ColorMatrix();
+                        colorMatrix.Matrix00 = colorMatrix.Matrix11 = colorMatrix.Matrix22 = colorMatrix.Matrix44 = 1;
+                        colorMatrix.Matrix33 = 0.30f;
+                        using (ImageAttributes ia = new ImageAttributes())
                         {
-                            g.DrawImage(Logo, new Rectangle(0, currentHeight, finalLogoWidth, finalLogoHeight), 0, 0, Logo.Width, Logo.Height, GraphicsUnit.Pixel, ia);
-                            currentHeight += finalLogoHeight;
+                            ia.SetColorMatrix(colorMatrix);
+
+                            float sizeRatio = (float)bitmap.Width / Logo.Width;
+                            int finalLogoWidth = (int)(Logo.Width * sizeRatio);
+                            int finalLogoHeight = (int)(Logo.Height * sizeRatio);
+                            int currentHeight = 0;
+                            int imageHeight = bitmap.Height;
+                            while (currentHeight < imageHeight)
+                            {
+                                g.DrawImage(bmpLogo, new Rectangle(0, currentHeight, finalLogoWidth, finalLogoHeight), 0, 0, Logo.Width, Logo.Height, GraphicsUnit.Pixel, ia);
+                                currentHeight += finalLogoHeight;
+                            }
                         }
                     }
                 }
@@ -292,9 +297,9 @@ namespace Medical
             }
         }
 
-        private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, float nearWorldPos, float farWorldPos, ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, float nearWorldPos, float farWorldPos, ImageRendererProperties properties, Action<FreeImageBitmap> renderingCompletedCallback)
         {
-            Bitmap bitmap = null;
+            FreeImageBitmap bitmap = null;
 	        OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
 	        if (sceneManager != null)
 	        {
@@ -388,18 +393,25 @@ namespace Medical
 
                             if (showWatermark && Logo != null)
                             {
-                                using (Graphics g = Graphics.FromImage(bitmap))
+                                float imageFinalHeight = bitmap.Height * 0.0447f;
+                                float scale = imageFinalHeight / Logo.Height;
+                                float imageFinalWidth = Logo.Width * scale;
+                                if (imageFinalWidth > bitmap.Width)
                                 {
-                                    float imageFinalHeight = bitmap.Height * 0.0447f;
-                                    float scale = imageFinalHeight / Logo.Height;
-                                    float imageFinalWidth = Logo.Width * scale;
-                                    if (imageFinalWidth > bitmap.Width)
+                                    imageFinalWidth = bitmap.Width;
+                                    scale = imageFinalWidth / Logo.Width;
+                                    imageFinalHeight = Logo.Height * scale;
+                                }
+                                using(FreeImageBitmap resizedLogo = new FreeImageBitmap(Logo))
+                                {
+                                    resizedLogo.Rescale((int)imageFinalWidth, (int)imageFinalHeight, FREE_IMAGE_FILTER.FILTER_BILINEAR);
+                                    //Have to composite the logo image first.
+                                    using (FreeImageBitmap fullImageCorner = bitmap.Copy(0, bitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, bitmap.Height))
                                     {
-                                        imageFinalWidth = bitmap.Width;
-                                        scale = imageFinalWidth / Logo.Width;
-                                        imageFinalHeight = Logo.Height * scale;
+                                        fullImageCorner.ConvertColorDepth(FREE_IMAGE_COLOR_DEPTH.FICD_24_BPP);
+                                        resizedLogo.Composite(false, null, fullImageCorner);
                                     }
-                                    g.DrawImage(Logo, new Rectangle(0, bitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, (int)imageFinalHeight));
+                                    bitmap.Paste(resizedLogo, 0, bitmap.Height - (int)imageFinalHeight, int.MaxValue);
                                 }
                             }
 
@@ -419,22 +431,11 @@ namespace Medical
                     {
                         //An error making the render texture. Log it and return the error image.
                         Log.Error("Could not render image. Returning placeholder image. Reason: Could not create valid render to texture target.");
-                        bitmap = new Bitmap(finalWidth, finalHeight);
-                        using (Graphics g = Graphics.FromImage(bitmap))
+                        bitmap = new FreeImageBitmap(finalWidth, finalHeight);
+                        bitmap.FillBackground(new RGBQUAD()
                         {
-                            using (Brush brush = new SolidBrush(System.Drawing.Color.FromArgb(0)))
-                            {
-                                g.FillRectangle(brush, 0, 0, bitmap.Width, bitmap.Height);
-                            }
-                            int fontSize = bitmap.Width / 5;
-                            using (Font font = new Font("Tahoma", fontSize, GraphicsUnit.Pixel))
-                            {
-                                String text = "Error";
-                                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                                SizeF textSize = g.MeasureString(text, font, bitmap.Width);
-                                g.DrawString(text, font, Brushes.Red, new RectangleF(0, 0, textSize.Width, textSize.Height));
-                            }
-                        }
+                            rgbRed = 255
+                        });
                     }
 	            }
 	        }
@@ -442,7 +443,7 @@ namespace Medical
             yield break;
         }
 
-        private Bitmap simpleRender(int width, int height, int aaMode, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
+        private FreeImageBitmap simpleRender(int width, int height, int aaMode, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
         {
             renderTexture.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, bgColor);
             renderTexture.update();
@@ -452,38 +453,21 @@ namespace Medical
             {
                 bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
             }
-            Bitmap bitmap = new Bitmap(width, height, bitmapFormat);
-            BitmapData bmpData = bitmap.LockBits(new Rectangle(new Point(), bitmap.Size), ImageLockMode.WriteOnly, bitmap.PixelFormat);
-            unsafe
-            {
-                using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
-                {
-                    renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
-                }
-            }
-            bitmap.UnlockBits(bmpData);
+            FreeImageBitmap bitmap = new FreeImageBitmap(width, height, bitmapFormat);
+            renderTextureToFreeImageBitmap(renderTexture, format, bitmap);
 
             //Resize if aa is active
             if (aaMode > 1)
             {
                 int smallWidth = width / aaMode;
                 int smallHeight = height / aaMode;
-                Bitmap largeImage = bitmap;
-                bitmap = new Bitmap(smallWidth, smallHeight);
-                using (Graphics graph = Graphics.FromImage(bitmap))
-                {
-                    graph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
-                    graph.CompositingQuality = CompositingQuality.HighQuality;
-                    graph.SmoothingMode = SmoothingMode.AntiAlias;
-                    graph.DrawImage(largeImage, new Rectangle(0, 0, smallWidth, smallHeight));
-                }
-                largeImage.Dispose();
+                bitmap.Rescale(smallWidth, smallHeight, FREE_IMAGE_FILTER.FILTER_BILINEAR);
             }
 
             return bitmap;
         }
 
-        private IEnumerable<IdleStatus> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, RenderTexture renderTexture, Camera camera, Camera backgroundCamera, bool transparentBG, Engine.Color bgColor, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> gridRender(int width, int height, int backBufferWidth, int backBufferHeight, int aaMode, RenderTexture renderTexture, Camera camera, Camera backgroundCamera, bool transparentBG, Engine.Color bgColor, Action<FreeImageBitmap> renderingCompletedCallback)
         {
             float originalLeft, originalRight, originalTop, originalBottom;
             camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
@@ -491,7 +475,6 @@ namespace Medical
             int imageCountWidth = width % backBufferWidth == 0 ? width / backBufferWidth : width / backBufferWidth + 1;
             int imageCountHeight = height % backBufferHeight == 0 ? height / backBufferHeight : height / backBufferHeight + 1;
 
-            //these two lines are likely what is distorting the image
             float gridStepHoriz = (originalRight * 2) / imageCountWidth;
             float gridStepVert = (originalTop * 2) / imageCountHeight;
 
@@ -526,78 +509,68 @@ namespace Medical
 
             Rectangle destRect = new Rectangle();
             Rectangle srcRect = new Rectangle(0, 0, imageStepHoriz, imageStepVert);
-            Bitmap fullBitmap = new Bitmap(finalWidth, finalHeight, bitmapFormat);
-            using (Graphics g = Graphics.FromImage(fullBitmap))
+            FreeImageBitmap fullBitmap = new FreeImageBitmap(finalWidth, finalHeight, bitmapFormat);
+
+            using (FreeImageBitmap pieceBitmap = new FreeImageBitmap(imageStepHoriz, imageStepVert, bitmapFormat))
             {
-                using (Bitmap pieceBitmap = new Bitmap(imageStepHoriz, imageStepVert, bitmapFormat))
+                bool aaOn = aaMode > 1;
+                Rectangle scalarRectangle = new Rectangle();
+                if (aaOn)
                 {
-                    Bitmap scaledPiecewiseBitmap = null;
-                    Graphics scalerGraphics = null; //Will remain null if AA is turned off.
-                    Rectangle scalarRectangle = new Rectangle();
-                    if (aaMode > 1)
+                    scalarRectangle = new Rectangle(0, 0, imageStepHorizSmall, imageStepVertSmall);
+                }
+                for (int i = 0; i < totalSS; ++i)
+                {
+                    int y = i / imageCountWidth;
+                    int x = i - y * imageCountWidth;
+
+                    left = originalLeft + gridStepHoriz * x;
+                    right = left + gridStepHoriz;
+                    top = originalTop - gridStepVert * y;
+                    bottom = top - gridStepVert;
+
+                    camera.setFrustumExtents(left, right, top, bottom);
+                    if (backgroundCamera != null)
                     {
-                        scaledPiecewiseBitmap = new Bitmap(imageStepHorizSmall, imageStepVertSmall, bitmapFormat);
-                        scalarRectangle = new Rectangle(0, 0, scaledPiecewiseBitmap.Width, scaledPiecewiseBitmap.Height);
-                        scalerGraphics = Graphics.FromImage(scaledPiecewiseBitmap);
-                        scalerGraphics.CompositingMode = CompositingMode.SourceCopy;
+                        bgLeft = bgOriginalLeft + bgGridStepHoriz * x;
+                        bgRight = bgLeft + bgGridStepHoriz;
+                        bgTop = bgOriginalTop - bgGridStepVert * y;
+                        bgBottom = bgTop - bgGridStepVert;
+
+                        backgroundCamera.setFrustumExtents(bgLeft, bgRight, bgTop, bgBottom);
                     }
-                    for (int i = 0; i < totalSS; ++i)
+                    Root.getSingleton().clearEventTimes();
+                    renderTexture.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, bgColor);
+                    renderTexture.update();
+
+                    renderTextureToFreeImageBitmap(renderTexture, format, pieceBitmap);
+                    destRect.X = x * imageStepHorizSmall;
+                    destRect.Y = y * imageStepVertSmall;
+                    destRect.Width = imageStepHorizSmall;
+                    destRect.Height = imageStepVertSmall;
+                    if (aaOn)
                     {
-                        int y = i / imageCountWidth;
-                        int x = i - y * imageCountWidth;
-
-                        left = originalLeft + gridStepHoriz * x;
-                        right = left + gridStepHoriz;
-                        top = originalTop - gridStepVert * y;
-                        bottom = top - gridStepVert;
-
-                        camera.setFrustumExtents(left, right, top, bottom);
-                        if (backgroundCamera != null)
+                        using(FreeImageBitmap scaled = new FreeImageBitmap(pieceBitmap))
                         {
-                            bgLeft = bgOriginalLeft + bgGridStepHoriz * x;
-                            bgRight = bgLeft + bgGridStepHoriz;
-                            bgTop = bgOriginalTop - bgGridStepVert * y;
-                            bgBottom = bgTop - bgGridStepVert;
-
-                            backgroundCamera.setFrustumExtents(bgLeft, bgRight, bgTop, bgBottom);
+                            scaled.Rescale(scalarRectangle.Width, scalarRectangle.Height, FREE_IMAGE_FILTER.FILTER_BILINEAR);
+                            fullBitmap.Paste(scaled, destRect.X, destRect.Y, int.MaxValue);
                         }
-                        Root.getSingleton().clearEventTimes();
-                        renderTexture.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, bgColor);
-                        renderTexture.update();
-
-                        BitmapData bmpData = pieceBitmap.LockBits(new Rectangle(new Point(), pieceBitmap.Size), ImageLockMode.WriteOnly, pieceBitmap.PixelFormat);
-                        unsafeAsyncBufferCopy(renderTexture, format, bmpData);
-                        pieceBitmap.UnlockBits(bmpData);
-                        destRect.X = x * imageStepHorizSmall;
-                        destRect.Y = y * imageStepVertSmall;
-                        destRect.Width = imageStepHorizSmall;
-                        destRect.Height = imageStepVertSmall;
-                        if (scalerGraphics != null) //Meaning AA is turned on.
-                        {
-                            scalerGraphics.DrawImage(pieceBitmap, scalarRectangle);
-                            g.DrawImage(scaledPiecewiseBitmap, destRect);
-                        }
-                        else
-                        {
-                            g.DrawImage(pieceBitmap, destRect);
-                        }
-
-                        if (imageRendererProgress != null)
-                        {
-                            imageRendererProgress.update((uint)(((float)(i + 1) / totalSS) * 100.0f), String.Format(updateString, i + 1));
-                            if (imageRendererProgress.Cancel)
-                            {
-                                break;
-                            }
-                        }
-
-                        yield return IdleStatus.Ok;
                     }
-                    if (scaledPiecewiseBitmap != null)
+                    else
                     {
-                        scalerGraphics.Dispose();
-                        scaledPiecewiseBitmap.Dispose();
+                        fullBitmap.Paste(pieceBitmap, destRect.X, destRect.Y, int.MaxValue);
                     }
+
+                    if (imageRendererProgress != null)
+                    {
+                        imageRendererProgress.update((uint)(((float)(i + 1) / totalSS) * 100.0f), String.Format(updateString, i + 1));
+                        if (imageRendererProgress.Cancel)
+                        {
+                            break;
+                        }
+                    }
+
+                    yield return IdleStatus.Ok;
                 }
             }
 
@@ -607,12 +580,13 @@ namespace Medical
             yield break;
         }
 
-        private static unsafe void unsafeAsyncBufferCopy(RenderTexture renderTexture, OgreWrapper.PixelFormat format, BitmapData bmpData)
+        unsafe private static void renderTextureToFreeImageBitmap(RenderTexture renderTexture, OgreWrapper.PixelFormat format, FreeImageBitmap bitmap)
         {
-            using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, format, bmpData.Scan0.ToPointer()))
+            using (PixelBox pixelBox = new PixelBox(0, 0, bitmap.Width, bitmap.Height, format, bitmap.GetScanlinePointer(0).ToPointer()))
             {
                 renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
             }
+            bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
         }
 
         public BackgroundScene Background
@@ -627,6 +601,6 @@ namespace Medical
             }
         }
 
-        public Bitmap Logo { get; set; }
+        public FreeImageBitmap Logo { get; set; }
     }
 }

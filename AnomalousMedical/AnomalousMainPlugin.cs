@@ -15,6 +15,7 @@ using System.Xml;
 using Engine.Saving.XMLSaver;
 using System.IO;
 using Engine.Platform;
+using FreeImageAPI;
 
 namespace Medical.GUI
 {
@@ -100,7 +101,7 @@ namespace Medical.GUI
             {
                 using (Stream stream = VirtualFileSystem.Instance.openStream("Watermark/AnomalousMedical.png", Engine.Resources.FileMode.Open))
                 {
-                    standaloneController.ImageRenderer.Logo = (Bitmap)Bitmap.FromStream(stream);
+                    standaloneController.ImageRenderer.Logo = new FreeImageBitmap(stream);
                 }
             }
 
