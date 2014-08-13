@@ -125,7 +125,7 @@ namespace Medical
             states.Add(state);
             if (state.Thumbnail == null)
             {
-                state.Thumbnail = imageRenderer.renderImage2(imageProperties);
+                state.Thumbnail = imageRenderer.renderImage(imageProperties);
             }
             if (StateAdded != null)
             {
@@ -178,7 +178,7 @@ namespace Medical
             sceneLoadNormalState = this.createState("Normal");
             sceneLoadNormalState.Notes.Notes = "Normal";
             sceneLoadNormalState.Notes.DataSource = "Automatic";
-            sceneLoadNormalState.Thumbnail = imageRenderer.renderImage2(imageProperties);
+            sceneLoadNormalState.Thumbnail = imageRenderer.renderImage(imageProperties);
             states.Add(sceneLoadNormalState);
             if (StateAdded != null)
             {

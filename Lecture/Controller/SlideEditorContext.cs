@@ -533,7 +533,7 @@ namespace Lecture
                 sceneThumbInfo.Color = viewport.getBackgroundColor();
             };
 
-            sceneThumbInfo.SceneThumb = imageRenderer.renderImage2(imageProperties);
+            sceneThumbInfo.SceneThumb = imageRenderer.renderImage(imageProperties);
             return sceneThumbInfo;
         }
 

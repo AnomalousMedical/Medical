@@ -166,7 +166,7 @@ namespace Medical.Controller.AnomalousMvc
 
             if (stateInfo.ThumbInfo != null)
             {
-                createdState.Thumbnail = ImageRenderer.renderImage2(stateInfo.ThumbInfo);
+                createdState.Thumbnail = ImageRenderer.renderImage(stateInfo.ThumbInfo);
             }
 
             standaloneController.MedicalStateController.addState(createdState);

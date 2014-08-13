@@ -61,25 +61,7 @@ namespace Medical
         /// </summary>
         /// <param name="properties"></param>
         /// <returns></returns>
-        public Bitmap renderImage(ImageRendererProperties properties)
-        {
-            Bitmap image = null;
-            IEnumerable<IdleStatus> process = renderImage(properties, (product) =>
-            {
-                image = product.ToBitmap();
-                product.Dispose();
-            });
-            IEnumerator<IdleStatus> runner = process.GetEnumerator();
-            while (runner.MoveNext()) ;
-            return image;
-        }
-
-        /// <summary>
-        /// A synchronous image render. It will happen on the calling thread like normal.
-        /// </summary>
-        /// <param name="properties"></param>
-        /// <returns></returns>
-        public FreeImageBitmap renderImage2(ImageRendererProperties properties)
+        public FreeImageBitmap renderImage(ImageRendererProperties properties)
         {
             FreeImageBitmap image = null;
             IEnumerable<IdleStatus> process = renderImage(properties, (product) =>

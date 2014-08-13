@@ -54,7 +54,7 @@ namespace Medical.GUI.AnomalousMvc
                 imageGrid.clear();
                 foreach (ThumbnailPickerInfo thumbProp in thumbnailProperties)
                 {
-                    using (FreeImageBitmap thumb = imageRenderer.renderImage2(thumbProp.ImageProperties))
+                    using (FreeImageBitmap thumb = imageRenderer.renderImage(thumbProp.ImageProperties))
                     {
                         String imageId = thumbnailImages.addImage(thumb, thumb);
                         ButtonGridItem item = imageGrid.addItem("Main", "", imageId);
