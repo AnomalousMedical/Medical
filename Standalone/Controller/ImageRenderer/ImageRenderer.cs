@@ -66,6 +66,24 @@ namespace Medical
             Bitmap image = null;
             IEnumerable<IdleStatus> process = renderImage(properties, (product) =>
             {
+                image = product.ToBitmap();
+                product.Dispose();
+            });
+            IEnumerator<IdleStatus> runner = process.GetEnumerator();
+            while (runner.MoveNext()) ;
+            return image;
+        }
+
+        /// <summary>
+        /// A synchronous image render. It will happen on the calling thread like normal.
+        /// </summary>
+        /// <param name="properties"></param>
+        /// <returns></returns>
+        public FreeImageBitmap renderImage2(ImageRendererProperties properties)
+        {
+            FreeImageBitmap image = null;
+            IEnumerable<IdleStatus> process = renderImage(properties, (product) =>
+            {
                 image = product;
             });
             IEnumerator<IdleStatus> runner = process.GetEnumerator();
@@ -82,10 +100,14 @@ namespace Medical
         /// <param name="renderingCompletedCallback"></param>
         public void renderImageAsync(ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
         {
-            idleHandler.runTemporaryIdle(renderImage(properties, renderingCompletedCallback));
+            idleHandler.runTemporaryIdle(renderImage(properties, (product) =>
+            {
+                renderingCompletedCallback(product.ToBitmap());
+                product.Dispose();
+            }));
         }
 
-        private IEnumerable<IdleStatus> renderImage(ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
+        private IEnumerable<IdleStatus> renderImage(ImageRendererProperties properties, Action<FreeImageBitmap> renderingCompletedCallback)
         {
             if (imageRendererProgress != null)
             {
@@ -180,8 +202,7 @@ namespace Medical
                 imageRendererProgress.Visible = false;
             }
 
-            renderingCompletedCallback(bitmap.ToBitmap());
-            bitmap.Dispose();
+            renderingCompletedCallback(bitmap);
             yield break;
         }
 

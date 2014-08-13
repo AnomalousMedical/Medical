@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
 using Logging;
+using FreeImageAPI;
 
 namespace Medical
 {
@@ -17,7 +18,7 @@ namespace Medical
         private TeethState teethState;
         private FossaState fossaState;
         private MedicalStateNotes notes;
-        private Bitmap thumbnail;
+        private FreeImageBitmap thumbnail;
 
         public MedicalState(String name)
         {
@@ -101,7 +102,7 @@ namespace Medical
         /// state is disposed. If a copy of the image is needed otherwise you
         /// must copy it manually.
         /// </summary>
-        public Bitmap Thumbnail
+        public FreeImageBitmap Thumbnail
         {
             get
             {
@@ -145,7 +146,7 @@ namespace Medical
             {
                 using (MemoryStream memStream = new MemoryStream(info.GetBlob(THUMBNAIL)))
                 {
-                    thumbnail = new Bitmap(memStream);
+                    thumbnail = new FreeImageBitmap(memStream);
                     memStream.Close();
                 }
             }
@@ -177,7 +178,7 @@ namespace Medical
                 {
                     using (MemoryStream memStream = new MemoryStream())
                     {
-                        thumbnail.Save(memStream, ImageFormat.Png);
+                        thumbnail.Save(memStream, FREE_IMAGE_FORMAT.FIF_PNG);
                         info.AddValue(THUMBNAIL, memStream.GetBuffer());
                         memStream.Close();
                     }
