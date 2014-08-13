@@ -12,6 +12,7 @@ using Engine.Editing;
 using Engine;
 using Medical.GUI.RmlWysiwyg.Elements;
 using System.Drawing;
+using FreeImageAPI;
 
 namespace Medical.GUI
 {
@@ -257,7 +258,7 @@ namespace Medical.GUI
             return widget.contains(position.x, position.y);
         }
 
-        public void writeToGraphics(Graphics g, Rectangle destRect)
+        public void writeToGraphics(FreeImageBitmap g, Rectangle destRect)
         {
             rocketWidget.writeToGraphics(g, destRect);
         }

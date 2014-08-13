@@ -475,7 +475,7 @@ namespace Medical
                 bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
             }
             FreeImageBitmap bitmap = new FreeImageBitmap(width, height, bitmapFormat);
-            renderTextureToFreeImageBitmap(renderTexture, format, bitmap);
+            bitmap.copyFromRenderTarget(renderTexture, format);
 
             //Resize if aa is active
             if (aaMode > 1)
@@ -564,7 +564,7 @@ namespace Medical
                     renderTexture.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, bgColor);
                     renderTexture.update();
 
-                    renderTextureToFreeImageBitmap(renderTexture, format, pieceBitmap);
+                    pieceBitmap.copyFromRenderTarget(renderTexture, format);
                     destRect.X = x * imageStepHorizSmall;
                     destRect.Y = y * imageStepVertSmall;
                     destRect.Width = imageStepHorizSmall;
@@ -599,15 +599,6 @@ namespace Medical
 
             renderingCompletedCallback(fullBitmap);
             yield break;
-        }
-
-        unsafe private static void renderTextureToFreeImageBitmap(RenderTexture renderTexture, OgreWrapper.PixelFormat format, FreeImageBitmap bitmap)
-        {
-            using (PixelBox pixelBox = new PixelBox(0, 0, bitmap.Width, bitmap.Height, format, bitmap.GetScanlinePointer(0).ToPointer()))
-            {
-                renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
-            }
-            bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
         }
 
         public BackgroundScene Background

@@ -1,6 +1,7 @@
 ﻿using Engine;
 using Engine.Attributes;
 using Engine.Saving;
+using FreeImageAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Medical
     public class SceneThumbInfo : Saveable, IDisposable
     {
         [DoNotSave]
-        private System.Drawing.Bitmap sceneThumb;
+        private FreeImageBitmap sceneThumb;
 
         private int includeX;
         private int includeY;
@@ -45,7 +46,7 @@ namespace Medical
         public SceneThumbInfo copy()
         {
             SceneThumbInfo copy = CopySaver.Default.copy(this);
-            copy.SceneThumb = (System.Drawing.Bitmap)sceneThumb.Clone();
+            copy.SceneThumb = new FreeImageBitmap(sceneThumb);
             return copy;
         }
 
@@ -54,7 +55,7 @@ namespace Medical
         /// so if you dispose this it will dispose the set scene thumb and if you set this property
         /// to a new value the old thumb will be disposed.
         /// </summary>
-        public System.Drawing.Bitmap SceneThumb
+        public FreeImageBitmap SceneThumb
         {
             get
             {

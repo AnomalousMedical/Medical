@@ -818,6 +818,7 @@
     <Compile Include="Utility\BitmapDataExtensions.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
+    <Compile Include="Utility\FreeImageBitmapExtensions.cs" />
     <Compile Include="Utility\IDisposableUtil.cs" />
     <Compile Include="Utility\MemoryCache.cs" />
     <Compile Include="Utility\Node.cs" />

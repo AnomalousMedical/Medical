@@ -19,6 +19,7 @@ using Engine.Editing;
 using Medical.SlideshowActions;
 using Medical.Controller;
 using OgreWrapper;
+using FreeImageAPI;
 
 namespace Lecture
 {
@@ -398,7 +399,7 @@ namespace Lecture
                 layoutChain.addLink(new BorderLayoutNoAnimationChainLink(GUILocationNames.ContentArea), true);
 
                 IntSize2 thumbTotalSize = new IntSize2(SlideImageManager.ThumbWidth, SlideImageManager.ThumbHeight);
-                Bitmap thumb = slideEditorController.SlideImageManager.createThumbBitmap(slide);
+                FreeImageBitmap thumb = slideEditorController.SlideImageManager.createThumbBitmap(slide);
                 layoutChain.SuppressLayout = true;
                 LayoutContainer sceneContainer = new NullLayoutContainer(thumbTotalSize);
                 layoutChain.addContainer(new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Center), sceneContainer, null);
@@ -418,77 +419,77 @@ namespace Lecture
                 layoutChain.Location = new IntVector2(0, 0);
                 layoutChain.layout();
 
-                //Render thumbnail
-                using (Graphics g = Graphics.FromImage(thumb))
+                //Render thumbnail, Start with the scene
+                IntVector2 sceneThumbPosition = sceneContainer.Location;
+                String sceneThumbFile = slide.SceneThumbName;
+                if (forceUpdateSceneThumb)
                 {
-                    //Start with the scene
-                    IntVector2 sceneThumbPosition = sceneContainer.Location;
-                    String sceneThumbFile = slide.SceneThumbName;
-                    if (forceUpdateSceneThumb)
+                    slideEditorController.SlideImageManager.addUnsavedSceneThumb(slide, renderSceneThumbnail());
+                }
+
+                SceneThumbInfo sceneThumbInfo = slideEditorController.SlideImageManager.loadThumbSceneBitmap(slide, renderSceneThumbnail);
+                IntSize2 centerSize = sceneContainer.WorkingSize;
+                RectangleF destRect = new RectangleF(sceneThumbPosition.x, sceneThumbPosition.y, centerSize.Width, centerSize.Height);
+
+                thumb.FillBackground(new RGBQUAD(System.Drawing.Color.FromArgb(sceneThumbInfo.Color.toARGB())));
+
+                int requiredWidth = (sceneThumbInfo.SceneThumb.Width - ((sceneThumbInfo.SceneThumb.Width - sceneThumbInfo.IncludeX) * 2));
+                int requiredHeight = (sceneThumbInfo.SceneThumb.Height - (sceneThumbInfo.IncludeY * 2));
+
+                int sceneThumbWidth = sceneThumbInfo.SceneThumb.Width;
+                int sceneThumbHeight = sceneThumbInfo.SceneThumb.Height;
+                int sceneThumbHalfWidth = sceneThumbWidth / 2;
+                int sceneThumbHalfHeight = sceneThumbHeight / 2;
+                float requiredHeightWidthRatio = (float)requiredHeight / requiredWidth;
+                float centerHeightWidthRatio = (float)centerSize.Height / centerSize.Width;
+
+                float srcWidth = requiredWidth;
+                float srcHeight = requiredHeight;
+
+                if (requiredHeightWidthRatio < centerHeightWidthRatio) //Compare ratios between our source required area and the destination
+                {
+                    //Use the full required width, add height from source image
+                    //Convert the center size to the same size ratio as the required size
+                    float sizeRatio = (float)requiredWidth / centerSize.Width;
+                    srcHeight = centerSize.Height * sizeRatio;
+                    if (srcHeight > sceneThumbHeight) //Stretch out the image as much as possible, limiting by the size of the scene thumb if needed.
                     {
-                        slideEditorController.SlideImageManager.addUnsavedSceneThumb(slide, renderSceneThumbnail());
+                        srcHeight = sceneThumbHeight;
                     }
-
-                    SceneThumbInfo sceneThumbInfo = slideEditorController.SlideImageManager.loadThumbSceneBitmap(slide, renderSceneThumbnail);
-                    IntSize2 centerSize = sceneContainer.WorkingSize;
-                    RectangleF destRect = new RectangleF(sceneThumbPosition.x, sceneThumbPosition.y, centerSize.Width, centerSize.Height);
-
-                    g.Clear(System.Drawing.Color.FromArgb(sceneThumbInfo.Color.toARGB()));
-
-                    int requiredWidth = (sceneThumbInfo.SceneThumb.Width - ((sceneThumbInfo.SceneThumb.Width - sceneThumbInfo.IncludeX) * 2));
-                    int requiredHeight = (sceneThumbInfo.SceneThumb.Height - (sceneThumbInfo.IncludeY * 2));
-
-                    int sceneThumbWidth = sceneThumbInfo.SceneThumb.Width;
-                    int sceneThumbHeight = sceneThumbInfo.SceneThumb.Height;
-                    int sceneThumbHalfWidth = sceneThumbWidth / 2;
-                    int sceneThumbHalfHeight = sceneThumbHeight / 2;
-                    float requiredHeightWidthRatio = (float)requiredHeight / requiredWidth;
-                    float centerHeightWidthRatio = (float)centerSize.Height / centerSize.Width;
-
-                    float srcWidth = requiredWidth;
-                    float srcHeight = requiredHeight;
-
-                    if (requiredHeightWidthRatio < centerHeightWidthRatio) //Compare ratios between our source required area and the destination
+                    float destHeight = srcHeight / sizeRatio;
+                    destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - destHeight / 2, destRect.Width, destHeight); //Make a dest rect that takes as much image as it can
+                }
+                else
+                {
+                    //Use the full required height, add width from source image
+                    float sizeRatio = (float)requiredHeight / centerSize.Height;
+                    srcWidth = centerSize.Width * sizeRatio;
+                    if (srcWidth > sceneThumbWidth)
                     {
-                        //Use the full required width, add height from source image
-                        //Convert the center size to the same size ratio as the required size
-                        float sizeRatio = (float)requiredWidth / centerSize.Width;
-                        srcHeight = centerSize.Height * sizeRatio;
-                        if (srcHeight > sceneThumbHeight) //Stretch out the image as much as possible, limiting by the size of the scene thumb if needed.
-                        {
-                            srcHeight = sceneThumbHeight;
-                        }
-                        float destHeight = srcHeight / sizeRatio;
-                        destRect = new RectangleF(destRect.Left, destRect.Height / 2 + destRect.Top - destHeight / 2, destRect.Width, destHeight); //Make a dest rect that takes as much image as it can
+                        srcWidth = sceneThumbWidth;
                     }
-                    else
+                    float destWidth = srcWidth / sizeRatio;
+                    destRect = new RectangleF(destRect.Width / 2 + destRect.Left - destWidth / 2, destRect.Top, destWidth, destRect.Height);
+                }
+
+                RectangleF srcRect = new RectangleF(sceneThumbHalfWidth - srcWidth / 2, sceneThumbHalfHeight - srcHeight / 2, srcWidth, srcHeight);
+
+                using (FreeImageBitmap resizedSceneThumb = sceneThumbInfo.SceneThumb.Copy((int)srcRect.X, (int)srcRect.Y, (int)srcRect.Right, (int)srcRect.Bottom))
+                {
+                    resizedSceneThumb.Rescale((int)destRect.Width, (int)destRect.Height, FREE_IMAGE_FILTER.FILTER_BILINEAR);
+                    thumb.Paste(resizedSceneThumb, (int)destRect.X, (int)destRect.Y, int.MaxValue);
+                }
+
+                //Render all panels
+                foreach (var editor in rmlEditors.Values)
+                {
+                    if (editor.Component != null)
                     {
-                        //Use the full required height, add width from source image
-                        float sizeRatio = (float)requiredHeight / centerSize.Height;
-                        srcWidth = centerSize.Width * sizeRatio;
-                        if (srcWidth > sceneThumbWidth)
+                        LayoutContainer container;
+                        if (layoutPositions.TryGetValue(editor, out container))
                         {
-                            srcWidth = sceneThumbWidth;
-                        }
-                        float destWidth = srcWidth / sizeRatio;
-                        destRect = new RectangleF(destRect.Width / 2 + destRect.Left - destWidth / 2, destRect.Top, destWidth, destRect.Height);
-                    }
-
-                    RectangleF srcRect = new RectangleF(sceneThumbHalfWidth - srcWidth / 2, sceneThumbHalfHeight - srcHeight / 2, srcWidth, srcHeight);
-
-                    g.DrawImage(sceneThumbInfo.SceneThumb, destRect, srcRect, GraphicsUnit.Pixel);
-
-                    //Render all panels
-                    foreach (var editor in rmlEditors.Values)
-                    {
-                        if (editor.Component != null)
-                        {
-                            LayoutContainer container;
-                            if (layoutPositions.TryGetValue(editor, out container))
-                            {
-                                Rectangle panelThumbPos = new Rectangle(container.Location.x, container.Location.y, container.WorkingSize.Width, container.WorkingSize.Height);
-                                editor.Component.writeToGraphics(g, panelThumbPos);
-                            }
+                            Rectangle panelThumbPos = new Rectangle(container.Location.x, container.Location.y, container.WorkingSize.Width, container.WorkingSize.Height);
+                            editor.Component.writeToGraphics(thumb, panelThumbPos);
                         }
                     }
                 }
@@ -532,7 +533,7 @@ namespace Lecture
                 sceneThumbInfo.Color = viewport.getBackgroundColor();
             };
 
-            sceneThumbInfo.SceneThumb = imageRenderer.renderImage(imageProperties);
+            sceneThumbInfo.SceneThumb = imageRenderer.renderImage2(imageProperties);
             return sceneThumbInfo;
         }
 

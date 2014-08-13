@@ -9,6 +9,7 @@ using Engine;
 using Engine.Platform;
 using System.Drawing;
 using System.Drawing.Imaging;
+using FreeImageAPI;
 
 namespace Medical.GUI
 {
@@ -229,7 +230,7 @@ namespace Medical.GUI
         /// </summary>
         /// <param name="g"></param>
         /// <param name="destRect"></param>
-        public void writeToGraphics(Graphics g, Rectangle destRect)
+        public void writeToGraphics(FreeImageBitmap g, Rectangle destRect)
         {
             bool changedSize = false;
             IntSize2 originalSize = new IntSize2(imageBox.Width, imageBox.Height);
@@ -251,24 +252,22 @@ namespace Medical.GUI
 
             unsafe
             {
-                using (Bitmap fullBitmap = new Bitmap(currentTextureWidth, currentTextureHeight, BitmapFormat))
+                using (FreeImageBitmap fullBitmap = new FreeImageBitmap(currentTextureWidth, currentTextureHeight, BitmapFormat))
                 {
-                    BitmapData bmpData = fullBitmap.LockBits(new Rectangle(new Point(), fullBitmap.Size), ImageLockMode.WriteOnly, fullBitmap.PixelFormat);
-                    using (PixelBox pixelBox = new PixelBox(0, 0, bmpData.Width, bmpData.Height, ogreTextureFormat, bmpData.Scan0.ToPointer()))
-                    {
-                        renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
-
-                        //Remove alpha
-                        BitmapDataExtensions.SetAlpha(bmpData, 255);
-                    }
-                    fullBitmap.UnlockBits(bmpData);
+                    fullBitmap.copyFromRenderTarget(renderTexture, ogreTextureFormat);
+                    //Remove alpha
+                    //BitmapDataExtensions.SetAlpha(bmpData, 255);
 
                     if (srcRect.Height > fullBitmap.Height)
                     {
                         srcRect.Height = fullBitmap.Height;
                     }
 
-                    g.DrawImage(fullBitmap, destRect, srcRect, GraphicsUnit.Pixel);
+                    using (FreeImageBitmap cropped = fullBitmap.Copy(srcRect))
+                    {
+                        cropped.Rescale(destRect.Width, destRect.Height, FREE_IMAGE_FILTER.FILTER_BILINEAR);
+                        g.Paste(cropped, destRect.X, destRect.Y, int.MaxValue);
+                    }
                 }
             }
             if (changedSize)

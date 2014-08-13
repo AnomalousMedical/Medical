@@ -6,6 +6,7 @@ using System.Drawing;
 using MyGUIPlugin;
 using Engine;
 using Medical.Controller;
+using FreeImageAPI;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -53,7 +54,7 @@ namespace Medical.GUI.AnomalousMvc
                 imageGrid.clear();
                 foreach (ThumbnailPickerInfo thumbProp in thumbnailProperties)
                 {
-                    using (Bitmap thumb = imageRenderer.renderImage(thumbProp.ImageProperties))
+                    using (FreeImageBitmap thumb = imageRenderer.renderImage2(thumbProp.ImageProperties))
                     {
                         String imageId = thumbnailImages.addImage(thumb, thumb);
                         ButtonGridItem item = imageGrid.addItem("Main", "", imageId);

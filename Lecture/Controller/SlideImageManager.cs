@@ -1,4 +1,5 @@
 ﻿using Engine;
+using FreeImageAPI;
 using Medical;
 using Medical.Controller;
 using MyGUIPlugin;
@@ -35,7 +36,7 @@ namespace Lecture
         public static readonly int SceneThumbHeight = ScaleHelper.Scaled(250);
 
         private ImageAtlas imageAtlas = new ImageAtlas("SlideThumbs", new IntSize2(ThumbWidth, ThumbHeight));
-        private Dictionary<Slide, Bitmap> unsavedThumbs = new Dictionary<Slide, Bitmap>();
+        private Dictionary<Slide, FreeImageBitmap> unsavedThumbs = new Dictionary<Slide, FreeImageBitmap>();
         private Dictionary<Slide, SceneThumbInfo> unsavedSceneThumbs = new Dictionary<Slide, SceneThumbInfo>();
         private MemoryCache<Slide, SceneThumbInfo> savedSceneThumbCache = new MemoryCache<Slide, SceneThumbInfo>();
         private SlideshowEditController slideEditController;
@@ -112,10 +113,10 @@ namespace Lecture
         /// </summary>
         /// <param name="slide"></param>
         /// <returns></returns>
-        public Bitmap createThumbBitmap(Slide slide)
+        public FreeImageBitmap createThumbBitmap(Slide slide)
         {
-            Bitmap thumb = new Bitmap(ThumbWidth, ThumbHeight);
-            Bitmap oldThumb;
+            FreeImageBitmap thumb = new FreeImageBitmap(ThumbWidth, ThumbHeight, PixelFormat.Format32bppArgb);
+            FreeImageBitmap oldThumb;
             if (unsavedThumbs.TryGetValue(slide, out oldThumb))
             {
                 oldThumb.Dispose();
@@ -150,7 +151,7 @@ namespace Lecture
 
                     using (Stream stream = slideEditController.ResourceProvider.openFile(sceneThumbFile))
                     {
-                        thumb.SceneThumb = (Bitmap)Bitmap.FromStream(stream);
+                        thumb.SceneThumb = new FreeImageBitmap(stream);
                     }
                     savedSceneThumbCache[slide] = thumb;
                 }
@@ -223,7 +224,7 @@ namespace Lecture
         {
             foreach (Slide slide in unsavedThumbs.Keys)
             {
-                Bitmap thumb = unsavedThumbs[slide];
+                FreeImageBitmap thumb = unsavedThumbs[slide];
                 saveThumbnail(Path.Combine(slide.UniqueName, Slideshow.SlideThumbName), thumb);
                 thumb.Dispose();
             }
@@ -244,7 +245,7 @@ namespace Lecture
         public void removeImage(Slide slide)
         {
             imageAtlas.removeImage(slide.UniqueName);
-            Bitmap oldThumb;
+            FreeImageBitmap oldThumb;
             if (unsavedThumbs.TryGetValue(slide, out oldThumb))
             {
                 oldThumb.Dispose();
@@ -287,13 +288,13 @@ namespace Lecture
         /// </summary>
         /// <param name="slide"></param>
         /// <param name="thumb"></param>
-        private void saveThumbnail(String fileName, Bitmap thumb)
+        private void saveThumbnail(String fileName, FreeImageBitmap thumb)
         {
             try
             {
                 using (Stream stream = slideEditController.ResourceProvider.openWriteStream(fileName))
                 {
-                    thumb.Save(stream, ImageFormat.Png);
+                    thumb.Save(stream, FREE_IMAGE_FORMAT.FIF_PNG);
                 }
             }
             catch (Exception ex)
