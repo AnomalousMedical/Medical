@@ -9,6 +9,7 @@ using System.Reflection;
 using MyGUIPlugin;
 using Engine;
 using Logging;
+using FreeImageAPI;
 
 namespace UnitTestPlugin.GUI
 {
@@ -19,7 +20,7 @@ namespace UnitTestPlugin.GUI
         public TestImageAtlas()
             : base("UnitTestPlugin.GUI.TestImageAtlas.TestImageAtlas.layout")
         {
-            using (Bitmap bitmap = (Bitmap)Bitmap.FromStream(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.LegacyLogoSmall.jpg")))
+            using (var bitmap = new FreeImageBitmap(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.LegacyLogoSmall.jpg")))
             {
                 Log.Debug("Adding LegacyLogoSmall to image atlas");
                 ImageAtlasPage page = imageAtlas.addImage("LegacyLogoSmall", bitmap);
@@ -31,7 +32,7 @@ namespace UnitTestPlugin.GUI
                     imageBox1.setImageCoord(new IntCoord(coord.Left, coord.Top, coord.Width, coord.Height));
                 }
             }
-            using (Bitmap bitmap = (Bitmap)Bitmap.FromStream(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.DownloadIcon.png")))
+            using (var bitmap = new FreeImageBitmap(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.DownloadIcon.png")))
             {
                 for (int i = 0; i < 10; ++i)
                 {
@@ -48,7 +49,7 @@ namespace UnitTestPlugin.GUI
                     }
                 }
             }
-            using (Bitmap bitmap = (Bitmap)Bitmap.FromStream(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.LegacyLogoSmall.jpg")))
+            using (var bitmap = new FreeImageBitmap(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.LegacyLogoSmall.jpg")))
             {
                 Log.Debug("Adding LegacyLogoSmall1 to image atlas");
                 ImageAtlasPage page = imageAtlas.addImage("LegacyLogoSmall1", bitmap);

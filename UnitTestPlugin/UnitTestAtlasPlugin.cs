@@ -40,7 +40,6 @@ namespace UnitTestPlugin
 
             testImageAtlas = new TestImageAtlas();
             guiManager.addManagedDialog(testImageAtlas);
-            //testImageAtlas.Visible = true;
 
             testSoundRecord = new TestSoundRecord(standaloneController);
             guiManager.addManagedDialog(testSoundRecord);
@@ -71,6 +70,7 @@ namespace UnitTestPlugin
 
             standaloneController.TaskController.addTask(new MDIDialogOpenTask(testSoundRecord, "UnitTestPlugin.TestSoundRecord", "Sound Record", CommonResources.NoIcon, "Unit Test", true));
             standaloneController.TaskController.addTask(new MDIDialogOpenTask(testTextureSceneView, "UnitTestPlugin.TestTextureSceneView", "Texture Scene View", CommonResources.NoIcon, "Unit Test", true));
+            standaloneController.TaskController.addTask(new MDIDialogOpenTask(testImageAtlas, "UnitTestPlugin.TestImageAtlas", "Image Atlas", CommonResources.NoIcon, "Unit Test", true));
         }
 
         public void sceneLoaded(SimScene scene)
