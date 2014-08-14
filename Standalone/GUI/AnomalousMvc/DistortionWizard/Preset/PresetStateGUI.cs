@@ -10,6 +10,7 @@ using System.IO;
 using System.Drawing;
 using Medical.Controller.AnomalousMvc;
 using Engine.Saving.XMLSaver;
+using FreeImageAPI;
 
 namespace Medical.GUI.AnomalousMvc
 {
@@ -74,12 +75,13 @@ namespace Medical.GUI.AnomalousMvc
                     {
                         using (Stream imageStream = context.ResourceProvider.openFile(fullImageName))
                         {
-                            Image image = Image.FromStream(imageStream);
-                            if (image != null)
+                            using (var image = new FreeImageBitmap(imageStream))
                             {
-                                imageKey = imageAtlas.addImage(fullImageName, image);
-                                image.Tag = fullImageName;
-                                image.Dispose();
+                                if (image != null)
+                                {
+                                    imageKey = imageAtlas.addImage(fullImageName, image);
+                                    image.Tag = fullImageName;
+                                }
                             }
                         }
                     }

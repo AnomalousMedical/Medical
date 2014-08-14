@@ -7,6 +7,7 @@ using Engine;
 using System.IO;
 using System.Drawing;
 using OgrePlugin;
+using FreeImageAPI;
 
 namespace Medical.GUI
 {
@@ -77,7 +78,7 @@ namespace Medical.GUI
                 {
                     using (Stream imageStream = archive.openStream(pictureFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                     {
-                        using (Image image = Image.FromStream(imageStream))
+                        using (var image = new FreeImageBitmap(imageStream))
                         {
                             if (image != null)
                             {
