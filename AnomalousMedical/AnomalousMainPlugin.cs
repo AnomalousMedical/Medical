@@ -84,8 +84,6 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(buyScreens);
             IDisposableUtil.DisposeIfNotNull(taskbar);
             IDisposableUtil.DisposeIfNotNull(taskMenu);
-            IDisposableUtil.DisposeIfNotNull(standaloneController.ImageRenderer.Logo);
-            standaloneController.ImageRenderer.Logo = null;
         }
 
         public void loadGUIResources()
@@ -99,10 +97,13 @@ namespace Medical.GUI
 
             if (VirtualFileSystem.Instance.exists("Watermark/AnomalousMedical.png"))
             {
-                using (Stream stream = VirtualFileSystem.Instance.openStream("Watermark/AnomalousMedical.png", Engine.Resources.FileMode.Open))
-                {
-                    standaloneController.ImageRenderer.Logo = new FreeImageBitmap(stream);
-                }
+                standaloneController.ImageRenderer.LoadLogo = () =>
+                    {
+                        using (Stream stream = VirtualFileSystem.Instance.openStream("Watermark/AnomalousMedical.png", Engine.Resources.FileMode.Open))
+                        {
+                            return new FreeImageBitmap(stream);
+                        }
+                    };
             }
 
             this.guiManager = standaloneController.GUIManager;

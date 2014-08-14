@@ -222,27 +222,28 @@ namespace Medical
 
         public void makeSampleImage(FreeImageBitmap bitmap)
         {
-            if (Logo != null)
+            if (LoadLogo != null)
             {
-                float sizeRatio = (float)bitmap.Width / Logo.Width;
-                int finalLogoWidth = (int)(Logo.Width * sizeRatio);
-                int finalLogoHeight = (int)(Logo.Height * sizeRatio);
-                int currentY = 0;
-                int imageHeight = bitmap.Height;
-                bitmap.ConvertColorDepth(FREE_IMAGE_COLOR_DEPTH.FICD_24_BPP);
-                using (FreeImageBitmap resizedLogo = new FreeImageBitmap(Logo))
+                using (FreeImageBitmap logo = LoadLogo())
                 {
-                    resizedLogo.Rescale(finalLogoWidth, finalLogoHeight, FREE_IMAGE_FILTER.FILTER_BILINEAR);
+                    float sizeRatio = (float)bitmap.Width / logo.Width;
+                    int finalLogoWidth = (int)(logo.Width * sizeRatio);
+                    int finalLogoHeight = (int)(logo.Height * sizeRatio);
+                    int currentY = 0;
+                    int imageHeight = bitmap.Height;
+                    bitmap.ConvertColorDepth(FREE_IMAGE_COLOR_DEPTH.FICD_24_BPP);
+
+                    logo.Rescale(finalLogoWidth, finalLogoHeight, FREE_IMAGE_FILTER.FILTER_BILINEAR);
                     while (currentY < imageHeight)
                     {
-                        int sectionHeight = resizedLogo.Height;
-                        if(currentY + sectionHeight > imageHeight)
+                        int sectionHeight = logo.Height;
+                        if (currentY + sectionHeight > imageHeight)
                         {
                             sectionHeight = imageHeight - currentY;
                         }
-                        using (FreeImageBitmap section = bitmap.Copy(0, currentY, resizedLogo.Width, currentY + sectionHeight))
+                        using (FreeImageBitmap section = bitmap.Copy(0, currentY, logo.Width, currentY + sectionHeight))
                         {
-                            using (FreeImageBitmap logoComposite = resizedLogo.Copy(0, 0, resizedLogo.Width, sectionHeight))
+                            using (FreeImageBitmap logoComposite = logo.Copy(0, 0, logo.Width, sectionHeight))
                             {
                                 logoComposite.Composite(false, null, section);
                                 bitmap.Paste(logoComposite, 0, currentY, int.MaxValue);
@@ -418,27 +419,28 @@ namespace Medical
                                 bitmap = simpleRender(backBufferWidth, backBufferHeight, aaMode, transparentBG, backColor, renderTexture);
                             }
 
-                            if (showWatermark && Logo != null)
+                            if (showWatermark && LoadLogo != null)
                             {
-                                float imageFinalHeight = bitmap.Height * 0.0447f;
-                                float scale = imageFinalHeight / Logo.Height;
-                                float imageFinalWidth = Logo.Width * scale;
-                                if (imageFinalWidth > bitmap.Width)
+                                using (FreeImageBitmap logo = LoadLogo())
                                 {
-                                    imageFinalWidth = bitmap.Width;
-                                    scale = imageFinalWidth / Logo.Width;
-                                    imageFinalHeight = Logo.Height * scale;
-                                }
-                                using(FreeImageBitmap resizedLogo = new FreeImageBitmap(Logo))
-                                {
-                                    resizedLogo.Rescale((int)imageFinalWidth, (int)imageFinalHeight, FREE_IMAGE_FILTER.FILTER_BILINEAR);
+                                    float imageFinalHeight = bitmap.Height * 0.0447f;
+                                    float scale = imageFinalHeight / logo.Height;
+                                    float imageFinalWidth = logo.Width * scale;
+                                    if (imageFinalWidth > bitmap.Width)
+                                    {
+                                        imageFinalWidth = bitmap.Width;
+                                        scale = imageFinalWidth / logo.Width;
+                                        imageFinalHeight = logo.Height * scale;
+                                    }
+
+                                    logo.Rescale((int)imageFinalWidth, (int)imageFinalHeight, FREE_IMAGE_FILTER.FILTER_BILINEAR);
                                     //Have to composite the logo image first.
                                     using (FreeImageBitmap fullImageCorner = bitmap.Copy(0, bitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, bitmap.Height))
                                     {
                                         fullImageCorner.ConvertColorDepth(FREE_IMAGE_COLOR_DEPTH.FICD_24_BPP);
-                                        resizedLogo.Composite(false, null, fullImageCorner);
+                                        logo.Composite(false, null, fullImageCorner);
                                     }
-                                    bitmap.Paste(resizedLogo, 0, bitmap.Height - (int)imageFinalHeight, int.MaxValue);
+                                    bitmap.Paste(logo, 0, bitmap.Height - (int)imageFinalHeight, int.MaxValue);
                                 }
                             }
 
@@ -619,6 +621,11 @@ namespace Medical
             }
         }
 
-        public FreeImageBitmap Logo { get; set; }
+        /// <summary>
+        /// Callback to load a logo bitmap. The FreeImageBitmap returned by this callback can be manipulated
+        /// and will be disposed, so if you need your copy of the FreeImageBitmap you should make a copy, if
+        /// loading from a file or stream, just directly return that bitmap.
+        /// </summary>
+        public Func<FreeImageBitmap> LoadLogo { get; set; }
     }
 }
