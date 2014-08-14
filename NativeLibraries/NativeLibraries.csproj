@@ -82,11 +82,11 @@
       <Link>libRocketWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="S:\Dependencies\FreeImage.NET\Release\FreeImage.dll">
+    <Content Include="..\..\Dependencies\FreeImage.NET\Release\FreeImage.dll">
       <Link>FreeImage.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="S:\Dependencies\OpenALSoft\WindowsBuild\Release\OpenAL32.dll">
+    <Content Include="..\..\Dependencies\OpenALSoft\WindowsBuild\Release\OpenAL32.dll">
       <Link>OpenAL32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
