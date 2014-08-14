@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
 using Engine.Editing;
 using Engine;
 

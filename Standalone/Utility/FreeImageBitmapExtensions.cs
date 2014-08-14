@@ -18,7 +18,7 @@ namespace Medical
         /// /// <param name="bitmap">This object.</param>
         /// <param name="format">The format of the pixel box.</param>
         /// <returns>A PixelBox with the given format for the FreeImageBitmap.</returns>
-        unsafe public static PixelBox createPixelBox(this FreeImageBitmap bitmap, PixelFormat format)
+        unsafe public static PixelBox createPixelBox(this FreeImageBitmap bitmap, OgreWrapper.PixelFormat format)
         {
             return new PixelBox(0, 0, bitmap.Width, bitmap.Height, format, bitmap.GetScanlinePointer(0).ToPointer());
         }
@@ -29,7 +29,7 @@ namespace Medical
         /// <param name="bitmap"></param>
         /// <param name="renderTarget"></param>
         /// <param name="format"></param>
-        public static void copyFromRenderTarget(this FreeImageBitmap bitmap, RenderTarget renderTarget, PixelFormat format)
+        public static void copyFromRenderTarget(this FreeImageBitmap bitmap, RenderTarget renderTarget, OgreWrapper.PixelFormat format)
         {
             using (PixelBox pixelBox = bitmap.createPixelBox(format))
             {

@@ -6,6 +6,7 @@ using Engine.Platform;
 using Medical.GUI;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using Engine;
 
 namespace Medical
 {
@@ -35,19 +36,19 @@ namespace Medical
         public event OSWindowEvent Deactivated;
         private bool activated = true;
 
-        public NativeOSWindow(String title, Point position, Size size)
+        public NativeOSWindow(String title, IntVector2 position, IntSize2 size)
             :this(null, title, position, size, false)
         {
             
         }
 
-        public NativeOSWindow(NativeOSWindow parent, String title, Point position, Size size)
+        public NativeOSWindow(NativeOSWindow parent, String title, IntVector2 position, IntSize2 size)
             :this(parent, title, position, size, false)
         {
 
         }
 
-        public NativeOSWindow(NativeOSWindow parent, String title, Point position, Size size, bool floatOnParent)
+        public NativeOSWindow(NativeOSWindow parent, String title, IntVector2 position, IntSize2 size, bool floatOnParent)
         {
             this.title = title;
 
@@ -63,7 +64,7 @@ namespace Medical
                 parentPtr = parent._NativePtr;
             }
 
-            nativeWindow = NativeOSWindow_create(parentPtr, title, position.X, position.Y, size.Width, size.Height, floatOnParent, deleteCB, sizedCB, closingCB, closedCB, activateCB);
+            nativeWindow = NativeOSWindow_create(parentPtr, title, position.x, position.y, size.Width, size.Height, floatOnParent, deleteCB, sizedCB, closingCB, closedCB, activateCB);
         }
 
         public void Dispose()

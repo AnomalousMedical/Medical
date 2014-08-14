@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace Medical
 {
@@ -19,11 +20,11 @@ namespace Medical
             }
         }
 
-        public static Point getDisplayLocation(int displayIndex)
+        public static IntVector2 getDisplayLocation(int displayIndex)
         {
             int x, y;
             SystemInfo_getDisplayLocation(displayIndex, out x, out y);
-            return new Point(x, y);
+            return new IntVector2(x, y);
         }
 
         #region PInvoke

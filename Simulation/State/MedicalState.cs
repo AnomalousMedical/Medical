@@ -5,7 +5,6 @@ using System.Text;
 using Engine.Saving;
 using System.Drawing;
 using System.IO;
-using System.Drawing.Imaging;
 using Logging;
 using FreeImageAPI;
 

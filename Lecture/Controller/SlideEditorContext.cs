@@ -11,8 +11,6 @@ using Medical.Platform;
 using Engine.Platform;
 using Medical.Editor;
 using Medical;
-using System.Drawing;
-using System.Drawing.Imaging;
 using Lecture.GUI;
 using Engine;
 using Engine.Editing;
@@ -431,7 +429,7 @@ namespace Lecture
                 IntSize2 centerSize = sceneContainer.WorkingSize;
                 RectangleF destRect = new RectangleF(sceneThumbPosition.x, sceneThumbPosition.y, centerSize.Width, centerSize.Height);
 
-                thumb.FillBackground(new RGBQUAD(System.Drawing.Color.FromArgb(sceneThumbInfo.Color.toARGB())));
+                thumb.FillBackground(new RGBQUAD(FreeImageAPI.Color.FromArgb(sceneThumbInfo.Color.toARGB())));
 
                 int requiredWidth = (sceneThumbInfo.SceneThumb.Width - ((sceneThumbInfo.SceneThumb.Width - sceneThumbInfo.IncludeX) * 2));
                 int requiredHeight = (sceneThumbInfo.SceneThumb.Height - (sceneThumbInfo.IncludeY * 2));

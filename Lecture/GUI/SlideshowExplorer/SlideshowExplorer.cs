@@ -11,8 +11,6 @@ using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
 using Medical.GUI;
 using Medical;
-using System.Drawing;
-using System.Drawing.Imaging;
 
 namespace Lecture.GUI
 {

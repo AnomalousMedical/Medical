@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -50,7 +51,7 @@ namespace Medical.GUI
         public static MainWindow Instance { get; private set; }
 
         public MainWindow(String windowTitle)
-            :base(windowTitle, new Point(-1, -1), new Size(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes))
+            :base(windowTitle, new IntVector2(-1, -1), new IntSize2(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes))
         {
             Instance = this;
             this.windowTitle = windowTitle;

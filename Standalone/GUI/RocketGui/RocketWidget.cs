@@ -7,15 +7,13 @@ using OgreWrapper;
 using libRocketPlugin;
 using Engine;
 using Engine.Platform;
-using System.Drawing;
-using System.Drawing.Imaging;
 using FreeImageAPI;
 
 namespace Medical.GUI
 {
     public class RocketWidget : IDisposable
     {
-        private const System.Drawing.Imaging.PixelFormat BitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+        private const FreeImageAPI.PixelFormat BitmapFormat = FreeImageAPI.PixelFormat.Format32bppArgb;
         private static readonly Engine.Color ClearColor = new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f);
 
         private const String RTT_BASE_NAME = "__RocketRTT{0}_{1}";

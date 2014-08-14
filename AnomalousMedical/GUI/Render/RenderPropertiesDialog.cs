@@ -7,7 +7,6 @@ using Medical.Controller;
 using System.Drawing;
 using Engine;
 using System.IO;
-using System.Drawing.Imaging;
 using FreeImageAPI;
 
 namespace Medical.GUI

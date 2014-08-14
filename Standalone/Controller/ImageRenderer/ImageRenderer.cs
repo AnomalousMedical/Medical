@@ -5,8 +5,6 @@ using System.Text;
 using System.Drawing;
 using OgrePlugin;
 using OgreWrapper;
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
 using Engine;
 using Logging;
 using Medical.Controller;
@@ -44,8 +42,6 @@ namespace Medical
         private IdleHandler idleHandler;
 
         private ImageRendererProgress imageRendererProgress;
-
-        static ImageAttributes IMAGE_ATTRIBUTES = new ImageAttributes();
 
         public ImageRenderer(MedicalController controller, SceneViewController sceneViewController, IdleHandler idleHandler)
         {
@@ -461,10 +457,10 @@ namespace Medical
             renderTexture.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, bgColor);
             renderTexture.update();
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
-            System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
+            FreeImageAPI.PixelFormat bitmapFormat = FreeImageAPI.PixelFormat.Format32bppRgb;
             if (transparentBG)
             {
-                bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+                bitmapFormat = FreeImageAPI.PixelFormat.Format32bppArgb;
             }
             FreeImageBitmap bitmap = new FreeImageBitmap(width, height, bitmapFormat);
             bitmap.copyFromRenderTarget(renderTexture, format);
@@ -514,10 +510,10 @@ namespace Medical
             String updateString = "Rendering piece {0} of " + totalSS;
 
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
-            System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
+            FreeImageAPI.PixelFormat bitmapFormat = FreeImageAPI.PixelFormat.Format32bppRgb;
             if (transparentBG)
             {
-                bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+                bitmapFormat = FreeImageAPI.PixelFormat.Format32bppArgb;
             }
 
             Rectangle destRect = new Rectangle();
