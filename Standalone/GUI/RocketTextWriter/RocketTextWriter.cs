@@ -23,6 +23,8 @@ namespace Medical.GUI
 
         public void writeText(FreeImageBitmap bitmap, string p, int fontSize)
         {
+            p = p.Replace("\n", "<br/>");
+
             int width = Math.Min(bitmap.Width, 2048);
             int height = Math.Min(bitmap.Height, 256);
 

@@ -8,6 +8,7 @@ using System.Drawing;
 using Engine;
 using System.IO;
 using System.Drawing.Imaging;
+using FreeImageAPI;
 
 namespace Medical.GUI
 {
@@ -39,7 +40,7 @@ namespace Medical.GUI
         private int previewMaxWidth;
         private int previewMaxHeight;
 
-        private Bitmap currentImage = null;
+        private FreeImageBitmap currentImage = null;
         private ImageAtlas imageAtlas = null;
 
         private ImageLicenseServer imageLicenseServer;
@@ -148,7 +149,7 @@ namespace Medical.GUI
         {
             if (currentImage != null)
             {
-                using (Bitmap bitmap = (Bitmap)currentImage.Clone())
+                using (FreeImageBitmap bitmap = new FreeImageBitmap(currentImage))
                 {
                     writeLicenseToImage(bitmap);
                     imageRenderer.makeSampleImage(bitmap);
@@ -159,7 +160,7 @@ namespace Medical.GUI
                     }
 
                     String extension;
-                    ImageFormat imageOutputFormat;
+                    FREE_IMAGE_FORMAT imageOutputFormat;
                     getImageFormat(out extension, out imageOutputFormat);
 
                     //Save the image as a temporary file and open it with the system file viewer
@@ -389,19 +390,14 @@ namespace Medical.GUI
             }
         }
 
-        private void writeLicenseToImage(Bitmap bitmap)
+        private void writeLicenseToImage(FreeImageBitmap bitmap)
         {
-            int fontPixels = (int)(currentImage.Height * 0.012f);
-            if (fontPixels < 8)
-            {
-                fontPixels = 8;
-            }
             String licenseUse = "personal";
             if (licenseTypeGroup.SelectedButton == commercialButton)
             {
                 licenseUse = "commercial";
             }
-            imageRenderer.addLicenseText(bitmap, String.Format("© Anomalous Medical {2}\nLicensed to {0} for {1} use.", imageLicenseServer.LicenseeName, licenseUse, DateTime.Now.Year.ToString()), fontPixels);
+            imageRenderer.addLicenseText(bitmap, String.Format("Copyright Anomalous Medical {2}\nLicensed to {0} for {1} use.", imageLicenseServer.LicenseeName, licenseUse, DateTime.Now.Year.ToString()));
         }
 
         private void saveImage()
@@ -409,7 +405,7 @@ namespace Medical.GUI
             String outputDirectory = outputFolder.OnlyText;
             String imageBaseName = imageName.OnlyText;
             String extension;
-            ImageFormat imageOutputFormat;
+            FREE_IMAGE_FORMAT imageOutputFormat;
             getImageFormat(out extension, out imageOutputFormat);
             try
             {
@@ -430,7 +426,7 @@ namespace Medical.GUI
             }
         }
 
-        private void writeImageToDisk(String outputDirectory, String imageBaseName, String extension, ImageFormat imageOutputFormat)
+        private void writeImageToDisk(String outputDirectory, String imageBaseName, String extension, FREE_IMAGE_FORMAT imageOutputFormat)
         {
             String fileName = imageBaseName + extension;
             ensureOutputFolderExists(outputDirectory);
@@ -454,20 +450,20 @@ namespace Medical.GUI
             closeCurrentImage();
         }
 
-        private void getImageFormat(out String extension, out ImageFormat imageOutputFormat)
+        private void getImageFormat(out String extension, out FREE_IMAGE_FORMAT imageOutputFormat)
         {
             extension = ".png";
-            imageOutputFormat = ImageFormat.Png;
+            imageOutputFormat = FREE_IMAGE_FORMAT.FIF_PNG;
 
             switch (imageFormat.SelectedIndex)
             {
                 case 1: //Bitmap
                     extension = ".bmp";
-                    imageOutputFormat = ImageFormat.Bmp;
+                    imageOutputFormat = FREE_IMAGE_FORMAT.FIF_BMP;
                     break;
                 case 2: //JPEG
                     extension = ".jpg";
-                    imageOutputFormat = ImageFormat.Jpeg;
+                    imageOutputFormat = FREE_IMAGE_FORMAT.FIF_JPEG;
                     break;
             }
         }

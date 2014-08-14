@@ -203,19 +203,6 @@ namespace Medical
             yield break;
         }
 
-        public void addLicenseText(Bitmap bitmap, String text, int textPixelHeight)
-        {
-            using (Graphics g = Graphics.FromImage(bitmap))
-            {
-                using (Font font = new Font("Tahoma", textPixelHeight, GraphicsUnit.Pixel))
-                {
-                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                    SizeF textSize = g.MeasureString(text, font, bitmap.Width);
-                    g.DrawString(text, font, Brushes.White, new RectangleF(0, 0, textSize.Width, textSize.Height));
-                }
-            }
-        }
-
         public void addLicenseText(FreeImageBitmap bitmap, string p)
         {
             if (ImageTextWriter != null)
@@ -233,30 +220,33 @@ namespace Medical
             }
         }
 
-        public void makeSampleImage(Bitmap bitmap)
+        public void makeSampleImage(FreeImageBitmap bitmap)
         {
             if (Logo != null)
             {
-                using (Bitmap bmpLogo = Logo.ToBitmap())
+                float sizeRatio = (float)bitmap.Width / Logo.Width;
+                int finalLogoWidth = (int)(Logo.Width * sizeRatio);
+                int finalLogoHeight = (int)(Logo.Height * sizeRatio);
+                int currentY = 0;
+                int imageHeight = bitmap.Height;
+                bitmap.ConvertColorDepth(FREE_IMAGE_COLOR_DEPTH.FICD_24_BPP);
+                using (FreeImageBitmap resizedLogo = new FreeImageBitmap(Logo))
                 {
-                    using (Graphics g = Graphics.FromImage(bitmap))
+                    resizedLogo.Rescale(finalLogoWidth, finalLogoHeight, FREE_IMAGE_FILTER.FILTER_BILINEAR);
+                    while (currentY < imageHeight)
                     {
-                        ColorMatrix colorMatrix = new ColorMatrix();
-                        colorMatrix.Matrix00 = colorMatrix.Matrix11 = colorMatrix.Matrix22 = colorMatrix.Matrix44 = 1;
-                        colorMatrix.Matrix33 = 0.30f;
-                        using (ImageAttributes ia = new ImageAttributes())
+                        int sectionHeight = resizedLogo.Height;
+                        if(currentY + sectionHeight > imageHeight)
                         {
-                            ia.SetColorMatrix(colorMatrix);
-
-                            float sizeRatio = (float)bitmap.Width / Logo.Width;
-                            int finalLogoWidth = (int)(Logo.Width * sizeRatio);
-                            int finalLogoHeight = (int)(Logo.Height * sizeRatio);
-                            int currentHeight = 0;
-                            int imageHeight = bitmap.Height;
-                            while (currentHeight < imageHeight)
+                            sectionHeight = imageHeight - currentY;
+                        }
+                        using (FreeImageBitmap section = bitmap.Copy(0, currentY, resizedLogo.Width, currentY + sectionHeight))
+                        {
+                            using (FreeImageBitmap logoComposite = resizedLogo.Copy(0, 0, resizedLogo.Width, sectionHeight))
                             {
-                                g.DrawImage(bmpLogo, new Rectangle(0, currentHeight, finalLogoWidth, finalLogoHeight), 0, 0, Logo.Width, Logo.Height, GraphicsUnit.Pixel, ia);
-                                currentHeight += finalLogoHeight;
+                                logoComposite.Composite(false, null, section);
+                                bitmap.Paste(logoComposite, 0, currentY, int.MaxValue);
+                                currentY += finalLogoHeight;
                             }
                         }
                     }
