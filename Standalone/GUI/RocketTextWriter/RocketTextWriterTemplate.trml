@@ -1,0 +1,10 @@
+<template name="RocketTextWriterTemplate" content="RocketTextWriterContent" appendHead="false">
+  <head>
+    <link type="text/rcss" href="~/libRocketPlugin.Resources.rkt.rcss"/>
+    <link type="text/rcss" href="~/libRocketPlugin.Resources.Anomalous.rcss"/>
+  </head>
+  <body>
+		<div id="RocketTextWriterContent">
+		</div>
+  </body>
+</template>

@@ -213,6 +213,7 @@
     <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
     <Compile Include="Controller\FrameClearManager.cs" />
     <Compile Include="Controller\IdleHandler.cs" />
+    <Compile Include="Controller\ImageRenderer\ImageTextWriter.cs" />
     <Compile Include="Controller\MusclePosition\MusclePositionController.cs" />
     <Compile Include="Controller\Posing\PoseController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
@@ -414,6 +415,7 @@
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="GUI\GUILocationNames.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
+    <Compile Include="GUI\RocketTextWriter\RocketTextWriter.cs" />
     <Compile Include="GUI\SceneErrorWindow\SceneErrorWindow.cs" />
     <Compile Include="GUI\RocketGui\DelegateRocketEventController.cs" />
     <Compile Include="GUI\RocketGui\DelegateRocketEventListener.cs" />
@@ -835,6 +837,9 @@
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorStyles.rcss" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorTemplate.trml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RocketTextWriter\RocketTextWriterTemplate.trml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\AssemblyInfoSource.cs" />

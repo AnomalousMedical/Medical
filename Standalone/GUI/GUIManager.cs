@@ -77,6 +77,7 @@ namespace Medical.GUI
 
             imageRendererProgress = new MyGUIImageRendererProgress();
             standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
+            standaloneController.ImageRenderer.ImageTextWriter = new RocketTextWriter();
 
             continuePrompt = new MyGUIContinuePromptProvider();
 

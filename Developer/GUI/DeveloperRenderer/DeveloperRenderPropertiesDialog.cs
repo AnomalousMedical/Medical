@@ -10,6 +10,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using Medical.GUI;
 using Medical;
+using FreeImageAPI;
 
 namespace Developer.GUI
 {
@@ -43,7 +44,7 @@ namespace Developer.GUI
         private int previewMaxWidth;
         private int previewMaxHeight;
 
-        private Bitmap currentImage = null;
+        private FreeImageBitmap currentImage = null;
         private ImageAtlas imageAtlas = null;
 
         private NotificationGUIManager notificationManager;
@@ -158,7 +159,7 @@ namespace Developer.GUI
                 }
 
                 String extension;
-                ImageFormat imageOutputFormat;
+                FREE_IMAGE_FORMAT imageOutputFormat;
                 getImageFormat(out extension, out imageOutputFormat);
 
                 //Save the image as a temporary file and open it with the system file viewer
@@ -322,14 +323,9 @@ namespace Developer.GUI
             }
         }
 
-        private void writeCopyrightText(Bitmap bitmap)
+        private void writeCopyrightText(FreeImageBitmap bitmap)
         {
-            int fontPixels = (int)(currentImage.Height * 0.012f);
-            if (fontPixels < 8)
-            {
-                fontPixels = 8;
-            }
-            imageRenderer.addLicenseText(bitmap, String.Format("© Anomalous Medical {0}", DateTime.Now.Year.ToString()), fontPixels);
+            imageRenderer.addLicenseText(bitmap, String.Format("Copyright Anomalous Medical {0}", DateTime.Now.Year.ToString()));
         }
 
         private void saveImage()
@@ -337,7 +333,7 @@ namespace Developer.GUI
             String outputDirectory = outputFolder.OnlyText;
             String imageBaseName = imageName.OnlyText;
             String extension;
-            ImageFormat imageOutputFormat;
+            FREE_IMAGE_FORMAT imageOutputFormat;
             getImageFormat(out extension, out imageOutputFormat);
             try
             {
@@ -358,7 +354,7 @@ namespace Developer.GUI
             }
         }
 
-        private void writeImageToDisk(String outputDirectory, String imageBaseName, String extension, ImageFormat imageOutputFormat)
+        private void writeImageToDisk(String outputDirectory, String imageBaseName, String extension, FREE_IMAGE_FORMAT imageOutputFormat)
         {
             String fileName = imageBaseName + extension;
             ensureOutputFolderExists(outputDirectory);
@@ -381,20 +377,20 @@ namespace Developer.GUI
             closeCurrentImage();
         }
 
-        private void getImageFormat(out String extension, out ImageFormat imageOutputFormat)
+        private void getImageFormat(out String extension, out FREE_IMAGE_FORMAT imageOutputFormat)
         {
             extension = ".png";
-            imageOutputFormat = ImageFormat.Png;
+            imageOutputFormat = FREE_IMAGE_FORMAT.FIF_PNG;
 
             switch (imageFormat.SelectedIndex)
             {
                 case 1: //Bitmap
                     extension = ".bmp";
-                    imageOutputFormat = ImageFormat.Bmp;
+                    imageOutputFormat = FREE_IMAGE_FORMAT.FIF_BMP;
                     break;
                 case 2: //JPEG
                     extension = ".jpg";
-                    imageOutputFormat = ImageFormat.Jpeg;
+                    imageOutputFormat = FREE_IMAGE_FORMAT.FIF_JPEG;
                     break;
             }
         }

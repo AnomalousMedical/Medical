@@ -89,6 +89,21 @@ namespace Medical
             }));
         }
 
+        /// <summary>
+        /// An async image render. This will hijack the idle handler's onIdle to
+        /// render the image. You supply a callback that will be called when the
+        /// image completes rendering. This funciton will return immediately.
+        /// </summary>
+        /// <param name="properties"></param>
+        /// <param name="renderingCompletedCallback"></param>
+        public void renderImageAsync(ImageRendererProperties properties, Action<FreeImageBitmap> renderingCompletedCallback)
+        {
+            idleHandler.runTemporaryIdle(renderImage(properties, (product) =>
+            {
+                renderingCompletedCallback(product);
+            }));
+        }
+
         private IEnumerable<IdleStatus> renderImage(ImageRendererProperties properties, Action<FreeImageBitmap> renderingCompletedCallback)
         {
             if (imageRendererProgress != null)
@@ -201,6 +216,23 @@ namespace Medical
             }
         }
 
+        public void addLicenseText(FreeImageBitmap bitmap, string p)
+        {
+            if (ImageTextWriter != null)
+            {
+                int fontPixels = (int)(bitmap.Height * 0.012f);
+                if (fontPixels < 8)
+                {
+                    fontPixels = 8;
+                }
+                else if (fontPixels > 72)
+                {
+                    fontPixels = 72;
+                }
+                ImageTextWriter.writeText(bitmap, p, fontPixels);
+            }
+        }
+
         public void makeSampleImage(Bitmap bitmap)
         {
             if (Logo != null)
@@ -243,6 +275,8 @@ namespace Medical
                 imageRendererProgress = value;
             }
         }
+
+        public ImageTextWriter ImageTextWriter { get; set; }
 
         //Acutal rendering
         static int maxBackBufferSize = 2048;

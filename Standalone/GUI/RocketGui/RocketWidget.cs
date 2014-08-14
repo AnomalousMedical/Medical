@@ -250,26 +250,24 @@ namespace Medical.GUI
                 renderTexture.update();
             }
 
-            unsafe
+            using (FreeImageBitmap fullBitmap = new FreeImageBitmap(currentTextureWidth, currentTextureHeight, BitmapFormat))
             {
-                using (FreeImageBitmap fullBitmap = new FreeImageBitmap(currentTextureWidth, currentTextureHeight, BitmapFormat))
+                fullBitmap.copyFromRenderTarget(renderTexture, ogreTextureFormat);
+                //Remove alpha
+                //BitmapDataExtensions.SetAlpha(bmpData, 255);
+
+                if (srcRect.Height > fullBitmap.Height)
                 {
-                    fullBitmap.copyFromRenderTarget(renderTexture, ogreTextureFormat);
-                    //Remove alpha
-                    //BitmapDataExtensions.SetAlpha(bmpData, 255);
+                    srcRect.Height = fullBitmap.Height;
+                }
 
-                    if (srcRect.Height > fullBitmap.Height)
-                    {
-                        srcRect.Height = fullBitmap.Height;
-                    }
-
-                    using (FreeImageBitmap cropped = fullBitmap.Copy(srcRect))
-                    {
-                        cropped.Rescale(destRect.Width, destRect.Height, FREE_IMAGE_FILTER.FILTER_BILINEAR);
-                        g.Paste(cropped, destRect.X, destRect.Y, int.MaxValue);
-                    }
+                using (FreeImageBitmap cropped = fullBitmap.Copy(srcRect))
+                {
+                    cropped.Rescale(destRect.Width, destRect.Height, FREE_IMAGE_FILTER.FILTER_BILINEAR);
+                    g.Paste(cropped, destRect.X, destRect.Y, int.MaxValue);
                 }
             }
+
             if (changedSize)
             {
                 imageBox.setSize(originalSize.Width, originalSize.Height);
