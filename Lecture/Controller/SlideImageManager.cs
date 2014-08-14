@@ -77,7 +77,7 @@ namespace Lecture
                             {
                                 using (Stream stream = slideEditController.ResourceProvider.openFile(thumbPath))
                                 {
-                                    Image thumb = Bitmap.FromStream(stream);
+                                    var thumb = new FreeImageBitmap(stream);
                                     ThreadManager.invoke(new Action(() =>
                                         {
                                             try
@@ -266,7 +266,7 @@ namespace Lecture
 
         private void clearAllThumbs()
         {
-            foreach (Bitmap thumb in unsavedThumbs.Values)
+            foreach (var thumb in unsavedThumbs.Values)
             {
                 thumb.Dispose();
             }

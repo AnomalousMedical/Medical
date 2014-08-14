@@ -80,22 +80,6 @@ namespace Medical
         /// </summary>
         /// <param name="properties"></param>
         /// <param name="renderingCompletedCallback"></param>
-        public void renderImageAsync(ImageRendererProperties properties, Action<Bitmap> renderingCompletedCallback)
-        {
-            idleHandler.runTemporaryIdle(renderImage(properties, (product) =>
-            {
-                renderingCompletedCallback(product.ToBitmap());
-                product.Dispose();
-            }));
-        }
-
-        /// <summary>
-        /// An async image render. This will hijack the idle handler's onIdle to
-        /// render the image. You supply a callback that will be called when the
-        /// image completes rendering. This funciton will return immediately.
-        /// </summary>
-        /// <param name="properties"></param>
-        /// <param name="renderingCompletedCallback"></param>
         public void renderImageAsync(ImageRendererProperties properties, Action<FreeImageBitmap> renderingCompletedCallback)
         {
             idleHandler.runTemporaryIdle(renderImage(properties, (product) =>
