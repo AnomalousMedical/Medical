@@ -1,6 +1,7 @@
 ﻿using Anomalous.Medical.StoreManager.Config;
 using Anomalous.Medical.StoreManager.Models;
 using Anomalous.Medical.StoreManager.Util;
+using FreeImageAPI;
 using Medical;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
@@ -44,7 +45,7 @@ namespace Anomalous.Medical.StoreManager.Controller
                             String extension = Path.GetExtension(path);
                             if (extension.Equals(".png", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase) || extension.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                using (Bitmap source = (Bitmap)Bitmap.FromFile(path))
+                                using (FreeImageBitmap source = new FreeImageBitmap(path))
                                 {
                                     //Cap the uploaded image size at 1000
                                     int resizedWidth = source.Width;

@@ -1,4 +1,5 @@
 ﻿using Engine;
+using FreeImageAPI;
 using libRocketPlugin;
 using Medical;
 using Medical.Controller;
@@ -126,7 +127,7 @@ namespace Lecture.GUI
             {
                 using (Stream imageStream = resourceProvider.openFile(filename))
                 {
-                    Image image = Bitmap.FromStream(imageStream);
+                    var image = new FreeImageBitmap(imageStream);
 
                     int left = 0;
                     int top = 0;

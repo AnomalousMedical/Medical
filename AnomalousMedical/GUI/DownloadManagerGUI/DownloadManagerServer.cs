@@ -12,6 +12,7 @@ using System.Globalization;
 using Engine;
 using System.Threading;
 using Mono.Security;
+using FreeImageAPI;
 
 namespace Medical.GUI
 {
@@ -221,7 +222,7 @@ namespace Medical.GUI
         {
             if (!String.IsNullOrEmpty(imageURL))
             {
-                using (Bitmap image = loadImageFromURL(imageURL))
+                using (var image = loadImageFromURL(imageURL))
                 {
                     if (image != null)
                     {
@@ -235,7 +236,7 @@ namespace Medical.GUI
         }
 
         //Runs on background thread
-        private Bitmap loadImageFromURL(String url)
+        private FreeImageBitmap loadImageFromURL(String url)
         {
             try
             {
@@ -246,7 +247,7 @@ namespace Medical.GUI
                     {
                         using (Stream responseStream = response.GetResponseStream())
                         {
-                            return new Bitmap(responseStream);
+                            return new FreeImageBitmap(responseStream);
                         }
                     }
                 }

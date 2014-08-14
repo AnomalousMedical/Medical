@@ -8,6 +8,7 @@ using Engine;
 using System.IO;
 using System.Drawing;
 using Medical.Controller;
+using FreeImageAPI;
 
 namespace Medical.GUI
 {
@@ -235,7 +236,7 @@ namespace Medical.GUI
                         {
                             using (Stream stream = resourceProvider.openFile(thumbPath))
                             {
-                                Image thumb = Bitmap.FromStream(stream);
+                                var thumb = new FreeImageBitmap(stream);
                                 ThreadManager.invoke(new Action(() =>
                                 {
                                     try

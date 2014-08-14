@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FreeImageAPI;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -13,7 +14,7 @@ namespace Anomalous.Medical.StoreManager.Util
         /// <summary>
         /// Save a resized image maintaining aspect ratio, the width and height specify the max width and max height.
         /// </summary>
-        public static void SaveResizedImage(Bitmap source, Stream stream, int width, int height)
+        public static void SaveResizedImage(FreeImageBitmap source, Stream stream, int width, int height)
         {
             SaveResizedImage(source, stream, ref width, ref height);
         }
@@ -21,7 +22,7 @@ namespace Anomalous.Medical.StoreManager.Util
         /// <summary>
         /// Save a resized image maintaining aspect ratio, the width and height specify the max width and max height.
         /// </summary>
-        public static void SaveResizedImage(Bitmap source, Stream stream, ref int width, ref int height)
+        public static void SaveResizedImage(FreeImageBitmap source, Stream stream, ref int width, ref int height)
         {
             if (source.Width > source.Height)
             {
@@ -36,16 +37,10 @@ namespace Anomalous.Medical.StoreManager.Util
                 height = (int)(source.Height * ratio);
             }
 
-            using (Bitmap resized = new Bitmap(width, height))
+            using(FreeImageBitmap resized = new FreeImageBitmap(source))
             {
-                using (Graphics graphics = Graphics.FromImage(resized))
-                {
-                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    graphics.DrawImage(source, 0, 0, resized.Width, resized.Height);
-                }
-                resized.Save(stream, ImageFormat.Png);
+                resized.Rescale(width, height, FREE_IMAGE_FILTER.FILTER_LANCZOS3);
+                resized.Save(stream, FREE_IMAGE_FORMAT.FIF_PNG);
             }
         }
     }

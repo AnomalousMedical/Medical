@@ -7,6 +7,7 @@ using MyGUIPlugin;
 using System.Drawing;
 using Engine;
 using Medical.Controller;
+using FreeImageAPI;
 
 namespace Medical.GUI
 {
@@ -48,7 +49,7 @@ namespace Medical.GUI
 
         public void setImage(Stream image)
         {
-            using (Bitmap bitmap = new Bitmap(image))
+            using (FreeImageBitmap bitmap = new FreeImageBitmap(image))
             {
                 if (imageAtlas != null)
                 {
