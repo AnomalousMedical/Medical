@@ -22,6 +22,7 @@ namespace UnitTestPlugin.GUI
         {
             using (var bitmap = new FreeImageBitmap(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.LegacyLogoSmall.jpg")))
             {
+                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
                 Log.Debug("Adding LegacyLogoSmall to image atlas");
                 ImageAtlasPage page = imageAtlas.addImage("LegacyLogoSmall", bitmap);
                 ImageBox imageBox1 = (ImageBox)window.findWidget("ImageBox1");
@@ -34,6 +35,7 @@ namespace UnitTestPlugin.GUI
             }
             using (var bitmap = new FreeImageBitmap(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.DownloadIcon.png")))
             {
+                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
                 for (int i = 0; i < 10; ++i)
                 {
                     String imageName = "DownloadIcon" + i;
@@ -51,6 +53,7 @@ namespace UnitTestPlugin.GUI
             }
             using (var bitmap = new FreeImageBitmap(Assembly.GetCallingAssembly().GetManifestResourceStream("UnitTestPlugin.Resources.LegacyLogoSmall.jpg")))
             {
+                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
                 Log.Debug("Adding LegacyLogoSmall1 to image atlas");
                 ImageAtlasPage page = imageAtlas.addImage("LegacyLogoSmall1", bitmap);
                 ImageBox imageBox1 = (ImageBox)window.findWidget("ImageBox1");
