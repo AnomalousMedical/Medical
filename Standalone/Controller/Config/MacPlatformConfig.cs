@@ -172,14 +172,6 @@ namespace Medical
             }
         }
 
-		protected override string InitializingCoreMessageImpl 
-		{
-			get 
-			{
-				return " (This can take a long time on the first run while the font cache is built, please be patient.)";
-			}
-		}
-
         protected override bool HasCustomSSLValidationImpl
         {
             get

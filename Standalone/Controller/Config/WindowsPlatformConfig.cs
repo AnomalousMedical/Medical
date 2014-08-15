@@ -174,14 +174,6 @@ namespace Medical
             throw new NotImplementedException();
 		}
 
-		protected override string InitializingCoreMessageImpl 
-		{
-			get 
-			{
-				return "";
-			}
-		}
-
         protected override void moveConfigurationIfNeededImpl()
         {
             

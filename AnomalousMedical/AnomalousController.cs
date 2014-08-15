@@ -91,7 +91,7 @@ namespace Medical
 
         private IEnumerable<IdleStatus> runSplashScreen()
         {
-			splashScreen.updateStatus(10, String.Format("Initializing Core{0}", PlatformConfig.InitializingCoreMessage));
+			splashScreen.updateStatus(10, "Initializing Core");
             yield return IdleStatus.Ok;
 
             //Configure the filesystem
