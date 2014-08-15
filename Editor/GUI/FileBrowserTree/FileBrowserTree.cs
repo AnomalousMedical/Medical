@@ -166,9 +166,9 @@ namespace Medical.GUI
                 {
                     return resourceProvider.directoryHasEntries(path);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Log.Warning("Could not get files from directory located at '{0}' for FileBrowserTree.", path);
+					Log.Warning("{0} trying to check for files in directory located at '{1}' for FileBrowserTree. Message: {2}", ex.GetType(), path, ex.Message);
                 }
             }
             return false;
