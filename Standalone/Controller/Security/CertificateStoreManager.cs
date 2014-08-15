@@ -77,27 +77,40 @@ namespace Medical
         /// already checked the server once on this run. You must call initialize before calling this or an exception will
         /// be thrown.
         /// </summary>
-        /// <param name="onBgThread">Set this to true to use a background thread to refresh or false to do it on the current thread.</param>
-        public static void RefreshCertificate(bool onBgThread)
+        public static bool RefreshCertificate()
         {
             if (allowInitialize)
             {
                 throw new Exception("Attempted to refresh the certificate store without initializing first.");
             }
 
+            //Only check the server one time per run.
             if (!CheckedServerThisRun)
             {
-                //Only check the server one time per run.
                 lastServerCheck = DateTime.MinValue;
+                GetCertificate();
+                return true;
+            }
+            return false;
+        }
 
-                if (onBgThread)
-                {
-                    ThreadPool.QueueUserWorkItem(arg => GetCertificate());
-                }
-                else
-                {
-                    GetCertificate();
-                }
+        /// <summary>
+        /// Attempt to refresh the CertificateStore from the server, this will only happen if the program has not
+        /// already checked the server once on this run. You must call initialize before calling this or an exception will
+        /// be thrown. This version will run on a background thread.
+        /// </summary>
+        public static void RefreshCertificateBg()
+        {
+            if (allowInitialize)
+            {
+                throw new Exception("Attempted to refresh the certificate store without initializing first.");
+            }
+
+            //Only check the server one time per run.
+            if (!CheckedServerThisRun)
+            {
+                lastServerCheck = DateTime.MinValue;
+                ThreadPool.QueueUserWorkItem(arg => GetCertificate());
             }
         }
 
@@ -256,8 +269,10 @@ namespace Medical
             }
             if(!valid && refreshCertStoreOnError)
             {
-                RefreshCertificate(false);
-                valid = IsValidServerCommunication(data, signature, false);
+                if (RefreshCertificate())
+                {
+                    valid = IsValidServerCommunication(data, signature, false);
+                }
             }
             return valid;
         }

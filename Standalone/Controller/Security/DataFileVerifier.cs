@@ -81,8 +81,10 @@ namespace Medical
 
             if(!valid && refreshCertificate)
             {
-                CertificateStoreManager.RefreshCertificate(false);
-                valid = isSafeDataFile(file, false);
+                if (CertificateStoreManager.RefreshCertificate())
+                {
+                    valid = isSafeDataFile(file, false);
+                }
             }
 
             return valid;
@@ -117,8 +119,10 @@ namespace Medical
 
             if(!safe && refreshCertificateStore)
             {
-                CertificateStoreManager.RefreshCertificate(false);
-                safe = isSafeDll(path, false);
+                if (CertificateStoreManager.RefreshCertificate())
+                {
+                    safe = isSafeDll(path, false);
+                }
             }
 
             return safe;

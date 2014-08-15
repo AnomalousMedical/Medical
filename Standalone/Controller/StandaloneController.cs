@@ -169,7 +169,7 @@ namespace Medical
         /// </summary>
         public void retryLoadingCertificateStore()
         {
-            CertificateStoreManager.RefreshCertificate(true);
+            CertificateStoreManager.RefreshCertificateBg();
         }
 
         public void addWorkingArchive()
