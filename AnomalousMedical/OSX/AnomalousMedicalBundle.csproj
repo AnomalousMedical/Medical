@@ -48,7 +48,6 @@
   <ItemGroup>
 	<!-- These items will go in the Contents/Resources folder -->
 	<ResourceFiles Include="BundleSource/Contents/Resources/AnomalousMedical.exe.config" />
-    <ResourceFiles Include="BundleSource/Contents/Resources/fonts.conf" />
 	<ResourceFiles Include="BundleSource/Contents/Resources/Skull.icns" />
 	<ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.exe" />
 
