@@ -76,6 +76,7 @@
 	<ResourceFiles Include="..\..\$(Configuration)\libRocketPlugin.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\Mono.Anomalous.Security.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\DotNetZip.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\FreeImageNET.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
 	<ResourceFiles Include="..\..\$(Configuration)\IntroductionTutorial.dat" />
 	
@@ -87,6 +88,7 @@
 	<ResourceFiles Include="..\..\../Engine/Release/libSoundWrapper.dylib" />
 	<ResourceFiles Include="..\..\../Engine/Release/libZip.dylib" />
 	<ResourceFiles Include="..\..\../Engine/Release/libRocketWrapper.dylib" />
+    <ResourceFiles Include="..\..\../Dependencies/FreeImage.NET/OSXBuild/src/FreeImage/Release/libFreeImage.dylib" />
   </ItemGroup>
   
   <!-- Common frameworks, items and target. -->

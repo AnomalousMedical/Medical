@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Medical.GUI;
 using OgrePlugin;
-using System.Drawing;
 using System.Reflection;
 using MyGUIPlugin;
 using Engine;

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
-using System.Drawing;
 using Engine;
 using System.IO;
 using FreeImageAPI;

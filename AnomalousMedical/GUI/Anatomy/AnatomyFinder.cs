@@ -6,7 +6,6 @@ using MyGUIPlugin;
 using Medical.Controller;
 using Engine.Platform;
 using Engine;
-using System.Drawing;
 
 namespace Medical.GUI
 {

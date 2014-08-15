@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.Reflection;
 using libRocketPlugin;
 using Engine;
-using System.Drawing;
 using System.Xml;
 using Engine.Saving.XMLSaver;
 using System.IO;

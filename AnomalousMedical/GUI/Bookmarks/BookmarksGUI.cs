@@ -5,7 +5,6 @@ using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
 using Engine;
-using System.Drawing;
 using Logging;
 
 namespace Medical.GUI
