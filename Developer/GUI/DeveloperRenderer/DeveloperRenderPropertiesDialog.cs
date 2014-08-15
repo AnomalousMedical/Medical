@@ -162,8 +162,15 @@ namespace Developer.GUI
 
                 //Save the image as a temporary file and open it with the system file viewer
                 String imageFile = String.Format("{0}/TempImage{1}", MedicalConfig.UserDocRoot, extension);
-                currentImage.Save(imageFile, imageOutputFormat);
-                OtherProcessManager.openLocalURL(imageFile);
+                try
+                {
+                    currentImage.Save(imageFile, imageOutputFormat);
+                    OtherProcessManager.openLocalURL(imageFile);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.show(String.Format("Error writing the preview file to {0}.\nReason: {2}", imageFile, MedicalConfig.ImageOutputFolder, ex.Message), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
             }
         }
 
@@ -347,7 +354,7 @@ namespace Developer.GUI
                 }
                 catch (Exception e1)
                 {
-                    MessageBox.show(String.Format("Error writing the file to the directory {0}\nReason: {1}.\n\nAlso failed to write to the backup save folder {2}.\nReason: {3}\n\nOur servers will still count this as one of your image credits. Please contact us at info@anomalousmedical.com get your credit back.\nWe reccomend taking a screen shot of this error message and sending it to us.", outputDirectory, e.Message, MedicalConfig.ImageOutputFolder, e1.Message), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                    MessageBox.show(String.Format("Error writing the file to the directory {0}\nReason: {1}.\n\nAlso failed to write to the backup save folder {2}.\nReason: {3}.", outputDirectory, e.Message, MedicalConfig.ImageOutputFolder, e1.Message), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                 }
             }
         }
