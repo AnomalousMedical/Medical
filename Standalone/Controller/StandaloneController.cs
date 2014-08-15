@@ -85,7 +85,7 @@ namespace Medical
             medicalConfig = new MedicalConfig();
             this.app = app;
 
-            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);
+            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl, MedicalConfig.LastCertificateStoreCheckTime);
             guiManager = new GUIManager(this);
             guiManager.MainGUIShown += guiManager_MainGUIShown;
             guiManager.MainGUIHidden += guiManager_MainGUIHidden;
@@ -168,7 +168,7 @@ namespace Medical
         /// </summary>
         public void retryLoadingCertificateStore()
         {
-            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl);
+            CertificateStoreManager.RefreshCertificate(true);
         }
 
         public void addWorkingArchive()
@@ -187,7 +187,7 @@ namespace Medical
             //Background
             this.background = background;
 
-            var dataFileVerifier = new DataFileVerifier(CertificateStoreManager.CertificateStore);
+            var dataFileVerifier = new DataFileVerifier();
 #if ALLOW_OVERRIDE
             dataFileVerifier.AllowUnsignedDataFiles = MedicalConfig.AllowUnsignedDataFilePlugins;
             dataFileVerifier.AllowUnsignedDlls = MedicalConfig.AllowUnsignedDllPlugins;

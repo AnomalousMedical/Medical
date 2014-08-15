@@ -18,6 +18,13 @@ namespace Medical
         private List<Tuple<String, String>> arguments;
         private List<UploadFileInfo> fileStreams;
 
+        /// <summary>
+        /// This event is fired when this server connection gets a result that is not HttpStatusCode.OK
+        /// when makeRequest is called. This also means that some sort of connection was established
+        /// with the server, it will not be called if an exception is raised.
+        /// </summary>
+        public event Action<ServerConnection> NonOkResultEvent;
+
         static ServerConnection()
         {
             ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
@@ -52,6 +59,10 @@ namespace Medical
                 if (ResponseStatusCode == HttpStatusCode.OK)
                 {
                     response(webResponse);
+                }
+                else if(NonOkResultEvent != null)
+                {
+                    NonOkResultEvent.Invoke(this);
                 }
             }
         }

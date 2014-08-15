@@ -68,6 +68,9 @@ namespace Medical
 
         void CertificateStoreManager_CertificateStoreLoaded()
         {
+            CertificateStoreManager.CertificateStoreLoaded -= CertificateStoreManager_CertificateStoreLoaded;
+            CertificateStoreManager.CertificateStoreLoadError -= CertificateStoreManager_CertificateStoreLoadError;
+
             LicenseManager = new LicenseManager(MedicalConfig.LicenseFile);
             LicenseManager.getKey(processKeyResults);
 

@@ -17,11 +17,8 @@ namespace Medical
     /// </summary>
     public class DataFileVerifier
     {
-        CertificateStore certificateStore;
-
-        public DataFileVerifier(CertificateStore certificateStore)
+        public DataFileVerifier()
         {
-            this.certificateStore = certificateStore;
             AllowUnsignedDataFiles = false;
             AllowUnsignedDlls = false;
         }
@@ -32,8 +29,13 @@ namespace Medical
 
         public bool isSafeDataFile(String file)
         {
+            return isSafeDataFile(file, true);
+        }
+
+        private bool isSafeDataFile(String file, bool refreshCertificate)
+        {
             bool valid = AllowUnsignedDataFiles;
-            SignedDataFile signedFile = new SignedDataFile(certificateStore);
+            SignedDataFile signedFile = new SignedDataFile(CertificateStoreManager.CertificateStore);
             switch (signedFile.isTrustedFile(file))
             {
                 case SignedDataFile.TrustedResult.Valid:
@@ -76,10 +78,22 @@ namespace Medical
                     Log.Error("Plugin '{0}' counter signature has been revoked.", file);
                     break;
             }
+
+            if(!valid && refreshCertificate)
+            {
+                CertificateStoreManager.RefreshCertificate(false);
+                valid = isSafeDataFile(file, false);
+            }
+
             return valid;
         }
 
         public bool isSafeDll(String path)
+        {
+            return isSafeDll(path, true);
+        }
+
+        private bool isSafeDll(String path, bool refreshCertificateStore)
         {
             bool safe = AllowUnsignedDlls;
             AuthenticodeDeformatter ad = new AuthenticodeDeformatter();
@@ -87,7 +101,7 @@ namespace Medical
             ad.FileName = path; //Must do this here because it does the check when the file is set.
             if (ad.IsTrusted())
             {
-                if (certificateStore.ValidDllCertificates.Contains(ad.SigningCertificate))
+                if (CertificateStoreManager.CertificateStore.ValidDllCertificates.Contains(ad.SigningCertificate))
                 {
                     safe = true;
                 }
@@ -101,13 +115,19 @@ namespace Medical
                 Log.Error("Plugin '{0}' is improperly signed.", path);
             }
 
+            if(!safe && refreshCertificateStore)
+            {
+                CertificateStoreManager.RefreshCertificate(false);
+                safe = isSafeDll(path, false);
+            }
+
             return safe;
         }
 
         void ad_SetupX509Chains(Mono.Security.X509.X509Chain signerChain, Mono.Security.X509.X509Chain timestampChain)
         {
-            signerChain.TrustAnchors.AddRange(certificateStore.TrustAnchors);
-            timestampChain.TrustAnchors.AddRange(certificateStore.TrustAnchors);
+            signerChain.TrustAnchors.AddRange(CertificateStoreManager.CertificateStore.TrustAnchors);
+            timestampChain.TrustAnchors.AddRange(CertificateStoreManager.CertificateStore.TrustAnchors);
         }
     }
 }
