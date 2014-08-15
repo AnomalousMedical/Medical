@@ -164,7 +164,10 @@ namespace Developer.GUI
                 String imageFile = String.Format("{0}/TempImage{1}", MedicalConfig.UserDocRoot, extension);
                 try
                 {
-                    currentImage.Save(imageFile, imageOutputFormat);
+                    using (Stream stream = File.Open(imageFile, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
+                    {
+                        currentImage.Save(stream, imageOutputFormat);
+                    }
                     OtherProcessManager.openLocalURL(imageFile);
                 }
                 catch(Exception ex)
@@ -377,7 +380,10 @@ namespace Developer.GUI
                     outputFile = Path.Combine(outputDirectory, fileName);
                 }
             }
-            currentImage.Save(outputFile, imageOutputFormat);
+            using (Stream stream = File.Open(outputFile, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
+            {
+                currentImage.Save(stream, imageOutputFormat);
+            }
             notificationManager.showNotification(new OpenImageNotification(outputFile));
             closeCurrentImage();
         }
