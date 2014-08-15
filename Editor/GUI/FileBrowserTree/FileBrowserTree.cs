@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using System.IO;
 using Engine.Platform;
 using Engine;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -161,7 +162,14 @@ namespace Medical.GUI
         {
             if (resourceProvider != null)
             {
-                return resourceProvider.directoryHasEntries(path);
+                try
+                {
+                    return resourceProvider.directoryHasEntries(path);
+                }
+                catch (Exception)
+                {
+                    Log.Warning("Could not get files from directory located at '{0}' for FileBrowserTree.", path);
+                }
             }
             return false;
         }
