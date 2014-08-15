@@ -147,7 +147,6 @@ namespace Medical
 
             //Certificate store
             MedicalConfig.CertificateStoreFile = Path.Combine(FolderFinder.LocalPrivateDataFolder, "CertificateStore.cst");
-            MedicalConfig.LastCertificateStoreCheckTime = DateTime.MinValue;
 
             //Configure website urls
             MedicalConfig.HelpURL = String.Format("{0}/Help", WebsiteHostUrl);
@@ -511,7 +510,17 @@ namespace Medical
 
         public static String CertificateStoreUrl { get; private set; }
 
-        public static DateTime LastCertificateStoreCheckTime { get; set; }
+        public static DateTime LastCertificateStoreCheckTime
+        {
+            get
+            {
+                return program.getValue("LastCertificateStoreCheckTime", DateTime.MinValue);
+            }
+            set
+            {
+                program.setValue("LastCertificateStoreCheckTime", value);
+            }
+        }
 
         public static String WebsiteHostUrl { get; private set; }
     }

@@ -16,8 +16,23 @@ namespace Medical
 {
     public static class CertificateStoreManager
     {
+        /// <summary>
+        /// This event is fired when the certificate store is found and loaded.
+        /// This will be invoked on the main thread.
+        /// </summary>
         public static event Action CertificateStoreLoaded;
+
+        /// <summary>
+        /// This event is fired if there is an error loading the certificate store.
+        /// This will be invoked on the main thread.
+        /// </summary>
         public static event Action CertificateStoreLoadError;
+
+        /// <summary>
+        /// This event is fired when a round trip has been made to the server checking for an updated Certificate Store.
+        /// This will be invoked on the main thread.
+        /// </summary>
+        public static event Action ServerCheckedForCertificate;
 
         private static String hashAlgoName;
         private static String hashAlgoOid;
@@ -141,13 +156,13 @@ namespace Medical
                     serverConnection.NonOkResultEvent += conn =>
                     {
                         //This will happen if the serverConnection gets a non ok response.
-                        CheckedServerThisRun = true;
+                        onServerContacted();
                     };
 
                     serverConnection.makeRequestDownloadResponse(responseStream =>
                         {
                             //This only happens if the server returns a certificate store.
-                            CheckedServerThisRun = true;
+                            onServerContacted();
                             try
                             {
                                 byte[] bytes = new byte[responseStream.Length];
@@ -268,6 +283,21 @@ namespace Medical
             byte[] rawCert = new byte[stream.Length];
             stream.Read(rawCert, 0, rawCert.Length);
             return new X509Certificate(rawCert);
+        }
+
+        /// <summary>
+        /// Called when the certificate store server is contacted.
+        /// </summary>
+        private static void onServerContacted()
+        {
+            CheckedServerThisRun = true;
+            ThreadManager.invoke(() =>
+            {
+                if (ServerCheckedForCertificate != null)
+                {
+                    ServerCheckedForCertificate.Invoke();
+                }
+            });
         }
     }
 }

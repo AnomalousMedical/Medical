@@ -85,6 +85,7 @@ namespace Medical
             medicalConfig = new MedicalConfig();
             this.app = app;
 
+            CertificateStoreManager.ServerCheckedForCertificate += () => MedicalConfig.LastCertificateStoreCheckTime = DateTime.Now;
             CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl, MedicalConfig.LastCertificateStoreCheckTime);
             guiManager = new GUIManager(this);
             guiManager.MainGUIShown += guiManager_MainGUIShown;
