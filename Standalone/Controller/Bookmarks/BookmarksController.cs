@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
-using System.Drawing;
 using Engine.Saving.XMLSaver;
 using System.Xml;
 using System.IO;

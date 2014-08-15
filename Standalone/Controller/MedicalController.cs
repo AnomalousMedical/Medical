@@ -14,7 +14,6 @@ using Engine.Saving.XMLSaver;
 using Engine.Resources;
 using System.IO;
 using BulletPlugin;
-using System.Drawing;
 using MyGUIPlugin;
 using Medical.GUI;
 using SoundPlugin;

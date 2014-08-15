@@ -11,7 +11,6 @@ using System.IO;
 using Engine.Editing;
 using Engine;
 using Medical.GUI.RmlWysiwyg.Elements;
-using System.Drawing;
 using FreeImageAPI;
 
 namespace Medical.GUI

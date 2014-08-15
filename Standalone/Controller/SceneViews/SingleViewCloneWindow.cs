@@ -5,7 +5,6 @@ using System.Text;
 using Engine.Platform;
 using Engine.Renderer;
 using OgrePlugin;
-using System.Drawing;
 using Medical.GUI;
 using Engine;
 

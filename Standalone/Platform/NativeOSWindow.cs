@@ -5,7 +5,6 @@ using System.Text;
 using Engine.Platform;
 using Medical.GUI;
 using System.Runtime.InteropServices;
-using System.Drawing;
 using Engine;
 
 namespace Medical

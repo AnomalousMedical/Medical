@@ -9,7 +9,6 @@ using Engine.ObjectManagement;
 using MyGUIPlugin;
 using OgreWrapper;
 using OgrePlugin;
-using System.Drawing;
 using Medical.GUI;
 
 namespace Medical.Controller

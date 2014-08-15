@@ -6,7 +6,6 @@ using MyGUIPlugin;
 using Engine.Editing;
 using Engine;
 using System.IO;
-using System.Drawing;
 using Medical.Controller;
 using FreeImageAPI;
 

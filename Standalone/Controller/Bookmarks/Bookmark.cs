@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Engine.Saving;
-using System.Drawing;
 
 namespace Medical
 {

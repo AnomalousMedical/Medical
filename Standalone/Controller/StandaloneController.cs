@@ -15,7 +15,6 @@ using System.Reflection;
 using MyGUIPlugin;
 using Medical.GUI;
 using Medical.Controller;
-using System.Drawing;
 using System.IO;
 using System.Diagnostics;
 using Medical.Controller.AnomalousMvc;

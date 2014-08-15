@@ -7,7 +7,6 @@ using Engine;
 using System.Xml;
 using Logging;
 using System.IO;
-using System.Drawing;
 using Medical.Controller.AnomalousMvc;
 using Engine.Saving.XMLSaver;
 using FreeImageAPI;

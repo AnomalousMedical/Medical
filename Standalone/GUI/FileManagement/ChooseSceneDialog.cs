@@ -5,7 +5,6 @@ using System.Text;
 using MyGUIPlugin;
 using Engine;
 using System.IO;
-using System.Drawing;
 using OgrePlugin;
 using FreeImageAPI;
 
