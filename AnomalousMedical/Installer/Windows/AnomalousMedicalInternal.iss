@@ -68,6 +68,8 @@ Source: S:\Medical\Release\WinMTDriver.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Zip.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\DotNetZip.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Mono.Anomalous.Security.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\FreeImage.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\FreeImageNET.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Utilities.dat; DestDir: {app}; Flags: ignoreversion
