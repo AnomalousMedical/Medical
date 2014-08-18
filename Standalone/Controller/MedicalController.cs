@@ -261,7 +261,7 @@ namespace Medical
                         {
                             Message = "Building Scene"
                         };
-                        foreach (var status in medicalScene.loadScene(scenePackage))
+                        foreach (var status in medicalScene.loadScene(scenePackage, SceneBuildOptions.SingleUseDefinitions))
                         {
                             yield return status;
                         }
