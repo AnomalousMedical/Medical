@@ -18,9 +18,12 @@ namespace Medical
             return null;
         }
 
-        public string getName()
+        public string Name
         {
-            return "Simulation";
+            get
+            {
+                return "Simulation";
+            }
         }
 
         public void initialize(PluginManager pluginManager)

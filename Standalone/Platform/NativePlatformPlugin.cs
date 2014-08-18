@@ -83,9 +83,12 @@ namespace Medical
 
         }
 
-        public string getName()
+        public string Name
         {
-            return "NativePlatform";
+            get
+            {
+                return "NativePlatform";
+            }
         }
 
         public DebugInterface getDebugInterface()
