@@ -151,6 +151,14 @@ namespace Medical.Controller
 
         public bool SmoothShow { get; set; }
 
+        public uint Position
+        {
+            get
+            {
+                return progressBar.Position;
+            }
+        }
+
         private bool subscribedToUpdate = false;
 
         private void subscribeToUpdate()

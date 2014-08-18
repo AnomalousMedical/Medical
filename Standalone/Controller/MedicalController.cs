@@ -227,7 +227,7 @@ namespace Medical
         /// </summary>
         /// <param name="filename">The file to load.</param>
         /// <returns>True if the scene was loaded, false on an error.</returns>
-        public bool openScene(String filename)
+        public IEnumerable<SceneBuildStatus> openScene(String filename)
         {
             medicalScene.destroyScene();
             VirtualFileSystem sceneArchive = VirtualFileSystem.Instance;
@@ -241,6 +241,10 @@ namespace Medical
                     ScenePackage scenePackage = null;
                     try
                     {
+                        yield return new SceneBuildStatus()
+                        {
+                            Message = "Loading Scene File"
+                        };
                         textReader = new XmlTextReader(file);
                         scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
                     }
@@ -253,16 +257,20 @@ namespace Medical
                     }
                     if (scenePackage != null)
                     {
-                        medicalScene.loadScene(scenePackage);
-                        return true;
+                        yield return new SceneBuildStatus()
+                        {
+                            Message = "Building Scene"
+                        };
+                        foreach (var status in medicalScene.loadScene(scenePackage))
+                        {
+                            yield return status;
+                        }
                     }
-                    return false;
                 }
             }
             else
             {
                 Log.Error("Could not load scene {0}.", filename);
-                return false;
             }
         }
 

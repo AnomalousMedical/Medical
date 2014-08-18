@@ -61,18 +61,31 @@ namespace Medical
         /// Load the scene in the given ScenePackage.
         /// </summary>
         /// <param name="scenePackage">The ScenePackage to load.</param>
-        public void loadScene(ScenePackage scenePackage)
+        public IEnumerable<SceneBuildStatus> loadScene(ScenePackage scenePackage)
         {
             currentScenePackage = scenePackage;
+            yield return new SceneBuildStatus()
+            {
+                Message = "Setting up Resources"
+            };
             sceneResourceManager.changeResourcesToMatch(scenePackage.ResourceManager);
             sceneResourceManager.initializeResources();
+
+            yield return new SceneBuildStatus()
+            {
+                Message = "Creating Scene"
+            };
+
             currentScene = scenePackage.SceneDefinition.createScene();
             if (OnSceneLoading != null)
             {
                 OnSceneLoading.Invoke(this, currentScene);
             }
             currentSimObjects = scenePackage.SimObjectManagerDefinition.createSimObjectManager(currentScene.getDefaultSubScene());
-            currentScene.buildScene();
+            foreach(var status in currentScene.buildSceneStatus())
+            {
+                yield return status;
+            }
             if (OnSceneLoaded != null)
             {
                 OnSceneLoaded.Invoke(this, currentScene);

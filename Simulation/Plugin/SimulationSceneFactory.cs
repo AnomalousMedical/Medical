@@ -15,9 +15,13 @@ namespace Medical
             
         }
 
-        public void createProducts()
+        public IEnumerable<SceneBuildStatus> createProducts()
         {
-            
+            SceneBuildStatus status = new SceneBuildStatus()
+            {
+                Subsystem = "Simulation"
+            };
+            yield return status;
         }
 
         public void createStaticProducts()

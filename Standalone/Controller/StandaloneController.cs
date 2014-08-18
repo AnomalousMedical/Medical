@@ -394,13 +394,20 @@ namespace Medical
         /// Opens a scene as a "new" scene by opening the given file and clearing the states.
         /// </summary>
         /// <param name="filename"></param>
-        public bool openNewScene(String filename)
+        public void openNewScene(String filename)
+        {
+            foreach (var status in openNewSceneStatus(filename)) { }
+        }
+
+        public IEnumerable<SceneBuildStatus> openNewSceneStatus(String filename)
         {
             medicalStateController.clearStates();
-            bool success = changeScene(filename);
+            foreach(var status in changeSceneStatus(filename))
+            {
+                yield return status;
+            }
             examController.clear();
             patientDataController.clearData();
-            return success;
         }
 
         public void sceneRevealed()
@@ -653,52 +660,58 @@ namespace Medical
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        internal bool changeScene(String file)
+        internal void changeScene(String file)
+        {
+            foreach (var status in changeSceneStatus(file)) { }
+        }
+
+        internal IEnumerable<SceneBuildStatus> changeSceneStatus(String file)
         {
 #if ALLOW_OVERRIDE
             Stopwatch sw = new Stopwatch();
             sw.Start();
 #endif
-            bool success = false;
             sceneViewController.resetAllCameraPositions();
             unloadScene();
             SimObjectErrorManager.Clear();
-            if (medicalController.openScene(file))
+            
+            foreach(var status in medicalController.openScene(file))
             {
-                SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
-                if (BeforeSceneLoadProperties != null)
+                yield return status;
+            }
+
+            SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
+            if (BeforeSceneLoadProperties != null)
+            {
+                BeforeSceneLoadProperties.Invoke(medicalController.CurrentScene);
+            }
+            if (defaultScene != null)
+            {
+                OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
+
+                SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                sceneViewController.createFromPresets(medicalScene.WindowPresets.Default, false);
+
+                sceneViewController.createCameras(medicalController.CurrentScene);
+                lightManager.sceneLoaded(medicalController.CurrentScene);
+
+                if (SceneLoaded != null)
                 {
-                    BeforeSceneLoadProperties.Invoke(medicalController.CurrentScene);
+                    SceneLoaded.Invoke(medicalController.CurrentScene);
                 }
-                if (defaultScene != null)
-                {
-                    OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
 
-                    SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-                    sceneViewController.createFromPresets(medicalScene.WindowPresets.Default, false);
+                anatomyController.sceneLoaded();
+            }
 
-                    sceneViewController.createCameras(medicalController.CurrentScene);
-                    lightManager.sceneLoaded(medicalController.CurrentScene);
-
-                    if (SceneLoaded != null)
-                    {
-                        SceneLoaded.Invoke(medicalController.CurrentScene);
-                    }
-
-                    anatomyController.sceneLoaded();
-                }
-                success = true;
-                if (SimObjectErrorManager.HasErrors)
-                {
-                    NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
-                }
+            if (SimObjectErrorManager.HasErrors)
+            {
+                NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
             }
 
 #if ALLOW_OVERRIDE
             sw.Stop();
-            Logging.Log.Debug("Scene '{0}' loaded in {0} ms", file, sw.ElapsedMilliseconds);
+            Logging.Log.Debug("Scene '{0}' loaded in {1} ms", file, sw.ElapsedMilliseconds);
 #endif
-            return success;
         }
 
         /// <summary>

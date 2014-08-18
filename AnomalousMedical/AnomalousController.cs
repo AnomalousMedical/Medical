@@ -140,9 +140,47 @@ namespace Medical
             controller.GUIManager.Disposing += GUIManager_Disposing;
 
             //Scene Load
-            splashScreen.updateStatus(30, "Loading Scene");
+            uint currentPosition = 30;
+            String message = "Loading Scene";
+            bool updateStatus = true;
+            bool firstOgre = true;
+
+            splashScreen.updateStatus(currentPosition, message);
             yield return IdleStatus.Ok;
-            controller.openNewScene(DefaultScene);
+
+            foreach(var status in controller.openNewSceneStatus(DefaultScene))
+            {
+                switch(status.Subsystem)
+                {
+                    case OgreInterface.PluginName:
+                        if (status.NumItems != 0)
+                        {
+                            currentPosition = 30 + (uint)(status.CurrentItem / (float)status.NumItems * 30);
+                            message = "Loading Artwork";
+                            updateStatus = firstOgre || currentPosition > splashScreen.Position;
+                            firstOgre = false;
+                        }
+                        break;
+                    default:
+                        updateStatus = true;
+                        if(status.Message != null)
+                        {
+                            message = status.Message;
+                        }
+                        else
+                        {
+                            message = "Loading Scene";
+                        }
+                        break;
+                }
+
+                if (updateStatus)
+                {
+                    splashScreen.updateStatus(currentPosition, message);
+                }
+
+                yield return IdleStatus.Ok;
+            }
 
             splashScreen.updateStatus(70, "Waiting for License");
             yield return IdleStatus.Ok;
