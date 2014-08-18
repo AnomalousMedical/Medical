@@ -21,8 +21,8 @@ namespace Medical
         private const int InitializingCorePosition = 10;
         private const int CreatingGuiPosition = 15;
         private const int LoadingScenePosition = 20;
-        private const int LoadingScenePropertiesPosition = 65;
-        private const int WaitingForLicensePosition = 70;
+        private const int LoadingScenePropertiesPosition = 75;
+        private const int WaitingForLicensePosition = 80;
         private const int LoadingPluginsPosition = 80;
         private const int InitializingPluginsPosition = 90;
         private const int FinishedPosition = 100;
