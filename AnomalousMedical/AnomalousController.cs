@@ -17,6 +17,8 @@ namespace Medical
 {
     class AnomalousController : StandaloneApp
     {
+        private delegate uint StatusUpdateFunc(uint currentPosition, uint startPos, uint totalPositionGain, PluginLoadStatus status);
+
         private StandaloneController controller;
         private SplashScreen splashScreen;
         private BorderLayoutChainLink editorBorder;
@@ -94,7 +96,7 @@ namespace Medical
 
         private IEnumerable<IdleStatus> runSplashScreen()
         {
-			splashScreen.updateStatus(10, "Initializing Core");
+            splashScreen.updateStatus(10, "Initializing Core");
             yield return IdleStatus.Ok;
 
             //Configure the filesystem
@@ -148,14 +150,14 @@ namespace Medical
             splashScreen.updateStatus(currentPosition, message);
             yield return IdleStatus.Ok;
 
-            foreach(var status in controller.openNewSceneStatus(DefaultScene))
+            foreach (var status in controller.openNewSceneStatus(DefaultScene))
             {
-                switch(status.Subsystem)
+                switch (status.Subsystem)
                 {
                     case OgreInterface.PluginName:
                         if (status.NumItems != 0)
                         {
-                            currentPosition = 30 + (uint)(status.CurrentItem / (float)status.NumItems * 30);
+                            currentPosition = 30 + (uint)(status.CurrentPercent * 30);
                             message = "Loading Artwork";
                             updateStatus = firstOgre || currentPosition > splashScreen.Position;
                             firstOgre = false;
@@ -163,7 +165,7 @@ namespace Medical
                         break;
                     default:
                         updateStatus = true;
-                        if(status.Message != null)
+                        if (status.Message != null)
                         {
                             message = status.Message;
                         }
@@ -204,7 +206,7 @@ namespace Medical
 
         public override string WindowTitle
         {
-            get 
+            get
             {
                 return "Anomalous Medical";
             }
@@ -250,70 +252,125 @@ namespace Medical
             controller.sceneRevealed();
         }
 
-        private void addPlugins()
+        private IEnumerable<PluginLoadStatus> addPlugins()
         {
+            PluginLoadStatus loadStatus = new PluginLoadStatus();
+            loadStatus.Total = MedicalConfig.PluginConfig.findRegularPluginsAndDependencies();
+
+            loadStatus.Total += 3;
+
             //DEPENDENCY_HACK
             MedicalConfig.PluginConfig.addAdditionalDependencyFile("Utilities.dat");
+            loadStatus.Current++;
+            yield return loadStatus;
             MedicalConfig.PluginConfig.addAdditionalPluginFile("IntroductionTutorial.dat");
+            loadStatus.Current++;
+            yield return loadStatus;
             controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(LicenseManager, this));
-            MedicalConfig.PluginConfig.findRegularPluginsAndDependencies();
-            foreach(String dependency in MedicalConfig.PluginConfig.Dependencies)
+            loadStatus.Current++;
+            yield return loadStatus;
+
+            foreach (String dependency in MedicalConfig.PluginConfig.Dependencies)
             {
                 controller.AtlasDependencyManager.addDependency(dependency);
+                loadStatus.Current++;
+                yield return loadStatus;
             }
             foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
             {
                 controller.AtlasPluginManager.addPlugin(plugin);
+                loadStatus.Current++;
+                yield return loadStatus;
             }
         }
 
         void processKeyResults(bool valid)
         {
+            //This is fired when the idle function returns to the normal thread processor and the ThreadUtilities invokes
+            //its invoke functions, which will contain the results of the license check.
             if (valid)
             {
-                keyValid();
+                //Key was valid and the splash screen is still showing.
+                splashScreen.updateStatus(80, "Loading Plugins");
+
+                keyValid(splashScreen.Position, 
+                (currentPosition, startPos, totalPositionGain, status) =>
+                    {
+                        if (status.Total != 0)
+                        {
+                            currentPosition = startPos + (uint)(status.PercentComplete * totalPositionGain);
+                            if (currentPosition > splashScreen.Position)
+                            {
+                                splashScreen.updateStatus(currentPosition, "Loading Plugins");
+                            }
+                        }
+                        return currentPosition;
+                    }, 
+                () =>
+                    {
+                        splashScreen.updateStatus(100, "");
+                        splashScreen.hide();
+                    });
             }
             else
             {
+                //Key was not valid, show the key dialog
                 showKeyDialog();
             }
         }
 
-        void keyValid()
-        {
-            if (splashScreen != null && splashScreen.Visible)
-            {
-                splashScreen.updateStatus(85, "Loading Plugins");
-            }
-
-            MedicalConfig.setUserDirectory(LicenseManager.User);
-
-            controller.GUIManager.setMainInterfaceEnabled(true);
-            licenseDisplay.setLicenseText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
-            addPlugins();
-            controller.initializePlugins();
-
-            if (splashScreen != null && splashScreen.Visible)
-            {
-                splashScreen.updateStatus(100, "");
-                splashScreen.hide();
-            }
-            else
-            {
-                //Let plugins know the scene has been revealed, if the license dialog had to be opened.
-                controller.sceneRevealed();
-            }
-
-            controller.MedicalController.MainTimer.resetLastTime();
-        }
-
         void showKeyDialog()
         {
-            MvcLoginController mvcLogin = new MvcLoginController(controller, LicenseManager, keyValid);
+            MvcLoginController mvcLogin = new MvcLoginController(controller, LicenseManager);
+            mvcLogin.LoginSucessful += () =>
+                {
+                    Root.getSingleton()._updateAllRenderTargets();
+                    keyValid(0,
+                        (currentPosition, startPos, totalPositionGain, status) =>
+                        {
+                            return currentPosition;
+                        },
+                        () =>
+                        {
+                            mvcLogin.close();
+                            //Let plugins know the scene has been revealed, since the license dialog had to be opened.
+                            controller.sceneRevealed();
+                        });
+                };
             mvcLogin.showContext();
 
             splashScreen.updateStatus(100, "");
             splashScreen.hide();
+        }
+
+        void keyValid(uint currentPosition, StatusUpdateFunc statusUpdateFunc, Action finishFunc)
+        {
+            controller.IdleHandler.runTemporaryIdle(keyValidIdleFunc(currentPosition, statusUpdateFunc, finishFunc));
+        }
+
+        private IEnumerable<IdleStatus> keyValidIdleFunc(uint currentPosition, StatusUpdateFunc statusUpdateFunc, Action finishFunc)
+        {
+            MedicalConfig.setUserDirectory(LicenseManager.User);
+
+            controller.GUIManager.setMainInterfaceEnabled(true);
+            licenseDisplay.setLicenseText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
+
+            foreach (var status in addPlugins())
+            {
+                currentPosition = statusUpdateFunc(currentPosition, 80, 10, status);
+                yield return IdleStatus.Ok;
+            }
+
+            foreach (var status in controller.initializePlugins())
+            {
+                currentPosition = statusUpdateFunc(currentPosition, 90, 10, status);
+                yield return IdleStatus.Ok;
+            }
+
+            finishFunc();
+
+            controller.MedicalController.MainTimer.resetLastTime();
+            yield return IdleStatus.Ok;
         }
 
         void GUIManager_Disposing()

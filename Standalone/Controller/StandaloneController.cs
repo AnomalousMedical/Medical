@@ -306,7 +306,7 @@ namespace Medical
             notificationManager.reshowAllNotifications();
         }
 
-        public void initializePlugins()
+        public IEnumerable<PluginLoadStatus> initializePlugins()
         {
             //Wizards
             ResourceManager.Instance.load("Medical.Resources.WizardImagesets.xml");
@@ -319,7 +319,10 @@ namespace Medical
             //DEPENDENCY_HACK
             atlasDependencyManager.initializeDependency(0);
 
-            atlasPluginManager.initialzePlugins();
+            foreach(var status in atlasPluginManager.initializePluginsStatus())
+            {
+                yield return status;
+            }
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             configFile.loadConfigFile();
             guiManager.loadSavedUI(configFile);

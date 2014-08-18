@@ -71,11 +71,6 @@ namespace Medical
             sceneResourceManager.changeResourcesToMatch(scenePackage.ResourceManager);
             sceneResourceManager.initializeResources();
 
-            yield return new SceneBuildStatus()
-            {
-                Message = "Creating Scene"
-            };
-
             currentScene = scenePackage.SceneDefinition.createScene();
             if (OnSceneLoading != null)
             {

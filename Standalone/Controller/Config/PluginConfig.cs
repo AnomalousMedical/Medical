@@ -32,10 +32,12 @@ namespace Medical
             ManagePluginsFile = Path.Combine(defaultPluginsFolder, "ManagePlugins.xml");
         }
 
-        public void findRegularPluginsAndDependencies()
+        public int findRegularPluginsAndDependencies()
         {
             plugins.AddRange(findLoadableFiles(defaultPluginsFolder));
             dependencies.AddRange(findLoadableFiles(defaultDependenciesFolder));
+
+            return plugins.Count + dependencies.Count;
         }
 
         public void readPluginsAndDependencies(ConfigFile configFile)

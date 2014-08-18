@@ -257,10 +257,6 @@ namespace Medical
                     }
                     if (scenePackage != null)
                     {
-                        yield return new SceneBuildStatus()
-                        {
-                            Message = "Building Scene"
-                        };
                         foreach (var status in medicalScene.loadScene(scenePackage, SceneBuildOptions.SingleUseDefinitions))
                         {
                             yield return status;

@@ -356,8 +356,18 @@ namespace Medical
             return null;
         }
 
-        public void initialzePlugins()
+        public void initializePlugins()
         {
+            foreach (var status in initializePluginsStatus()) { }
+        }
+
+        public IEnumerable<PluginLoadStatus> initializePluginsStatus()
+        {
+            PluginLoadStatus loadStatus = new PluginLoadStatus()
+            {
+                Total = uninitializedPlugins.Count
+            };
+
             //If we already added the plugins folder to MyGUI, remove it.
             if (addedPluginsToMyGUIResourceGroup)
             {
@@ -398,6 +408,9 @@ namespace Medical
                         saveManagementInstructions();
                     }
                 }
+
+                loadStatus.Current++;
+                yield return loadStatus;
             }
             uninitializedPlugins.Clear();
         }

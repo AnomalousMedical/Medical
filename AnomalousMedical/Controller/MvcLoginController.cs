@@ -22,13 +22,12 @@ namespace Medical.Controller
         private ViewHostControl passwordControl;
         private ViewHostControl messageControl;
         private ViewHostControl errorControl;
-        private Action loginSucessfulCallback;
+        public event Action LoginSucessful;
 
-        public MvcLoginController(StandaloneController controller, LicenseManager licenseManager, Action loginSucessfulCallback)
+        public MvcLoginController(StandaloneController controller, LicenseManager licenseManager)
         {
             this.controller = controller;
             this.licenseManager = licenseManager;
-            this.loginSucessfulCallback = loginSucessfulCallback;
         }
 
         public void showContext()
@@ -120,6 +119,11 @@ namespace Medical.Controller
             controller.MvcCore.startRunningContext(context);
         }
 
+        public void close()
+        {
+            context.runAction("Index/Shutdown");
+        }
+
         void getLicense(Object credentials)
         {
             try
@@ -145,8 +149,11 @@ namespace Medical.Controller
 
         void licenseCaptured()
         {
-            this.close();
-            loginSucessfulCallback();
+            messageControl.Value = "Login Successful, Loading Plugins.";
+            if(LoginSucessful != null)
+            {
+                LoginSucessful.Invoke();
+            }
         }
 
         void licenseLoginFail()
@@ -164,11 +171,6 @@ namespace Medical.Controller
             messageControl.Value = "Please try again.";
             errorControl.Value = message;
             passwordControl.focus();
-        }
-
-        void close()
-        {
-            context.runAction("Index/Shutdown");
         }
     }
 }
