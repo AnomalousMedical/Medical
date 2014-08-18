@@ -17,6 +17,20 @@ namespace Medical
 {
     class AnomalousController : StandaloneApp
     {
+        private const int LoadingServerFilesPosition = 5;
+        private const int InitializingCorePosition = 10;
+        private const int CreatingGuiPosition = 15;
+        private const int LoadingScenePosition = 20;
+        private const int LoadingScenePropertiesPosition = 65;
+        private const int WaitingForLicensePosition = 70;
+        private const int LoadingPluginsPosition = 80;
+        private const int InitializingPluginsPosition = 90;
+        private const int FinishedPosition = 100;
+
+        private const int LoadingSceneDelta = LoadingScenePropertiesPosition - LoadingScenePosition;
+        private const int LoadingPluginsDelta = InitializingPluginsPosition - LoadingPluginsPosition;
+        private const int InitializingPluginsDelta = FinishedPosition - InitializingPluginsPosition;
+
         private delegate uint StatusUpdateFunc(uint currentPosition, uint startPos, uint totalPositionGain, PluginLoadStatus status);
 
         private StandaloneController controller;
@@ -57,12 +71,12 @@ namespace Medical
             controller = new StandaloneController(this);
             controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
             MyGUIInterface.Instance.CommonResourceGroup.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedResource", true);
-            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
+            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, FinishedPosition, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
             UpdateController.CurrentVersion = Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
 
-            splashScreen.updateStatus(5, "Loading Files from Server");
+            splashScreen.updateStatus(LoadingServerFilesPosition, "Loading Files from Server");
             ResourceManager.Instance.load("Medical.Resources.AnomalousBootstrapImagesets.xml");
 
             return true;
@@ -96,7 +110,7 @@ namespace Medical
 
         private IEnumerable<IdleStatus> runSplashScreen()
         {
-            splashScreen.updateStatus(10, "Initializing Core");
+            splashScreen.updateStatus(InitializingCorePosition, "Initializing Core");
             yield return IdleStatus.Ok;
 
             //Configure the filesystem
@@ -119,7 +133,7 @@ namespace Medical
             shaderGroup.initialize();
 
             //GUI
-            splashScreen.updateStatus(20, "Creating GUI");
+            splashScreen.updateStatus(CreatingGuiPosition, "Creating GUI");
             yield return IdleStatus.Ok;
 
             //Layout Chain
@@ -142,7 +156,7 @@ namespace Medical
             controller.GUIManager.Disposing += GUIManager_Disposing;
 
             //Scene Load
-            uint currentPosition = 30;
+            uint currentPosition = LoadingScenePosition;
             String message = "Loading Scene";
             bool updateStatus = true;
             bool firstOgre = true;
@@ -157,7 +171,7 @@ namespace Medical
                     case OgreInterface.PluginName:
                         if (status.NumItems != 0)
                         {
-                            currentPosition = 30 + (uint)(status.CurrentPercent * 30);
+                            currentPosition = LoadingScenePosition + (uint)(status.CurrentPercent * LoadingSceneDelta);
                             message = "Loading Artwork";
                             updateStatus = firstOgre || currentPosition > splashScreen.Position;
                             firstOgre = false;
@@ -184,7 +198,7 @@ namespace Medical
                 yield return IdleStatus.Ok;
             }
 
-            splashScreen.updateStatus(70, "Waiting for License");
+            splashScreen.updateStatus(WaitingForLicensePosition, "Waiting for License");
             yield return IdleStatus.Ok;
         }
 
@@ -200,7 +214,7 @@ namespace Medical
         {
             if (splashScreen != null)
             {
-                splashScreen.updateStatus(60, "Loading Scene Properties");
+                splashScreen.updateStatus(LoadingScenePropertiesPosition, "Loading Scene Properties");
             }
         }
 
@@ -291,7 +305,7 @@ namespace Medical
             if (valid)
             {
                 //Key was valid and the splash screen is still showing.
-                splashScreen.updateStatus(80, "Loading Plugins");
+                splashScreen.updateStatus(LoadingPluginsPosition, "Loading Plugins");
 
                 keyValid(splashScreen.Position, 
                 (currentPosition, startPos, totalPositionGain, status) =>
@@ -308,7 +322,7 @@ namespace Medical
                     }, 
                 () =>
                     {
-                        splashScreen.updateStatus(100, "");
+                        splashScreen.updateStatus(FinishedPosition, "");
                         splashScreen.hide();
                     });
             }
@@ -339,7 +353,7 @@ namespace Medical
                 };
             mvcLogin.showContext();
 
-            splashScreen.updateStatus(100, "");
+            splashScreen.updateStatus(FinishedPosition, "");
             splashScreen.hide();
         }
 
@@ -357,13 +371,13 @@ namespace Medical
 
             foreach (var status in addPlugins())
             {
-                currentPosition = statusUpdateFunc(currentPosition, 80, 10, status);
+                currentPosition = statusUpdateFunc(currentPosition, LoadingPluginsPosition, LoadingPluginsDelta, status);
                 yield return IdleStatus.Ok;
             }
 
             foreach (var status in controller.initializePlugins())
             {
-                currentPosition = statusUpdateFunc(currentPosition, 90, 10, status);
+                currentPosition = statusUpdateFunc(currentPosition, InitializingPluginsPosition, InitializingPluginsDelta, status);
                 yield return IdleStatus.Ok;
             }
 
