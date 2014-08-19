@@ -17,7 +17,7 @@ namespace Medical
         public event DependencyMessageDelegate LoadError;
 
         private StandaloneController standaloneController;
-        private Dictionary<long, AtlasDependency> dependencies = new Dictionary<long, AtlasDependency>();
+        private Dictionary<Guid, AtlasDependency> dependencies = new Dictionary<Guid, AtlasDependency>();
         private String additionalSearchPath;
         private HashSet<String> loadedDependencyNames = new HashSet<string>();
         private ManagePluginInstructions manageDependencyInstructions;
@@ -206,7 +206,7 @@ namespace Medical
             }
         }
 
-        public void initializeDependency(long dependencyId)
+        public void initializeDependency(Guid dependencyId)
         {
             AtlasDependency dependency;
             if (dependencies.TryGetValue(dependencyId, out dependency))

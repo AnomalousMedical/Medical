@@ -85,7 +85,7 @@ namespace Medical
         }
 
         [Editable]
-        public long DependencyId { get; set; }
+        public Guid DependencyId { get; set; }
 
         [Editable]
         public string Name { get; set; }
@@ -126,7 +126,7 @@ namespace Medical
 
         protected DDAtlasDependency(LoadInfo info)
         {
-            DependencyId = info.GetInt64("DependencyId");
+            DependencyId = info.GetGuid("DependencyId");
             Name = info.GetString("Name");
             BrandingImageKey = info.GetString("BrandingImageKey");
             VersionString = info.GetString("VersionString");

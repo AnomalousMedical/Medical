@@ -29,7 +29,7 @@ namespace Medical
         /// <summary>
         /// The id of the dependency
         /// </summary>
-        long DependencyId { get; }
+        Guid DependencyId { get; }
 
         /// <summary>
         /// A friendly name for the dependency. Could be displayed to the user.

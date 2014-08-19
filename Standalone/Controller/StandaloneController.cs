@@ -318,7 +318,7 @@ namespace Medical
             ResourceManager.Instance.load("Medical.Resources.SlideshowIcons.xml");
 
             //DEPENDENCY_HACK
-            atlasDependencyManager.initializeDependency(0);
+            atlasDependencyManager.initializeDependency(new Guid("e2199fcc-2873-413c-8673-d7aa3a703f59"));
 
             foreach(var status in atlasPluginManager.initializePluginsStatus())
             {

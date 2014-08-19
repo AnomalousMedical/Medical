@@ -51,7 +51,8 @@ namespace Medical
             DDAtlasDependency newDep = new DDAtlasDependency()
                 {
                     VersionString = "1.0.0.0",
-                    PropDefinitionDirectory = "PropDefinitions"
+                    PropDefinitionDirectory = "PropDefinitions",
+                    DependencyId = Guid.NewGuid()
                 };
             creatingNewFile(filePath);
             saveObject(filePath, newDep);

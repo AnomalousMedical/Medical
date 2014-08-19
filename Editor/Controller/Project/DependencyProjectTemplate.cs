@@ -15,7 +15,8 @@ namespace Medical
             DDAtlasDependency dependency = new DDAtlasDependency()
             {
                 DependencyNamespace = projectName,
-                VersionString = "1.0.0.0"
+                VersionString = "1.0.0.0",
+                DependencyId = Guid.NewGuid()
             };
 
             saveObject(dependency, resourceProvider, "Dependency.ddd");

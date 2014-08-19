@@ -291,7 +291,7 @@ namespace Medical
                 yield return loadStatus;
             }
 
-            foreach(int dependencyId in MedicalConfig.PluginConfig.ForceLoadDependencies)
+            foreach(var dependencyId in MedicalConfig.PluginConfig.ForceLoadDependencies)
             {
                 controller.AtlasDependencyManager.initializeDependency(dependencyId);
                 yield return loadStatus;
