@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Anomalous.Medical.StoreManager.Util
 {
-    public class LogoUtil
+    class LogoUtil
     {
         /// <summary>
         /// Save a resized image maintaining aspect ratio, the width and height specify the max width and max height.
