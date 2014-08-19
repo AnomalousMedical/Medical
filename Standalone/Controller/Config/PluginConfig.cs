@@ -13,6 +13,7 @@ namespace Medical
         private String defaultPluginsFolder;
 
         private List<String> dependencies = new List<string>();
+        private List<int> forceLoadDependencies = new List<int>();
         private String defaultDependenciesFolder;
 
         public PluginConfig(String defaultPluginsFolder, String defaultDependenciesFolder)
@@ -66,6 +67,16 @@ namespace Medical
             {
                 dependencies.Add(iter.next());
             }
+
+            iter = new ConfigIterator(section, "ForceLoad");
+            while (iter.hasNext())
+            {
+                int value;
+                if (NumberParser.TryParse(iter.next(), out value))
+                {
+                    forceLoadDependencies.Add(value);
+                }
+            }
         }
 
         public void addAdditionalDependencyFile(String file)
@@ -91,6 +102,14 @@ namespace Medical
             get
             {
                 return dependencies;
+            }
+        }
+
+        public IEnumerable<int> ForceLoadDependencies
+        {
+            get
+            {
+                return forceLoadDependencies;
             }
         }
 
