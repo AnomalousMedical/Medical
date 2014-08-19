@@ -29,9 +29,6 @@ namespace Medical
             {
                 Directory.CreateDirectory(defaultDependenciesFolder);
             }
-
-            ManagePluginsFile = Path.Combine(defaultPluginsFolder, "ManagePlugins.xml");
-            ManageDependenciesFile = Path.Combine(defaultDependenciesFolder, "ManageDependencies.xml");
         }
 
         public int findRegularPluginsAndDependencies()
@@ -129,10 +126,6 @@ namespace Medical
                 return defaultDependenciesFolder;
             }
         }
-
-        public String ManagePluginsFile { get; private set; }
-
-        public String ManageDependenciesFile { get; private set; }
 
         private IEnumerable<String> findLoadableFiles(String path)
         {

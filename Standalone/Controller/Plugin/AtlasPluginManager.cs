@@ -30,7 +30,7 @@ namespace Medical
         private String additionalSearchPath;
         private HashSet<String> loadedPluginNames = new HashSet<string>();
         private bool addedPluginsToMyGUIResourceGroup = false;
-        private ManagePluginInstructions managePluginInstructions = new ManagePluginInstructions();
+        private ManagePluginInstructions managePluginInstructions;
         private HashSet<long> usedPluginIds = new HashSet<long>();
 
         public delegate void PluginMessageDelegate(String message);
@@ -48,6 +48,8 @@ namespace Medical
             additionalSearchPath = FolderFinder.ExecutableFolder;
 
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(FindArtworkPluginAssembly);
+
+            managePluginInstructions = new ManagePluginInstructions(MedicalConfig.PluginConfig.PluginsFolder);
         }
 
         public void Dispose()
@@ -63,34 +65,18 @@ namespace Medical
 
         public void manageInstalledPlugins()
         {
-            String manageFile = MedicalConfig.PluginConfig.ManagePluginsFile;
-            if (File.Exists(manageFile))
+            var loadedInstructions = ManagePluginInstructions.restore(MedicalConfig.PluginConfig.PluginsFolder);
+            if (loadedInstructions != null)
             {
-                using (Stream stream = File.Open(manageFile, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.None))
-                {
-                    var loadedInstructions = SharedXmlSaver.Load<ManagePluginInstructions>(stream);
-                    if (loadedInstructions != null)
-                    {
-                        loadedInstructions.process(Path.GetFullPath(MedicalConfig.PluginConfig.PluginsFolder));
-                    }
-                }
-
-                //Prevent a crash from reprocessing all plugins
-                try
-                {
-                    File.Delete(manageFile);
-                }
-                catch (Exception e)
-                {
-                    Log.Error("Could not delete plugin management file {0} because {1}.", manageFile, e.Message);
-                }
+                loadedInstructions.process();
+                loadedInstructions.deletePersistantFile();
             }
         }
 
         public void addPluginToMove(String path)
         {
             managePluginInstructions.addFileToMove(path);
-            saveManagementInstructions();
+            managePluginInstructions.savePersistantFile();
         }
 
         public void addPluginToUninstall(AtlasPlugin plugin)
@@ -98,7 +84,7 @@ namespace Medical
             if (plugin.AllowUninstall)
             {
                 managePluginInstructions.addFileToDelete(plugin.Location);
-                saveManagementInstructions();
+                managePluginInstructions.savePersistantFile();
             }
         }
 
@@ -165,7 +151,7 @@ namespace Medical
                             {
                                 Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
                                 managePluginInstructions.addFileToDelete(fullPath);
-                                saveManagementInstructions();
+                                managePluginInstructions.savePersistantFile();
                             }
                         }
                     }
@@ -296,7 +282,7 @@ namespace Medical
                             {
                                 Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
                                 managePluginInstructions.addFileToDelete(fullPath);
-                                saveManagementInstructions();
+                                managePluginInstructions.savePersistantFile();
                             }
                         }
                     }
@@ -401,7 +387,7 @@ namespace Medical
                     {
                         Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", plugin.PluginName, plugin.Location, deleteEx.Message);
                         managePluginInstructions.addFileToDelete(plugin.Location);
-                        saveManagementInstructions();
+                        managePluginInstructions.savePersistantFile();
                     }
                 }
 
@@ -478,21 +464,6 @@ namespace Medical
             Assembly assembly = null;
             artworkPluginAssemblies.TryGetValue(args.Name, out assembly);
             return assembly;
-        }
-
-        private void saveManagementInstructions()
-        {
-            try
-            {
-                using (Stream stream = File.Open(MedicalConfig.PluginConfig.ManagePluginsFile, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, FileShare.None))
-                {
-                    SharedXmlSaver.Save(managePluginInstructions, stream);
-                }
-            }
-            catch (Exception writeInstructionsEx)
-            {
-                Log.Error("Could not write plugin management instructions to '{0}' because {1}.", MedicalConfig.PluginConfig.ManagePluginsFile, writeInstructionsEx.Message);
-            }
         }
 
         private void firePluginLoadError(String message)
