@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Medical
 {
@@ -19,6 +20,7 @@ namespace Medical
         private Dictionary<long, AtlasDependency> dependencies = new Dictionary<long, AtlasDependency>();
         private String additionalSearchPath;
         private HashSet<String> loadedDependencyNames = new HashSet<string>();
+        private ManagePluginInstructions manageDependencyInstructions = new ManagePluginInstructions();
 
         private DataFileVerifier dataFileVerifier;
 
@@ -37,6 +39,32 @@ namespace Medical
             foreach(var dependency in dependencies.Values)
             {
                 dependency.Dispose();
+            }
+        }
+
+        public void manageInstalledDependencies()
+        {
+            String manageFile = MedicalConfig.PluginConfig.ManageDependenciesFile;
+            if (File.Exists(manageFile))
+            {
+                using (Stream stream = File.Open(manageFile, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.None))
+                {
+                    var loadedInstructions = SharedXmlSaver.Load<ManagePluginInstructions>(stream);
+                    if (loadedInstructions != null)
+                    {
+                        loadedInstructions.process(Path.GetFullPath(MedicalConfig.PluginConfig.DependenciesFolder));
+                    }
+                }
+
+                //Prevent a crash from reprocessing all plugins
+                try
+                {
+                    File.Delete(manageFile);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Could not delete plugin management file {0} because {1}.", manageFile, e.Message);
+                }
             }
         }
 
@@ -92,6 +120,8 @@ namespace Medical
                         catch (Exception deleteEx)
                         {
                             Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
+                            manageDependencyInstructions.addFileToDelete(fullPath);
+                            saveManagementInstructions();
                         }
                     }
                 }
@@ -161,8 +191,8 @@ namespace Medical
                             catch (Exception deleteEx)
                             {
                                 Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
-                                //managePluginInstructions.addFileToDelete(fullPath);
-                                //saveManagementInstructions();
+                                manageDependencyInstructions.addFileToDelete(fullPath);
+                                saveManagementInstructions();
                             }
                         }
                     }
@@ -170,6 +200,8 @@ namespace Medical
                 else
                 {
                     Log.Error("Error loading '{0}' in path '{1}' from '{2}' because it does not exist.", definitionFile, path, fullPath);
+                    manageDependencyInstructions.addFileToDelete(fullPath);
+                    saveManagementInstructions();
                 }
             }
 
@@ -218,6 +250,22 @@ namespace Medical
             if (LoadError != null)
             {
                 LoadError.Invoke(message);
+            }
+        }
+
+        private void saveManagementInstructions()
+        {
+            String file = MedicalConfig.PluginConfig.ManageDependenciesFile;
+            try
+            {
+                using (Stream stream = File.Open(file, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, FileShare.None))
+                {
+                    SharedXmlSaver.Save(manageDependencyInstructions, stream);
+                }
+            }
+            catch (Exception writeInstructionsEx)
+            {
+                Log.Error("Could not write dependency management instructions to '{0}' because {1}.", file, writeInstructionsEx.Message);
             }
         }
     }

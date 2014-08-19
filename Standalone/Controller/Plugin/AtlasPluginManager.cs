@@ -29,9 +29,8 @@ namespace Medical
         private SimScene currentScene;
         private String additionalSearchPath;
         private HashSet<String> loadedPluginNames = new HashSet<string>();
-        private XmlSaver xmlSaver = new XmlSaver();
         private bool addedPluginsToMyGUIResourceGroup = false;
-        private ManagePluginInstructions managePluginInstructions;
+        private ManagePluginInstructions managePluginInstructions = new ManagePluginInstructions();
         private HashSet<long> usedPluginIds = new HashSet<long>();
 
         public delegate void PluginMessageDelegate(String message);
@@ -67,12 +66,12 @@ namespace Medical
             String manageFile = MedicalConfig.PluginConfig.ManagePluginsFile;
             if (File.Exists(manageFile))
             {
-                using (XmlTextReader xmlReader = new XmlTextReader(manageFile))
+                using (Stream stream = File.Open(manageFile, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.None))
                 {
-                    managePluginInstructions = xmlSaver.restoreObject(xmlReader) as ManagePluginInstructions;
-                    if (managePluginInstructions != null)
+                    var loadedInstructions = SharedXmlSaver.Load<ManagePluginInstructions>(stream);
+                    if (loadedInstructions != null)
                     {
-                        managePluginInstructions.process();
+                        loadedInstructions.process(Path.GetFullPath(MedicalConfig.PluginConfig.PluginsFolder));
                     }
                 }
 
@@ -86,9 +85,6 @@ namespace Medical
                     Log.Error("Could not delete plugin management file {0} because {1}.", manageFile, e.Message);
                 }
             }
-
-            //Create a new instance for anything that happens this run
-            managePluginInstructions = new ManagePluginInstructions();
         }
 
         public void addPluginToMove(String path)
@@ -488,10 +484,9 @@ namespace Medical
         {
             try
             {
-                using (XmlTextWriter xmlWriter = new XmlTextWriter(MedicalConfig.PluginConfig.ManagePluginsFile, Encoding.Unicode))
+                using (Stream stream = File.Open(MedicalConfig.PluginConfig.ManagePluginsFile, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, FileShare.None))
                 {
-                    xmlWriter.Formatting = Formatting.Indented;
-                    xmlSaver.saveObject(managePluginInstructions, xmlWriter);
+                    SharedXmlSaver.Save(managePluginInstructions, stream);
                 }
             }
             catch (Exception writeInstructionsEx)

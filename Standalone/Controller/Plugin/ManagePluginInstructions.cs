@@ -28,13 +28,12 @@ namespace Medical
             moveFiles.Add(file);
         }
 
-        public void process()
+        public void process(String targetDirectory)
         {
             //Manage existing plugins based on the config file.
-            String pluginDirectory = Path.GetFullPath(MedicalConfig.PluginConfig.PluginsFolder);
             foreach(String file in deleteFiles)
             {
-                if (file.StartsWith(pluginDirectory))
+                if (file.StartsWith(targetDirectory))
                 {
                     try
                     {
@@ -48,7 +47,7 @@ namespace Medical
                 }
                 else
                 {
-                    Log.Error("Could not delete plugin {0} because it is not in the correct directory {1}.", file, pluginDirectory);
+                    Log.Error("Could not delete plugin {0} because it is not in the correct directory {1}.", file, targetDirectory);
                 }
             }
 
@@ -57,7 +56,7 @@ namespace Medical
                 String fileName = Path.GetFileName(file);
                 try
                 {
-                    String destinationFile = Path.Combine(pluginDirectory, fileName);
+                    String destinationFile = Path.Combine(targetDirectory, fileName);
                     if (File.Exists(destinationFile))
                     {
                         File.Delete(destinationFile);

@@ -199,6 +199,7 @@ namespace Medical
             atlasPluginManager.manageInstalledPlugins();
 
             atlasDependencyManager = new AtlasDependencyManager(this, dataFileVerifier);
+            atlasDependencyManager.manageInstalledDependencies();
             //Handle errors
 
             clipboard = new SaveableClipboard();
