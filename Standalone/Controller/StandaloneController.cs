@@ -72,7 +72,6 @@ namespace Medical
         private MainWindow mainWindow;
         private StandaloneApp app;
         private AtlasPluginManager atlasPluginManager;
-        private AtlasDependencyManager atlasDependencyManager;
 		private bool shuttingDown = false;
         private MedicalConfig medicalConfig;
 
@@ -148,7 +147,6 @@ namespace Medical
             }
 			IDisposableUtil.DisposeIfNotNull(touchController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
-            IDisposableUtil.DisposeIfNotNull(atlasDependencyManager);
             IDisposableUtil.DisposeIfNotNull(notificationManager);
             IDisposableUtil.DisposeIfNotNull(guiManager);
 			IDisposableUtil.DisposeIfNotNull(measurementGrid);
@@ -197,10 +195,6 @@ namespace Medical
             atlasPluginManager = new AtlasPluginManager(this, dataFileVerifier);
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             atlasPluginManager.manageInstalledPlugins();
-
-            atlasDependencyManager = new AtlasDependencyManager(this, dataFileVerifier);
-            atlasDependencyManager.manageInstalledDependencies();
-            //Handle errors
 
             clipboard = new SaveableClipboard();
 
@@ -317,20 +311,8 @@ namespace Medical
             ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
             ResourceManager.Instance.load("Medical.Resources.SlideshowIcons.xml");
 
-            PluginLoadStatus status = new PluginLoadStatus()
+            foreach(var status in atlasPluginManager.initializePluginsStatus())
             {
-                Total = atlasDependencyManager.UninitalizedCount + atlasPluginManager.UninitalizedCount
-            };
-
-            foreach(var dependencyStatus in atlasDependencyManager.initializeDependenciesStatus())
-            {
-                status.Current++;
-                yield return status;
-            }
-
-            foreach(var pluginStatus in atlasPluginManager.initializePluginsStatus())
-            {
-                status.Current++;
                 yield return status;
             }
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
@@ -513,14 +495,6 @@ namespace Medical
             get
             {
                 return atlasPluginManager;
-            }
-        }
-
-        public AtlasDependencyManager AtlasDependencyManager
-        {
-            get
-            {
-                return atlasDependencyManager;
             }
         }
 

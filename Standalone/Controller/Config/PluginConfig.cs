@@ -12,34 +12,22 @@ namespace Medical
         private List<String> plugins = new List<string>();
         private String defaultPluginsFolder;
 
-        private List<String> dependencies = new List<string>();
-        private List<Guid> forceLoadDependencies = new List<Guid>();
-        private String defaultDependenciesFolder;
-
-        public PluginConfig(String defaultPluginsFolder, String defaultDependenciesFolder)
+        public PluginConfig(String defaultPluginsFolder)
         {
             this.defaultPluginsFolder = defaultPluginsFolder;
             if (!Directory.Exists(defaultPluginsFolder))
             {
                 Directory.CreateDirectory(defaultPluginsFolder);
             }
-
-            this.defaultDependenciesFolder = defaultDependenciesFolder;
-            if(!Directory.Exists(defaultDependenciesFolder))
-            {
-                Directory.CreateDirectory(defaultDependenciesFolder);
-            }
         }
 
-        public int findRegularPluginsAndDependencies()
+        public int findPlugins()
         {
             plugins.AddRange(findLoadableFiles(defaultPluginsFolder));
-            dependencies.AddRange(findLoadableFiles(defaultDependenciesFolder));
-
-            return plugins.Count + dependencies.Count;
+            return plugins.Count;
         }
 
-        public void readPluginsAndDependencies(ConfigFile configFile)
+        public void findConfiguredPlugins(ConfigFile configFile)
         {
             String[] args = Environment.GetCommandLineArgs();
             for (int i = 0; i < args.Length; ++i)
@@ -58,28 +46,6 @@ namespace Medical
             {
                 plugins.Add(iter.next());
             }
-
-            section = configFile.createOrRetrieveConfigSection("Dependencies");
-            iter = new ConfigIterator(section, "Dependency");
-            while (iter.hasNext())
-            {
-                dependencies.Add(iter.next());
-            }
-
-            iter = new ConfigIterator(section, "ForceLoad");
-            while (iter.hasNext())
-            {
-                Guid value;
-                if (Guid.TryParse(iter.next(), out value))
-                {
-                    forceLoadDependencies.Add(value);
-                }
-            }
-        }
-
-        public void addAdditionalDependencyFile(String file)
-        {
-            dependencies.Add(file);
         }
 
         public void addAdditionalPluginFile(String file)
@@ -95,35 +61,11 @@ namespace Medical
             }
         }
 
-        public IEnumerable<String> Dependencies
-        {
-            get
-            {
-                return dependencies;
-            }
-        }
-
-        public IEnumerable<Guid> ForceLoadDependencies
-        {
-            get
-            {
-                return forceLoadDependencies;
-            }
-        }
-
         public String PluginsFolder
         {
             get
             {
                 return defaultPluginsFolder;
-            }
-        }
-
-        public String DependenciesFolder
-        {
-            get
-            {
-                return defaultDependenciesFolder;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Engine.Editing;
+using Engine.ObjectManagement;
 using Engine.Resources;
 using Engine.Saving;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public partial class DDAtlasDependency : AtlasDependency, Saveable
+    public partial class DDAtlasDependency : AtlasPlugin, Saveable
     {
         private List<AtlasDependencyResource> resources = new List<AtlasDependencyResource>();
 
@@ -30,19 +31,17 @@ namespace Medical
             
         }
 
-        public void initialize(StandaloneController standaloneController, AtlasDependencyManager dependencyManager)
+        public void initialize(StandaloneController standaloneController)
         {
-            String dependencyPath = Path.Combine("Dependencies", DependencyNamespace);
-
             if (resources.Count > 0)
             {
-                var resourceManager = dependencyManager.DependencyResourceManager;
+                var resourceManager = standaloneController.AtlasPluginManager.ResourceManager;
                 foreach(var subsystemResources in resourceManager.getSubsystemEnumerator())
                 {
-                    var resourceGroup = subsystemResources.addResourceGroup(DependencyNamespace);
+                    var resourceGroup = subsystemResources.addResourceGroup(PluginNamespace);
                     foreach (var resource in resources)
                     {
-                        var engineResource = resourceGroup.addResource(Path.Combine(dependencyPath, resource.Path), "EngineArchive", resource.Recursive);
+                        var engineResource = resourceGroup.addResource(Path.Combine(RootFolder, resource.Path), "EngineArchive", resource.Recursive);
                     }
                 }
 
@@ -51,7 +50,7 @@ namespace Medical
 
             if (PropDefinitionDirectory != null)
             {
-                String fullPropPath = Path.Combine(dependencyPath, PropDefinitionDirectory);
+                String fullPropPath = Path.Combine(RootFolder, PropDefinitionDirectory);
                 if (VirtualFileSystem.Instance.exists(fullPropPath))
                 {
                     foreach (var propPath in VirtualFileSystem.Instance.listFiles(fullPropPath, "*.prop", false))
@@ -64,8 +63,6 @@ namespace Medical
                     }
                 }
             }
-
-            Initialized = true;
         }
 
         /// <summary>
@@ -84,11 +81,39 @@ namespace Medical
             onResourceRemoved(resource);
         }
 
-        [Editable]
-        public Guid DependencyId { get; set; }
+        public void sceneLoaded(SimScene scene)
+        {
+            
+        }
+
+        public void sceneUnloading(SimScene scene)
+        {
+            
+        }
+
+        public void setMainInterfaceEnabled(bool enabled)
+        {
+            
+        }
+
+        public void sceneRevealed()
+        {
+            
+        }
 
         [Editable]
-        public string Name { get; set; }
+        public string PluginName { get; private set; }
+
+        public bool AllowUninstall
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        [Editable]
+        public long PluginId { get; set; }
 
         [Editable]
         public string BrandingImageKey { get; set; }
@@ -120,32 +145,34 @@ namespace Medical
         public String RootFolder { get; internal set; }
 
         [Editable]
-        public String DependencyNamespace { get; set; }
+        public String PluginNamespace { get; set; }
 
-        public bool Initialized { get; private set; }
+        [Editable]
+        public String IconResourceFile { get; set; }
 
         protected DDAtlasDependency(LoadInfo info)
         {
-            DependencyId = info.GetGuid("DependencyId");
-            Name = info.GetString("Name");
-            BrandingImageKey = info.GetString("BrandingImageKey");
+            PluginId = info.GetInt64("PluginId", -1);
+            PluginName = info.GetString("PluginName");
             VersionString = info.GetString("VersionString");
-            DependencyNamespace = info.GetString("DependencyNamespace");
+            PluginNamespace = info.GetString("PluginNamespace");
             PropDefinitionDirectory = info.GetString("PropDefinitionDirectory");
+            IconResourceFile = info.GetString("IconResourceFile");
+            BrandingImageKey = info.GetString("BrandingImageKey");
             info.RebuildList("Resource", resources);
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.AddValue("DependencyId", DependencyId);
-            info.AddValue("Name", Name);
-            info.AddValue("BrandingImageKey", BrandingImageKey);
+            info.AddValue("PluginId", PluginId);
+            info.AddValue("PluginName", PluginName);
             info.AddValue("VersionString", VersionString);
-            info.AddValue("DependencyNamespace", DependencyNamespace);
+            info.AddValue("PluginNamespace", PluginNamespace);
             info.AddValue("PropDefinitionDirectory", PropDefinitionDirectory);
+            info.AddValue("IconResourceFile", IconResourceFile);
+            info.AddValue("BrandingImageKey", BrandingImageKey);
             info.ExtractList("Resource", resources);
         }
-
     }
 
     partial class DDAtlasDependency

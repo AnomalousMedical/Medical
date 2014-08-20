@@ -38,6 +38,8 @@ namespace Medical
 
         private DataFileVerifier dataFileVerifier;
 
+        private Engine.Resources.ResourceManager resourceManager;
+
         public AtlasPluginManager(StandaloneController standaloneController, DataFileVerifier dataFileVerifier)
         {
             this.dataFileVerifier = dataFileVerifier;
@@ -50,6 +52,8 @@ namespace Medical
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(FindArtworkPluginAssembly);
 
             managePluginInstructions = new ManagePluginInstructions(MedicalConfig.PluginConfig.PluginsFolder);
+
+            resourceManager = PluginManager.Instance.createLiveResourceManager("Plugins");
         }
 
         public void Dispose()
@@ -287,9 +291,50 @@ namespace Medical
                         }
                     }
                 }
-                else
+
+                if (!loadedPlugin)
                 {
-                    Log.Error("Error loading '{0}' in path '{1}' from '{2}' because it does not exist.", pluginDefinitionFile, path, fullPath);
+                    String dependencyDefinitionFile = pluginDirectory + "Dependency.ddd";
+                    if (VirtualFileSystem.Instance.fileExists(dependencyDefinitionFile))
+                    {
+                        using (Stream stream = VirtualFileSystem.Instance.openStream(dependencyDefinitionFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        {
+                            try
+                            {
+                                DDAtlasDependency dependency = SharedXmlSaver.Load<DDAtlasDependency>(stream);
+                                if (dependency != null)
+                                {
+                                    dependency.Location = fullPath;
+                                    dependency.RootFolder = pluginDirectory;
+                                    addDependency(dependency);
+                                    loadedPlugin = true;
+                                }
+                                else
+                                {
+                                    throw new Exception(String.Format("Error loading '{0}' in path '{1}' from '{2}' because it was null.", dependencyDefinitionFile, path, fullPath));
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", Path.GetFileName(fullPath)));
+                                Log.Error(ex.Message);
+                                try
+                                {
+                                    File.Delete(fullPath);
+                                }
+                                catch (Exception deleteEx)
+                                {
+                                    Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
+                                    managePluginInstructions.addFileToDelete(fullPath);
+                                    managePluginInstructions.savePersistantFile();
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Log.Error("Error loading '{0}' or '{1}' in path '{2}' from '{3}' because it does not exist.", pluginDefinitionFile, dependencyDefinitionFile, path, fullPath);
+                    }
                 }
             }
 
@@ -324,6 +369,11 @@ namespace Medical
                 artworkPluginAssemblies.Add(assembly.FullName, assembly);
                 MyGUIInterface.Instance.CommonResourceGroup.addResource(pluginType.AssemblyQualifiedName, "EmbeddedScalableResource", true);
             }
+        }
+
+        private void addDependency(DDAtlasDependency dependency)
+        {
+            uninitializedPlugins.Insert(0, dependency);
         }
 
         public AtlasPlugin getPlugin(long pluginId)
@@ -446,6 +496,14 @@ namespace Medical
             get
             {
                 return unlicensedPlugins;
+            }
+        }
+
+        public Engine.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                return resourceManager;
             }
         }
 

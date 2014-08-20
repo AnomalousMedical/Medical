@@ -14,9 +14,8 @@ namespace Medical
         {
             DDAtlasDependency dependency = new DDAtlasDependency()
             {
-                DependencyNamespace = projectName,
+                PluginNamespace = projectName,
                 VersionString = "1.0.0.0",
-                DependencyId = Guid.NewGuid()
             };
 
             saveObject(dependency, resourceProvider, "Dependency.ddd");

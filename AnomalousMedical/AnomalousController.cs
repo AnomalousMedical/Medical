@@ -269,12 +269,12 @@ namespace Medical
         private IEnumerable<PluginLoadStatus> addPlugins()
         {
             PluginLoadStatus loadStatus = new PluginLoadStatus();
-            loadStatus.Total = MedicalConfig.PluginConfig.findRegularPluginsAndDependencies();
+            loadStatus.Total = MedicalConfig.PluginConfig.findPlugins();
 
             loadStatus.Total += 3;
 
             //DEPENDENCY_HACK
-            MedicalConfig.PluginConfig.addAdditionalDependencyFile("Utilities.dat");
+            MedicalConfig.PluginConfig.addAdditionalPluginFile("Utilities.dat");
             loadStatus.Current++;
             yield return loadStatus;
             MedicalConfig.PluginConfig.addAdditionalPluginFile("IntroductionTutorial.dat");
@@ -283,13 +283,6 @@ namespace Medical
             controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(LicenseManager, this));
             loadStatus.Current++;
             yield return loadStatus;
-
-            foreach (String dependency in MedicalConfig.PluginConfig.Dependencies)
-            {
-                controller.AtlasDependencyManager.addDependency(dependency);
-                loadStatus.Current++;
-                yield return loadStatus;
-            }
 
             foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
             {

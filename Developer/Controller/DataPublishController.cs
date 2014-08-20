@@ -64,7 +64,7 @@ namespace Developer
 
                         if (dependency != null)
                         {
-                            findFiles(dataDefinitionPath, "Dependencies", outputPath, dependency.DependencyNamespace);
+                            findFiles(dataDefinitionPath, "Plugins", outputPath, dependency.PluginNamespace);
                         }
                         break;
                 }

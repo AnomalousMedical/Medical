@@ -52,7 +52,6 @@ namespace Medical
                 {
                     VersionString = "1.0.0.0",
                     PropDefinitionDirectory = "PropDefinitions",
-                    DependencyId = Guid.NewGuid()
                 };
             creatingNewFile(filePath);
             saveObject(filePath, newDep);
