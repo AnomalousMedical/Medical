@@ -171,9 +171,9 @@
     <Compile Include="Controller\Plugin\PluginLoadStatus.cs" />
     <Compile Include="Controller\Security\CertificateStoreManager.cs" />
     <Compile Include="Controller\Config\EditorConfig.cs" />
-    <Compile Include="Controller\Dependency\AtlasDependencyResource.cs" />
-    <Compile Include="Controller\Dependency\AtlasDependencyResourceEditableProperty.cs" />
-    <Compile Include="Controller\Dependency\DDAtlasDependency.cs" />
+    <Compile Include="Controller\Plugin\Dependency\AtlasDependencyResource.cs" />
+    <Compile Include="Controller\Plugin\Dependency\AtlasDependencyResourceEditableProperty.cs" />
+    <Compile Include="Controller\Plugin\Dependency\DDAtlasDependency.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditablePropAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableElementNameAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\ElementNameEditableProperty.cs" />
