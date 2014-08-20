@@ -317,11 +317,20 @@ namespace Medical
             ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
             ResourceManager.Instance.load("Medical.Resources.SlideshowIcons.xml");
 
-            //DEPENDENCY_HACK
-            atlasDependencyManager.initializeDependency(new Guid("e2199fcc-2873-413c-8673-d7aa3a703f59"));
-
-            foreach(var status in atlasPluginManager.initializePluginsStatus())
+            PluginLoadStatus status = new PluginLoadStatus()
             {
+                Total = atlasDependencyManager.UninitalizedCount + atlasPluginManager.UninitalizedCount
+            };
+
+            foreach(var dependencyStatus in atlasDependencyManager.initializeDependenciesStatus())
+            {
+                status.Current++;
+                yield return status;
+            }
+
+            foreach(var pluginStatus in atlasPluginManager.initializePluginsStatus())
+            {
+                status.Current++;
                 yield return status;
             }
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);

@@ -17,7 +17,9 @@ namespace Medical
         public event DependencyMessageDelegate LoadError;
 
         private StandaloneController standaloneController;
-        private Dictionary<Guid, AtlasDependency> dependencies = new Dictionary<Guid, AtlasDependency>();
+        private List<AtlasDependency> uninitializedDependencies = new List<AtlasDependency>();
+        private List<AtlasDependency> dependencies = new List<AtlasDependency>();
+        private HashSet<Guid> usedDependencyIds = new HashSet<Guid>();
         private String additionalSearchPath;
         private HashSet<String> loadedDependencyNames = new HashSet<string>();
         private ManagePluginInstructions manageDependencyInstructions;
@@ -38,7 +40,7 @@ namespace Medical
 
         public void Dispose()
         {
-            foreach(var dependency in dependencies.Values)
+            foreach(var dependency in dependencies)
             {
                 dependency.Dispose();
             }
@@ -196,30 +198,42 @@ namespace Medical
 
         public void addDependency(AtlasDependency dependency)
         {
-            if(!dependencies.ContainsKey(dependency.DependencyId))
+            if(!usedDependencyIds.Contains(dependency.DependencyId))
             {
-                dependencies.Add(dependency.DependencyId, dependency);
+                uninitializedDependencies.Add(dependency);
+                usedDependencyIds.Add(dependency.DependencyId);
             }
             else
             {
-                Log.Error("Attempted to add Dependency '{0}' with id '{1}' that is already in use for another dependency named '{2}'", dependency.Name, dependency.DependencyId, dependencies[dependency.DependencyId].Name);
+                Log.Error("Attempted to add Dependency '{0}' with id '{1}' that is already in use for another dependency.", dependency.Name, dependency.DependencyId);
             }
         }
 
-        public void initializeDependency(Guid dependencyId)
+        public void initializeDependencies()
         {
-            AtlasDependency dependency;
-            if (dependencies.TryGetValue(dependencyId, out dependency))
+            foreach (var status in initializeDependenciesStatus()) { }
+        }
+
+        public IEnumerable<PluginLoadStatus> initializeDependenciesStatus()
+        {
+            PluginLoadStatus status = new PluginLoadStatus()
             {
-                if(!dependency.Initialized)
-                {
-                    Log.ImportantInfo("Initializing dependency '{0}'", dependency.Name);
-                    dependency.initialize(standaloneController, this);
-                }
+                Total = uninitializedDependencies.Count,
+            };
+            foreach(var dependency in uninitializedDependencies)
+            {
+                dependency.initialize(standaloneController, this);
+                dependencies.Add(dependency);
+                yield return status;
             }
-            else
+            uninitializedDependencies.Clear();
+        }
+
+        public int UninitalizedCount
+        {
+            get
             {
-                Log.Warning("Attempted to initialize dependency id {0}, but it has not been loaded.", dependencyId);
+                return uninitializedDependencies.Count;
             }
         }
 

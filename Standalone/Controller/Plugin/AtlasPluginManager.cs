@@ -425,6 +425,14 @@ namespace Medical
             }
         }
 
+        public int UninitalizedCount
+        {
+            get
+            {
+                return uninitializedPlugins.Count;
+            }
+        }
+
         public IEnumerable<AtlasPlugin> LoadedPlugins
         {
             get
