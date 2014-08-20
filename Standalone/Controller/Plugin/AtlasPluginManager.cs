@@ -371,7 +371,7 @@ namespace Medical
             }
         }
 
-        private void addDependency(DDAtlasDependency dependency)
+        private void addDependency(AtlasDependency dependency)
         {
             uninitializedPlugins.Insert(0, dependency);
         }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public partial class DDAtlasDependency : AtlasPlugin, Saveable
+    public partial class DDAtlasDependency : AtlasDependency, Saveable
     {
         private List<AtlasDependencyResource> resources = new List<AtlasDependencyResource>();
 
