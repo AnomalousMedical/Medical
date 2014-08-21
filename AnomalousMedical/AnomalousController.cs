@@ -271,12 +271,8 @@ namespace Medical
             PluginLoadStatus loadStatus = new PluginLoadStatus();
             loadStatus.Total = MedicalConfig.PluginConfig.findPlugins();
 
-            loadStatus.Total += 3;
+            loadStatus.Total += 2;
 
-            //DEPENDENCY_HACK
-            MedicalConfig.PluginConfig.addAdditionalPluginFile("Utilities.dat");
-            loadStatus.Current++;
-            yield return loadStatus;
             MedicalConfig.PluginConfig.addAdditionalPluginFile("IntroductionTutorial.dat");
             loadStatus.Current++;
             yield return loadStatus;
