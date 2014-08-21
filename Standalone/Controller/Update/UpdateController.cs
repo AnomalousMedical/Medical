@@ -75,7 +75,7 @@ namespace Medical
         public static void checkForUpdate(Action<UpdateCheckResult> checkCompletedCallback, AtlasPluginManager pluginManager, LicenseManager licenseManager)
         {
             //Check for updates on a background thread
-            Thread updateThread = new Thread(delegate()
+            ThreadPool.QueueUserWorkItem(state =>
             {
                 UpdateCheckResult result = UpdateCheckResult.NoUpdates;
                 try
@@ -119,7 +119,6 @@ namespace Medical
 
                 ThreadManager.invoke(checkCompletedCallback, result);
             });
-            updateThread.Start();
         }
 
         /// <summary>
