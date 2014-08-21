@@ -400,9 +400,13 @@ namespace Medical.GUI
             standaloneController.openHelpPage();
         }
 
-        void updateCheckCompleted(bool hasUpdate)
+        void updateCheckCompleted(UpdateController.UpdateCheckResult result)
         {
-            if (hasUpdate)
+            if ((result & UpdateController.UpdateCheckResult.FilesMissing) != 0)
+            {
+                standaloneController.NotificationManager.showTaskNotification("Required files missing\nClick Here to Download", downloadsTask.IconName, downloadsTask);
+            }
+            else if(result > 0)
             {
                 standaloneController.NotificationManager.showTaskNotification("Update(s) Found\nClick Here to Download", downloadsTask.IconName, downloadsTask);
             }

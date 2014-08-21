@@ -16,6 +16,15 @@ namespace Medical
 {
     public class UpdateController
     {
+        [Flags]
+        public enum UpdateCheckResult
+        {
+            NoUpdates = 0,
+            PluginUpdates = 1,
+            PlatformUpdate = 1 << 1,
+            FilesMissing = 1 << 2,
+        }
+
         static ConfigFile updateInfo;
         static ConfigSection updateSection;
 
@@ -63,18 +72,18 @@ namespace Medical
             }
         }
 
-        public static void checkForUpdate(Action<bool> checkCompletedCallback, AtlasPluginManager pluginManager, LicenseManager licenseManager)
+        public static void checkForUpdate(Action<UpdateCheckResult> checkCompletedCallback, AtlasPluginManager pluginManager, LicenseManager licenseManager)
         {
             //Check for updates on a background thread
             Thread updateThread = new Thread(delegate()
             {
-                bool foundUpdate = false;
+                UpdateCheckResult result = UpdateCheckResult.NoUpdates;
                 try
                 {
                     ServerUpdateInfo updateInfo = getUpdateInfo(licenseManager);
                     if (updateInfo.RemotePlatformVersion > CurrentVersion)
                     {
-                        foundUpdate = true;
+                        result |= UpdateCheckResult.PlatformUpdate;
                     }
                     else
                     {
@@ -83,7 +92,21 @@ namespace Medical
                             AtlasPlugin plugin = pluginManager.getPlugin(pluginUpdate.PluginId);
                             if (plugin != null && pluginUpdate.Version > plugin.Version)
                             {
-                                foundUpdate = true;
+                                result |= UpdateCheckResult.PluginUpdates;
+                                break;
+                            }
+                        }
+                        foreach(var dependencyUpdate in updateInfo.DependencyUpdateInfo)
+                        {
+                            AtlasPlugin plugin = pluginManager.getPlugin(dependencyUpdate.PluginId);
+                            if (plugin == null) //alert about missing files
+                            {
+                                result |= UpdateCheckResult.FilesMissing;
+                                break;
+                            }
+                            else if(dependencyUpdate.Version > plugin.Version)
+                            {
+                                result |= UpdateCheckResult.PluginUpdates;
                                 break;
                             }
                         }
@@ -94,7 +117,7 @@ namespace Medical
                     Log.Error("Could not read update status from the server. Reason:\n{0}", e.Message);
                 }
 
-                ThreadManager.invoke(checkCompletedCallback, foundUpdate);
+                ThreadManager.invoke(checkCompletedCallback, result);
             });
             updateThread.Start();
         }

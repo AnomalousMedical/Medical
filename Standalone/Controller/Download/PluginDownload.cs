@@ -42,7 +42,7 @@ namespace Medical
                         }
                         else
                         {
-                            Plugin = atlasPluginManager.findPlugin(PluginId);
+                            Plugin = atlasPluginManager.getPlugin(PluginId);
                         }
                     }));
                 }

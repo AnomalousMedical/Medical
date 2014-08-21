@@ -152,18 +152,18 @@ namespace Medical
             MedicalConfig.HelpURL = String.Format("{0}/Help", WebsiteHostUrl);
             MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword", WebsiteHostUrl);
             MedicalConfig.RegisterURL = String.Format("{0}/Login", WebsiteHostUrl);
-            MedicalConfig.LicenseServerURL = String.Format("{0}/DRM3/License", WebsiteHostUrl);
+            MedicalConfig.LicenseServerURL = String.Format("{0}/DRM4/License", WebsiteHostUrl);
             MedicalConfig.AnomalousMedicalStoreURL = String.Format("{0}/Store", WebsiteHostUrl);
             MedicalConfig.AnomalousMedicalBlogURL = String.Format("{0}/Blog", WebsiteHostUrl);
             MedicalConfig.ProductPageBaseURL = String.Format("{0}/Product/Plugin/{{0}}", WebsiteHostUrl);
-            MedicalConfig.LicenseReaderURL = String.Format("{0}/DRM3/LicenseReader", WebsiteHostUrl);
-            MedicalConfig.LicenseImageURL = String.Format("{0}/DRM3/LicenseImage", WebsiteHostUrl);
+            MedicalConfig.LicenseReaderURL = String.Format("{0}/DRM4/LicenseReader", WebsiteHostUrl);
+            MedicalConfig.LicenseImageURL = String.Format("{0}/DRM4/LicenseImage", WebsiteHostUrl);
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", WebsiteHostUrl);
-            MedicalConfig.CertificateStoreUrl = String.Format("{0}/DRM3/CertificateStore", WebsiteHostUrl);
+            MedicalConfig.CertificateStoreUrl = String.Format("{0}/DRM4/CertificateStore", WebsiteHostUrl);
 
-            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM3/Update{1}", WebsiteHostUrl, buildUrlExtraPath);
-            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM3/DownloadInfo{1}", WebsiteHostUrl, buildUrlExtraPath);
-            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM3/FileDownload{1}", WebsiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM4/Update{1}", WebsiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM4/DownloadInfo{1}", WebsiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM4/FileDownload{1}", WebsiteHostUrl, buildUrlExtraPath);
 
             //Read command line
             String[] commandLine = Environment.GetCommandLineArgs();

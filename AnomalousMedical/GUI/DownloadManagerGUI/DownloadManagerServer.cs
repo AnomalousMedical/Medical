@@ -120,7 +120,7 @@ namespace Medical.GUI
                 }
 
                 Dictionary<long, ServerPluginDownloadInfo> newDownloadInfos = new Dictionary<long, ServerPluginDownloadInfo>();
-                foreach(var pluginUpdateInfo in serverUpdateInfo.PluginUpdateInfo)
+                foreach(var pluginUpdateInfo in serverUpdateInfo.PluginUpdateInfo.Union(serverUpdateInfo.DependencyUpdateInfo))
                 {
                     if (!alreadyFoundPlugin(pluginUpdateInfo.PluginId))
                     {
