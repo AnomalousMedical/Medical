@@ -143,37 +143,40 @@ namespace Medical.GUI
 
         private void addInfoToButtonGrid(DownloadGUIInfo download, bool selectNewItem)
         {
-            String group = "";
-            switch (download.Status)
+            if (download != null)
             {
-                case ServerDownloadStatus.NotInstalled:
-                    group = "Not Installed";
-                    break;
-                case ServerDownloadStatus.Update:
-                    group = "Updates";
-                    break;
-                case ServerDownloadStatus.Downloading:
-                    group = "Downloading";
-                    break;
-                case ServerDownloadStatus.PendingUninstall:
-                    group = "Pending Uninstall";
-                    break;
-                case ServerDownloadStatus.PendingInstall:
-                    group = "Pending Install";
-                    break;
-                case ServerDownloadStatus.Installed:
-                    group = "Installed";
-                    break;
-                case ServerDownloadStatus.Unlicensed:
-                    group = "Unlicensed";
-                    break;
-            }
-            ButtonGridItem item = pluginGrid.addItem(group, download.Name, download.ImageKey);
-            item.UserObject = download;
-            download.GUIItem = item;
-            if (selectNewItem)
-            {
-                pluginGrid.SelectedItem = item;
+                String group = "";
+                switch (download.Status)
+                {
+                    case ServerDownloadStatus.NotInstalled:
+                        group = "Not Installed";
+                        break;
+                    case ServerDownloadStatus.Update:
+                        group = "Updates";
+                        break;
+                    case ServerDownloadStatus.Downloading:
+                        group = "Downloading";
+                        break;
+                    case ServerDownloadStatus.PendingUninstall:
+                        group = "Pending Uninstall";
+                        break;
+                    case ServerDownloadStatus.PendingInstall:
+                        group = "Pending Install";
+                        break;
+                    case ServerDownloadStatus.Installed:
+                        group = "Installed";
+                        break;
+                    case ServerDownloadStatus.Unlicensed:
+                        group = "Unlicensed";
+                        break;
+                }
+                ButtonGridItem item = pluginGrid.addItem(group, download.Name, download.ImageKey);
+                item.UserObject = download;
+                download.GUIItem = item;
+                if (selectNewItem)
+                {
+                    pluginGrid.SelectedItem = item;
+                }
             }
         }
 

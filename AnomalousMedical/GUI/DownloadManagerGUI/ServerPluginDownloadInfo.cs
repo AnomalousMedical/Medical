@@ -50,7 +50,14 @@ namespace Medical.GUI
             AtlasPlugin plugin = pluginDownload.Plugin;
             if (pluginDownload.LoadedSucessfully && plugin != null)
             {
-                return new UninstallInfo(plugin);
+                if (plugin.AllowUninstall)
+                {
+                    return new UninstallInfo(plugin);
+                }
+                else
+                {
+                    return null;
+                }
             }
             return new UpdateInfo(ImageKey, Name, String.Format("You must restart Anomalous Medical to finish installing {0}. You may install more things by selecting them and clicking install before restarting.", Name), ServerDownloadStatus.PendingInstall, false);
         }
