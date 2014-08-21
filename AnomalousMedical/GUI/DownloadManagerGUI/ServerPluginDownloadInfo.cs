@@ -74,7 +74,7 @@ namespace Medical.GUI
             else if (!readingDescriptionFromServer)
             {
                 readingDescriptionFromServer = true;
-                Thread descriptionReadThread = new Thread(delegate()
+                ThreadPool.QueueUserWorkItem(state =>
                 {
                     description = server.readLicenseFromServer(PluginId);
                     if (description != null)
@@ -93,7 +93,6 @@ namespace Medical.GUI
                         }));
                     }
                 });
-                descriptionReadThread.Start();
             }
         }
     }

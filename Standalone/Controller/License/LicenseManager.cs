@@ -36,7 +36,7 @@ namespace Medical
                 return;
             }
 #endif
-            Thread t = new Thread(delegate()
+            ThreadPool.QueueUserWorkItem(state =>
             {
                 if (File.Exists(keyFile))
                 {
@@ -103,8 +103,6 @@ namespace Medical
                 //Check validity
                 ThreadManager.invoke(() => resultCallback(Valid));
             });
-            t.IsBackground = true;
-            t.Start();
         }
 
         public bool allowFeature(long featureCode)

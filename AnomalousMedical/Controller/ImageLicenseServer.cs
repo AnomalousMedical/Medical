@@ -33,7 +33,7 @@ namespace Medical
         public void licenseImage(ImageLicenseType type, LicenseCallback callback)
         {
             LicensingImage = true;
-            Thread readLicenseThread = new Thread(delegate()
+            ThreadPool.QueueUserWorkItem(state =>
             {
                 bool success = false;
                 bool promptStoreVisit = false;
@@ -78,13 +78,12 @@ namespace Medical
                     callback.Invoke(success, promptStoreVisit, message);
                 }));
             });
-            readLicenseThread.Start();
         }
 
         public void getLicenseFromServer(ImageLicenseType licenseType, LicenseTextCallback callback)
         {
             ReadingLicenseText = true;
-            Thread readLicenseThread = new Thread(delegate()
+            ThreadPool.QueueUserWorkItem(state =>
             {
                 bool success = false;
                 String message = "Error reading license from server";
@@ -113,7 +112,6 @@ namespace Medical
                     callback.Invoke(success, message);
                 }));
             });
-            readLicenseThread.Start();
         }
 
         public String LicenseeName
