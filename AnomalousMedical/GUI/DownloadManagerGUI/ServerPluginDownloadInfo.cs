@@ -19,11 +19,18 @@ namespace Medical.GUI
             this.server = server;
             this.PluginId = pluginId;
             this.Name = name;
+            Dependencies = new List<long>();
         }
 
         protected override void doStartDownload(DownloadController downloadController)
         {
             Download = downloadController.downloadPlugin(PluginId, this);
+        }
+
+        public override bool dependsOn(ServerDownloadInfo testAsDependency)
+        {
+            ServerPluginDownloadInfo other = testAsDependency as ServerPluginDownloadInfo;
+            return other != null && Dependencies.Contains(other.PluginId);
         }
 
         public override void downloadCompleted(Download download)
@@ -63,6 +70,8 @@ namespace Medical.GUI
         }
 
         public long PluginId { get; set; }
+
+        public List<long> Dependencies { get; private set; }
 
         public override string MoreInfoURL
         {

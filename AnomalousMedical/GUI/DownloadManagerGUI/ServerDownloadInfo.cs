@@ -58,6 +58,17 @@ namespace Medical.GUI
             return null;
         }
 
+        /// <summary>
+        /// Tests if this download depends on testAsDependency. If true downloading this object's file
+        /// requires a download of testAsDependency.
+        /// </summary>
+        /// <param name="testAsDependency">The download to test as a dependency.</param>
+        /// <returns>True if this download also needs testAsDependency downloaded.</returns>
+        public virtual bool dependsOn(ServerDownloadInfo testAsDependency)
+        {
+            return false;
+        }
+
         public Download Download { get; protected set; }
 
         public String StatusString { get; set; }

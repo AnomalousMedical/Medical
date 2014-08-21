@@ -186,6 +186,12 @@ namespace Medical.GUI
                                     }
                                 }
 
+                                ASN1 dependencies = pluginInfo[3];
+                                for (int j = 0; j < dependencies.Count; ++j)
+                                {
+                                    downloadInfo.Dependencies.Add(BitConverter.ToInt64(dependencies[j].Value, 0));
+                                }
+
                                 alertDownloadFound(downloadInfo);
                             }
                         });

@@ -216,7 +216,7 @@ namespace Medical.GUI
             ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
             if (pluginInfo != null)
             {
-                downloadItem(selectedItem, pluginInfo);
+                downloadItem(selectedItem, pluginInfo, true);
             }
         }
 
@@ -240,7 +240,7 @@ namespace Medical.GUI
             ServerDownloadInfo pluginInfo = selectedItem.UserObject as ServerDownloadInfo;
             if (pluginInfo != null && (pluginInfo.Status == ServerDownloadStatus.NotInstalled || pluginInfo.Status == ServerDownloadStatus.Update))
             {
-                downloadItem(selectedItem, pluginInfo);
+                downloadItem(selectedItem, pluginInfo, true);
             }
         }
 
@@ -259,12 +259,29 @@ namespace Medical.GUI
             }
             foreach (ServerDownloadInfo dlInfo in pendingDownloads)
             {
-                downloadItem(dlInfo.GUIItem, dlInfo);
+                downloadItem(dlInfo.GUIItem, dlInfo, false);
             }
         }
 
-        private void downloadItem(ButtonGridItem selectedItem, ServerDownloadInfo downloadInfo)
+        private void downloadItem(ButtonGridItem selectedItem, ServerDownloadInfo downloadInfo, bool autoAddDependencies)
         {
+            if(autoAddDependencies)
+            {
+                //Quite possibly the worst way to implement this, read the stuff that can be downloaded out of the button grid.
+                List<ServerDownloadInfo> pendingDownloads = new List<ServerDownloadInfo>();
+                foreach (var currentInfo in pluginGrid.Items.Select(i => i.UserObject as ServerDownloadInfo))
+                {
+                    if (currentInfo != null && (currentInfo.Status == ServerDownloadStatus.NotInstalled || currentInfo.Status == ServerDownloadStatus.Update) && downloadInfo.dependsOn(currentInfo))
+                    {
+                        pendingDownloads.Add(currentInfo);
+                    }
+                }
+                foreach (ServerDownloadInfo dlInfo in pendingDownloads)
+                {
+                    downloadItem(dlInfo.GUIItem, dlInfo, false);
+                }
+            }
+
             downloadInfo.startDownload(downloadController);
 
             pluginGrid.SuppressLayout = true;
