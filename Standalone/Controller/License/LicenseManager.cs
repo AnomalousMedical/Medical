@@ -133,6 +133,25 @@ namespace Medical
             return false;
         }
 
+        public bool allowPropUse(long? propId)
+        {
+            if(propId.HasValue)
+            {
+                if(license != null)
+                {
+                    return license.allowPropUse(propId.Value);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         /// <summary>
         /// This method can be used to get a new license from the server if the
         /// original is missing a feature or something that was added after the

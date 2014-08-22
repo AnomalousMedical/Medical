@@ -122,7 +122,10 @@ namespace Medical
                 Browser browser = new Browser("Props", "Choose Prop");
                 foreach (var propDef in standaloneController.TimelineController.PropFactory.PropDefinitions)
                 {
-                    browser.addNode(propDef.BrowserPath, new BrowserNode(propDef.PrettyName, propDef.Name));
+                    if (standaloneController.App.LicenseManager.allowPropUse(propDef.PropLicenseId))
+                    {
+                        browser.addNode(propDef.BrowserPath, new BrowserNode(propDef.PrettyName, propDef.Name));
+                    }
                 }
                 return browser;
             });

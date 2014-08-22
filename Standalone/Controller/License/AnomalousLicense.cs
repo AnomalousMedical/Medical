@@ -70,19 +70,14 @@ namespace Engine
             }
         }
 
-        public void addFeature(long featureID)
-        {
-            features.Add(featureID);
-        }
-
-        public void removeFeature(long featureID)
-        {
-            features.Remove(featureID);
-        }
-
         public bool supportsFeature(long featureID)
         {
             return features.Contains(featureID);
+        }
+
+        public bool allowPropUse(long p)
+        {
+            return false;
         }
 
         public String LicenseeName { get; private set; }
