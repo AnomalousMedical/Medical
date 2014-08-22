@@ -130,7 +130,7 @@ namespace Medical
         public void setDependencyIds(IEnumerable<long> dependencyIds)
         {
             this.dependencyIds.Clear();
-            this.dependencyIds.AddRange(dependencyIds);
+            this.dependencyIds.AddRange(dependencyIds.Distinct());
         }
 
         public IEnumerable<DDPluginTask> Tasks

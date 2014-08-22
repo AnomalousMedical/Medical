@@ -7,6 +7,7 @@ using Medical.Platform;
 using Medical.Controller.AnomalousMvc;
 using Engine.Platform;
 using Medical.Controller;
+using System.IO;
 
 namespace Medical
 {
@@ -24,14 +25,18 @@ namespace Medical
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
         private PluginTypeController pluginTypeController;
+        private EditorController editorController;
+        private StandaloneController standaloneController;
 
         private DDAtlasPlugin plugin;
 
-        public PluginEditorContext(DDAtlasPlugin plugin, String file, PluginTypeController pluginTypeController, EditorController editorController, MedicalUICallback uiCallback)
+        public PluginEditorContext(DDAtlasPlugin plugin, String file, PluginTypeController pluginTypeController, EditorController editorController, MedicalUICallback uiCallback, StandaloneController standaloneController)
         {
             this.pluginTypeController = pluginTypeController;
             this.currentFile = file;
             this.plugin = plugin;
+            this.editorController = editorController;
+            this.standaloneController = standaloneController;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -52,6 +57,10 @@ namespace Medical
                 saveAll();
             }));
             taskbar.addTask(new RunMvcContextActionTask("Save", "Save Plugin Definition File", "CommonToolstrip/Save", "File", "Editor/Save", mvcContext));
+            taskbar.addTask(new CallbackTask("FindDependencies", "Find Dependencies", "EditorFileIcon/.ddp", "", item =>
+            {
+                findDependencies();
+            }));
             mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("Editor", 
@@ -117,6 +126,26 @@ namespace Medical
         private void save()
         {
             pluginTypeController.saveFile(plugin, currentFile);
+        }
+
+        private void findDependencies()
+        {
+            CleanupInfo resourceInfo = new CleanupInfo();
+            resourceInfo.defineObjectClass(ShowPropAction.PropClass);
+            foreach(String file in editorController.ResourceProvider.listFiles("*.tl", "", true))
+            {
+                Timeline timeline;
+                using(Stream fileStream = editorController.ResourceProvider.openFile(file))
+                {
+                    timeline = SharedXmlSaver.Load<Timeline>(fileStream);
+                }
+                timeline.cleanup(resourceInfo);
+            }
+
+            plugin.setDependencyIds(resourceInfo.getObjects<String>(ShowPropAction.PropClass)
+                    .Select(n => standaloneController.PropFactory.getDependencyIdForProp(n))
+                    .Where(id => id.HasValue)
+                    .Select(id => id.Value));
         }
     }
 }

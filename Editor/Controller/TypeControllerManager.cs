@@ -119,7 +119,7 @@ namespace Medical
             PluginTypeController pluginTypeController = new PluginTypeController(editorController);
             pluginTypeController.OpenEditor += (file, ddPlugin) =>
                 {
-                    pluginEditorContext = new PluginEditorContext(ddPlugin, file, pluginTypeController, plugin.EditorController, plugin.UICallback);
+                    pluginEditorContext = new PluginEditorContext(ddPlugin, file, pluginTypeController, plugin.EditorController, plugin.UICallback, standaloneController);
                     pluginEditorContext.Focus += obj =>
                         {
                             pluginEditorContext = obj;
