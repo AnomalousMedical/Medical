@@ -412,7 +412,7 @@ namespace Medical.GUI
         {
             if ((result & UpdateController.UpdateCheckResult.FilesMissing) != 0)
             {
-                standaloneController.NotificationManager.showTaskNotification("Required files missing\nClick Here to Download", downloadsTask.IconName, downloadsTask);
+                standaloneController.NotificationManager.showTaskNotification("Additional files needed\nClick Here to Download", downloadsTask.IconName, downloadsTask);
             }
             else if(result > 0)
             {
