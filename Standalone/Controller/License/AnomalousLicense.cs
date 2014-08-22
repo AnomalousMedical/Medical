@@ -25,6 +25,7 @@ namespace Engine
     internal class AnomalousLicense
     {
         private List<long> features = new List<long>();
+        private List<long> propLicenses = new List<long>();
 
         public AnomalousLicense(byte[] licenseData)
         {
@@ -58,6 +59,15 @@ namespace Engine
                     {
                         features.Add(BitConverter.ToInt64(featuresAsn1[i].Value, 0));
                     }
+                    //Has prop licenses
+                    if(license.Count > 4)
+                    {
+                        ASN1 propLicensesAsn1 = license.Element(4, 0x30);
+                        for(int i = 0; i < propLicensesAsn1.Count; ++i)
+                        {
+                            propLicenses.Add(BitConverter.ToInt64(propLicensesAsn1[i].Value, 0));
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -75,9 +85,9 @@ namespace Engine
             return features.Contains(featureID);
         }
 
-        public bool allowPropUse(long p)
+        public bool allowPropUse(long propId)
         {
-            return false;
+            return propLicenses.Contains(propId);
         }
 
         public String LicenseeName { get; private set; }
