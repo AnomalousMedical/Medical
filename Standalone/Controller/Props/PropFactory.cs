@@ -83,6 +83,16 @@ namespace Medical
             return null;
         }
 
+        public long? getDependencyIdForProp(string propName)
+        {
+            PropDefinition propDef;
+            if (prototypes.TryGetValue(propName, out propDef))
+            {
+                return propDef.DependencyPluginId;
+            }
+            return null;
+        }
+
         public void getInitialPosition(String propName, ref Vector3 translation, ref Quaternion rotation)
         {
             PropDefinition propDef;

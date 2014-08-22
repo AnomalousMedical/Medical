@@ -14,6 +14,8 @@ namespace Medical
 {
     public class ShowPropAction : TimelineAction
     {
+        public const String PropClass = "Prop";
+
         public delegate void UpdatedDelegate(float time);
 
         public event UpdatedDelegate Updated;
@@ -124,7 +126,10 @@ namespace Medical
 
         public override void cleanup(CleanupInfo cleanupInfo)
         {
-
+            if(cleanupInfo.hasObjectClass(PropClass))
+            {
+                cleanupInfo.claimObject(PropClass, propType);
+            }
         }
 
         public override void reverseSides()

@@ -198,5 +198,13 @@ namespace Developer
                 return true;
             }
         }
+
+        public IEnumerable<long> DependencyPluginIds
+        {
+            get
+            {
+                return IEnumerableUtil<long>.EmptyIterator;
+            }
+        }
     }
 }

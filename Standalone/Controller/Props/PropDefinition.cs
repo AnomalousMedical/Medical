@@ -33,6 +33,8 @@ namespace Medical
         [Editable]
         public long? PropLicenseId { get; set; }
 
+        public long? DependencyPluginId { get; set; }
+
         public bool RequireLicense
         {
             get

@@ -170,6 +170,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<long> DependencyPluginIds
+        {
+            get
+            {
+                return IEnumerableUtil<long>.EmptyIterator;
+            }
+        }
+
         public void open()
         {
             openPatientDialog.show(0, 0);

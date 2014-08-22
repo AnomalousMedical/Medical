@@ -185,6 +185,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<long> DependencyPluginIds
+        {
+            get
+            {
+                return IEnumerableUtil<long>.EmptyIterator;
+            }
+        }
+
         public SimObjectMover SimObjectMover
         {
             get

@@ -58,6 +58,7 @@ namespace Medical
                         using (var stream = VirtualFileSystem.Instance.openStream(propPath, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                         {
                             var propDefinition = SharedXmlSaver.Load<PropDefinition>(stream);
+                            propDefinition.DependencyPluginId = PluginId;
                             standaloneController.PropFactory.addDefinition(propDefinition);
                         }
                     }
@@ -149,6 +150,14 @@ namespace Medical
 
         [Editable]
         public String IconResourceFile { get; set; }
+
+        public IEnumerable<long> DependencyPluginIds
+        {
+            get
+            {
+                return IEnumerableUtil<long>.EmptyIterator;
+            }
+        }
 
         protected DDAtlasDependency(LoadInfo info)
         {

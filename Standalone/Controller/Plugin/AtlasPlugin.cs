@@ -45,5 +45,10 @@ namespace Medical
         /// Return true to allow the plugin to be uninstalled.
         /// </summary>
         bool AllowUninstall { get; }
+
+        /// <summary>
+        /// An enumerator over the plugin ids that this plugin is dependent on.
+        /// </summary>
+        IEnumerable<long> DependencyPluginIds { get; }
     }
 }

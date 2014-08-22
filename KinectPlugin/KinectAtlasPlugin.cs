@@ -151,6 +151,14 @@ namespace KinectPlugin
             }
         }
 
+        public IEnumerable<long> DependencyPluginIds
+        {
+            get
+            {
+                return IEnumerableUtil<long>.EmptyIterator;
+            }
+        }
+
         void sensorManager_SkeletonFrameReady(Skeleton[] skeletons)
         {
             if (skeletons.Length != 0)

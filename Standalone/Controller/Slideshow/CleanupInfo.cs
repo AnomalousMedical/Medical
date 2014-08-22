@@ -26,6 +26,11 @@ namespace Medical
             objects.Add(type, new List<object>());
         }
 
+        public bool hasObjectClass(String type)
+        {
+            return objects.ContainsKey(type);
+        }
+
         public void claimObject(String type, Object obj)
         {
             List<Object> objs;

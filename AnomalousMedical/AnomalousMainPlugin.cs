@@ -347,6 +347,14 @@ namespace Medical.GUI
             }
         }
 
+        public IEnumerable<long> DependencyPluginIds
+        {
+            get
+            {
+                return IEnumerableUtil<long>.EmptyIterator;
+            }
+        }
+
         public void showOptions()
         {
             options.show(0, 0);

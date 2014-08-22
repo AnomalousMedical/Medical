@@ -73,9 +73,12 @@ namespace Medical
                            where e.Attribute("onclick") != null
                            select e;
 
-            foreach (var element in triggers)
+            if (info.hasObjectClass(Slide.SlideActionClass))
             {
-                info.claimObject(Slide.SlideActionClass, element.Attribute("onclick").Value);
+                foreach (var element in triggers)
+                {
+                    info.claimObject(Slide.SlideActionClass, element.Attribute("onclick").Value);
+                }
             }
 
             base.claimFiles(info, resourceProvider, slide);

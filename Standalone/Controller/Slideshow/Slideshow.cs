@@ -85,6 +85,7 @@ namespace Medical
         public void cleanup(CleanupInfo cleanupInfo, ResourceProvider resourceProvider)
         {
             cleanupInfo.defineObjectClass(Slide.SlideActionClass);
+            cleanupInfo.defineObjectClass(ShowPropAction.PropClass);
             foreach (Slide slide in slides)
             {
                 slide.cleanup(cleanupInfo, resourceProvider);

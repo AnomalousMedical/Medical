@@ -695,6 +695,21 @@ namespace Lecture
                     Logging.Log.Error("Cleanup -- Failed to delete directory '{0}'. Reason: {1}", dir, ex.Message);
                 }
             }
+
+            PropFactory propFactory = standaloneController.PropFactory;
+            DDAtlasPlugin plugin;
+            using(Stream pluginFileStream = editorController.ResourceProvider.openFile("Plugin.ddp"))
+            {
+                plugin = SharedXmlSaver.Load<DDAtlasPlugin>(pluginFileStream);
+            }
+            plugin.setDependencyIds(cleanupInfo.getObjects<String>(ShowPropAction.PropClass)
+                    .Select(n => propFactory.getDependencyIdForProp(n))
+                    .Where(id => id.HasValue)
+                    .Select(id => id.Value));
+            using(Stream pluginFileStream = editorController.ResourceProvider.openWriteStream("Plugin.ddp"))
+            {
+                SharedXmlSaver.Save(plugin, pluginFileStream);
+            }
         }
 
         /// <summary>

@@ -18,6 +18,7 @@ namespace Medical
     {
         private List<DDPluginTask> tasks = new List<DDPluginTask>();
         private String pluginNamespace;
+        private List<long> dependencyIds = new List<long>();
 
         public DDAtlasPlugin()
         {
@@ -121,6 +122,17 @@ namespace Medical
             return false;
         }
 
+        /// <summary>
+        /// Set the DependencyIds for this plugin, this will clear out any existing ids so be sure to include
+        /// them all in your enumerator.
+        /// </summary>
+        /// <param name="dependencyIds">An enumerator over all the dependency ids for this plugin.</param>
+        public void setDependencyIds(IEnumerable<long> dependencyIds)
+        {
+            this.dependencyIds.Clear();
+            this.dependencyIds.AddRange(dependencyIds);
+        }
+
         public IEnumerable<DDPluginTask> Tasks
         {
             get
@@ -200,6 +212,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<long> DependencyPluginIds
+        {
+            get
+            {
+                return dependencyIds;
+            }
+        }
+
         #region Saveable Members
 
         protected DDAtlasPlugin(LoadInfo info)
@@ -212,6 +232,7 @@ namespace Medical
             BrandingImageKey = info.GetString("BrandingImageKey");
             VersionString = info.GetString("Version", "1.0.0.0");
             SequencesDirectory = info.GetString("SequencesDirectory", null);
+            info.RebuildList("DependencyId", dependencyIds);
         }
 
         public void getInfo(SaveInfo info)
@@ -224,6 +245,7 @@ namespace Medical
             info.AddValue("BrandingImageKey", BrandingImageKey);
             info.AddValue("Version", VersionString);
             info.AddValue("SequencesDirectory", SequencesDirectory);
+            info.ExtractList("DependencyId", dependencyIds);
         }
 
         #endregion
