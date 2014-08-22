@@ -28,7 +28,7 @@ namespace Medical
 
         public void loadGUIResources()
         {
-            
+            MyGUIPlugin.ResourceManager.Instance.load(System.IO.Path.Combine(RootFolder, IconResourceFile));
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -109,7 +109,7 @@ namespace Medical
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
