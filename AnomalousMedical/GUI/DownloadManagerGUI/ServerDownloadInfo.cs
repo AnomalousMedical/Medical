@@ -69,6 +69,16 @@ namespace Medical.GUI
             return false;
         }
 
+        /// <summary>
+        /// Determine if this download is for a given dependency plugin id.
+        /// </summary>
+        /// <param name="pluginId"></param>
+        /// <returns></returns>
+        public virtual bool shouldAutoDownlaod(IEnumerable<long> autoDownloadIds)
+        {
+            return false;
+        }
+
         public Download Download { get; protected set; }
 
         public String StatusString { get; set; }

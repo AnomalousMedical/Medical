@@ -40,6 +40,7 @@ namespace Medical
         public void initialize(StandaloneController standaloneController)
         {
             TimelineController = standaloneController.TimelineController;
+            AtlasPluginManager = standaloneController.AtlasPluginManager;
             MvcCore = standaloneController.MvcCore;
             GuiManager = standaloneController.GUIManager;
 
@@ -157,6 +158,8 @@ namespace Medical
         public String SequencesDirectory { get; set; }
 
         public TimelineController TimelineController { get; private set; }
+
+        public AtlasPluginManager AtlasPluginManager { get; private set; }
 
         public AnomalousMvcCore MvcCore { get; private set; }
 

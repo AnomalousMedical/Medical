@@ -31,6 +31,7 @@ namespace Medical.GUI
         private DownloadManagerServer downloadServer;
         private NotificationGUIManager notificationManager;
         private StandaloneController standaloneController;
+        private List<long> autoDownloadIds = new List<long>();
 
         public DownloadManagerGUI(StandaloneController standaloneController, DownloadManagerServer downloadServer)
             : base("Medical.GUI.DownloadManagerGUI.DownloadManagerGUI.layout", standaloneController.GUIManager)
@@ -82,6 +83,11 @@ namespace Medical.GUI
             downloadServer.Dispose();
             activeNotDisposed = false;
             base.Dispose();
+        }
+
+        public void addAutoDownloadItems(IEnumerable<long> pluginIds)
+        {
+            autoDownloadIds.AddRange(pluginIds);
         }
 
         void PluginManagerGUI_Showing(object sender, EventArgs e)
@@ -138,6 +144,29 @@ namespace Medical.GUI
             {
                 readingServerPluginInfo = false;
                 readingInfo.Visible = false;
+                queueAutoDownloads();
+            }
+        }
+
+        private void queueAutoDownloads()
+        {
+            if (autoDownloadIds.Count > 0)
+            {
+                //Quite possibly the worst way to implement this, read the stuff that can be downloaded out of the button grid.
+                List<ServerDownloadInfo> pendingDownloads = new List<ServerDownloadInfo>();
+                foreach (var currentInfo in pluginGrid.Items.Select(i => i.UserObject as ServerDownloadInfo))
+                {
+                    if (currentInfo != null && (currentInfo.Status == ServerDownloadStatus.NotInstalled || currentInfo.Status == ServerDownloadStatus.Update) && currentInfo.shouldAutoDownlaod(autoDownloadIds))
+                    {
+                        pendingDownloads.Add(currentInfo);
+                    }
+                }
+                foreach (ServerDownloadInfo dlInfo in pendingDownloads)
+                {
+                    downloadItem(dlInfo.GUIItem, dlInfo, false);
+                }
+
+                autoDownloadIds.Clear();
             }
         }
 

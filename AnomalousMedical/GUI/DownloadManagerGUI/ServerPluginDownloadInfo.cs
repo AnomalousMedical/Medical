@@ -33,6 +33,11 @@ namespace Medical.GUI
             return other != null && Dependencies.Contains(other.PluginId);
         }
 
+        public override bool shouldAutoDownlaod(IEnumerable<long> autoDownloadIds)
+        {
+            return autoDownloadIds.Contains(PluginId);
+        }
+
         public override void downloadCompleted(Download download)
         {
             PluginDownload pluginDownload = (PluginDownload)download;

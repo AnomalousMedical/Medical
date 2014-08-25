@@ -22,7 +22,6 @@ namespace Medical
             NoUpdates = 0,
             PluginUpdates = 1,
             PlatformUpdate = 1 << 1,
-            FilesMissing = 1 << 2,
         }
 
         static ConfigFile updateInfo;
@@ -99,12 +98,7 @@ namespace Medical
                         foreach(var dependencyUpdate in updateInfo.DependencyUpdateInfo)
                         {
                             AtlasPlugin plugin = pluginManager.getPlugin(dependencyUpdate.PluginId);
-                            if (plugin == null) //alert about missing files
-                            {
-                                result |= UpdateCheckResult.FilesMissing;
-                                break;
-                            }
-                            else if(dependencyUpdate.Version > plugin.Version)
+                            if(plugin != null && dependencyUpdate.Version > plugin.Version)
                             {
                                 result |= UpdateCheckResult.PluginUpdates;
                                 break;

@@ -23,31 +23,44 @@ namespace Medical
 
         public override void clicked(TaskPositioner taskPositioner)
         {
-            VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider(Plugin.PluginRootFolder);
-            try
+            if (Plugin.AtlasPluginManager.allDependenciesLoadedFor(this.Plugin))
             {
-                Slideshow slideshow;
-                using (Stream stream = resourceProvider.openFile(SlideshowFile))
+                VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider(Plugin.PluginRootFolder);
+                try
                 {
-                    slideshow = SharedXmlSaver.Load<Slideshow>(stream);
+                    Slideshow slideshow;
+                    using (Stream stream = resourceProvider.openFile(SlideshowFile))
+                    {
+                        slideshow = SharedXmlSaver.Load<Slideshow>(stream);
+                    }
+                    if (slideshow.Version == Slideshow.CurrentVersion)
+                    {
+                        AnomalousMvcContext context = slideshow.createContext(resourceProvider, Plugin.GuiManager);
+                        context.RuntimeName = UniqueName;
+                        context.setResourceProvider(resourceProvider);
+                        Plugin.TimelineController.setResourceProvider(resourceProvider);
+                        Plugin.MvcCore.startRunningContext(context);
+                    }
+                    else
+                    {
+                        MessageBox.show(String.Format("Cannot run slideshow \"{0}.\" It was created in a different version of Anomalous Medical.\nYou will need to download an updated version.", Name), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                        InlineRmlUpgradeCache.removeSlideshowPanels(slideshow);
+                    }
                 }
-                if (slideshow.Version == Slideshow.CurrentVersion)
+                catch (Exception ex)
                 {
-                    AnomalousMvcContext context = slideshow.createContext(resourceProvider, Plugin.GuiManager);
-                    context.RuntimeName = UniqueName;
-                    context.setResourceProvider(resourceProvider);
-                    Plugin.TimelineController.setResourceProvider(resourceProvider);
-                    Plugin.MvcCore.startRunningContext(context);
-                }
-                else
-                {
-                    MessageBox.show(String.Format("Cannot run slideshow \"{0}.\" It was created in a different version of Anomalous Medical.\nYou will need to download an updated version.", Name), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                    InlineRmlUpgradeCache.removeSlideshowPanels(slideshow);
+                    Log.Error("Cannot load context '{0}'\nReason: {1}", SlideshowFile, ex.Message);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Log.Error("Cannot load context '{0}'\nReason: {1}", SlideshowFile, ex.Message);
+                MessageBox.show("Additional files needed to run this task. Would you like to download them now?", "Files Needed", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        Plugin.AtlasPluginManager.requestDependencyDownloadFor(this.Plugin);
+                    }
+                });
             }
         }
 

@@ -196,7 +196,7 @@ namespace Medical.GUI
             exitTaskItem.OnClicked += new CallbackTask.ClickedCallback(exitTaskItem_OnClicked);
             taskController.addTask(exitTaskItem);
 
-            CallbackTask toggleFullscreen = new CallbackTask("Medical.ToggleFullscreen", "Toggle Fullscreen", CommonResources.NoIcon, TaskMenuCategories.System, int.MaxValue - 2, false, (item) =>
+            CallbackTask toggleFullscreen = new CallbackTask("Medical.ToggleFullscreen", "Toggle Fullscreen", "AnomalousMedical/ToggleFullscreen", TaskMenuCategories.System, int.MaxValue - 2, false, (item) =>
             {
                 MainWindow.Instance.toggleFullscreen();
             });
@@ -243,6 +243,8 @@ namespace Medical.GUI
             toggleFullscreenMessageEvent.addButton(KeyboardButtonCode.KC_RETURN);
             toggleFullscreenMessageEvent.addButton(KeyboardButtonCode.KC_LMENU);
             standaloneController.MedicalController.EventManager.addEvent(toggleFullscreenMessageEvent);
+
+            standaloneController.AtlasPluginManager.RequestDependencyDownload += AtlasPluginManager_RequestDependencyDownload;
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)
@@ -410,13 +412,13 @@ namespace Medical.GUI
 
         void updateCheckCompleted(UpdateController.UpdateCheckResult result)
         {
-            if ((result & UpdateController.UpdateCheckResult.FilesMissing) != 0)
-            {
-                standaloneController.NotificationManager.showTaskNotification("Additional files needed\nClick Here to Download", downloadsTask.IconName, downloadsTask);
-            }
-            else if(result > 0)
+            if(result > 0)
             {
                 standaloneController.NotificationManager.showTaskNotification("Update(s) Found\nClick Here to Download", downloadsTask.IconName, downloadsTask);
+            }
+            if(!standaloneController.AtlasPluginManager.allDependenciesLoaded())
+            {
+                standaloneController.NotificationManager.showTaskNotification("Additional Files Needed\nClick Here to Download", downloadsTask.IconName, downloadsTask);
             }
         }
 
@@ -509,6 +511,16 @@ namespace Medical.GUI
         void SelectionModeChooser_ShowBuyMessage()
         {
             buyScreens.showScreen(BuyScreens.SelectionMode);
+        }
+
+        void AtlasPluginManager_RequestDependencyDownload(AtlasPlugin obj)
+        {
+            downloadManagerGUI.addAutoDownloadItems(obj.DependencyPluginIds);
+            var downloadGUITask = standaloneController.DownloadController.OpenDownloadGUITask;
+            if (downloadGUITask != null)
+            {
+                downloadGUITask.clicked(null);
+            }
         }
     }
 }

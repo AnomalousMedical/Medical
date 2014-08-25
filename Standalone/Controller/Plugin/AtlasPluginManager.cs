@@ -32,9 +32,15 @@ namespace Medical
         private bool addedPluginsToMyGUIResourceGroup = false;
         private ManagePluginInstructions managePluginInstructions;
         private HashSet<long> usedPluginIds = new HashSet<long>();
+        private HashSet<long> loadedDependencyPluginIds = new HashSet<long>();
 
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
+
+        /// <summary>
+        /// This event is fired if the dependencies for a given plugin are requested to be downloaded.
+        /// </summary>
+        public event Action<AtlasPlugin> RequestDependencyDownload;
 
         private DataFileVerifier dataFileVerifier;
 
@@ -374,6 +380,10 @@ namespace Medical
         private void addDependency(AtlasDependency dependency)
         {
             uninitializedPlugins.Insert(0, dependency);
+            if(!loadedDependencyPluginIds.Contains(dependency.PluginId))
+            {
+                loadedDependencyPluginIds.Add(dependency.PluginId);
+            }
         }
 
         public AtlasPlugin getPlugin(long pluginId)
@@ -447,6 +457,30 @@ namespace Medical
             uninitializedPlugins.Clear();
         }
 
+        public bool allDependenciesLoaded()
+        {
+            foreach(AtlasPlugin plugin in plugins)
+            {
+                if (!allDependenciesLoadedFor(plugin))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool allDependenciesLoadedFor(AtlasPlugin plugin)
+        {
+            foreach (long dependencyPluginId in plugin.DependencyPluginIds)
+            {
+                if (!loadedDependencyPluginIds.Contains(dependencyPluginId))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         internal void setMainInterfaceEnabled(bool enabled)
         {
             foreach (AtlasPlugin plugin in plugins)
@@ -460,6 +494,18 @@ namespace Medical
             foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.sceneRevealed();
+            }
+        }
+
+        /// <summary>
+        /// Fire a request to download the dependencies for a given plugin.
+        /// </summary>
+        /// <param name="plugin">The plugin to download dependencies for.</param>
+        public void requestDependencyDownloadFor(AtlasPlugin plugin)
+        {
+            if(RequestDependencyDownload != null)
+            {
+                RequestDependencyDownload(plugin);
             }
         }
 

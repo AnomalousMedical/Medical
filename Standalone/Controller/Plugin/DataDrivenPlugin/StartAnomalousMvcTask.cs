@@ -8,6 +8,7 @@ using Medical.Controller.AnomalousMvc;
 using System.IO;
 using Logging;
 using Medical.Editor;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -21,22 +22,35 @@ namespace Medical
 
         public override void clicked(TaskPositioner taskPositioner)
         {
-            VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider(Plugin.PluginRootFolder);
-            try
+            if (Plugin.AtlasPluginManager.allDependenciesLoadedFor(this.Plugin))
             {
-                AnomalousMvcContext context;
-                using (Stream stream = resourceProvider.openFile(ContextFile))
+                VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider(Plugin.PluginRootFolder);
+                try
                 {
-                    context = Plugin.MvcCore.loadContext(stream);
+                    AnomalousMvcContext context;
+                    using (Stream stream = resourceProvider.openFile(ContextFile))
+                    {
+                        context = Plugin.MvcCore.loadContext(stream);
+                    }
+                    context.RuntimeName = UniqueName;
+                    context.setResourceProvider(resourceProvider);
+                    Plugin.TimelineController.setResourceProvider(resourceProvider);
+                    Plugin.MvcCore.startRunningContext(context);
                 }
-                context.RuntimeName = UniqueName;
-                context.setResourceProvider(resourceProvider);
-                Plugin.TimelineController.setResourceProvider(resourceProvider);
-                Plugin.MvcCore.startRunningContext(context);
+                catch (Exception ex)
+                {
+                    Log.Error("Cannot load context '{0}'\nReason: {1}", ContextFile, ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Log.Error("Cannot load context '{0}'\nReason: {1}", ContextFile, ex.Message);
+                MessageBox.show("Additional files needed to run this task. Would you like to download them now?", "Files Needed", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        Plugin.AtlasPluginManager.requestDependencyDownloadFor(this.Plugin);
+                    }
+                });
             }
         }
 
