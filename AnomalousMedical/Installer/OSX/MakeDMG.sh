@@ -15,13 +15,16 @@ DMG_NAME=$3
 LAYOUT_FOLDER=$4
 LICENSE_FOLDER=$5
 
-sudo rm -r "$DMG_NAME"
-sudo rm "$DMG_NAME.dmg"
+rm -r "$DMG_NAME"
+rm "$DMG_NAME.dmg"
 
 mkdir -p "$DMG_NAME"
 
-cp -r "$APP_PATH/$APP_NAME.app" "$DMG_NAME/$APP_NAME.app"
+# Use pax to copy, keeps sym links valid, have to be in the folder with the app bundle for this to work however.
+cd $APP_PATH
+pax -rw "$APP_NAME.app" "$START_PATH/$DMG_NAME"
+cd $START_PATH
 
 dropdmg --layout-folder="$LAYOUT_FOLDER" --license-folder="$LICENSE_FOLDER" --internet-enabled "$DMG_NAME"
 
-sudo rm -r "$DMG_NAME"
+rm -r "$DMG_NAME"
