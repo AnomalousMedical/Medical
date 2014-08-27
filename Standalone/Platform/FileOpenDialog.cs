@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -68,14 +69,17 @@ namespace Medical
 
                 resultCb = (result) =>
                 {
-                    try
+                    ThreadManager.invoke(() =>
                     {
-                        this.showModalCallback(result, paths);
-                    }
-                    finally
-                    {
-                        this.Dispose();
-                    }
+                        try
+                        {
+                            this.showModalCallback(result, paths);
+                        }
+                        finally
+                        {
+                            this.Dispose();
+                        }
+                    });
                 };
             }
 

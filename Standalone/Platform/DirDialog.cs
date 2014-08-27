@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -50,14 +51,18 @@ namespace Medical
 
                 resultCb = (result, filePtr) =>
                 {
-                    try
+                    String managedFileString = Marshal.PtrToStringUni(filePtr);
+                    ThreadManager.invoke(() =>
                     {
-                        this.showModalCallback(result, Marshal.PtrToStringUni(filePtr));
-                    }
-                    finally
-                    {
-                        this.Dispose();
-                    }
+                        try
+                        {
+                            this.showModalCallback(result, managedFileString);
+                        }
+                        finally
+                        {
+                            this.Dispose();
+                        }
+                    });
                 };
             }
 

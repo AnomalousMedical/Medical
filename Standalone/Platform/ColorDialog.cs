@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using System.Runtime.InteropServices;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -47,14 +48,17 @@ namespace Medical
 
                 resultCb = (result, color) =>
                 {
-                    try
+                    ThreadManager.invoke(() =>
                     {
-                        this.showModalCallback(result, color);
-                    }
-                    finally
-                    {
-                        this.Dispose();
-                    }
+                        try
+                        {
+                            this.showModalCallback(result, color);
+                        }
+                        finally
+                        {
+                            this.Dispose();
+                        }
+                    });
                 };
             }
 
