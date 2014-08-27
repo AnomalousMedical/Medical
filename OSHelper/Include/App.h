@@ -19,7 +19,6 @@ public:
     
 	bool fireIdle()
     {
-        //return true;
         return onIdleCB();
     }
     

@@ -51,7 +51,6 @@ void CocoaApp::run()
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     [app run];
-    fireExit();
     
     [pool drain];
 }

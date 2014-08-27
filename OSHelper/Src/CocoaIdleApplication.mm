@@ -29,34 +29,43 @@ enum EventSubtypes
     cocoaApp = app;
 }
 
--(void)sendEvent:(NSEvent*) event
+- (void)run
 {
-    if([event type] == NSApplicationDefined && event.subtype == IDLE_EVENT_SUBTYPE)
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSEvent *event;
+    
+    [self finishLaunching];
+    
+    shouldKeepRunning = cocoaApp->fireInit();
+    
+    while(shouldKeepRunning)
     {
-        if(cocoaApp->fireIdle())
+        [pool release];
+        pool = [[NSAutoreleasePool alloc] init];
+        
+        //Grab an event, if one is found process it otherwise tell the program to idle.
+        event = [self nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];
+        if(event != nil)
         {
-            [self postEvent:[NSEvent otherEventWithType:NSApplicationDefined location:NSZeroPoint modifierFlags:NSAnyEventMask timestamp:0 windowNumber:0 context:nil subtype:IDLE_EVENT_SUBTYPE data1:0 data2:0] atStart:NO];
+            [self sendEvent:event];
         }
         else
         {
-            [self doStopApplication];
+            cocoaApp->fireIdle();
         }
+        
+        [self updateWindows];
+        
     }
-    else
-    {
-        [super sendEvent:event];
-    }
-}
-
--(void)startIdleCallbacks
-{
-    [self postEvent:[NSEvent otherEventWithType:NSApplicationDefined location:NSZeroPoint modifierFlags:NSAnyEventMask timestamp:0 windowNumber:0 context:nil subtype:IDLE_EVENT_SUBTYPE data1:0 data2:0] atStart:NO];
+    
+    cocoaApp->fireExit();
+    
+    [pool release];
 }
 
 -(void)doStopApplication
 {
-    [self stop:nil];
-    [self postEvent:[NSEvent otherEventWithType:NSApplicationDefined location:NSZeroPoint modifierFlags:NSAnyEventMask timestamp:0 windowNumber:0 context:nil subtype:EXIT_EVENT_SUBTYPE data1:0 data2:0] atStart:NO];
+    shouldKeepRunning = NO;
 }
 
 @end

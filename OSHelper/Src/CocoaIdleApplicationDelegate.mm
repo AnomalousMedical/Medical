@@ -12,23 +12,12 @@
     return self;
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    if(cocoaApp->fireInit())
-    {
-        [app startIdleCallbacks];
-    }
-    else
-    {
-        [app doStopApplication];
-    }
-}
-
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
-    //We need the stack to unwind, stop termination and run our stop
+    //We need the stack to unwind, cancel termination and run our stop, this will cause the loop in IdleApplication.run to stop and will
+    //unwind back up to the c# main.
     [app doStopApplication];
-    return NO;
+    return NSTerminateCancel;
 }
 
 @end
