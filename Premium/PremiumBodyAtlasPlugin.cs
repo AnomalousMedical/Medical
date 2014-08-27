@@ -98,7 +98,10 @@ namespace Medical
             taskController.addTask(notesTask);
 
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
-            standaloneController.TaskController.addTask(new CloneWindowTask(standaloneController, cloneWindowDialog));
+            if (PlatformConfig.AllowCloneWindows)
+            {
+                standaloneController.TaskController.addTask(new CloneWindowTask(standaloneController, cloneWindowDialog));
+            }
             taskController.addTask(windowLayout);
         }
 
