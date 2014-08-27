@@ -15,7 +15,7 @@ namespace Medical
         delegate int OnExitDelegate();
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        delegate bool OnIdleDelegate();
+        delegate void OnIdleDelegate();
 
         OnInitDelegate onInitCB;
         OnExitDelegate onExitCB;
@@ -63,7 +63,7 @@ namespace Medical
 
         public abstract int OnExit();
 
-        public abstract bool OnIdle();
+        public abstract void OnIdle();
 
         [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr App_create();

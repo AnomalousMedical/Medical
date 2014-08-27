@@ -2,7 +2,7 @@
 
 typedef bool (*OnInitDelegate)();
 typedef int (*OnExitDelegate)();
-typedef bool (*OnIdleDelegate)();
+typedef void (*OnIdleDelegate)();
 
 class App
 {
@@ -17,9 +17,9 @@ public:
     
     virtual void exit() = 0;
     
-	bool fireIdle()
+	void fireIdle()
     {
-        return onIdleCB();
+        onIdleCB();
     }
     
     bool fireInit()
