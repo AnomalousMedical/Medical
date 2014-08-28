@@ -101,7 +101,7 @@ namespace Medical.Controller
 
         private bool getCameraRay(EventLayer eventLayer, out Ray3 cameraRay)
         {
-            Vector3 absMouse = eventLayer.Mouse.getAbsMouse();
+            Vector3 absMouse = eventLayer.Mouse.AbsolutePosition;
             if (!Gui.Instance.HandledMouse && !InputManager.Instance.isModalAny())
             {
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;

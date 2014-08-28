@@ -64,24 +64,36 @@ namespace Medical
             lastMouse = absMouse;
         }
 
-        public override Vector3 getAbsMouse()
+        public override Vector3 AbsolutePosition
         {
-            return absMouse;
+            get
+            {
+                return absMouse;
+            }
         }
 
-        public override float getMouseAreaHeight()
+        public override Vector3 RelativePosition
         {
-            return window.WindowHeight;
+            get
+            {
+                return relMouse;
+            }
         }
 
-        public override float getMouseAreaWidth()
+        public override float AreaWidth
         {
-            return window.WindowWidth;
+            get
+            {
+                return window.WindowWidth;
+            }
         }
 
-        public override Vector3 getRelMouse()
+        public override float AreaHeight
         {
-            return relMouse;
+            get
+            {
+                return window.WindowHeight;
+            }
         }
 
         public override void setSensitivity(float sensitivity)

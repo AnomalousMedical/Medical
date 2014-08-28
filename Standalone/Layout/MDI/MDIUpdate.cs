@@ -37,7 +37,7 @@ namespace Medical.Controller
         {
             //Mouse
             Mouse mouse = eventLayer.Mouse;
-            Vector3 mousePos = mouse.getAbsMouse();
+            Vector3 mousePos = mouse.AbsolutePosition;
             mdiManager.injectMouseLocation(mousePos);
             for (int i = 0; i < mouseButtonsDown.Length; i++)
             {

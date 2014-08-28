@@ -224,7 +224,7 @@ namespace Medical
 
         private void mouseMove()
         {
-            Vector3 mouseCoords = events.Mouse.getAbsMouse();
+            Vector3 mouseCoords = events.Mouse.AbsolutePosition;
             bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());
             if (events[CameraEvents.RotateCamera].FirstFrameDown)
             {
@@ -237,7 +237,7 @@ namespace Medical
             {
                 currentlyInMotion = false;
             }
-            mouseCoords = events.Mouse.getRelMouse();
+            mouseCoords = events.Mouse.RelativePosition;
             if (currentlyInMotion)
             {
                 if (events[CameraEvents.PanCamera].Down)
@@ -245,11 +245,11 @@ namespace Medical
                     float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
                     if (events[CameraEvents.LockX].Up)
                     {
-                        lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * scaleFactor);
+                        lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.AreaWidth * SCROLL_SCALE) * scaleFactor);
                     }
                     if (events[CameraEvents.LockY].Up)
                     {
-                        lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * scaleFactor);
+                        lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.AreaHeight * SCROLL_SCALE) * scaleFactor);
                     }
                     moveLookAt();
                     stopMaintainingIncludePoint();

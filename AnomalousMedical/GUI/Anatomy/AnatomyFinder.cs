@@ -268,12 +268,12 @@ namespace Medical.GUI
 
         void pickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
         {
-            mouseDownMousePos = eventLayer.Mouse.getAbsMouse();
+            mouseDownMousePos = eventLayer.Mouse.AbsolutePosition;
         }
 
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
-            Vector3 absMouse = eventLayer.Mouse.getAbsMouse();
+            Vector3 absMouse = eventLayer.Mouse.AbsolutePosition;
             Vector3 mouseMovedAmount = mouseDownMousePos - absMouse;
             mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
             mouseMovedAmount.y = Math.Abs(mouseMovedAmount.y);

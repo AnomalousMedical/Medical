@@ -66,7 +66,7 @@ namespace Medical
         {
             //Process the mouse
             Mouse mouse = events.Mouse;
-            Vector3 mouseLoc = mouse.getAbsMouse();
+            Vector3 mouseLoc = mouse.AbsolutePosition;
             Ray3 spaceRay = new Ray3();
             Vector3 cameraPos = Vector3.Zero;
             CameraMotionValidator validator = CameraResolver.getValidatorForLocation((int)mouseLoc.x, (int)mouseLoc.y);
