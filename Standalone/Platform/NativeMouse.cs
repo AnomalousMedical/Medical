@@ -96,11 +96,6 @@ namespace Medical
             }
         }
 
-        public override void setSensitivity(float sensitivity)
-        {
-            
-        }
-
         void OnMouseDown(MouseButtonCode id)
         {
             buttonDownStatus[(int)id] = true;
