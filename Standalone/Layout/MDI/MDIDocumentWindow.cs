@@ -37,7 +37,7 @@ namespace Medical.Controller
             captionButton = mainWidget.findWidget("CaptionButton") as Button;
             if (captionButton != null)
             {
-                captionButton.MouseButtonPressed += new MyGUIEvent(captionButton_MouseButtonClick);
+                captionButton.MouseButtonPressed += new MyGUIEvent(captionButton_MouseButtonPressed);
                 captionButton.MouseDrag += new MyGUIEvent(captionButton_MouseDrag);
                 captionButton.MouseButtonReleased += new MyGUIEvent(captionButton_MouseButtonReleased);
                 captionButton.Pointer = MainWindow.HAND;
@@ -256,7 +256,7 @@ namespace Medical.Controller
             close();
         }
 
-        void captionButton_MouseButtonClick(Widget source, EventArgs e)
+        void captionButton_MouseButtonPressed(Widget source, EventArgs e)
         {
             layoutManager.ActiveWindow = this;
             MouseEventArgs me = (MouseEventArgs)e;

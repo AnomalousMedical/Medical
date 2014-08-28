@@ -800,7 +800,6 @@
     <Compile Include="Layout\MDI\MDIContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIException.cs" />
     <Compile Include="Layout\MDI\MDILayoutManager.cs" />
-    <Compile Include="Layout\MDI\MDIUpdate.cs" />
     <Compile Include="Layout\MDI\MDIWindow.cs" />
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
     <Compile Include="Layout\MDI\MDILayoutContainer.cs" />

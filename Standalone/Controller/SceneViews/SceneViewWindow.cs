@@ -451,54 +451,6 @@ namespace Medical.Controller
             }
         }
 
-        public float YawVelocity
-        {
-            get
-            {
-                return cameraMover.YawVelocity;
-            }
-            set
-            {
-                cameraMover.YawVelocity = value;
-            }
-        }
-
-        public float PitchVelocity
-        {
-            get
-            {
-                return cameraMover.PitchVelocity;
-            }
-            set
-            {
-                cameraMover.PitchVelocity = value;
-            }
-        }
-
-        public Vector2 PanVelocity
-        {
-            get
-            {
-                return cameraMover.PanVelocity;
-            }
-            set
-            {
-                cameraMover.PanVelocity = value;
-            }
-        }
-
-        public float ZoomVelocity
-        {
-            get
-            {
-                return cameraMover.ZoomVelocity;
-            }
-            set
-            {
-                cameraMover.ZoomVelocity = value;
-            }
-        }
-
         public String CurrentTransparencyState
         {
             get
@@ -695,6 +647,14 @@ namespace Medical.Controller
             {
                 window = value;
             }
+        }
+
+        /// <summary>
+        /// This function is called when the SceneViewManager makes this ScenViewWindow the active scene view.
+        /// </summary>
+        protected internal virtual void _madeActiveSceneView()
+        {
+
         }
 
         void sceneView_RenderingEnded(SceneView sceneView)

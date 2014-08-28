@@ -137,18 +137,7 @@ namespace Medical.Controller
 
             if (window == activeWindow)
             {
-                if (mdiWindows.Count > 0)
-                {
-                    activeWindow = mdiWindows[0];
-                    if (ActiveWindowChanged != null)
-                    {
-                        ActiveWindowChanged.Invoke(activeWindow);
-                    }
-                }
-                else
-                {
-                    activeWindow = null;
-                }
+                ActiveWindow = mdiWindows.FirstOrDefault();
             }
 
             window.Dispose();
@@ -312,9 +301,24 @@ namespace Medical.Controller
             {
                 if (activeWindow == null)
                 {
-                    return mdiWindows.Count > 0 ? mdiWindows[0] : null;
+                    return mdiWindows.FirstOrDefault();
                 }
                 return activeWindow;
+            }
+            private set
+            {
+                if(activeWindow != value)
+                {
+                    activeWindow = value;
+                    if (activeWindow != null)
+                    {
+                        activeWindow._madeActiveSceneView();
+                    }
+                    if(ActiveWindowChanged != null)
+                    {
+                        ActiveWindowChanged.Invoke(activeWindow);
+                    }
+                }
             }
         }
 
@@ -402,23 +406,15 @@ namespace Medical.Controller
                 MDISceneViewWindow mdiSceneWindow = window as MDISceneViewWindow;
                 if (mdiSceneWindow != null && mdiSceneWindow._getMDIWindow() == activeMDIWindow)
                 {
-                    activeWindow = window;
-                    if (ActiveWindowChanged != null)
-                    {
-                        ActiveWindowChanged.Invoke(window);
-                    }
+                    ActiveWindow = window;
                     foundWindow = true;
                     break;
                 }
             }
             //If we did not find the window specified, use the first window as the current window
-            if (!foundWindow && mdiWindows.Count > 0)
+            if (!foundWindow)
             {
-                activeWindow = mdiWindows[0];
-                if (ActiveWindowChanged != null)
-                {
-                    ActiveWindowChanged.Invoke(activeWindow);
-                }
+                ActiveWindow = mdiWindows.FirstOrDefault();
             }
         }
 

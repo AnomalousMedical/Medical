@@ -203,7 +203,6 @@ namespace Medical
 
             //MDI Layout
             mdiLayout = new MDILayoutManager();
-            medicalController.MainTimer.addUpdateListener(new MDIUpdate(medicalController.EventManager.DefaultEventLayer, mdiLayout));
 
             //SceneView
             MyGUIInterface myGUI = MyGUIInterface.Instance;

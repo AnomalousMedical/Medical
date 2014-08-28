@@ -109,12 +109,6 @@ namespace Medical
         Vector3 targetRotatedUp;
         Vector3 targetRotatedLeft;
 
-        //Velocity move variables
-        private float pitchVelocity = 0.0f;
-        private float yawVelocity = 0.0f;
-        private Vector2 panVelocity = new Vector2(0.0f, 0.0f);
-        private float zoomVelocity = 0.0f;
-
         private bool allowRotation = true;
         private bool allowZoom = true;
         private EasingFunction easingFunction = EasingFunction.EaseOutQuadratic;
@@ -185,41 +179,11 @@ namespace Medical
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
                     camera.LookAt = lookAt;
                 }
-                else if (!velocityMove() && !Gui.Instance.HandledMouseButtons)
+                else if (!Gui.Instance.HandledMouseButtons)
                 {
                     mouseMove();
                 }
             }
-        }
-
-        /// <summary>
-        /// This funciton will move stuff based on velocities. This allows joystick control of the camera.
-        /// </summary>
-        /// <returns></returns>
-        private bool velocityMove()
-        {
-            bool moved = false;
-            if (yawVelocity != 0.0f || pitchVelocity != 0.0f)
-            {
-                yaw += yawVelocity;
-                pitch += pitchVelocity;
-                moveCameraYawPitch();
-                moved = true;
-            }
-            if (panVelocity.x != 0.0f || panVelocity.y != 0.0f)
-            {
-                lookAt += rotatedLeft * panVelocity.x;
-                lookAt += rotatedUp * panVelocity.y;
-                moveLookAt();
-                moved = true;
-            }
-            if (zoomVelocity != 0.0f)
-            {
-                orbitDistance += zoomVelocity;
-                moveZoom();
-                moved = true;
-            }
-            return moved;
         }
 
         private void mouseMove()
@@ -558,54 +522,6 @@ namespace Medical
             set
             {
                 allowZoom = value;
-            }
-        }
-
-        public override float YawVelocity
-        {
-            get
-            {
-                return yawVelocity;
-            }
-            set
-            {
-                yawVelocity = value;
-            }
-        }
-
-        public override float PitchVelocity
-        {
-            get
-            {
-                return pitchVelocity;
-            }
-            set
-            {
-                pitchVelocity = value;
-            }
-        }
-
-        public override float ZoomVelocity
-        {
-            get
-            {
-                return zoomVelocity;
-            }
-            set
-            {
-                zoomVelocity = value;
-            }
-        }
-
-        public override Vector2 PanVelocity
-        {
-            get
-            {
-                return panVelocity;
-            }
-            set
-            {
-                panVelocity = value;
             }
         }
 

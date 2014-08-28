@@ -140,40 +140,6 @@ namespace Medical.Controller
         }
 
         /// <summary>
-        /// Inject a mouse button down event.
-        /// </summary>
-        /// <param name="absMouse">The location of the event.</param>
-        /// <param name="mouseButton">The mouse button that was pressed.</param>
-        /// <param name="mouseAlreadyHandled">True if some other subsystem already did some mouse input.</param>
-        public void injectMouseDown(Vector3 absMouse, MouseButtonCode mouseButton, bool mouseAlreadyHandled)
-        {
-            if (!mouseAlreadyHandled && (mouseButton == MouseButtonCode.MB_BUTTON0 || mouseButton == MouseButtonCode.MB_BUTTON1))
-            {
-                ActiveWindow = findWindow(absMouse);
-            }
-        }
-
-        /// <summary>
-        /// Inject a mouse button up event.
-        /// </summary>
-        /// <param name="absMouse">The location of the event.</param>
-        /// <param name="mouseButton">The mouse button that was pressed.</param>
-        /// <param name="mouseAlreadyHandled">True if some other subsystem already did some mouse input.</param>
-        public void injectMouseUp(Vector3 absMouse, MouseButtonCode mouseButton, bool mouseAlreadyHandled)
-        {
-            
-        }
-
-        /// <summary>
-        /// Inject the mouse location.
-        /// </summary>
-        /// <param name="absMouse">The location of the mouse cursor.</param>
-        public void injectMouseLocation(Vector3 absMouse)
-        {
-
-        }
-
-        /// <summary>
         /// LayoutContainer function
         /// </summary>
         public override void bringToFront()
@@ -308,25 +274,6 @@ namespace Medical.Controller
             }
             window._setMDILayoutManager(this);
             windows.Add(window);
-        }
-
-        /// <summary>
-        /// Helper function to find a window at the given location.
-        /// </summary>
-        /// <param name="absMouse"></param>
-        /// <returns></returns>
-        private MDIWindow findWindow(Vector3 absMouse)
-        {
-            foreach (MDIWindow window in windows)
-            {
-                IntVector2 topLeft = window.Location;
-                IntVector2 bottomRight = new IntVector2(window.WorkingSize.Width + topLeft.x, window.WorkingSize.Height + topLeft.y);
-                if (topLeft.x < absMouse.x && topLeft.y < absMouse.y && bottomRight.x > absMouse.x && bottomRight.y > absMouse.y)
-                {
-                    return window;
-                }
-            }
-            return null;
         }
     }
 }

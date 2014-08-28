@@ -81,6 +81,11 @@ namespace Medical.Controller
             return mdiWindow;
         }
 
+        protected internal override void _madeActiveSceneView()
+        {
+            TransparencyController.ActiveTransparencyState = CurrentTransparencyState;
+        }
+
         void mdiWindow_Closed(object sender, EventArgs e)
         {
             controller.destroyWindow(this);
