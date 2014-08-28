@@ -66,7 +66,6 @@ namespace Medical.Controller
             this.startLookAt = cameraMover.LookAt;
             transparencyStateName = name;
             TransparencyController.createTransparencyState(transparencyStateName);
-            UseDefaultTransparency = false;
             NearPlaneWorldPos = 200;
             FarPlaneWorldPos = -200;
         }
@@ -455,11 +454,9 @@ namespace Medical.Controller
         {
             get
             {
-                return UseDefaultTransparency ? TransparencyController.DefaultTransparencyState : transparencyStateName;
+                return transparencyStateName;
             }
         }
-
-        public bool UseDefaultTransparency { get; set; }
 
         public String Name
         {
