@@ -117,14 +117,14 @@ namespace Medical
             absMouse.x = x;
             absMouse.y = y;
 
-            fireMoved(MouseButtonCode.NUM_BUTTONS);
+            fireMoved();
         }
 
         void OnMouseWheel(int z)
         {
             absMouse.z += z;
 
-            fireMoved(MouseButtonCode.NUM_BUTTONS);
+            fireMoved();
         }
 
         #region PInvoke
