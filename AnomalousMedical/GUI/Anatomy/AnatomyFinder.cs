@@ -39,9 +39,9 @@ namespace Medical.GUI
         
         static AnatomyFinder()
         {
-            //pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy);
-            //pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
-            //DefaultEvents.registerDefaultEvent(pickAnatomy);
+            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy);
+            pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
+            DefaultEvents.registerDefaultEvent(pickAnatomy);
 
             changeSelectionMode = new MessageEvent(AnatomyFinderEvents.ChangeSelectionMode);
             changeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
@@ -87,8 +87,6 @@ namespace Medical.GUI
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
             this.eventManager = eventManager;
-            eventManager.Mouse.ButtonDown += mouse_ButtonDown;
-            eventManager.Mouse.ButtonUp += mouse_ButtonUp;
 
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
@@ -124,10 +122,10 @@ namespace Medical.GUI
             setupSelectionButton(SelectionMode.Remove, "RemoveButton");
             selectionMode.Selection = SelectionMode.Select;
 
-            //pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
-            //pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
-            changeSelectionMode.FirstFrameUpEvent += new MessageEventCallback(changeSelectionMode_FirstFrameUpEvent);
-            openAnatomyFinder.FirstFrameUpEvent += new MessageEventCallback(openAnatomyFinder_FirstFrameUpEvent);
+            pickAnatomy.FirstFrameDownEvent += pickAnatomy_FirstFrameDownEvent;
+            pickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
+            changeSelectionMode.FirstFrameUpEvent += changeSelectionMode_FirstFrameUpEvent;
+            openAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
             toggleAddMode.FirstFrameDownEvent += toggleAdMode_FirstFrameDownEvent;
             toggleAddMode.FirstFrameUpEvent += toggleAdMode_FirstFrameUpEvent;
             toggleRemoveMode.FirstFrameDownEvent += toggleRemoveMode_FirstFrameDownEvent;
@@ -143,6 +141,22 @@ namespace Medical.GUI
             fixListItemWidth();
 
             updateSearch();
+        }
+
+        public override void Dispose()
+        {
+            pickAnatomy.FirstFrameDownEvent -= pickAnatomy_FirstFrameDownEvent;
+            pickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
+            changeSelectionMode.FirstFrameUpEvent -= changeSelectionMode_FirstFrameUpEvent;
+            openAnatomyFinder.FirstFrameUpEvent -= openAnatomyFinder_FirstFrameUpEvent;
+            toggleAddMode.FirstFrameDownEvent -= toggleAdMode_FirstFrameDownEvent;
+            toggleAddMode.FirstFrameUpEvent -= toggleAdMode_FirstFrameUpEvent;
+            toggleRemoveMode.FirstFrameDownEvent -= toggleRemoveMode_FirstFrameDownEvent;
+            toggleRemoveMode.FirstFrameUpEvent -= toggleRemoveMode_FirstFrameUpEvent;
+
+            buttonGridThumbs.Dispose();
+            anatomyWindowManager.Dispose();
+            base.Dispose();
         }
 
         private void setupSelectionButton(SelectionMode mode, String name)
@@ -177,15 +191,6 @@ namespace Medical.GUI
         void button_UserObject_EventToolTip(Widget source, EventArgs e)
         {
             TooltipManager.Instance.processTooltip(source, source.UserObject.ToString(), (ToolTipEventArgs)e);
-        }
-
-        public override void Dispose()
-        {
-            buttonGridThumbs.Dispose();
-            eventManager.Mouse.ButtonDown -= mouse_ButtonDown;
-            eventManager.Mouse.ButtonUp -= mouse_ButtonUp;
-            anatomyWindowManager.Dispose();
-            base.Dispose();
         }
 
         public void sceneUnloading()
@@ -262,22 +267,6 @@ namespace Medical.GUI
             String search = searchBox.Caption;
             anatomyController.findAnatomy(search);
             clearButton.Visible = !String.IsNullOrEmpty(search);
-        }
-
-        void mouse_ButtonUp(Mouse mouse, MouseButtonCode buttonCode)
-        {
-            if (buttonCode == MouseButtonCode.MB_BUTTON0)
-            {
-                pickAnatomy_FirstFrameUpEvent(eventManager);
-            }
-        }
-
-        void mouse_ButtonDown(Mouse mouse, MouseButtonCode buttonCode)
-        {
-            if (buttonCode == MouseButtonCode.MB_BUTTON0)
-            {
-                pickAnatomy_FirstFrameDownEvent(eventManager);
-            }
         }
 
         void pickAnatomy_FirstFrameDownEvent(EventManager eventManager)
