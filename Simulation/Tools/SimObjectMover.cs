@@ -30,13 +30,13 @@ namespace Medical
         private String name;
         private DebugDrawingSurface drawingSurface = null;
         private List<MovableObjectTools> movableObjects = new List<MovableObjectTools>();
-        private EventManager events;
+        private EventLayer events;
         private MovableObjectTools currentTools = null;
         private bool showMoveTools = false;
         private bool showRotateTools = false;
         private float toolSize = 1.0f;
 
-        public SimObjectMover(String name, PluginManager pluginManager, EventManager events)
+        public SimObjectMover(String name, PluginManager pluginManager, EventLayer events)
         {
             this.pluginManager = pluginManager;
             this.name = name;

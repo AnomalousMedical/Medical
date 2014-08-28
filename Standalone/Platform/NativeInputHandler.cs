@@ -30,25 +30,25 @@ namespace Medical
             }
         }
 
-        public override Keyboard createKeyboard(bool buffered)
+        public override KeyboardHardware createKeyboard(bool buffered, EventManager eventManager)
         {
             if (createdKeyboard == null)
             {
-                createdKeyboard = new NativeKeyboard(window);
+                createdKeyboard = new NativeKeyboard(window, eventManager);
             }
             return createdKeyboard;
         }
 
-        public override Mouse createMouse(bool buffered)
+        public override MouseHardware createMouse(bool buffered, EventManager eventManager)
         {
             if (createdMouse == null)
             {
-                createdMouse = new NativeMouse(window);
+                createdMouse = new NativeMouse(window, eventManager);
             }
             return createdMouse;
         }
 
-        public override void destroyKeyboard(Keyboard keyboard)
+        public override void destroyKeyboard(KeyboardHardware keyboard)
         {
             ((NativeKeyboard)keyboard).Dispose();
             if (keyboard == createdKeyboard)
@@ -57,7 +57,7 @@ namespace Medical
             }
         }
 
-        public override void destroyMouse(Mouse mouse)
+        public override void destroyMouse(MouseHardware mouse)
         {
             ((NativeMouse)mouse).Dispose();
             if (mouse == createdMouse)

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class NativeKeyboard : Engine.Platform.Keyboard, IDisposable
+    class NativeKeyboard : Engine.Platform.KeyboardHardware, IDisposable
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void KeyDownDelegate(KeyboardButtonCode keyCode, uint character);
@@ -19,16 +19,14 @@ namespace Medical
 
         private IntPtr nativeKeyboard;
 
-        public override event KeyEvent KeyPressed;
-        public override event KeyEvent KeyReleased;
-
         private NativeOSWindow window;
         private bool[] keysDown = new bool[256];
         bool altDown = false;
         bool ctrlDown = false;
         bool shiftDown = false;
 
-        public NativeKeyboard(NativeOSWindow window)
+        public NativeKeyboard(NativeOSWindow window, EventManager eventManager)
+            :base(eventManager)
         {
             this.window = window;
             window.Deactivated += window_Deactivated;
@@ -69,10 +67,7 @@ namespace Medical
                         ctrlDown = true;
                         break;
                 }
-                if (KeyPressed != null)
-                {
-                    KeyPressed.Invoke(keyCode, character);
-                }
+                fireKeyPressed(keyCode, character);
             }
         }
 
@@ -95,10 +90,7 @@ namespace Medical
                         ctrlDown = false;
                         break;
                 }
-                if (KeyReleased != null)
-                {
-                    KeyReleased.Invoke(keyCode, 0);
-                }
+                fireKeyReleased(keyCode, 0);
             }
         }
 

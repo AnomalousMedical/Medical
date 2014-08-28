@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class NativeMouse : Mouse, IDisposable
+    class NativeMouse : MouseHardware, IDisposable
     {
         private NativeOSWindow window;
         private Vector3 absMouse = Vector3.Zero;
@@ -31,7 +31,8 @@ namespace Medical
         MouseMoveDelegate mouseMoveCB;
         MouseWheelDelegate mouseWheelCB;
 
-        public NativeMouse(NativeOSWindow window)
+        public NativeMouse(NativeOSWindow window, EventManager eventManager)
+            :base(eventManager)
         {
             this.window = window;
 

@@ -56,7 +56,7 @@ namespace Medical
             return false;
         }
 
-        public void processSelection(EventManager events, ref Vector3 cameraPos, ref Ray3 spaceRay)
+        public void processSelection(EventLayer events, ref Vector3 cameraPos, ref Ray3 spaceRay)
         {
             if (MoveToolVisible)
             {

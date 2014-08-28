@@ -77,17 +77,14 @@ namespace Medical.GUI
         private const int MOUSE_MOVE_GRACE_PIXELS = 3;
 
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
-        private EventManager eventManager;
 
         private ButtonGroup<SelectionMode> selectionMode;
 
         public event Action ShowBuyMessage;
 
-        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, EventManager eventManager)
+        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
-            this.eventManager = eventManager;
-
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             anatomyController.ShowPremiumAnatomyChanged += anatomyController_ShowPremiumAnatomyChanged;
@@ -226,7 +223,7 @@ namespace Medical.GUI
 
         public IntVector2 DisplayHintLocation { get; private set; }
 
-        void openAnatomyFinder_FirstFrameUpEvent(EventManager eventManager)
+        void openAnatomyFinder_FirstFrameUpEvent(EventLayer eventLayer)
         {
             if (!Gui.Instance.HandledKeyboardButtons || InputManager.Instance.getKeyFocusWidget().RootWidget == window)
             {
@@ -269,14 +266,14 @@ namespace Medical.GUI
             clearButton.Visible = !String.IsNullOrEmpty(search);
         }
 
-        void pickAnatomy_FirstFrameDownEvent(EventManager eventManager)
+        void pickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
         {
-            mouseDownMousePos = eventManager.Mouse.getAbsMouse();
+            mouseDownMousePos = eventLayer.Mouse.getAbsMouse();
         }
 
-        void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
+        void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
-            Vector3 absMouse = eventManager.Mouse.getAbsMouse();
+            Vector3 absMouse = eventLayer.Mouse.getAbsMouse();
             Vector3 mouseMovedAmount = mouseDownMousePos - absMouse;
             mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
             mouseMovedAmount.y = Math.Abs(mouseMovedAmount.y);
@@ -314,7 +311,7 @@ namespace Medical.GUI
             }
         }
 
-        void changeSelectionMode_FirstFrameUpEvent(EventManager eventManager)
+        void changeSelectionMode_FirstFrameUpEvent(EventLayer eventLayer)
         {
             if (!Gui.Instance.HandledKeyboardButtons)
             {
@@ -522,7 +519,7 @@ namespace Medical.GUI
             }
         }
 
-        void toggleRemoveMode_FirstFrameUpEvent(EventManager eventManager)
+        void toggleRemoveMode_FirstFrameUpEvent(EventLayer eventLayer)
         {
             if(selectionMode.Selection == SelectionMode.Remove)
             {
@@ -530,12 +527,12 @@ namespace Medical.GUI
             }
         }
 
-        void toggleRemoveMode_FirstFrameDownEvent(EventManager eventManager)
+        void toggleRemoveMode_FirstFrameDownEvent(EventLayer eventLayer)
         {
             selectionMode.Selection = SelectionMode.Remove;
         }
 
-        void toggleAdMode_FirstFrameUpEvent(EventManager eventManager)
+        void toggleAdMode_FirstFrameUpEvent(EventLayer eventLayer)
         {
             if (selectionMode.Selection == SelectionMode.Add)
             {
@@ -543,7 +540,7 @@ namespace Medical.GUI
             }
         }
 
-        void toggleAdMode_FirstFrameDownEvent(EventManager eventManager)
+        void toggleAdMode_FirstFrameDownEvent(EventLayer eventLayer)
         {
             selectionMode.Selection = SelectionMode.Add;
         }

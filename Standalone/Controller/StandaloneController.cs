@@ -203,11 +203,11 @@ namespace Medical
 
             //MDI Layout
             mdiLayout = new MDILayoutManager();
-            medicalController.MainTimer.addUpdateListener(new MDIUpdate(medicalController.EventManager, mdiLayout));
+            medicalController.MainTimer.addUpdateListener(new MDIUpdate(medicalController.EventManager.DefaultEventLayer, mdiLayout));
 
             //SceneView
             MyGUIInterface myGUI = MyGUIInterface.Instance;
-            sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
+            sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager.DefaultEventLayer, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
             sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
             lightManager = PluginManager.Instance.RendererPlugin.createSceneViewLightManager();
 
@@ -238,7 +238,7 @@ namespace Medical
             musclePositionController = new MusclePositionController(medicalController.MainTimer, this);
 
             //Teeth mover
-            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
+            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager.DefaultEventLayer);
             this.SceneLoaded += teethMover.sceneLoaded;
             this.SceneUnloading += teethMover.sceneUnloading;
             TeethController.TeethMover = teethMover;

@@ -22,11 +22,11 @@ namespace Medical
             DefaultEvents.registerDefaultEvent(vertexSelect);
         }
 
-        EventManager eventManager;
+        EventLayer eventLayer;
 
-        public TeethTimerUpdate(EventManager eventManager)
+        public TeethTimerUpdate(EventLayer eventLayer)
         {
-            this.eventManager = eventManager;
+            this.eventLayer = eventLayer;
         }
 
         public void exceededMaxDelta()
@@ -41,10 +41,10 @@ namespace Medical
 
         public void sendUpdate(Clock clock)
         {
-            if (eventManager[TeethEvents.VertexSelect].Down)
+            if (eventLayer[TeethEvents.VertexSelect].Down)
             {
                 //Process the mouse
-                Mouse mouse = eventManager.Mouse;
+                Mouse mouse = eventLayer.Mouse;
                 Vector3 mouseLoc = mouse.getAbsMouse();
                 Ray3 spaceRay = new Ray3();
                 Vector3 cameraPos = Vector3.Zero;

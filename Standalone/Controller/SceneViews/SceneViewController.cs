@@ -22,7 +22,7 @@ namespace Medical.Controller
         public event SceneViewWindowEvent ActiveWindowChanged;
 
         private MDILayoutManager mdiLayout;
-        private EventManager eventManager;
+        private EventLayer eventLayer;
         private UpdateTimer mainTimer;
         private RendererWindow rendererWindow;
         private bool camerasCreated = false;
@@ -39,10 +39,10 @@ namespace Medical.Controller
         private List<MDISceneViewWindow> mdiWindows = new List<MDISceneViewWindow>();
         private List<TextureSceneView> textureWindows = new List<TextureSceneView>();
 
-        public SceneViewController(MDILayoutManager mdiLayout, EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager, BackgroundScene background)
+        public SceneViewController(MDILayoutManager mdiLayout, EventLayer eventLayer, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager, BackgroundScene background)
         {
             this.background = background;
-            this.eventManager = eventManager;
+            this.eventLayer = eventLayer;
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
             this.mdiLayout = mdiLayout;
@@ -92,7 +92,7 @@ namespace Medical.Controller
 
         public TextureSceneView createTextureSceneView(String name, Vector3 translation, Vector3 lookAt, int width, int height)
         {
-            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, Vector3.Zero, Vector3.Zero, 0, 1000, null, eventManager);
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, Vector3.Zero, Vector3.Zero, 0, 1000, null, eventLayer);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
 
@@ -431,7 +431,7 @@ namespace Medical.Controller
         /// <returns></returns>
         private MDISceneViewWindow doCreateWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, int zIndexStart)
         {
-            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, null, eventManager);
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, null, eventLayer);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
             MDISceneViewWindow window = new MDISceneViewWindow(rendererWindow, this, mainTimer, orbitCamera, name, background, zIndexStart);

@@ -13,13 +13,13 @@ namespace Medical.Controller
     /// </summary>
     class MDIUpdate : UpdateListener
     {
-        private EventManager eventManager;
+        private EventLayer eventLayer;
         MDILayoutManager mdiManager;
         bool[] mouseButtonsDown = new bool[(int)MouseButtonCode.NUM_BUTTONS];
 
-        public MDIUpdate(EventManager eventManager, MDILayoutManager mdiManager)
+        public MDIUpdate(EventLayer eventLayer, MDILayoutManager mdiManager)
         {
-            this.eventManager = eventManager;
+            this.eventLayer = eventLayer;
             this.mdiManager = mdiManager;
         }
 
@@ -36,7 +36,7 @@ namespace Medical.Controller
         public void sendUpdate(Clock clock)
         {
             //Mouse
-            Mouse mouse = eventManager.Mouse;
+            Mouse mouse = eventLayer.Mouse;
             Vector3 mousePos = mouse.getAbsMouse();
             mdiManager.injectMouseLocation(mousePos);
             for (int i = 0; i < mouseButtonsDown.Length; i++)

@@ -51,7 +51,7 @@ namespace Medical
             boundingBox.setExtents(boundsExtents);
         }
 
-        public void processSelection(EventManager events, ref Ray3 spaceRay)
+        public void processSelection(EventLayer events, ref Ray3 spaceRay)
         {
             Vector3 trans = movable.ToolTranslation;
             if (events[ToolEvents.Pick].FirstFrameDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))

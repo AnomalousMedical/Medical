@@ -78,7 +78,7 @@ namespace Medical
         private float maxOrbitDistance;
 
         private CameraPositioner camera;
-        private EventManager events;
+        private EventLayer events;
 
         //These three vectors form the axis relative to the current rotation.
         private Vector3 normalDirection; //z
@@ -119,10 +119,10 @@ namespace Medical
         private bool allowZoom = true;
         private EasingFunction easingFunction = EasingFunction.EaseOutQuadratic;
 
-        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, CameraMotionValidator motionValidator, EventManager eventManager)
+        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, CameraMotionValidator motionValidator, EventLayer events)
         {
             this.camera = null;
-            this.events = eventManager;
+            this.events = events;
             this.translation = translation;
             this.lookAt = lookAt;
             this.motionValidator = motionValidator;

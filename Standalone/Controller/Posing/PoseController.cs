@@ -60,16 +60,16 @@ namespace Medical.Controller
             }
         }
 
-        void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
+        void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
             pickAnatomy.DownContinues -= pickAnatomy_DownContinues;
             ikScene.removeExternalControl(dragControl);
         }
 
-        void pickAnatomy_FirstFrameDownEvent(EventManager eventManager)
+        void pickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
         {
             Ray3 cameraRay;
-            if (getCameraRay(eventManager, out cameraRay))
+            if (getCameraRay(eventLayer, out cameraRay))
             {
                 var matches = PoseableObjectsManager.findPoseable(cameraRay);
                 foreach (var match in matches.Results)
@@ -90,18 +90,18 @@ namespace Medical.Controller
             }
         }
 
-        void pickAnatomy_DownContinues(EventManager eventManager)
+        void pickAnatomy_DownContinues(EventLayer eventLayer)
         {
             Ray3 cameraRay;
-            if (getCameraRay(eventManager, out cameraRay))
+            if (getCameraRay(eventLayer, out cameraRay))
             {
                 dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
             }
         }
 
-        private bool getCameraRay(EventManager eventManager, out Ray3 cameraRay)
+        private bool getCameraRay(EventLayer eventLayer, out Ray3 cameraRay)
         {
-            Vector3 absMouse = eventManager.Mouse.getAbsMouse();
+            Vector3 absMouse = eventLayer.Mouse.getAbsMouse();
             if (!Gui.Instance.HandledMouse && !InputManager.Instance.isModalAny())
             {
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;

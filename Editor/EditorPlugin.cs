@@ -82,7 +82,7 @@ namespace Medical
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
-            propMover = new SimObjectMover("Props", medicalController.PluginManager, medicalController.EventManager);
+            propMover = new SimObjectMover("Props", medicalController.PluginManager, medicalController.EventManager.DefaultEventLayer);
             medicalController.OnLoopUpdate += propMover.update;
 
             this.standaloneController = standaloneController;

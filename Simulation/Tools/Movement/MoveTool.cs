@@ -84,7 +84,7 @@ namespace Medical
             return boundingBox.testIntersection(spaceRay);
         }
 
-        public void processSelection(EventManager events, ref Vector3 cameraPos, ref Ray3 spaceRay)
+        public void processSelection(EventLayer events, ref Vector3 cameraPos, ref Ray3 spaceRay)
         {
             float distance = (cameraPos - movable.ToolTranslation).length();
             Vector3 spacePoint = spaceRay.Direction * distance + spaceRay.Origin;
