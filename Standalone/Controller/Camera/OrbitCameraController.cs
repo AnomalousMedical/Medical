@@ -255,11 +255,11 @@ namespace Medical
                 if (allowZoom)
                 {
                     float zoomAmount = ZoomMultiple * 60f + 3.6f;
-                    if(events[CameraEvents.ZoomInCamera].AnyDown)
+                    if(events[CameraEvents.ZoomInCamera].Down)
                     {
                         orbitDistance -= zoomAmount;
                     }
-                    else if(events[CameraEvents.ZoomOutCamera].AnyDown)
+                    else if(events[CameraEvents.ZoomOutCamera].Down)
                     {
                         orbitDistance += zoomAmount;
                     }
