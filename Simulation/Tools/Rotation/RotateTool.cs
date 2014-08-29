@@ -63,7 +63,7 @@ namespace Medical
 
                 currentEulerRotation = Vector3.Zero;
             }
-            else if (events[ToolEvents.Pick].Down && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
+            else if (events[ToolEvents.Pick].HeldDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
                 Mouse mouse = events.Mouse;
                 Vector3 relMouse = mouse.RelativePosition;

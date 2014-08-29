@@ -78,7 +78,7 @@ namespace Medical
                 cameraPos = camera.Translation;              
             }
             //Check collisions and draw shapes
-            if (!events[ToolEvents.Pick].Down)
+            if (!events[ToolEvents.Pick].HeldDown)
             {
                 float closestDistance = float.MaxValue;
                 MovableObjectTools closestTools = null;

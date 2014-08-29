@@ -216,33 +216,33 @@ namespace Medical
             mouseCoords = events.Mouse.RelativePosition;
             if (currentlyInMotion)
             {
-                if (events[CameraEvents.PanCamera].Down)
+                if (events[CameraEvents.PanCamera].HeldDown)
                 {
                     float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
-                    if (events[CameraEvents.LockX].Up)
+                    if (events[CameraEvents.LockX].ReleasedUp)
                     {
                         lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.AreaWidth * SCROLL_SCALE) * scaleFactor);
                     }
-                    if (events[CameraEvents.LockY].Up)
+                    if (events[CameraEvents.LockY].ReleasedUp)
                     {
                         lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.AreaHeight * SCROLL_SCALE) * scaleFactor);
                     }
                     moveLookAt();
                     stopMaintainingIncludePoint();
                 }
-                else if (allowZoom && events[CameraEvents.ZoomCamera].Down)
+                else if (allowZoom && events[CameraEvents.ZoomCamera].HeldDown)
                 {
                     orbitDistance += ZoomMultiple * mouseCoords.y + mouseCoords.y;
                     moveZoom();
                     stopMaintainingIncludePoint();
                 }
-                else if (allowRotation && events[CameraEvents.RotateCamera].Down)
+                else if (allowRotation && events[CameraEvents.RotateCamera].HeldDown)
                 {
-                    if (events[CameraEvents.LockX].Up)
+                    if (events[CameraEvents.LockX].ReleasedUp)
                     {
                         yaw += mouseCoords.x / -100.0f;
                     }
-                    if (events[CameraEvents.LockY].Up)
+                    if (events[CameraEvents.LockY].ReleasedUp)
                     {
                         pitch += mouseCoords.y / 100.0f;
                     }

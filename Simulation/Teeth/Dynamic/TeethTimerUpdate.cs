@@ -41,7 +41,7 @@ namespace Medical
 
         public void sendUpdate(Clock clock)
         {
-            if (eventLayer[TeethEvents.VertexSelect].Down)
+            if (eventLayer[TeethEvents.VertexSelect].HeldDown)
             {
                 //Process the mouse
                 Mouse mouse = eventLayer.Mouse;

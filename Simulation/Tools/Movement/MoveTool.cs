@@ -92,7 +92,7 @@ namespace Medical
             {
                 mouseOffset = -(spacePoint - movable.ToolTranslation);
             }
-            else if (events[ToolEvents.Pick].Down)
+            else if (events[ToolEvents.Pick].HeldDown)
             {
                 spacePoint += -movable.ToolTranslation + mouseOffset;
 

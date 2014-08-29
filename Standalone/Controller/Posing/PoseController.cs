@@ -62,7 +62,7 @@ namespace Medical.Controller
 
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
-            pickAnatomy.DownContinues -= pickAnatomy_DownContinues;
+            pickAnatomy.OnHeldDown -= pickAnatomy_OnHeldDown;
             ikScene.removeExternalControl(dragControl);
         }
 
@@ -82,7 +82,7 @@ namespace Medical.Controller
                         Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
                         dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
                         dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
-                        pickAnatomy.DownContinues += pickAnatomy_DownContinues;
+                        pickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
                         ikScene.addExternalControl(dragControl);
                         break;
                     }
@@ -90,7 +90,7 @@ namespace Medical.Controller
             }
         }
 
-        void pickAnatomy_DownContinues(EventLayer eventLayer)
+        void pickAnatomy_OnHeldDown(EventLayer eventLayer)
         {
             Ray3 cameraRay;
             if (getCameraRay(eventLayer, out cameraRay))

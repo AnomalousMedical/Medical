@@ -72,7 +72,7 @@ namespace LeapMotionPlugin
                     {
                         if (active != null)
                         {
-                            if (eventManager[Events.Rotate].Down)
+                            if (eventManager[Events.Rotate].HeldDown)
                             {
                                 //Logging.Log.Debug("{0}, {1}", frameTrans.x, frameTrans.y);
                                 //active.zoom(-frameTrans.z);
@@ -85,7 +85,7 @@ namespace LeapMotionPlugin
                                 damping.x = calculateDamping(damping.x, moving, XDampingStart, XDampingMax, XDampingAccel, deltaTime);
                                 damping.y = calculateDamping(damping.y, moving, YDampingStart, YDampingMax, YDampingAccel, deltaTime);
                             }
-                            if (eventManager[Events.Pan].Down)
+                            if (eventManager[Events.Pan].HeldDown)
                             {
                                 active.pan(frameTrans.x / 10, frameTrans.y / -10);
                                 active.stopMaintainingIncludePoint();
