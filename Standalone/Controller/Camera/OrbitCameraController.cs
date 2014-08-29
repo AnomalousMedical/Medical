@@ -16,6 +16,8 @@ namespace Medical
         RotateCamera,
         PanCamera,
         ZoomCamera,
+        ZoomInCamera,
+        ZoomOutCamera,
         LockX,
         LockY,
     }
@@ -28,6 +30,8 @@ namespace Medical
         private static MessageEvent rotateCamera;
         private static MessageEvent panCamera;
         private static MessageEvent zoomCamera;
+        private static MessageEvent zoomInCamera;
+        private static MessageEvent zoomOutCamera;
 
         static OrbitCameraController()
         {
@@ -44,6 +48,14 @@ namespace Medical
             zoomCamera.addButton(currentMouseButton);
             zoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
             DefaultEvents.registerDefaultEvent(zoomCamera);
+
+            zoomInCamera = new MessageEvent(CameraEvents.ZoomInCamera);
+            zoomInCamera.MouseWheelDirection = MouseWheelDirection.Up;
+            DefaultEvents.registerDefaultEvent(zoomInCamera);
+
+            zoomOutCamera = new MessageEvent(CameraEvents.ZoomOutCamera);
+            zoomOutCamera.MouseWheelDirection = MouseWheelDirection.Down;
+            DefaultEvents.registerDefaultEvent(zoomOutCamera);
 
             MessageEvent lockX = new MessageEvent(CameraEvents.LockX);
             lockX.addButton(KeyboardButtonCode.KC_C);
@@ -179,7 +191,7 @@ namespace Medical
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
                     camera.LookAt = lookAt;
                 }
-                else if (!Gui.Instance.HandledMouseButtons)
+                else
                 {
                     mouseMove();
                 }
@@ -240,16 +252,16 @@ namespace Medical
             }
             if (activeWindow)
             {
-                if (allowZoom && !Gui.Instance.HandledMouseMove && mouseCoords.z != 0)
+                if (allowZoom)
                 {
                     float zoomAmount = ZoomMultiple * 60f + 3.6f;
-                    if (mouseCoords.z < 0)
-                    {
-                        orbitDistance += zoomAmount;
-                    }
-                    else if (mouseCoords.z > 0)
+                    if(events[CameraEvents.ZoomInCamera].AnyDown)
                     {
                         orbitDistance -= zoomAmount;
+                    }
+                    else if(events[CameraEvents.ZoomOutCamera].AnyDown)
+                    {
+                        orbitDistance += zoomAmount;
                     }
                     moveZoom();
                     stopMaintainingIncludePoint();
