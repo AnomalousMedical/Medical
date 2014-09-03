@@ -562,21 +562,6 @@ namespace Medical.Controller.AnomalousMvc
             stopPlayingTimeline();
         }
 
-        /// <summary>
-        /// This function will enable / disable the camera movement that occures when no modifier is used.
-        /// This can be useful if you have something that can be dragged on display and you need
-        /// to prevent the camera from moving. You can also restrict this to only if they are trying to
-        /// move the camera with mouse button 0.
-        /// 
-        /// Right now this disables rotation, but if some other movement becomes primary, this will disable
-        /// that instead.
-        /// </summary>
-        /// <param name="active">True to allow camera movement, false to ignore.</param>
-        public void setAllowUnmodifiedCameraMovement(bool active)
-        {
-            core.setAllowUnmodifiedCameraMovement(active);
-        }
-
         public bool AllowShutdown
         {
             get

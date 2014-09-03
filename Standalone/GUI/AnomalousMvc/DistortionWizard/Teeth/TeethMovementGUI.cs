@@ -43,7 +43,6 @@ namespace Medical.GUI.AnomalousMvc
         private TeethAdaptationView wizardView;
         private AnomalousMvcContext context;
         private String lastCameraButtonAction;
-        private bool disableCamera = false;
 
         public TeethMovementGUI(Widget mainWidget, TeethAdaptationView wizardView, AnomalousMvcContext context)
         {
@@ -71,7 +70,6 @@ namespace Medical.GUI.AnomalousMvc
             rightLateralCameraButton.MouseButtonClick += new MyGUIEvent(rightLateralCameraButton_MouseButtonClick);
 
             lastCameraButtonAction = wizardView.MidlineAnteriorAction;
-            disableCamera = MedicalConfig.CameraMouseButton == Engine.Platform.MouseButtonCode.MB_BUTTON0;
         }
 
         public void disableAllButtons()
@@ -85,11 +83,6 @@ namespace Medical.GUI.AnomalousMvc
         {
             TeethController.showTeethTools(MIDLINE_ANTERIOR_TEETH);
             TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
-        }
-
-        public void closing()
-        {
-            context.setAllowUnmodifiedCameraMovement(true);
         }
 
         private void topCameraButton_MouseButtonClick(object sender, EventArgs e)
@@ -159,12 +152,7 @@ namespace Medical.GUI.AnomalousMvc
             {
                 moveButton.Checked = false;
                 adaptButton.Checked = false;
-                if (disableCamera)
-                {
-                    context.runAction(lastCameraButtonAction);
-                }
             }
-            setCameraActive();
         }
 
         void moveButton_CheckedChanged(Widget sender, EventArgs e)
@@ -174,19 +162,6 @@ namespace Medical.GUI.AnomalousMvc
             {
                 rotateButton.Checked = false;
                 adaptButton.Checked = false;
-                if (disableCamera)
-                {
-                    context.runAction(lastCameraButtonAction);
-                }
-            }
-            setCameraActive();
-        }
-
-        void setCameraActive()
-        {
-            if (disableCamera)
-            {
-                context.setAllowUnmodifiedCameraMovement(!(moveButton.Checked || rotateButton.Checked));
             }
         }
     }

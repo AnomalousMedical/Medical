@@ -84,6 +84,7 @@ namespace Medical.Controller
                         dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
                         pickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
                         ikScene.addExternalControl(dragControl);
+                        eventLayer.alertEventsHandled();
                         break;
                     }
                 }
@@ -97,6 +98,7 @@ namespace Medical.Controller
             {
                 dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
             }
+            eventLayer.alertEventsHandled();
         }
 
         private bool getCameraRay(EventLayer eventLayer, out Ray3 cameraRay)
