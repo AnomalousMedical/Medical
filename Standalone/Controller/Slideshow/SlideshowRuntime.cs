@@ -101,7 +101,7 @@ namespace Medical
             })));
 
             eventContext = new EventContext();
-            MessageEvent nextEvent = new MessageEvent(Events.Next);
+            MessageEvent nextEvent = new MessageEvent(Events.Next, EventLayers.Gui);
             nextEvent.addButton(KeyboardButtonCode.KC_RIGHT);
             nextEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -109,7 +109,7 @@ namespace Medical
             };
             eventContext.addEvent(nextEvent);
 
-            MessageEvent backEvent = new MessageEvent(Events.Back);
+            MessageEvent backEvent = new MessageEvent(Events.Back, EventLayers.Gui);
             backEvent.addButton(KeyboardButtonCode.KC_LEFT);
             backEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -117,7 +117,7 @@ namespace Medical
             };
             eventContext.addEvent(backEvent);
 
-            MessageEvent zoomInEvent = new MessageEvent(Events.ZoomIn);
+            MessageEvent zoomInEvent = new MessageEvent(Events.ZoomIn, EventLayers.Gui);
             zoomInEvent.addButton(KeyboardButtonCode.KC_EQUALS);
             zoomInEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -125,7 +125,7 @@ namespace Medical
             };
             eventContext.addEvent(zoomInEvent);
 
-            MessageEvent zoomOutEvent = new MessageEvent(Events.ZoomOut);
+            MessageEvent zoomOutEvent = new MessageEvent(Events.ZoomOut, EventLayers.Gui);
             zoomOutEvent.addButton(KeyboardButtonCode.KC_MINUS);
             zoomOutEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -133,7 +133,7 @@ namespace Medical
             };
             eventContext.addEvent(zoomOutEvent);
 
-            MessageEvent closeEvent = new MessageEvent(Events.Close);
+            MessageEvent closeEvent = new MessageEvent(Events.Close, EventLayers.Gui);
             closeEvent.addButton(KeyboardButtonCode.KC_ESCAPE);
             closeEvent.FirstFrameUpEvent += eventManager =>
             {

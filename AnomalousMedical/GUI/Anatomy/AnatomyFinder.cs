@@ -39,24 +39,24 @@ namespace Medical.GUI
         
         static AnatomyFinder()
         {
-            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy);
+            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.Gui);
             pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(pickAnatomy);
 
-            changeSelectionMode = new MessageEvent(AnatomyFinderEvents.ChangeSelectionMode);
+            changeSelectionMode = new MessageEvent(AnatomyFinderEvents.ChangeSelectionMode, EventLayers.Gui);
             changeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
             DefaultEvents.registerDefaultEvent(changeSelectionMode);
 
-            openAnatomyFinder = new MessageEvent(AnatomyFinderEvents.OpenAnatomyFinder);
+            openAnatomyFinder = new MessageEvent(AnatomyFinderEvents.OpenAnatomyFinder, EventLayers.Gui);
             openAnatomyFinder.addButton(KeyboardButtonCode.KC_LCONTROL);
             openAnatomyFinder.addButton(KeyboardButtonCode.KC_F);
             DefaultEvents.registerDefaultEvent(openAnatomyFinder);
 
-            toggleAddMode = new MessageEvent(AnatomyFinderEvents.ToggleAddMode);
+            toggleAddMode = new MessageEvent(AnatomyFinderEvents.ToggleAddMode, EventLayers.Gui);
             toggleAddMode.addButton(KeyboardButtonCode.KC_LCONTROL);
             DefaultEvents.registerDefaultEvent(toggleAddMode);
 
-            toggleRemoveMode = new MessageEvent(AnatomyFinderEvents.ToggleRemoveMode);
+            toggleRemoveMode = new MessageEvent(AnatomyFinderEvents.ToggleRemoveMode, EventLayers.Gui);
             toggleRemoveMode.addButton(KeyboardButtonCode.KC_LMENU);
             DefaultEvents.registerDefaultEvent(toggleRemoveMode);
         }

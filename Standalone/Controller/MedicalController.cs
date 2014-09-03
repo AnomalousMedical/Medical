@@ -97,6 +97,8 @@ namespace Medical
                 return true;
             };
 
+            MyGUIInterface.EventLayerKey = EventLayers.Gui;
+
             //Configure plugins
             pluginManager.OnConfigureDefaultWindow = configureWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
@@ -129,7 +131,7 @@ namespace Medical
             }
 
             inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
-            eventManager = new EventManager(inputHandler);
+            eventManager = new EventManager(inputHandler, Enum.GetValues(typeof(EventLayers)));
             Medical.Platform.GlobalContextEventHandler.setEventManager(eventManager);
             eventUpdate = new EventUpdateListener(eventManager);
             mainTimer.addUpdateListener(eventUpdate);
@@ -208,18 +210,6 @@ namespace Medical
         public void shutdown()
         {
             mainTimer.stopLoop();
-        }
-
-        public void destroyInputHandler()
-        {
-            eventManager.destroyInputObjects();
-            pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
-        }
-
-        public void recreateInputHandler(OSWindow window)
-        {
-            inputHandler = new NativeInputHandler(window as NativeOSWindow);
-            eventManager.changeInputHandler(inputHandler);
         }
 
         /// <summary>

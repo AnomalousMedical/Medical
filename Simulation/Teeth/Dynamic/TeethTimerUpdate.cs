@@ -17,7 +17,7 @@ namespace Medical
 
         static TeethTimerUpdate()
         {
-            MessageEvent vertexSelect = new MessageEvent(TeethEvents.VertexSelect);
+            MessageEvent vertexSelect = new MessageEvent(TeethEvents.VertexSelect, EventLayers.Gui);
             vertexSelect.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(vertexSelect);
         }

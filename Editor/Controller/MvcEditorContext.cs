@@ -93,7 +93,7 @@ namespace Medical
             }));
 
             eventContext = new EventContext();
-            eventContext.addEvent(new MessageEvent(Events.Save, 
+            eventContext.addEvent(new MessageEvent(Events.Save, EventLayers.Gui, 
                 frameUp: eventManager =>
                 {
                     saveAll();

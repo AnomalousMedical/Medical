@@ -95,7 +95,7 @@ namespace Medical
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
-            MessageEvent saveEvent = new MessageEvent(Events.Save);
+            MessageEvent saveEvent = new MessageEvent(Events.Save, EventLayers.Gui);
             saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>

@@ -35,33 +35,33 @@ namespace Medical
 
         static OrbitCameraController()
         {
-            rotateCamera = new MessageEvent(CameraEvents.RotateCamera);
+            rotateCamera = new MessageEvent(CameraEvents.RotateCamera, EventLayers.Cameras);
             rotateCamera.addButton(currentMouseButton);
             DefaultEvents.registerDefaultEvent(rotateCamera);
 
-            panCamera = new MessageEvent(CameraEvents.PanCamera);
+            panCamera = new MessageEvent(CameraEvents.PanCamera, EventLayers.Cameras);
             panCamera.addButton(currentMouseButton);
             panCamera.addButton(PlatformConfig.PanKey);
             DefaultEvents.registerDefaultEvent(panCamera);
 
-            zoomCamera = new MessageEvent(CameraEvents.ZoomCamera);
+            zoomCamera = new MessageEvent(CameraEvents.ZoomCamera, EventLayers.Cameras);
             zoomCamera.addButton(currentMouseButton);
             zoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
             DefaultEvents.registerDefaultEvent(zoomCamera);
 
-            zoomInCamera = new MessageEvent(CameraEvents.ZoomInCamera);
+            zoomInCamera = new MessageEvent(CameraEvents.ZoomInCamera, EventLayers.Cameras);
             zoomInCamera.MouseWheelDirection = MouseWheelDirection.Up;
             DefaultEvents.registerDefaultEvent(zoomInCamera);
 
-            zoomOutCamera = new MessageEvent(CameraEvents.ZoomOutCamera);
+            zoomOutCamera = new MessageEvent(CameraEvents.ZoomOutCamera, EventLayers.Cameras);
             zoomOutCamera.MouseWheelDirection = MouseWheelDirection.Down;
             DefaultEvents.registerDefaultEvent(zoomOutCamera);
 
-            MessageEvent lockX = new MessageEvent(CameraEvents.LockX);
+            MessageEvent lockX = new MessageEvent(CameraEvents.LockX, EventLayers.Cameras);
             lockX.addButton(KeyboardButtonCode.KC_C);
             DefaultEvents.registerDefaultEvent(lockX);
 
-            MessageEvent lockY = new MessageEvent(CameraEvents.LockY);
+            MessageEvent lockY = new MessageEvent(CameraEvents.LockY, EventLayers.Cameras);
             lockY.addButton(KeyboardButtonCode.KC_X);
             DefaultEvents.registerDefaultEvent(lockY);
         }
@@ -125,10 +125,10 @@ namespace Medical
         private bool allowZoom = true;
         private EasingFunction easingFunction = EasingFunction.EaseOutQuadratic;
 
-        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, CameraMotionValidator motionValidator, EventLayer events)
+        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, CameraMotionValidator motionValidator, EventManager eventManager)
         {
             this.camera = null;
-            this.events = events;
+            this.events = eventManager[EventLayers.Cameras];
             this.translation = translation;
             this.lookAt = lookAt;
             this.motionValidator = motionValidator;

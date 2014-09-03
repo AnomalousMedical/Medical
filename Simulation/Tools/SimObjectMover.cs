@@ -13,15 +13,15 @@ namespace Medical
     {
         static SimObjectMover()
         {
-            MessageEvent pickEvent = new MessageEvent(ToolEvents.Pick);
+            MessageEvent pickEvent = new MessageEvent(ToolEvents.Pick, EventLayers.Tools);
             pickEvent.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(pickEvent);
 
-            MessageEvent increaseToolSize = new MessageEvent(ToolEvents.IncreaseToolSize);
+            MessageEvent increaseToolSize = new MessageEvent(ToolEvents.IncreaseToolSize, EventLayers.Tools);
             increaseToolSize.addButton(KeyboardButtonCode.KC_EQUALS);
             DefaultEvents.registerDefaultEvent(increaseToolSize);
 
-            MessageEvent decreaseToolSize = new MessageEvent(ToolEvents.DecreaseToolSize);
+            MessageEvent decreaseToolSize = new MessageEvent(ToolEvents.DecreaseToolSize, EventLayers.Tools);
             decreaseToolSize.addButton(KeyboardButtonCode.KC_MINUS);
             DefaultEvents.registerDefaultEvent(decreaseToolSize);
         }
@@ -36,11 +36,11 @@ namespace Medical
         private bool showRotateTools = false;
         private float toolSize = 1.0f;
 
-        public SimObjectMover(String name, PluginManager pluginManager, EventLayer events)
+        public SimObjectMover(String name, PluginManager pluginManager, EventManager eventManager)
         {
             this.pluginManager = pluginManager;
             this.name = name;
-            this.events = events;
+            this.events = eventManager[EventLayers.Tools];
         }
 
         public void sceneLoaded(SimScene scene)

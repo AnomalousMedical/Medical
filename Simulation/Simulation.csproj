@@ -230,6 +230,7 @@
     <Compile Include="Transparency\TransparencyState.cs" />
     <Compile Include="Transparency\TransparencySubInterface.cs" />
     <Compile Include="Transparency\TransparencyTracker.cs" />
+    <Compile Include="Utility\EventLayers.cs" />
     <Compile Include="Utility\NaturalSort.cs" />
     <Compile Include="Utility\SimulationConfig.cs" />
   </ItemGroup>
