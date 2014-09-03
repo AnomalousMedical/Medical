@@ -14,7 +14,7 @@ namespace Medical
         /// </summary>
         /// <param name="fingers">The list of fingers to process.</param>
         /// <returns></returns>
-        bool processFingers(List<Finger> fingers);
+        bool processFingers(IReadOnlyList<Finger> fingers);
 
         /// <summary>
         /// This method will be called after all processFingers for all methods

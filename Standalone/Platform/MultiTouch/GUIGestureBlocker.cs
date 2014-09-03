@@ -8,7 +8,7 @@ namespace Medical
 {
     class GUIGestureBlocker : Gesture
     {
-        public bool processFingers(List<Finger> fingers)
+        public bool processFingers(IReadOnlyList<Finger> fingers)
         {
             return Gui.Instance.HandledMouseButtons;
         }

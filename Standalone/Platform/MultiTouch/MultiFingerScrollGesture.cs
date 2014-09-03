@@ -26,7 +26,7 @@ namespace Medical
             this.minimumMomentum = minimumMomentum;
         }
 
-        public bool processFingers(List<Finger> fingers)
+        public bool processFingers(IReadOnlyList<Finger> fingers)
         {
             if (fingers.Count == fingerCount)
             {

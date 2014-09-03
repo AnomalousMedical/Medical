@@ -16,8 +16,8 @@ namespace Medical
         {
 
         }
-        
-        public bool processFingers(List<Finger> fingers)
+
+        public bool processFingers(IReadOnlyList<Finger> fingers)
         {
             if (Gui.Instance.HandledMouseButtons)
             {
