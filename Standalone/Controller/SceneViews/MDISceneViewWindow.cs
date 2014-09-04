@@ -13,6 +13,26 @@ namespace Medical.Controller
 {
     public class MDISceneViewWindow : SceneViewWindow
     {
+        enum Events
+        {
+            PrimarySelect,
+            SecondarySelect,
+        }
+
+        private static MessageEvent primaryActionSelect;
+        private static MessageEvent secondaryActionSelect;
+
+        static MDISceneViewWindow()
+        {
+            primaryActionSelect = new MessageEvent(Events.PrimarySelect, EventLayers.Cameras);
+            primaryActionSelect.addButton(MouseButtonCode.MB_BUTTON0);
+            DefaultEvents.registerDefaultEvent(primaryActionSelect);
+
+            secondaryActionSelect = new MessageEvent(Events.SecondarySelect, EventLayers.Cameras);
+            secondaryActionSelect.addButton(MouseButtonCode.MB_BUTTON1);
+            DefaultEvents.registerDefaultEvent(secondaryActionSelect);
+        }
+
         private MDIDocumentWindow mdiWindow;
 
         public MDISceneViewWindow(RendererWindow rendererWindow, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
@@ -31,11 +51,16 @@ namespace Medical.Controller
             mdiWindow.Closed += new EventHandler(mdiWindow_Closed);
             mdiWindow.ActiveStatusChanged += new EventHandler(mdiWindow_ActiveStatusChanged);
 
+            primaryActionSelect.FirstFrameDownEvent += selectEvent;
+            secondaryActionSelect.FirstFrameDownEvent += selectEvent;
+
             this.RendererWindow = rendererWindow;
         }
 
         public override void Dispose()
         {
+            primaryActionSelect.FirstFrameDownEvent -= selectEvent;
+            secondaryActionSelect.FirstFrameDownEvent -= selectEvent;
             base.Dispose();
             mdiWindow.Dispose();
         }
@@ -96,6 +121,15 @@ namespace Medical.Controller
             if (mdiWindow.Active)
             {
                 TransparencyController.ActiveTransparencyState = CurrentTransparencyState;
+            }
+        }
+
+        void selectEvent(EventLayer eventLayer)
+        {
+            var absPos = eventLayer.Mouse.AbsolutePosition;
+            if (allowMotion((int)absPos.x, (int)absPos.y))
+            {
+                mdiWindow.Active = true;
             }
         }
     }
