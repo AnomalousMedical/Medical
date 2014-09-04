@@ -67,6 +67,7 @@ namespace Medical
             scratchArea.Dispose();
             aspectRatioTask.Dispose();
             editorController.Dispose();
+            propMover.Dispose();
         }
 
         public void loadGUIResources()
@@ -82,8 +83,7 @@ namespace Medical
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
-            propMover = new SimObjectMover("Props", medicalController.PluginManager, medicalController.EventManager);
-            medicalController.OnLoopUpdate += propMover.update;
+            propMover = new SimObjectMover("Props", medicalController.PluginManager.RendererPlugin, medicalController.EventManager);
 
             this.standaloneController = standaloneController;
             editorTimelineController = new TimelineController(standaloneController);

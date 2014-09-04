@@ -30,6 +30,7 @@ namespace Lecture
         {
             slideshowExplorer.Dispose();
             editorController.Dispose();
+            propMover.Dispose();
         }
 
         public void loadGUIResources()
@@ -50,8 +51,7 @@ namespace Lecture
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
-            propMover = new SimObjectMover("LectureProps", medicalController.PluginManager, medicalController.EventManager);
-            medicalController.OnLoopUpdate += propMover.update;
+            propMover = new SimObjectMover("LectureProps", medicalController.PluginManager.RendererPlugin, medicalController.EventManager);
 
             propEditController = new PropEditController(propMover);
 

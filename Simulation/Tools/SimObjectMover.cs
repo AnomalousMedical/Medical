@@ -9,7 +9,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public class SimObjectMover
+    public class SimObjectMover : IDisposable
     {
         static SimObjectMover()
         {
@@ -26,7 +26,7 @@ namespace Medical
             DefaultEvents.registerDefaultEvent(decreaseToolSize);
         }
 
-        private PluginManager pluginManager;
+        private RendererPlugin rendererPlugin;
         private String name;
         private DebugDrawingSurface drawingSurface = null;
         private List<MovableObjectTools> movableObjects = new List<MovableObjectTools>();
@@ -36,11 +36,18 @@ namespace Medical
         private bool showRotateTools = false;
         private float toolSize = 1.0f;
 
-        public SimObjectMover(String name, PluginManager pluginManager, EventManager eventManager)
+        public SimObjectMover(String name, RendererPlugin rendererPlugin, EventManager eventManager)
         {
-            this.pluginManager = pluginManager;
+            this.rendererPlugin = rendererPlugin;
             this.name = name;
             this.events = eventManager[EventLayers.Tools];
+            events.OnUpdate += events_OnUpdate;
+        }
+
+        public void Dispose()
+        {
+            events.OnUpdate -= events_OnUpdate;
+            destroyDrawingSurface();
         }
 
         public void sceneLoaded(SimScene scene)
@@ -48,21 +55,26 @@ namespace Medical
             SimSubScene subScene = scene.getDefaultSubScene();
             if (subScene != null)
             {
-                drawingSurface = pluginManager.RendererPlugin.createDebugDrawingSurface(name + "DebugSurface", subScene);
+                drawingSurface = rendererPlugin.createDebugDrawingSurface(name + "DebugSurface", subScene);
                 drawingSurface.setDepthTesting(false);
             }
         }
 
         public void sceneUnloading(SimScene scene)
         {
+            destroyDrawingSurface();
+        }
+
+        private void destroyDrawingSurface()
+        {
             if (drawingSurface != null)
             {
-                pluginManager.RendererPlugin.destroyDebugDrawingSurface(drawingSurface);
+                rendererPlugin.destroyDebugDrawingSurface(drawingSurface);
                 drawingSurface = null;
             }
         }
 
-        public void update(Clock clock)
+        void events_OnUpdate(EventLayer eventLayer, bool allowEventProcessing)
         {
             //Process the mouse
             Mouse mouse = events.Mouse;

@@ -131,6 +131,7 @@ namespace Medical
 
         public void Dispose()
         {
+            teethMover.Dispose();
             unloadScene();
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
@@ -237,11 +238,10 @@ namespace Medical
             musclePositionController = new MusclePositionController(medicalController.MainTimer, this);
 
             //Teeth mover
-            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
+            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager.RendererPlugin, medicalController.EventManager);
             this.SceneLoaded += teethMover.sceneLoaded;
             this.SceneUnloading += teethMover.sceneUnloading;
             TeethController.TeethMover = teethMover;
-            medicalController.OnLoopUpdate += teethMover.update;
             imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
 
