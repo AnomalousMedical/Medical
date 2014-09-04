@@ -24,11 +24,11 @@ namespace Medical.Controller
 
         static MDISceneViewWindow()
         {
-            primaryActionSelect = new MessageEvent(Events.PrimarySelect, EventLayers.Cameras);
+            primaryActionSelect = new MessageEvent(Events.PrimarySelect, EventLayers.AfterGui);
             primaryActionSelect.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(primaryActionSelect);
 
-            secondaryActionSelect = new MessageEvent(Events.SecondarySelect, EventLayers.Cameras);
+            secondaryActionSelect = new MessageEvent(Events.SecondarySelect, EventLayers.AfterGui);
             secondaryActionSelect.addButton(MouseButtonCode.MB_BUTTON1);
             DefaultEvents.registerDefaultEvent(secondaryActionSelect);
         }

@@ -23,7 +23,7 @@ namespace Medical.Controller
 
         static PoseController()
         {
-            pickAnatomy = new MessageEvent(Events.SelectAndMove, EventLayers.Posing);
+            pickAnatomy = new MessageEvent(Events.SelectAndMove, EventLayers.PosingAndSelection);
             pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(pickAnatomy);
         }

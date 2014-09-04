@@ -39,7 +39,7 @@ namespace Medical.GUI
         
         static AnatomyFinder()
         {
-            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.Gui);
+            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.PosingAndSelection);
             pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(pickAnatomy);
 

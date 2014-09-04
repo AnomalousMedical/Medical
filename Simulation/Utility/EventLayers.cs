@@ -9,8 +9,9 @@ namespace Medical
     public enum EventLayers
     {
         Gui = 0,
-        Tools = 1,
-        Posing = 2,
-        Cameras = 3,
+        AfterGui = 1,
+        Tools = 2,
+        PosingAndSelection = 3,
+        Cameras = 4,
     }
 }
