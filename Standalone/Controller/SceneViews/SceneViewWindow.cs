@@ -283,7 +283,7 @@ namespace Medical.Controller
         public void calculateIncludePoint(CameraPosition cameraPosition)
         {
             //Make the include point projected out to the lookat location
-            Ray3 camRay = this.getCameraToViewportRay(1, 0);
+            Ray3 camRay = this.getCameraToViewportRayRatio(1, 0);
             cameraPosition.IncludePoint = camRay.Origin + camRay.Direction * (cameraPosition.LookAt - cameraPosition.Translation).length();
             cameraPosition.UseIncludePoint = true;
         }
@@ -366,13 +366,35 @@ namespace Medical.Controller
             return new Vector2(((pos2d.x * 0.5f) + 0.5f) * screenWidth, (1.0f - ((pos2d.y * 0.5f) + 0.5f)) * screenHeight);
         }
 
-        public Ray3 getCameraToViewportRay(float x, float y)
+        /// <summary>
+        /// Get a ray from the camera using a ratio from 0 to 1.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public Ray3 getCameraToViewportRayRatio(float x, float y)
         {
             if (sceneView != null)
             {
                 return sceneView.getCameraToViewportRay(x, y);
             }
             return new Ray3();
+        }
+
+        /// <summary>
+        /// Get a ray from the camera using screen coords, these will be converted into local coords, so you can use
+        /// mouse absolute positions.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public Ray3 getCameraToViewportRayScreen(int x, int y)
+        {
+            Vector2 windowLoc = new Vector2(RenderXLoc, RenderYLoc);
+            Size2 windowSize = new Size2(RenderWidth, RenderHeight);
+            float ratioX = (x - windowLoc.x) / windowSize.Width;
+            float ratioY = (y - windowLoc.y) / windowSize.Height;
+            return getCameraToViewportRayRatio(ratioX, ratioY);
         }
 
         public Vector3 unproject(float screenX, float screenY)
@@ -720,7 +742,7 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="x">X location.</param>
         /// <param name="y">Y location.</param>
-        public void getLocalCoords(ref float x, ref float y)
+        public void getLocalCoords(ref int x, ref int y)
         {
             x -= Location.x;
             y -= Location.y;

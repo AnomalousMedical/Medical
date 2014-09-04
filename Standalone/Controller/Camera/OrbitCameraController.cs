@@ -129,6 +129,7 @@ namespace Medical
         {
             this.camera = null;
             this.events = eventManager[EventLayers.Cameras];
+            events.OnUpdate += events_OnUpdate;
             this.translation = translation;
             this.lookAt = lookAt;
             this.motionValidator = motionValidator;
@@ -191,82 +192,87 @@ namespace Medical
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
                     camera.LookAt = lookAt;
                 }
-                else
+            }
+        }
+
+        void events_OnUpdate(EventLayer eventLayer)
+        {
+            if (camera != null && !automaticMovement)
+            {
+                IntVector3 mouseCoords = events.Mouse.AbsolutePosition;
+                bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());
+                if (events[CameraEvents.RotateCamera].FirstFrameDown)
                 {
-                    mouseMove();
+                    if (activeWindow)
+                    {
+                        currentlyInMotion = true;
+                    }
+                }
+                else if (events[CameraEvents.RotateCamera].FirstFrameUp)
+                {
+                    currentlyInMotion = false;
+                }
+                mouseCoords = events.Mouse.RelativePosition;
+                if (currentlyInMotion)
+                {
+                    if (events[CameraEvents.PanCamera].HeldDown)
+                    {
+                        float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
+                        if (events[CameraEvents.LockX].ReleasedUp)
+                        {
+                            lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.AreaWidth * SCROLL_SCALE) * scaleFactor);
+                        }
+                        if (events[CameraEvents.LockY].ReleasedUp)
+                        {
+                            lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.AreaHeight * SCROLL_SCALE) * scaleFactor);
+                        }
+                        moveLookAt();
+                        stopMaintainingIncludePoint();
+                    }
+                    else if (allowZoom && events[CameraEvents.ZoomCamera].HeldDown)
+                    {
+                        orbitDistance += ZoomMultiple * mouseCoords.y + mouseCoords.y;
+                        moveZoom();
+                        stopMaintainingIncludePoint();
+                    }
+                    else if (allowRotation && events[CameraEvents.RotateCamera].HeldDown)
+                    {
+                        if (events[CameraEvents.LockX].ReleasedUp)
+                        {
+                            yaw += mouseCoords.x / -100.0f;
+                        }
+                        if (events[CameraEvents.LockY].ReleasedUp)
+                        {
+                            pitch += mouseCoords.y / 100.0f;
+                        }
+                        moveCameraYawPitch();
+                        stopMaintainingIncludePoint();
+                    }
+                }
+                if (activeWindow)
+                {
+                    if (allowZoom)
+                    {
+                        if (events[CameraEvents.ZoomInCamera].Down)
+                        {
+                            wheelZoom(-1, eventLayer);
+                        }
+                        else if (events[CameraEvents.ZoomOutCamera].Down)
+                        {
+                            wheelZoom(1, eventLayer);
+                        }
+                    }
                 }
             }
         }
 
-        private void mouseMove()
+        private void wheelZoom(int zoomDirection, EventLayer eventLayer)
         {
-            Vector3 mouseCoords = events.Mouse.AbsolutePosition;
-            bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());
-            if (events[CameraEvents.RotateCamera].FirstFrameDown)
-            {
-                if (activeWindow)
-                {
-                    currentlyInMotion = true;
-                }
-            }
-            else if (events[CameraEvents.RotateCamera].FirstFrameUp)
-            {
-                currentlyInMotion = false;
-            }
-            mouseCoords = events.Mouse.RelativePosition;
-            if (currentlyInMotion)
-            {
-                if (events[CameraEvents.PanCamera].HeldDown)
-                {
-                    float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
-                    if (events[CameraEvents.LockX].ReleasedUp)
-                    {
-                        lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.AreaWidth * SCROLL_SCALE) * scaleFactor);
-                    }
-                    if (events[CameraEvents.LockY].ReleasedUp)
-                    {
-                        lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.AreaHeight * SCROLL_SCALE) * scaleFactor);
-                    }
-                    moveLookAt();
-                    stopMaintainingIncludePoint();
-                }
-                else if (allowZoom && events[CameraEvents.ZoomCamera].HeldDown)
-                {
-                    orbitDistance += ZoomMultiple * mouseCoords.y + mouseCoords.y;
-                    moveZoom();
-                    stopMaintainingIncludePoint();
-                }
-                else if (allowRotation && events[CameraEvents.RotateCamera].HeldDown)
-                {
-                    if (events[CameraEvents.LockX].ReleasedUp)
-                    {
-                        yaw += mouseCoords.x / -100.0f;
-                    }
-                    if (events[CameraEvents.LockY].ReleasedUp)
-                    {
-                        pitch += mouseCoords.y / 100.0f;
-                    }
-                    moveCameraYawPitch();
-                    stopMaintainingIncludePoint();
-                }
-            }
-            if (activeWindow)
-            {
-                if (allowZoom)
-                {
-                    float zoomAmount = ZoomMultiple * 60f + 3.6f;
-                    if(events[CameraEvents.ZoomInCamera].Down)
-                    {
-                        orbitDistance -= zoomAmount;
-                    }
-                    else if(events[CameraEvents.ZoomOutCamera].Down)
-                    {
-                        orbitDistance += zoomAmount;
-                    }
-                    moveZoom();
-                    stopMaintainingIncludePoint();
-                }
-            }
+            float zoomAmount = (ZoomMultiple * 60f + 3.6f) * zoomDirection;
+            orbitDistance += zoomAmount;
+            moveZoom();
+            stopMaintainingIncludePoint();
+            eventLayer.alertEventsHandled();
         }
 
         public float ZoomMultiple

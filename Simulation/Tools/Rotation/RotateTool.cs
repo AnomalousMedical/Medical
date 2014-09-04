@@ -68,7 +68,7 @@ namespace Medical
             else if (events[ToolEvents.Pick].HeldDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
                 Mouse mouse = events.Mouse;
-                Vector3 relMouse = mouse.RelativePosition;
+                IntVector3 relMouse = mouse.RelativePosition;
                 float amount = relMouse.x + relMouse.y;
                 amount /= 100;
                 xAxis.computeRotation(ref currentEulerRotation, amount);

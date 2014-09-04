@@ -74,11 +74,11 @@ namespace Medical
             }
         }
 
-        void events_OnUpdate(EventLayer eventLayer, bool allowEventProcessing)
+        void events_OnUpdate(EventLayer eventLayer)
         {
             //Process the mouse
             Mouse mouse = events.Mouse;
-            Vector3 mouseLoc = mouse.AbsolutePosition;
+            IntVector3 mouseLoc = mouse.AbsolutePosition;
             Ray3 spaceRay = new Ray3();
             Vector3 cameraPos = Vector3.Zero;
             CameraMotionValidator validator = CameraResolver.getValidatorForLocation((int)mouseLoc.x, (int)mouseLoc.y);

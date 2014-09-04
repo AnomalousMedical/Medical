@@ -23,7 +23,7 @@ namespace Medical.Controller
 
         static PoseController()
         {
-            pickAnatomy = new MessageEvent(Events.SelectAndMove, EventLayers.PosingAndSelection);
+            pickAnatomy = new MessageEvent(Events.SelectAndMove, EventLayers.Posing);
             pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(pickAnatomy);
         }
@@ -64,6 +64,7 @@ namespace Medical.Controller
         {
             pickAnatomy.OnHeldDown -= pickAnatomy_OnHeldDown;
             ikScene.removeExternalControl(dragControl);
+            dragControl.TargetBone = null;
         }
 
         void pickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
@@ -103,15 +104,11 @@ namespace Medical.Controller
 
         private bool getCameraRay(EventLayer eventLayer, out Ray3 cameraRay)
         {
-            Vector3 absMouse = eventLayer.Mouse.AbsolutePosition;
+            IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
             if (!Gui.Instance.HandledMouse && !InputManager.Instance.isModalAny())
             {
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-                Vector2 windowLoc = new Vector2(activeWindow.RenderXLoc, activeWindow.RenderYLoc);
-                Size2 windowSize = new Size2(activeWindow.RenderWidth, activeWindow.RenderHeight);
-                absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
-                absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
-                cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
+                cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
                 return true;
             }
             cameraRay = new Ray3();

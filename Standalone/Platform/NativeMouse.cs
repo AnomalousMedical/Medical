@@ -11,9 +11,9 @@ namespace Medical
     class NativeMouse : MouseHardware, IDisposable
     {
         private NativeOSWindow window;
-        private Vector3 absMouse = Vector3.Zero;
-        private Vector3 relMouse = Vector3.Zero;
-        private Vector3 lastMouse = Vector3.Zero;
+        private IntVector3 absMouse = new IntVector3(0, 0, 0);
+        private IntVector3 relMouse = new IntVector3(0, 0, 0);
+        private IntVector3 lastMouse = new IntVector3(0, 0, 0);
         private bool[] buttonDownStatus = new bool[(int)MouseButtonCode.NUM_BUTTONS];
 
         IntPtr nativeMouse;
@@ -64,7 +64,7 @@ namespace Medical
             lastMouse = absMouse;
         }
 
-        public override Vector3 AbsolutePosition
+        public override IntVector3 AbsolutePosition
         {
             get
             {
@@ -72,7 +72,7 @@ namespace Medical
             }
         }
 
-        public override Vector3 RelativePosition
+        public override IntVector3 RelativePosition
         {
             get
             {

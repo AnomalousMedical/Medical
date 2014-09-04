@@ -11,7 +11,8 @@ namespace Medical
         Gui = 0,
         AfterGui = 1,
         Tools = 2,
-        PosingAndSelection = 3,
-        Cameras = 4,
+        Posing = 3,
+        Selection = 4,
+        Cameras = 5,
     }
 }

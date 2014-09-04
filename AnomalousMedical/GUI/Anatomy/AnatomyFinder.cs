@@ -39,7 +39,7 @@ namespace Medical.GUI
         
         static AnatomyFinder()
         {
-            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.PosingAndSelection);
+            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.Posing);
             pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(pickAnatomy);
 
@@ -73,7 +73,7 @@ namespace Medical.GUI
         private int lastWidth = -1;
         private int lastHeight = -1;
 
-        private Vector3 mouseDownMousePos;
+        private IntVector3 mouseDownMousePos;
         private const int MOUSE_MOVE_GRACE_PIXELS = 3;
 
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
@@ -273,19 +273,15 @@ namespace Medical.GUI
 
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
-            Vector3 absMouse = eventLayer.Mouse.AbsolutePosition;
-            Vector3 mouseMovedAmount = mouseDownMousePos - absMouse;
+            IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
+            IntVector3 mouseMovedAmount = mouseDownMousePos - absMouse;
             mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
             mouseMovedAmount.y = Math.Abs(mouseMovedAmount.y);
             if (!Gui.Instance.HandledMouse && !InputManager.Instance.isModalAny() && mouseMovedAmount.x < MOUSE_MOVE_GRACE_PIXELS && mouseMovedAmount.y < MOUSE_MOVE_GRACE_PIXELS)
             {
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-                Vector2 windowLoc = new Vector2(activeWindow.RenderXLoc, activeWindow.RenderYLoc);
-                Size2 windowSize = new Size2(activeWindow.RenderWidth, activeWindow.RenderHeight);
-                DisplayHintLocation = new IntVector2((int)absMouse.x, (int)absMouse.y); //Set the hint location before modifying the abs mouse
-                absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
-                absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
-                Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
+                DisplayHintLocation = new IntVector2(absMouse.x, absMouse.y);
+                Ray3 cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
 
                 Anatomy bestMatch = anatomyController.findAnatomy(cameraRay);
 
