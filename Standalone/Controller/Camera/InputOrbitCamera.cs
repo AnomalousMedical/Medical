@@ -68,88 +68,113 @@ namespace Medical
 
         private bool currentlyInMotion;
         private EventManager eventManager;
+        private MouseTravelTracker travelTracker = new MouseTravelTracker();
 
         public InputOrbitCamera(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, EventManager eventManager)
             :base(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance)
         {
             this.eventManager = eventManager;
             eventManager[EventLayers.Cameras].OnUpdate += processInputEvents;
+
+            rotateCamera.FirstFrameDownEvent += rotateCamera_FirstFrameDownEvent;
+            rotateCamera.FirstFrameUpEvent += rotateCamera_FirstFrameUpEvent;
         }
 
         public override void Dispose()
         {
             eventManager[EventLayers.Cameras].OnUpdate -= processInputEvents;
+
+            rotateCamera.FirstFrameDownEvent -= rotateCamera_FirstFrameDownEvent;
+            rotateCamera.FirstFrameUpEvent -= rotateCamera_FirstFrameUpEvent;
             base.Dispose();
         }
 
         public CameraMotionValidator MotionValidator { get; set; }
 
-        void processInputEvents(EventLayer events)
+        void rotateCamera_FirstFrameDownEvent(EventLayer eventLayer)
         {
-            if (AllowManualMovement && events.EventProcessingAllowed)
+            travelTracker.reset();
+        }
+
+        void rotateCamera_FirstFrameUpEvent(EventLayer eventLayer)
+        {
+            if(travelTracker.TraveledOverLimit)
             {
-                IntVector3 mouseCoords = events.Mouse.AbsolutePosition;
+                eventLayer.alertEventsHandled();
+            }
+        }
+
+        void processInputEvents(EventLayer eventLayer)
+        {
+            if (AllowManualMovement && eventLayer.EventProcessingAllowed)
+            {
+                IntVector3 mouseCoords = eventLayer.Mouse.AbsolutePosition;
                 bool activeWindow = MotionValidator == null || (MotionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && MotionValidator.isActiveWindow());
-                if (events[CameraEvents.RotateCamera].FirstFrameDown)
+                if (eventLayer[CameraEvents.RotateCamera].FirstFrameDown)
                 {
                     if (activeWindow)
                     {
                         currentlyInMotion = true;
+                        eventLayer.alertEventsHandled();
                     }
                 }
-                else if (events[CameraEvents.RotateCamera].FirstFrameUp)
+                else if (eventLayer[CameraEvents.RotateCamera].FirstFrameUp)
                 {
                     currentlyInMotion = false;
                 }
-                mouseCoords = events.Mouse.RelativePosition;
+                mouseCoords = eventLayer.Mouse.RelativePosition;
                 if (currentlyInMotion)
                 {
-                    if (events[CameraEvents.PanCamera].HeldDown)
+                    travelTracker.traveled(mouseCoords);
+                    if (eventLayer[CameraEvents.PanCamera].HeldDown)
                     {
                         int x = mouseCoords.x;
                         int y = mouseCoords.y;
-                        if (events[CameraEvents.LockX].Down)
+                        if (eventLayer[CameraEvents.LockX].Down)
                         {
                             x = 0;
                         }
-                        if (events[CameraEvents.LockY].Down)
+                        if (eventLayer[CameraEvents.LockY].Down)
                         {
                             y = 0;
                         }
-                        panFromMotion(x, y, events.Mouse.AreaWidth, events.Mouse.AreaHeight);
+                        panFromMotion(x, y, eventLayer.Mouse.AreaWidth, eventLayer.Mouse.AreaHeight);
+                        eventLayer.alertEventsHandled();
                     }
-                    else if (AllowZoom && events[CameraEvents.ZoomCamera].HeldDown)
+                    else if (AllowZoom && eventLayer[CameraEvents.ZoomCamera].HeldDown)
                     {
                         zoomFromMotion(mouseCoords.y);
+                        eventLayer.alertEventsHandled();
                     }
-                    else if (AllowRotation && events[CameraEvents.RotateCamera].HeldDown)
+                    else if (AllowRotation && eventLayer[CameraEvents.RotateCamera].HeldDown)
                     {
                         int x = mouseCoords.x;
                         int y = mouseCoords.y;
-                        if (events[CameraEvents.LockX].Down)
+                        if (eventLayer[CameraEvents.LockX].Down)
                         {
                             x = 0;
                         }
-                        if (events[CameraEvents.LockY].Down)
+                        if (eventLayer[CameraEvents.LockY].Down)
                         {
                             y = 0;
                         }
                         rotateFromMotion(x, y);
+                        eventLayer.alertEventsHandled();
                     }
                 }
                 if (activeWindow)
                 {
                     if (AllowZoom)
                     {
-                        if (events[CameraEvents.ZoomInCamera].Down)
+                        if (eventLayer[CameraEvents.ZoomInCamera].Down)
                         {
                             incrementZoom(-1);
-                            events.alertEventsHandled();
+                            eventLayer.alertEventsHandled();
                         }
-                        else if (events[CameraEvents.ZoomOutCamera].Down)
+                        else if (eventLayer[CameraEvents.ZoomOutCamera].Down)
                         {
                             incrementZoom(1);
-                            events.alertEventsHandled();
+                            eventLayer.alertEventsHandled();
                         }
                     }
                 }

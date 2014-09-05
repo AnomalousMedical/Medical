@@ -12,7 +12,7 @@ namespace Medical
         AfterGui = 1,
         Tools = 2,
         Posing = 3,
-        Selection = 4,
-        Cameras = 5,
+        Cameras = 4,
+        Selection = 5,
     }
 }
