@@ -386,14 +386,14 @@ namespace Medical.Controller
         }
 
         /// <summary>
-        /// Stop the window from auto adjusting to show the include point when the
-        /// scene view is resized. Should call whenever the user updates a position
-        /// manually through a control mechanism (rotating camera with mouse, touching screen etc)
+        /// Determine if the given x, y location is contained in this SceneViewWindow.
         /// </summary>
-        public void stopMaintainingIncludePoint()
+        /// <param name="x">The x location.</param>
+        /// <param name="y">The y location.</param>
+        /// <returns>True if the point is contained in this window. False if it is not.</returns>
+        public bool containsPoint(int x, int y)
         {
-            //Do not add any custom logic here, only pass to camera mover.
-            cameraMover.stopMaintainingIncludePoint();
+            return (x > Location.x && x < Location.x + WorkingSize.Width) && (y > Location.y && y < Location.y + WorkingSize.Height);
         }
 
         public override bool Visible
@@ -680,69 +680,5 @@ namespace Medical.Controller
                 borderPanel1 = null;
             }
         }
-
-        #region CameraMotionValidator Members
-
-        /// <summary>
-        /// Determine if the camera should be allowed to move based on the current mouse location.
-        /// </summary>
-        /// <param name="x">The x location of the mouse.</param>
-        /// <param name="y">The y location of the mouse.</param>
-        /// <returns>True if the camera should be allowed to move.  False if it should stay still.</returns>
-        public bool allowMotion(int x, int y)
-        {
-            return !InputManager.Instance.isModalAny() && (x > Location.x && x < Location.x + WorkingSize.Width) && (y > Location.y && y < Location.y + WorkingSize.Height);
-        }
-
-        /// <summary>
-        /// Determine if the window is currently set as "active" allowing certain behavior.
-        /// This is an optional check by classes using the validator it may be desirable to
-        /// do an action even if the window is not active.
-        /// </summary>
-        /// <returns>True if the window is active.</returns>
-        public bool isActiveWindow()
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// Get the location passed in the coordinates for the motion validator.
-        /// </summary>
-        /// <param name="x">X location.</param>
-        /// <param name="y">Y location.</param>
-        public void getLocalCoords(ref int x, ref int y)
-        {
-            x -= Location.x;
-            y -= Location.y;
-        }
-
-        /// <summary>
-        /// Get the width of the mouse area for this validator.
-        /// </summary>
-        /// <returns>The width of the mouse area.</returns>
-        public float getMouseAreaWidth()
-        {
-            return WorkingSize.Width;
-        }
-
-        /// <summary>
-        /// Get the height of the mouse area for this validator.
-        /// </summary>
-        /// <returns>The height of the mouse area.</returns>
-        public float getMouseAreaHeight()
-        {
-            return WorkingSize.Height;
-        }
-
-        /// <summary>
-        /// Get the camera for this motion validator.
-        /// </summary>
-        /// <returns>The camera for this validator.</returns>
-        public SceneView getCamera()
-        {
-            return sceneView;
-        }
-
-        #endregion
     }
 }

@@ -128,7 +128,7 @@ namespace Medical.Controller
             if (eventLayer.EventProcessingAllowed)
             {
                 var absPos = eventLayer.Mouse.AbsolutePosition;
-                if (allowMotion((int)absPos.x, (int)absPos.y))
+                if (containsPoint(absPos.x, absPos.y))
                 {
                     mdiWindow.Active = true;
                 }
