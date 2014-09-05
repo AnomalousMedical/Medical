@@ -820,6 +820,7 @@
     <Compile Include="Utility\FreeImageBitmapExtensions.cs" />
     <Compile Include="Utility\IDisposableUtil.cs" />
     <Compile Include="Utility\MemoryCache.cs" />
+    <Compile Include="Utility\MouseTravelTracker.cs" />
     <Compile Include="Utility\Node.cs" />
     <Compile Include="Utility\OrderedDictionary.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />

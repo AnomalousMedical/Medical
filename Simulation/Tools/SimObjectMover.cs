@@ -133,7 +133,16 @@ namespace Medical
                     if (closestTools != null)
                     {
                         closestTools.processSelection(events, ref cameraPos, ref spaceRay);
+                        events.alertEventsHandled();
                     }
+                }
+                else if(events[ToolEvents.Pick].FirstFrameUp)
+                {
+                    if(currentTools != null)
+                    {
+                        events.alertEventsHandled();
+                    }
+                    currentTools = null;
                 }
             }
             else
@@ -141,8 +150,9 @@ namespace Medical
                 if (currentTools != null)
                 {
                     currentTools.processSelection(events, ref cameraPos, ref spaceRay);
+                    events.alertEventsHandled();
                 }
-            }  
+            }
             foreach (MovableObjectTools tools in movableObjects)
             {
                 tools.drawTools(drawingSurface);

@@ -197,7 +197,7 @@ namespace Medical
 
         void events_OnUpdate(EventLayer eventLayer)
         {
-            if (camera != null && !automaticMovement)
+            if (camera != null && !automaticMovement && eventLayer.EventProcessingAllowed)
             {
                 IntVector3 mouseCoords = events.Mouse.AbsolutePosition;
                 bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());

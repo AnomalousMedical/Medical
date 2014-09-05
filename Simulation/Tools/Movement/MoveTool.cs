@@ -91,7 +91,6 @@ namespace Medical
             if (events[ToolEvents.Pick].FirstFrameDown)
             {
                 mouseOffset = -(spacePoint - movable.ToolTranslation);
-                events.alertEventsHandled();
             }
             else if (events[ToolEvents.Pick].HeldDown)
             {
@@ -105,8 +104,6 @@ namespace Medical
                     + yzAxisBox.translate(spacePoint);
 
                 movable.move(newPos);
-
-                events.alertEventsHandled();
             }
         }
 

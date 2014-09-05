@@ -39,7 +39,7 @@ namespace Medical.GUI
         
         static AnatomyFinder()
         {
-            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.Posing);
+            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.Selection);
             pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(pickAnatomy);
 
@@ -72,9 +72,6 @@ namespace Medical.GUI
         private AnatomyController anatomyController;
         private int lastWidth = -1;
         private int lastHeight = -1;
-
-        private IntVector3 mouseDownMousePos;
-        private const int MOUSE_MOVE_GRACE_PIXELS = 3;
 
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
 
@@ -119,7 +116,6 @@ namespace Medical.GUI
             setupSelectionButton(SelectionMode.Remove, "RemoveButton");
             selectionMode.Selection = SelectionMode.Select;
 
-            pickAnatomy.FirstFrameDownEvent += pickAnatomy_FirstFrameDownEvent;
             pickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
             changeSelectionMode.FirstFrameUpEvent += changeSelectionMode_FirstFrameUpEvent;
             openAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
@@ -142,7 +138,6 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            pickAnatomy.FirstFrameDownEvent -= pickAnatomy_FirstFrameDownEvent;
             pickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
             changeSelectionMode.FirstFrameUpEvent -= changeSelectionMode_FirstFrameUpEvent;
             openAnatomyFinder.FirstFrameUpEvent -= openAnatomyFinder_FirstFrameUpEvent;
@@ -266,18 +261,10 @@ namespace Medical.GUI
             clearButton.Visible = !String.IsNullOrEmpty(search);
         }
 
-        void pickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
-        {
-            mouseDownMousePos = eventLayer.Mouse.AbsolutePosition;
-        }
-
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
             IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
-            IntVector3 mouseMovedAmount = mouseDownMousePos - absMouse;
-            mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
-            mouseMovedAmount.y = Math.Abs(mouseMovedAmount.y);
-            if (!Gui.Instance.HandledMouse && !InputManager.Instance.isModalAny() && mouseMovedAmount.x < MOUSE_MOVE_GRACE_PIXELS && mouseMovedAmount.y < MOUSE_MOVE_GRACE_PIXELS)
+            if (eventLayer.EventProcessingAllowed)
             {
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
                 DisplayHintLocation = new IntVector2(absMouse.x, absMouse.y);

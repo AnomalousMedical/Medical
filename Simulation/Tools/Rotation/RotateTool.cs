@@ -62,8 +62,6 @@ namespace Medical
                 startingRotation.setEuler(stRot.x, stRot.y, stRot.z);
 
                 currentEulerRotation = Vector3.Zero;
-
-                events.alertEventsHandled();
             }
             else if (events[ToolEvents.Pick].HeldDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
@@ -77,8 +75,6 @@ namespace Medical
                 newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
                 newRot *= startingRotation;
                 movable.rotate(ref newRot);
-
-                events.alertEventsHandled();
             }
             else if (events[ToolEvents.Pick].FirstFrameUp && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {

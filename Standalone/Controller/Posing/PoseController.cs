@@ -34,6 +34,7 @@ namespace Medical.Controller
         private ExternalDragControl dragControl = new ExternalDragControl();
         private float hitDistance;
         private bool allowPosing = false;
+        private MouseTravelTracker travelTracker = new MouseTravelTracker();
 
         public PoseController(StandaloneController controller)
         {
@@ -65,28 +66,36 @@ namespace Medical.Controller
             pickAnatomy.OnHeldDown -= pickAnatomy_OnHeldDown;
             ikScene.removeExternalControl(dragControl);
             dragControl.TargetBone = null;
+            if (eventLayer.EventProcessingAllowed && travelTracker.TraveledOverLimit)
+            {
+                eventLayer.alertEventsHandled();
+            }
         }
 
         void pickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
         {
-            Ray3 cameraRay;
-            if (getCameraRay(eventLayer, out cameraRay))
+            travelTracker.reset();
+            if (eventLayer.EventProcessingAllowed)
             {
-                var matches = PoseableObjectsManager.findPoseable(cameraRay);
-                foreach (var match in matches.Results)
+                Ray3 cameraRay;
+                if (getCameraRay(eventLayer, out cameraRay))
                 {
-                    var bone = match.PoseableIdentifier.Bone;
-                    if (bone != null && !bone.Pinned)
+                    var matches = PoseableObjectsManager.findPoseable(cameraRay);
+                    foreach (var match in matches.Results)
                     {
-                        dragControl.TargetBone = bone;
-                        hitDistance = match.Distance;
-                        Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
-                        dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
-                        dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
-                        pickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
-                        ikScene.addExternalControl(dragControl);
-                        eventLayer.alertEventsHandled();
-                        break;
+                        var bone = match.PoseableIdentifier.Bone;
+                        if (bone != null && !bone.Pinned)
+                        {
+                            dragControl.TargetBone = bone;
+                            hitDistance = match.Distance;
+                            Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
+                            dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
+                            dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
+                            pickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
+                            ikScene.addExternalControl(dragControl);
+                            eventLayer.alertEventsHandled();
+                            break;
+                        }
                     }
                 }
             }
@@ -94,12 +103,16 @@ namespace Medical.Controller
 
         void pickAnatomy_OnHeldDown(EventLayer eventLayer)
         {
-            Ray3 cameraRay;
-            if (getCameraRay(eventLayer, out cameraRay))
+            if (eventLayer.EventProcessingAllowed)
             {
-                dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
+                travelTracker.traveled(eventLayer.Mouse.RelativePosition);
+                Ray3 cameraRay;
+                if (getCameraRay(eventLayer, out cameraRay))
+                {
+                    dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
+                }
+                eventLayer.alertEventsHandled();
             }
-            eventLayer.alertEventsHandled();
         }
 
         private bool getCameraRay(EventLayer eventLayer, out Ray3 cameraRay)
