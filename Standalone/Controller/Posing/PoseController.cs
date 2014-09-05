@@ -77,25 +77,22 @@ namespace Medical.Controller
             travelTracker.reset();
             if (eventLayer.EventProcessingAllowed)
             {
-                Ray3 cameraRay;
-                if (getCameraRay(eventLayer, out cameraRay))
+                Ray3 cameraRay = getCameraRay(eventLayer);
+                var matches = PoseableObjectsManager.findPoseable(cameraRay);
+                foreach (var match in matches.Results)
                 {
-                    var matches = PoseableObjectsManager.findPoseable(cameraRay);
-                    foreach (var match in matches.Results)
+                    var bone = match.PoseableIdentifier.Bone;
+                    if (bone != null && !bone.Pinned)
                     {
-                        var bone = match.PoseableIdentifier.Bone;
-                        if (bone != null && !bone.Pinned)
-                        {
-                            dragControl.TargetBone = bone;
-                            hitDistance = match.Distance;
-                            Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
-                            dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
-                            dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
-                            pickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
-                            ikScene.addExternalControl(dragControl);
-                            eventLayer.alertEventsHandled();
-                            break;
-                        }
+                        dragControl.TargetBone = bone;
+                        hitDistance = match.Distance;
+                        Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
+                        dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
+                        dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
+                        pickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
+                        ikScene.addExternalControl(dragControl);
+                        eventLayer.alertEventsHandled();
+                        break;
                     }
                 }
             }
@@ -106,26 +103,21 @@ namespace Medical.Controller
             if (eventLayer.EventProcessingAllowed)
             {
                 travelTracker.traveled(eventLayer.Mouse.RelativePosition);
-                Ray3 cameraRay;
-                if (getCameraRay(eventLayer, out cameraRay))
-                {
-                    dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
-                }
+                Ray3 cameraRay = getCameraRay(eventLayer);
+                dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
                 eventLayer.alertEventsHandled();
             }
         }
 
-        private bool getCameraRay(EventLayer eventLayer, out Ray3 cameraRay)
+        private Ray3 getCameraRay(EventLayer eventLayer)
         {
             IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
-            if (!Gui.Instance.HandledMouse && !InputManager.Instance.isModalAny())
+            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+            if(activeWindow != null)
             {
-                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-                cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
-                return true;
+                return activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
             }
-            cameraRay = new Ray3();
-            return false;
+            return new Ray3();
         }
 
         void controller_SceneLoaded(SimScene scene)
