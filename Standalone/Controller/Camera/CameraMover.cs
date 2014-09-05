@@ -8,9 +8,14 @@ using OgreWrapper;
 
 namespace Medical
 {
-    public abstract class CameraMover : UpdateListener
+    public abstract class CameraMover : UpdateListener, IDisposable
     {
         protected Vector3? currentIncludePoint = null;
+
+        public virtual void Dispose()
+        {
+
+        }
 
         /// <summary>
         /// Rotate the camera by a certain amount (if supported).

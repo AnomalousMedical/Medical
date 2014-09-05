@@ -96,7 +96,7 @@ namespace Medical.Controller
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
 
-            TextureSceneView window = new TextureSceneView(this, mainTimer, orbitCamera, name, background, 0, width, height);
+            TextureSceneView window = new TextureSceneView(this, orbitCamera, name, background, 0, width, height);
 
             if (camerasCreated)
             {
@@ -196,8 +196,8 @@ namespace Medical.Controller
         {
             if (cloneWindow == null)
             {
-                CloneCamera cloneCamera = new CloneCamera(this);
-                cloneWindow = new SingleViewCloneWindow(windowInfo, this, mainTimer, cloneCamera, "Clone", background, 0, floatOnParent);
+                CloneCamera cloneCamera = new CloneCamera(this, mainTimer);
+                cloneWindow = new SingleViewCloneWindow(windowInfo, this, cloneCamera, "Clone", background, 0, floatOnParent);
                 cloneWindow.Closed += new EventHandler(cloneWindow_Closed);
                 if (WindowCreated != null)
                 {
@@ -430,7 +430,8 @@ namespace Medical.Controller
             InputOrbitCamera orbitCamera = new InputOrbitCamera(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
-            MDISceneViewWindow window = new MDISceneViewWindow(rendererWindow, this, mainTimer, orbitCamera, name, background, zIndexStart);
+            orbitCamera.setUpdateTimer(mainTimer);
+            MDISceneViewWindow window = new MDISceneViewWindow(rendererWindow, this, orbitCamera, name, background, zIndexStart);
             orbitCamera.MotionValidator = window;
             window.AutoAspectRatio = autoAspectRatio;
             window.AspectRatio = aspectRatio;

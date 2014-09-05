@@ -64,6 +64,7 @@ namespace Medical
         private bool allowRotation = true;
         private bool allowZoom = true;
         private EasingFunction easingFunction = EasingFunction.EaseOutQuadratic;
+        private UpdateTimer timer;
 
         public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance)
         {
@@ -75,6 +76,28 @@ namespace Medical
             this.minOrbitDistance = minOrbitDistance;
             this.maxOrbitDistance = maxOrbitDistance;
             computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
+        }
+
+        public override void Dispose()
+        {
+            if (timer != null)
+            {
+                timer.removeUpdateListener(this);
+            }
+            base.Dispose();
+        }
+
+        public void setUpdateTimer(UpdateTimer timer)
+        {
+            if(timer != null)
+            {
+                timer.removeUpdateListener(this);
+            }
+            this.timer = timer;
+            if (timer != null)
+            {
+                timer.addUpdateListener(this);
+            }
         }
 
         public override void rotate(float yawDelta, float pitchDelta)

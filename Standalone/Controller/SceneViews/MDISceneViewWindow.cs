@@ -35,11 +35,10 @@ namespace Medical.Controller
 
         private MDIDocumentWindow mdiWindow;
 
-        public MDISceneViewWindow(RendererWindow rendererWindow, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
-            :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
+        public MDISceneViewWindow(RendererWindow rendererWindow, SceneViewController controller, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
+            :base(controller, cameraMover, name, background, zIndexStart)
         {
             this.createBackground(((OgreWindow)PluginManager.Instance.RendererPlugin.PrimaryWindow).OgreRenderTarget, false);
-            this.listenForCameraMoverUpdates();
 
             //MDI Window
             mdiWindow = new MDIDocumentWindow(Name);

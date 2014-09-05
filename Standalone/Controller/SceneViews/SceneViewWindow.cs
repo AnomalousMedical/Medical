@@ -27,7 +27,6 @@ namespace Medical.Controller
 
         private SceneView sceneView;
         private CameraMover cameraMover;
-        private UpdateTimer mainTimer;
         private RendererWindow window;
         private String name;
         protected SceneViewController controller;
@@ -53,14 +52,13 @@ namespace Medical.Controller
         private RenderingMode renderingMode = RenderingMode.Solid;
         private bool clearEveryFrame = false;
 
-        public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
+        public SceneViewWindow(SceneViewController controller, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
         {
             this.zIndexStart = zIndexStart;
             this.background = background;
             this.controller = controller;
             this.cameraMover = cameraMover;
             this.name = name;
-            this.mainTimer = mainTimer;
             this.startPosition = cameraMover.Translation;
             this.startLookAt = cameraMover.LookAt;
             transparencyStateName = name;
@@ -79,22 +77,10 @@ namespace Medical.Controller
             vpBackground.BackgroundColor = backColor;
         }
 
-        /// <summary>
-        /// You must call this function to listen for updates on the camera mover. A lot of things will not work correctly
-        /// if you do not call this function, however, since we also use this mechanism for the render to texture scene
-        /// views and since they do not really require updates normally and since there are potentially a lot more of
-        /// those types of scene views compared to the ones users actually interact with we want to be able to have scene
-        /// views that do not automatically update.
-        /// </summary>
-        protected void listenForCameraMoverUpdates()
-        {
-            mainTimer.addUpdateListener(cameraMover);
-        }
-
         public virtual void Dispose()
         {
             IDisposableUtil.DisposeIfNotNull(vpBackground);
-            mainTimer.removeUpdateListener(cameraMover);
+            cameraMover.Dispose();
             TransparencyController.removeTransparencyState(transparencyStateName);
             destroyBorderPanels();
             if (Disposed != null)
@@ -399,21 +385,6 @@ namespace Medical.Controller
         public Vector3 unproject(float screenX, float screenY)
         {
             return Unproject(screenX, screenY, Camera.getViewMatrix(), Camera.getProjectionMatrix());
-        }
-
-        public void rotate(float yawDelta, float pitchDelta)
-        {
-            cameraMover.rotate(yawDelta, pitchDelta);
-        }
-
-        public void pan(float xDelta, float yDelta)
-        {
-            cameraMover.pan(xDelta, yDelta);
-        }
-
-        public void zoom(float zoomDelta)
-        {
-            cameraMover.zoom(zoomDelta);
         }
 
         /// <summary>

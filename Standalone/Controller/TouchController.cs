@@ -53,7 +53,7 @@ namespace Medical
             if (sceneView != null)
             {
                 float sensitivity = 4.0f;
-                sceneView.rotate(-deltaX * sensitivity, deltaY * sensitivity);
+                sceneView.CameraMover.rotate(-deltaX * sensitivity, deltaY * sensitivity);
                 sceneView.stopMaintainingIncludePoint();
             }
         }
@@ -64,7 +64,7 @@ namespace Medical
             if (sceneView != null)
             {
                 float sensitivity = 15.0f;
-                sceneView.pan(deltaX * sensitivity, deltaY * sensitivity);
+                sceneView.CameraMover.pan(deltaX * sensitivity, deltaY * sensitivity);
                 sceneView.stopMaintainingIncludePoint();
             }
         }
@@ -75,7 +75,7 @@ namespace Medical
             if (sceneView != null)
             {
                 float sensitivity = 80.0f;
-                sceneView.zoom(zoomDelta * sensitivity);
+                sceneView.CameraMover.zoom(zoomDelta * sensitivity);
                 sceneView.stopMaintainingIncludePoint();
             }
         }

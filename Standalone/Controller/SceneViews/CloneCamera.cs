@@ -12,10 +12,19 @@ namespace Medical.Controller
     {
         private SceneViewController sceneViewController;
         private CameraPositioner camera;
+        private UpdateTimer timer;
 
-        public CloneCamera(SceneViewController sceneViewController)
+        public CloneCamera(SceneViewController sceneViewController, UpdateTimer timer)
         {
             this.sceneViewController = sceneViewController;
+            this.timer = timer;
+            timer.addUpdateListener(this);
+        }
+
+        public override void Dispose()
+        {
+            timer.removeUpdateListener(this);
+            base.Dispose();
         }
 
         public override void setCamera(CameraPositioner camera)

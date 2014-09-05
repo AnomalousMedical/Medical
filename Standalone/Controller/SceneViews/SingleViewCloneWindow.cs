@@ -17,15 +17,14 @@ namespace Medical.Controller
         private OgreWindow rendererWindow;
         private NativeOSWindow osWindow;
 
-        public SingleViewCloneWindow(WindowInfo windowInfo, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart, bool floatOnParent)
-            :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
+        public SingleViewCloneWindow(WindowInfo windowInfo, SceneViewController controller, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart, bool floatOnParent)
+            :base(controller, cameraMover, name, background, zIndexStart)
         {
             IntVector2 location = SystemInfo.getDisplayLocation(windowInfo.MonitorIndex);
             location.y = -1;
             osWindow = new NativeOSWindow(MainWindow.Instance, "Clone Window", location, new IntSize2(windowInfo.Width, windowInfo.Height), floatOnParent);
             this.rendererWindow = (OgreWindow)OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
             this.createBackground(rendererWindow.OgreRenderTarget, true);
-            this.listenForCameraMoverUpdates();
             this.RendererWindow = rendererWindow;
             osWindow.show();
             osWindow.Closed += osWindow_Closed;

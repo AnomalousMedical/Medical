@@ -24,8 +24,8 @@ namespace Medical.Controller
         private bool alwaysRender = true;
         private bool renderingEnabled = true;
 
-        public TextureSceneView(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart, int width, int height)
-            :base(controller, mainTimer, cameraMover, name, background, zIndexStart)
+        public TextureSceneView(SceneViewController controller, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart, int width, int height)
+            :base(controller, cameraMover, name, background, zIndexStart)
         {
             this.TextureName = name;
             texture = TextureManager.getInstance().createManual(name, MyGUIInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, ogreTextureFormat, TextureUsage.TU_RENDERTARGET, false, 0);

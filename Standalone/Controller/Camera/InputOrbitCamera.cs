@@ -67,11 +67,19 @@ namespace Medical
         }
 
         private bool currentlyInMotion;
+        private EventManager eventManager;
 
         public InputOrbitCamera(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, EventManager eventManager)
             :base(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance)
         {
+            this.eventManager = eventManager;
             eventManager[EventLayers.Cameras].OnUpdate += processInputEvents;
+        }
+
+        public override void Dispose()
+        {
+            eventManager[EventLayers.Cameras].OnUpdate -= processInputEvents;
+            base.Dispose();
         }
 
         public CameraMotionValidator MotionValidator { get; set; }
