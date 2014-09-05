@@ -51,7 +51,7 @@ namespace Lecture
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
-            propMover = new SimObjectMover("LectureProps", medicalController.PluginManager.RendererPlugin, medicalController.EventManager);
+            propMover = new SimObjectMover("LectureProps", medicalController.PluginManager.RendererPlugin, medicalController.EventManager, standaloneController.SceneViewController);
 
             propEditController = new PropEditController(propMover);
 

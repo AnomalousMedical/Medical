@@ -6,6 +6,7 @@ using Engine;
 using Engine.ObjectManagement;
 using Engine.Renderer;
 using Engine.Platform;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -35,9 +36,11 @@ namespace Medical
         private bool showMoveTools = false;
         private bool showRotateTools = false;
         private float toolSize = 1.0f;
+        private SceneViewController sceneViewController;
 
-        public SimObjectMover(String name, RendererPlugin rendererPlugin, EventManager eventManager)
+        public SimObjectMover(String name, RendererPlugin rendererPlugin, EventManager eventManager, SceneViewController sceneViewController)
         {
+            this.sceneViewController = sceneViewController;
             this.rendererPlugin = rendererPlugin;
             this.name = name;
             this.events = eventManager[EventLayers.Tools];
@@ -81,13 +84,11 @@ namespace Medical
             IntVector3 mouseLoc = mouse.AbsolutePosition;
             Ray3 spaceRay = new Ray3();
             Vector3 cameraPos = Vector3.Zero;
-            CameraMotionValidator validator = CameraResolver.getValidatorForLocation((int)mouseLoc.x, (int)mouseLoc.y);
-            if (validator != null)
+            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+            if (activeWindow != null)
             {
-                validator.getLocalCoords(ref mouseLoc.x, ref mouseLoc.y);
-                SceneView camera = validator.getCamera();
-                spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
-                cameraPos = camera.Translation;              
+                spaceRay = activeWindow.getCameraToViewportRayScreen(mouseLoc.x, mouseLoc.y);
+                cameraPos = activeWindow.Translation;              
             }
             //Check collisions and draw shapes
             if (!events[ToolEvents.Pick].HeldDown)

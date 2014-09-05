@@ -82,7 +82,7 @@ namespace Medical.GUI.AnomalousMvc
         public void setDefaultTools()
         {
             TeethController.showTeethTools(MIDLINE_ANTERIOR_TEETH);
-            TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
+            TeethToolController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
         }
 
         private void topCameraButton_MouseButtonClick(object sender, EventArgs e)
@@ -90,7 +90,7 @@ namespace Medical.GUI.AnomalousMvc
             lastCameraButtonAction = wizardView.TopButtonAction;
             TeethController.showTeethTools(true, false);
             context.runAction(wizardView.TopButtonAction);
-            TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Z, MovementPlane.XZ);
+            TeethToolController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Z, MovementPlane.XZ);
         }
 
         private void bottomCameraButton_MouseButtonClick(object sender, EventArgs e)
@@ -98,7 +98,7 @@ namespace Medical.GUI.AnomalousMvc
             lastCameraButtonAction = wizardView.BottomButtonAction;
             TeethController.showTeethTools(false, true);
             context.runAction(wizardView.BottomButtonAction);
-            TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Z, MovementPlane.XZ);
+            TeethToolController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Z, MovementPlane.XZ);
         }
 
         private void leftLateralCameraButton_MouseButtonClick(object sender, EventArgs e)
@@ -106,7 +106,7 @@ namespace Medical.GUI.AnomalousMvc
             lastCameraButtonAction = wizardView.LeftLateralAction;
             TeethController.showTeethTools(LEFT_LATERAL_TEETH);
             context.runAction(wizardView.LeftLateralAction);
-            TeethController.TeethMover.setActivePlanes(MovementAxis.Y | MovementAxis.Z, MovementPlane.YZ); 
+            TeethToolController.TeethMover.setActivePlanes(MovementAxis.Y | MovementAxis.Z, MovementPlane.YZ); 
         }
 
         private void midlineAnteriorCameraButton_MouseButtonClick(object sender, EventArgs e)
@@ -114,7 +114,7 @@ namespace Medical.GUI.AnomalousMvc
             lastCameraButtonAction = wizardView.MidlineAnteriorAction;
             TeethController.showTeethTools(MIDLINE_ANTERIOR_TEETH);
             context.runAction(wizardView.MidlineAnteriorAction);
-            TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
+            TeethToolController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
         }
 
         private void rightLateralCameraButton_MouseButtonClick(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace Medical.GUI.AnomalousMvc
             lastCameraButtonAction = wizardView.RightLateralAction;
             TeethController.showTeethTools(RIGHT_LATERAL_TEETH);
             context.runAction(wizardView.RightLateralAction);
-            TeethController.TeethMover.setActivePlanes(MovementAxis.Y | MovementAxis.Z, MovementPlane.YZ);
+            TeethToolController.TeethMover.setActivePlanes(MovementAxis.Y | MovementAxis.Z, MovementPlane.YZ);
         }
 
         void adaptButton_CheckedChanged(Widget sender, EventArgs e)
@@ -147,7 +147,7 @@ namespace Medical.GUI.AnomalousMvc
 
         void rotateButton_CheckedChanged(Widget sender, EventArgs e)
         {
-            TeethController.TeethMover.ShowRotateTools = rotateButton.Checked;
+            TeethToolController.TeethMover.ShowRotateTools = rotateButton.Checked;
             if (rotateButton.Checked)
             {
                 moveButton.Checked = false;
@@ -157,7 +157,7 @@ namespace Medical.GUI.AnomalousMvc
 
         void moveButton_CheckedChanged(Widget sender, EventArgs e)
         {
-            TeethController.TeethMover.ShowMoveTools = moveButton.Checked;
+            TeethToolController.TeethMover.ShowMoveTools = moveButton.Checked;
             if (moveButton.Checked)
             {
                 rotateButton.Checked = false;

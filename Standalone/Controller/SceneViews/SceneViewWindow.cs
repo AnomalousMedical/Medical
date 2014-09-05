@@ -16,7 +16,7 @@ namespace Medical.Controller
     public delegate void SceneViewWindowRenderEvent(SceneViewWindow window, bool currentCameraRender);
     public delegate void SceneViewWindowResizedEvent(SceneViewWindow window);
 
-    public abstract class SceneViewWindow : LayoutContainer, IDisposable, CameraMotionValidator
+    public abstract class SceneViewWindow : LayoutContainer, IDisposable
     {
         public event SceneViewWindowEvent CameraCreated;
         public event SceneViewWindowEvent CameraDestroyed;
@@ -106,7 +106,6 @@ namespace Medical.Controller
             sceneView.ClearEveryFrame = clearEveryFrame;
             sceneView.setRenderingMode(renderingMode);
             cameraMover.setCamera(new CameraPositioner(sceneView, NearPlaneWorldPos, FarPlaneWorldPos));
-            CameraResolver.addMotionValidator(this);
             sceneView.RenderingStarted += sceneView_RenderingStarted;
             sceneView.RenderingEnded += sceneView_RenderingEnded;
             if (CameraCreated != null)
@@ -125,7 +124,6 @@ namespace Medical.Controller
                 }
                 --zOffset;
                 Log.Info("Destroying SceneView for {0}.", name);
-                CameraResolver.removeMotionValidator(this);
                 sceneView.RenderingStarted -= sceneView_RenderingStarted;
                 sceneView.RenderingEnded -= sceneView_RenderingEnded;
                 cameraMover.setCamera(null);

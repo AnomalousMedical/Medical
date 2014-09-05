@@ -83,7 +83,7 @@ namespace Medical
 
             //Prop Mover
             MedicalController medicalController = standaloneController.MedicalController;
-            propMover = new SimObjectMover("Props", medicalController.PluginManager.RendererPlugin, medicalController.EventManager);
+            propMover = new SimObjectMover("Props", medicalController.PluginManager.RendererPlugin, medicalController.EventManager, standaloneController.SceneViewController);
 
             this.standaloneController = standaloneController;
             editorTimelineController = new TimelineController(standaloneController);

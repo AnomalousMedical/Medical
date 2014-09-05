@@ -297,36 +297,6 @@ namespace Medical
             }
         }
 
-        #region MovableObject Members
-
-        [DoNotCopy]
-        public override Vector3 ToolTranslation
-        {
-            get
-            {
-                return Owner.Translation;
-            }
-        }
-
-        public override void move(Vector3 offset)
-        {
-            Offset += offset;
-        }
-
-        [DoNotCopy]
-        public override Quaternion ToolRotation
-        {
-            get
-            {
-                return rotationOffset;
-            }
-        }
-
-        public override void rotate(ref Quaternion newRot)
-        {
-            Rotation = newRot;
-        }
-
         [DoNotCopy]
         public override bool ShowTools
         {
@@ -340,11 +310,17 @@ namespace Medical
             }
         }
 
-        public override void alertToolHighlightStatus(bool highlighted)
+        [DoNotCopy]
+        public override bool ToolHighlight
         {
-            toolHighlight = highlighted;
+            get
+            {
+                return toolHighlight;
+            }
+            set
+            {
+                toolHighlight = value;
+            }
         }
-
-        #endregion
     }
 }

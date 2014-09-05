@@ -9,36 +9,30 @@ namespace Medical
     public class TeethController
     {
         static Dictionary<String, Tooth> teeth = new Dictionary<string, Tooth>();
-        static SimObjectMover teethMover;
-        //static SelectionController selectionController;
-        //static SelectionMovableObject selectionMovable;
-        //static Dictionary<Tooth, ToothSelectable> teethSelectables = new Dictionary<Tooth,ToothSelectable>();
+
+        public static event Action<Tooth> ToothAdded;
+        public static event Action<Tooth> ToothRemoved;
 
         static TeethController()
         {
             HighlightContacts = false;
-            //selectionController = new SelectionController();
-            //selectionMovable = new SelectionMovableObject(selectionController);
         }
 
         public static void addTooth(String name, Tooth tooth)
         {
             teeth.Add(name, tooth);
-            if (teethMover != null)
+            if(ToothAdded != null)
             {
-                teethMover.addMovableObject(name, tooth);
-                //teethSelectables.Add(tooth, new ToothSelectable(tooth));
+                ToothAdded.Invoke(tooth);
             }
         }
 
         public static void removeTooth(String name)
         {
-            if (teethMover != null)
+            if(ToothRemoved != null)
             {
                 Tooth tooth = teeth[name];
-                teethMover.removeMovableObject(tooth);
-                //selectionController.removeSelectedObject(teethSelectables[tooth]);
-                //teethSelectables.Remove(tooth);
+                ToothRemoved.Invoke(tooth);
             }
             teeth.Remove(name);
         }
@@ -174,59 +168,7 @@ namespace Medical
             return center;
         }
 
-        /// <summary>
-        /// Call this function before a screenshot is rendered to hide the
-        /// movement tools if you wish them hidden in the screenshot. This
-        /// function is setup to consume as an EventHandler, but it does not
-        /// actually use the arguments.
-        /// </summary>
-        /// <param name="sender">Ignored.</param>
-        /// <param name="e">Ignored.</param>
-        public static void ScreenshotRenderStarted(Object sender, EventArgs e)
-        {
-            if (teethMover != null)
-            {
-                teethMover.setDrawingSurfaceVisible(false);
-            }
-        }
-
-        /// <summary>
-        /// Call this function after a screenshot is rendered to show the
-        /// movement tools if you hid them with ScreenshotRenderStarted. This
-        /// function is setup to consume as an EventHandler, but it does not
-        /// actually use the arguments.
-        /// </summary>
-        /// <param name="sender">Ignored.</param>
-        /// <param name="e">Ignored.</param>
-        public static void ScreenshotRenderCompleted(Object sender, EventArgs e)
-        {
-            if (teethMover != null)
-            {
-                teethMover.setDrawingSurfaceVisible(true);
-            }
-        }
-
         public static bool HighlightContacts { get; set; }
-
-        public static SimObjectMover TeethMover
-        {
-            get
-            {
-                return teethMover;
-            }
-            set
-            {
-                //if (teethMover != null)
-                //{
-                //    teethMover.removeMovableObject(selectionMovable);
-                //}
-                teethMover = value;
-                //if (teethMover != null)
-                //{
-                //    teethMover.addMovableObject("_SelectionMovable", selectionMovable);
-                //}
-            }
-        }
 
         public static float AdaptForce
         {

@@ -238,12 +238,12 @@ namespace Medical
             musclePositionController = new MusclePositionController(medicalController.MainTimer, this);
 
             //Teeth mover
-            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager.RendererPlugin, medicalController.EventManager);
+            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager.RendererPlugin, medicalController.EventManager, sceneViewController);
             this.SceneLoaded += teethMover.sceneLoaded;
             this.SceneUnloading += teethMover.sceneUnloading;
-            TeethController.TeethMover = teethMover;
-            imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
-            imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
+            TeethToolController.TeethMover = teethMover;
+            imageRenderer.ImageRenderStarted += TeethToolController.ScreenshotRenderStarted;
+            imageRenderer.ImageRenderCompleted += TeethToolController.ScreenshotRenderCompleted;
 
             //Download
             downloadController = new DownloadController(app.LicenseManager, AtlasPluginManager);

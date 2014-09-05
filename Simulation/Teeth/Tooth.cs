@@ -18,7 +18,7 @@ namespace Medical
         Bottom,
     }
 
-    public abstract class Tooth : Behavior, MovableObject
+    public abstract class Tooth : Behavior
     {
         [DoNotCopy]
         public abstract bool Adapt
@@ -64,24 +64,6 @@ namespace Medical
         [DoNotCopy]
         public abstract bool IsTopTooth { get; }
 
-        #region MovableObject Members
-
-        [DoNotCopy]
-        public abstract Vector3 ToolTranslation
-        {
-            get;
-        }
-
-        public abstract void move(Vector3 offset);
-
-        [DoNotCopy]
-        public abstract Quaternion ToolRotation
-        {
-            get;
-        }
-
-        public abstract void rotate(ref Quaternion newRot);
-
         [DoNotCopy]
         public abstract bool ShowTools
         {
@@ -89,8 +71,11 @@ namespace Medical
             set;
         }
 
-        public abstract void alertToolHighlightStatus(bool highlighted);
-
-        #endregion
+        [DoNotCopy]
+        public abstract bool ToolHighlight
+        {
+            get;
+            set;
+        }
     }
 }
