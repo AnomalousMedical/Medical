@@ -92,7 +92,7 @@ namespace Medical.Controller
 
         public TextureSceneView createTextureSceneView(String name, Vector3 translation, Vector3 lookAt, int width, int height)
         {
-            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, Vector3.Zero, Vector3.Zero, 0, 1000, null, eventManager);
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, Vector3.Zero, Vector3.Zero, 0, 1000);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
 
@@ -427,10 +427,11 @@ namespace Medical.Controller
         /// <returns></returns>
         private MDISceneViewWindow doCreateWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, int zIndexStart)
         {
-            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, null, eventManager);
+            InputOrbitCamera orbitCamera = new InputOrbitCamera(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
             MDISceneViewWindow window = new MDISceneViewWindow(rendererWindow, this, mainTimer, orbitCamera, name, background, zIndexStart);
+            orbitCamera.MotionValidator = window;
             window.AutoAspectRatio = autoAspectRatio;
             window.AspectRatio = aspectRatio;
             if (WindowCreated != null)

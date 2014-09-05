@@ -73,17 +73,5 @@ namespace Medical.Controller
                 return Vector3.Zero;
             }
         }
-
-        public override CameraMotionValidator MotionValidator
-        {
-            get
-            {
-                return null;
-            }
-            set
-            {
-                
-            }
-        }
     }
 }

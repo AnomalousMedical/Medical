@@ -80,7 +80,7 @@ namespace Medical
             }
         }
 
-        public override float AreaWidth
+        public override int AreaWidth
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Medical
             }
         }
 
-        public override float AreaHeight
+        public override int AreaHeight
         {
             get
             {

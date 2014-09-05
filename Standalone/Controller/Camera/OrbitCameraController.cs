@@ -80,7 +80,7 @@ namespace Medical
         }
 
         private const float HALF_PI = (float)Math.PI / 2.0f - 0.001f;
-        private const int SCROLL_SCALE = 5;
+        private const float SCROLL_SCALE = 5.0f;
 
         #endregion Static
 
@@ -90,7 +90,6 @@ namespace Medical
         private float maxOrbitDistance;
 
         private CameraPositioner camera;
-        private EventLayer events;
 
         //These three vectors form the axis relative to the current rotation.
         private Vector3 normalDirection; //z
@@ -100,10 +99,8 @@ namespace Medical
         private float orbitDistance;
         private float yaw;
         private float pitch;
-        private bool currentlyInMotion;
         private Vector3 lookAt;
         private Vector3 translation;
-        private CameraMotionValidator motionValidator = null;
 
         private bool automaticMovement = false;
         private float totalTime = 0.0f;
@@ -125,14 +122,11 @@ namespace Medical
         private bool allowZoom = true;
         private EasingFunction easingFunction = EasingFunction.EaseOutQuadratic;
 
-        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, CameraMotionValidator motionValidator, EventManager eventManager)
+        public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance)
         {
             this.camera = null;
-            this.events = eventManager[EventLayers.Cameras];
-            events.OnUpdate += events_OnUpdate;
             this.translation = translation;
             this.lookAt = lookAt;
-            this.motionValidator = motionValidator;
             this.boundMax = boundMax;
             this.boundMin = boundMin;
             this.minOrbitDistance = minOrbitDistance;
@@ -195,84 +189,36 @@ namespace Medical
             }
         }
 
-        void events_OnUpdate(EventLayer eventLayer)
+        public void panFromMotion(int x, int y, int areaWidth, int areaHeight)
         {
-            if (camera != null && !automaticMovement && eventLayer.EventProcessingAllowed)
-            {
-                IntVector3 mouseCoords = events.Mouse.AbsolutePosition;
-                bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());
-                if (events[CameraEvents.RotateCamera].FirstFrameDown)
-                {
-                    if (activeWindow)
-                    {
-                        currentlyInMotion = true;
-                    }
-                }
-                else if (events[CameraEvents.RotateCamera].FirstFrameUp)
-                {
-                    currentlyInMotion = false;
-                }
-                mouseCoords = events.Mouse.RelativePosition;
-                if (currentlyInMotion)
-                {
-                    if (events[CameraEvents.PanCamera].HeldDown)
-                    {
-                        float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
-                        if (events[CameraEvents.LockX].ReleasedUp)
-                        {
-                            lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.AreaWidth * SCROLL_SCALE) * scaleFactor);
-                        }
-                        if (events[CameraEvents.LockY].ReleasedUp)
-                        {
-                            lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.AreaHeight * SCROLL_SCALE) * scaleFactor);
-                        }
-                        moveLookAt();
-                        stopMaintainingIncludePoint();
-                    }
-                    else if (allowZoom && events[CameraEvents.ZoomCamera].HeldDown)
-                    {
-                        orbitDistance += ZoomMultiple * mouseCoords.y + mouseCoords.y;
-                        moveZoom();
-                        stopMaintainingIncludePoint();
-                    }
-                    else if (allowRotation && events[CameraEvents.RotateCamera].HeldDown)
-                    {
-                        if (events[CameraEvents.LockX].ReleasedUp)
-                        {
-                            yaw += mouseCoords.x / -100.0f;
-                        }
-                        if (events[CameraEvents.LockY].ReleasedUp)
-                        {
-                            pitch += mouseCoords.y / 100.0f;
-                        }
-                        moveCameraYawPitch();
-                        stopMaintainingIncludePoint();
-                    }
-                }
-                if (activeWindow)
-                {
-                    if (allowZoom)
-                    {
-                        if (events[CameraEvents.ZoomInCamera].Down)
-                        {
-                            wheelZoom(-1, eventLayer);
-                        }
-                        else if (events[CameraEvents.ZoomOutCamera].Down)
-                        {
-                            wheelZoom(1, eventLayer);
-                        }
-                    }
-                }
-            }
+            float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
+            lookAt += rotatedLeft * (x / (areaWidth * SCROLL_SCALE) * scaleFactor);
+            lookAt += rotatedUp * (y / (areaHeight * SCROLL_SCALE) * scaleFactor);
+            moveLookAt();
+            stopMaintainingIncludePoint();
         }
 
-        private void wheelZoom(int zoomDirection, EventLayer eventLayer)
+        public void zoomFromMotion(int y)
+        {
+            orbitDistance += ZoomMultiple * y + y;
+            moveZoom();
+            stopMaintainingIncludePoint();
+        }
+
+        public void rotateFromMotion(int x, int y)
+        {
+            yaw += x / -100.0f;
+            pitch += y / 100.0f;
+            moveCameraYawPitch();
+            stopMaintainingIncludePoint();
+        }
+
+        public void incrementZoom(int zoomDirection)
         {
             float zoomAmount = (ZoomMultiple * 60f + 3.6f) * zoomDirection;
             orbitDistance += zoomAmount;
             moveZoom();
             stopMaintainingIncludePoint();
-            eventLayer.alertEventsHandled();
         }
 
         public float ZoomMultiple
@@ -507,18 +453,6 @@ namespace Medical
             }
         }
 
-        public override CameraMotionValidator MotionValidator
-        {
-            get
-            {
-                return motionValidator;
-            }
-            set
-            {
-                motionValidator = value;
-            }
-        }
-
         public bool AllowRotation
         {
             get
@@ -564,6 +498,14 @@ namespace Medical
             set
             {
                 boundMin = value;
+            }
+        }
+
+        public bool AllowManualMovement
+        {
+            get
+            {
+                return camera != null && !automaticMovement;
             }
         }
     }

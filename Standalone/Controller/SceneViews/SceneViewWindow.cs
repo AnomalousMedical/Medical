@@ -59,7 +59,6 @@ namespace Medical.Controller
             this.background = background;
             this.controller = controller;
             this.cameraMover = cameraMover;
-            cameraMover.MotionValidator = this;
             this.name = name;
             this.mainTimer = mainTimer;
             this.startPosition = cameraMover.Translation;
