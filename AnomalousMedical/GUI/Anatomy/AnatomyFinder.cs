@@ -281,7 +281,7 @@ namespace Medical.GUI
                 {
                     searchBox.Caption = "Clicked";
                     clearButton.Visible = true;
-                    if (MedicalConfig.AutoOpenAnatomyFinder && !Visible)
+                    if (MedicalConfig.AutoOpenAnatomyFinder && !Visible && selectionMode.Selection != SelectionMode.Remove)
                     {
                         Visible = true;
                     }
