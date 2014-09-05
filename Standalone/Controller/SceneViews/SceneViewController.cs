@@ -22,7 +22,6 @@ namespace Medical.Controller
         public event SceneViewWindowEvent ActiveWindowChanged;
 
         private MDILayoutManager mdiLayout;
-        private EventManager eventManager;
         private UpdateTimer mainTimer;
         private RendererWindow rendererWindow;
         private bool camerasCreated = false;
@@ -34,6 +33,7 @@ namespace Medical.Controller
         private bool autoAspectRatio = true;
         private float aspectRatio = 4f / 3f;
         private BackgroundScene background;
+        private CameraInputController cameraInputController;
 
         private SingleViewCloneWindow cloneWindow = null;
         private List<MDISceneViewWindow> mdiWindows = new List<MDISceneViewWindow>();
@@ -42,10 +42,10 @@ namespace Medical.Controller
         public SceneViewController(MDILayoutManager mdiLayout, EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager, BackgroundScene background)
         {
             this.background = background;
-            this.eventManager = eventManager;
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
             this.mdiLayout = mdiLayout;
+            cameraInputController = new CameraInputController(this, eventManager);
 
             rm = renderManager;
             mdiLayout.ActiveWindowChanged += new EventHandler(mdiLayout_ActiveWindowChanged);
@@ -53,6 +53,7 @@ namespace Medical.Controller
 
         public void Dispose()
         {
+            cameraInputController.Dispose();
             destroyCameras();
             foreach (SceneViewWindow window in mdiWindows)
             {
@@ -427,12 +428,11 @@ namespace Medical.Controller
         /// <returns></returns>
         private MDISceneViewWindow doCreateWindow(String name, Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, int zIndexStart)
         {
-            InputOrbitCamera orbitCamera = new InputOrbitCamera(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance, eventManager);
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, boundMin, boundMax, minOrbitDistance, maxOrbitDistance);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
             orbitCamera.setUpdateTimer(mainTimer);
             MDISceneViewWindow window = new MDISceneViewWindow(rendererWindow, this, orbitCamera, name, background, zIndexStart);
-            orbitCamera.MotionValidator = window;
             window.AutoAspectRatio = autoAspectRatio;
             window.AspectRatio = aspectRatio;
             if (WindowCreated != null)

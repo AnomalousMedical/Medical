@@ -9,6 +9,7 @@ using Logging;
 using System.Text.RegularExpressions;
 using Engine.Platform;
 using Engine;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -221,7 +222,7 @@ namespace Medical.GUI
             MedicalConfig.EngineConfig.ShowStatistics = showStatsCheck.Checked;
             MouseButtonCode cameraButtonCode = (MouseButtonCode)cameraButtonCombo.SelectedIndex;
             MedicalConfig.CameraMouseButton = cameraButtonCode;
-            InputOrbitCamera.changeMouseButton(cameraButtonCode);
+            CameraInputController.changeMouseButton(cameraButtonCode);
             MedicalConfig.DefaultScene = defaultSceneCombo.SelectedItemData.ToString();
             MedicalConfig.AutoOpenAnatomyFinder = autoOpenAnatomyFinder.Checked;
 

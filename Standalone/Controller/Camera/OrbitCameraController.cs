@@ -155,7 +155,7 @@ namespace Medical
             }
         }
 
-        public void panFromMotion(int x, int y, int areaWidth, int areaHeight)
+        public override void panFromMotion(int x, int y, int areaWidth, int areaHeight)
         {
             float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
             lookAt += rotatedLeft * (x / (areaWidth * SCROLL_SCALE) * scaleFactor);
@@ -164,14 +164,14 @@ namespace Medical
             stopMaintainingIncludePoint();
         }
 
-        public void zoomFromMotion(int y)
+        public override void zoomFromMotion(int y)
         {
             orbitDistance += ZoomMultiple * y + y;
             moveZoom();
             stopMaintainingIncludePoint();
         }
 
-        public void rotateFromMotion(int x, int y)
+        public override void rotateFromMotion(int x, int y)
         {
             yaw += x / -100.0f;
             pitch += y / 100.0f;
@@ -179,7 +179,7 @@ namespace Medical
             stopMaintainingIncludePoint();
         }
 
-        public void incrementZoom(int zoomDirection)
+        public override void incrementZoom(int zoomDirection)
         {
             float zoomAmount = (ZoomMultiple * 60f + 3.6f) * zoomDirection;
             orbitDistance += zoomAmount;
@@ -419,7 +419,7 @@ namespace Medical
             }
         }
 
-        public bool AllowRotation
+        public override bool AllowRotation
         {
             get
             {
@@ -431,7 +431,7 @@ namespace Medical
             }
         }
 
-        public bool AllowZoom
+        public override bool AllowZoom
         {
             get
             {
@@ -467,7 +467,7 @@ namespace Medical
             }
         }
 
-        public bool AllowManualMovement
+        public override bool AllowManualMovement
         {
             get
             {

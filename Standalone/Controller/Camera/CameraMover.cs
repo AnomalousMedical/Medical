@@ -95,5 +95,57 @@ namespace Medical
         {
             get;
         }
+
+        public virtual bool AllowManualMovement
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public virtual void panFromMotion(int x, int y, int areaWidth, int areaHeight)
+        {
+            
+        }
+
+        public virtual void zoomFromMotion(int y)
+        {
+            
+        }
+
+        public virtual void rotateFromMotion(int x, int y)
+        {
+            
+        }
+
+        public virtual void incrementZoom(int zoomDirection)
+        {
+            
+        }
+
+        public virtual bool AllowZoom
+        {
+            get
+            {
+                return false;
+            }
+            set
+            {
+
+            }
+        }
+
+        public virtual bool AllowRotation
+        {
+            get
+            {
+                return false;
+            }
+            set
+            {
+
+            }
+        }
     }
 }
