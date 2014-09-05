@@ -8,8 +8,64 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    /// <summary>
+    /// This is an orbit camera that can process input from the user to move the camera.
+    /// </summary>
     class InputOrbitCamera : OrbitCameraController
     {
+        private static MouseButtonCode currentMouseButton = MedicalConfig.CameraMouseButton;
+        private static MessageEvent rotateCamera;
+        private static MessageEvent panCamera;
+        private static MessageEvent zoomCamera;
+        private static MessageEvent zoomInCamera;
+        private static MessageEvent zoomOutCamera;
+
+        static InputOrbitCamera()
+        {
+            rotateCamera = new MessageEvent(CameraEvents.RotateCamera, EventLayers.Cameras);
+            rotateCamera.addButton(currentMouseButton);
+            DefaultEvents.registerDefaultEvent(rotateCamera);
+
+            panCamera = new MessageEvent(CameraEvents.PanCamera, EventLayers.Cameras);
+            panCamera.addButton(currentMouseButton);
+            panCamera.addButton(PlatformConfig.PanKey);
+            DefaultEvents.registerDefaultEvent(panCamera);
+
+            zoomCamera = new MessageEvent(CameraEvents.ZoomCamera, EventLayers.Cameras);
+            zoomCamera.addButton(currentMouseButton);
+            zoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
+            DefaultEvents.registerDefaultEvent(zoomCamera);
+
+            zoomInCamera = new MessageEvent(CameraEvents.ZoomInCamera, EventLayers.Cameras);
+            zoomInCamera.MouseWheelDirection = MouseWheelDirection.Up;
+            DefaultEvents.registerDefaultEvent(zoomInCamera);
+
+            zoomOutCamera = new MessageEvent(CameraEvents.ZoomOutCamera, EventLayers.Cameras);
+            zoomOutCamera.MouseWheelDirection = MouseWheelDirection.Down;
+            DefaultEvents.registerDefaultEvent(zoomOutCamera);
+
+            MessageEvent lockX = new MessageEvent(CameraEvents.LockX, EventLayers.Cameras);
+            lockX.addButton(KeyboardButtonCode.KC_C);
+            DefaultEvents.registerDefaultEvent(lockX);
+
+            MessageEvent lockY = new MessageEvent(CameraEvents.LockY, EventLayers.Cameras);
+            lockY.addButton(KeyboardButtonCode.KC_X);
+            DefaultEvents.registerDefaultEvent(lockY);
+        }
+
+        public static void changeMouseButton(MouseButtonCode newMouseButton)
+        {
+            rotateCamera.removeButton(currentMouseButton);
+            panCamera.removeButton(currentMouseButton);
+            zoomCamera.removeButton(currentMouseButton);
+
+            currentMouseButton = newMouseButton;
+
+            rotateCamera.addButton(currentMouseButton);
+            panCamera.addButton(currentMouseButton);
+            zoomCamera.addButton(currentMouseButton);
+        }
+
         private bool currentlyInMotion;
 
         public InputOrbitCamera(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance, EventManager eventManager)

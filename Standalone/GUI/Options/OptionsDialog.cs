@@ -221,7 +221,7 @@ namespace Medical.GUI
             MedicalConfig.EngineConfig.ShowStatistics = showStatsCheck.Checked;
             MouseButtonCode cameraButtonCode = (MouseButtonCode)cameraButtonCombo.SelectedIndex;
             MedicalConfig.CameraMouseButton = cameraButtonCode;
-            OrbitCameraController.changeMouseButton(cameraButtonCode);
+            InputOrbitCamera.changeMouseButton(cameraButtonCode);
             MedicalConfig.DefaultScene = defaultSceneCombo.SelectedItemData.ToString();
             MedicalConfig.AutoOpenAnatomyFinder = autoOpenAnatomyFinder.Checked;
 

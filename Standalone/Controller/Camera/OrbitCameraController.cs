@@ -24,65 +24,8 @@ namespace Medical
 
     public class OrbitCameraController : CameraMover
     {
-        #region Static
-
-        private static MouseButtonCode currentMouseButton = MedicalConfig.CameraMouseButton;
-        private static MessageEvent rotateCamera;
-        private static MessageEvent panCamera;
-        private static MessageEvent zoomCamera;
-        private static MessageEvent zoomInCamera;
-        private static MessageEvent zoomOutCamera;
-
-        static OrbitCameraController()
-        {
-            rotateCamera = new MessageEvent(CameraEvents.RotateCamera, EventLayers.Cameras);
-            rotateCamera.addButton(currentMouseButton);
-            DefaultEvents.registerDefaultEvent(rotateCamera);
-
-            panCamera = new MessageEvent(CameraEvents.PanCamera, EventLayers.Cameras);
-            panCamera.addButton(currentMouseButton);
-            panCamera.addButton(PlatformConfig.PanKey);
-            DefaultEvents.registerDefaultEvent(panCamera);
-
-            zoomCamera = new MessageEvent(CameraEvents.ZoomCamera, EventLayers.Cameras);
-            zoomCamera.addButton(currentMouseButton);
-            zoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
-            DefaultEvents.registerDefaultEvent(zoomCamera);
-
-            zoomInCamera = new MessageEvent(CameraEvents.ZoomInCamera, EventLayers.Cameras);
-            zoomInCamera.MouseWheelDirection = MouseWheelDirection.Up;
-            DefaultEvents.registerDefaultEvent(zoomInCamera);
-
-            zoomOutCamera = new MessageEvent(CameraEvents.ZoomOutCamera, EventLayers.Cameras);
-            zoomOutCamera.MouseWheelDirection = MouseWheelDirection.Down;
-            DefaultEvents.registerDefaultEvent(zoomOutCamera);
-
-            MessageEvent lockX = new MessageEvent(CameraEvents.LockX, EventLayers.Cameras);
-            lockX.addButton(KeyboardButtonCode.KC_C);
-            DefaultEvents.registerDefaultEvent(lockX);
-
-            MessageEvent lockY = new MessageEvent(CameraEvents.LockY, EventLayers.Cameras);
-            lockY.addButton(KeyboardButtonCode.KC_X);
-            DefaultEvents.registerDefaultEvent(lockY);
-        }
-
-        public static void changeMouseButton(MouseButtonCode newMouseButton)
-        {
-            rotateCamera.removeButton(currentMouseButton);
-            panCamera.removeButton(currentMouseButton);
-            zoomCamera.removeButton(currentMouseButton);
-
-            currentMouseButton = newMouseButton;
-
-            rotateCamera.addButton(currentMouseButton);
-            panCamera.addButton(currentMouseButton);
-            zoomCamera.addButton(currentMouseButton);
-        }
-
         private const float HALF_PI = (float)Math.PI / 2.0f - 0.001f;
         private const float SCROLL_SCALE = 5.0f;
-
-        #endregion Static
 
         private Vector3 boundMax;
         private Vector3 boundMin;
