@@ -125,10 +125,13 @@ namespace Medical.Controller
 
         void selectEvent(EventLayer eventLayer)
         {
-            var absPos = eventLayer.Mouse.AbsolutePosition;
-            if (allowMotion((int)absPos.x, (int)absPos.y))
+            if (eventLayer.EventProcessingAllowed)
             {
-                mdiWindow.Active = true;
+                var absPos = eventLayer.Mouse.AbsolutePosition;
+                if (allowMotion((int)absPos.x, (int)absPos.y))
+                {
+                    mdiWindow.Active = true;
+                }
             }
         }
     }
