@@ -729,7 +729,7 @@
     <Compile Include="Platform\GlobalEventHandler\EventContext.cs" />
     <Compile Include="Platform\GlobalEventHandler\GlobalContextEventHandler.cs" />
     <Compile Include="Platform\ManagedLogListener.cs" />
-    <Compile Include="Platform\MultiTouch\MultiTouch.cs" />
+    <Compile Include="Platform\MultiTouch.cs" />
     <Compile Include="Controller\Props\Arrow\Arrow.cs" />
     <Compile Include="Controller\Props\PropFadeBehavior.cs" />
     <Compile Include="Controller\Props\PropFactory.cs" />
