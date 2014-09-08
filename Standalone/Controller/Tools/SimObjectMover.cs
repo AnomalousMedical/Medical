@@ -12,9 +12,9 @@ namespace Medical
 {
     public class SimObjectMover : IDisposable
     {
-        internal static readonly ButtonEvent PickEvent;
-        internal static readonly ButtonEvent IncreaseToolSize;
-        internal static readonly ButtonEvent DecreaseToolSize;
+        private static readonly ButtonEvent PickEvent;
+        private static readonly ButtonEvent IncreaseToolSize;
+        private static readonly ButtonEvent DecreaseToolSize;
 
         static SimObjectMover()
         {
@@ -93,14 +93,12 @@ namespace Medical
 
         void events_OnUpdate(EventLayer eventLayer)
         {
-            //Process the mouse
-            Mouse mouse = events.Mouse;
-            IntVector3 mouseLoc = mouse.AbsolutePosition;
             Ray3 spaceRay = new Ray3();
             Vector3 cameraPos = Vector3.Zero;
             SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
             if (activeWindow != null)
             {
+                IntVector3 mouseLoc = events.Mouse.AbsolutePosition;
                 spaceRay = activeWindow.getCameraToViewportRayScreen(mouseLoc.x, mouseLoc.y);
                 cameraPos = activeWindow.Translation;              
             }
@@ -147,7 +145,7 @@ namespace Medical
                     currentTools = closestTools;
                     if (closestTools != null)
                     {
-                        closestTools.processSelection(events, ref cameraPos, ref spaceRay);
+                        closestTools.pickStarted(events, ref cameraPos, ref spaceRay);
                         events.alertEventsHandled();
                     }
                 }
@@ -164,7 +162,7 @@ namespace Medical
             {
                 if (currentTools != null)
                 {
-                    currentTools.processSelection(events, ref cameraPos, ref spaceRay);
+                    currentTools.pickHeld(events, ref cameraPos, ref spaceRay);
                     events.alertEventsHandled();
                 }
             }

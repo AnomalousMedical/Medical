@@ -56,15 +56,38 @@ namespace Medical
             return false;
         }
 
-        public void processSelection(EventLayer events, ref Vector3 cameraPos, ref Ray3 spaceRay)
+        public void pickStarted(EventLayer events, ref Vector3 cameraPos, ref Ray3 spaceRay)
         {
             if (MoveToolVisible)
             {
-                moveTool.processSelection(events, ref cameraPos, ref spaceRay);
+                float distance = (cameraPos - movable.ToolTranslation).length();
+                Vector3 spacePoint = spaceRay.Direction * distance + spaceRay.Origin;
+
+                moveTool.moveStarted(ref spacePoint);
             }
             if (RotateToolVisible)
             {
-                rotateTool.processSelection(events, ref spaceRay);
+                rotateTool.rotateStarted();
+            }
+        }
+
+        public void pickHeld(EventLayer events, ref Vector3 cameraPos, ref Ray3 spaceRay)
+        {
+            if (MoveToolVisible)
+            {
+                float distance = (cameraPos - movable.ToolTranslation).length();
+                Vector3 spacePoint = spaceRay.Direction * distance + spaceRay.Origin;
+
+                moveTool.move(ref spacePoint);
+            }
+            if (RotateToolVisible)
+            {
+                Mouse mouse = events.Mouse;
+                IntVector3 relMouse = mouse.RelativePosition;
+                float amount = relMouse.x + relMouse.y;
+                amount /= 100;
+
+                rotateTool.addRotation(amount);
             }
         }
 

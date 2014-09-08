@@ -50,35 +50,34 @@ namespace Medical
             boundingBox.setExtents(boundsExtents);
         }
 
-        public void processSelection(EventLayer events, ref Ray3 spaceRay)
+        /// <summary>
+        /// Call before using addRotation to rotate
+        /// </summary>
+        public void rotateStarted()
         {
             Vector3 trans = movable.ToolTranslation;
-            if (SimObjectMover.PickEvent.FirstFrameDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
-            {
-                startingRotation.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
 
-                Vector3 stRot = movable.ToolRotation.getEuler();
-                startingRotation.setEuler(stRot.x, stRot.y, stRot.z);
+            startingRotation.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
 
-                currentEulerRotation = Vector3.Zero;
-            }
-            else if (SimObjectMover.PickEvent.HeldDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
-            {
-                Mouse mouse = events.Mouse;
-                IntVector3 relMouse = mouse.RelativePosition;
-                float amount = relMouse.x + relMouse.y;
-                amount /= 100;
-                xAxis.computeRotation(ref currentEulerRotation, amount);
-                yAxis.computeRotation(ref currentEulerRotation, amount);
-                zAxis.computeRotation(ref currentEulerRotation, amount);
-                newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
-                newRot *= startingRotation;
-                movable.rotate(ref newRot);
-            }
-            else
-            {
-                processAxis(ref spaceRay);
-            }
+            Vector3 stRot = movable.ToolRotation.getEuler();
+            startingRotation.setEuler(stRot.x, stRot.y, stRot.z);
+
+            currentEulerRotation = Vector3.Zero;
+        }
+
+        /// <summary>
+        /// Add more rotation specified by amount on the current selected axis. Use rotateStarted before calling this since
+        /// the addition is based on the starting rotation.
+        /// </summary>
+        /// <param name="amount"></param>
+        public void addRotation(float amount)
+        {
+            xAxis.computeRotation(ref currentEulerRotation, amount);
+            yAxis.computeRotation(ref currentEulerRotation, amount);
+            zAxis.computeRotation(ref currentEulerRotation, amount);
+            newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
+            newRot *= startingRotation;
+            movable.rotate(ref newRot);
         }
 
         public bool processAxis(ref Ray3 spaceRay)

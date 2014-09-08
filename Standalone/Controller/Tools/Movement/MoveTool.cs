@@ -83,27 +83,23 @@ namespace Medical
             return boundingBox.testIntersection(spaceRay);
         }
 
-        public void processSelection(EventLayer events, ref Vector3 cameraPos, ref Ray3 spaceRay)
+        public void moveStarted(ref Vector3 spacePoint)
         {
-            float distance = (cameraPos - movable.ToolTranslation).length();
-            Vector3 spacePoint = spaceRay.Direction * distance + spaceRay.Origin;
-            if (SimObjectMover.PickEvent.FirstFrameDown)
-            {
-                mouseOffset = -(spacePoint - movable.ToolTranslation);
-            }
-            else if (SimObjectMover.PickEvent.HeldDown)
-            {
-                spacePoint += -movable.ToolTranslation + mouseOffset;
+            mouseOffset = -(spacePoint - movable.ToolTranslation);
+        }
 
-                Vector3 newPos = xAxisBox.translate(spacePoint)
-                    + yAxisBox.translate(spacePoint)
-                    + zAxisBox.translate(spacePoint)
-                    + xzAxisBox.translate(spacePoint)
-                    + xyAxisBox.translate(spacePoint)
-                    + yzAxisBox.translate(spacePoint);
+        public void move(ref Vector3 spacePoint)
+        {
+            spacePoint += -movable.ToolTranslation + mouseOffset;
 
-                movable.move(newPos);
-            }
+            Vector3 newPos = xAxisBox.translate(spacePoint)
+                + yAxisBox.translate(spacePoint)
+                + zAxisBox.translate(spacePoint)
+                + xzAxisBox.translate(spacePoint)
+                + xyAxisBox.translate(spacePoint)
+                + yzAxisBox.translate(spacePoint);
+
+            movable.move(newPos);
         }
 
         public bool processAxis(ref Ray3 spaceRay)
