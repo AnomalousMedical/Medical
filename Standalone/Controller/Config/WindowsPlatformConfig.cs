@@ -32,24 +32,27 @@ namespace Medical
             return String.Format("{0} - {1}", windowText, subText);
         }
 
-        protected override Gesture createGuiGestureImpl()
-        {
-            return new GuiGestures();
-        }
-
         protected override MultiFingerScrollGesture createRotateGestureImpl()
         {
-            return new MultiFingerScrollGesture(ROTATE_FINGER_COUNT, ROTATE_DECEL_TIME, ROTATE_MIN_MOMENTUM);
+            return new MultiFingerScrollGesture(EventLayers.Cameras, ROTATE_FINGER_COUNT, ROTATE_DECEL_TIME, ROTATE_MIN_MOMENTUM);
         }
 
         protected override MultiFingerScrollGesture createPanGestureImpl()
         {
-            return new MultiFingerScrollGesture(PAN_FINGER_COUNT, PAN_DECEL_TIME, PAN_MIN_MOMENTUM);
+            return new MultiFingerScrollGesture(EventLayers.Cameras, PAN_FINGER_COUNT, PAN_DECEL_TIME, PAN_MIN_MOMENTUM);
         }
 
         protected override TwoFingerZoom createZoomGestureImpl()
         {
-            return new TwoFingerZoom(ZOOM_DECEL_TIME, ZOOM_MIN_MOMENTUM);
+            return new TwoFingerZoom(EventLayers.Cameras, ZOOM_DECEL_TIME, ZOOM_MIN_MOMENTUM);
+        }
+
+        protected override bool AllowGuiGesturesImpl
+        {
+            get
+            {
+                return true;
+            }
         }
 
         protected override String ThemeFileImpl

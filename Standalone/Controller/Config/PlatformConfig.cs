@@ -40,11 +40,6 @@ namespace Medical
             return currentConfig.formatTitleImpl(windowText, subText);
         }
 
-        public static Gesture createGuiGesture()
-        {
-            return currentConfig.createGuiGestureImpl();
-        }
-
         public static MultiFingerScrollGesture createRotateGesture()
         {
             return currentConfig.createRotateGestureImpl();
@@ -58,6 +53,14 @@ namespace Medical
         public static TwoFingerZoom createZoomGesture()
         {
             return currentConfig.createZoomGestureImpl();
+        }
+
+        public static bool AllowGuiGestures
+        {
+            get
+            {
+                return currentConfig.AllowGuiGesturesImpl;
+            }
         }
 
         public static String ThemeFile
@@ -202,13 +205,13 @@ namespace Medical
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
 
-        protected abstract Gesture createGuiGestureImpl();
-
         protected abstract MultiFingerScrollGesture createRotateGestureImpl();
 
         protected abstract MultiFingerScrollGesture createPanGestureImpl();
 
         protected abstract TwoFingerZoom createZoomGestureImpl();
+
+        protected abstract bool AllowGuiGesturesImpl { get; }
 
         protected abstract String ThemeFileImpl { get; }
 

@@ -50,9 +50,9 @@ namespace Medical
             }
         }
 
-        public InputHandler createInputHandler(OSWindow window, bool foreground, bool exclusive, bool noWinKey)
+        public InputHandler createInputHandler(OSWindow window, bool foreground, bool exclusive, bool noWinKey, bool enableMultitouch)
         {
-            return new NativeInputHandler((NativeOSWindow)window);
+            return new NativeInputHandler((NativeOSWindow)window, enableMultitouch);
         }
 
         public void destroyInputHandler(InputHandler handler)

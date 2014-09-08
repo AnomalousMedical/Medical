@@ -661,7 +661,6 @@
     <Compile Include="Controller\Resources\ResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineStaticInfo.cs" />
     <Compile Include="Controller\Resources\VirtualFilesystemResourceProvider.cs" />
-    <Compile Include="Controller\TouchController.cs" />
     <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
@@ -730,11 +729,6 @@
     <Compile Include="Platform\GlobalEventHandler\EventContext.cs" />
     <Compile Include="Platform\GlobalEventHandler\GlobalContextEventHandler.cs" />
     <Compile Include="Platform\ManagedLogListener.cs" />
-    <Compile Include="Platform\MultiTouch\Finger.cs" />
-    <Compile Include="Platform\MultiTouch\Gesture.cs" />
-    <Compile Include="Platform\MultiTouch\GestureEngine.cs" />
-    <Compile Include="Platform\MultiTouch\GUIGestureBlocker.cs" />
-    <Compile Include="Platform\MultiTouch\MultiFingerScrollGesture.cs" />
     <Compile Include="Platform\MultiTouch\MultiTouch.cs" />
     <Compile Include="Controller\Props\Arrow\Arrow.cs" />
     <Compile Include="Controller\Props\PropFadeBehavior.cs" />
@@ -800,8 +794,6 @@
     <Compile Include="Platform\App.cs" />
     <Compile Include="Platform\ColorDialog.cs" />
     <Compile Include="Platform\DirDialog.cs" />
-    <Compile Include="Platform\MultiTouch\SingleFingerGUIDrag.cs" />
-    <Compile Include="Platform\MultiTouch\TwoFingerZoom.cs" />
     <Compile Include="Platform\MessageDialog.cs" />
     <Compile Include="Platform\NativeOSWindow.cs" />
     <Compile Include="Platform\SystemInfo.cs" />

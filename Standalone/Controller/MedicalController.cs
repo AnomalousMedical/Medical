@@ -98,6 +98,7 @@ namespace Medical
             };
 
             MyGUIInterface.EventLayerKey = EventLayers.Gui;
+            MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.AllowGuiGestures;
 
             //Configure plugins
             pluginManager.OnConfigureDefaultWindow = configureWindow;
@@ -130,7 +131,7 @@ namespace Medical
                 mainTimer.FramerateCap = MedicalConfig.EngineConfig.FPSCap;
             }
 
-            inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
+            inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false, MedicalConfig.EnableMultitouch);
             eventManager = new EventManager(inputHandler, Enum.GetValues(typeof(EventLayers)));
             Medical.Platform.GlobalContextEventHandler.setEventManager(eventManager);
             eventUpdate = new EventUpdateListener(eventManager);

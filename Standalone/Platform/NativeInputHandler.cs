@@ -12,10 +12,12 @@ namespace Medical
 
         private NativeKeyboard createdKeyboard;
         private NativeMouse createdMouse;
+        private bool enableMultitouch;
 
-        public NativeInputHandler(NativeOSWindow window)
+        public NativeInputHandler(NativeOSWindow window, bool enableMultitouch)
         {
             this.window = window;
+            this.enableMultitouch = enableMultitouch;
         }
 
         public void Dispose()
@@ -63,6 +65,23 @@ namespace Medical
             if (mouse == createdMouse)
             {
                 createdMouse = null;
+            }
+        }
+
+        public override TouchHardware createTouchHardware(Touches touches)
+        {
+            if(enableMultitouch && MultiTouch.IsAvailable)
+            {
+                return new MultiTouch(window, touches);
+            }
+            return null;
+        }
+
+        public override void destroyTouchHardware(TouchHardware touchHardware)
+        {
+            if(touchHardware != null)
+            {
+                ((MultiTouch)touchHardware).Dispose();
             }
         }
     }

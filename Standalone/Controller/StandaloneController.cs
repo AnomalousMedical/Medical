@@ -75,9 +75,6 @@ namespace Medical
 		private bool shuttingDown = false;
         private MedicalConfig medicalConfig;
 
-        //Touch
-        private TouchController touchController;
-
         public StandaloneController(StandaloneApp app)
         {
             PlatformConfig.MoveConfigurationIfNeeded();
@@ -146,7 +143,6 @@ namespace Medical
                 guiManager.saveUI(configFile);
                 configFile.writeConfigFile();
             }
-			IDisposableUtil.DisposeIfNotNull(touchController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
             IDisposableUtil.DisposeIfNotNull(notificationManager);
             IDisposableUtil.DisposeIfNotNull(guiManager);
@@ -265,16 +261,6 @@ namespace Medical
 
             //Tasks
             taskController = new TaskController();
-
-            //MultiTouch
-            if (MedicalConfig.EnableMultitouch && MultiTouch.IsAvailable)
-            {
-                touchController = new TouchController(mainWindow, medicalController.MainTimer, sceneViewController);
-            }
-            else
-            {
-                Log.Info("MultiTouch not available");
-            }
 
             //Coroutine
             Coroutine.SetTimer(medicalController.MainTimer);

@@ -19,6 +19,10 @@ namespace Medical.Controller
         private static ButtonEvent LockX;
         private static ButtonEvent LockY;
 
+        private static MultiFingerScrollGesture rotateGesture;
+        private static MultiFingerScrollGesture panGesture;
+        private static TwoFingerZoom zoomGesture;
+
         static CameraInputController()
         {
             RotateCamera = new ButtonEvent(EventLayers.Cameras);
@@ -50,6 +54,15 @@ namespace Medical.Controller
             LockY = new ButtonEvent(EventLayers.Cameras);
             LockY.addButton(KeyboardButtonCode.KC_X);
             DefaultEvents.registerDefaultEvent(LockY);
+
+            zoomGesture = PlatformConfig.createZoomGesture();
+            DefaultEvents.registerDefaultEvent(zoomGesture);
+
+            rotateGesture = PlatformConfig.createRotateGesture();
+            DefaultEvents.registerDefaultEvent(rotateGesture);
+
+            panGesture = PlatformConfig.createPanGesture();
+            DefaultEvents.registerDefaultEvent(panGesture);
         }
 
         public static void changeMouseButton(MouseButtonCode newMouseButton)
@@ -78,6 +91,10 @@ namespace Medical.Controller
 
             RotateCamera.FirstFrameDownEvent += rotateCamera_FirstFrameDownEvent;
             RotateCamera.FirstFrameUpEvent += rotateCamera_FirstFrameUpEvent;
+
+            zoomGesture.Zoom += zoomGesture_Zoom;
+            rotateGesture.Scroll += rotateGesture_Scroll;
+            panGesture.Scroll += panGesture_Scroll;
         }
 
         public void Dispose()
@@ -86,6 +103,10 @@ namespace Medical.Controller
 
             RotateCamera.FirstFrameDownEvent -= rotateCamera_FirstFrameDownEvent;
             RotateCamera.FirstFrameUpEvent -= rotateCamera_FirstFrameUpEvent;
+
+            zoomGesture.Zoom -= zoomGesture_Zoom;
+            rotateGesture.Scroll -= rotateGesture_Scroll;
+            panGesture.Scroll -= panGesture_Scroll;
         }
 
         void rotateCamera_FirstFrameDownEvent(EventLayer eventLayer)
@@ -174,6 +195,51 @@ namespace Medical.Controller
                         }
                     }
                 }
+            }
+        }
+
+        void rotateGesture_Scroll(EventLayer eventLayer, float deltaX, float deltaY)
+        {
+            if (eventLayer.EventProcessingAllowed)
+            {
+                SceneViewWindow sceneView = sceneViewController.ActiveWindow;
+                if (sceneView != null)
+                {
+                    float sensitivity = 4.0f;
+                    sceneView.CameraMover.rotate(-deltaX * sensitivity, deltaY * sensitivity);
+                    sceneView.CameraMover.stopMaintainingIncludePoint();
+                }
+                eventLayer.alertEventsHandled();
+            }
+        }
+
+        void panGesture_Scroll(EventLayer eventLayer, float deltaX, float deltaY)
+        {
+            if (eventLayer.EventProcessingAllowed)
+            {
+                SceneViewWindow sceneView = sceneViewController.ActiveWindow;
+                if (sceneView != null)
+                {
+                    float sensitivity = 15.0f;
+                    sceneView.CameraMover.pan(deltaX * sensitivity, deltaY * sensitivity);
+                    sceneView.CameraMover.stopMaintainingIncludePoint();
+                }
+                eventLayer.alertEventsHandled();
+            }
+        }
+
+        void zoomGesture_Zoom(EventLayer eventLayer, float zoomDelta)
+        {
+            if (eventLayer.EventProcessingAllowed)
+            {
+                SceneViewWindow sceneView = sceneViewController.ActiveWindow;
+                if (sceneView != null)
+                {
+                    float sensitivity = 80.0f;
+                    sceneView.CameraMover.zoom(zoomDelta * sensitivity);
+                    sceneView.CameraMover.stopMaintainingIncludePoint();
+                }
+                eventLayer.alertEventsHandled();
             }
         }
     }

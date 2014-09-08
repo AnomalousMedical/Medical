@@ -9,34 +9,12 @@ using Engine;
 
 namespace Medical
 {
-    [StructLayout(LayoutKind.Explicit, Size=20)]
-    public struct TouchInfo
-    {
-        [FieldOffset(0)]
-	    public float normalizedX;
-        [FieldOffset(4)]
-        public float normalizedY;
-        [FieldOffset(8)]
-        public int pixelX;
-        [FieldOffset(12)]
-        public int pixelY;
-        [FieldOffset(16)]
-        public int id;
-    };
-
-    public delegate void TouchEvent(TouchInfo info);
-    public delegate void TouchCanceledEvent();
-
-    public class MultiTouch : IDisposable
+    public class MultiTouch : TouchHardware, IDisposable
     {
         private IntPtr nativeMultiTouch;
 
-        public event TouchEvent TouchStarted;
-        public event TouchEvent TouchEnded;
-        public event TouchEvent TouchMoved;
-        public event TouchCanceledEvent AllTouchesCanceled;
-
-        public MultiTouch(NativeOSWindow nativeWindow) 
+        public MultiTouch(NativeOSWindow nativeWindow, Touches touches) 
+            :base(touches)
         {
             touchStartedCB = new TouchEventDelegate(touchStarted);
             touchEndedCB = new TouchEventDelegate(touchEnded);
@@ -62,34 +40,22 @@ namespace Medical
 
         private void touchStarted(TouchInfo touchInfo)
         {
-            if (TouchStarted != null)
-            {
-                TouchStarted.Invoke(touchInfo);
-            }
+            fireTouchStarted(touchInfo);
         }
 
         private void touchEnded(TouchInfo touchInfo)
         {
-            if (TouchEnded != null)
-            {
-                TouchEnded.Invoke(touchInfo);
-            }
+            fireTouchEnded(touchInfo);
         }
 
         private void touchMoved(TouchInfo touchInfo)
         {
-            if (TouchMoved != null)
-            {
-                TouchMoved.Invoke(touchInfo);
-            }
+            fireTouchMoved(touchInfo);
         }
 
         private void allTouchesCanceled()
         {
-            if (AllTouchesCanceled != null)
-            {
-                AllTouchesCanceled.Invoke();
-            }
+            fireAllTouchesCanceled();
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
