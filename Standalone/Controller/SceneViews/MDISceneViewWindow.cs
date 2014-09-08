@@ -13,22 +13,16 @@ namespace Medical.Controller
 {
     public class MDISceneViewWindow : SceneViewWindow
     {
-        enum Events
-        {
-            PrimarySelect,
-            SecondarySelect,
-        }
-
         private static ButtonEvent PrimaryActionSelect;
         private static ButtonEvent SecondaryActionSelect;
 
         static MDISceneViewWindow()
         {
-            PrimaryActionSelect = new ButtonEvent(Events.PrimarySelect, EventLayers.AfterGui);
+            PrimaryActionSelect = new ButtonEvent(EventLayers.AfterGui);
             PrimaryActionSelect.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(PrimaryActionSelect);
 
-            SecondaryActionSelect = new ButtonEvent(Events.SecondarySelect, EventLayers.AfterGui);
+            SecondaryActionSelect = new ButtonEvent(EventLayers.AfterGui);
             SecondaryActionSelect.addButton(MouseButtonCode.MB_BUTTON1);
             DefaultEvents.registerDefaultEvent(SecondaryActionSelect);
         }

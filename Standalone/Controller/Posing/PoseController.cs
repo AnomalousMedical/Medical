@@ -14,16 +14,11 @@ namespace Medical.Controller
 {
     class PoseController
     {
-        enum Events
-        {
-            SelectAndMove,
-        }
-
         private static ButtonEvent PickAnatomy;
 
         static PoseController()
         {
-            PickAnatomy = new ButtonEvent(Events.SelectAndMove, EventLayers.Posing);
+            PickAnatomy = new ButtonEvent(EventLayers.Posing);
             PickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(PickAnatomy);
         }

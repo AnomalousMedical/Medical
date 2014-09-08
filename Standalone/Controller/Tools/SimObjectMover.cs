@@ -18,15 +18,15 @@ namespace Medical
 
         static SimObjectMover()
         {
-            PickEvent = new ButtonEvent(ToolEvents.Pick, EventLayers.Tools);
+            PickEvent = new ButtonEvent(EventLayers.Tools);
             PickEvent.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(PickEvent);
 
-            IncreaseToolSize = new ButtonEvent(ToolEvents.IncreaseToolSize, EventLayers.Tools);
+            IncreaseToolSize = new ButtonEvent(EventLayers.Tools);
             IncreaseToolSize.addButton(KeyboardButtonCode.KC_EQUALS);
             DefaultEvents.registerDefaultEvent(IncreaseToolSize);
 
-            DecreaseToolSize = new ButtonEvent(ToolEvents.DecreaseToolSize, EventLayers.Tools);
+            DecreaseToolSize = new ButtonEvent(EventLayers.Tools);
             DecreaseToolSize.addButton(KeyboardButtonCode.KC_MINUS);
             DefaultEvents.registerDefaultEvent(DecreaseToolSize);
         }

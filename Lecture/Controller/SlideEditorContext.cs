@@ -26,15 +26,6 @@ namespace Lecture
         public event Action<SlideEditorContext> Focus;
         public event Action<SlideEditorContext> Blur;
 
-        enum Events
-        {
-            Save,
-            Undo,
-            Redo,
-            Run,
-            Capture
-        }
-
         private Dictionary<String, RmlEditorViewInfo> rmlEditors = new Dictionary<string, RmlEditorViewInfo>();
         private String currentRmlEditor;
         private AnomalousMvcContext mvcContext;
@@ -252,7 +243,7 @@ namespace Lecture
                 previewTriggerAction));
 
             eventContext = new EventContext();
-            ButtonEvent saveEvent = new ButtonEvent(Events.Save, EventLayers.Gui);
+            ButtonEvent saveEvent = new ButtonEvent(EventLayers.Gui);
             saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>
@@ -261,7 +252,7 @@ namespace Lecture
             };
             eventContext.addEvent(saveEvent);
 
-            ButtonEvent undoEvent = new ButtonEvent(Events.Undo, EventLayers.Gui);
+            ButtonEvent undoEvent = new ButtonEvent(EventLayers.Gui);
             undoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             undoEvent.addButton(KeyboardButtonCode.KC_Z);
             undoEvent.FirstFrameUpEvent += eventManager =>
@@ -270,7 +261,7 @@ namespace Lecture
             };
             eventContext.addEvent(undoEvent);
 
-            ButtonEvent redoEvent = new ButtonEvent(Events.Redo, EventLayers.Gui);
+            ButtonEvent redoEvent = new ButtonEvent(EventLayers.Gui);
             redoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             redoEvent.addButton(KeyboardButtonCode.KC_Y);
             redoEvent.FirstFrameUpEvent += eventManager =>
@@ -279,7 +270,7 @@ namespace Lecture
             };
             eventContext.addEvent(redoEvent);
 
-            ButtonEvent runEvent = new ButtonEvent(Events.Run, EventLayers.Gui);
+            ButtonEvent runEvent = new ButtonEvent(EventLayers.Gui);
             runEvent.addButton(KeyboardButtonCode.KC_F5);
             runEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -290,7 +281,7 @@ namespace Lecture
             };
             eventContext.addEvent(runEvent);
 
-            ButtonEvent captureEvent = new ButtonEvent(Events.Capture, EventLayers.Gui);
+            ButtonEvent captureEvent = new ButtonEvent(EventLayers.Gui);
             captureEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             captureEvent.addButton(KeyboardButtonCode.KC_SPACE);
             captureEvent.FirstFrameUpEvent += eventManager =>

@@ -13,19 +13,6 @@ namespace Medical
 {
     class TimelineEditorContext
     {
-        enum Events
-        {
-            Save,
-            TogglePlay,
-            Cut,
-            Copy,
-            Paste,
-            SelectAll,
-            Translate,
-            Rotate,
-            PropTimeline
-        }
-
         public event Action<TimelineEditorContext> Focus;
         public event Action<TimelineEditorContext> Blur;
 
@@ -160,14 +147,14 @@ namespace Medical
 
             eventContext = new EventContext();
 
-            eventContext.addEvent(new ButtonEvent(Events.Save, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     saveAll();
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_S }));
 
-            eventContext.addEvent(new ButtonEvent(Events.TogglePlay, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     if (timeline.TimelineController.Playing)
@@ -181,49 +168,49 @@ namespace Medical
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_SPACE }));
 
-            eventContext.addEvent(new ButtonEvent(Events.Cut, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("TimelineEditor/Cut");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_X }));
 
-            eventContext.addEvent(new ButtonEvent(Events.Copy, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("TimelineEditor/Copy");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_C }));
 
-            eventContext.addEvent(new ButtonEvent(Events.Paste, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("TimelineEditor/Paste");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_V }));
 
-            eventContext.addEvent(new ButtonEvent(Events.SelectAll, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("TimelineEditor/SelectAll");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_A }));
 
-            eventContext.addEvent(new ButtonEvent(Events.Translate, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                     {
                         mvcContext.runAction("TimelineEditor/Translation");
                     },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_T }));
 
-            eventContext.addEvent(new ButtonEvent(Events.Rotate, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                     {
                         mvcContext.runAction("TimelineEditor/Rotation");
                     },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_R }));
 
-            eventContext.addEvent(new ButtonEvent(Events.PropTimeline, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: EventManager =>
                     {
                         mvcContext.runAction("PropTimeline/ShowIfNotOpen");

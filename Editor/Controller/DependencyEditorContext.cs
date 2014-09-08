@@ -15,11 +15,6 @@ namespace Medical
         public event Action<DependencyEditorContext> Focus;
         public event Action<DependencyEditorContext> Blur;
 
-        enum Events
-        {
-            Save
-        }
-
         private String currentFile;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
@@ -86,7 +81,7 @@ namespace Medical
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
-            ButtonEvent saveEvent = new ButtonEvent(Events.Save, EventLayers.Gui);
+            ButtonEvent saveEvent = new ButtonEvent(EventLayers.Gui);
             saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>

@@ -15,11 +15,6 @@ namespace Medical
         public event Action<MvcEditorContext> Focused;
         public event Action<MvcEditorContext> Blured;
 
-        enum Events
-        {
-            Save
-        }
-
         private String currentFile;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
@@ -93,7 +88,7 @@ namespace Medical
             }));
 
             eventContext = new EventContext();
-            eventContext.addEvent(new ButtonEvent(Events.Save, EventLayers.Gui, 
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui, 
                 frameUp: eventManager =>
                 {
                     saveAll();

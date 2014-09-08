@@ -280,7 +280,6 @@
     <Compile Include="Controller\Tools\Selection\SelectionController.cs" />
     <Compile Include="Controller\Tools\Selection\SelectionMovableObject.cs" />
     <Compile Include="Controller\Tools\SimObjectMover.cs" />
-    <Compile Include="Controller\Tools\ToolEvents.cs" />
     <Compile Include="Controller\TeethToolController.cs" />
     <Compile Include="Controller\Update\PluginUpdateInfo.cs" />
     <Compile Include="Controller\Update\ServerUpdateInfo.cs" />

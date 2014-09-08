@@ -11,17 +11,6 @@ using OgreWrapper;
 
 namespace Medical
 {
-    enum CameraEvents
-    {
-        RotateCamera,
-        PanCamera,
-        ZoomCamera,
-        ZoomInCamera,
-        ZoomOutCamera,
-        LockX,
-        LockY,
-    }
-
     public class OrbitCameraController : CameraMover
     {
         private const float HALF_PI = (float)Math.PI / 2.0f - 0.001f;

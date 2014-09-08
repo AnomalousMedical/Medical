@@ -11,15 +11,6 @@ namespace Medical.GUI
 {
     public class AnatomyFinder : MDIDialog
     {
-        enum AnatomyFinderEvents
-        {
-            PickAnatomy,
-            ChangeSelectionMode,
-            OpenAnatomyFinder,
-            ToggleAddMode,
-            ToggleRemoveMode,
-        }
-
         enum SelectionMode
         {
             Select,
@@ -39,24 +30,24 @@ namespace Medical.GUI
         
         static AnatomyFinder()
         {
-            PickAnatomy = new ButtonEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.Selection);
+            PickAnatomy = new ButtonEvent(EventLayers.Selection);
             PickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(PickAnatomy);
 
-            ChangeSelectionMode = new ButtonEvent(AnatomyFinderEvents.ChangeSelectionMode, EventLayers.Gui);
+            ChangeSelectionMode = new ButtonEvent(EventLayers.Gui);
             ChangeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
             DefaultEvents.registerDefaultEvent(ChangeSelectionMode);
 
-            OpenAnatomyFinder = new ButtonEvent(AnatomyFinderEvents.OpenAnatomyFinder, EventLayers.Gui);
+            OpenAnatomyFinder = new ButtonEvent(EventLayers.Gui);
             OpenAnatomyFinder.addButton(KeyboardButtonCode.KC_LCONTROL);
             OpenAnatomyFinder.addButton(KeyboardButtonCode.KC_F);
             DefaultEvents.registerDefaultEvent(OpenAnatomyFinder);
 
-            ToggleAddMode = new ButtonEvent(AnatomyFinderEvents.ToggleAddMode, EventLayers.Gui);
+            ToggleAddMode = new ButtonEvent(EventLayers.Gui);
             ToggleAddMode.addButton(KeyboardButtonCode.KC_LCONTROL);
             DefaultEvents.registerDefaultEvent(ToggleAddMode);
 
-            ToggleRemoveMode = new ButtonEvent(AnatomyFinderEvents.ToggleRemoveMode, EventLayers.Gui);
+            ToggleRemoveMode = new ButtonEvent(EventLayers.Gui);
             ToggleRemoveMode.addButton(KeyboardButtonCode.KC_LMENU);
             DefaultEvents.registerDefaultEvent(ToggleRemoveMode);
         }

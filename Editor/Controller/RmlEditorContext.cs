@@ -19,13 +19,6 @@ namespace Medical
         public event Action<RmlEditorContext> Focus;
         public event Action<RmlEditorContext> Blur;
 
-        enum Events
-        {
-            Save,
-            Undo,
-            Redo
-        }
-
         private TextEditorComponent textEditorComponent;
         private RmlWysiwygComponent rmlComponent;
         private String currentFile;
@@ -214,7 +207,7 @@ namespace Medical
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
-            ButtonEvent saveEvent = new ButtonEvent(Events.Save, EventLayers.Gui);
+            ButtonEvent saveEvent = new ButtonEvent(EventLayers.Gui);
             saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>
@@ -223,7 +216,7 @@ namespace Medical
             };
             eventContext.addEvent(saveEvent);
 
-            ButtonEvent undoEvent = new ButtonEvent(Events.Undo, EventLayers.Gui);
+            ButtonEvent undoEvent = new ButtonEvent(EventLayers.Gui);
             undoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             undoEvent.addButton(KeyboardButtonCode.KC_Z);
             undoEvent.FirstFrameUpEvent += eventManager =>
@@ -232,7 +225,7 @@ namespace Medical
             };
             eventContext.addEvent(undoEvent);
 
-            ButtonEvent redoEvent = new ButtonEvent(Events.Redo, EventLayers.Gui);
+            ButtonEvent redoEvent = new ButtonEvent(EventLayers.Gui);
             redoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             redoEvent.addButton(KeyboardButtonCode.KC_Y);
             redoEvent.FirstFrameUpEvent += eventManager =>

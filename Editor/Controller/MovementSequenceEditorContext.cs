@@ -16,15 +16,6 @@ namespace Medical
         public event Action<MovementSequenceEditorContext> Focus;
         public event Action<MovementSequenceEditorContext> Blur;
 
-        enum Events
-        {
-            Save, 
-            Cut,
-            Copy,
-            Paste,
-            SelectAll,
-        }
-
         private String currentFile;
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
@@ -99,7 +90,7 @@ namespace Medical
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
-            ButtonEvent saveEvent = new ButtonEvent(Events.Save, EventLayers.Gui);
+            ButtonEvent saveEvent = new ButtonEvent(EventLayers.Gui);
             saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>
@@ -108,28 +99,28 @@ namespace Medical
             };
             eventContext.addEvent(saveEvent);
 
-            eventContext.addEvent(new ButtonEvent(Events.Cut, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("Editor/Cut");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_X }));
 
-            eventContext.addEvent(new ButtonEvent(Events.Copy, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("Editor/Copy");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_C }));
 
-            eventContext.addEvent(new ButtonEvent(Events.Paste, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("Editor/Paste");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_V }));
 
-            eventContext.addEvent(new ButtonEvent(Events.SelectAll, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("Editor/SelectAll");

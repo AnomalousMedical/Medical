@@ -21,33 +21,33 @@ namespace Medical.Controller
 
         static CameraInputController()
         {
-            RotateCamera = new ButtonEvent(CameraEvents.RotateCamera, EventLayers.Cameras);
+            RotateCamera = new ButtonEvent(EventLayers.Cameras);
             RotateCamera.addButton(currentMouseButton);
             DefaultEvents.registerDefaultEvent(RotateCamera);
 
-            PanCamera = new ButtonEvent(CameraEvents.PanCamera, EventLayers.Cameras);
+            PanCamera = new ButtonEvent(EventLayers.Cameras);
             PanCamera.addButton(currentMouseButton);
             PanCamera.addButton(PlatformConfig.PanKey);
             DefaultEvents.registerDefaultEvent(PanCamera);
 
-            ZoomCamera = new ButtonEvent(CameraEvents.ZoomCamera, EventLayers.Cameras);
+            ZoomCamera = new ButtonEvent(EventLayers.Cameras);
             ZoomCamera.addButton(currentMouseButton);
             ZoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
             DefaultEvents.registerDefaultEvent(ZoomCamera);
 
-            ZoomInCamera = new ButtonEvent(CameraEvents.ZoomInCamera, EventLayers.Cameras);
+            ZoomInCamera = new ButtonEvent(EventLayers.Cameras);
             ZoomInCamera.MouseWheelDirection = MouseWheelDirection.Up;
             DefaultEvents.registerDefaultEvent(ZoomInCamera);
 
-            ZoomOutCamera = new ButtonEvent(CameraEvents.ZoomOutCamera, EventLayers.Cameras);
+            ZoomOutCamera = new ButtonEvent(EventLayers.Cameras);
             ZoomOutCamera.MouseWheelDirection = MouseWheelDirection.Down;
             DefaultEvents.registerDefaultEvent(ZoomOutCamera);
 
-            LockX = new ButtonEvent(CameraEvents.LockX, EventLayers.Cameras);
+            LockX = new ButtonEvent(EventLayers.Cameras);
             LockX.addButton(KeyboardButtonCode.KC_C);
             DefaultEvents.registerDefaultEvent(LockX);
 
-            LockY = new ButtonEvent(CameraEvents.LockY, EventLayers.Cameras);
+            LockY = new ButtonEvent(EventLayers.Cameras);
             LockY.addButton(KeyboardButtonCode.KC_X);
             DefaultEvents.registerDefaultEvent(LockY);
         }

@@ -14,15 +14,6 @@ namespace Medical
 {
     class SlideshowRuntime
     {
-        enum Events
-        {
-            Next,
-            Back,
-            ZoomIn,
-            ZoomOut,
-            Close
-        }
-
         public const String SlideTaskbarName = "SlideTaskbar";
         private const String PreviousTaskName = "SlideshowIcons/Back";
         private const String PreviousTaskDisabledName = "SlideshowIcons/BackInactive";
@@ -101,7 +92,7 @@ namespace Medical
             })));
 
             eventContext = new EventContext();
-            ButtonEvent nextEvent = new ButtonEvent(Events.Next, EventLayers.Gui);
+            ButtonEvent nextEvent = new ButtonEvent(EventLayers.Gui);
             nextEvent.addButton(KeyboardButtonCode.KC_RIGHT);
             nextEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -109,7 +100,7 @@ namespace Medical
             };
             eventContext.addEvent(nextEvent);
 
-            ButtonEvent backEvent = new ButtonEvent(Events.Back, EventLayers.Gui);
+            ButtonEvent backEvent = new ButtonEvent(EventLayers.Gui);
             backEvent.addButton(KeyboardButtonCode.KC_LEFT);
             backEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -117,7 +108,7 @@ namespace Medical
             };
             eventContext.addEvent(backEvent);
 
-            ButtonEvent zoomInEvent = new ButtonEvent(Events.ZoomIn, EventLayers.Gui);
+            ButtonEvent zoomInEvent = new ButtonEvent(EventLayers.Gui);
             zoomInEvent.addButton(KeyboardButtonCode.KC_EQUALS);
             zoomInEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -125,7 +116,7 @@ namespace Medical
             };
             eventContext.addEvent(zoomInEvent);
 
-            ButtonEvent zoomOutEvent = new ButtonEvent(Events.ZoomOut, EventLayers.Gui);
+            ButtonEvent zoomOutEvent = new ButtonEvent(EventLayers.Gui);
             zoomOutEvent.addButton(KeyboardButtonCode.KC_MINUS);
             zoomOutEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -133,7 +124,7 @@ namespace Medical
             };
             eventContext.addEvent(zoomOutEvent);
 
-            ButtonEvent closeEvent = new ButtonEvent(Events.Close, EventLayers.Gui);
+            ButtonEvent closeEvent = new ButtonEvent(EventLayers.Gui);
             closeEvent.addButton(KeyboardButtonCode.KC_ESCAPE);
             closeEvent.FirstFrameUpEvent += eventManager =>
             {
