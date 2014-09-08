@@ -41,7 +41,7 @@ namespace Medical
                 if (currentShowPropAction != null)
                 {
                     simObjectMover.removeMovableObject(this);
-                    simObjectMover.setDrawingSurfaceVisible(false);
+                    simObjectMover.Visible = false;
                 }
                 if (currentMovePropAction != null)
                 {
@@ -52,7 +52,7 @@ namespace Medical
                 {
                     simObjectMover.setActivePlanes(MovementAxis.All, MovementPlane.All);
                     simObjectMover.addMovableObject("Prop", this);
-                    simObjectMover.setDrawingSurfaceVisible(true);
+                    simObjectMover.Visible = true;
                     Duration = currentShowPropAction.Duration;
                     ShowTools = true;
                 }

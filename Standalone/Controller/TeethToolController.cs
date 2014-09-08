@@ -97,7 +97,7 @@ namespace Medical
         {
             if (TeethMover != null)
             {
-                TeethMover.setDrawingSurfaceVisible(false);
+                TeethMover.Visible = false;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Medical
         {
             if (TeethMover != null)
             {
-                TeethMover.setDrawingSurfaceVisible(true);
+                TeethMover.Visible = true;
             }
         }
 

@@ -13,7 +13,6 @@ namespace Medical
         private static Vector3 YAW = new Vector3(1.0f, 0.0f, 0.0f);
         private static Vector3 PITCH = new Vector3(0.0f, 1.0f, 0.0f);
         private static Vector3 ROLL = new Vector3(0.0f, 0.0f, 1.0f);
-        private const float RADIUS_DELTA = 1.0f;
 
         private RotationAxis xAxis;
         private RotationAxis yAxis;
@@ -75,12 +74,6 @@ namespace Medical
                 newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
                 newRot *= startingRotation;
                 movable.rotate(ref newRot);
-            }
-            else if (SimObjectMover.PickEvent.FirstFrameUp && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
-            {
-                newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
-                newRot *= startingRotation;
-                currentEulerRotation = newRot.getEuler();
             }
             else
             {

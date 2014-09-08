@@ -13,7 +13,6 @@ namespace Medical
     {
         #region Fields
 
-        const float LENGTH_DELTA = 1.0f;
         const float DOUBLE_AXIS_SCALE = 3.0f;
 
         private Axis xAxisBox;

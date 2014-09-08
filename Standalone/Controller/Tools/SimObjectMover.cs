@@ -41,6 +41,7 @@ namespace Medical
         private bool showRotateTools = false;
         private float toolSize = 1.0f;
         private SceneViewController sceneViewController;
+        private bool visible = false;
 
         public SimObjectMover(String name, RendererPlugin rendererPlugin, EventManager eventManager, SceneViewController sceneViewController)
         {
@@ -49,10 +50,18 @@ namespace Medical
             this.name = name;
             this.events = eventManager[EventLayers.Tools];
             events.OnUpdate += events_OnUpdate;
+
+            ToolSizeIncrement = 1.0f;
+            ToolSizeMinimum = 1.0f;
+
+            IncreaseToolSize.FirstFrameUpEvent += IncreaseToolSize_FirstFrameUpEvent;
+            DecreaseToolSize.FirstFrameUpEvent += DecreaseToolSize_FirstFrameUpEvent;
         }
 
         public void Dispose()
         {
+            IncreaseToolSize.FirstFrameUpEvent -= IncreaseToolSize_FirstFrameUpEvent;
+            DecreaseToolSize.FirstFrameUpEvent -= DecreaseToolSize_FirstFrameUpEvent;
             events.OnUpdate -= events_OnUpdate;
             destroyDrawingSurface();
         }
@@ -64,6 +73,7 @@ namespace Medical
             {
                 drawingSurface = rendererPlugin.createDebugDrawingSurface(name + "DebugSurface", subScene);
                 drawingSurface.setDepthTesting(false);
+                drawingSurface.setVisible(visible);
             }
         }
 
@@ -189,20 +199,31 @@ namespace Medical
             }
         }
 
-        public void setDrawingSurfaceVisible(bool visible)
-        {
-            if (drawingSurface != null)
-            {
-                drawingSurface.setVisible(visible);
-            }
-        }
-
         public void setActivePlanes(MovementAxis axes, MovementPlane planes)
         {
             foreach (MovableObjectTools currentTools in movableObjects)
             {
                 currentTools.setActiveAxes(axes);
                 currentTools.setActivePlanes(planes);
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                if (visible != value)
+                {
+                    this.visible = value;
+                    if (drawingSurface != null)
+                    {
+                        drawingSurface.setVisible(visible);
+                    }
+                }
             }
         }
 
@@ -251,6 +272,32 @@ namespace Medical
                 {
                     tools.setToolSize(toolSize);
                 }
+            }
+        }
+
+        /// <summary>
+        /// How much to change the tool size on the increase / decrease size events.
+        /// </summary>
+        public float ToolSizeIncrement { get; set; }
+
+        /// <summary>
+        /// The minimum tool size.
+        /// </summary>
+        public float ToolSizeMinimum { get; set; }
+
+        void DecreaseToolSize_FirstFrameUpEvent(EventLayer eventLayer)
+        {
+            if(eventLayer.EventProcessingAllowed && (showMoveTools || showRotateTools) && visible && toolSize - ToolSizeIncrement >= ToolSizeMinimum)
+            {
+                ToolSize -= ToolSizeIncrement;
+            }
+        }
+
+        void IncreaseToolSize_FirstFrameUpEvent(EventLayer eventLayer)
+        {
+            if (eventLayer.EventProcessingAllowed && (showMoveTools || showRotateTools) && visible)
+            {
+                ToolSize += ToolSizeIncrement;
             }
         }
     }
