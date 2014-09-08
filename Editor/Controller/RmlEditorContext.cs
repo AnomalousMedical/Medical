@@ -214,7 +214,7 @@ namespace Medical
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
-            MessageEvent saveEvent = new MessageEvent(Events.Save, EventLayers.Gui);
+            ButtonEvent saveEvent = new ButtonEvent(Events.Save, EventLayers.Gui);
             saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>
@@ -223,7 +223,7 @@ namespace Medical
             };
             eventContext.addEvent(saveEvent);
 
-            MessageEvent undoEvent = new MessageEvent(Events.Undo, EventLayers.Gui);
+            ButtonEvent undoEvent = new ButtonEvent(Events.Undo, EventLayers.Gui);
             undoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             undoEvent.addButton(KeyboardButtonCode.KC_Z);
             undoEvent.FirstFrameUpEvent += eventManager =>
@@ -232,7 +232,7 @@ namespace Medical
             };
             eventContext.addEvent(undoEvent);
 
-            MessageEvent redoEvent = new MessageEvent(Events.Redo, EventLayers.Gui);
+            ButtonEvent redoEvent = new ButtonEvent(Events.Redo, EventLayers.Gui);
             redoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             redoEvent.addButton(KeyboardButtonCode.KC_Y);
             redoEvent.FirstFrameUpEvent += eventManager =>

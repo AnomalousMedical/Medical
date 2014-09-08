@@ -88,11 +88,11 @@ namespace Medical
         {
             float distance = (cameraPos - movable.ToolTranslation).length();
             Vector3 spacePoint = spaceRay.Direction * distance + spaceRay.Origin;
-            if (events[ToolEvents.Pick].FirstFrameDown)
+            if (SimObjectMover.PickEvent.FirstFrameDown)
             {
                 mouseOffset = -(spacePoint - movable.ToolTranslation);
             }
-            else if (events[ToolEvents.Pick].HeldDown)
+            else if (SimObjectMover.PickEvent.HeldDown)
             {
                 spacePoint += -movable.ToolTranslation + mouseOffset;
 

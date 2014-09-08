@@ -252,7 +252,7 @@ namespace Lecture
                 previewTriggerAction));
 
             eventContext = new EventContext();
-            MessageEvent saveEvent = new MessageEvent(Events.Save, EventLayers.Gui);
+            ButtonEvent saveEvent = new ButtonEvent(Events.Save, EventLayers.Gui);
             saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>
@@ -261,7 +261,7 @@ namespace Lecture
             };
             eventContext.addEvent(saveEvent);
 
-            MessageEvent undoEvent = new MessageEvent(Events.Undo, EventLayers.Gui);
+            ButtonEvent undoEvent = new ButtonEvent(Events.Undo, EventLayers.Gui);
             undoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             undoEvent.addButton(KeyboardButtonCode.KC_Z);
             undoEvent.FirstFrameUpEvent += eventManager =>
@@ -270,7 +270,7 @@ namespace Lecture
             };
             eventContext.addEvent(undoEvent);
 
-            MessageEvent redoEvent = new MessageEvent(Events.Redo, EventLayers.Gui);
+            ButtonEvent redoEvent = new ButtonEvent(Events.Redo, EventLayers.Gui);
             redoEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             redoEvent.addButton(KeyboardButtonCode.KC_Y);
             redoEvent.FirstFrameUpEvent += eventManager =>
@@ -279,7 +279,7 @@ namespace Lecture
             };
             eventContext.addEvent(redoEvent);
 
-            MessageEvent runEvent = new MessageEvent(Events.Run, EventLayers.Gui);
+            ButtonEvent runEvent = new ButtonEvent(Events.Run, EventLayers.Gui);
             runEvent.addButton(KeyboardButtonCode.KC_F5);
             runEvent.FirstFrameUpEvent += eventManager =>
             {
@@ -290,7 +290,7 @@ namespace Lecture
             };
             eventContext.addEvent(runEvent);
 
-            MessageEvent captureEvent = new MessageEvent(Events.Capture, EventLayers.Gui);
+            ButtonEvent captureEvent = new ButtonEvent(Events.Capture, EventLayers.Gui);
             captureEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             captureEvent.addButton(KeyboardButtonCode.KC_SPACE);
             captureEvent.FirstFrameUpEvent += eventManager =>

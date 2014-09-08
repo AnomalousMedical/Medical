@@ -11,56 +11,58 @@ namespace Medical.Controller
     class CameraInputController : IDisposable
     {
         private static MouseButtonCode currentMouseButton = MedicalConfig.CameraMouseButton;
-        private static MessageEvent rotateCamera;
-        private static MessageEvent panCamera;
-        private static MessageEvent zoomCamera;
-        private static MessageEvent zoomInCamera;
-        private static MessageEvent zoomOutCamera;
+        private static ButtonEvent RotateCamera;
+        private static ButtonEvent PanCamera;
+        private static ButtonEvent ZoomCamera;
+        private static ButtonEvent ZoomInCamera;
+        private static ButtonEvent ZoomOutCamera;
+        private static ButtonEvent LockX;
+        private static ButtonEvent LockY;
 
         static CameraInputController()
         {
-            rotateCamera = new MessageEvent(CameraEvents.RotateCamera, EventLayers.Cameras);
-            rotateCamera.addButton(currentMouseButton);
-            DefaultEvents.registerDefaultEvent(rotateCamera);
+            RotateCamera = new ButtonEvent(CameraEvents.RotateCamera, EventLayers.Cameras);
+            RotateCamera.addButton(currentMouseButton);
+            DefaultEvents.registerDefaultEvent(RotateCamera);
 
-            panCamera = new MessageEvent(CameraEvents.PanCamera, EventLayers.Cameras);
-            panCamera.addButton(currentMouseButton);
-            panCamera.addButton(PlatformConfig.PanKey);
-            DefaultEvents.registerDefaultEvent(panCamera);
+            PanCamera = new ButtonEvent(CameraEvents.PanCamera, EventLayers.Cameras);
+            PanCamera.addButton(currentMouseButton);
+            PanCamera.addButton(PlatformConfig.PanKey);
+            DefaultEvents.registerDefaultEvent(PanCamera);
 
-            zoomCamera = new MessageEvent(CameraEvents.ZoomCamera, EventLayers.Cameras);
-            zoomCamera.addButton(currentMouseButton);
-            zoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
-            DefaultEvents.registerDefaultEvent(zoomCamera);
+            ZoomCamera = new ButtonEvent(CameraEvents.ZoomCamera, EventLayers.Cameras);
+            ZoomCamera.addButton(currentMouseButton);
+            ZoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
+            DefaultEvents.registerDefaultEvent(ZoomCamera);
 
-            zoomInCamera = new MessageEvent(CameraEvents.ZoomInCamera, EventLayers.Cameras);
-            zoomInCamera.MouseWheelDirection = MouseWheelDirection.Up;
-            DefaultEvents.registerDefaultEvent(zoomInCamera);
+            ZoomInCamera = new ButtonEvent(CameraEvents.ZoomInCamera, EventLayers.Cameras);
+            ZoomInCamera.MouseWheelDirection = MouseWheelDirection.Up;
+            DefaultEvents.registerDefaultEvent(ZoomInCamera);
 
-            zoomOutCamera = new MessageEvent(CameraEvents.ZoomOutCamera, EventLayers.Cameras);
-            zoomOutCamera.MouseWheelDirection = MouseWheelDirection.Down;
-            DefaultEvents.registerDefaultEvent(zoomOutCamera);
+            ZoomOutCamera = new ButtonEvent(CameraEvents.ZoomOutCamera, EventLayers.Cameras);
+            ZoomOutCamera.MouseWheelDirection = MouseWheelDirection.Down;
+            DefaultEvents.registerDefaultEvent(ZoomOutCamera);
 
-            MessageEvent lockX = new MessageEvent(CameraEvents.LockX, EventLayers.Cameras);
-            lockX.addButton(KeyboardButtonCode.KC_C);
-            DefaultEvents.registerDefaultEvent(lockX);
+            LockX = new ButtonEvent(CameraEvents.LockX, EventLayers.Cameras);
+            LockX.addButton(KeyboardButtonCode.KC_C);
+            DefaultEvents.registerDefaultEvent(LockX);
 
-            MessageEvent lockY = new MessageEvent(CameraEvents.LockY, EventLayers.Cameras);
-            lockY.addButton(KeyboardButtonCode.KC_X);
-            DefaultEvents.registerDefaultEvent(lockY);
+            LockY = new ButtonEvent(CameraEvents.LockY, EventLayers.Cameras);
+            LockY.addButton(KeyboardButtonCode.KC_X);
+            DefaultEvents.registerDefaultEvent(LockY);
         }
 
         public static void changeMouseButton(MouseButtonCode newMouseButton)
         {
-            rotateCamera.removeButton(currentMouseButton);
-            panCamera.removeButton(currentMouseButton);
-            zoomCamera.removeButton(currentMouseButton);
+            RotateCamera.removeButton(currentMouseButton);
+            PanCamera.removeButton(currentMouseButton);
+            ZoomCamera.removeButton(currentMouseButton);
 
             currentMouseButton = newMouseButton;
 
-            rotateCamera.addButton(currentMouseButton);
-            panCamera.addButton(currentMouseButton);
-            zoomCamera.addButton(currentMouseButton);
+            RotateCamera.addButton(currentMouseButton);
+            PanCamera.addButton(currentMouseButton);
+            ZoomCamera.addButton(currentMouseButton);
         }
 
         private bool currentlyInMotion;
@@ -74,16 +76,16 @@ namespace Medical.Controller
             this.eventManager = eventManager;
             eventManager[EventLayers.Cameras].OnUpdate += processInputEvents;
 
-            rotateCamera.FirstFrameDownEvent += rotateCamera_FirstFrameDownEvent;
-            rotateCamera.FirstFrameUpEvent += rotateCamera_FirstFrameUpEvent;
+            RotateCamera.FirstFrameDownEvent += rotateCamera_FirstFrameDownEvent;
+            RotateCamera.FirstFrameUpEvent += rotateCamera_FirstFrameUpEvent;
         }
 
         public void Dispose()
         {
             eventManager[EventLayers.Cameras].OnUpdate -= processInputEvents;
 
-            rotateCamera.FirstFrameDownEvent -= rotateCamera_FirstFrameDownEvent;
-            rotateCamera.FirstFrameUpEvent -= rotateCamera_FirstFrameUpEvent;
+            RotateCamera.FirstFrameDownEvent -= rotateCamera_FirstFrameDownEvent;
+            RotateCamera.FirstFrameUpEvent -= rotateCamera_FirstFrameUpEvent;
         }
 
         void rotateCamera_FirstFrameDownEvent(EventLayer eventLayer)
@@ -109,12 +111,12 @@ namespace Medical.Controller
                 {
                     IntVector3 mouseCoords = eventLayer.Mouse.AbsolutePosition;
 
-                    if (eventLayer[CameraEvents.RotateCamera].FirstFrameDown)
+                    if (RotateCamera.FirstFrameDown)
                     {
                         currentlyInMotion = true;
                         eventLayer.alertEventsHandled();
                     }
-                    else if (eventLayer[CameraEvents.RotateCamera].FirstFrameUp)
+                    else if (RotateCamera.FirstFrameUp)
                     {
                         currentlyInMotion = false;
                     }
@@ -122,35 +124,35 @@ namespace Medical.Controller
                     if (currentlyInMotion)
                     {
                         travelTracker.traveled(mouseCoords);
-                        if (eventLayer[CameraEvents.PanCamera].HeldDown)
+                        if (PanCamera.HeldDown)
                         {
                             int x = mouseCoords.x;
                             int y = mouseCoords.y;
-                            if (eventLayer[CameraEvents.LockX].Down)
+                            if (LockX.Down)
                             {
                                 x = 0;
                             }
-                            if (eventLayer[CameraEvents.LockY].Down)
+                            if (LockY.Down)
                             {
                                 y = 0;
                             }
                             cameraMover.panFromMotion(x, y, eventLayer.Mouse.AreaWidth, eventLayer.Mouse.AreaHeight);
                             eventLayer.alertEventsHandled();
                         }
-                        else if (cameraMover.AllowZoom && eventLayer[CameraEvents.ZoomCamera].HeldDown)
+                        else if (cameraMover.AllowZoom && ZoomCamera.HeldDown)
                         {
                             cameraMover.zoomFromMotion(mouseCoords.y);
                             eventLayer.alertEventsHandled();
                         }
-                        else if (cameraMover.AllowRotation && eventLayer[CameraEvents.RotateCamera].HeldDown)
+                        else if (cameraMover.AllowRotation && RotateCamera.HeldDown)
                         {
                             int x = mouseCoords.x;
                             int y = mouseCoords.y;
-                            if (eventLayer[CameraEvents.LockX].Down)
+                            if (LockX.Down)
                             {
                                 x = 0;
                             }
-                            if (eventLayer[CameraEvents.LockY].Down)
+                            if (LockY.Down)
                             {
                                 y = 0;
                             }
@@ -160,12 +162,12 @@ namespace Medical.Controller
                     }
                     if (cameraMover.AllowZoom)
                     {
-                        if (eventLayer[CameraEvents.ZoomInCamera].Down)
+                        if (ZoomInCamera.Down)
                         {
                             cameraMover.incrementZoom(-1);
                             eventLayer.alertEventsHandled();
                         }
-                        else if (eventLayer[CameraEvents.ZoomOutCamera].Down)
+                        else if (ZoomOutCamera.Down)
                         {
                             cameraMover.incrementZoom(1);
                             eventLayer.alertEventsHandled();

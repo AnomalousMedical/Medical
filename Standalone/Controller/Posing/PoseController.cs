@@ -19,13 +19,13 @@ namespace Medical.Controller
             SelectAndMove,
         }
 
-        private static MessageEvent pickAnatomy;
+        private static ButtonEvent PickAnatomy;
 
         static PoseController()
         {
-            pickAnatomy = new MessageEvent(Events.SelectAndMove, EventLayers.Posing);
-            pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
-            DefaultEvents.registerDefaultEvent(pickAnatomy);
+            PickAnatomy = new ButtonEvent(Events.SelectAndMove, EventLayers.Posing);
+            PickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
+            DefaultEvents.registerDefaultEvent(PickAnatomy);
         }
 
         private BEPUikScene ikScene;
@@ -63,7 +63,7 @@ namespace Medical.Controller
 
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
-            pickAnatomy.OnHeldDown -= pickAnatomy_OnHeldDown;
+            PickAnatomy.OnHeldDown -= pickAnatomy_OnHeldDown;
             ikScene.removeExternalControl(dragControl);
             dragControl.TargetBone = null;
             if (eventLayer.EventProcessingAllowed && travelTracker.TraveledOverLimit)
@@ -89,7 +89,7 @@ namespace Medical.Controller
                         Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
                         dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
                         dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
-                        pickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
+                        PickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
                         ikScene.addExternalControl(dragControl);
                         eventLayer.alertEventsHandled();
                         break;
@@ -139,13 +139,13 @@ namespace Medical.Controller
         {
             if (ikScene != null && allowPosing)
             {
-                pickAnatomy.FirstFrameDownEvent += pickAnatomy_FirstFrameDownEvent;
-                pickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
+                PickAnatomy.FirstFrameDownEvent += pickAnatomy_FirstFrameDownEvent;
+                PickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
             }
             else
             {
-                pickAnatomy.FirstFrameDownEvent -= pickAnatomy_FirstFrameDownEvent;
-                pickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
+                PickAnatomy.FirstFrameDownEvent -= pickAnatomy_FirstFrameDownEvent;
+                PickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
             }
         }
     }

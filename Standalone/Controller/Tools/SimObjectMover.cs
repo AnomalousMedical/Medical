@@ -12,19 +12,23 @@ namespace Medical
 {
     public class SimObjectMover : IDisposable
     {
+        internal static readonly ButtonEvent PickEvent;
+        internal static readonly ButtonEvent IncreaseToolSize;
+        internal static readonly ButtonEvent DecreaseToolSize;
+
         static SimObjectMover()
         {
-            MessageEvent pickEvent = new MessageEvent(ToolEvents.Pick, EventLayers.Tools);
-            pickEvent.addButton(MouseButtonCode.MB_BUTTON0);
-            DefaultEvents.registerDefaultEvent(pickEvent);
+            PickEvent = new ButtonEvent(ToolEvents.Pick, EventLayers.Tools);
+            PickEvent.addButton(MouseButtonCode.MB_BUTTON0);
+            DefaultEvents.registerDefaultEvent(PickEvent);
 
-            MessageEvent increaseToolSize = new MessageEvent(ToolEvents.IncreaseToolSize, EventLayers.Tools);
-            increaseToolSize.addButton(KeyboardButtonCode.KC_EQUALS);
-            DefaultEvents.registerDefaultEvent(increaseToolSize);
+            IncreaseToolSize = new ButtonEvent(ToolEvents.IncreaseToolSize, EventLayers.Tools);
+            IncreaseToolSize.addButton(KeyboardButtonCode.KC_EQUALS);
+            DefaultEvents.registerDefaultEvent(IncreaseToolSize);
 
-            MessageEvent decreaseToolSize = new MessageEvent(ToolEvents.DecreaseToolSize, EventLayers.Tools);
-            decreaseToolSize.addButton(KeyboardButtonCode.KC_MINUS);
-            DefaultEvents.registerDefaultEvent(decreaseToolSize);
+            DecreaseToolSize = new ButtonEvent(ToolEvents.DecreaseToolSize, EventLayers.Tools);
+            DecreaseToolSize.addButton(KeyboardButtonCode.KC_MINUS);
+            DefaultEvents.registerDefaultEvent(DecreaseToolSize);
         }
 
         private RendererPlugin rendererPlugin;
@@ -91,7 +95,7 @@ namespace Medical
                 cameraPos = activeWindow.Translation;              
             }
             //Check collisions and draw shapes
-            if (!events[ToolEvents.Pick].HeldDown)
+            if (!PickEvent.HeldDown)
             {
                 float closestDistance = float.MaxValue;
                 MovableObjectTools closestTools = null;
@@ -128,7 +132,7 @@ namespace Medical
                         tools.clearSelection();
                     }
                 }
-                if (events[ToolEvents.Pick].FirstFrameDown)
+                if (PickEvent.FirstFrameDown)
                 {
                     currentTools = closestTools;
                     if (closestTools != null)
@@ -137,7 +141,7 @@ namespace Medical
                         events.alertEventsHandled();
                     }
                 }
-                else if(events[ToolEvents.Pick].FirstFrameUp)
+                else if(PickEvent.FirstFrameUp)
                 {
                     if(currentTools != null)
                     {

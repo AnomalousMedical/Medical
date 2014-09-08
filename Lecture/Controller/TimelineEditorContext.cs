@@ -172,14 +172,14 @@ namespace Lecture
 
             eventContext = new EventContext();
 
-            eventContext.addEvent(new MessageEvent(Events.Save, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Save, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     saveAll();
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_S }));
 
-            eventContext.addEvent(new MessageEvent(Events.TogglePlay, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.TogglePlay, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     if (timeline.TimelineController.Playing)
@@ -193,49 +193,49 @@ namespace Lecture
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_SPACE }));
 
-            eventContext.addEvent(new MessageEvent(Events.Cut, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Cut, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("TimelineEditor/Cut");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_X }));
 
-            eventContext.addEvent(new MessageEvent(Events.Copy, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Copy, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("TimelineEditor/Copy");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_C }));
 
-            eventContext.addEvent(new MessageEvent(Events.Paste, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Paste, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("TimelineEditor/Paste");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_V }));
 
-            eventContext.addEvent(new MessageEvent(Events.SelectAll, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.SelectAll, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("TimelineEditor/SelectAll");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_A }));
 
-            eventContext.addEvent(new MessageEvent(Events.Translate, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Translate, EventLayers.Gui,
                 frameUp: eventManager =>
                     {
                         mvcContext.runAction("TimelineEditor/Translation");
                     },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_T }));
 
-            eventContext.addEvent(new MessageEvent(Events.Rotate, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Rotate, EventLayers.Gui,
                 frameUp: eventManager =>
                     {
                         mvcContext.runAction("TimelineEditor/Rotation");
                     },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_R }));
 
-            eventContext.addEvent(new MessageEvent(Events.PropTimeline, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.PropTimeline, EventLayers.Gui,
                 frameUp: EventManager =>
                     {
                         mvcContext.runAction("PropTimeline/ShowIfNotOpen");

@@ -99,7 +99,7 @@ namespace Medical
                 new RunCommandsAction("Resumed", new RestoreViewLayoutCommand())));
 
             eventContext = new EventContext();
-            MessageEvent saveEvent = new MessageEvent(Events.Save, EventLayers.Gui);
+            ButtonEvent saveEvent = new ButtonEvent(Events.Save, EventLayers.Gui);
             saveEvent.addButton(KeyboardButtonCode.KC_LCONTROL);
             saveEvent.addButton(KeyboardButtonCode.KC_S);
             saveEvent.FirstFrameUpEvent += eventManager =>
@@ -108,28 +108,28 @@ namespace Medical
             };
             eventContext.addEvent(saveEvent);
 
-            eventContext.addEvent(new MessageEvent(Events.Cut, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Cut, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("Editor/Cut");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_X }));
 
-            eventContext.addEvent(new MessageEvent(Events.Copy, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Copy, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("Editor/Copy");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_C }));
 
-            eventContext.addEvent(new MessageEvent(Events.Paste, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.Paste, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("Editor/Paste");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_V }));
 
-            eventContext.addEvent(new MessageEvent(Events.SelectAll, EventLayers.Gui,
+            eventContext.addEvent(new ButtonEvent(Events.SelectAll, EventLayers.Gui,
                 frameUp: eventManager =>
                 {
                     mvcContext.runAction("Editor/SelectAll");

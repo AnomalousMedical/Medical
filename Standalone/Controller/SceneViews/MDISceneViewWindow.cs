@@ -19,18 +19,18 @@ namespace Medical.Controller
             SecondarySelect,
         }
 
-        private static MessageEvent primaryActionSelect;
-        private static MessageEvent secondaryActionSelect;
+        private static ButtonEvent PrimaryActionSelect;
+        private static ButtonEvent SecondaryActionSelect;
 
         static MDISceneViewWindow()
         {
-            primaryActionSelect = new MessageEvent(Events.PrimarySelect, EventLayers.AfterGui);
-            primaryActionSelect.addButton(MouseButtonCode.MB_BUTTON0);
-            DefaultEvents.registerDefaultEvent(primaryActionSelect);
+            PrimaryActionSelect = new ButtonEvent(Events.PrimarySelect, EventLayers.AfterGui);
+            PrimaryActionSelect.addButton(MouseButtonCode.MB_BUTTON0);
+            DefaultEvents.registerDefaultEvent(PrimaryActionSelect);
 
-            secondaryActionSelect = new MessageEvent(Events.SecondarySelect, EventLayers.AfterGui);
-            secondaryActionSelect.addButton(MouseButtonCode.MB_BUTTON1);
-            DefaultEvents.registerDefaultEvent(secondaryActionSelect);
+            SecondaryActionSelect = new ButtonEvent(Events.SecondarySelect, EventLayers.AfterGui);
+            SecondaryActionSelect.addButton(MouseButtonCode.MB_BUTTON1);
+            DefaultEvents.registerDefaultEvent(SecondaryActionSelect);
         }
 
         private MDIDocumentWindow mdiWindow;
@@ -50,16 +50,16 @@ namespace Medical.Controller
             mdiWindow.Closed += new EventHandler(mdiWindow_Closed);
             mdiWindow.ActiveStatusChanged += new EventHandler(mdiWindow_ActiveStatusChanged);
 
-            primaryActionSelect.FirstFrameDownEvent += selectEvent;
-            secondaryActionSelect.FirstFrameDownEvent += selectEvent;
+            PrimaryActionSelect.FirstFrameDownEvent += selectEvent;
+            SecondaryActionSelect.FirstFrameDownEvent += selectEvent;
 
             this.RendererWindow = rendererWindow;
         }
 
         public override void Dispose()
         {
-            primaryActionSelect.FirstFrameDownEvent -= selectEvent;
-            secondaryActionSelect.FirstFrameDownEvent -= selectEvent;
+            PrimaryActionSelect.FirstFrameDownEvent -= selectEvent;
+            SecondaryActionSelect.FirstFrameDownEvent -= selectEvent;
             base.Dispose();
             mdiWindow.Dispose();
         }

@@ -236,7 +236,7 @@ namespace Medical.GUI
                 }
             }
 
-            var toggleFullscreenMessageEvent = new MessageEvent("ToggleFullscreen", EventLayers.Gui, frameUp: (evtMgr) =>
+            var toggleFullscreenMessageEvent = new ButtonEvent("ToggleFullscreen", EventLayers.Gui, frameUp: (evtMgr) =>
                 {
                     MainWindow.Instance.toggleFullscreen();
                 });

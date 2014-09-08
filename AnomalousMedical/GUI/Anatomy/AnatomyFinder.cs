@@ -31,34 +31,34 @@ namespace Medical.GUI
         private static readonly int ThumbRenderSize = ScaleHelper.Scaled(200);
         private static readonly int lockSize = ScaleHelper.Scaled(18);
 
-        private static MessageEvent pickAnatomy;
-        private static MessageEvent changeSelectionMode;
-        private static MessageEvent openAnatomyFinder;
-        private static MessageEvent toggleAddMode;
-        private static MessageEvent toggleRemoveMode;
+        private static ButtonEvent PickAnatomy;
+        private static ButtonEvent ChangeSelectionMode;
+        private static ButtonEvent OpenAnatomyFinder;
+        private static ButtonEvent ToggleAddMode;
+        private static ButtonEvent ToggleRemoveMode;
         
         static AnatomyFinder()
         {
-            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.Selection);
-            pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
-            DefaultEvents.registerDefaultEvent(pickAnatomy);
+            PickAnatomy = new ButtonEvent(AnatomyFinderEvents.PickAnatomy, EventLayers.Selection);
+            PickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
+            DefaultEvents.registerDefaultEvent(PickAnatomy);
 
-            changeSelectionMode = new MessageEvent(AnatomyFinderEvents.ChangeSelectionMode, EventLayers.Gui);
-            changeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
-            DefaultEvents.registerDefaultEvent(changeSelectionMode);
+            ChangeSelectionMode = new ButtonEvent(AnatomyFinderEvents.ChangeSelectionMode, EventLayers.Gui);
+            ChangeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
+            DefaultEvents.registerDefaultEvent(ChangeSelectionMode);
 
-            openAnatomyFinder = new MessageEvent(AnatomyFinderEvents.OpenAnatomyFinder, EventLayers.Gui);
-            openAnatomyFinder.addButton(KeyboardButtonCode.KC_LCONTROL);
-            openAnatomyFinder.addButton(KeyboardButtonCode.KC_F);
-            DefaultEvents.registerDefaultEvent(openAnatomyFinder);
+            OpenAnatomyFinder = new ButtonEvent(AnatomyFinderEvents.OpenAnatomyFinder, EventLayers.Gui);
+            OpenAnatomyFinder.addButton(KeyboardButtonCode.KC_LCONTROL);
+            OpenAnatomyFinder.addButton(KeyboardButtonCode.KC_F);
+            DefaultEvents.registerDefaultEvent(OpenAnatomyFinder);
 
-            toggleAddMode = new MessageEvent(AnatomyFinderEvents.ToggleAddMode, EventLayers.Gui);
-            toggleAddMode.addButton(KeyboardButtonCode.KC_LCONTROL);
-            DefaultEvents.registerDefaultEvent(toggleAddMode);
+            ToggleAddMode = new ButtonEvent(AnatomyFinderEvents.ToggleAddMode, EventLayers.Gui);
+            ToggleAddMode.addButton(KeyboardButtonCode.KC_LCONTROL);
+            DefaultEvents.registerDefaultEvent(ToggleAddMode);
 
-            toggleRemoveMode = new MessageEvent(AnatomyFinderEvents.ToggleRemoveMode, EventLayers.Gui);
-            toggleRemoveMode.addButton(KeyboardButtonCode.KC_LMENU);
-            DefaultEvents.registerDefaultEvent(toggleRemoveMode);
+            ToggleRemoveMode = new ButtonEvent(AnatomyFinderEvents.ToggleRemoveMode, EventLayers.Gui);
+            ToggleRemoveMode.addButton(KeyboardButtonCode.KC_LMENU);
+            DefaultEvents.registerDefaultEvent(ToggleRemoveMode);
         }
 
         private HashSetMultiSelectButtonGrid anatomyList;
@@ -116,13 +116,13 @@ namespace Medical.GUI
             setupSelectionButton(SelectionMode.Remove, "RemoveButton");
             selectionMode.Selection = SelectionMode.Select;
 
-            pickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
-            changeSelectionMode.FirstFrameUpEvent += changeSelectionMode_FirstFrameUpEvent;
-            openAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
-            toggleAddMode.FirstFrameDownEvent += toggleAdMode_FirstFrameDownEvent;
-            toggleAddMode.FirstFrameUpEvent += toggleAdMode_FirstFrameUpEvent;
-            toggleRemoveMode.FirstFrameDownEvent += toggleRemoveMode_FirstFrameDownEvent;
-            toggleRemoveMode.FirstFrameUpEvent += toggleRemoveMode_FirstFrameUpEvent;
+            PickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
+            ChangeSelectionMode.FirstFrameUpEvent += changeSelectionMode_FirstFrameUpEvent;
+            OpenAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
+            ToggleAddMode.FirstFrameDownEvent += toggleAdMode_FirstFrameDownEvent;
+            ToggleAddMode.FirstFrameUpEvent += toggleAdMode_FirstFrameUpEvent;
+            ToggleRemoveMode.FirstFrameDownEvent += toggleRemoveMode_FirstFrameDownEvent;
+            ToggleRemoveMode.FirstFrameUpEvent += toggleRemoveMode_FirstFrameUpEvent;
 
             Button unhideAll = window.findWidget("UnhideAll") as Button;
             unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
@@ -138,13 +138,13 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            pickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
-            changeSelectionMode.FirstFrameUpEvent -= changeSelectionMode_FirstFrameUpEvent;
-            openAnatomyFinder.FirstFrameUpEvent -= openAnatomyFinder_FirstFrameUpEvent;
-            toggleAddMode.FirstFrameDownEvent -= toggleAdMode_FirstFrameDownEvent;
-            toggleAddMode.FirstFrameUpEvent -= toggleAdMode_FirstFrameUpEvent;
-            toggleRemoveMode.FirstFrameDownEvent -= toggleRemoveMode_FirstFrameDownEvent;
-            toggleRemoveMode.FirstFrameUpEvent -= toggleRemoveMode_FirstFrameUpEvent;
+            PickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
+            ChangeSelectionMode.FirstFrameUpEvent -= changeSelectionMode_FirstFrameUpEvent;
+            OpenAnatomyFinder.FirstFrameUpEvent -= openAnatomyFinder_FirstFrameUpEvent;
+            ToggleAddMode.FirstFrameDownEvent -= toggleAdMode_FirstFrameDownEvent;
+            ToggleAddMode.FirstFrameUpEvent -= toggleAdMode_FirstFrameUpEvent;
+            ToggleRemoveMode.FirstFrameDownEvent -= toggleRemoveMode_FirstFrameDownEvent;
+            ToggleRemoveMode.FirstFrameUpEvent -= toggleRemoveMode_FirstFrameUpEvent;
 
             buttonGridThumbs.Dispose();
             anatomyWindowManager.Dispose();
@@ -165,10 +165,10 @@ namespace Medical.GUI
             switch(selectionMode[(Button)source])
             {
                 case SelectionMode.Add:
-                    text = String.Format("Add to Selection ({0})", toggleAddMode.KeyDescription);
+                    text = String.Format("Add to Selection ({0})", ToggleAddMode.KeyDescription);
                     break;
                 case SelectionMode.Remove:
-                    text = String.Format("Remove from Selection ({0})", toggleRemoveMode.KeyDescription);
+                    text = String.Format("Remove from Selection ({0})", ToggleRemoveMode.KeyDescription);
                     break;
                 case SelectionMode.Select:
                     text = "Select";

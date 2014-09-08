@@ -54,7 +54,7 @@ namespace Medical
         public void processSelection(EventLayer events, ref Ray3 spaceRay)
         {
             Vector3 trans = movable.ToolTranslation;
-            if (events[ToolEvents.Pick].FirstFrameDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
+            if (SimObjectMover.PickEvent.FirstFrameDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
                 startingRotation.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
 
@@ -63,7 +63,7 @@ namespace Medical
 
                 currentEulerRotation = Vector3.Zero;
             }
-            else if (events[ToolEvents.Pick].HeldDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
+            else if (SimObjectMover.PickEvent.HeldDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
                 Mouse mouse = events.Mouse;
                 IntVector3 relMouse = mouse.RelativePosition;
@@ -76,7 +76,7 @@ namespace Medical
                 newRot *= startingRotation;
                 movable.rotate(ref newRot);
             }
-            else if (events[ToolEvents.Pick].FirstFrameUp && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
+            else if (SimObjectMover.PickEvent.FirstFrameUp && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
                 newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
                 newRot *= startingRotation;
