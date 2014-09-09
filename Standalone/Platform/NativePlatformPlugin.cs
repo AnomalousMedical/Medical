@@ -9,7 +9,7 @@ using Medical.Platform;
 
 namespace Medical
 {
-    public class NativePlatformPlugin : PlatformPlugin
+    public class NativePlatformPlugin : PluginInterface
     {
         private ManagedLogListener managedLogListener = new ManagedLogListener();
 
@@ -32,45 +32,9 @@ namespace Medical
             managedLogListener.Dispose();
         }
 
-        public SystemTimer createTimer()
-        {
-            return new NativeSystemTimer();
-        }
-
-        public void destroyTimer(SystemTimer timer)
-        {
-            NativeSystemTimer pcTimer = timer as NativeSystemTimer;
-            if (pcTimer != null)
-            {
-                pcTimer.Dispose();
-            }
-            else
-            {
-                Log.Error("Attempted to delete a SystemTimer that was not a PCSystemTimer in NativePlatformPlugin. Are you mixing platform plugins?");
-            }
-        }
-
-        public InputHandler createInputHandler(OSWindow window, bool foreground, bool exclusive, bool noWinKey, bool enableMultitouch)
-        {
-            return new NativeInputHandler((NativeOSWindow)window, enableMultitouch);
-        }
-
-        public void destroyInputHandler(InputHandler handler)
-        {
-            NativeInputHandler pcInput = handler as NativeInputHandler;
-            if (pcInput != null)
-            {
-                pcInput.Dispose();
-            }
-            else
-            {
-                Log.Error("Attempted to delete a InputHandler that was not a PCInputHandler in NativePlatformPlugin. Are you mixing platform plugins?");
-            }
-        }
-
         public void initialize(PluginManager pluginManager)
         {
-            pluginManager.setPlatformPlugin(this);
+            
         }
 
         public void link(PluginManager pluginManager)

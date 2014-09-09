@@ -33,15 +33,15 @@ namespace Medical
         private LogFileListener logListener;
 
         //Platform
-        private SystemTimer systemTimer;
+        private NativeSystemTimer systemTimer;
         private NativeUpdateTimer mainTimer;
         private EventManager eventManager;
-        private InputHandler inputHandler;
+        private NativeInputHandler inputHandler;
         private EventUpdateListener eventUpdate;
         private MedicalUpdate medicalUpdate;
 
         //Performance
-        private SystemTimer performanceMetricTimer;
+        private NativeSystemTimer performanceMetricTimer;
 
         //Controller
         private MedicalSceneController medicalScene;
@@ -68,7 +68,7 @@ namespace Medical
         /// <param name="mainForm">The form to use for input, or null to use the primary render window.</param>
         /// <param name="messagePump"></param>
         /// <param name="configureWindow"></param>
-        public void initialize(StandaloneApp app, OSWindow mainForm, ConfigureDefaultWindow configureWindow)
+        public void initialize(StandaloneApp app, NativeOSWindow mainForm, ConfigureDefaultWindow configureWindow)
         {
             //Create the log.
             logListener = new LogFileListener();
@@ -112,12 +112,12 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(SimulationPlugin).Assembly);
             pluginManager.initializePlugins();
 
-            performanceMetricTimer = pluginManager.PlatformPlugin.createTimer();
+            performanceMetricTimer = new NativeSystemTimer();
             PerformanceMonitor.setupEnabledState(performanceMetricTimer);
 
             //Intialize the platform
             BulletInterface.Instance.ShapeMargin = 0.005f;
-            systemTimer = pluginManager.PlatformPlugin.createTimer();
+            systemTimer = new NativeSystemTimer();
 
             mainTimer = new NativeUpdateTimer(systemTimer);
 
@@ -131,7 +131,7 @@ namespace Medical
                 mainTimer.FramerateCap = MedicalConfig.EngineConfig.FPSCap;
             }
 
-            inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false, MedicalConfig.EnableMultitouch);
+            inputHandler = new NativeInputHandler(mainForm, MedicalConfig.EnableMultitouch);
             eventManager = new EventManager(inputHandler, Enum.GetValues(typeof(EventLayers)));
             Medical.Platform.GlobalContextEventHandler.setEventManager(eventManager);
             eventUpdate = new EventUpdateListener(eventManager);
@@ -174,16 +174,16 @@ namespace Medical
             }
             if (inputHandler != null)
             {
-                pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
+                inputHandler.Dispose();
             }
             if (systemTimer != null)
             {
-                pluginManager.PlatformPlugin.destroyTimer(systemTimer);
+                systemTimer.Dispose();
             }
             if (performanceMetricTimer != null)
             {
                 PerformanceMonitor.destroyEnabledState();
-                pluginManager.PlatformPlugin.destroyTimer(performanceMetricTimer);
+                performanceMetricTimer.Dispose();
             }
             if (pluginManager != null)
             {

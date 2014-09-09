@@ -11,10 +11,6 @@ namespace Medical
     class NativeMouse : MouseHardware, IDisposable
     {
         private NativeOSWindow window;
-        private IntVector3 absMouse = new IntVector3(0, 0, 0);
-        private IntVector3 relMouse = new IntVector3(0, 0, 0);
-        private IntVector3 lastMouse = new IntVector3(0, 0, 0);
-        private bool[] buttonDownStatus = new bool[(int)MouseButtonCode.NUM_BUTTONS];
 
         IntPtr nativeMouse;
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -31,100 +27,32 @@ namespace Medical
         MouseMoveDelegate mouseMoveCB;
         MouseWheelDelegate mouseWheelCB;
 
-        public NativeMouse(NativeOSWindow window, EventManager eventManager)
-            :base(eventManager)
+        public NativeMouse(NativeOSWindow window, Mouse mouse)
+            : base(mouse)
         {
             this.window = window;
 
-            mouseButtonDownCB = new MouseButtonDownDelegate(OnMouseDown);
-            mouseButtonUpCB = new MouseButtonUpDelegate(OnMouseUp);
-            mouseMoveCB = new MouseMoveDelegate(OnMouseMotion);
-            mouseWheelCB = new MouseWheelDelegate(OnMouseWheel);
+            mouseButtonDownCB = new MouseButtonDownDelegate(fireButtonDown);
+            mouseButtonUpCB = new MouseButtonUpDelegate(fireButtonUp);
+            mouseMoveCB = new MouseMoveDelegate(fireMoved);
+            mouseWheelCB = new MouseWheelDelegate(fireWheel);
 
             nativeMouse = NativeMouse_new(window._NativePtr, mouseButtonDownCB, mouseButtonUpCB, mouseMoveCB, mouseWheelCB);
+
+            fireSizeChanged(window.WindowWidth, window.WindowHeight);
+            window.Resized += window_Resized;
         }
 
         public void Dispose()
         {
+            window.Resized -= window_Resized;
             NativeMouse_delete(nativeMouse);
             nativeMouse = IntPtr.Zero;
         }
 
-        public override bool buttonDown(MouseButtonCode button)
+        void window_Resized(OSWindow window)
         {
-            return buttonDownStatus[(int)button];
-        }
-
-        public override void capture()
-        {
-            relMouse.x = absMouse.x - lastMouse.x;
-            relMouse.y = absMouse.y - lastMouse.y;
-            relMouse.z = absMouse.z - lastMouse.z;
-
-            lastMouse = absMouse;
-        }
-
-        public override IntVector3 AbsolutePosition
-        {
-            get
-            {
-                return absMouse;
-            }
-        }
-
-        public override IntVector3 RelativePosition
-        {
-            get
-            {
-                return relMouse;
-            }
-        }
-
-        public override int AreaWidth
-        {
-            get
-            {
-                return window.WindowWidth;
-            }
-        }
-
-        public override int AreaHeight
-        {
-            get
-            {
-                return window.WindowHeight;
-            }
-        }
-
-        void OnMouseDown(MouseButtonCode id)
-        {
-            buttonDownStatus[(int)id] = true;
-            fireButtonDown(id);
-        }
-
-        void OnMouseUp(MouseButtonCode id)
-        {
-            //Make sure the button is down
-            if(buttonDownStatus[(int)id])
-            {
-                buttonDownStatus[(int)id] = false;
-                fireButtonUp(id);
-            }
-        }
-
-        void OnMouseMotion(int x, int y)
-        {
-            absMouse.x = x;
-            absMouse.y = y;
-
-            fireMoved();
-        }
-
-        void OnMouseWheel(int z)
-        {
-            absMouse.z += z;
-
-            fireMoved();
+            fireSizeChanged(window.WindowWidth, window.WindowHeight);
         }
 
         #region PInvoke

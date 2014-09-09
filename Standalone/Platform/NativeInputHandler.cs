@@ -41,11 +41,11 @@ namespace Medical
             return createdKeyboard;
         }
 
-        public override MouseHardware createMouse(bool buffered, EventManager eventManager)
+        public override MouseHardware createMouse(bool buffered, Mouse mouse)
         {
             if (createdMouse == null)
             {
-                createdMouse = new NativeMouse(window, eventManager);
+                createdMouse = new NativeMouse(window, mouse);
             }
             return createdMouse;
         }
