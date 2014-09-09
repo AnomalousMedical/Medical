@@ -11,17 +11,6 @@ namespace Medical
 {
     class WindowsPlatformConfig : PlatformConfig
     {
-        private const int ROTATE_FINGER_COUNT = 1;
-        private const float ROTATE_DECEL_TIME = 0.5f;
-        private const float ROTATE_MIN_MOMENTUM = 0.01f;
-
-        private const float ZOOM_DECEL_TIME = 1.0f;
-        private const float ZOOM_MIN_MOMENTUM = 0.01f;
-
-        private const int PAN_FINGER_COUNT = 2;
-        private const float PAN_DECEL_TIME = 0.5f;
-        private const float PAN_MIN_MOMENTUM = 0.01f;
-
         public WindowsPlatformConfig()
         {
             Log.ImportantInfo("Platform is Windows");
@@ -32,26 +21,11 @@ namespace Medical
             return String.Format("{0} - {1}", windowText, subText);
         }
 
-        protected override MultiFingerScrollGesture createRotateGestureImpl()
-        {
-            return new MultiFingerScrollGesture(EventLayers.Cameras, ROTATE_FINGER_COUNT, ROTATE_DECEL_TIME, ROTATE_MIN_MOMENTUM);
-        }
-
-        protected override MultiFingerScrollGesture createPanGestureImpl()
-        {
-            return new MultiFingerScrollGesture(EventLayers.Cameras, PAN_FINGER_COUNT, PAN_DECEL_TIME, PAN_MIN_MOMENTUM);
-        }
-
-        protected override TwoFingerZoom createZoomGestureImpl()
-        {
-            return new TwoFingerZoom(EventLayers.Cameras, ZOOM_DECEL_TIME, ZOOM_MIN_MOMENTUM);
-        }
-
-        protected override bool AllowGuiGesturesImpl
+        protected override TouchType TouchTypeImpl
         {
             get
             {
-                return true;
+                return TouchType.Screen;
             }
         }
 

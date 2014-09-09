@@ -21,7 +21,7 @@ namespace Medical.Controller
 
         private static MultiFingerScrollGesture rotateGesture;
         private static MultiFingerScrollGesture panGesture;
-        private static TwoFingerZoom zoomGesture;
+        private static MultiFingerScrollGesture zoomGesture;
 
         static CameraInputController()
         {
@@ -55,14 +55,19 @@ namespace Medical.Controller
             LockY.addButton(KeyboardButtonCode.KC_X);
             DefaultEvents.registerDefaultEvent(LockY);
 
-            zoomGesture = PlatformConfig.createZoomGesture();
-            DefaultEvents.registerDefaultEvent(zoomGesture);
+            switch(PlatformConfig.TouchType)
+            { 
+                case TouchType.Screen:
+                    zoomGesture = new MultiFingerScrollGesture(EventLayers.Cameras, 2, 0.5f, 0.01f);
+                    DefaultEvents.registerDefaultEvent(zoomGesture);
 
-            rotateGesture = PlatformConfig.createRotateGesture();
-            DefaultEvents.registerDefaultEvent(rotateGesture);
+                    rotateGesture = new MultiFingerScrollGesture(EventLayers.Cameras, 1, 0.5f, 0.01f);
+                    DefaultEvents.registerDefaultEvent(rotateGesture);
 
-            panGesture = PlatformConfig.createPanGesture();
-            DefaultEvents.registerDefaultEvent(panGesture);
+                    panGesture = new MultiFingerScrollGesture(EventLayers.Cameras, 3, 0.5f, 0.01f); ;
+                    DefaultEvents.registerDefaultEvent(panGesture);
+                break;
+            }
         }
 
         public static void changeMouseButton(MouseButtonCode newMouseButton)
@@ -92,9 +97,12 @@ namespace Medical.Controller
             RotateCamera.FirstFrameDownEvent += rotateCamera_FirstFrameDownEvent;
             RotateCamera.FirstFrameUpEvent += rotateCamera_FirstFrameUpEvent;
 
-            zoomGesture.Zoom += zoomGesture_Zoom;
-            rotateGesture.Scroll += rotateGesture_Scroll;
-            panGesture.Scroll += panGesture_Scroll;
+            if (zoomGesture != null)
+            {
+                zoomGesture.Scroll += zoomGesture_Scroll;
+                rotateGesture.Scroll += rotateGesture_Scroll;
+                panGesture.Scroll += panGesture_Scroll;
+            }
         }
 
         public void Dispose()
@@ -104,9 +112,12 @@ namespace Medical.Controller
             RotateCamera.FirstFrameDownEvent -= rotateCamera_FirstFrameDownEvent;
             RotateCamera.FirstFrameUpEvent -= rotateCamera_FirstFrameUpEvent;
 
-            zoomGesture.Zoom -= zoomGesture_Zoom;
-            rotateGesture.Scroll -= rotateGesture_Scroll;
-            panGesture.Scroll -= panGesture_Scroll;
+            if (zoomGesture != null)
+            {
+                zoomGesture.Scroll -= zoomGesture_Scroll;
+                rotateGesture.Scroll -= rotateGesture_Scroll;
+                panGesture.Scroll -= panGesture_Scroll;
+            }
         }
 
         void rotateCamera_FirstFrameDownEvent(EventLayer eventLayer)
@@ -230,7 +241,7 @@ namespace Medical.Controller
             }
         }
 
-        void zoomGesture_Zoom(EventLayer eventLayer, float zoomDelta)
+        void zoomGesture_Scroll(EventLayer eventLayer, float deltaX, float deltaY)
         {
             if (eventLayer.EventProcessingAllowed)
             {
@@ -238,7 +249,7 @@ namespace Medical.Controller
                 if (sceneView != null)
                 {
                     float sensitivity = 80.0f;
-                    sceneView.CameraMover.zoom(zoomDelta * sensitivity);
+                    sceneView.CameraMover.zoom(deltaY * sensitivity);
                     sceneView.CameraMover.stopMaintainingIncludePoint();
                 }
                 eventLayer.alertEventsHandled();

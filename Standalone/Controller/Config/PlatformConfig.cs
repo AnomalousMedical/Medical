@@ -15,6 +15,13 @@ namespace Medical
         Mac,
     }
 
+    public enum TouchType
+    {
+        None,
+        Trackpad,
+        Screen
+    }
+
     public abstract class PlatformConfig
     {
         private static PlatformConfig currentConfig;
@@ -40,26 +47,11 @@ namespace Medical
             return currentConfig.formatTitleImpl(windowText, subText);
         }
 
-        public static MultiFingerScrollGesture createRotateGesture()
-        {
-            return currentConfig.createRotateGestureImpl();
-        }
-
-        public static MultiFingerScrollGesture createPanGesture()
-        {
-            return currentConfig.createPanGestureImpl();
-        }
-
-        public static TwoFingerZoom createZoomGesture()
-        {
-            return currentConfig.createZoomGestureImpl();
-        }
-
-        public static bool AllowGuiGestures
+        public static TouchType TouchType
         {
             get
             {
-                return currentConfig.AllowGuiGesturesImpl;
+                return currentConfig.TouchTypeImpl;
             }
         }
 
@@ -205,13 +197,7 @@ namespace Medical
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
 
-        protected abstract MultiFingerScrollGesture createRotateGestureImpl();
-
-        protected abstract MultiFingerScrollGesture createPanGestureImpl();
-
-        protected abstract TwoFingerZoom createZoomGestureImpl();
-
-        protected abstract bool AllowGuiGesturesImpl { get; }
+        protected abstract TouchType TouchTypeImpl { get; }
 
         protected abstract String ThemeFileImpl { get; }
 

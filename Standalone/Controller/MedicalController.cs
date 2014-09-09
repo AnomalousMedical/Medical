@@ -98,7 +98,7 @@ namespace Medical
             };
 
             MyGUIInterface.EventLayerKey = EventLayers.Gui;
-            MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.AllowGuiGestures;
+            MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.TouchType == TouchType.Screen;
 
             //Configure plugins
             pluginManager.OnConfigureDefaultWindow = configureWindow;
