@@ -32,11 +32,11 @@ namespace Medical
             }
         }
 
-        public override KeyboardHardware createKeyboard(bool buffered, EventManager eventManager)
+        public override KeyboardHardware createKeyboard(bool buffered, Keyboard keyboard)
         {
             if (createdKeyboard == null)
             {
-                createdKeyboard = new NativeKeyboard(window, eventManager);
+                createdKeyboard = new NativeKeyboard(window, keyboard);
             }
             return createdKeyboard;
         }
