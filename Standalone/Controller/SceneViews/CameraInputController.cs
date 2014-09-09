@@ -144,9 +144,9 @@ namespace Medical.Controller
                     mouseCoords = eventLayer.Mouse.RelativePosition;
                     if (currentlyInMotion)
                     {
-                        travelTracker.traveled(mouseCoords);
                         if (PanCamera.HeldDown)
                         {
+                            travelTracker.traveled(mouseCoords);
                             int x = mouseCoords.x;
                             int y = mouseCoords.y;
                             if (LockX.Down)
@@ -162,11 +162,13 @@ namespace Medical.Controller
                         }
                         else if (cameraMover.AllowZoom && ZoomCamera.HeldDown)
                         {
+                            travelTracker.traveled(mouseCoords);
                             cameraMover.zoomFromMotion(mouseCoords.y);
                             eventLayer.alertEventsHandled();
                         }
                         else if (cameraMover.AllowRotation && RotateCamera.HeldDown)
                         {
+                            travelTracker.traveled(mouseCoords);
                             int x = mouseCoords.x;
                             int y = mouseCoords.y;
                             if (LockX.Down)
