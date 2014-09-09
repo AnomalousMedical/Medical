@@ -32,7 +32,7 @@ namespace Medical
             }
         }
 
-        public override KeyboardHardware createKeyboard(bool buffered, Keyboard keyboard)
+        public override KeyboardHardware createKeyboard(Keyboard keyboard)
         {
             if (createdKeyboard == null)
             {
@@ -41,7 +41,7 @@ namespace Medical
             return createdKeyboard;
         }
 
-        public override MouseHardware createMouse(bool buffered, Mouse mouse)
+        public override MouseHardware createMouse(Mouse mouse)
         {
             if (createdMouse == null)
             {
