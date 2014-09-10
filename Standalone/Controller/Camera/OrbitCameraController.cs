@@ -89,26 +89,6 @@ namespace Medical
             }
         }
 
-        public override void rotate(float yawDelta, float pitchDelta)
-        {
-            yaw += yawDelta;
-            pitch += pitchDelta;
-            moveCameraYawPitch();
-        }
-
-        public override void pan(float xDelta, float yDelta)
-        {
-            lookAt += rotatedLeft * xDelta;
-            lookAt += rotatedUp * yDelta;
-            moveLookAt();
-        }
-
-        public override void zoom(float zoomDelta)
-        {
-            orbitDistance += zoomDelta;
-            moveZoom();
-        }
-
         public override void sendUpdate(Clock clock)
         {
             if (camera != null)

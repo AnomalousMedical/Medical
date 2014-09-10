@@ -18,26 +18,6 @@ namespace Medical
         }
 
         /// <summary>
-        /// Rotate the camera by a certain amount (if supported).
-        /// </summary>
-        /// <param name="yawDelta"></param>
-        /// <param name="pitchDelta"></param>
-        public virtual void rotate(float yawDelta, float pitchDelta)
-        {
-
-        }
-
-        public virtual void pan(float xDelta, float yDelta)
-        {
-            
-        }
-
-        public virtual void zoom(float zoomDelta)
-        {
-            
-        }
-
-        /// <summary>
         /// set the current camera for this controller. This can be set to null to disable the controller.
         /// </summary>
         /// <param name="camera">The camera to use.</param>
