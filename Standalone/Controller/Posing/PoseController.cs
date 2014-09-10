@@ -70,7 +70,7 @@ namespace Medical.Controller
         void pickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
         {
             travelTracker.reset();
-            if (eventLayer.EventProcessingAllowed)
+            if (eventLayer.EventProcessingAllowed && !PickAnatomy.DownAndUpThisFrame)
             {
                 Ray3 cameraRay = getCameraRay(eventLayer);
                 var matches = PoseableObjectsManager.findPoseable(cameraRay);
