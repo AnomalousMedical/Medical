@@ -27,9 +27,9 @@ namespace Medical.Controller
         private static ButtonEvent LockX;
         private static ButtonEvent LockY;
 
-        private static MultiFingerScrollGesture rotateGesture;
-        private static MultiFingerScrollGesture panGesture;
-        private static MultiFingerScrollGesture zoomGesture;
+        private static FingerDragGesture rotateGesture;
+        private static FingerDragGesture panGesture;
+        private static FingerDragGesture zoomGesture;
 
         static CameraInputController()
         {
@@ -66,13 +66,13 @@ namespace Medical.Controller
             switch(PlatformConfig.TouchType)
             { 
                 case TouchType.Screen:
-                    zoomGesture = new MultiFingerScrollGesture(EventLayers.Cameras, 2, 0.5f, 0.01f);
+                    zoomGesture = new FingerDragGesture(EventLayers.Cameras, 2, 0.5f, 0.01f);
                     DefaultEvents.registerDefaultEvent(zoomGesture);
 
-                    rotateGesture = new MultiFingerScrollGesture(EventLayers.Cameras, 1, 0.5f, 0.01f);
+                    rotateGesture = new FingerDragGesture(EventLayers.Cameras, 1, 0.5f, 0.01f);
                     DefaultEvents.registerDefaultEvent(rotateGesture);
 
-                    panGesture = new MultiFingerScrollGesture(EventLayers.Cameras, 3, 0.5f, 0.01f); ;
+                    panGesture = new FingerDragGesture(EventLayers.Cameras, 3, 0.5f, 0.01f); ;
                     DefaultEvents.registerDefaultEvent(panGesture);
                 break;
             }
@@ -108,11 +108,11 @@ namespace Medical.Controller
 
             if (zoomGesture != null)
             {
-                zoomGesture.Scroll += zoomGesture_Scroll;
+                zoomGesture.Dragged += zoomGesture_Dragged;
                 zoomGesture.MomentumStarted += zoomGesture_MomentumStarted;
-                rotateGesture.Scroll += rotateGesture_Scroll;
+                rotateGesture.Dragged += rotateGesture_Dragged;
                 rotateGesture.MomentumStarted += rotateGesture_MomentumStarted;
-                panGesture.Scroll += panGesture_Scroll;
+                panGesture.Dragged += panGesture_Dragged;
                 panGesture.MomentumStarted += panGesture_MomentumStarted;
                 eventManager.Touches.AllFingersReleased += Touches_AllFingersReleased;
             }
@@ -127,11 +127,11 @@ namespace Medical.Controller
 
             if (zoomGesture != null)
             {
-                zoomGesture.Scroll -= zoomGesture_Scroll;
+                zoomGesture.Dragged -= zoomGesture_Dragged;
                 zoomGesture.MomentumStarted -= zoomGesture_MomentumStarted;
-                rotateGesture.Scroll -= rotateGesture_Scroll;
+                rotateGesture.Dragged -= rotateGesture_Dragged;
                 rotateGesture.MomentumStarted -= rotateGesture_MomentumStarted;
-                panGesture.Scroll -= panGesture_Scroll;
+                panGesture.Dragged -= panGesture_Dragged;
                 panGesture.MomentumStarted -= panGesture_MomentumStarted;
                 eventManager.Touches.AllFingersReleased -= Touches_AllFingersReleased;
             }
@@ -228,7 +228,7 @@ namespace Medical.Controller
             }
         }
 
-        void rotateGesture_Scroll(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        void rotateGesture_Dragged(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate)
             {
@@ -244,7 +244,7 @@ namespace Medical.Controller
             }
         }
 
-        void rotateGesture_MomentumStarted(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        void rotateGesture_MomentumStarted(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate)
             {
@@ -252,7 +252,7 @@ namespace Medical.Controller
             }
         }
 
-        void panGesture_Scroll(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        void panGesture_Dragged(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Pan)
             {
@@ -268,7 +268,7 @@ namespace Medical.Controller
             }
         }
 
-        void panGesture_MomentumStarted(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        void panGesture_MomentumStarted(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Pan)
             {
@@ -276,7 +276,7 @@ namespace Medical.Controller
             }
         }
 
-        void zoomGesture_Scroll(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        void zoomGesture_Dragged(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Zoom)
             {
@@ -292,7 +292,7 @@ namespace Medical.Controller
             }
         }
 
-        void zoomGesture_MomentumStarted(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        void zoomGesture_MomentumStarted(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Zoom)
             {
