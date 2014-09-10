@@ -10,6 +10,14 @@ namespace Medical.Controller
 {
     class CameraInputController : IDisposable
     {
+        enum Gesture : int
+        {
+            None = 0,
+            Rotate = 1,
+            Zoom = 2,
+            Pan = 3
+        }
+
         private static MouseButtonCode currentMouseButton = MedicalConfig.CameraMouseButton;
         private static ButtonEvent RotateCamera;
         private static ButtonEvent PanCamera;
@@ -87,6 +95,7 @@ namespace Medical.Controller
         private EventManager eventManager;
         private MouseTravelTracker travelTracker = new MouseTravelTracker();
         private SceneViewController sceneViewController;
+        private Gesture currentGesture = Gesture.None;
 
         public CameraInputController(SceneViewController sceneViewController, EventManager eventManager)
         {
@@ -100,8 +109,12 @@ namespace Medical.Controller
             if (zoomGesture != null)
             {
                 zoomGesture.Scroll += zoomGesture_Scroll;
+                zoomGesture.MomentumStarted += zoomGesture_MomentumStarted;
                 rotateGesture.Scroll += rotateGesture_Scroll;
+                rotateGesture.MomentumStarted += rotateGesture_MomentumStarted;
                 panGesture.Scroll += panGesture_Scroll;
+                panGesture.MomentumStarted += panGesture_MomentumStarted;
+                eventManager.Touches.AllFingersReleased += Touches_AllFingersReleased;
             }
         }
 
@@ -115,8 +128,12 @@ namespace Medical.Controller
             if (zoomGesture != null)
             {
                 zoomGesture.Scroll -= zoomGesture_Scroll;
+                zoomGesture.MomentumStarted -= zoomGesture_MomentumStarted;
                 rotateGesture.Scroll -= rotateGesture_Scroll;
+                rotateGesture.MomentumStarted -= rotateGesture_MomentumStarted;
                 panGesture.Scroll -= panGesture_Scroll;
+                panGesture.MomentumStarted -= panGesture_MomentumStarted;
+                eventManager.Touches.AllFingersReleased -= Touches_AllFingersReleased;
             }
         }
 
@@ -211,49 +228,81 @@ namespace Medical.Controller
             }
         }
 
-        void rotateGesture_Scroll(EventLayer eventLayer, float deltaX, float deltaY)
+        void rotateGesture_Scroll(EventLayer eventLayer, MultiFingerScrollGesture gesture)
         {
-            if (eventLayer.EventProcessingAllowed)
+            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate)
             {
+                currentGesture = Gesture.Rotate;
                 SceneViewWindow sceneView = sceneViewController.ActiveWindow;
                 if (sceneView != null)
                 {
                     float sensitivity = 4.0f;
-                    sceneView.CameraMover.rotate(-deltaX * sensitivity, deltaY * sensitivity);
+                    sceneView.CameraMover.rotate(-gesture.DeltaX * sensitivity, gesture.DeltaY * sensitivity);
                     sceneView.CameraMover.stopMaintainingIncludePoint();
                 }
                 eventLayer.alertEventsHandled();
             }
         }
 
-        void panGesture_Scroll(EventLayer eventLayer, float deltaX, float deltaY)
+        void rotateGesture_MomentumStarted(EventLayer eventLayer, MultiFingerScrollGesture gesture)
         {
-            if (eventLayer.EventProcessingAllowed)
+            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate)
             {
+                eventLayer.alertEventsHandled();
+            }
+        }
+
+        void panGesture_Scroll(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        {
+            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Pan)
+            {
+                currentGesture = Gesture.Pan;
                 SceneViewWindow sceneView = sceneViewController.ActiveWindow;
                 if (sceneView != null)
                 {
                     float sensitivity = 15.0f;
-                    sceneView.CameraMover.pan(deltaX * sensitivity, deltaY * sensitivity);
+                    sceneView.CameraMover.pan(gesture.DeltaX * sensitivity, gesture.DeltaY * sensitivity);
                     sceneView.CameraMover.stopMaintainingIncludePoint();
                 }
                 eventLayer.alertEventsHandled();
             }
         }
 
-        void zoomGesture_Scroll(EventLayer eventLayer, float deltaX, float deltaY)
+        void panGesture_MomentumStarted(EventLayer eventLayer, MultiFingerScrollGesture gesture)
         {
-            if (eventLayer.EventProcessingAllowed)
+            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Pan)
             {
+                eventLayer.alertEventsHandled();
+            }
+        }
+
+        void zoomGesture_Scroll(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        {
+            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Zoom)
+            {
+                currentGesture = Gesture.Zoom;
                 SceneViewWindow sceneView = sceneViewController.ActiveWindow;
                 if (sceneView != null)
                 {
                     float sensitivity = 80.0f;
-                    sceneView.CameraMover.zoom(deltaY * sensitivity);
+                    sceneView.CameraMover.zoom(gesture.DeltaY * sensitivity);
                     sceneView.CameraMover.stopMaintainingIncludePoint();
                 }
                 eventLayer.alertEventsHandled();
             }
+        }
+
+        void zoomGesture_MomentumStarted(EventLayer eventLayer, MultiFingerScrollGesture gesture)
+        {
+            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Zoom)
+            {
+                eventLayer.alertEventsHandled();
+            }
+        }
+
+        void Touches_AllFingersReleased(Touches obj)
+        {
+            currentGesture = Gesture.None;
         }
     }
 }
