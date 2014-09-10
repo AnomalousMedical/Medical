@@ -15,12 +15,16 @@ namespace Medical.Controller
     class PoseController
     {
         private static ButtonEvent PickAnatomy;
+        private static FingerDragGesture moveAnatomyGesture;
 
         static PoseController()
         {
             PickAnatomy = new ButtonEvent(EventLayers.Posing);
             PickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(PickAnatomy);
+
+            moveAnatomyGesture = new FingerDragGesture(EventLayers.Posing, 1, 0.000001f, float.MaxValue, 1);
+            DefaultEvents.registerDefaultEvent(moveAnatomyGesture);
         }
 
         private BEPUikScene ikScene;
@@ -30,6 +34,7 @@ namespace Medical.Controller
         private float hitDistance;
         private bool allowPosing = false;
         private MouseTravelTracker travelTracker = new MouseTravelTracker();
+        private bool allowMousePosing = true;
 
         public PoseController(StandaloneController controller)
         {
@@ -59,35 +64,29 @@ namespace Medical.Controller
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
             PickAnatomy.OnHeldDown -= pickAnatomy_OnHeldDown;
-            ikScene.removeExternalControl(dragControl);
-            dragControl.TargetBone = null;
-            if (eventLayer.EventProcessingAllowed && travelTracker.TraveledOverLimit)
+            if (allowMousePosing)
             {
-                eventLayer.alertEventsHandled();
+                clearDragTarget();
+                if (eventLayer.EventProcessingAllowed && travelTracker.TraveledOverLimit)
+                {
+                    eventLayer.alertEventsHandled();
+                }
             }
         }
 
         void pickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
         {
-            travelTracker.reset();
-            if (eventLayer.EventProcessingAllowed && !PickAnatomy.DownAndUpThisFrame)
+            if (allowMousePosing)
             {
-                Ray3 cameraRay = getCameraRay(eventLayer);
-                var matches = PoseableObjectsManager.findPoseable(cameraRay);
-                foreach (var match in matches.Results)
+                travelTracker.reset();
+                if (eventLayer.EventProcessingAllowed && !PickAnatomy.DownAndUpThisFrame)
                 {
-                    var bone = match.PoseableIdentifier.Bone;
-                    if (bone != null && !bone.Pinned)
+                    IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
+                    Ray3 cameraRay = getCameraRay(absMouse.x, absMouse.y);
+                    if (findDragTarget(cameraRay))
                     {
-                        dragControl.TargetBone = bone;
-                        hitDistance = match.Distance;
-                        Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
-                        dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
-                        dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
                         PickAnatomy.OnHeldDown += pickAnatomy_OnHeldDown;
-                        ikScene.addExternalControl(dragControl);
                         eventLayer.alertEventsHandled();
-                        break;
                     }
                 }
             }
@@ -95,22 +94,61 @@ namespace Medical.Controller
 
         void pickAnatomy_OnHeldDown(EventLayer eventLayer)
         {
-            if (eventLayer.EventProcessingAllowed)
+            if (allowMousePosing && eventLayer.EventProcessingAllowed)
             {
                 travelTracker.traveled(eventLayer.Mouse.RelativePosition);
-                Ray3 cameraRay = getCameraRay(eventLayer);
-                dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
+                IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
+                Ray3 cameraRay = getCameraRay(absMouse.x, absMouse.y);
+                moveDragTarget(cameraRay);
                 eventLayer.alertEventsHandled();
             }
         }
 
-        private Ray3 getCameraRay(EventLayer eventLayer)
+        void moveAnatomyGesture_GestureStarted(EventLayer eventLayer, FingerDragGesture gesture)
         {
-            IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
+            allowMousePosing = false;
+            travelTracker.reset();
+            if (eventLayer.EventProcessingAllowed)
+            {
+                Ray3 cameraRay = getCameraRay(gesture.AbsoluteX, gesture.AbsoluteY);
+                if (findDragTarget(cameraRay))
+                {
+                    moveAnatomyGesture.Dragged += moveAnatomyGesture_Dragged;
+                    moveAnatomyGesture.MomentumEnded += moveAnatomyGesture_MomentumEnded;
+                    eventLayer.alertEventsHandled();
+                }
+            }
+        }
+
+        void moveAnatomyGesture_Dragged(EventLayer eventLayer, FingerDragGesture gesture)
+        {
+            if (eventLayer.EventProcessingAllowed)
+            {
+                travelTracker.traveled((int)gesture.DeltaX, (int)gesture.DeltaY);
+                Ray3 cameraRay = getCameraRay(gesture.AbsoluteX, gesture.AbsoluteY);
+                moveDragTarget(cameraRay);
+                eventLayer.alertEventsHandled();
+            }
+        }
+
+        void moveAnatomyGesture_MomentumEnded(EventLayer eventLayer, FingerDragGesture gesture)
+        {
+            allowMousePosing = true;
+            moveAnatomyGesture.Dragged -= moveAnatomyGesture_Dragged;
+            moveAnatomyGesture.MomentumEnded -= moveAnatomyGesture_MomentumEnded;
+            clearDragTarget();
+            if (eventLayer.EventProcessingAllowed && travelTracker.TraveledOverLimit)
+            {
+                eventLayer.alertEventsHandled();
+            }
+        }
+
+        private Ray3 getCameraRay(int x, int y)
+        {
             SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
             if(activeWindow != null)
             {
-                return activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
+                return activeWindow.getCameraToViewportRayScreen(x, y);
             }
             return new Ray3();
         }
@@ -136,12 +174,45 @@ namespace Medical.Controller
             {
                 PickAnatomy.FirstFrameDownEvent += pickAnatomy_FirstFrameDownEvent;
                 PickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
+                moveAnatomyGesture.GestureStarted += moveAnatomyGesture_GestureStarted;
             }
             else
             {
                 PickAnatomy.FirstFrameDownEvent -= pickAnatomy_FirstFrameDownEvent;
                 PickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
+                moveAnatomyGesture.GestureStarted -= moveAnatomyGesture_GestureStarted;
             }
+        }
+
+        private bool findDragTarget(Ray3 cameraRay)
+        {
+            var matches = PoseableObjectsManager.findPoseable(cameraRay);
+            foreach (var match in matches.Results)
+            {
+                var bone = match.PoseableIdentifier.Bone;
+                if (bone != null && !bone.Pinned)
+                {
+                    dragControl.TargetBone = bone;
+                    hitDistance = match.Distance;
+                    Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
+                    dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
+                    dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
+                    ikScene.addExternalControl(dragControl);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void moveDragTarget(Ray3 cameraRay)
+        {
+            dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
+        }
+
+        private void clearDragTarget()
+        {
+            ikScene.removeExternalControl(dragControl);
+            dragControl.TargetBone = null;
         }
     }
 }
