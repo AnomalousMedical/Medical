@@ -240,9 +240,7 @@ namespace Medical.Controller
                 SceneViewWindow sceneView = sceneViewController.ActiveWindow;
                 if (sceneView != null)
                 {
-                    float sensitivity = 4.0f;
-                    sceneView.CameraMover.rotate(-gesture.DeltaX * sensitivity, gesture.DeltaY * sensitivity);
-                    sceneView.CameraMover.stopMaintainingIncludePoint();
+                    sceneView.CameraMover.rotateFromMotion((int)gesture.DeltaX, (int)gesture.DeltaY);
                 }
                 eventLayer.alertEventsHandled();
             }
@@ -272,9 +270,7 @@ namespace Medical.Controller
                 SceneViewWindow sceneView = sceneViewController.ActiveWindow;
                 if (sceneView != null)
                 {
-                    float sensitivity = 15.0f;
-                    sceneView.CameraMover.pan(gesture.DeltaX * sensitivity, gesture.DeltaY * sensitivity);
-                    sceneView.CameraMover.stopMaintainingIncludePoint();
+                    sceneView.CameraMover.panFromMotion((int)gesture.DeltaX, (int)gesture.DeltaY, eventLayer.Mouse.AreaWidth, eventLayer.Mouse.AreaHeight);
                 }
                 eventLayer.alertEventsHandled();
             }
@@ -304,9 +300,7 @@ namespace Medical.Controller
                 SceneViewWindow sceneView = sceneViewController.ActiveWindow;
                 if (sceneView != null)
                 {
-                    float sensitivity = 80.0f;
-                    sceneView.CameraMover.zoom(gesture.DeltaY * sensitivity);
-                    sceneView.CameraMover.stopMaintainingIncludePoint();
+                    sceneView.CameraMover.zoomFromMotion((int)gesture.DeltaY);
                 }
                 eventLayer.alertEventsHandled();
             }
