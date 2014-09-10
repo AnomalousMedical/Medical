@@ -266,9 +266,16 @@ namespace Medical.Controller
 
         void rotateGesture_MomentumStarted(EventLayer eventLayer, FingerDragGesture gesture)
         {
-            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate && travelTracker.TraveledOverLimit)
+            if (eventLayer.EventProcessingAllowed)
             {
-                eventLayer.alertEventsHandled();
+                if (currentGesture <= Gesture.Rotate && travelTracker.TraveledOverLimit)
+                {
+                    eventLayer.alertEventsHandled();
+                }
+            }
+            else
+            {
+                gesture.cancelMomentum();
             }
         }
 
@@ -296,9 +303,16 @@ namespace Medical.Controller
 
         void panGesture_MomentumStarted(EventLayer eventLayer, FingerDragGesture gesture)
         {
-            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Pan)
+            if (eventLayer.EventProcessingAllowed)
             {
-                eventLayer.alertEventsHandled();
+                if (currentGesture <= Gesture.Pan)
+                {
+                    eventLayer.alertEventsHandled();
+                }
+            }
+            else
+            {
+                gesture.cancelMomentum();
             }
         }
 
@@ -326,9 +340,16 @@ namespace Medical.Controller
 
         void zoomGesture_MomentumStarted(EventLayer eventLayer, FingerDragGesture gesture)
         {
-            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Zoom)
+            if (eventLayer.EventProcessingAllowed)
             {
-                eventLayer.alertEventsHandled();
+                if (currentGesture <= Gesture.Zoom)
+                {
+                    eventLayer.alertEventsHandled();
+                }
+            }
+            else
+            {
+                gesture.cancelMomentum();
             }
         }
 
