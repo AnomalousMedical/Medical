@@ -110,11 +110,13 @@ namespace Medical.Controller
             {
                 zoomGesture.Dragged += zoomGesture_Dragged;
                 zoomGesture.MomentumStarted += zoomGesture_MomentumStarted;
+                zoomGesture.MomentumEnded += zoomGesture_MomentumEnded;
                 rotateGesture.Dragged += rotateGesture_Dragged;
                 rotateGesture.MomentumStarted += rotateGesture_MomentumStarted;
+                rotateGesture.MomentumEnded += rotateGesture_MomentumEnded;
                 panGesture.Dragged += panGesture_Dragged;
                 panGesture.MomentumStarted += panGesture_MomentumStarted;
-                eventManager.Touches.AllFingersReleased += Touches_AllFingersReleased;
+                panGesture.MomentumEnded += panGesture_MomentumEnded;
             }
         }
 
@@ -129,11 +131,13 @@ namespace Medical.Controller
             {
                 zoomGesture.Dragged -= zoomGesture_Dragged;
                 zoomGesture.MomentumStarted -= zoomGesture_MomentumStarted;
+                zoomGesture.MomentumEnded -= zoomGesture_MomentumEnded;
                 rotateGesture.Dragged -= rotateGesture_Dragged;
                 rotateGesture.MomentumStarted -= rotateGesture_MomentumStarted;
+                rotateGesture.MomentumEnded -= rotateGesture_MomentumEnded;
                 panGesture.Dragged -= panGesture_Dragged;
                 panGesture.MomentumStarted -= panGesture_MomentumStarted;
-                eventManager.Touches.AllFingersReleased -= Touches_AllFingersReleased;
+                panGesture.MomentumEnded -= panGesture_MomentumEnded;
             }
         }
 
@@ -252,6 +256,14 @@ namespace Medical.Controller
             }
         }
 
+        void rotateGesture_MomentumEnded(EventLayer eventLayer, FingerDragGesture gesture)
+        {
+            if (currentGesture <= Gesture.Rotate)
+            {
+                currentGesture = Gesture.None;
+            }
+        }
+
         void panGesture_Dragged(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Pan)
@@ -276,6 +288,14 @@ namespace Medical.Controller
             }
         }
 
+        void panGesture_MomentumEnded(EventLayer eventLayer, FingerDragGesture gesture)
+        {
+            if (currentGesture <= Gesture.Pan)
+            {
+                currentGesture = Gesture.None;
+            }
+        }
+
         void zoomGesture_Dragged(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Zoom)
@@ -297,6 +317,14 @@ namespace Medical.Controller
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Zoom)
             {
                 eventLayer.alertEventsHandled();
+            }
+        }
+
+        void zoomGesture_MomentumEnded(EventLayer eventLayer, FingerDragGesture gesture)
+        {
+            if (currentGesture <= Gesture.Zoom)
+            {
+                currentGesture = Gesture.None;
             }
         }
 
