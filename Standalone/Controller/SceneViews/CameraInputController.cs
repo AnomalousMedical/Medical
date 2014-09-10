@@ -111,9 +111,12 @@ namespace Medical.Controller
                 zoomGesture.Dragged += zoomGesture_Dragged;
                 zoomGesture.MomentumStarted += zoomGesture_MomentumStarted;
                 zoomGesture.MomentumEnded += zoomGesture_MomentumEnded;
+
+                rotateGesture.GestureStarted += rotateGesture_GestureStarted;
                 rotateGesture.Dragged += rotateGesture_Dragged;
                 rotateGesture.MomentumStarted += rotateGesture_MomentumStarted;
                 rotateGesture.MomentumEnded += rotateGesture_MomentumEnded;
+                
                 panGesture.Dragged += panGesture_Dragged;
                 panGesture.MomentumStarted += panGesture_MomentumStarted;
                 panGesture.MomentumEnded += panGesture_MomentumEnded;
@@ -132,9 +135,12 @@ namespace Medical.Controller
                 zoomGesture.Dragged -= zoomGesture_Dragged;
                 zoomGesture.MomentumStarted -= zoomGesture_MomentumStarted;
                 zoomGesture.MomentumEnded -= zoomGesture_MomentumEnded;
+
+                rotateGesture.GestureStarted -= rotateGesture_GestureStarted;
                 rotateGesture.Dragged -= rotateGesture_Dragged;
                 rotateGesture.MomentumStarted -= rotateGesture_MomentumStarted;
                 rotateGesture.MomentumEnded -= rotateGesture_MomentumEnded;
+                
                 panGesture.Dragged -= panGesture_Dragged;
                 panGesture.MomentumStarted -= panGesture_MomentumStarted;
                 panGesture.MomentumEnded -= panGesture_MomentumEnded;
@@ -235,6 +241,14 @@ namespace Medical.Controller
             }
         }
 
+        void rotateGesture_GestureStarted(EventLayer eventLayer, FingerDragGesture gesture)
+        {
+            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate)
+            {
+                travelTracker.reset();
+            }
+        }
+
         void rotateGesture_Dragged(EventLayer eventLayer, FingerDragGesture gesture)
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate)
@@ -245,13 +259,14 @@ namespace Medical.Controller
                 {
                     sceneView.CameraMover.rotateFromMotion((int)gesture.DeltaX, (int)gesture.DeltaY);
                 }
+                travelTracker.traveled((int)gesture.DeltaX, (int)gesture.DeltaY);
                 eventLayer.alertEventsHandled();
             }
         }
 
         void rotateGesture_MomentumStarted(EventLayer eventLayer, FingerDragGesture gesture)
         {
-            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate)
+            if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate && travelTracker.TraveledOverLimit)
             {
                 eventLayer.alertEventsHandled();
             }

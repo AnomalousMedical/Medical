@@ -29,6 +29,12 @@ namespace Medical
             travelDistance.y += Math.Abs(travelAmount.y);
         }
 
+        public void traveled(int x, int y)
+        {
+            travelDistance.x += Math.Abs(x);
+            travelDistance.y += Math.Abs(y);
+        }
+
         public bool TraveledOverLimit
         {
             get
