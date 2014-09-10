@@ -66,13 +66,13 @@ namespace Medical.Controller
             switch(PlatformConfig.TouchType)
             { 
                 case TouchType.Screen:
-                    zoomGesture = new FingerDragGesture(EventLayers.Cameras, 2, 0.5f, 0.01f);
+                    zoomGesture = new FingerDragGesture(EventLayers.Cameras, 2, 0.5f, 2f, 5);
                     DefaultEvents.registerDefaultEvent(zoomGesture);
 
-                    rotateGesture = new FingerDragGesture(EventLayers.Cameras, 1, 0.5f, 0.01f);
+                    rotateGesture = new FingerDragGesture(EventLayers.Cameras, 1, 0.5f, 2f, 5);
                     DefaultEvents.registerDefaultEvent(rotateGesture);
 
-                    panGesture = new FingerDragGesture(EventLayers.Cameras, 3, 0.5f, 0.01f); ;
+                    panGesture = new FingerDragGesture(EventLayers.Cameras, 3, 0.5f, 2f, 5);
                     DefaultEvents.registerDefaultEvent(panGesture);
                 break;
             }
@@ -156,76 +156,79 @@ namespace Medical.Controller
 
         void processInputEvents(EventLayer eventLayer)
         {
-            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-            if (activeWindow != null && eventLayer.EventProcessingAllowed)
+            if (currentGesture == Gesture.None)
             {
-                CameraMover cameraMover = activeWindow.CameraMover;
-                if (cameraMover.AllowManualMovement)
+                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+                if (activeWindow != null && eventLayer.EventProcessingAllowed)
                 {
-                    IntVector3 mouseCoords = eventLayer.Mouse.AbsolutePosition;
+                    CameraMover cameraMover = activeWindow.CameraMover;
+                    if (cameraMover.AllowManualMovement)
+                    {
+                        IntVector3 mouseCoords = eventLayer.Mouse.AbsolutePosition;
 
-                    if (RotateCamera.FirstFrameDown)
-                    {
-                        currentlyInMotion = true;
-                        eventLayer.alertEventsHandled();
-                    }
-                    else if (RotateCamera.FirstFrameUp)
-                    {
-                        currentlyInMotion = false;
-                    }
-                    mouseCoords = eventLayer.Mouse.RelativePosition;
-                    if (currentlyInMotion)
-                    {
-                        if (PanCamera.HeldDown)
+                        if (RotateCamera.FirstFrameDown)
                         {
-                            travelTracker.traveled(mouseCoords);
-                            int x = mouseCoords.x;
-                            int y = mouseCoords.y;
-                            if (LockX.Down)
-                            {
-                                x = 0;
-                            }
-                            if (LockY.Down)
-                            {
-                                y = 0;
-                            }
-                            cameraMover.panFromMotion(x, y, eventLayer.Mouse.AreaWidth, eventLayer.Mouse.AreaHeight);
+                            currentlyInMotion = true;
                             eventLayer.alertEventsHandled();
                         }
-                        else if (cameraMover.AllowZoom && ZoomCamera.HeldDown)
+                        else if (RotateCamera.FirstFrameUp)
                         {
-                            travelTracker.traveled(mouseCoords);
-                            cameraMover.zoomFromMotion(mouseCoords.y);
-                            eventLayer.alertEventsHandled();
+                            currentlyInMotion = false;
                         }
-                        else if (cameraMover.AllowRotation && RotateCamera.HeldDown)
+                        mouseCoords = eventLayer.Mouse.RelativePosition;
+                        if (currentlyInMotion)
                         {
-                            travelTracker.traveled(mouseCoords);
-                            int x = mouseCoords.x;
-                            int y = mouseCoords.y;
-                            if (LockX.Down)
+                            if (PanCamera.HeldDown)
                             {
-                                x = 0;
+                                travelTracker.traveled(mouseCoords);
+                                int x = mouseCoords.x;
+                                int y = mouseCoords.y;
+                                if (LockX.Down)
+                                {
+                                    x = 0;
+                                }
+                                if (LockY.Down)
+                                {
+                                    y = 0;
+                                }
+                                cameraMover.panFromMotion(x, y, eventLayer.Mouse.AreaWidth, eventLayer.Mouse.AreaHeight);
+                                eventLayer.alertEventsHandled();
                             }
-                            if (LockY.Down)
+                            else if (cameraMover.AllowZoom && ZoomCamera.HeldDown)
                             {
-                                y = 0;
+                                travelTracker.traveled(mouseCoords);
+                                cameraMover.zoomFromMotion(mouseCoords.y);
+                                eventLayer.alertEventsHandled();
                             }
-                            cameraMover.rotateFromMotion(x, y);
-                            eventLayer.alertEventsHandled();
+                            else if (cameraMover.AllowRotation && RotateCamera.HeldDown)
+                            {
+                                travelTracker.traveled(mouseCoords);
+                                int x = mouseCoords.x;
+                                int y = mouseCoords.y;
+                                if (LockX.Down)
+                                {
+                                    x = 0;
+                                }
+                                if (LockY.Down)
+                                {
+                                    y = 0;
+                                }
+                                cameraMover.rotateFromMotion(x, y);
+                                eventLayer.alertEventsHandled();
+                            }
                         }
-                    }
-                    if (cameraMover.AllowZoom)
-                    {
-                        if (ZoomInCamera.Down)
+                        if (cameraMover.AllowZoom)
                         {
-                            cameraMover.incrementZoom(-1);
-                            eventLayer.alertEventsHandled();
-                        }
-                        else if (ZoomOutCamera.Down)
-                        {
-                            cameraMover.incrementZoom(1);
-                            eventLayer.alertEventsHandled();
+                            if (ZoomInCamera.Down)
+                            {
+                                cameraMover.incrementZoom(-1);
+                                eventLayer.alertEventsHandled();
+                            }
+                            else if (ZoomOutCamera.Down)
+                            {
+                                cameraMover.incrementZoom(1);
+                                eventLayer.alertEventsHandled();
+                            }
                         }
                     }
                 }
