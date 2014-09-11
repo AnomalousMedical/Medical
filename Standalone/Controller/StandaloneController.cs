@@ -241,6 +241,9 @@ namespace Medical
             imageRenderer.ImageRenderStarted += TeethToolController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethToolController.ScreenshotRenderCompleted;
 
+            SceneLoaded += SleepyActorRepository.SceneLoaded;
+            SceneUnloading += SleepyActorRepository.SceneUnloading;
+
             //Download
             downloadController = new DownloadController(app.LicenseManager, AtlasPluginManager);
 
