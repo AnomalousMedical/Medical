@@ -1,4 +1,5 @@
-﻿using Engine.Saving;
+﻿using Engine.ObjectManagement;
+using Engine.Saving;
 using Medical;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
@@ -141,6 +142,22 @@ namespace Lecture
                 }
                 lastEditSlide = slide;
                 uiCallback.CurrentDirectory = slide.UniqueName;
+            }
+        }
+
+        internal void sceneLoading(SimScene scene)
+        {
+            if(slideEditorContext != null)
+            {
+                slideEditorContext.resetSlide();
+            }
+        }
+
+        public void sceneUnloading(SimScene scene)
+        {
+            if(timelineEditorContext != null)
+            {
+                timelineEditorContext.clearSelection();
             }
         }
 

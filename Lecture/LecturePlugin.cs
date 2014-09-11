@@ -71,11 +71,13 @@ namespace Lecture
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)
         {
             propMover.sceneLoaded(scene);
+            slideshowEditController.sceneLoading(scene);
         }
 
         public void sceneUnloading(Engine.ObjectManagement.SimScene scene)
         {
             propMover.sceneUnloading(scene);
+            slideshowEditController.sceneUnloading(scene);
         }
 
         public void setMainInterfaceEnabled(bool enabled)

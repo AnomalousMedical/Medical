@@ -10,6 +10,8 @@ namespace Medical.GUI
 {
     public class TimelineEditorView : MyGUIView
     {
+        public event Action<TimelineEditorComponent> ComponentCreated;
+
         public TimelineEditorView(String name, Timeline timeline, TimelineController timelineController, EditorController editorController, PropEditController propEditController)
             :base(name)
         {
@@ -30,6 +32,14 @@ namespace Medical.GUI
         public EditorController EditorController { get; set; }
 
         public PropEditController PropEditController { get; set; }
+
+        internal void fireComponentCreated(TimelineEditorComponent component)
+        {
+            if(ComponentCreated != null)
+            {
+                ComponentCreated.Invoke(component);
+            }
+        }
 
         protected TimelineEditorView(LoadInfo info)
             :base(info)

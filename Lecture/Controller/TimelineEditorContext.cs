@@ -27,6 +27,7 @@ namespace Lecture
         private SlideshowEditController slideshowEditController;
         private PropEditController propEditController;
         private Slide slide;
+        private TimelineEditorComponent timelineEditor;
 
         public TimelineEditorContext(Timeline timeline, Slide slide, String name, SlideshowEditController slideshowEditController, PropEditController propEditController, PropFactory propFactory, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
         {
@@ -44,8 +45,10 @@ namespace Lecture
 
             mvcContext.Models.add(new EditMenuManager());
             mvcContext.Models.add(new EditInterfaceHandler());
-            
-            mvcContext.Views.add(new TimelineEditorView("TimelineEditor", currentTimeline, timelineController, editorController, propEditController));
+
+            var timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline, timelineController, editorController, propEditController);
+            timelineEditorView.ComponentCreated += timelineEditorView_ComponentCreated;
+            mvcContext.Views.add(timelineEditorView);
 
             ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback);
             genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left)
@@ -235,6 +238,11 @@ namespace Lecture
             mvcContext.runAction("TimelineEditor/Close");
         }
 
+        public void clearSelection()
+        {
+            timelineEditor.clearSelection();
+        }
+
         public AnomalousMvcContext MvcContext
         {
             get
@@ -262,6 +270,11 @@ namespace Lecture
                 mvcContext.Views.add(rmlView);
                 showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));
             }
+        }
+
+        void timelineEditorView_ComponentCreated(TimelineEditorComponent timelineEditor)
+        {
+            this.timelineEditor = timelineEditor;
         }
     }
 }

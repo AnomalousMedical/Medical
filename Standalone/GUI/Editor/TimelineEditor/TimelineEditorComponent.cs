@@ -123,6 +123,11 @@ namespace Medical.GUI
             timelineView.selectAll();
         }
 
+        public void clearSelection()
+        {
+            timelineView.clearSelection();
+        }
+
         public Timeline CurrentTimeline
         {
             get

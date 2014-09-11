@@ -201,7 +201,7 @@ namespace Lecture
 
             taskbar.addTask(new CallbackTask("ResetSlide", "Reset Slide", "Lecture.Icon.RevertIcon", "Edit", 0, true, item =>
             {
-                mvcContext.runAction("Editor/SetupScene");
+                resetSlide();
             }));
 
             mvcContext.Views.add(taskbar);
@@ -289,6 +289,11 @@ namespace Lecture
                 editorController.capture();
             };
             eventContext.addEvent(captureEvent);
+        }
+
+        public void resetSlide()
+        {
+            mvcContext.runAction("Editor/SetupScene");
         }
 
         public void close()
