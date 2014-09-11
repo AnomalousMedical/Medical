@@ -21,6 +21,7 @@ namespace Medical
     /// </summary>
     public static class SleepyActorRepository
     {
+        private static List<RigidBody> extraSleepers = new List<RigidBody>(); //Sleepers added through the OnRigidBodyAdded function, to be cleared when scene is unloading.
         private static List<RigidBody> sleepers = new List<RigidBody>();
         private static bool sleeping = false;
 
@@ -36,6 +37,11 @@ namespace Medical
 
         public static void SceneUnloading(SimScene scene)
         {
+            foreach(var rigidBody in extraSleepers)
+            {
+                removeSleeper(rigidBody);
+            }
+
             var bulletScene = scene.getDefaultSubScene().getSimElementManager<BulletScene>();
             if (bulletScene != null)
             {
@@ -100,12 +106,14 @@ namespace Medical
 
         private static void bulletScene_OnRigidBodyAdded(BulletScene bulletScene, RigidBody rigidBody)
         {
+            extraSleepers.Add(rigidBody);
             addSleeper(rigidBody);
             wakeUp();
         }
 
         private static void bulletScene_OnRigidBodyRemoved(BulletScene bulletScene, RigidBody rigidBody)
         {
+            extraSleepers.Remove(rigidBody);
             removeSleeper(rigidBody);
             wakeUp();
         }
