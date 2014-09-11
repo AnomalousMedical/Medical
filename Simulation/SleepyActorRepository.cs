@@ -100,11 +100,13 @@ namespace Medical
 
         private static void bulletScene_OnRigidBodyAdded(BulletScene bulletScene, RigidBody rigidBody)
         {
+            addSleeper(rigidBody);
             wakeUp();
         }
 
         private static void bulletScene_OnRigidBodyRemoved(BulletScene bulletScene, RigidBody rigidBody)
         {
+            removeSleeper(rigidBody);
             wakeUp();
         }
     }
