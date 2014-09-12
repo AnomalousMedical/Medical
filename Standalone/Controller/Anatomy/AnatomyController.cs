@@ -16,6 +16,13 @@ namespace Medical
         None,
     }
 
+    public enum SelectionOperator
+    {
+        Select,
+        Add,
+        Remove
+    }
+
     public class AnatomyController
     {
         public event EventHandler AnatomyChanged;
@@ -23,10 +30,12 @@ namespace Medical
         private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
         private AnatomySearchList anatomySearchList = new AnatomySearchList();
 
-        private AnatomyPickingMode pickingMode;
+        private AnatomyPickingMode pickingMode = AnatomyPickingMode.Group;
+        private SelectionOperator selectionOperator = SelectionOperator.Select;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
         public event EventDelegate<AnatomyController, bool> ShowPremiumAnatomyChanged;
         public event EventDelegate<AnatomyController, AnatomyCommandPermissions> CommandPermissionsChanged;
+        public event EventDelegate<AnatomyController, SelectionOperator> SelectionOperatorChanged;
         private bool showPremiumAnatomy = true;
         private AnatomyCommandPermissions commandPermissions = AnatomyCommandPermissions.None;
 
@@ -212,6 +221,25 @@ namespace Medical
             }
         }
 
+        public SelectionOperator SelectionOperator
+        {
+            get
+            {
+                return selectionOperator;
+            }
+            set
+            {
+                if(value != selectionOperator)
+                {
+                    selectionOperator = value;
+                    if(SelectionOperatorChanged != null)
+                    {
+                        SelectionOperatorChanged.Invoke(this, selectionOperator);
+                    }
+                }
+            }
+        }
+
         public bool ShowPremiumAnatomy
         {
             get
@@ -240,6 +268,22 @@ namespace Medical
             else
             {
                 CommandPermissions &= (~permission);
+            }
+        }
+
+        public void processSelection(Anatomy anatomy)
+        {
+            switch (SelectionOperator)
+            {
+                case SelectionOperator.Select:
+                    SelectedAnatomy.setSelection(anatomy);
+                    break;
+                case SelectionOperator.Add:
+                    SelectedAnatomy.addSelection(anatomy);
+                    break;
+                case SelectionOperator.Remove:
+                    SelectedAnatomy.removeSelection(anatomy);
+                    break;
             }
         }
 

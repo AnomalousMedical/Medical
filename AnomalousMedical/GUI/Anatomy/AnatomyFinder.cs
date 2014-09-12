@@ -11,13 +11,6 @@ namespace Medical.GUI
 {
     public class AnatomyFinder : MDIDialog
     {
-        enum SelectionMode
-        {
-            Select,
-            Add,
-            Remove
-        }
-
         private static readonly int ThumbSize = ScaleHelper.Scaled(50);
         private static readonly int ThumbRenderSize = ScaleHelper.Scaled(200);
         private static readonly int lockSize = ScaleHelper.Scaled(18);
@@ -25,8 +18,6 @@ namespace Medical.GUI
         private static ButtonEvent PickAnatomy;
         private static ButtonEvent ChangeSelectionMode;
         private static ButtonEvent OpenAnatomyFinder;
-        private static ButtonEvent ToggleAddMode;
-        private static ButtonEvent ToggleRemoveMode;
         
         static AnatomyFinder()
         {
@@ -42,14 +33,6 @@ namespace Medical.GUI
             OpenAnatomyFinder.addButton(KeyboardButtonCode.KC_LCONTROL);
             OpenAnatomyFinder.addButton(KeyboardButtonCode.KC_F);
             DefaultEvents.registerDefaultEvent(OpenAnatomyFinder);
-
-            ToggleAddMode = new ButtonEvent(EventLayers.Gui);
-            ToggleAddMode.addButton(KeyboardButtonCode.KC_LCONTROL);
-            DefaultEvents.registerDefaultEvent(ToggleAddMode);
-
-            ToggleRemoveMode = new ButtonEvent(EventLayers.Gui);
-            ToggleRemoveMode.addButton(KeyboardButtonCode.KC_LMENU);
-            DefaultEvents.registerDefaultEvent(ToggleRemoveMode);
         }
 
         private HashSetMultiSelectButtonGrid anatomyList;
@@ -65,8 +48,6 @@ namespace Medical.GUI
         private int lastHeight = -1;
 
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
-
-        private ButtonGroup<SelectionMode> selectionMode;
 
         public event Action ShowBuyMessage;
 
@@ -101,19 +82,9 @@ namespace Medical.GUI
             clearButton.EventToolTip += button_UserObject_EventToolTip;
             clearButton.UserObject = "Clear Search";
 
-            selectionMode = new ButtonGroup<SelectionMode>();
-            setupSelectionButton(SelectionMode.Select, "SelectButton");
-            setupSelectionButton(SelectionMode.Add, "AddButton");
-            setupSelectionButton(SelectionMode.Remove, "RemoveButton");
-            selectionMode.Selection = SelectionMode.Select;
-
             PickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
             ChangeSelectionMode.FirstFrameUpEvent += changeSelectionMode_FirstFrameUpEvent;
             OpenAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
-            ToggleAddMode.FirstFrameDownEvent += toggleAdMode_FirstFrameDownEvent;
-            ToggleAddMode.FirstFrameUpEvent += toggleAdMode_FirstFrameUpEvent;
-            ToggleRemoveMode.FirstFrameDownEvent += toggleRemoveMode_FirstFrameDownEvent;
-            ToggleRemoveMode.FirstFrameUpEvent += toggleRemoveMode_FirstFrameUpEvent;
 
             Button unhideAll = window.findWidget("UnhideAll") as Button;
             unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
@@ -132,43 +103,10 @@ namespace Medical.GUI
             PickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
             ChangeSelectionMode.FirstFrameUpEvent -= changeSelectionMode_FirstFrameUpEvent;
             OpenAnatomyFinder.FirstFrameUpEvent -= openAnatomyFinder_FirstFrameUpEvent;
-            ToggleAddMode.FirstFrameDownEvent -= toggleAdMode_FirstFrameDownEvent;
-            ToggleAddMode.FirstFrameUpEvent -= toggleAdMode_FirstFrameUpEvent;
-            ToggleRemoveMode.FirstFrameDownEvent -= toggleRemoveMode_FirstFrameDownEvent;
-            ToggleRemoveMode.FirstFrameUpEvent -= toggleRemoveMode_FirstFrameUpEvent;
 
             buttonGridThumbs.Dispose();
             anatomyWindowManager.Dispose();
             base.Dispose();
-        }
-
-        private void setupSelectionButton(SelectionMode mode, String name)
-        {
-            Button selectionButton = (Button)window.findWidget(name);
-            selectionMode.addButton(mode, selectionButton);
-            selectionButton.NeedToolTip = true;
-            selectionButton.EventToolTip += selectionButton_EventToolTip;
-        }
-
-        void selectionButton_EventToolTip(Widget source, EventArgs e)
-        {
-            String text;
-            switch(selectionMode[(Button)source])
-            {
-                case SelectionMode.Add:
-                    text = String.Format("Add to Selection ({0})", ToggleAddMode.KeyDescription);
-                    break;
-                case SelectionMode.Remove:
-                    text = String.Format("Remove from Selection ({0})", ToggleRemoveMode.KeyDescription);
-                    break;
-                case SelectionMode.Select:
-                    text = "Select";
-                    break;
-                default:
-                    text = "Unknown";
-                    break;
-            }
-            TooltipManager.Instance.processTooltip(source, text, (ToolTipEventArgs)e);
         }
 
         void button_UserObject_EventToolTip(Widget source, EventArgs e)
@@ -265,14 +203,14 @@ namespace Medical.GUI
 
                 if (anatomyController.PickingMode != AnatomyPickingMode.None)
                 {
-                    processSelection(bestMatch);
+                    anatomyController.processSelection(bestMatch);
                 }
 
                 if (bestMatch != null)
                 {
                     searchBox.Caption = "Clicked";
                     clearButton.Visible = true;
-                    if (MedicalConfig.AutoOpenAnatomyFinder && !Visible && selectionMode.Selection != SelectionMode.Remove)
+                    if (MedicalConfig.AutoOpenAnatomyFinder && !Visible && anatomyController.SelectionOperator != SelectionOperator.Remove)
                     {
                         Visible = true;
                     }
@@ -334,7 +272,7 @@ namespace Medical.GUI
             if (anatomyController.ShowPremiumAnatomy || anatomy.ShowInBasicVersion)
             {
                 DisplayHintLocation = new IntVector2(window.Right, item.AbsoluteTop);
-                processSelection(anatomy);
+                anatomyController.processSelection(anatomy);
             }
             else
             {
@@ -475,48 +413,6 @@ namespace Medical.GUI
             LayerState layers = new LayerState(anatomy.TransparencyNames, 1.0f);
 
             buttonGridThumbs.itemAdded(arg2, layers, translation, center, anatomy);
-        }
-
-        private void processSelection(Anatomy anatomy)
-        {
-            switch(selectionMode.Selection)
-            {
-                case SelectionMode.Select:
-                    anatomyController.SelectedAnatomy.setSelection(anatomy);
-                    break;
-                case SelectionMode.Add:
-                    anatomyController.SelectedAnatomy.addSelection(anatomy);
-                    break;
-                case SelectionMode.Remove:
-                    anatomyController.SelectedAnatomy.removeSelection(anatomy);
-                    break;
-            }
-        }
-
-        void toggleRemoveMode_FirstFrameUpEvent(EventLayer eventLayer)
-        {
-            if(selectionMode.Selection == SelectionMode.Remove)
-            {
-                selectionMode.Selection = SelectionMode.Select;
-            }
-        }
-
-        void toggleRemoveMode_FirstFrameDownEvent(EventLayer eventLayer)
-        {
-            selectionMode.Selection = SelectionMode.Remove;
-        }
-
-        void toggleAdMode_FirstFrameUpEvent(EventLayer eventLayer)
-        {
-            if (selectionMode.Selection == SelectionMode.Add)
-            {
-                selectionMode.Selection = SelectionMode.Select;
-            }
-        }
-
-        void toggleAdMode_FirstFrameDownEvent(EventLayer eventLayer)
-        {
-            selectionMode.Selection = SelectionMode.Add;
         }
     }
 }

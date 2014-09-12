@@ -4,7 +4,7 @@
         <Property key="Caption" value="Anatomy Finder"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="EditBox" skin="EditBoxClear" position="0 4 128 26" align="HStretch Top" name="SearchBox"/>
+        <Widget type="EditBox" skin="EditBoxClear" position="0 4 222 26" align="HStretch Top" name="SearchBox"/>
         <Widget type="ScrollView" skin="ScrollView" position="0 34 256 314" align="Stretch" name="AnatomyList">
             <Property key="CanvasSize" value="238 10"/>
             <Property key="CanvasAlign" value="Left Top"/>
@@ -12,15 +12,6 @@
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>
-        </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="130 2 30 30" align="Right Top" name="SelectButton">
-            <Property key="ImageResource" value="AnatomyFinder.Select"/>
-        </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="162 2 30 30" align="Right Top" name="AddButton">
-            <Property key="ImageResource" value="AnatomyFinder.Add"/>
-        </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="194 2 30 30" align="Right Top" name="RemoveButton">
-            <Property key="ImageResource" value="AnatomyFinder.Remove"/>
         </Widget>
         <Widget type="Button" skin="ButtonImageBackground" position="226 2 30 30" align="Right Top" name="UnhideAll">
             <Property key="ImageResource" value="AnatomyFinder.ShowAll"/>

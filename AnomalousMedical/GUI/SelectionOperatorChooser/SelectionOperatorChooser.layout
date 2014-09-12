@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PopupPanel" position="187 65 81 205" layer="Overlapped">
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 3 64 64" name="SelectButton">
+            <Property key="Caption" value="Select"/>
+            <Property key="ImageResource" value="AnatomyFinder.Select"/>
+        </Widget>
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 70 64 64" name="AddButton">
+            <Property key="Caption" value="Add"/>
+            <Property key="ImageResource" value="AnatomyFinder.Add"/>
+        </Widget>
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 137 64 64" name="RemoveButton">
+            <Property key="Caption" value="Remove"/>
+            <Property key="ImageResource" value="AnatomyFinder.Remove"/>
+        </Widget>
+    </Widget>
+</MyGUI>

@@ -50,6 +50,7 @@ namespace Medical.GUI
 
         //Tasks
         private SelectionModeTask selectionModeTask;
+        private SelectionOperatorTask selectionOperatorTask;
         private Task downloadsTask;
 
         public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
@@ -70,6 +71,7 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
+            selectionOperatorTask.Dispose();
             renderDialog.Dispose();
             options.Dispose();
             anatomyFinder.Dispose();
@@ -163,6 +165,11 @@ namespace Medical.GUI
             selectionModeTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(selectionModeTask);
             Slideshow.AdditionalTasks.addTask(selectionModeTask);
+
+            selectionOperatorTask = new SelectionOperatorTask(standaloneController.AnatomyController);
+            selectionOperatorTask.ShowOnTimelineTaskbar = true;
+            taskController.addTask(selectionOperatorTask);
+            Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Patient, 0));
