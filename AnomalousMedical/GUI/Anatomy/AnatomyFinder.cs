@@ -16,7 +16,6 @@ namespace Medical.GUI
         private static readonly int lockSize = ScaleHelper.Scaled(18);
 
         private static ButtonEvent PickAnatomy;
-        private static ButtonEvent ChangeSelectionMode;
         private static ButtonEvent OpenAnatomyFinder;
         
         static AnatomyFinder()
@@ -24,10 +23,6 @@ namespace Medical.GUI
             PickAnatomy = new ButtonEvent(EventLayers.Selection);
             PickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(PickAnatomy);
-
-            ChangeSelectionMode = new ButtonEvent(EventLayers.Gui);
-            ChangeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
-            DefaultEvents.registerDefaultEvent(ChangeSelectionMode);
 
             OpenAnatomyFinder = new ButtonEvent(EventLayers.Gui);
             OpenAnatomyFinder.addButton(KeyboardButtonCode.KC_LCONTROL);
@@ -83,7 +78,6 @@ namespace Medical.GUI
             clearButton.UserObject = "Clear Search";
 
             PickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
-            ChangeSelectionMode.FirstFrameUpEvent += changeSelectionMode_FirstFrameUpEvent;
             OpenAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
 
             Button unhideAll = window.findWidget("UnhideAll") as Button;
@@ -101,7 +95,6 @@ namespace Medical.GUI
         public override void Dispose()
         {
             PickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
-            ChangeSelectionMode.FirstFrameUpEvent -= changeSelectionMode_FirstFrameUpEvent;
             OpenAnatomyFinder.FirstFrameUpEvent -= openAnatomyFinder_FirstFrameUpEvent;
 
             buttonGridThumbs.Dispose();
@@ -210,7 +203,7 @@ namespace Medical.GUI
                 {
                     searchBox.Caption = "Clicked";
                     clearButton.Visible = true;
-                    if (MedicalConfig.AutoOpenAnatomyFinder && !Visible && anatomyController.SelectionOperator != SelectionOperator.Remove)
+                    if (MedicalConfig.AutoOpenAnatomyFinder && !Visible && anatomyController.SelectionOperator != SelectionOperator.Remove && anatomyController.PickingMode != AnatomyPickingMode.None)
                     {
                         Visible = true;
                     }
@@ -219,32 +212,6 @@ namespace Medical.GUI
                 {
                     clearButton.Visible = false;
                     searchBox.Caption = "";
-                }
-            }
-        }
-
-        void changeSelectionMode_FirstFrameUpEvent(EventLayer eventLayer)
-        {
-            if (!Gui.Instance.HandledKeyboardButtons)
-            {
-                switch (anatomyController.PickingMode)
-                {
-                    case AnatomyPickingMode.Group:
-                        if (anatomyController.ShowPremiumAnatomy)
-                        {
-                            anatomyController.PickingMode = AnatomyPickingMode.Individual;
-                        }
-                        else
-                        {
-                            anatomyController.PickingMode = AnatomyPickingMode.None;
-                        }
-                        break;
-                    case AnatomyPickingMode.Individual:
-                        anatomyController.PickingMode = AnatomyPickingMode.None;
-                        break;
-                    case AnatomyPickingMode.None:
-                        anatomyController.PickingMode = AnatomyPickingMode.Group;
-                        break;
                 }
             }
         }

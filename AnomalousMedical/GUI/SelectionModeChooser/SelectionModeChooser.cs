@@ -4,12 +4,22 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
     class SelectionModeChooser : PopupContainer
     {
         private static readonly int lockSize = ScaleHelper.Scaled(18);
+
+        private static ButtonEvent ChangeSelectionMode;
+
+        static SelectionModeChooser()
+        {
+            ChangeSelectionMode = new ButtonEvent(EventLayers.Gui);
+            ChangeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
+            DefaultEvents.registerDefaultEvent(ChangeSelectionMode);
+        }
 
         private AnatomyController anatomyController;
         private bool allowSelectionModeChanges = true;
@@ -40,6 +50,8 @@ namespace Medical.GUI
             pickingModeGroup.SelectedButton = pickingModeGroup.findButtonWithUserData(anatomyController.PickingMode);
             pickingModeGroup.SelectedButtonChanged += new EventHandler(pickingModeGroup_SelectedButtonChanged);
 
+            ChangeSelectionMode.FirstFrameUpEvent += changeSelectionMode_FirstFrameUpEvent;
+
             toggleIndividualSelectionVisible();
         }
 
@@ -49,6 +61,7 @@ namespace Medical.GUI
             {
                 Gui.Instance.destroyWidget(lockedFeatureImage);
             }
+            ChangeSelectionMode.FirstFrameUpEvent -= changeSelectionMode_FirstFrameUpEvent;
             base.Dispose();
         }
 
@@ -111,6 +124,32 @@ namespace Medical.GUI
             if(ShowBuyMessage != null)
             {
                 ShowBuyMessage.Invoke();
+            }
+        }
+
+        void changeSelectionMode_FirstFrameUpEvent(EventLayer eventLayer)
+        {
+            if (!Gui.Instance.HandledKeyboardButtons)
+            {
+                switch (anatomyController.PickingMode)
+                {
+                    case AnatomyPickingMode.Group:
+                        if (anatomyController.ShowPremiumAnatomy)
+                        {
+                            anatomyController.PickingMode = AnatomyPickingMode.Individual;
+                        }
+                        else
+                        {
+                            anatomyController.PickingMode = AnatomyPickingMode.None;
+                        }
+                        break;
+                    case AnatomyPickingMode.Individual:
+                        anatomyController.PickingMode = AnatomyPickingMode.None;
+                        break;
+                    case AnatomyPickingMode.None:
+                        anatomyController.PickingMode = AnatomyPickingMode.Group;
+                        break;
+                }
             }
         }
     }
