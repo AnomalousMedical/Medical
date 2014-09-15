@@ -20,7 +20,6 @@ namespace Medical
             : base("Medical.ChangeWindowLayout", "Window Layout", "PremiumFeatures/WindowLayoutIcon", TaskMenuCategories.Tools)
         {
             this.sceneViewController = sceneViewController;
-            this.ShowOnTimelineTaskbar = true;
         }
 
         public void Dispose()

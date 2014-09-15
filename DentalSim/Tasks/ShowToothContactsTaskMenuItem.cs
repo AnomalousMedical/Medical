@@ -12,7 +12,6 @@ namespace DentalSim
             : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "DentalSimIcons/ShowToothContacts", "Dental Simulation")
         {
             this.Weight = weight;
-            this.ShowOnTimelineTaskbar = true;
         }
 
         public override void clicked(TaskPositioner positioner)

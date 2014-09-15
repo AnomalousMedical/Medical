@@ -16,7 +16,6 @@ namespace Developer
             : base("Developer.DisablePhysicsTask", "Disable Physics", "Developer.DisablePhysics", "Developer")
         {
             this.Weight = weight;
-            this.ShowOnTimelineTaskbar = true;
         }
 
         public void sceneChanged(SimScene scene)

@@ -87,7 +87,6 @@ namespace Medical
         {
             TaskUniqueName = info.GetString("TaskUniqueName", UniqueName);
             ShowOnTaskbar = info.GetBoolean("ShowOnTaskbar", ShowOnTaskbar);
-            ShowOnTimelineTaskbar = info.GetBoolean("ShowOnTimelineTaskbar", ShowOnTimelineTaskbar);
             ShowOnTaskMenu = info.GetBoolean("ShowOnTaskMenu", ShowOnTaskMenu);
         }
 
@@ -99,7 +98,6 @@ namespace Medical
             info.AddValue("Category", Category);
             info.AddValue("TaskUniqueName", TaskUniqueName);
             info.AddValue("ShowOnTaskbar", ShowOnTaskbar);
-            info.AddValue("ShowOnTimelineTaskbar", ShowOnTimelineTaskbar);
             info.AddValue("ShowOnTaskMenu", ShowOnTaskMenu);
         }
     }

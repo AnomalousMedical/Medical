@@ -90,11 +90,9 @@ namespace Medical
             taskController.addTask(saveAsTaskItem);
 
             MDIDialogOpenTask statesTask = new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "PremiumFeatures/StatesIcon", TaskMenuCategories.Patient);
-            statesTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(statesTask);
 
             MDIDialogOpenTask notesTask = new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "PremiumFeatures/NotesIcon", TaskMenuCategories.Patient);
-            notesTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(notesTask);
 
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));

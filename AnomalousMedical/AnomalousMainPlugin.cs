@@ -162,12 +162,10 @@ namespace Medical.GUI
 
             //Tasks
             selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
-            selectionModeTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(selectionModeTask);
             Slideshow.AdditionalTasks.addTask(selectionModeTask);
 
             selectionOperatorTask = new SelectionOperatorTask(standaloneController.AnatomyController);
-            selectionOperatorTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
@@ -211,17 +209,14 @@ namespace Medical.GUI
 
             //Tools Section
             MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Tools);
-            renderTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(renderTask);
 
             //Navigation Section
             MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "AnomalousMedical/SearchIcon", TaskMenuCategories.Navigation);
-            anatomyFinderTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(anatomyFinderTask);
             Slideshow.AdditionalTasks.addTask(anatomyFinderTask);
 
             ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "AnomalousMedical/FavoritesIcon", TaskMenuCategories.Navigation);
-            bookmarkTask.ShowOnTimelineTaskbar = true;
             taskController.addTask(bookmarkTask);
             Slideshow.AdditionalTasks.addTask(bookmarkTask);
 

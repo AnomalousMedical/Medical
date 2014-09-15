@@ -12,7 +12,6 @@ namespace Medical.GUI
         public VolumeControlTask()
             : base("Medical.VolumeControl", "Volume", SoundConfig.MasterVolume > 0.0f ? "StandaloneIcons/VolumeControl" : "StandaloneIcons/VolumeControlOff", TaskMenuCategories.System)
         {
-            this.ShowOnTimelineTaskbar = true;
             SoundConfig.MasterVolumeChanged += new EventHandler(SoundConfig_MasterVolumeChanged);
         }
 
