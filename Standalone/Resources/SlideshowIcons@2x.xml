@@ -49,7 +49,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="SlideshowIcons/ResetZoom">
+  <Resource type="ResourceImageSet" name="SlideshowIcons/Reload">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 0"/>
@@ -57,7 +57,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomIn">
+  <Resource type="ResourceImageSet" name="SlideshowIcons/ResetZoom">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="256 0"/>
@@ -65,10 +65,18 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomOut">
+  <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomIn">
     <Group name="Icons" texture="Medical.Resources.SlideshowIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="192 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SlideshowIcons/ZoomOut">
+    <Group name="Icons" texture="Medical.Resources.SlideshowIcons@2x.png" size="64 64">
+      <Index name="Icon">
+        <Frame point="256 64"/>
       </Index>
     </Group>
   </Resource>

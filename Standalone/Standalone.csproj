@@ -112,6 +112,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\PopulateFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\SetData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Layers\ChangeLayersCommand.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateReloadCurrentCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\ChangeTeethHighlightsCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\RestoreTeethHighlightsCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\SaveTeethHighlightsCommand.cs" />

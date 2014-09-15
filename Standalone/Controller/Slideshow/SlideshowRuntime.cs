@@ -18,6 +18,7 @@ namespace Medical
         private const String PreviousTaskName = "SlideshowIcons/Back";
         private const String PreviousTaskDisabledName = "SlideshowIcons/BackInactive";
         private const String NextTaskName = "SlideshowIcons/Forward";
+        private const String ReloadTaskName = "SlideshowIcons/Reload";
         private const String NextTaskDisabledName = "SlideshowIcons/ForwardInactive";
 
         private AnomalousMvcContext mvcContext;
@@ -69,6 +70,10 @@ namespace Medical
             });
             taskbar.addItem(new TaskTaskbarItem(previousTask));
             taskbar.addItem(new TaskTaskbarItem(nextTask));
+            taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.Reload", "Reload", ReloadTaskName, "None", arg =>
+            {
+                reload();
+            })));
             //taskbar.addItem(new TaskTaskbarItem(new CallbackTask("Slideshow.ToggleMode", "Toggle Display Mode", "SlideshowIcons/NormalVectorToggle", "None", arg =>
             //{
             //    displayManager.VectorMode = !displayManager.VectorMode;
@@ -223,6 +228,11 @@ namespace Medical
                 displayManager.AdditionalZoomMultiple = 2.0f;
             }
             guiManager.layout();
+        }
+
+        private void reload()
+        {
+            mvcContext.runAction("NavigationBug/Reload");
         }
 
         private void next()
