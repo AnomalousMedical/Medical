@@ -80,12 +80,6 @@ namespace Medical.GUI
             PickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
             OpenAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
 
-            Button unhideAll = window.findWidget("UnhideAll") as Button;
-            unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
-            unhideAll.NeedToolTip = true;
-            unhideAll.EventToolTip += button_UserObject_EventToolTip;
-            unhideAll.UserObject = "Unhide All";
-
             this.Resized += new EventHandler(AnatomyFinder_Resized);
             fixListItemWidth();
 
@@ -221,11 +215,6 @@ namespace Medical.GUI
             searchBox.Caption = "";
             updateSearch();
             InputManager.Instance.setKeyFocusWidget(searchBox);
-        }
-
-        void unhideAll_MouseButtonClick(Widget source, EventArgs e)
-        {
-            TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         void anatomyList_ItemActivated(ButtonGridItem item)

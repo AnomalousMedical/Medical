@@ -207,6 +207,12 @@ namespace Medical.GUI
             });
             taskController.addTask(toggleFullscreen);
 
+            CallbackTask unhideAllAnatomy = new CallbackTask("Medical.UnhideAllAnatomy", "Unhide All", "AnatomyFinder.ShowAll", TaskMenuCategories.Navigation, int.MaxValue - 2, false, (item) =>
+            {
+                TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            });
+            taskController.addTask(unhideAllAnatomy);
+
             //Tools Section
             MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Tools);
             taskController.addTask(renderTask);
