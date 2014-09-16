@@ -107,6 +107,7 @@
     <Compile Include="Anatomy\TransparencyAnatomyCommand.cs" />
     <Compile Include="Anatomy\PinIKAnatomyCommand.cs" />
     <Compile Include="Anatomy\TransparencySectionAnatomyCommand.cs" />
+    <Compile Include="Animation\ActionSequencer.cs" />
     <Compile Include="Animation\AnimationManipulator.cs" />
     <Compile Include="Animation\AnimationManipulatorState.cs" />
     <Compile Include="Animation\AnimationManipulatorStateEntry.cs" />

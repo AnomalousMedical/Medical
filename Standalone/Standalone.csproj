@@ -735,7 +735,6 @@
     <Compile Include="Controller\Props\PropFadeBehavior.cs" />
     <Compile Include="Controller\Props\PropFactory.cs" />
     <Compile Include="Controller\Props\Syringe\Syringe.cs" />
-    <Compile Include="Controller\Timeline\ActionSequencer.cs" />
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplay.cs" />

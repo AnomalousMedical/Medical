@@ -10,7 +10,7 @@ namespace Medical
     /// <summary>
     /// The interface for actions in the ActionSequencer.
     /// </summary>
-    interface ActionSequencerAction
+    public interface ActionSequencerAction
     {
         /// <summary>
         /// Called when the action is starting up.
@@ -60,7 +60,7 @@ namespace Medical
     /// order and do all the processing.
     /// </summary>
     /// <typeparam name="T">The type of this ActionSequencer. Must extend ActionSequencerAction.</typeparam>
-    class ActionSequencer<T> : Saveable
+    public class ActionSequencer<T> : Saveable
         where T : ActionSequencerAction
     {
         int newActionStartIndex;
