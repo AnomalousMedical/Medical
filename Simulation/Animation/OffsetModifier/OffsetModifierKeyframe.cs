@@ -42,6 +42,8 @@ namespace Medical
             }
         }
 
+        public float BlendAmount { get; set; }
+
         public void blendFrom(OffsetModifierKeyframe previousFrame, float percentage, SimObjectFollowerWithRotation follower)
         {
             follower.TranslationOffset = previousFrame.translationOffset.lerp(ref translationOffset, ref percentage);
