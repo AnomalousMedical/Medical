@@ -64,11 +64,42 @@ namespace Medical
             base.destroy();
         }
 
-        void broadcaster_PositionChanged(SimObject obj)
+        public void computePosition()
         {
             Vector3 trans = targetSimObject.Translation + Quaternion.quatRotate(targetSimObject.Rotation, translationOffset);
             Quaternion rotation = targetSimObject.Rotation * rotationOffset;
             updatePosition(ref trans, ref rotation);
+        }
+
+        void broadcaster_PositionChanged(SimObject obj)
+        {
+            computePosition();
+        }
+
+        [DoNotCopy]
+        public Vector3 TranslationOffset
+        {
+            get
+            {
+                return translationOffset;
+            }
+            set
+            {
+                translationOffset = value;
+            }
+        }
+
+        [DoNotCopy]
+        public Quaternion RotationOffset
+        {
+            get
+            {
+                return rotationOffset;
+            }
+            set
+            {
+                rotationOffset = value;
+            }
         }
     }
 }

@@ -269,6 +269,7 @@
     <Compile Include="Controller\TaskController\CallbackTaskWithObject.cs" />
     <Compile Include="Controller\TaskController\RunMvcContextActionTask.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
+    <Compile Include="Controller\Timeline\ActionSequencer.cs" />
     <Compile Include="Controller\Tools\MovableObject.cs" />
     <Compile Include="Controller\Tools\MovableObjectTools.cs" />
     <Compile Include="Controller\Tools\Movement\Axis.cs" />

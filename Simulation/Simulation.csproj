@@ -107,7 +107,6 @@
     <Compile Include="Anatomy\TransparencyAnatomyCommand.cs" />
     <Compile Include="Anatomy\PinIKAnatomyCommand.cs" />
     <Compile Include="Anatomy\TransparencySectionAnatomyCommand.cs" />
-    <Compile Include="Animation\ActionSequencer.cs" />
     <Compile Include="Animation\AnimationManipulator.cs" />
     <Compile Include="Animation\AnimationManipulatorState.cs" />
     <Compile Include="Animation\AnimationManipulatorStateEntry.cs" />
@@ -122,6 +121,9 @@
     <Compile Include="Animation\DetachableSimObjectFollower.cs" />
     <Compile Include="Animation\FixedJointBoneFollower.cs" />
     <Compile Include="Animation\NodeFollower.cs" />
+    <Compile Include="Animation\OffsetModifier\AngleOffsetModiferDriver.cs" />
+    <Compile Include="Animation\OffsetModifier\OffsetModifierKeyframe.cs" />
+    <Compile Include="Animation\OffsetModifier\OffsetModifierSequence.cs" />
     <Compile Include="Animation\PhysicalAnimator.cs" />
     <Compile Include="Animation\PoseManipulator.cs" />
     <Compile Include="Animation\PoseManipulatorStateEntry.cs" />
