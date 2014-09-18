@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class AngleOffsetModiferDriver : Interface
+    class AngleOffsetModiferDriver : Interface, BlendDriver
     {
         [Editable]
         String firstAngleSimObjectName;
@@ -26,20 +26,10 @@ namespace Medical
         String secondAngleBroadcasterName = "PositionBroadcaster";
 
         [Editable]
-        String targetSimObjectName = "this";
-
-        [Editable]
-        String targetSequenceName = "OffsetModifierSequence";
-
-        [Editable]
         Vector3 testVector = Vector3.Up;
 
         [Editable]
         float maximumAngle;
-
-        [DoNotCopy]
-        [DoNotSave]
-        OffsetModifierSequence sequence;
 
         [DoNotCopy]
         [DoNotSave]
@@ -60,6 +50,14 @@ namespace Medical
         [DoNotCopy]
         [DoNotSave]
         float startingAngle;
+
+        [DoNotCopy]
+        [DoNotSave]
+        float blend = 0.0f;
+
+        [DoNotCopy]
+        [DoNotSave]
+        public event Action<BlendDriver> BlendAmountChanged;
 
         protected override void constructed()
         {
@@ -94,18 +92,6 @@ namespace Medical
                 blacklist("The second angle SimObject '{0}' does not have a position broadcaster named '{1}'.", secondAngleSimObjectName, secondAngleBroadcasterName);
             }
 
-            SimObject targetSimObject = Owner.getOtherSimObject(targetSimObjectName);
-            if (targetSimObject == null)
-            {
-                blacklist("The target SimObject '{0}' could not be found.", targetSimObjectName);
-            }
-
-            sequence = targetSimObject.getElement(targetSequenceName) as OffsetModifierSequence;
-            if (sequence == null)
-            {
-                blacklist("The target SimObject '{0}' does not have a OffsetModifierSequence named '{1}'.", targetSimObjectName, targetSequenceName);
-            }
-
             startingAngle = getAngle();
 
             firstAngleBroadcaster.PositionChanged += angleBroadcaster_PositionChanged;
@@ -119,9 +105,17 @@ namespace Medical
             base.destroy();
         }
 
+        public float BlendAmount
+        {
+            get
+            {
+                return blend;
+            }
+        }
+
         void angleBroadcaster_PositionChanged(SimObject obj)
         {
-            float blend = (getAngle() - startingAngle) / maximumAngle;
+            blend = (getAngle() - startingAngle) / maximumAngle;
             if(blend < 0.0f)
             {
                 blend = 0.0f;
@@ -130,7 +124,10 @@ namespace Medical
             {
                 blend = 1.0f;
             }
-            sequence.blend(blend);
+            if(BlendAmountChanged != null)
+            {
+                BlendAmountChanged.Invoke(this);
+            }
         }
 
         float getAngle()

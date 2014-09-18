@@ -18,6 +18,16 @@ namespace Medical
         [Editable]
         String targetFollowerName = "SimObjectFollower";
 
+        [Editable]
+        String blendDriverSimObjectName = "this";
+
+        [Editable]
+        String blendDriverElementName = "BlendDriver";
+
+        [DoNotCopy]
+        [DoNotSave]
+        BlendDriver blendDriver;
+
         [DoNotCopy]
         [DoNotSave]
         SimObjectFollowerWithRotation follower;
@@ -51,6 +61,20 @@ namespace Medical
                 blacklist("The target SimObject {0} does not have a SimObjectFollowerWithRotation named {1}.", targetSimObjectName, targetFollowerName);
             }
 
+            SimObject blendDriverSimObject = Owner.getOtherSimObject(blendDriverSimObjectName);
+            if (blendDriverSimObject == null)
+            {
+                blacklist("The blend driver SimObject {0} could not be found.", blendDriverSimObjectName);
+            }
+
+            blendDriver = targetSimObject.getElement(blendDriverElementName) as BlendDriver;
+            if (blendDriver == null)
+            {
+                blacklist("The blend driver SimObject {0} does not have a BlendDriver named {1}.", blendDriverSimObjectName, blendDriverElementName);
+            }
+
+            blendDriver.BlendAmountChanged += blendDriver_BlendAmountChanged;
+
             keyframes.Add(new OffsetModifierKeyframe()
             {
                 TranslationOffset = follower.TranslationOffset,
@@ -73,7 +97,18 @@ namespace Medical
             });
         }
 
-        public void blend(float amount)
+        protected override void destroy()
+        {
+            blendDriver.BlendAmountChanged -= blendDriver_BlendAmountChanged;
+            base.destroy();
+        }
+
+        void blendDriver_BlendAmountChanged(BlendDriver obj)
+        {
+            blend(obj.BlendAmount);
+        }
+
+        void blend(float amount)
         {
             if (keyframes.Count > 1) //At least 2 key frames
             {
