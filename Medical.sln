@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{B05D69F8-6463-4276-8077-D7F3F0C02A9E}"
 EndProject
@@ -42,6 +42,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManager", "StoreManager\StoreManager.csproj", "{8D19B608-2952-4467-BC07-0A1EA473DA09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectPlugin", "KinectPlugin\KinectPlugin.csproj", "{99E46BE1-F937-47DB-9E78-0C0D698DDDBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movement", "Movement\Movement.csproj", "{207F9849-EF23-4677-B825-F43D05F78C00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -338,6 +340,24 @@ Global
 		{99E46BE1-F937-47DB-9E78-0C0D698DDDBC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{99E46BE1-F937-47DB-9E78-0C0D698DDDBC}.Release|Win32.ActiveCfg = Release|Any CPU
 		{99E46BE1-F937-47DB-9E78-0C0D698DDDBC}.Release|x86.ActiveCfg = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.PublicRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.PublicRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.PublicRelease|Win32.ActiveCfg = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.PublicRelease|x86.ActiveCfg = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Release|Win32.ActiveCfg = Release|Any CPU
+		{207F9849-EF23-4677-B825-F43D05F78C00}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
