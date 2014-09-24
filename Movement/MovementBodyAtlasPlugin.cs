@@ -8,12 +8,15 @@ using Medical.Controller;
 using System.Diagnostics;
 using Medical.GUI;
 using Engine;
+using Medical.Movement.GUI;
 
-namespace Medical
+namespace Medical.Movement
 {
     public class MovementBodyAtlasPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
+
+        private MovementDialog movementDialog;
 
         public MovementBodyAtlasPlugin()
         {
@@ -22,7 +25,7 @@ namespace Medical
 
         public void Dispose()
         {
-            
+            movementDialog.Dispose();
         }
 
         public void loadGUIResources()
@@ -32,7 +35,15 @@ namespace Medical
 
         public void initialize(StandaloneController standaloneController)
         {
-            
+            GUIManager guiManager = standaloneController.GUIManager;
+            var resources = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            Console.WriteLine(resources);
+            movementDialog = new MovementDialog(standaloneController.MusclePositionController, standaloneController.MedicalController);
+            guiManager.addManagedDialog(movementDialog);
+
+            var taskController = standaloneController.TaskController;
+            var movementDialogTask = new MDIDialogOpenTask(movementDialog, "Medical.Movement.MovementDialogTask", "Movement", CommonResources.NoIcon, "Movement");
+            taskController.addTask(movementDialogTask);
         }
 
         public void sceneLoaded(SimScene scene)

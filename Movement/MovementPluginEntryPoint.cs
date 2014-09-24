@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-[assembly: Medical.MovementPluginEntryPoint()]
+[assembly: Medical.Movement.MovementPluginEntryPoint()]
 
-namespace Medical
+namespace Medical.Movement
 {
     class MovementPluginEntryPoint : AtlasPluginEntryPointAttribute
     {

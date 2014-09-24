@@ -7,7 +7,7 @@
     <ProjectGuid>{207F9849-EF23-4677-B825-F43D05F78C00}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Movement</RootNamespace>
+    <RootNamespace>Medical.Movement</RootNamespace>
     <AssemblyName>Movement</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BEPUikPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\BEPUikPlugin.dll</HintPath>
+    </Reference>
     <Reference Include="Engine">
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
     </Reference>
@@ -45,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\MovementDialog.cs" />
     <Compile Include="MovementPluginEntryPoint.cs" />
     <Compile Include="MovementBodyAtlasPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +60,10 @@
       <Project>{e217c194-a14f-41de-a838-c401e60adf15}</Project>
       <Name>Standalone</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\MovementDialog.layout">
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

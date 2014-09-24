@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="132 108 224 288" layer="Overlapped">
+        <Property key="Caption" value="Movement"/>
+        <Property key="MinSize" value="178 273"/>
+        <UserString key="CurrentDockLocation" value="Floating"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <Widget type="Button" skin="VerticalIconTextButton" position="5 187 101 64" align="HRelative Bottom" name="Reset">
+            <Property key="Caption" value="Reset"/>
+            <Property key="ImageResource" value="Movement/Reset"/>
+        </Widget>
+        <Widget type="Button" skin="VerticalIconTextButton" position="111 187 101 64" align="HRelative Bottom" name="Restore">
+            <Property key="Caption" value="Restore"/>
+            <Property key="ImageResource" value="Movement/Restore"/>
+            <Property key="ModeImage" value="true"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 24 69 33" name="CSpineFlexExt">
+            <Property key="Caption" value="Flex / Ext"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position="0 4 106 16">
+            <Property key="Caption" value="Cervical Spine"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="72 26 76 27" name="CSpineLateral">
+            <Property key="Caption" value="Lateral"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="152 26 57 28" name="CSpineAxial">
+            <Property key="Caption" value="Axial Rot"/>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
