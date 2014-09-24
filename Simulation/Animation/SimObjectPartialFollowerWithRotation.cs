@@ -28,6 +28,9 @@ namespace Medical
         [Editable]
         private String jointSimObjectName;
 
+        [Editable]
+        private String fkParentSimObjectName;
+
         [DoNotCopy]
         [DoNotSave]
         SimObject targetSimObject;
@@ -38,15 +41,19 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
+        SimObject fkParentSimObject;
+
+        [DoNotCopy]
+        [DoNotSave]
         Vector3 translationOffset;
 
         [DoNotCopy]
         [DoNotSave]
         Quaternion rotationOffset;
 
-        [DoNotCopy]
-        [DoNotSave]
-        Vector3 parentTranslationOffset;
+        //[DoNotCopy]
+        //[DoNotSave]
+        //Vector3 parentTranslationOffset;
 
         [DoNotCopy]
         [DoNotSave]
@@ -74,6 +81,12 @@ namespace Medical
                 blacklist("Cannot find parent SimObject {0}.", parentSimObjectName);
             }
 
+            fkParentSimObject = Owner.getOtherSimObject(fkParentSimObjectName);
+            if (fkParentSimObject == null)
+            {
+                blacklist("Cannot find parent SimObject {0}.", fkParentSimObjectName);
+            }
+
             broadcaster = targetSimObject.getElement(targetPositionBroadcasterName) as PositionBroadcaster;
             if (broadcaster == null)
             {
@@ -90,24 +103,23 @@ namespace Medical
                 }
                 //Find the center of rotation in this object's local space
                 centerOfRotationOffset = jointSimObject.Translation - Owner.Translation;
+
+                Quaternion ourRotation = Owner.Rotation;
+                Quaternion inverseParentRot = fkParentSimObject.Rotation.inverse();
+                Vector3 parentTrans = fkParentSimObject.Translation;
+
+                //Figure out the translation in parent space, first, however, we must transform the center of rotation offset by the current rotation.
+                //This makes the recorded translation offsets relative to the center of rotation point in world space instead of the center of this SimObject.
+                translationOffset = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentTrans;
+                translationOffset = Quaternion.quatRotate(inverseParentRot, translationOffset);
+            }
+            else
+            {
+                translationOffset = Vector3.Zero;
             }
 
-            Quaternion ourRotation = Owner.Rotation;
-            Vector3 ourTranslation = Owner.Translation;// +Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset);
-
-            Quaternion inverseTargetRot = targetSimObject.Rotation.inverse();
-
-            translationOffset = ourTranslation - targetSimObject.Translation;
-            translationOffset = Quaternion.quatRotate(inverseTargetRot, translationOffset);
-
-            rotationOffset = inverseTargetRot * Owner.Rotation;
-
-            Quaternion inverseParentRot = parentSimObject.Rotation.inverse();
-
-            parentTranslationOffset = ourTranslation - parentSimObject.Translation;
-            parentTranslationOffset = Quaternion.quatRotate(inverseParentRot, parentTranslationOffset);
-
-            parentRotationOffset = inverseParentRot * Owner.Rotation;
+            rotationOffset = targetSimObject.Rotation.inverse() * Owner.Rotation;
+            parentRotationOffset = parentSimObject.Rotation.inverse() * Owner.Rotation;
         }
 
         protected override void destroy()
@@ -119,18 +131,16 @@ namespace Medical
         public void computePosition()
         {
             Quaternion targetRotation = targetSimObject.Rotation;
-            Vector3 targetTrans = targetSimObject.Translation + Quaternion.quatRotate(targetRotation, translationOffset);
             targetRotation = targetRotation * rotationOffset;
-            //targetTrans -= Quaternion.quatRotate(ref targetRotation, ref centerOfRotationOffset);
 
             Quaternion parentRotation = parentSimObject.Rotation;
-            Vector3 parentTrans = parentSimObject.Translation + Quaternion.quatRotate(parentRotation, parentTranslationOffset);
             parentRotation = parentRotation * parentRotationOffset;
-            //parentTrans -= Quaternion.quatRotate(ref parentRotation, ref centerOfRotationOffset);
 
-            Vector3 trans = parentTrans.lerp(ref targetTrans, ref interpolationAmount);
             Quaternion rotation = parentRotation.slerp(ref targetRotation, interpolationAmount);
-            updatePosition(ref trans, ref rotation);
+            Vector3 newTrans = fkParentSimObject.Translation + Quaternion.quatRotate(fkParentSimObject.Rotation, translationOffset);
+            newTrans -= Quaternion.quatRotate(ref rotation, ref centerOfRotationOffset);
+
+            updatePosition(ref newTrans, ref rotation);
         }
 
         /* rotation only
