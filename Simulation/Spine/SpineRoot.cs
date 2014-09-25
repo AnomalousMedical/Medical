@@ -15,6 +15,10 @@ namespace Medical.Spine
         [DoNotSave]
         private SpineSegment childSegment;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private bool moved = false;
+
         public override void update(Clock clock, EventManager eventManager)
         {
             //try not to do this every frame
@@ -28,10 +32,16 @@ namespace Medical.Spine
 
         public void updatePosition()
         {
-            if (childSegment != null)
+            if (moved && childSegment != null)
             {
                 childSegment.updatePosition();
+                moved = false;
             }
+        }
+
+        internal void alertSpineMoved()
+        {
+            moved = true;
         }
     }
 }

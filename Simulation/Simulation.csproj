@@ -151,7 +151,7 @@
     <Compile Include="Measurement\MeasurementController.cs" />
     <Compile Include="Measurement\MeasurementDrawer.cs" />
     <Compile Include="Measurement\SimObjectFollower.cs" />
-    <Compile Include="Spine\SpineIKSegment.cs" />
+    <Compile Include="Spine\SpineControlBone.cs" />
     <Compile Include="Spine\SpineSegment.cs" />
     <Compile Include="Spine\Vertebra.cs" />
     <Compile Include="MouthInterior\BottomLipSection.cs" />

@@ -17,9 +17,6 @@ namespace Medical.Spine
         String targetSimObjectName;
 
         [Editable]
-        float interpolationAmount = 0.5f;
-
-        [Editable]
         String parentSimObjectName;
 
         [Editable]
@@ -30,6 +27,9 @@ namespace Medical.Spine
 
         [Editable]
         private String parentSpineSegmentName = "Follower";
+
+        [Editable]
+        float interpolationAmount = 0.5f;
 
         [DoNotCopy]
         [DoNotSave]
@@ -89,6 +89,9 @@ namespace Medical.Spine
             }
             spineSegment.setChildSegment(this);
 
+            Vector3 parentSegmentTrans = parentSpineSegmentSimObject.Translation;
+            Quaternion inverseParentSegmentRot = parentSpineSegmentSimObject.Rotation.inverse();
+
             if (!String.IsNullOrEmpty(jointSimObjectName))
             {
                 SimObject jointSimObject = Owner.getOtherSimObject(jointSimObjectName);
@@ -100,18 +103,18 @@ namespace Medical.Spine
                 centerOfRotationOffset = jointSimObject.Translation - Owner.Translation;
 
                 Quaternion ourRotation = Owner.Rotation;
-                Quaternion inverseParentRot = parentSpineSegmentSimObject.Rotation.inverse();
-                Vector3 parentTrans = parentSpineSegmentSimObject.Translation;
 
                 //Figure out the translation in parent space, first, however, we must transform the center of rotation offset by the current rotation.
                 //This makes the recorded translation offsets relative to the center of rotation point in world space instead of the center of this SimObject.
-                translationOffset = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentTrans;
-                translationOffset = Quaternion.quatRotate(inverseParentRot, translationOffset);
+                translationOffset = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentSegmentTrans;
             }
             else
             {
-                translationOffset = Vector3.Zero;
+                translationOffset = Owner.Translation - parentSegmentTrans;
+                centerOfRotationOffset = Vector3.Zero;
             }
+            //Rotate the translation offset into the parent coord system
+            translationOffset = Quaternion.quatRotate(inverseParentSegmentRot, translationOffset);
 
             rotationOffset = targetSimObject.Rotation.inverse() * Owner.Rotation;
             parentRotationOffset = parentSimObject.Rotation.inverse() * Owner.Rotation;
