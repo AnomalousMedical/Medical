@@ -29,7 +29,13 @@ namespace Medical.Spine
         private String parentSpineSegmentName = "Follower";
 
         [Editable]
-        float interpolationAmount = 0.5f;
+        float flexExtInterpolation;
+
+        [Editable]
+        float lateralBendingInterpolation;
+
+        [Editable]
+        float axialRotInterpolation;
 
         [DoNotCopy]
         [DoNotSave]
@@ -133,7 +139,21 @@ namespace Medical.Spine
             Quaternion parentRotation = parentControlBoneSimObject.Rotation;
             parentRotation = parentRotation * parentControlBoneRotationOffset;
 
-            Quaternion rotation = parentRotation.slerp(ref childRotation, interpolationAmount);
+            //Slerp method, only allows 1 interpolation value
+            //Quaternion rotation = parentRotation.slerp(ref childRotation, interpolationAmount);
+
+            //Parent Local Euler, seems to avoid jitter
+            //Rotate child to parent's space
+            childRotation *= parentRotation.inverse();
+
+            //Convert to euler
+            Vector3 euler = childRotation.getEuler();
+
+            //Blend euler angles from 0 to the given angle and reconstruct quaternion
+            Quaternion rotation = new Quaternion(0f.interpolate(euler.x, axialRotInterpolation),
+                                                 0f.interpolate(euler.y, lateralBendingInterpolation),
+                                                 0f.interpolate(euler.z, flexExtInterpolation)) * parentRotation;
+
             Vector3 translation = parentSpineSegmentSimObject.Translation + Quaternion.quatRotate(parentSpineSegmentSimObject.Rotation, parentSpineSegmentTranslationOffset);
             translation -= Quaternion.quatRotate(ref rotation, ref centerOfRotationOffset);
 
@@ -152,15 +172,6 @@ namespace Medical.Spine
             {
                 childSegment.updatePosition();
             }
-        }
-
-        protected override void customLoad(Engine.Saving.LoadInfo info)
-        {
-            //variable renames, get rid of this
-            parentSpineSegmentSimObjectName = info.GetString("fkParentSimObjectName", parentSpineSegmentSimObjectName);
-            childControlBoneSimObjectName = info.GetString("targetSimObjectName", childControlBoneSimObjectName);
-            parentControlBoneSimObjectName = info.GetString("parentSimObjectName", parentControlBoneSimObjectName);
-            base.customLoad(info);
         }
     }
 }
