@@ -14,10 +14,10 @@ namespace Medical.Spine
     class Vertebra : Interface, SpineSegment
     {
         [Editable]
-        String targetSimObjectName;
+        String childControlBoneSimObjectName;
 
         [Editable]
-        String parentSimObjectName;
+        String parentControlBoneSimObjectName;
 
         [Editable]
         private String jointSimObjectName;
@@ -33,11 +33,19 @@ namespace Medical.Spine
 
         [DoNotCopy]
         [DoNotSave]
-        SimObject targetSimObject;
+        SimObject childControlBoneSimObject;
 
         [DoNotCopy]
         [DoNotSave]
-        SimObject parentSimObject;
+        Quaternion childControlBoneRotationOffset;
+
+        [DoNotCopy]
+        [DoNotSave]
+        SimObject parentControlBoneSimObject;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Quaternion parentControlBoneRotationOffset;
 
         [DoNotCopy]
         [DoNotSave]
@@ -45,15 +53,7 @@ namespace Medical.Spine
 
         [DoNotCopy]
         [DoNotSave]
-        Vector3 translationOffset;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Quaternion rotationOffset;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Quaternion parentRotationOffset;
+        Vector3 parentSpineSegmentTranslationOffset;
 
         [DoNotCopy]
         [DoNotSave]
@@ -65,16 +65,16 @@ namespace Medical.Spine
 
         protected override void link()
         {
-            targetSimObject = Owner.getOtherSimObject(targetSimObjectName);
-            if (targetSimObject == null)
+            childControlBoneSimObject = Owner.getOtherSimObject(childControlBoneSimObjectName);
+            if (childControlBoneSimObject == null)
             {
-                blacklist("Cannot find target SimObject {0}.", targetSimObjectName);
+                blacklist("Cannot find target SimObject {0}.", childControlBoneSimObjectName);
             }
 
-            parentSimObject = Owner.getOtherSimObject(parentSimObjectName);
-            if (parentSimObject == null)
+            parentControlBoneSimObject = Owner.getOtherSimObject(parentControlBoneSimObjectName);
+            if (parentControlBoneSimObject == null)
             {
-                blacklist("Cannot find parent SimObject {0}.", parentSimObjectName);
+                blacklist("Cannot find parent SimObject {0}.", parentControlBoneSimObjectName);
             }
 
             parentSpineSegmentSimObject = Owner.getOtherSimObject(parentSpineSegmentSimObjectName);
@@ -106,18 +106,18 @@ namespace Medical.Spine
 
                 //Figure out the translation in parent space, first, however, we must transform the center of rotation offset by the current rotation.
                 //This makes the recorded translation offsets relative to the center of rotation point in world space instead of the center of this SimObject.
-                translationOffset = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentSegmentTrans;
+                parentSpineSegmentTranslationOffset = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentSegmentTrans;
             }
             else
             {
-                translationOffset = Owner.Translation - parentSegmentTrans;
+                parentSpineSegmentTranslationOffset = Owner.Translation - parentSegmentTrans;
                 centerOfRotationOffset = Vector3.Zero;
             }
             //Rotate the translation offset into the parent coord system
-            translationOffset = Quaternion.quatRotate(inverseParentSegmentRot, translationOffset);
+            parentSpineSegmentTranslationOffset = Quaternion.quatRotate(inverseParentSegmentRot, parentSpineSegmentTranslationOffset);
 
-            rotationOffset = targetSimObject.Rotation.inverse() * Owner.Rotation;
-            parentRotationOffset = parentSimObject.Rotation.inverse() * Owner.Rotation;
+            childControlBoneRotationOffset = childControlBoneSimObject.Rotation.inverse() * Owner.Rotation;
+            parentControlBoneRotationOffset = parentControlBoneSimObject.Rotation.inverse() * Owner.Rotation;
         }
 
         protected override void destroy()
@@ -127,17 +127,17 @@ namespace Medical.Spine
 
         public void computePosition()
         {
-            Quaternion targetRotation = targetSimObject.Rotation;
-            targetRotation = targetRotation * rotationOffset;
+            Quaternion childRotation = childControlBoneSimObject.Rotation;
+            childRotation = childRotation * childControlBoneRotationOffset;
 
-            Quaternion parentRotation = parentSimObject.Rotation;
-            parentRotation = parentRotation * parentRotationOffset;
+            Quaternion parentRotation = parentControlBoneSimObject.Rotation;
+            parentRotation = parentRotation * parentControlBoneRotationOffset;
 
-            Quaternion rotation = parentRotation.slerp(ref targetRotation, interpolationAmount);
-            Vector3 newTrans = parentSpineSegmentSimObject.Translation + Quaternion.quatRotate(parentSpineSegmentSimObject.Rotation, translationOffset);
-            newTrans -= Quaternion.quatRotate(ref rotation, ref centerOfRotationOffset);
+            Quaternion rotation = parentRotation.slerp(ref childRotation, interpolationAmount);
+            Vector3 translation = parentSpineSegmentSimObject.Translation + Quaternion.quatRotate(parentSpineSegmentSimObject.Rotation, parentSpineSegmentTranslationOffset);
+            translation -= Quaternion.quatRotate(ref rotation, ref centerOfRotationOffset);
 
-            updatePosition(ref newTrans, ref rotation);
+            updatePosition(ref translation, ref rotation);
         }
 
         public void setChildSegment(SpineSegment segment)
@@ -154,35 +154,12 @@ namespace Medical.Spine
             }
         }
 
-        [DoNotCopy]
-        public Vector3 TranslationOffset
-        {
-            get
-            {
-                return translationOffset;
-            }
-            set
-            {
-                translationOffset = value;
-            }
-        }
-
-        [DoNotCopy]
-        public Quaternion RotationOffset
-        {
-            get
-            {
-                return rotationOffset;
-            }
-            set
-            {
-                rotationOffset = value;
-            }
-        }
-
         protected override void customLoad(Engine.Saving.LoadInfo info)
         {
+            //variable renames, get rid of this
             parentSpineSegmentSimObjectName = info.GetString("fkParentSimObjectName", parentSpineSegmentSimObjectName);
+            childControlBoneSimObjectName = info.GetString("targetSimObjectName", childControlBoneSimObjectName);
+            parentControlBoneSimObjectName = info.GetString("parentSimObjectName", parentControlBoneSimObjectName);
             base.customLoad(info);
         }
     }
