@@ -55,6 +55,7 @@ namespace Medical
         {
             renamedTypeMap.addRenamedType("Medical.PositionBroadcaster", typeof(PositionBroadcaster));
             renamedTypeMap.addRenamedType("Medical.PoseableByEntity", typeof(PoseableByAnatomyIdentifier));
+            renamedTypeMap.addRenamedType("Medical.SimObjectPartialFollowerWithRotation", typeof(Spine.Vertebra));
         }
 
         #endregion

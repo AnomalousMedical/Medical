@@ -151,7 +151,9 @@
     <Compile Include="Measurement\MeasurementController.cs" />
     <Compile Include="Measurement\MeasurementDrawer.cs" />
     <Compile Include="Measurement\SimObjectFollower.cs" />
-    <Compile Include="Animation\SimObjectPartialFollowerWithRotation.cs" />
+    <Compile Include="Spine\SpineIKSegment.cs" />
+    <Compile Include="Spine\SpineSegment.cs" />
+    <Compile Include="Spine\Vertebra.cs" />
     <Compile Include="MouthInterior\BottomLipSection.cs" />
     <Compile Include="MouthInterior\LipController.cs" />
     <Compile Include="MouthInterior\LipSection.cs" />
@@ -189,6 +191,7 @@
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Props\Splint.cs" />
     <Compile Include="SleepyActorRepository.cs" />
+    <Compile Include="Spine\SpineRoot.cs" />
     <Compile Include="State\CompoundPresetState.cs" />
     <Compile Include="State\MedicalState.cs" />
     <Compile Include="State\MedicalStateNotes.cs" />

@@ -9,15 +9,12 @@ using Engine.Platform;
 using Engine.Attributes;
 using Engine.Behaviors.Animation;
 
-namespace Medical
+namespace Medical.Spine
 {
-    class SimObjectPartialFollowerWithRotation : Interface
+    class Vertebra : Interface, SpineSegment
     {
         [Editable]
         String targetSimObjectName;
-
-        [Editable]
-        String targetPositionBroadcasterName = "PositionBroadcaster";
 
         [Editable]
         float interpolationAmount = 0.5f;
@@ -29,7 +26,10 @@ namespace Medical
         private String jointSimObjectName;
 
         [Editable]
-        private String fkParentSimObjectName;
+        private String parentSpineSegmentSimObjectName;
+
+        [Editable]
+        private String parentSpineSegmentName = "Follower";
 
         [DoNotCopy]
         [DoNotSave]
@@ -41,7 +41,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        SimObject fkParentSimObject;
+        SimObject parentSpineSegmentSimObject;
 
         [DoNotCopy]
         [DoNotSave]
@@ -51,21 +51,17 @@ namespace Medical
         [DoNotSave]
         Quaternion rotationOffset;
 
-        //[DoNotCopy]
-        //[DoNotSave]
-        //Vector3 parentTranslationOffset;
-
         [DoNotCopy]
         [DoNotSave]
         Quaternion parentRotationOffset;
 
         [DoNotCopy]
         [DoNotSave]
-        PositionBroadcaster broadcaster;
+        private Vector3 centerOfRotationOffset = Vector3.Zero;
 
         [DoNotCopy]
         [DoNotSave]
-        private Vector3 centerOfRotationOffset = Vector3.Zero;
+        private SpineSegment childSegment;
 
         protected override void link()
         {
@@ -81,18 +77,17 @@ namespace Medical
                 blacklist("Cannot find parent SimObject {0}.", parentSimObjectName);
             }
 
-            fkParentSimObject = Owner.getOtherSimObject(fkParentSimObjectName);
-            if (fkParentSimObject == null)
+            parentSpineSegmentSimObject = Owner.getOtherSimObject(parentSpineSegmentSimObjectName);
+            if (parentSpineSegmentSimObject == null)
             {
-                blacklist("Cannot find parent SimObject {0}.", fkParentSimObjectName);
+                blacklist("Cannot find parent SpineSegment SimObject {0}.", parentSpineSegmentSimObjectName);
             }
-
-            broadcaster = targetSimObject.getElement(targetPositionBroadcasterName) as PositionBroadcaster;
-            if (broadcaster == null)
+            var spineSegment = parentSpineSegmentSimObject.getElement(parentSpineSegmentName) as SpineSegment;
+            if(spineSegment == null)
             {
-                blacklist("Cannot find target PositionBroadcaster '{0}' on SimObject '{1}'", targetPositionBroadcasterName, targetSimObjectName);
+                blacklist("Cannot find SpineSegment {0} on parent SpineSegment SimObject {1}.", parentSpineSegmentName, parentSpineSegmentSimObjectName);
             }
-            broadcaster.PositionChanged += broadcaster_PositionChanged;
+            spineSegment.setChildSegment(this);
 
             if (!String.IsNullOrEmpty(jointSimObjectName))
             {
@@ -105,8 +100,8 @@ namespace Medical
                 centerOfRotationOffset = jointSimObject.Translation - Owner.Translation;
 
                 Quaternion ourRotation = Owner.Rotation;
-                Quaternion inverseParentRot = fkParentSimObject.Rotation.inverse();
-                Vector3 parentTrans = fkParentSimObject.Translation;
+                Quaternion inverseParentRot = parentSpineSegmentSimObject.Rotation.inverse();
+                Vector3 parentTrans = parentSpineSegmentSimObject.Translation;
 
                 //Figure out the translation in parent space, first, however, we must transform the center of rotation offset by the current rotation.
                 //This makes the recorded translation offsets relative to the center of rotation point in world space instead of the center of this SimObject.
@@ -124,7 +119,6 @@ namespace Medical
 
         protected override void destroy()
         {
-            broadcaster.PositionChanged -= broadcaster_PositionChanged;
             base.destroy();
         }
 
@@ -137,26 +131,24 @@ namespace Medical
             parentRotation = parentRotation * parentRotationOffset;
 
             Quaternion rotation = parentRotation.slerp(ref targetRotation, interpolationAmount);
-            Vector3 newTrans = fkParentSimObject.Translation + Quaternion.quatRotate(fkParentSimObject.Rotation, translationOffset);
+            Vector3 newTrans = parentSpineSegmentSimObject.Translation + Quaternion.quatRotate(parentSpineSegmentSimObject.Rotation, translationOffset);
             newTrans -= Quaternion.quatRotate(ref rotation, ref centerOfRotationOffset);
 
             updatePosition(ref newTrans, ref rotation);
         }
 
-        /* rotation only
-         Quaternion targetRotation = targetSimObject.Rotation;
-            Quaternion parentRotation = parentSimObject.Rotation;
-            //targetRotation = Quaternion.Identity.slerp(ref targetRotation, interpolationAmount, true) * Quaternion.Identity.slerp(ref parentRotation, 1.0f - interpolationAmount, true);
-            targetRotation = parentRotation.slerp(ref targetRotation, interpolationAmount, true);
+        public void setChildSegment(SpineSegment segment)
+        {
+            childSegment = segment;
+        }
 
-            Vector3 trans = targetSimObject.Translation + Quaternion.quatRotate(targetRotation, translationOffset);
-            Quaternion rotation = targetRotation * rotationOffset;
-            updatePosition(ref trans, ref rotation);
-         */
-
-        void broadcaster_PositionChanged(SimObject obj)
+        public void updatePosition()
         {
             computePosition();
+            if (childSegment != null)
+            {
+                childSegment.updatePosition();
+            }
         }
 
         [DoNotCopy]
@@ -183,6 +175,12 @@ namespace Medical
             {
                 rotationOffset = value;
             }
+        }
+
+        protected override void customLoad(Engine.Saving.LoadInfo info)
+        {
+            parentSpineSegmentSimObjectName = info.GetString("fkParentSimObjectName", parentSpineSegmentSimObjectName);
+            base.customLoad(info);
         }
     }
 }
