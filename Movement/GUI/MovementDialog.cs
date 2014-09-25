@@ -98,7 +98,8 @@ namespace Medical.Movement.GUI
             {
                 yield return first;
                 yield return medicalController.getSimObject("C_T_SpineJoint");
-                yield return medicalController.getSimObject("T_L_SpineJoint");
+                yield return medicalController.getSimObject("UpperT_LowerT_SpineJoint");
+                yield return medicalController.getSimObject("LowerT_L_SpineJoint");
                 yield return medicalController.getSimObject("L_Pelvis_Joint");
             }
             else
