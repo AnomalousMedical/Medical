@@ -13,7 +13,7 @@ namespace Medical
     /// This is an FK Root that will schedule its update to run before the scene's bullet
     /// physics scene updates.
     /// </summary>
-    public class FKBulletRoot : Interface, FKRoot
+    public class FKBulletRoot : BehaviorInterface, FKRoot
     {
         private const float FullBlend = 0.99999f;
 

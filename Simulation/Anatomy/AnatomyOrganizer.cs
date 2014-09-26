@@ -9,7 +9,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    public partial class AnatomyOrganizer : Interface
+    public partial class AnatomyOrganizer : BehaviorInterface
     {
         private AnatomyTreeNode rootNode;
 

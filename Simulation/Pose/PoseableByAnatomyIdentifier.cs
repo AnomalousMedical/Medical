@@ -16,7 +16,7 @@ namespace Medical
     /// <summary>
     /// This class will search for poseables by raycasting onto an entity.
     /// </summary>
-    class PoseableByAnatomyIdentifier : Interface, PoseableIdentifier
+    class PoseableByAnatomyIdentifier : BehaviorInterface, PoseableIdentifier
     {
         [Editable]
         private String anatomySimObjectName = "this";

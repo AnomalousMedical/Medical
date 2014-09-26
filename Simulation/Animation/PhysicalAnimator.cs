@@ -11,7 +11,7 @@ using OgrePlugin;
 
 namespace Medical
 {
-    class PhysicalAnimator : Interface
+    class PhysicalAnimator : BehaviorInterface
     {
         [Editable]
         String targetSimObject;

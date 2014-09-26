@@ -12,7 +12,7 @@ namespace Medical
 {
     public delegate void MovingMuscleTargetOffsetChanged(MovingMuscleTarget source, Vector3 offset);
 
-    public class MovingMuscleTarget : Interface
+    public class MovingMuscleTarget : BehaviorInterface
     {
         [DoNotSave]
         [DoNotCopy]

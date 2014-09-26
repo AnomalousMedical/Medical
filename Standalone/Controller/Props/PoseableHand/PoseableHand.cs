@@ -9,7 +9,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    public class PoseableHand : Interface
+    public class PoseableHand : BehaviorInterface
     {
         public const String PoseableHandBehavior = "PoseableHandBehavior";
 

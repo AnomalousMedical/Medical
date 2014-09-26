@@ -11,7 +11,7 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    class PoseManipulator : Interface, AnimationManipulator
+    class PoseManipulator : BehaviorInterface, AnimationManipulator
     {
         [Editable]
         String targetSimObject;

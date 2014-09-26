@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class OffsetModifierSequence : Interface
+    public class OffsetModifierSequence : BehaviorInterface
     {
         [Editable]
         String targetSimObjectName = "this";

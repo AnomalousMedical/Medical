@@ -9,7 +9,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    public class Plane : Interface
+    public class Plane : BehaviorInterface
     {
         public const String BehaviorName = "Behavior";
 

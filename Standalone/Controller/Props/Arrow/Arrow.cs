@@ -11,7 +11,7 @@ using Engine.ObjectManagement;
 
 namespace Medical
 {
-    public class Arrow : Interface
+    public class Arrow : BehaviorInterface
     {
         public const string ArrowBehaviorName = "Behavior";
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class AngleOffsetModiferDriver : Interface, BlendDriver
+    class AngleOffsetModiferDriver : BehaviorInterface, BlendDriver
     {
         [Editable]
         String firstAngleSimObjectName;

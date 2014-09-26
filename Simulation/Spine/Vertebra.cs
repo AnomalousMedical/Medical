@@ -11,7 +11,7 @@ using Engine.Behaviors.Animation;
 
 namespace Medical.Spine
 {
-    class Vertebra : Interface, SpineSegment
+    class Vertebra : BehaviorInterface, SpineSegment
     {
         [Editable]
         String childControlBoneSimObjectName;

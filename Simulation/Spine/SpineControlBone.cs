@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Medical.Spine
 {
-    class SpineControlBone : Interface
+    class SpineControlBone : BehaviorInterface
     {
         [Editable]
         private String spineRootSimObjectName = "Pelvis";

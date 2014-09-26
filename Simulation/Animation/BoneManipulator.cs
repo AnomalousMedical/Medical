@@ -12,7 +12,7 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    abstract class BoneManipulator : Interface, AnimationManipulator
+    abstract class BoneManipulator : BehaviorInterface, AnimationManipulator
     {
         [Editable]
         String targetSimObject;

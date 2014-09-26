@@ -11,7 +11,7 @@ using OgrePlugin;
 
 namespace Medical
 {
-    public partial class AnatomyIdentifier : Interface, Anatomy
+    public partial class AnatomyIdentifier : BehaviorInterface, Anatomy
     {
         [Editable]
         private String anatomicalName;

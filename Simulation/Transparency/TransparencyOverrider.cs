@@ -9,7 +9,7 @@ using Engine.ObjectManagement;
 
 namespace Medical
 {
-    public abstract class TransparencyOverrider : Interface
+    public abstract class TransparencyOverrider : BehaviorInterface
     {
         [Editable]
         private String cullSimObjectName = "this";

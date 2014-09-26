@@ -28,7 +28,7 @@ namespace Medical
             DefaultEvents.registerDefaultEvent(printDebugInfo);
         }
 #else
-    public class Fossa : Interface
+    public class Fossa : BehaviorInterface
     {
 #endif
 

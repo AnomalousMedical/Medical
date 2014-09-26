@@ -9,7 +9,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    public class CircularHighlight : Interface
+    public class CircularHighlight : BehaviorInterface
     {
         public const String BehaviorName = "Behavior";
 

@@ -9,7 +9,7 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    public class Splint : Interface
+    public class Splint : BehaviorInterface
     {
         public const String JointName = "Joint";
         public const String RigidBodyName = "RigidBody";

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class FKLink : Interface, FKElement
+    public class FKLink : BehaviorInterface, FKElement
     {
         [Editable]
         private String parentSimObjectName;

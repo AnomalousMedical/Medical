@@ -7,7 +7,7 @@ using Engine.ObjectManagement;
 
 namespace Medical
 {
-    public class Mandible : Interface
+    public class Mandible : BehaviorInterface
     {
         protected override void constructed()
         {

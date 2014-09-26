@@ -14,7 +14,7 @@ namespace Medical
     /// <summary>
     /// This class will do transparency based off another TransparencyInterface
     /// </summary>
-    public abstract class TransparencySubInterface : Interface
+    public abstract class TransparencySubInterface : BehaviorInterface
     {
         [Editable] String parentInterfaceName;
 
