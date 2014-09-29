@@ -39,7 +39,7 @@ namespace Medical.Animation.Proxy
             }
         }
 
-        internal void alertSpineMoved()
+        internal void alertChainMoved()
         {
             moved = true;
         }

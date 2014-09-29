@@ -11,7 +11,7 @@ using Engine.Behaviors.Animation;
 
 namespace Medical.Animation.Proxy
 {
-    class InterpolatedRotationSegment : BehaviorInterface, ProxyChainSegment
+    class InterpolatedRotationSegment : ProxyChainSegmentBehavior
     {
         [Editable]
         String childControlBoneSimObjectName;
@@ -21,12 +21,6 @@ namespace Medical.Animation.Proxy
 
         [Editable]
         private String jointSimObjectName;
-
-        [Editable]
-        private String parentSpineSegmentSimObjectName;
-
-        [Editable]
-        private String parentSpineSegmentName = "Follower";
 
         [Editable]
         float flexExtInterpolation;
@@ -55,10 +49,6 @@ namespace Medical.Animation.Proxy
 
         [DoNotCopy]
         [DoNotSave]
-        SimObject parentSpineSegmentSimObject;
-
-        [DoNotCopy]
-        [DoNotSave]
         Vector3 parentSpineSegmentTranslationOffset;
 
         [DoNotCopy]
@@ -71,6 +61,8 @@ namespace Medical.Animation.Proxy
 
         protected override void link()
         {
+            base.link();
+
             childControlBoneSimObject = Owner.getOtherSimObject(childControlBoneSimObjectName);
             if (childControlBoneSimObject == null)
             {
@@ -83,20 +75,8 @@ namespace Medical.Animation.Proxy
                 blacklist("Cannot find parent SimObject {0}.", parentControlBoneSimObjectName);
             }
 
-            parentSpineSegmentSimObject = Owner.getOtherSimObject(parentSpineSegmentSimObjectName);
-            if (parentSpineSegmentSimObject == null)
-            {
-                blacklist("Cannot find parent SpineSegment SimObject {0}.", parentSpineSegmentSimObjectName);
-            }
-            var spineSegment = parentSpineSegmentSimObject.getElement(parentSpineSegmentName) as ProxyChainSegment;
-            if(spineSegment == null)
-            {
-                blacklist("Cannot find SpineSegment {0} on parent SpineSegment SimObject {1}.", parentSpineSegmentName, parentSpineSegmentSimObjectName);
-            }
-            spineSegment.setChildSegment(this);
-
-            Vector3 parentSegmentTrans = parentSpineSegmentSimObject.Translation;
-            Quaternion inverseParentSegmentRot = parentSpineSegmentSimObject.Rotation.inverse();
+            Vector3 parentSegmentTrans = parentSegmentSimObject.Translation;
+            Quaternion inverseParentSegmentRot = parentSegmentSimObject.Rotation.inverse();
 
             if (!String.IsNullOrEmpty(jointSimObjectName))
             {
@@ -131,7 +111,7 @@ namespace Medical.Animation.Proxy
             base.destroy();
         }
 
-        public void computePosition()
+        protected override void computePosition()
         {
             Quaternion childRotation = childControlBoneSimObject.Rotation;
             childRotation = childRotation * childControlBoneRotationOffset;
@@ -154,38 +134,10 @@ namespace Medical.Animation.Proxy
                                                  0f.interpolate(euler.y, lateralBendingInterpolation),
                                                  0f.interpolate(euler.z, flexExtInterpolation)) * parentRotation;
 
-            Vector3 translation = parentSpineSegmentSimObject.Translation + Quaternion.quatRotate(parentSpineSegmentSimObject.Rotation, parentSpineSegmentTranslationOffset);
+            Vector3 translation = parentSegmentSimObject.Translation + Quaternion.quatRotate(parentSegmentSimObject.Rotation, parentSpineSegmentTranslationOffset);
             translation -= Quaternion.quatRotate(ref rotation, ref centerOfRotationOffset);
 
             updatePosition(ref translation, ref rotation);
-        }
-
-        public void setChildSegment(ProxyChainSegment segment)
-        {
-            if(childSegment == null)
-            {
-                childSegment = segment;
-            }
-            else if(childSegment is MultiChildSegment)
-            {
-                childSegment.setChildSegment(segment);
-            }
-            else
-            {
-                var oldChild = childSegment;
-                childSegment = new MultiChildSegment();
-                childSegment.setChildSegment(oldChild);
-                childSegment.setChildSegment(segment);
-            }
-        }
-
-        public void updatePosition()
-        {
-            computePosition();
-            if (childSegment != null)
-            {
-                childSegment.updatePosition();
-            }
         }
     }
 }

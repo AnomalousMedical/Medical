@@ -10,16 +10,10 @@ using System.Threading.Tasks;
 
 namespace Medical.Animation.Proxy
 {
-    class OffsetSegment : BehaviorInterface, ProxyChainSegment
+    class OffsetSegment : ProxyChainSegmentBehavior
     {
         [Editable]
         private String proxySimObjectName;
-
-        [Editable]
-        private String parentSegmentSimObjectName;
-
-        [Editable]
-        private String parentSegmentName = "Follower";
 
         [Editable]
         private String offsetRootSimObjectName;
@@ -33,28 +27,11 @@ namespace Medical.Animation.Proxy
 
         [DoNotCopy]
         [DoNotSave]
-        private ProxyChainSegment childSegment;
-
-        [DoNotCopy]
-        [DoNotSave]
         private OffsetRoot offsetRoot;
 
         protected override void link()
         {
             base.link();
-
-            //Parent segment
-            var parentSegmentSimObject = Owner.getOtherSimObject(parentSegmentSimObjectName);
-            if (parentSegmentSimObject == null)
-            {
-                blacklist("Cannot find parent segment SimObject {0}.", parentSegmentSimObjectName);
-            }
-            var parentSegment = parentSegmentSimObject.getElement(parentSegmentName) as ProxyChainSegment;
-            if (parentSegment == null)
-            {
-                blacklist("Cannot find segment {0} on parent segment SimObject {1}.", parentSegmentName, parentSegmentSimObjectName);
-            }
-            parentSegment.setChildSegment(this);
 
             //Offset Root
             var offsetRootSimObject = Owner.getOtherSimObject(offsetRootSimObjectName);
@@ -76,35 +53,7 @@ namespace Medical.Animation.Proxy
             }
         }
 
-        public void setChildSegment(ProxyChainSegment segment)
-        {
-            if (childSegment == null)
-            {
-                childSegment = segment;
-            }
-            else if (childSegment is MultiChildSegment)
-            {
-                childSegment.setChildSegment(segment);
-            }
-            else
-            {
-                var oldChild = childSegment;
-                childSegment = new MultiChildSegment();
-                childSegment.setChildSegment(oldChild);
-                childSegment.setChildSegment(segment);
-            }
-        }
-
-        public void updatePosition()
-        {
-            computePosition();
-            if (childSegment != null)
-            {
-                childSegment.updatePosition();
-            }
-        }
-
-        private void computePosition()
+        protected override void computePosition()
         {
             Vector3 translation = proxySimObject.Translation + offsetRoot.ProxyTranslationOffset;
             Quaternion rotation = proxySimObject.Rotation *offsetRoot.ProxyRotationOffset;

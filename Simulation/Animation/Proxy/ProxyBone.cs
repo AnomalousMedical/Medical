@@ -12,35 +12,43 @@ namespace Medical.Animation.Proxy
     class ProxyBone : BehaviorInterface
     {
         [Editable]
-        private String spineRootSimObjectName = "Pelvis";
+        private String proxyRootSimObjectName = "Pelvis";
 
         [Editable]
-        private String spineRootName = "SpineRoot";
+        private String proxyRootName = "SpineRoot";
 
         [DoNotCopy]
         [DoNotSave]
-        ProxyRoot spineRoot;
+        ProxyRoot proxyRoot;
 
         protected override void link()
         {
             base.link();
 
-            var spineRootSimObject = Owner.getOtherSimObject(spineRootSimObjectName);
+            var spineRootSimObject = Owner.getOtherSimObject(proxyRootSimObjectName);
             if (spineRootSimObject == null)
             {
-                blacklist("Cannot find parent Spine Root SimObject '{0}'.", spineRootSimObjectName);
+                blacklist("Cannot find parent Spine Root SimObject '{0}'.", proxyRootSimObjectName);
             }
 
-            spineRoot = spineRootSimObject.getElement(spineRootName) as ProxyRoot;
-            if (spineRoot == null)
+            proxyRoot = spineRootSimObject.getElement(proxyRootName) as ProxyRoot;
+            if (proxyRoot == null)
             {
-                blacklist("Cannot find SpineRoot '{0}' on SimObject '{1}'.", spineRootName, spineRootSimObjectName);
+                blacklist("Cannot find SpineRoot '{0}' on SimObject '{1}'.", proxyRootName, proxyRootSimObjectName);
             }
         }
 
         protected override void positionUpdated()
         {
-            spineRoot.alertSpineMoved();
+            proxyRoot.alertChainMoved();
+        }
+
+        protected override void customLoad(Engine.Saving.LoadInfo info)
+        {
+            base.customLoad(info);
+
+            proxyRootSimObjectName = info.GetString("spineRootSimObjectName", proxyRootSimObjectName);
+            proxyRootName = info.GetString("spineRootName", proxyRootName);
         }
     }
 }
