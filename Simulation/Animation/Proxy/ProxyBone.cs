@@ -42,13 +42,5 @@ namespace Medical.Animation.Proxy
         {
             proxyRoot.alertChainMoved();
         }
-
-        protected override void customLoad(Engine.Saving.LoadInfo info)
-        {
-            base.customLoad(info);
-
-            proxyRootSimObjectName = info.GetString("spineRootSimObjectName", proxyRootSimObjectName);
-            proxyRootName = info.GetString("spineRootName", proxyRootName);
-        }
     }
 }
