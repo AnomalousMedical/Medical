@@ -162,7 +162,21 @@ namespace Medical.Spine
 
         public void setChildSegment(SpineSegment segment)
         {
-            childSegment = segment;
+            if(childSegment == null)
+            {
+                childSegment = segment;
+            }
+            else if(childSegment is MultiChildSegment)
+            {
+                childSegment.setChildSegment(segment);
+            }
+            else
+            {
+                var oldChild = childSegment;
+                childSegment = new MultiChildSegment();
+                childSegment.setChildSegment(oldChild);
+                childSegment.setChildSegment(segment);
+            }
         }
 
         public void updatePosition()
