@@ -152,11 +152,11 @@
     <Compile Include="Measurement\MeasurementDrawer.cs" />
     <Compile Include="Measurement\SimObjectFollower.cs" />
     <Compile Include="Animation\Proxy\MultiChildSegment.cs" />
-    <Compile Include="Animation\Proxy\OffsetFollowerRoot.cs" />
-    <Compile Include="Animation\Proxy\ProxyOffsetFollower.cs" />
-    <Compile Include="Animation\Proxy\SpineControlBone.cs" />
+    <Compile Include="Animation\Proxy\OffsetRoot.cs" />
+    <Compile Include="Animation\Proxy\OffsetSegment.cs" />
+    <Compile Include="Animation\Proxy\ProxyBone.cs" />
     <Compile Include="Animation\Proxy\ProxyChainSegment.cs" />
-    <Compile Include="Animation\Proxy\Vertebra.cs" />
+    <Compile Include="Animation\Proxy\InterpolatedRotationSegment.cs" />
     <Compile Include="MouthInterior\BottomLipSection.cs" />
     <Compile Include="MouthInterior\LipController.cs" />
     <Compile Include="MouthInterior\LipSection.cs" />
@@ -194,7 +194,7 @@
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Props\Splint.cs" />
     <Compile Include="SleepyActorRepository.cs" />
-    <Compile Include="Animation\Proxy\SpineRoot.cs" />
+    <Compile Include="Animation\Proxy\ProxyRoot.cs" />
     <Compile Include="State\CompoundPresetState.cs" />
     <Compile Include="State\MedicalState.cs" />
     <Compile Include="State\MedicalStateNotes.cs" />

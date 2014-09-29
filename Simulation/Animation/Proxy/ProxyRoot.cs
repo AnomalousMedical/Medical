@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical.Spine
+namespace Medical.Animation.Proxy
 {
-    class SpineRoot : Behavior, ProxyChainSegment
+    class ProxyRoot : Behavior, ProxyChainSegment
     {
         [DoNotCopy]
         [DoNotSave]

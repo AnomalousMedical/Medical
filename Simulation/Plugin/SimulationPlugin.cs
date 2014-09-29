@@ -6,6 +6,7 @@ using Engine;
 using Engine.Platform;
 using Engine.Command;
 using Engine.Behaviors.Animation;
+using Medical.Animation.Proxy;
 
 namespace Medical
 {
@@ -55,6 +56,11 @@ namespace Medical
         {
             renamedTypeMap.addRenamedType("Medical.PositionBroadcaster", typeof(PositionBroadcaster));
             renamedTypeMap.addRenamedType("Medical.PoseableByEntity", typeof(PoseableByAnatomyIdentifier));
+            renamedTypeMap.addRenamedType("Medical.Spine.SpineRoot", typeof(ProxyRoot));
+            renamedTypeMap.addRenamedType("Medical.Spine.Vertebra", typeof(InterpolatedRotationSegment));
+            renamedTypeMap.addRenamedType("Medical.Spine.SpineControlBone", typeof(ProxyBone));
+            renamedTypeMap.addRenamedType("Medical.Spine.OffsetFollowerRoot", typeof(OffsetRoot));
+            renamedTypeMap.addRenamedType("Medical.Spine.ProxyOffsetFollower", typeof(OffsetSegment));
         }
 
         #endregion

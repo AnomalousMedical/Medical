@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical.Spine
+namespace Medical.Animation.Proxy
 {
-    class SpineControlBone : BehaviorInterface
+    class ProxyBone : BehaviorInterface
     {
         [Editable]
         private String spineRootSimObjectName = "Pelvis";
@@ -19,7 +19,7 @@ namespace Medical.Spine
 
         [DoNotCopy]
         [DoNotSave]
-        SpineRoot spineRoot;
+        ProxyRoot spineRoot;
 
         protected override void link()
         {
@@ -31,7 +31,7 @@ namespace Medical.Spine
                 blacklist("Cannot find parent Spine Root SimObject '{0}'.", spineRootSimObjectName);
             }
 
-            spineRoot = spineRootSimObject.getElement(spineRootName) as SpineRoot;
+            spineRoot = spineRootSimObject.getElement(spineRootName) as ProxyRoot;
             if (spineRoot == null)
             {
                 blacklist("Cannot find SpineRoot '{0}' on SimObject '{1}'.", spineRootName, spineRootSimObjectName);

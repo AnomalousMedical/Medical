@@ -9,9 +9,9 @@ using Engine.Platform;
 using Engine.Attributes;
 using Engine.Behaviors.Animation;
 
-namespace Medical.Spine
+namespace Medical.Animation.Proxy
 {
-    class Vertebra : BehaviorInterface, ProxyChainSegment
+    class InterpolatedRotationSegment : BehaviorInterface, ProxyChainSegment
     {
         [Editable]
         String childControlBoneSimObjectName;
