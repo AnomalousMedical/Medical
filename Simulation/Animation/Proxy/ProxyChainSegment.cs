@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Medical.Spine
 {
-    public interface SpineSegment
+    public interface ProxyChainSegment
     {
-        void setChildSegment(SpineSegment segment);
+        void setChildSegment(ProxyChainSegment segment);
 
         void updatePosition();
     }

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Medical.Spine
 {
-    class SpineRoot : Behavior, SpineSegment
+    class SpineRoot : Behavior, ProxyChainSegment
     {
         [DoNotCopy]
         [DoNotSave]
-        private SpineSegment childSegment;
+        private ProxyChainSegment childSegment;
 
         [DoNotCopy]
         [DoNotSave]
@@ -25,7 +25,7 @@ namespace Medical.Spine
             updatePosition();
         }
 
-        public void setChildSegment(SpineSegment segment)
+        public void setChildSegment(ProxyChainSegment segment)
         {
             childSegment = segment;
         }

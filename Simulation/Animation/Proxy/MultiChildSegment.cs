@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Medical.Spine
 {
-    class MultiChildSegment : SpineSegment
+    class MultiChildSegment : ProxyChainSegment
     {
-        private List<SpineSegment> children = new List<SpineSegment>();
+        private List<ProxyChainSegment> children = new List<ProxyChainSegment>();
 
-        public void setChildSegment(SpineSegment segment)
+        public void setChildSegment(ProxyChainSegment segment)
         {
             children.Add(segment);
         }

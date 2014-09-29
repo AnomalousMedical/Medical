@@ -11,7 +11,7 @@ using Engine.Behaviors.Animation;
 
 namespace Medical.Spine
 {
-    class Vertebra : BehaviorInterface, SpineSegment
+    class Vertebra : BehaviorInterface, ProxyChainSegment
     {
         [Editable]
         String childControlBoneSimObjectName;
@@ -67,7 +67,7 @@ namespace Medical.Spine
 
         [DoNotCopy]
         [DoNotSave]
-        private SpineSegment childSegment;
+        private ProxyChainSegment childSegment;
 
         protected override void link()
         {
@@ -88,7 +88,7 @@ namespace Medical.Spine
             {
                 blacklist("Cannot find parent SpineSegment SimObject {0}.", parentSpineSegmentSimObjectName);
             }
-            var spineSegment = parentSpineSegmentSimObject.getElement(parentSpineSegmentName) as SpineSegment;
+            var spineSegment = parentSpineSegmentSimObject.getElement(parentSpineSegmentName) as ProxyChainSegment;
             if(spineSegment == null)
             {
                 blacklist("Cannot find SpineSegment {0} on parent SpineSegment SimObject {1}.", parentSpineSegmentName, parentSpineSegmentSimObjectName);
@@ -160,7 +160,7 @@ namespace Medical.Spine
             updatePosition(ref translation, ref rotation);
         }
 
-        public void setChildSegment(SpineSegment segment)
+        public void setChildSegment(ProxyChainSegment segment)
         {
             if(childSegment == null)
             {
