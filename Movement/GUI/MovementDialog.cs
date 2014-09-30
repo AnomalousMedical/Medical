@@ -93,11 +93,10 @@ namespace Medical.Movement.GUI
 
         public IEnumerable<SimObject> cSpineJoints()
         {
-            var first = medicalController.getSimObject("Skull_C_Joint");
+            var first = medicalController.getSimObject("C_T_SpineJoint");
             if (first != null)
             {
                 yield return first;
-                yield return medicalController.getSimObject("C_T_SpineJoint");
                 yield return medicalController.getSimObject("UpperT_LowerT_SpineJoint");
                 yield return medicalController.getSimObject("LowerT_L_SpineJoint");
                 yield return medicalController.getSimObject("L_Pelvis_Joint");
