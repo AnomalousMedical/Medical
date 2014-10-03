@@ -9,12 +9,14 @@ using Medical.Muscles;
 using Engine.Platform;
 using Medical.GUI.AnomalousMvc;
 using Medical.Controller.AnomalousMvc;
+using Engine.Editing;
 
 namespace Medical.GUI
 {
     public class OffsetSequenceEditor : LayoutComponent, EditMenuProvider
     {
         public const float Duration = 10.0f;
+        private const String DefaultTargetLabelText = "No Target Selected";
 
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
@@ -24,6 +26,8 @@ namespace Medical.GUI
         private MedicalController medicalController;
 
         private OffsetModifierSequence offsetSequence;
+
+        private TextBox targetLabel;
 
         public OffsetSequenceEditor(SaveableClipboard clipboard, MyGUIViewHost viewHost, OffsetSequenceEditorView view, MedicalController medicalController)
             : base("Medical.GUI.OffsetSequence.OffsetSequenceEditor.layout", viewHost)
@@ -66,6 +70,9 @@ namespace Medical.GUI
 
             Button chooseTargetButton = (Button)widget.findWidget("ChooseTargetButton");
             chooseTargetButton.MouseButtonClick += chooseTargetButton_MouseButtonClick;
+
+            targetLabel = (TextBox)widget.findWidget("TargetLabel");
+            targetLabel.Caption = DefaultTargetLabelText;
         }
 
         public override void Dispose()
@@ -204,9 +211,18 @@ namespace Medical.GUI
 
         void chooseTargetButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //Hardcoded to left patella for now.
-            var patella = medicalController.getSimObject("LeftPatella");
-            Player = patella.getElement("OffsetModifierSequence") as OffsetModifierPlayer;
+            Browser browser = new Browser("Offset Modifier Players", "Choose a player");
+            foreach(var player in OffsetModifierPlayer.EditablePlayers)
+            {
+                browser.addNode(player.Owner.Name, new BrowserNode(player.Name, player));
+            }
+            BrowserWindow<OffsetModifierPlayer>.GetInput(browser, true, getBrowseResult);
+        }
+
+        bool getBrowseResult(OffsetModifierPlayer result, ref String errorMessage)
+        {
+            Player = result;
+            return true;
         }
 
         private OffsetModifierPlayer player;
@@ -232,6 +248,11 @@ namespace Medical.GUI
                         player.Sequence = CurrentSequence;
                     }
                     timelineView.MarkerTime = player.BlendDriver.BlendAmount;
+                    targetLabel.Caption = String.Format("{0} - {1}", player.Owner.Name, player.Name);
+                }
+                else
+                {
+                    targetLabel.Caption = DefaultTargetLabelText;
                 }
             }
         }

@@ -6,8 +6,8 @@
                 <Property key="CanvasAlign" value="Left Top"/>
                 <Property key="CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="3 1 185 20" align="Left Top" name="ChooseTargetButton">
-                <Property key="Caption" value="Choose Target"/>
+            <Widget type="Button" skin="Button" position="135 1 53 20" align="Left Top" name="ChooseTargetButton">
+                <Property key="Caption" value="Choose"/>
                 <Property key="ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 39" align="Left VStretch" name="ActionFilter">
@@ -21,6 +21,7 @@
                 <Property key="VisibleHScroll" value="false"/>
                 <Property key="CanvasAlign" value="Left Top"/>
             </Widget>
+            <Widget type="TextBox" skin="TextBox" position="3 1 131 20" name="TargetLabel"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="680 1 237 68" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="CanvasSize" value="214 314"/>

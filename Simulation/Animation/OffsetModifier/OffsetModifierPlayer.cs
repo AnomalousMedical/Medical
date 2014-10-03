@@ -17,6 +17,16 @@ namespace Medical
     {
         private static XmlSaver saver = new XmlSaver();
 
+        private static List<OffsetModifierPlayer> editablePlayers = new List<OffsetModifierPlayer>();
+
+        public static IEnumerable<OffsetModifierPlayer> EditablePlayers
+        {
+            get
+            {
+                return editablePlayers;
+            }
+        }
+
         [Editable]
         String targetSimObjectName = "this";
 
@@ -31,6 +41,9 @@ namespace Medical
 
         [Editable]
         String sequenceFileName;
+
+        [Editable]
+        bool editable = true;
 
         [DoNotCopy]
         [DoNotSave]
@@ -78,10 +91,19 @@ namespace Medical
             }
 
             loadSequence(sequenceFileName);
+
+            if(editable)
+            {
+                editablePlayers.Add(this);
+            }
         }
 
         protected override void destroy()
         {
+            if(editable)
+            {
+                editablePlayers.Remove(this);
+            }
             blendDriver.BlendAmountChanged -= blendDriver_BlendAmountChanged;
             base.destroy();
         }
