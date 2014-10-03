@@ -139,6 +139,7 @@ namespace Medical
                 if (currentSequence != null)
                 {
                     blendDriver.BlendAmountChanged += blendDriver_BlendAmountChanged;
+                    blend(blendDriver.BlendAmount);
                 }
             }
         }

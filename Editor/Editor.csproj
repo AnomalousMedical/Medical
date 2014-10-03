@@ -85,6 +85,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Documents\UnknownDocumentHandler.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\DependencyTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\OffsetSequenceTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\PropTypeController.cs" />

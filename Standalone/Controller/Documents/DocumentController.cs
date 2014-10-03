@@ -60,7 +60,7 @@ namespace Medical
                     return true;
                 }
             }
-            return false;
+            return UnknownDocumentHander != null && UnknownDocumentHander.canReadFile(filename) && UnknownDocumentHander.processFile(filename);
         }
 
         public String getFileTypePrettyName(String filename)
@@ -156,5 +156,11 @@ namespace Medical
                 recentDocuments.DocumentReaccessed -= value;
             }
         }
+
+        /// <summary>
+        /// This document handler will be invoked if the other registered document handlers cannot handle
+        /// the chosen document.
+        /// </summary>
+        public DocumentHandler UnknownDocumentHander { get; set; }
     }
 }
