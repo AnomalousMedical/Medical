@@ -64,5 +64,10 @@ namespace Medical
             info.AddValue("RotationOffset", RotationOffset);
             info.AddValue("BlendAmount", BlendAmount);
         }
+
+        public void preview(SimObjectFollowerWithRotation follower)
+        {
+            blendFrom(this, 0.0f, follower);
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace Medical
         //Editor contexts
         private MvcEditorContext mvcEditorContext;
         private MovementSequenceEditorContext movementSequenceEditorContext;
+        private OffsetSequenceEditorContext offsetSequenceEditorContext;
         private PluginEditorContext pluginEditorContext;
         private DependencyEditorContext dependencyEditorContext;
         private TimelineEditorContext timelineEditorContext;
@@ -172,6 +173,27 @@ namespace Medical
                     editorController.runEditorContext(movementSequenceEditorContext.MvcContext);
                 };
 
+
+
+            //Movement Sequence type controller
+            OffsetSequenceTypeController offsetSequenceTypeController = new OffsetSequenceTypeController(editorController);
+            offsetSequenceTypeController.OpenEditor += (file, movementSequence) =>
+            {
+                offsetSequenceEditorContext = new OffsetSequenceEditorContext(movementSequence, file, offsetSequenceTypeController);
+                offsetSequenceEditorContext.Focus += obj =>
+                {
+                    offsetSequenceEditorContext = obj;
+                };
+                offsetSequenceEditorContext.Blur += obj =>
+                {
+                    if (offsetSequenceEditorContext == obj)
+                    {
+                        offsetSequenceEditorContext = null;
+                    }
+                };
+                editorController.runEditorContext(offsetSequenceEditorContext.MvcContext);
+            };
+
             //TRML Type controller
             TRmlTypeController trmlTypeController = new TRmlTypeController(editorController);
             trmlTypeController.OpenEditor += (file) =>
@@ -258,6 +280,7 @@ namespace Medical
             //Add type controllers to editor controller, this also adds some item templates
             editorController.addTypeController(timelineTypeController);
             editorController.addTypeController(movementSequenceTypeController);
+            editorController.addTypeController(offsetSequenceTypeController);
             editorController.addTypeController(rmlTypeController);
             editorController.addTypeController(trmlTypeController);
             editorController.addTypeController(rcssTypeController);
@@ -280,6 +303,10 @@ namespace Medical
             if (movementSequenceEditorContext != null)
             {
                 movementSequenceEditorContext.close();
+            }
+            if(offsetSequenceEditorContext != null)
+            {
+                offsetSequenceEditorContext.close();
             }
             if (pluginEditorContext != null)
             {

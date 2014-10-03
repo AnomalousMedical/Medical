@@ -86,10 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\EditorController\TypeControllers\DependencyTypeController.cs" />
+    <Compile Include="Controller\EditorController\TypeControllers\OffsetSequenceTypeController.cs" />
     <Compile Include="Controller\EditorController\TypeControllers\PropTypeController.cs" />
     <Compile Include="Controller\EditorFilesystemWatcher.cs" />
     <Compile Include="Controller\DependencyEditorContext.cs" />
     <Compile Include="Controller\EditorUICallback.cs" />
+    <Compile Include="Controller\OffsetSequenceEditorContext.cs" />
     <Compile Include="Controller\PropEditorContext.cs" />
     <Compile Include="Controller\Project\DependencyProjectTemplate.cs" />
     <Compile Include="Controller\XmlEditorContext.cs" />
@@ -132,6 +134,12 @@
     <Compile Include="GUI\EditorTaskbar\EditorTaskbarView.cs" />
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
+    <Compile Include="GUI\OffsetSequence\OffsetKeyframeData.cs" />
+    <Compile Include="GUI\OffsetSequence\OffsetKeyframeProperties.cs" />
+    <Compile Include="GUI\OffsetSequence\OffsetSequenceClipboardContainer.cs" />
+    <Compile Include="GUI\OffsetSequence\OffsetSequenceEditor.cs" />
+    <Compile Include="GUI\OffsetSequence\OffsetSequenceEditorFactory.cs" />
+    <Compile Include="GUI\OffsetSequence\OffsetSequenceEditorView.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
     <Compile Include="GUI\FileBrowserTree\DirectoryNode.cs" />
     <Compile Include="GUI\FileBrowserTree\FileNode.cs" />
@@ -170,6 +178,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbarFileButton.layout" />
+    <EmbeddedResource Include="GUI\OffsetSequence\OffsetKeyframeProperties.layout" />
+    <EmbeddedResource Include="GUI\OffsetSequence\OffsetSequenceEditor.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\ProjectExplorer\ProjectExplorer.layout" />
     <EmbeddedResource Include="GUI\ScratchArea\ScratchArea.layout" />
     <EmbeddedResource Include="GUI\TextEditor\TextEditorComponent.layout" />

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" position="204 195 929 69" layer="Overlapped">
+        <Widget type="Widget" skin="PanelSkin" position="0 3 678 69" align="Stretch">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 487 39" align="Stretch" name="ActionView">
+                <Property key="CanvasAlign" value="Left Top"/>
+                <Property key="CanvasSize" value="0 100"/>
+            </Widget>
+            <Widget type="Button" skin="ImageButton" position="124 1 64 20" align="Left Top" name="PlayButton">
+                <Property key="Caption" value="Play"/>
+                <Property key="ImageResource" value="Timeline/PlayIcon"/>
+            </Widget>
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 39" align="Left VStretch" name="ActionFilter">
+                <Property key="CanvasSize" value="179 200"/>
+                <Property key="CanvasAlign" value="Left Top"/>
+                <Property key="VisibleVScroll" value="false"/>
+                <Property key="VisibleHScroll" value="false"/>
+            </Widget>
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 2 486 21" align="HStretch Top" name="NumberLine">
+                <Property key="VisibleVScroll" value="false"/>
+                <Property key="VisibleHScroll" value="false"/>
+                <Property key="CanvasAlign" value="Left Top"/>
+            </Widget>
+            <Widget type="EditBox" skin="EditBox" position="51 1 71 20" name="SequenceDuration"/>
+            <Widget type="TextBox" skin="TextBox" position="0 1 50 19">
+                <Property key="Caption" value="Duration"/>
+                <Property key="TextAlign" value="Left VCenter"/>
+            </Widget>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollView" position="680 1 237 68" align="Right VStretch" name="ActionPropertiesScrollView">
+            <Property key="CanvasSize" value="214 314"/>
+            <Property key="CanvasAlign" value="Left Top"/>
+            <Widget type="TextBox" skin="TextBox" position="0 1 66 16" align="HStretch Top" name="PropertiesText">
+                <Property key="Caption" value="Properties"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="1 24 74 15">
+                <Property key="Caption" value="Start Time"/>
+            </Widget>
+            <Widget type="EditBox" skin="EditBox" position="76 23 132 18" name="StartTime"/>
+            <Widget type="Button" skin="Button" position="137 2 73 18" name="RemoveAction">
+                <Property key="Caption" value="Remove"/>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>

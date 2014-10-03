@@ -72,6 +72,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<OffsetModifierKeyframe> Keyframes
+        {
+            get
+            {
+                return keyframes;
+            }
+        }
+
         protected OffsetModifierSequence(LoadInfo info)
         {
             info.RebuildList("Keyframe", keyframes);
