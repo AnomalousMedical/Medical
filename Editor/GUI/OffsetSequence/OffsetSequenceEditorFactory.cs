@@ -12,17 +12,19 @@ namespace Medical.GUI
     class OffsetSequenceEditorFactory : ViewHostComponentFactory
     {
         SaveableClipboard clipboard;
+        MedicalController medicalController;
 
-        public OffsetSequenceEditorFactory(SaveableClipboard clipboard)
+        public OffsetSequenceEditorFactory(MedicalController medicalController, SaveableClipboard clipboard)
         {
             this.clipboard = clipboard;
+            this.medicalController = medicalController;
         }
 
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             if (view is OffsetSequenceEditorView)
             {
-                return new OffsetSequenceEditor(clipboard, viewHost, (OffsetSequenceEditorView)view);
+                return new OffsetSequenceEditor(clipboard, viewHost, (OffsetSequenceEditorView)view, medicalController);
             }
             return null;
         }

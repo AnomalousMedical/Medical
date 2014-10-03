@@ -105,6 +105,23 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Blend to a specified value.
+        /// </summary>
+        /// <param name="amount"></param>
+        public void blend(float amount)
+        {
+            currentSequence.blend(amount, follower);
+        }
+
+        /// <summary>
+        /// Restore the default sequence to this player.
+        /// </summary>
+        public void restoreDefaultSequence()
+        {
+            loadSequence(sequenceFileName);
+        }
+
         public OffsetModifierSequence Sequence
         {
             get
@@ -126,9 +143,17 @@ namespace Medical
             }
         }
 
+        public BlendDriver BlendDriver
+        {
+            get
+            {
+                return blendDriver;
+            }
+        }
+
         void blendDriver_BlendAmountChanged(BlendDriver obj)
         {
-            currentSequence.blend(obj.BlendAmount, follower);
+            blend(obj.BlendAmount);
         }
     }
 }

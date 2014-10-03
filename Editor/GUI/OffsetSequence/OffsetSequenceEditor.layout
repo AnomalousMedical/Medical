@@ -6,8 +6,8 @@
                 <Property key="CanvasAlign" value="Left Top"/>
                 <Property key="CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="ImageButton" position="124 1 64 20" align="Left Top" name="PlayButton">
-                <Property key="Caption" value="Play"/>
+            <Widget type="Button" skin="Button" position="3 1 185 20" align="Left Top" name="ChooseTargetButton">
+                <Property key="Caption" value="Choose Target"/>
                 <Property key="ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 39" align="Left VStretch" name="ActionFilter">
@@ -20,11 +20,6 @@
                 <Property key="VisibleVScroll" value="false"/>
                 <Property key="VisibleHScroll" value="false"/>
                 <Property key="CanvasAlign" value="Left Top"/>
-            </Widget>
-            <Widget type="EditBox" skin="EditBox" position="51 1 71 20" name="SequenceDuration"/>
-            <Widget type="TextBox" skin="TextBox" position="0 1 50 19">
-                <Property key="Caption" value="Duration"/>
-                <Property key="TextAlign" value="Left VCenter"/>
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="680 1 237 68" align="Right VStretch" name="ActionPropertiesScrollView">
@@ -42,4 +37,5 @@
             </Widget>
         </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>

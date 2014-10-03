@@ -14,21 +14,22 @@ namespace Medical.GUI
 {
     public class OffsetSequenceEditor : LayoutComponent, EditMenuProvider
     {
+        public const float Duration = 10.0f;
+
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
         private TimelineView timelineView;
         private NumberLine numberLine;
-        private Button playButton;
-        private NumericEdit durationEdit;
-        private bool allowSynchronization = true;
         private SaveableClipboard clipboard;
+        private MedicalController medicalController;
 
         private OffsetModifierSequence offsetSequence;
 
-        public OffsetSequenceEditor(SaveableClipboard clipboard, MyGUIViewHost viewHost, OffsetSequenceEditorView view)
+        public OffsetSequenceEditor(SaveableClipboard clipboard, MyGUIViewHost viewHost, OffsetSequenceEditorView view, MedicalController medicalController)
             : base("Medical.GUI.OffsetSequence.OffsetSequenceEditor.layout", viewHost)
         {
             this.clipboard = clipboard;
+            this.medicalController = medicalController;
 
             widget.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
@@ -36,23 +37,11 @@ namespace Medical.GUI
             //Remove button
             Button removeButton = widget.findWidget("RemoveAction") as Button;
             removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
-            
-            //Duration Edit
-            durationEdit = new NumericEdit(widget.findWidget("SequenceDuration") as EditBox);
-            durationEdit.AllowFloat = true;
-            durationEdit.ValueChanged += new MyGUIEvent(durationEdit_ValueChanged);
-            durationEdit.MinValue = 0.0f;
-            durationEdit.MaxValue = 600;
-
-            //Play Button
-            playButton = widget.findWidget("PlayButton") as Button;
-            playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
 
             //Timeline view
             ScrollView timelineViewScrollView = widget.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
-            timelineView.DurationChanged += new EventHandler(timelineView_DurationChanged);
-            timelineView.Duration = 1.0f;
+            timelineView.Duration = Duration;
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
 
             //Properties
@@ -74,10 +63,14 @@ namespace Medical.GUI
             CurrentSequence = view.Sequence;
 
             ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
+
+            Button chooseTargetButton = (Button)widget.findWidget("ChooseTargetButton");
+            chooseTargetButton.MouseButtonClick += chooseTargetButton_MouseButtonClick;
         }
 
         public override void Dispose()
         {
+            Player = null;//Reset the player
             base.Dispose();
         }
 
@@ -130,35 +123,22 @@ namespace Medical.GUI
                 timelineView.removeAllData();
                 if (offsetSequence != null)
                 {
-                    timelineView.Duration = 1.0f;
+                    timelineView.Duration = Duration;
                     foreach (var state in offsetSequence.Keyframes)
                     {
-                        timelineView.addData(new OffsetKeyframeData(state, offsetSequence));
+                        addToTimeline(state);
                     }
                 }
                 else
                 {
-                    timelineView.Duration = 5.0f;
+                    timelineView.Duration = Duration;
                 }
             }
         }
 
-        internal void addStateToTimeline(OffsetModifierKeyframe state)
+        internal void addToTimeline(OffsetModifierKeyframe state)
         {
-            timelineView.addData(new OffsetKeyframeData(state, offsetSequence));
-        }
-
-        void playButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            //if (movementSequenceController.Playing)
-            //{
-            //    movementSequenceController.stopPlayback();
-            //}
-            //else
-            //{
-            //    movementSequenceController.CurrentSequence = offsetSequence;
-            //    movementSequenceController.playCurrentSequence();
-            //}
+            timelineView.addData(new OffsetKeyframeData(state, offsetSequence, this));
         }
 
         void removeButton_MouseButtonClick(Widget source, EventArgs e)
@@ -200,65 +180,17 @@ namespace Medical.GUI
             }
         }
 
-        //void movementSequenceController_PlaybackStopped(MovementSequenceController controller)
-        //{
-        //    playButton.Caption = "Play";
-        //    playButton.ImageBox.setItemResource("Timeline/PlayIcon");
-        //}
-
-        //void movementSequenceController_PlaybackStarted(MovementSequenceController controller)
-        //{
-        //    playButton.Caption = "Stop";
-        //    playButton.ImageBox.setItemResource("Timeline/StopIcon");
-        //}
-
-        //void movementSequenceController_PlaybackUpdate(MovementSequenceController controller)
-        //{
-        //    timelineView.MarkerTime = controller.CurrentTime;
-        //}
-
         void trackFilter_AddTrackItem(string name, Object trackUserObject)
         {
             if (offsetSequence != null)
             {
                 OffsetModifierKeyframe keyframe = new OffsetModifierKeyframe();
-                //state.captureState();
+                //keyframe.capture();
                 keyframe.BlendAmount = timelineView.MarkerTime;
                 offsetSequence.addKeyframe(keyframe);
                 offsetSequence.sort();
-                addStateToTimeline(keyframe);
+                addToTimeline(keyframe);
             }
-        }
-
-        private void synchronizeDuration(object sender, float duration)
-        {
-            if (allowSynchronization)
-            {
-                allowSynchronization = false;
-                //if (sender != durationEdit)
-                //{
-                //    durationEdit.FloatValue = duration;
-                //}
-                //if (sender != timelineView)
-                //{
-                //    timelineView.Duration = duration;
-                //}
-                //if (sender != offsetSequence && offsetSequence != null)
-                //{
-                //    offsetSequence.Duration = duration;
-                //}
-                allowSynchronization = true;
-            }
-        }
-
-        void timelineView_DurationChanged(object sender, EventArgs e)
-        {
-            synchronizeDuration(sender, timelineView.Duration);
-        }
-
-        void durationEdit_ValueChanged(Widget source, EventArgs e)
-        {
-            synchronizeDuration(durationEdit, durationEdit.FloatValue);
         }
 
         void widget_RootKeyChangeFocus(Widget source, EventArgs e)
@@ -268,6 +200,45 @@ namespace Medical.GUI
             {
                 ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
             }
+        }
+
+        void chooseTargetButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            //Hardcoded to left patella for now.
+            var patella = medicalController.getSimObject("LeftPatella");
+            Player = patella.getElement("OffsetModifierSequence") as OffsetModifierPlayer;
+        }
+
+        private OffsetModifierPlayer player;
+        public OffsetModifierPlayer Player
+        {
+            get
+            {
+                return player;
+            }
+            set
+            {
+                if (player != null)
+                {
+                    player.BlendDriver.BlendAmountChanged -= BlendDriver_BlendAmountChanged;
+                    player.restoreDefaultSequence();
+                }
+                player = value;
+                if(player != null)
+                {
+                    player.BlendDriver.BlendAmountChanged += BlendDriver_BlendAmountChanged;
+                    if(CurrentSequence != null)
+                    {
+                        player.Sequence = CurrentSequence;
+                    }
+                    timelineView.MarkerTime = player.BlendDriver.BlendAmount;
+                }
+            }
+        }
+
+        void BlendDriver_BlendAmountChanged(BlendDriver obj)
+        {
+            timelineView.MarkerTime = obj.BlendAmount * Duration;
         }
     }
 }

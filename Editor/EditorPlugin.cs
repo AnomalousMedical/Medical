@@ -127,7 +127,7 @@ namespace Medical
             editorController.ProjectChanged += editorController_ProjectChanged;
 
             //Editor Views
-            standaloneController.ViewHostFactory.addFactory(new OffsetSequenceEditorFactory(standaloneController.Clipboard));
+            standaloneController.ViewHostFactory.addFactory(new OffsetSequenceEditorFactory(standaloneController.MedicalController, standaloneController.Clipboard));
         }
 
         void editorController_ProjectChanged(EditorController editorController)

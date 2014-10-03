@@ -11,17 +11,21 @@ namespace Medical.GUI
     {
         private OffsetModifierKeyframe keyframe;
         private OffsetModifierSequence sequence;
+        private OffsetSequenceEditor editor;
 
-        public OffsetKeyframeData(OffsetModifierKeyframe keyframe, OffsetModifierSequence sequence)
+        public OffsetKeyframeData(OffsetModifierKeyframe keyframe, OffsetModifierSequence sequence, OffsetSequenceEditor editor)
         {
             this.keyframe = keyframe;
             this.sequence = sequence;
+            this.editor = editor;
         }
 
         public override void editingStarted()
         {
-            //Call this with some kind of follower
-            //keyframe.preview();
+            if (editor.Player != null)
+            {
+                editor.Player.blend(keyframe.BlendAmount);
+            }
         }
 
         public override string Track
@@ -45,11 +49,11 @@ namespace Medical.GUI
         {
             get
             {
-                return keyframe.BlendAmount;
+                return keyframe.BlendAmount * OffsetSequenceEditor.Duration;
             }
             set
             {
-                keyframe.BlendAmount = value;
+                keyframe.BlendAmount = value / OffsetSequenceEditor.Duration;
                 sequence.sort();
             }
         }

@@ -56,7 +56,7 @@ namespace Medical.GUI
                     copiedAction.BlendAmount = totalDuration;
                 }
                 sequence.addKeyframe(copiedAction);
-                editor.addStateToTimeline(copiedAction);
+                editor.addToTimeline(copiedAction);
             }
             sequence.sort();
         }
