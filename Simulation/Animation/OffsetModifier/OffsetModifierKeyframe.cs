@@ -53,12 +53,16 @@ namespace Medical
 
         protected OffsetModifierKeyframe(LoadInfo info)
         {
-
+            TranslationOffset = info.GetVector3("TranslationOffset");
+            RotationOffset = info.GetQuaternion("RotationOffset");
+            BlendAmount = info.GetFloat("BlendAmount");
         }
 
         public void getInfo(SaveInfo info)
         {
-            
+            info.AddValue("TranslationOffset", TranslationOffset);
+            info.AddValue("RotationOffset", RotationOffset);
+            info.AddValue("BlendAmount", BlendAmount);
         }
     }
 }

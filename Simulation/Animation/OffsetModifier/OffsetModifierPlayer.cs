@@ -2,16 +2,21 @@
 using Engine.Attributes;
 using Engine.Editing;
 using Engine.ObjectManagement;
+using Engine.Saving.XMLSaver;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Medical
 {
     public class OffsetModifierPlayer : BehaviorInterface
     {
+        private static XmlSaver saver = new XmlSaver();
+
         [Editable]
         String targetSimObjectName = "this";
 
@@ -23,6 +28,9 @@ namespace Medical
 
         [Editable]
         String blendDriverElementName = "BlendDriver";
+
+        [Editable]
+        String sequenceFileName;
 
         [DoNotCopy]
         [DoNotSave]
@@ -69,30 +77,7 @@ namespace Medical
                 blacklist("The blend driver SimObject {0} does not have a BlendDriver named {1}.", blendDriverSimObjectName, blendDriverElementName);
             }
 
-            blendDriver.BlendAmountChanged += blendDriver_BlendAmountChanged;
-
-            currentSequence = new OffsetModifierSequence();
-
-            currentSequence.addKeyframe(new OffsetModifierKeyframe()
-            {
-                TranslationOffset = follower.TranslationOffset,
-                RotationOffset = follower.RotationOffset,
-                BlendAmount = 0,
-            });
-
-            currentSequence.addKeyframe(new OffsetModifierKeyframe()
-            {
-                TranslationOffset = Vector3.UnitZ * 20,
-                RotationOffset = follower.RotationOffset,
-                BlendAmount = 0.5f,
-            });
-
-            currentSequence.addKeyframe(new OffsetModifierKeyframe()
-            {
-                TranslationOffset = Vector3.Zero,
-                RotationOffset = Quaternion.Identity,
-                BlendAmount = 1,
-            });
+            loadSequence(sequenceFileName);
         }
 
         protected override void destroy()
@@ -101,14 +86,49 @@ namespace Medical
             base.destroy();
         }
 
-        void blendDriver_BlendAmountChanged(BlendDriver obj)
+        /// <summary>
+        /// Load a sequence from the Virtual File System. If the sequence does not exist the current sequence will be set to null.
+        /// </summary>
+        /// <param name="filename"></param>
+        public void loadSequence(String filename)
         {
-            blend(obj.BlendAmount);
+            if(filename != null && VirtualFileSystem.Instance.exists(filename))
+            {
+                using (var reader = new XmlTextReader(VirtualFileSystem.Instance.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                {
+                    Sequence = saver.restoreObject(reader) as OffsetModifierSequence;
+                }
+            }
+            else
+            {
+                Sequence = null;
+            }
         }
 
-        void blend(float amount)
+        public OffsetModifierSequence Sequence
         {
-            currentSequence.blend(amount, follower);
+            get
+            {
+                return currentSequence;
+            }
+            set
+            {
+                //Make sure we are not subscribing multiple times
+                blendDriver.BlendAmountChanged -= blendDriver_BlendAmountChanged;
+
+                currentSequence = value;
+
+                //Subscribe if we have a sequence
+                if (currentSequence != null)
+                {
+                    blendDriver.BlendAmountChanged += blendDriver_BlendAmountChanged;
+                }
+            }
+        }
+
+        void blendDriver_BlendAmountChanged(BlendDriver obj)
+        {
+            currentSequence.blend(obj.BlendAmount, follower);
         }
     }
 }
