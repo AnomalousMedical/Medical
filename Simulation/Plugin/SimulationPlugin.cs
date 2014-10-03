@@ -12,8 +12,6 @@ namespace Medical
 {
     public class SimulationPlugin : PluginInterface
     {
-        #region PluginInterface Members
-
         public DebugInterface getDebugInterface()
         {
             return null;
@@ -56,7 +54,5 @@ namespace Medical
         {
             
         }
-
-        #endregion
     }
 }

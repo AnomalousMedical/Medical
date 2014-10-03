@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class OffsetModifierKeyframe : Saveable
+    public class OffsetModifierKeyframe : Saveable
     {
         private Vector3 translationOffset;
         private Quaternion rotationOffset;

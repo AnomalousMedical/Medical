@@ -125,6 +125,7 @@
     <Compile Include="Animation\OffsetModifier\BlendDriver.cs" />
     <Compile Include="Animation\OffsetModifier\OffsetModifierKeyframe.cs" />
     <Compile Include="Animation\OffsetModifier\OffsetModifierSequence.cs" />
+    <Compile Include="Animation\OffsetModifier\OffsetModifierPlayer.cs" />
     <Compile Include="Animation\PhysicalAnimator.cs" />
     <Compile Include="Animation\PoseManipulator.cs" />
     <Compile Include="Animation\PoseManipulatorStateEntry.cs" />

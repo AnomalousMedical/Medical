@@ -11,7 +11,7 @@ using Engine.Behaviors.Animation;
 
 namespace Medical
 {
-    class SimObjectFollowerWithRotation : BehaviorInterface
+    public class SimObjectFollowerWithRotation : BehaviorInterface
     {
         [Editable]
         String targetSimObjectName;
