@@ -63,6 +63,7 @@ namespace Medical.GUI
                 if(keyframe != null)
                 {
                     keyframe.TranslationOffset = value;
+                    updatePlayer();
                 }
             }
         }
@@ -83,7 +84,16 @@ namespace Medical.GUI
                 if (keyframe != null)
                 {
                     keyframe.RotationOffset = value;
+                    updatePlayer();
                 }
+            }
+        }
+
+        private void updatePlayer()
+        {
+            if (sequenceEditor.Player != null)
+            {
+                sequenceEditor.Player.blend(keyframe.BlendAmount);
             }
         }
     }
