@@ -101,5 +101,17 @@ namespace Medical
                 rotationOffset = value;
             }
         }
+
+        /// <summary>
+        /// The SimObject that is being followed.
+        /// </summary>
+        [DoNotCopy]
+        public SimObject TargetSimObject
+        {
+            get
+            {
+                return targetSimObject;
+            }
+        }
     }
 }

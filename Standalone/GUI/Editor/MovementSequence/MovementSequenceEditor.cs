@@ -92,6 +92,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            actionProperties.Dispose();
             movementSequenceController.PlaybackStarted -= movementSequenceController_PlaybackStarted;
             movementSequenceController.PlaybackStopped -= movementSequenceController_PlaybackStopped;
             movementSequenceController.PlaybackUpdate -= movementSequenceController_PlaybackUpdate;

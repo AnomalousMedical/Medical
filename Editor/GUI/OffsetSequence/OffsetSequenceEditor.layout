@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="204 195 929 69" layer="Overlapped">
-        <Widget type="Widget" skin="PanelSkin" position="0 3 678 69" align="Stretch">
-            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 487 39" align="Stretch" name="ActionView">
+    <Widget type="Widget" skin="PanelEmpty" position="204 195 929 169" layer="Overlapped">
+        <Widget type="Widget" skin="PanelSkin" position="0 3 678 169" align="Stretch">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 487 139" align="Stretch" name="ActionView">
                 <Property key="CanvasAlign" value="Left Top"/>
                 <Property key="CanvasSize" value="0 100"/>
             </Widget>
@@ -10,7 +10,7 @@
                 <Property key="Caption" value="Choose"/>
                 <Property key="ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
-            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 39" align="Left VStretch" name="ActionFilter">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 139" align="Left VStretch" name="ActionFilter">
                 <Property key="CanvasSize" value="179 200"/>
                 <Property key="CanvasAlign" value="Left Top"/>
                 <Property key="VisibleVScroll" value="false"/>
@@ -23,7 +23,7 @@
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="3 1 131 20" name="TargetLabel"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="680 1 237 68" align="Right VStretch" name="ActionPropertiesScrollView">
+        <Widget type="ScrollView" skin="ScrollView" position="680 1 237 168" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="CanvasSize" value="214 314"/>
             <Property key="CanvasAlign" value="Left Top"/>
             <Widget type="TextBox" skin="TextBox" position="0 1 66 16" align="HStretch Top" name="PropertiesText">

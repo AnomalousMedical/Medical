@@ -52,7 +52,7 @@ namespace Medical.GUI
             ScrollView timelinePropertiesScrollView = widget.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
-            actionProperties.addPanel("Offset Position", new OffsetKeyframeProperties(timelinePropertiesScrollView));
+            actionProperties.addPanel("Offset Position", new OffsetKeyframeProperties(timelinePropertiesScrollView, this, view.UICallback));
 
             //Timeline filter
             ScrollView timelineFilterScrollView = widget.findWidget("ActionFilter") as ScrollView;
@@ -78,6 +78,7 @@ namespace Medical.GUI
         public override void Dispose()
         {
             Player = null;//Reset the player
+            actionProperties.Dispose();
             base.Dispose();
         }
 
@@ -192,7 +193,10 @@ namespace Medical.GUI
             if (offsetSequence != null)
             {
                 OffsetModifierKeyframe keyframe = new OffsetModifierKeyframe();
-                //keyframe.capture();
+                if(Player != null)
+                {
+                    Player.setKeyframeOffset(keyframe);
+                }
                 keyframe.BlendAmount = timelineView.MarkerTime;
                 offsetSequence.addKeyframe(keyframe);
                 offsetSequence.sort();

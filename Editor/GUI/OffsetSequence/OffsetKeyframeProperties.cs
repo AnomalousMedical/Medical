@@ -4,29 +4,87 @@ using System.Linq;
 using System.Text;
 using Medical.Muscles;
 using MyGUIPlugin;
+using Engine.Editing;
+using Engine;
 
 namespace Medical.GUI
 {
     class OffsetKeyframeProperties : TimelineDataPanel
     {
         private OffsetModifierKeyframe keyframe;
+        private OffsetSequenceEditor sequenceEditor;
+        private PropertiesForm propertiesForm;
+        private EditInterface editInterface;
 
-        public OffsetKeyframeProperties(Widget parentWidget)
+        public OffsetKeyframeProperties(Widget parentWidget, OffsetSequenceEditor sequenceEditor, MedicalUICallback uiCallback)
             : base(parentWidget, "Medical.GUI.OffsetSequence.OffsetKeyframeProperties.layout")
         {
-            Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
-            useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);
+            this.sequenceEditor = sequenceEditor;
+
+            propertiesForm = new PropertiesForm(mainWidget, uiCallback);
+
+            editInterface = ReflectedEditInterface.createEditInterface(this, "Properties");
+            editInterface.addCommand(new EditInterfaceCommand("Use Current", (callback, caller) =>
+            {
+                if (sequenceEditor.Player != null && keyframe != null)
+                {
+                    sequenceEditor.Player.setKeyframeOffset(keyframe);
+                    editInterface.fireDataNeedsRefresh();
+                }
+            }));
+        }
+
+        public override void Dispose()
+        {
+            propertiesForm.Dispose();
+            base.Dispose();
         }
 
         public override void setCurrentData(TimelineData data)
         {
             keyframe = ((OffsetKeyframeData)data).KeyFrame;
+            propertiesForm.EditInterface = editInterface;
+            mainWidget.Height = propertiesForm.Height;
         }
 
-        void useCurrent_MouseButtonClick(Widget source, EventArgs e)
+        [Editable]
+        public Vector3 TranslationOffset
         {
-            //Capture
-            //keyframe.captureState();
+            get
+            {
+                if(keyframe != null)
+                {
+                    return keyframe.TranslationOffset;
+                }
+                return Vector3.Zero;
+            }
+            set
+            {
+                if(keyframe != null)
+                {
+                    keyframe.TranslationOffset = value;
+                }
+            }
+        }
+
+        [Editable]
+        public Quaternion RotationOffset
+        {
+            get
+            {
+                if (keyframe != null)
+                {
+                    return keyframe.RotationOffset;
+                }
+                return Quaternion.Identity;
+            }
+            set
+            {
+                if (keyframe != null)
+                {
+                    keyframe.RotationOffset = value;
+                }
+            }
         }
     }
 }

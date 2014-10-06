@@ -23,7 +23,7 @@ namespace Medical
 
         private OffsetModifierSequence movementSequence;
 
-        public OffsetSequenceEditorContext(OffsetModifierSequence movementSequence, String file, OffsetSequenceTypeController typeController)
+        public OffsetSequenceEditorContext(OffsetModifierSequence movementSequence, String file, OffsetSequenceTypeController typeController, MedicalUICallback uiCallback)
         {
             this.typeController = typeController;
             this.currentFile = file;
@@ -38,7 +38,7 @@ namespace Medical
 
             mvcContext.Models.add(new EditMenuManager());
 
-            OffsetSequenceEditorView offsetSequenceView = new OffsetSequenceEditorView("SequenceEditor", movementSequence);
+            OffsetSequenceEditorView offsetSequenceView = new OffsetSequenceEditorView("SequenceEditor", uiCallback, movementSequence);
             offsetSequenceView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
             mvcContext.Views.add(offsetSequenceView);
 
