@@ -11,7 +11,7 @@ namespace Medical.GUI
 {
     public class OffsetSequenceEditorView : MyGUIView
     {
-        public OffsetSequenceEditorView(String name, MedicalUICallback uiCallback, OffsetModifierSequence sequence = null)
+        public OffsetSequenceEditorView(String name, MedicalUICallback uiCallback, SimObjectMover simObjectMover, OffsetModifierSequence sequence = null)
             : base(name)
         {
             ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom)
@@ -20,11 +20,14 @@ namespace Medical.GUI
             };
             Sequence = sequence;
             UICallback = uiCallback;
+            SimObjectMover = simObjectMover;
         }
 
         public OffsetModifierSequence Sequence { get; set; }
 
         public MedicalUICallback UICallback { get; set; }
+
+        public SimObjectMover SimObjectMover { get; set; }
 
         protected OffsetSequenceEditorView(LoadInfo info)
             :base(info)

@@ -20,14 +20,16 @@ namespace Medical
         private AnomalousMvcContext mvcContext;
         private EventContext eventContext;
         private OffsetSequenceTypeController typeController;
+        private SimObjectMover simObjectMover;
 
         private OffsetModifierSequence movementSequence;
 
-        public OffsetSequenceEditorContext(OffsetModifierSequence movementSequence, String file, OffsetSequenceTypeController typeController, MedicalUICallback uiCallback)
+        public OffsetSequenceEditorContext(OffsetModifierSequence movementSequence, String file, OffsetSequenceTypeController typeController, MedicalUICallback uiCallback, SimObjectMover simObjectMover)
         {
             this.typeController = typeController;
             this.currentFile = file;
             this.movementSequence = movementSequence;
+            this.simObjectMover = simObjectMover;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -38,7 +40,7 @@ namespace Medical
 
             mvcContext.Models.add(new EditMenuManager());
 
-            OffsetSequenceEditorView offsetSequenceView = new OffsetSequenceEditorView("SequenceEditor", uiCallback, movementSequence);
+            OffsetSequenceEditorView offsetSequenceView = new OffsetSequenceEditorView("SequenceEditor", uiCallback, simObjectMover, movementSequence);
             offsetSequenceView.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Bottom);
             mvcContext.Views.add(offsetSequenceView);
 

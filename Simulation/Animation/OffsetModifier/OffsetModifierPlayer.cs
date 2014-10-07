@@ -191,6 +191,14 @@ namespace Medical
             }
         }
 
+        public SimObjectFollowerWithRotation Follower
+        {
+            get
+            {
+                return follower;
+            }
+        }
+
         void blendDriver_BlendAmountChanged(BlendDriver obj)
         {
             blend(obj.BlendAmount);

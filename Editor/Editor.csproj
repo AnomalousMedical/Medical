@@ -141,6 +141,7 @@
     <Compile Include="GUI\OffsetSequence\OffsetSequenceEditor.cs" />
     <Compile Include="GUI\OffsetSequence\OffsetSequenceEditorFactory.cs" />
     <Compile Include="GUI\OffsetSequence\OffsetSequenceEditorView.cs" />
+    <Compile Include="GUI\OffsetSequence\FollowerMovableObject.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
     <Compile Include="GUI\FileBrowserTree\DirectoryNode.cs" />
     <Compile Include="GUI\FileBrowserTree\FileNode.cs" />

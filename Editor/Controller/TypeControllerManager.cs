@@ -179,7 +179,7 @@ namespace Medical
             OffsetSequenceTypeController offsetSequenceTypeController = new OffsetSequenceTypeController(editorController);
             offsetSequenceTypeController.OpenEditor += (file, movementSequence) =>
             {
-                offsetSequenceEditorContext = new OffsetSequenceEditorContext(movementSequence, file, offsetSequenceTypeController, plugin.UICallback);
+                offsetSequenceEditorContext = new OffsetSequenceEditorContext(movementSequence, file, offsetSequenceTypeController, plugin.UICallback, plugin.SimObjectMover);
                 offsetSequenceEditorContext.Focus += obj =>
                 {
                     offsetSequenceEditorContext = obj;

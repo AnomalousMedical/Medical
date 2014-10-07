@@ -71,6 +71,16 @@ namespace Medical
             updatePosition(ref trans, ref rotation);
         }
 
+        public void move(Vector3 offset)
+        {
+            updateTranslation(Owner.Translation + offset);
+        }
+
+        public void rotate(Quaternion offset)
+        {
+            updateRotation(offset);
+        }
+
         void broadcaster_PositionChanged(SimObject obj)
         {
             computePosition();

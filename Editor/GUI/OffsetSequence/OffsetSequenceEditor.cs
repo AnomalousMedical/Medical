@@ -24,6 +24,7 @@ namespace Medical.GUI
         private NumberLine numberLine;
         private SaveableClipboard clipboard;
         private MedicalController medicalController;
+        private SimObjectMover simObjectMover;
 
         private OffsetModifierSequence offsetSequence;
 
@@ -34,6 +35,7 @@ namespace Medical.GUI
         {
             this.clipboard = clipboard;
             this.medicalController = medicalController;
+            this.simObjectMover = view.SimObjectMover;
 
             widget.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
@@ -77,7 +79,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            Player = null;//Reset the player
+            Player = null;//Reset the player, this does a lot of cleanup so don't remove it
             actionProperties.Dispose();
             base.Dispose();
         }
@@ -197,7 +199,7 @@ namespace Medical.GUI
                 {
                     Player.setKeyframeOffset(keyframe);
                 }
-                keyframe.BlendAmount = timelineView.MarkerTime;
+                keyframe.BlendAmount = timelineView.MarkerTime / Duration;
                 offsetSequence.addKeyframe(keyframe);
                 offsetSequence.sort();
                 addToTimeline(keyframe);
@@ -229,6 +231,7 @@ namespace Medical.GUI
             return true;
         }
 
+        private FollowerMovableObject movable;
         private OffsetModifierPlayer player;
         public OffsetModifierPlayer Player
         {
@@ -242,6 +245,7 @@ namespace Medical.GUI
                 {
                     player.BlendDriver.BlendAmountChanged -= BlendDriver_BlendAmountChanged;
                     player.restoreDefaultSequence();
+                    simObjectMover.removeMovableObject(movable);
                 }
                 player = value;
                 if(player != null)
@@ -253,10 +257,17 @@ namespace Medical.GUI
                     }
                     timelineView.MarkerTime = player.BlendDriver.BlendAmount;
                     targetLabel.Caption = String.Format("{0} - {1}", player.Owner.Name, player.Name);
+                    movable = new FollowerMovableObject(player.Follower);
+                    movable.ShowTools = true;
+                    simObjectMover.addMovableObject("Movable", movable);
+                    simObjectMover.ShowMoveTools = true;
+                    simObjectMover.ShowRotateTools = false;
+                    simObjectMover.Visible = true;
                 }
                 else
                 {
                     targetLabel.Caption = DefaultTargetLabelText;
+                    simObjectMover.Visible = false;
                 }
             }
         }
