@@ -14,7 +14,6 @@ namespace Medical.GUI
         private OffsetModifierKeyframe keyframe;
         private OffsetSequenceEditor sequenceEditor;
         private PropertiesForm propertiesForm;
-        private EditInterface editInterface;
 
         public OffsetKeyframeProperties(Widget parentWidget, OffsetSequenceEditor sequenceEditor, MedicalUICallback uiCallback)
             : base(parentWidget, "Medical.GUI.OffsetSequence.OffsetKeyframeProperties.layout")
@@ -22,16 +21,6 @@ namespace Medical.GUI
             this.sequenceEditor = sequenceEditor;
 
             propertiesForm = new PropertiesForm(mainWidget, uiCallback);
-
-            editInterface = ReflectedEditInterface.createEditInterface(this, "Properties");
-            editInterface.addCommand(new EditInterfaceCommand("Use Current", (callback, caller) =>
-            {
-                if (sequenceEditor.Player != null && keyframe != null)
-                {
-                    sequenceEditor.Player.setKeyframeOffset(keyframe);
-                    editInterface.fireDataNeedsRefresh();
-                }
-            }));
         }
 
         public override void Dispose()
@@ -42,54 +31,17 @@ namespace Medical.GUI
 
         public override void setCurrentData(TimelineData data)
         {
+            if(propertiesForm.EditInterface != null)
+            {
+                propertiesForm.EditInterface.OnDataNeedsRefresh -= editInterface_OnDataNeedsRefresh;
+            }
             keyframe = ((OffsetKeyframeData)data).KeyFrame;
-            propertiesForm.EditInterface = editInterface;
+            propertiesForm.EditInterface = keyframe.EditInterface;
+            propertiesForm.EditInterface.OnDataNeedsRefresh += editInterface_OnDataNeedsRefresh;
             mainWidget.Height = propertiesForm.Height;
         }
 
-        [Editable]
-        public Vector3 TranslationOffset
-        {
-            get
-            {
-                if(keyframe != null)
-                {
-                    return keyframe.TranslationOffset;
-                }
-                return Vector3.Zero;
-            }
-            set
-            {
-                if(keyframe != null)
-                {
-                    keyframe.TranslationOffset = value;
-                    updatePlayer();
-                }
-            }
-        }
-
-        [Editable]
-        public Quaternion RotationOffset
-        {
-            get
-            {
-                if (keyframe != null)
-                {
-                    return keyframe.RotationOffset;
-                }
-                return Quaternion.Identity;
-            }
-            set
-            {
-                if (keyframe != null)
-                {
-                    keyframe.RotationOffset = value;
-                    updatePlayer();
-                }
-            }
-        }
-
-        private void updatePlayer()
+        void editInterface_OnDataNeedsRefresh(EditInterface editInterface)
         {
             if (sequenceEditor.Player != null)
             {

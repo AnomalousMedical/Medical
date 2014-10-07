@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.Editing;
 using Engine.Saving;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,14 @@ namespace Medical
     {
         private Vector3 translationOffset;
         private Quaternion rotationOffset;
+        private EditInterface editInterface;
 
         public OffsetModifierKeyframe()
         {
 
         }
 
+        [Editable]
         public Vector3 TranslationOffset
         {
             get
@@ -27,9 +30,11 @@ namespace Medical
             set
             {
                 translationOffset = value;
+                fireDataNeedsRefresh();
             }
         }
 
+        [Editable]
         public Quaternion RotationOffset
         {
             get
@@ -39,6 +44,7 @@ namespace Medical
             set
             {
                 rotationOffset = value;
+                fireDataNeedsRefresh();
             }
         }
 
@@ -56,6 +62,26 @@ namespace Medical
             TranslationOffset = info.GetVector3("TranslationOffset");
             RotationOffset = info.GetQuaternion("RotationOffset");
             BlendAmount = info.GetFloat("BlendAmount");
+        }
+
+        public EditInterface EditInterface
+        {
+            get
+            {
+                if (editInterface == null)
+                {
+                    editInterface = ReflectedEditInterface.createEditInterface(this, "Properties");
+                }
+                return editInterface;
+            }
+        }
+
+        private void fireDataNeedsRefresh()
+        {
+            if (editInterface != null)
+            {
+                editInterface.fireDataNeedsRefresh();
+            }
         }
 
         public void getInfo(SaveInfo info)

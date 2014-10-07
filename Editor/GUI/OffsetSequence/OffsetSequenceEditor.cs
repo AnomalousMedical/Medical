@@ -25,9 +25,9 @@ namespace Medical.GUI
         private SaveableClipboard clipboard;
         private MedicalController medicalController;
         private SimObjectMover simObjectMover;
+        private KeyframeMovableObject keyframeMover;
 
         private OffsetModifierSequence offsetSequence;
-        private FollowerMovableObject movable;
         private OffsetModifierPlayer player;
 
         private TextBox targetLabel;
@@ -51,12 +51,16 @@ namespace Medical.GUI
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.Duration = Duration;
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
+            timelineView.ActiveDataChanged += timelineView_ActiveDataChanged;
 
             //Properties
             ScrollView timelinePropertiesScrollView = widget.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
             actionProperties.addPanel("Offset Position", new OffsetKeyframeProperties(timelinePropertiesScrollView, this, view.UICallback));
+
+            keyframeMover = new KeyframeMovableObject();
+            simObjectMover.addMovableObject("KeyframeMover", keyframeMover);
 
             //Timeline filter
             ScrollView timelineFilterScrollView = widget.findWidget("ActionFilter") as ScrollView;
@@ -81,6 +85,8 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            simObjectMover.removeMovableObject(keyframeMover);
+            simObjectMover.Visible = false;
             Player = null;//Reset the player, this does a lot of cleanup so don't remove it
             actionProperties.Dispose();
             base.Dispose();
@@ -114,7 +120,7 @@ namespace Medical.GUI
             OffsetSequenceClipboardContainer clipContainer = clipboard.createCopy<OffsetSequenceClipboardContainer>();
             if (clipContainer != null)
             {
-                clipContainer.addKeyFramesToSequence(offsetSequence, this, timelineView.MarkerTime, timelineView.Duration);
+                clipContainer.addKeyFramesToSequence(offsetSequence, this, timelineView.MarkerTime / Duration, 1.0f);
             }
         }
 
@@ -258,7 +264,6 @@ namespace Medical.GUI
                 {
                     player.BlendDriver.BlendAmountChanged -= BlendDriver_BlendAmountChanged;
                     player.restoreDefaultSequence();
-                    simObjectMover.removeMovableObject(movable);
                 }
                 player = value;
                 if(player != null)
@@ -272,14 +277,13 @@ namespace Medical.GUI
                     }
                     timelineView.MarkerTime = player.BlendDriver.BlendAmount;
                     targetLabel.Caption = String.Format("{0} - {1}", player.Owner.Name, player.Name);
-                    movable = new FollowerMovableObject(player.Follower);
-                    movable.ShowTools = true;
-                    simObjectMover.addMovableObject("Movable", movable);
+                    keyframeMover.Follower = player.Follower;
                     simObjectMover.Visible = true;
                 }
                 else
                 {
                     targetLabel.Caption = DefaultTargetLabelText;
+                    keyframeMover.Follower = null;
                     simObjectMover.Visible = false;
                 }
             }
@@ -288,6 +292,19 @@ namespace Medical.GUI
         void BlendDriver_BlendAmountChanged(BlendDriver obj)
         {
             timelineView.MarkerTime = obj.BlendAmount * Duration;
+        }
+
+        void timelineView_ActiveDataChanged(object sender, EventArgs e)
+        {
+            OffsetKeyframeData data = (OffsetKeyframeData)timelineView.CurrentData;
+            if(data != null)
+            {
+                keyframeMover.Keyframe = data.KeyFrame;
+            }
+            else
+            {
+                keyframeMover.Keyframe = null;
+            }
         }
     }
 }

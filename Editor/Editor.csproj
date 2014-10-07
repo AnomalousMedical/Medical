@@ -135,13 +135,13 @@
     <Compile Include="GUI\EditorTaskbar\EditorTaskbarView.cs" />
     <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
     <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
+    <Compile Include="GUI\OffsetSequence\KeyframeMovableObject.cs" />
     <Compile Include="GUI\OffsetSequence\OffsetKeyframeData.cs" />
     <Compile Include="GUI\OffsetSequence\OffsetKeyframeProperties.cs" />
     <Compile Include="GUI\OffsetSequence\OffsetSequenceClipboardContainer.cs" />
     <Compile Include="GUI\OffsetSequence\OffsetSequenceEditor.cs" />
     <Compile Include="GUI\OffsetSequence\OffsetSequenceEditorFactory.cs" />
     <Compile Include="GUI\OffsetSequence\OffsetSequenceEditorView.cs" />
-    <Compile Include="GUI\OffsetSequence\FollowerMovableObject.cs" />
     <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
     <Compile Include="GUI\FileBrowserTree\DirectoryNode.cs" />
     <Compile Include="GUI\FileBrowserTree\FileNode.cs" />
