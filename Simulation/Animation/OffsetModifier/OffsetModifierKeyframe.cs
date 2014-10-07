@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Engine.Editing;
+using Engine.ObjectManagement;
 using Engine.Saving;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,21 @@ namespace Medical
             follower.TranslationOffset = previousFrame.translationOffset.lerp(ref translationOffset, ref percentage);
             follower.RotationOffset = previousFrame.rotationOffset.nlerp(ref rotationOffset, ref percentage);
             follower.computePosition();
+        }
+
+        /// <summary>
+        /// Apply the current translation and rotation offset to the given keyframe.
+        /// </summary>
+        /// <param name="keyframe"></param>
+        public void deriveOffsetFromFollower(SimObjectFollowerWithRotation follower)
+        {
+            SimObject child = follower.Owner;
+            SimObject parent = follower.TargetSimObject;
+
+            Quaternion inverseParentRot = parent.Rotation.inverse();
+
+            this.TranslationOffset = Quaternion.quatRotate(inverseParentRot, child.Translation - parent.Translation);
+            this.RotationOffset = inverseParentRot * child.Rotation;
         }
 
         protected OffsetModifierKeyframe(LoadInfo info)

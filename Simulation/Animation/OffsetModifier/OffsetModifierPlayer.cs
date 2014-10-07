@@ -137,23 +137,6 @@ namespace Medical
         }
 
         /// <summary>
-        /// Apply the current translation and rotation offset to the given keyframe.
-        /// </summary>
-        /// <param name="keyframe"></param>
-        public void setKeyframeOffset(OffsetModifierKeyframe keyframe)
-        {
-            SimObject child = follower.Owner;
-            SimObject parent = follower.TargetSimObject;
-
-            Quaternion inverseParentRot = parent.Rotation.inverse();
-
-            keyframe.TranslationOffset = child.Translation - parent.Translation;
-            keyframe.TranslationOffset = Quaternion.quatRotate(inverseParentRot, keyframe.TranslationOffset);
-
-            keyframe.RotationOffset = inverseParentRot * child.Rotation;
-        }
-
-        /// <summary>
         /// Restore the default sequence to this player.
         /// </summary>
         public void restoreDefaultSequence()

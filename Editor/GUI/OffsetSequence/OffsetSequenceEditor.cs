@@ -218,7 +218,7 @@ namespace Medical.GUI
                 OffsetModifierKeyframe keyframe = new OffsetModifierKeyframe();
                 if(Player != null)
                 {
-                    Player.setKeyframeOffset(keyframe);
+                    keyframe.deriveOffsetFromFollower(Player.Follower);
                 }
                 keyframe.BlendAmount = timelineView.MarkerTime / Duration;
                 offsetSequence.addKeyframe(keyframe);
