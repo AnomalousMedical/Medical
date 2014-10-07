@@ -16,7 +16,7 @@ namespace Medical
         private Quaternion rotationOffset;
         private EditInterface editInterface;
 
-        public OffsetModifierKeyframe()
+        internal OffsetModifierKeyframe()
         {
 
         }

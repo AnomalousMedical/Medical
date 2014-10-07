@@ -21,6 +21,11 @@ namespace Medical
 
         }
 
+        public OffsetModifierKeyframe createKeyframe()
+        {
+            return new OffsetModifierKeyframe();
+        }
+
         public void addKeyframe(OffsetModifierKeyframe frame)
         {
             keyframes.Add(frame);

@@ -215,7 +215,7 @@ namespace Medical.GUI
         {
             if (offsetSequence != null)
             {
-                OffsetModifierKeyframe keyframe = new OffsetModifierKeyframe();
+                OffsetModifierKeyframe keyframe = offsetSequence.createKeyframe();
                 if(Player != null)
                 {
                     keyframe.deriveOffsetFromFollower(Player.Follower);
