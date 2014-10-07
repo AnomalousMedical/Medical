@@ -80,13 +80,31 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// This is a hint for the SimObject used to edit this sequence. It does not mean that is the only
+        /// object that this sequence can apply to, but it provides a hint to the editor for an object to
+        /// use as a default.
+        /// </summary>
+        public String SimObjectHint { get; set; }
+
+        /// <summary>
+        /// This is a hint for the Player on a SimObject used to edit this sequence. It does not mean that is the only
+        /// object that this sequence can apply to, but it provides a hint to the editor for an object to
+        /// use as a default.
+        /// </summary>
+        public String PlayerNameHint { get; set; }
+
         protected OffsetModifierSequence(LoadInfo info)
         {
+            SimObjectHint = info.GetString("SimObjectHint", null);
+            PlayerNameHint = info.GetString("FollowerNameHint", null);
             info.RebuildList("Keyframe", keyframes);
         }
 
         public void getInfo(SaveInfo info)
         {
+            info.AddValue("SimObjectHint", SimObjectHint);
+            info.AddValue("FollowerNameHint", PlayerNameHint);
             info.ExtractList("Keyframe", keyframes);
         }
     }

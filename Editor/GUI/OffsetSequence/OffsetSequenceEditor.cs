@@ -27,6 +27,8 @@ namespace Medical.GUI
         private SimObjectMover simObjectMover;
 
         private OffsetModifierSequence offsetSequence;
+        private FollowerMovableObject movable;
+        private OffsetModifierPlayer player;
 
         private TextBox targetLabel;
 
@@ -66,8 +68,6 @@ namespace Medical.GUI
             //Add tracks to timeline.
             timelineView.addTrack("Offset Position");
 
-            CurrentSequence = view.Sequence;
-
             ViewHost.Context.getModel<EditMenuManager>(EditMenuManager.DefaultName).setMenuProvider(this);
 
             Button chooseTargetButton = (Button)widget.findWidget("ChooseTargetButton");
@@ -75,6 +75,8 @@ namespace Medical.GUI
 
             targetLabel = (TextBox)widget.findWidget("TargetLabel");
             targetLabel.Caption = DefaultTargetLabelText;
+
+            CurrentSequence = view.Sequence;
         }
 
         public override void Dispose()
@@ -137,6 +139,19 @@ namespace Medical.GUI
                     foreach (var state in offsetSequence.Keyframes)
                     {
                         addToTimeline(state);
+                    }
+
+                    if (offsetSequence.SimObjectHint != null && offsetSequence.PlayerNameHint != null)
+                    {
+                        var simObject = medicalController.getSimObject(offsetSequence.SimObjectHint);
+                        if (simObject != null)
+                        {
+                            Player = simObject.getElement(offsetSequence.PlayerNameHint) as OffsetModifierPlayer;
+                        }
+                        else
+                        {
+                            Player = null;
+                        }
                     }
                 }
                 else
@@ -231,8 +246,6 @@ namespace Medical.GUI
             return true;
         }
 
-        private FollowerMovableObject movable;
-        private OffsetModifierPlayer player;
         public OffsetModifierPlayer Player
         {
             get
@@ -254,14 +267,14 @@ namespace Medical.GUI
                     if(CurrentSequence != null)
                     {
                         player.Sequence = CurrentSequence;
+                        CurrentSequence.SimObjectHint = player.Owner.Name;
+                        CurrentSequence.PlayerNameHint = player.Name;
                     }
                     timelineView.MarkerTime = player.BlendDriver.BlendAmount;
                     targetLabel.Caption = String.Format("{0} - {1}", player.Owner.Name, player.Name);
                     movable = new FollowerMovableObject(player.Follower);
                     movable.ShowTools = true;
                     simObjectMover.addMovableObject("Movable", movable);
-                    simObjectMover.ShowMoveTools = true;
-                    simObjectMover.ShowRotateTools = false;
                     simObjectMover.Visible = true;
                 }
                 else

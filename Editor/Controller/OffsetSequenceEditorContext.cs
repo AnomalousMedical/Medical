@@ -30,6 +30,8 @@ namespace Medical
             this.currentFile = file;
             this.movementSequence = movementSequence;
             this.simObjectMover = simObjectMover;
+            simObjectMover.ShowMoveTools = true;
+            simObjectMover.ShowRotateTools = false;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -54,6 +56,8 @@ namespace Medical
             taskbar.addTask(new RunMvcContextActionTask("Copy", "Copy", "Editor/CopyIcon", "", "Editor/Copy", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("Paste", "Paste", "Editor/PasteIcon", "", "Editor/Paste", mvcContext));
             taskbar.addTask(new RunMvcContextActionTask("SelectAll", "Select All", "Editor/SelectAllIcon", "", "Editor/SelectAll", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Translation", "Translation", "Editor/TranslateIcon", "", "Editor/Translation", mvcContext));
+            taskbar.addTask(new RunMvcContextActionTask("Rotation", "Rotation", "Editor/RotateIcon", "", "Editor/Rotation", mvcContext));
             mvcContext.Views.add(taskbar);
 
             mvcContext.Controllers.add(new MvcController("Editor", 
@@ -68,7 +72,17 @@ namespace Medical
                 new CutAction(),
                 new CopyAction(),
                 new PasteAction(),
-                new SelectAllAction()));
+                new SelectAllAction(),
+                new CallbackAction("Translation", context =>
+                {
+                    this.simObjectMover.ShowMoveTools = true;
+                    this.simObjectMover.ShowRotateTools = false;
+                }),
+                new CallbackAction("Rotation", context =>
+                {
+                    this.simObjectMover.ShowMoveTools = false;
+                    this.simObjectMover.ShowRotateTools = true;
+                })));
 
             mvcContext.Controllers.add(new MvcController("Common",
                 new RunCommandsAction("Start", new RunActionCommand("Editor/Show")),
@@ -128,6 +142,20 @@ namespace Medical
                     mvcContext.runAction("Editor/SelectAll");
                 },
                 keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_A }));
+
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
+                frameUp: eventManager =>
+                {
+                    mvcContext.runAction("Editor/Translation");
+                },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_T }));
+
+            eventContext.addEvent(new ButtonEvent(EventLayers.Gui,
+                frameUp: eventManager =>
+                {
+                    mvcContext.runAction("Editor/Rotation");
+                },
+                keys: new KeyboardButtonCode[] { KeyboardButtonCode.KC_LCONTROL, KeyboardButtonCode.KC_R }));
         }
 
         public void close()
