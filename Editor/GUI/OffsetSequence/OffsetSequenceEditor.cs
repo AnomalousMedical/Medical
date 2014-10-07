@@ -25,7 +25,7 @@ namespace Medical.GUI
         private SaveableClipboard clipboard;
         private MedicalController medicalController;
         private SimObjectMover simObjectMover;
-        private KeyframeMovableObject keyframeMover;
+        private List<KeyframeMovableObject> keyframeMovers = new List<KeyframeMovableObject>();
 
         private OffsetModifierSequence offsetSequence;
         private OffsetModifierPlayer player;
@@ -59,9 +59,6 @@ namespace Medical.GUI
             actionProperties.Visible = false;
             actionProperties.addPanel("Offset Position", new OffsetKeyframeProperties(timelinePropertiesScrollView, this, view.UICallback));
 
-            keyframeMover = new KeyframeMovableObject();
-            simObjectMover.addMovableObject("KeyframeMover", keyframeMover);
-
             //Timeline filter
             ScrollView timelineFilterScrollView = widget.findWidget("ActionFilter") as ScrollView;
             trackFilter = new TrackFilter(timelineFilterScrollView, timelineView);
@@ -85,7 +82,10 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            simObjectMover.removeMovableObject(keyframeMover);
+            foreach (KeyframeMovableObject mover in keyframeMovers)
+            {
+                simObjectMover.removeMovableObject(mover);
+            }
             simObjectMover.Visible = false;
             Player = null;//Reset the player, this does a lot of cleanup so don't remove it
             actionProperties.Dispose();
@@ -277,13 +277,19 @@ namespace Medical.GUI
                     }
                     timelineView.MarkerTime = player.BlendDriver.BlendAmount;
                     targetLabel.Caption = String.Format("{0} - {1}", player.Owner.Name, player.Name);
-                    keyframeMover.Follower = player.Follower;
+                    foreach (KeyframeMovableObject mover in keyframeMovers)
+                    {
+                        mover.Follower = player.Follower;
+                    }
                     simObjectMover.Visible = true;
                 }
                 else
                 {
                     targetLabel.Caption = DefaultTargetLabelText;
-                    keyframeMover.Follower = null;
+                    foreach (KeyframeMovableObject mover in keyframeMovers)
+                    {
+                        mover.Follower = null;
+                    }
                     simObjectMover.Visible = false;
                 }
             }
@@ -296,14 +302,24 @@ namespace Medical.GUI
 
         void timelineView_ActiveDataChanged(object sender, EventArgs e)
         {
-            OffsetKeyframeData data = (OffsetKeyframeData)timelineView.CurrentData;
-            if(data != null)
+            foreach (KeyframeMovableObject mover in keyframeMovers)
             {
-                keyframeMover.Keyframe = data.KeyFrame;
+                simObjectMover.removeMovableObject(mover);
             }
-            else
+            keyframeMovers.Clear();
+            OffsetKeyframeData data = timelineView.CurrentData as OffsetKeyframeData;
+            if (data != null)
             {
-                keyframeMover.Keyframe = null;
+                foreach (var movementSection in data.KeyFrame.MovableSections)
+                {
+                    var mover = new KeyframeMovableObject(movementSection);
+                    if (Player != null)
+                    {
+                        mover.Follower = player.Follower;
+                    }
+                    simObjectMover.addMovableObject(Guid.NewGuid().ToString(), mover);
+                    keyframeMovers.Add(mover);
+                }
             }
         }
     }

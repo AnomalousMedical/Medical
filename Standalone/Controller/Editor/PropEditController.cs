@@ -223,7 +223,7 @@ namespace Medical
 
         public bool ShowTools { get; set; }
 
-        public void rotate(ref Quaternion newRot)
+        public void rotate(Quaternion newRot)
         {
             if (currentShowPropAction != null)
             {

@@ -77,7 +77,7 @@ namespace Medical
             zAxis.computeRotation(ref currentEulerRotation, amount);
             newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
             newRot *= startingRotation;
-            movable.rotate(ref newRot);
+            movable.rotate(newRot);
         }
 
         public bool processAxis(ref Ray3 spaceRay)
@@ -161,6 +161,11 @@ namespace Medical
                 zAxis.draw(circleSurface, movable.ToolTranslation);
             }
             circleSurface.end();
+        }
+
+        public void destroyCircleDrawings(DebugDrawingSurface axisSurface)
+        {
+            axisSurface.destroySection(name + "RotateTool");
         }
 
         public bool Visible { get; set; }

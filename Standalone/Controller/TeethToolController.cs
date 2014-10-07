@@ -47,7 +47,7 @@ namespace Medical
                 }
             }
 
-            public void rotate(ref Quaternion newRot)
+            public void rotate(Quaternion newRot)
             {
                 tooth.Rotation = newRot;
             }

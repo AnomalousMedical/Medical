@@ -51,7 +51,7 @@ namespace Medical
 
         void createNew(String filePath)
         {
-            OffsetModifierSequence sequence = new OffsetModifierSequence();
+            OffsetModifierSequence sequence = new SimpleOffsetModifierSequence();
             creatingNewFile(filePath);
             saveObject(filePath, sequence);
             openEditor(filePath);

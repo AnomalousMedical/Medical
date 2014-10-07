@@ -193,6 +193,10 @@ namespace Medical
             }
             if (tools != null)
             {
+                if (drawingSurface != null)
+                {
+                    tools.destroyToolDrawings(drawingSurface);
+                }
                 movableObjects.Remove(tools);
             }
         }

@@ -33,7 +33,7 @@ namespace Medical
         /// Rotate the object to newRot.
         /// </summary>
         /// <param name="newRot">The new rotation.</param>
-        void rotate(ref Quaternion newRot);
+        void rotate(Quaternion newRot);
 
         /// <summary>
         /// This is called when the tool gains and looses its highlight. It can

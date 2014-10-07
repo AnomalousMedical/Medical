@@ -113,6 +113,12 @@ namespace Medical
             rotateTool.drawCircles(axisSurface);
         }
 
+        public void destroyToolDrawings(DebugDrawingSurface axisSurface)
+        {
+            moveTool.destroyAxisDrawings(axisSurface);
+            rotateTool.destroyCircleDrawings(axisSurface);
+        }
+
         public void setToolSize(float size)
         {
             moveTool.resizeAxes(size);

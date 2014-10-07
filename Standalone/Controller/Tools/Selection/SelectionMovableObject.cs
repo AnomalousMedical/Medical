@@ -16,8 +16,6 @@ namespace Medical
             this.selectionController = selectionController;
         }
 
-        #region MovableObject Members
-
         public Vector3 ToolTranslation
         {
             get
@@ -53,7 +51,7 @@ namespace Medical
             }
         }
 
-        public void rotate(ref Quaternion newRot)
+        public void rotate(Quaternion newRot)
         {
             selectionController.rotateSelectedObject(ref newRot);
         }
@@ -62,7 +60,5 @@ namespace Medical
         {
             
         }
-
-        #endregion
     }
 }

@@ -11,8 +11,6 @@ namespace Medical
 {
     class MoveTool
     {
-        #region Fields
-
         const float DOUBLE_AXIS_SCALE = 3.0f;
 
         private Axis xAxisBox;
@@ -26,10 +24,6 @@ namespace Medical
         private bool enabled = true;
         private MovableObject movable;
         private Box3 boundingBox = new Box3();
-
-        #endregion Fields
-
-        #region Constructors
 
         public MoveTool(String name, MovableObject movable, float startingLength)
         {
@@ -54,10 +48,6 @@ namespace Medical
             boundingBox.setExtents(boundsExtents);
             Visible = false;
         }
-
-        #endregion Constructors
-
-        #region Functions
 
         public void setEnabled(bool enabled)
         {
@@ -180,6 +170,11 @@ namespace Medical
             axisSurface.end();
         }
 
+        public void destroyAxisDrawings(DebugDrawingSurface axisSurface)
+        {
+            axisSurface.destroySection(name + "MoveTool");
+        }
+
         public void setActivePlanes(MovementPlane activePlanes)
         {
             clearSelection();
@@ -195,8 +190,6 @@ namespace Medical
             yAxisBox.Enabled = (activeAxes & MovementAxis.Y) == MovementAxis.Y;
             zAxisBox.Enabled = (activeAxes & MovementAxis.Z) == MovementAxis.Z;
         }
-
-        #endregion
 
         public bool Visible { get; set; }
     }

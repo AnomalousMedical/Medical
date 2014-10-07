@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class OffsetModifierSequence : Saveable
+    public abstract class OffsetModifierSequence : Saveable
     {
         private List<OffsetModifierKeyframe> keyframes = new List<OffsetModifierKeyframe>();
         private int currentKeyframeIndex = 0;
@@ -21,10 +21,7 @@ namespace Medical
 
         }
 
-        public OffsetModifierKeyframe createKeyframe()
-        {
-            return new OffsetModifierKeyframe();
-        }
+        public abstract OffsetModifierKeyframe createKeyframe();
 
         public void addKeyframe(OffsetModifierKeyframe frame)
         {
