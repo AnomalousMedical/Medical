@@ -12,7 +12,7 @@ namespace Medical
 {
     public class OffsetSequenceTypeController : SaveableTypeController<OffsetModifierSequence>
     {
-        private const String Icon = CommonResources.NoIcon;
+        public const String Icon = CommonResources.NoIcon;
 
         public OffsetSequenceTypeController(EditorController editorController)
             :base(".oms", editorController)
@@ -28,30 +28,23 @@ namespace Medical
 
         public override ProjectItemTemplate createItemTemplate()
         {
-            return new ProjectItemTemplateDelegate("Offset Modifier Sequence", Icon, "File", delegate(String path, String fileName, EditorController editorController)
-            {
-                String filePath = Path.Combine(path, fileName);
-                filePath = Path.ChangeExtension(filePath, ".oms");
-                if (EditorController.ResourceProvider.exists(filePath))
-                {
-                    MessageBox.show(String.Format("Are you sure you want to override {0}?", filePath), "Override", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, delegate(MessageBoxStyle overrideResult)
-                    {
-                        if (overrideResult == MessageBoxStyle.Yes)
-                        {
-                            createNew(filePath);
-                        }
-                    });
-                }
-                else
-                {
-                    createNew(filePath);
-                }
-            });
+            return new OffsetModifierSequenceTemplate(this);
         }
 
-        void createNew(String filePath)
+        public void createNew(String filePath, OffsetModiferSequenceType type)
         {
-            OffsetModifierSequence sequence = new SimpleOffsetModifierSequence();
+            OffsetModifierSequence sequence;
+
+            switch(type)
+            {
+                case OffsetModiferSequenceType.Orbit:
+                    sequence = new OrbitOffsetModifierSequence();
+                    break;
+                default:
+                    sequence = new SimpleOffsetModifierSequence();
+                    break;
+            }
+
             creatingNewFile(filePath);
             saveObject(filePath, sequence);
             openEditor(filePath);

@@ -123,6 +123,8 @@
     <Compile Include="Animation\NodeFollower.cs" />
     <Compile Include="Animation\OffsetModifier\AngleOffsetModiferDriver.cs" />
     <Compile Include="Animation\OffsetModifier\BlendDriver.cs" />
+    <Compile Include="Animation\OffsetModifier\OrbitOffsetModifierKeyframe.cs" />
+    <Compile Include="Animation\OffsetModifier\OrbitOffsetModifierSequence.cs" />
     <Compile Include="Animation\OffsetModifier\OffsetModifierMovableSection.cs" />
     <Compile Include="Animation\OffsetModifier\OffsetModifierKeyframe.cs" />
     <Compile Include="Animation\OffsetModifier\OffsetModifierSequence.cs" />

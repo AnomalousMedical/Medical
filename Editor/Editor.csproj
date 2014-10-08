@@ -92,6 +92,7 @@
     <Compile Include="Controller\EditorFilesystemWatcher.cs" />
     <Compile Include="Controller\DependencyEditorContext.cs" />
     <Compile Include="Controller\EditorUICallback.cs" />
+    <Compile Include="Controller\ItemTemplates\OffsetModifierSequenceTemplate.cs" />
     <Compile Include="Controller\OffsetSequenceEditorContext.cs" />
     <Compile Include="Controller\PropEditorContext.cs" />
     <Compile Include="Controller\Project\DependencyProjectTemplate.cs" />

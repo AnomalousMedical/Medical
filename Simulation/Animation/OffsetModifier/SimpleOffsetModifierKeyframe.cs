@@ -18,7 +18,7 @@ namespace Medical
 
         internal SimpleOffsetModifierKeyframe()
         {
-
+            rotationOffset = Quaternion.Identity;
         }
 
         [Editable]
@@ -112,15 +112,15 @@ namespace Medical
 
         protected SimpleOffsetModifierKeyframe(LoadInfo info)
         {
-            TranslationOffset = info.GetVector3("TranslationOffset");
-            RotationOffset = info.GetQuaternion("RotationOffset");
+            translationOffset = info.GetVector3("TranslationOffset");
+            rotationOffset = info.GetQuaternion("RotationOffset");
             BlendAmount = info.GetFloat("BlendAmount");
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.AddValue("TranslationOffset", TranslationOffset);
-            info.AddValue("RotationOffset", RotationOffset);
+            info.AddValue("TranslationOffset", translationOffset);
+            info.AddValue("RotationOffset", rotationOffset);
             info.AddValue("BlendAmount", BlendAmount);
         }
 
