@@ -69,7 +69,7 @@ namespace Medical
         }
 
         [Editable]
-        public Quaternion OribiterAdditionalRotation
+        public Quaternion OrbiterAdditionalRotation
         {
             get
             {
@@ -230,7 +230,7 @@ namespace Medical
 
             public void move(Vector3 offset, SimObjectFollowerWithRotation follower)
             {
-                //keyframe.TranslationOffset += Quaternion.quatRotate(follower.TargetSimObject.Rotation.inverse(), offset);
+                keyframe.OrbitRadius += offset.z;
             }
 
             public Quaternion getRotation(SimObjectFollowerWithRotation follower)
@@ -240,7 +240,7 @@ namespace Medical
 
             public void setRotation(Quaternion rotation, SimObjectFollowerWithRotation follower)
             {
-                //keyframe.RotationOffset = follower.TargetSimObject.Rotation.inverse() * rotation;
+                keyframe.OrbiterAdditionalRotation = follower.TargetSimObject.Rotation.inverse() * keyframe.orbitRotation.inverse() * rotation;
             }
         }
     }
