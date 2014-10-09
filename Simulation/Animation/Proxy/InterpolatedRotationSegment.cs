@@ -49,7 +49,7 @@ namespace Medical.Animation.Proxy
 
         [DoNotCopy]
         [DoNotSave]
-        Vector3 parentSpineSegmentTranslationOffset;
+        Vector3 parentSegmentTranslationOffset;
 
         [DoNotCopy]
         [DoNotSave]
@@ -92,15 +92,15 @@ namespace Medical.Animation.Proxy
 
                 //Figure out the translation in parent space, first, however, we must transform the center of rotation offset by the current rotation.
                 //This makes the recorded translation offsets relative to the center of rotation point in world space instead of the center of this SimObject.
-                parentSpineSegmentTranslationOffset = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentSegmentTrans;
+                parentSegmentTranslationOffset = Owner.Translation + Quaternion.quatRotate(ref ourRotation, ref centerOfRotationOffset) - parentSegmentTrans;
             }
             else
             {
-                parentSpineSegmentTranslationOffset = Owner.Translation - parentSegmentTrans;
+                parentSegmentTranslationOffset = Owner.Translation - parentSegmentTrans;
                 centerOfRotationOffset = Vector3.Zero;
             }
             //Rotate the translation offset into the parent coord system
-            parentSpineSegmentTranslationOffset = Quaternion.quatRotate(inverseParentSegmentRot, parentSpineSegmentTranslationOffset);
+            parentSegmentTranslationOffset = Quaternion.quatRotate(inverseParentSegmentRot, parentSegmentTranslationOffset);
 
             childControlBoneRotationOffset = childControlBoneSimObject.Rotation.inverse() * Owner.Rotation;
             parentControlBoneRotationOffset = parentControlBoneSimObject.Rotation.inverse() * Owner.Rotation;
@@ -134,7 +134,7 @@ namespace Medical.Animation.Proxy
                                                  0f.interpolate(euler.y, lateralBendingInterpolation),
                                                  0f.interpolate(euler.z, flexExtInterpolation)) * parentRotation;
 
-            Vector3 translation = parentSegmentSimObject.Translation + Quaternion.quatRotate(parentSegmentSimObject.Rotation, parentSpineSegmentTranslationOffset);
+            Vector3 translation = parentSegmentSimObject.Translation + Quaternion.quatRotate(parentSegmentSimObject.Rotation, parentSegmentTranslationOffset);
             translation -= Quaternion.quatRotate(ref rotation, ref centerOfRotationOffset);
 
             updatePosition(ref translation, ref rotation);

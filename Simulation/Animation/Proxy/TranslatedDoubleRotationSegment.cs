@@ -10,10 +10,16 @@ using System.Threading.Tasks;
 
 namespace Medical.Animation.Proxy
 {
-    public class OffsetRoot : ProxyChainSegmentBehavior
+    public class TranslatedDoubleRotationSegment : ProxyChainSegmentBehavior
     {
         [Editable]
         private String proxySimObjectName;
+
+        [Editable]
+        private String secondaryRotationParentSimObjectName;
+
+        [Editable]
+        private float rotationInterpolationAmount = 0.5f;
 
         [DoNotCopy]
         [DoNotSave]
@@ -29,11 +35,11 @@ namespace Medical.Animation.Proxy
 
         [DoNotCopy]
         [DoNotSave]
-        Vector3 proxyTranslationOffset;
+        SimObject secondaryRotationParentSimObject;
 
         [DoNotCopy]
         [DoNotSave]
-        Quaternion proxyRotationOffset;
+        Quaternion secondaryRotationOffset;
 
         protected override void link()
         {
@@ -42,7 +48,13 @@ namespace Medical.Animation.Proxy
             proxySimObject = Owner.getOtherSimObject(proxySimObjectName);
             if (proxySimObject == null)
             {
-                blacklist("Cannot find proxy SimObject {0}.", proxySimObjectName);
+                blacklist("Cannot find proxy SimObject '{0}'.", proxySimObjectName);
+            }
+
+            secondaryRotationParentSimObject = Owner.getOtherSimObject(secondaryRotationParentSimObjectName);
+            if (secondaryRotationParentSimObject == null)
+            {
+                blacklist("Cannot find secondary rotation parent SimObject '{0}'.", secondaryRotationParentSimObjectName);
             }
 
             Quaternion inverseTargetRot = parentSegmentSimObject.Rotation.inverse();
@@ -52,39 +64,17 @@ namespace Medical.Animation.Proxy
 
             rotationOffset = inverseTargetRot * Owner.Rotation;
 
-            computeProxyOffsets(Owner.Translation, Owner.Rotation);
-        }
-
-        public Vector3 ProxyTranslationOffset
-        {
-            get
-            {
-                return proxyTranslationOffset;
-            }
-        }
-
-        public Quaternion ProxyRotationOffset
-        {
-            get
-            {
-                return proxyRotationOffset;
-            }
+            secondaryRotationOffset = secondaryRotationParentSimObject.Rotation.inverse() * Owner.Rotation;
         }
 
         protected override void computePosition()
         {
             Vector3 trans = parentSegmentSimObject.Translation + Quaternion.quatRotate(parentSegmentSimObject.Rotation, translationOffset);
-            Quaternion rotation = parentSegmentSimObject.Rotation * rotationOffset;
-
-            computeProxyOffsets(trans, rotation);
+            Quaternion primaryRotation = parentSegmentSimObject.Rotation * rotationOffset;
+            Quaternion secondaryRotation = secondaryRotationParentSimObject.Rotation * secondaryRotationOffset;
+            Quaternion rotation = primaryRotation.nlerp(ref secondaryRotation, ref rotationInterpolationAmount);
 
             updatePosition(ref trans, ref rotation);
-        }
-
-        private void computeProxyOffsets(Vector3 trans, Quaternion rotation)
-        {
-            proxyTranslationOffset = trans - proxySimObject.Translation;
-            proxyRotationOffset = proxySimObject.Rotation.inverse() * rotation;
         }
     }
 }

@@ -134,6 +134,7 @@
     <Compile Include="Animation\PhysicalAnimator.cs" />
     <Compile Include="Animation\PoseManipulator.cs" />
     <Compile Include="Animation\PoseManipulatorStateEntry.cs" />
+    <Compile Include="Animation\Proxy\TranslatedDoubleRotationSegment.cs" />
     <Compile Include="Animation\Proxy\ProxyChainSegmentBehavior.cs" />
     <Compile Include="Animation\SimObjectFollowerWithRotation.cs" />
     <Compile Include="Animation\Tracer.cs" />
@@ -159,7 +160,6 @@
     <Compile Include="Measurement\MeasurementDrawer.cs" />
     <Compile Include="Measurement\SimObjectFollower.cs" />
     <Compile Include="Animation\Proxy\MultiChildSegment.cs" />
-    <Compile Include="Animation\Proxy\OffsetRoot.cs" />
     <Compile Include="Animation\Proxy\OffsetSegment.cs" />
     <Compile Include="Animation\Proxy\ProxyBone.cs" />
     <Compile Include="Animation\Proxy\ProxyChainSegment.cs" />
