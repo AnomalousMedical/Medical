@@ -1,4 +1,5 @@
-﻿using Logging;
+﻿using Engine;
+using Logging;
 using Medical.Controller;
 using Microsoft.Kinect;
 using System;
@@ -19,6 +20,8 @@ namespace KinectPlugin
         private byte[] colorPixels;
         private Body[] bodies;
         private BodyFrameReader bodyFrameReader;
+        private ColorFrameReader colorFrameReader;
+        bool processedLastColorFrame = true;
 
         /// <summary>
         /// Called when a skeleton frame is ready, this event will fire on the main application thread.
@@ -31,6 +34,8 @@ namespace KinectPlugin
         public event Action<byte[]> SensorColorFrameReady;
 
         public event Action<KinectSensorManager> StatusChanged;
+
+        public event Action<KinectSensorManager> ColorFeedChanged;
 
         public KinectSensorManager()
         {
@@ -47,6 +52,8 @@ namespace KinectPlugin
                 bodyFrameReader.Dispose();
                 bodyFrameReader = null;
             }
+
+            setColorFeedEnabled(false, activeSensor);
 
             if (activeSensor != null)
             {
@@ -92,7 +99,7 @@ namespace KinectPlugin
             {
                 if(useColorFeed != value)
                 {
-                    useColorFeed = true;
+                    useColorFeed = value;
                     if(activeSensor != null)
                     {
                         ThreadPool.QueueUserWorkItem((state) =>
@@ -106,6 +113,16 @@ namespace KinectPlugin
                 }
             }
         }
+
+        public bool HasColorFeed
+        {
+            get
+            {
+                return colorFrameReader != null;
+            }
+        }
+
+        public IntSize2 ColorFrameSize { get; private set; }
 
         private void findSensor()
         {
@@ -122,24 +139,10 @@ namespace KinectPlugin
                     bodyFrameReader = localSensor.BodyFrameSource.OpenReader();
                     bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
 
-                    //TransformSmoothParameters smoothParam = new TransformSmoothParameters()
-                    //{
-                    //    Correction = 0.5f,
-                    //    JitterRadius = 0.1f,
-                    //    MaxDeviationRadius = 0.04f,
-                    //    Prediction = 0.0f,
-                    //    Smoothing = 0.5f,
-                    //};
-
-                    //localSensor.SkeletonStream.Enable(smoothParam);
-
-                    //localSensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
-
-                    //if (useColorFeed)
-                    //{
-                    //    setColorFeedEnabled(true, localSensor);
-                    //}
-                    //localSensor.ColorFrameReady += sensor_ColorFrameReady;
+                    if(useColorFeed)
+                    {
+                        setColorFeedEnabled(true, localSensor);
+                    }
 
                     // Start the sensor!
                     try
@@ -189,46 +192,72 @@ namespace KinectPlugin
             }
         }
 
-        //bool processedLastColorFrame = true;
-        //void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
-        //{
-        //    //This happens on its own thread
-        //    KinectSensor sensor = sender as KinectSensor;
-        //    if (processedLastColorFrame && useColorFeed && SensorColorFrameReady != null && sensor != null)
-        //    {
-        //        processedLastColorFrame = false;
-        //        using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
-        //        {
-        //            if (colorFrame != null)
-        //            {
-        //                // Copy the pixel data from the image to a temporary array
-        //                colorFrame.CopyPixelDataTo(colorPixels);
-        //            }
-        //        }
-
-        //        ThreadManager.invoke(() =>
-        //        {
-        //            if (SensorColorFrameReady != null)
-        //            {
-        //                SensorColorFrameReady.Invoke(colorPixels);
-        //            }
-        //            processedLastColorFrame = true;
-        //        });
-        //    }
-        //}
-
         private void setColorFeedEnabled(bool enabled, KinectSensor sensor)
         {
-            //if (enabled)
-            //{
-            //    sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-            //    colorPixels = new byte[sensor.ColorStream.FramePixelDataLength];
-            //}
-            //else
-            //{
-            //    sensor.ColorStream.Disable();
-            //    colorPixels = null;
-            //}
+            if (enabled)
+            {
+                if (colorFrameReader == null)
+                {
+                    colorFrameReader = sensor.ColorFrameSource.OpenReader();
+                    colorFrameReader.FrameArrived += colorFrameReader_FrameArrived;
+                    FrameDescription colorFrameDescription = sensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Rgba);
+                    ColorFrameSize = new IntSize2(colorFrameDescription.Width, colorFrameDescription.Height);
+                    colorPixels = new byte[colorFrameDescription.LengthInPixels * 4];
+                }
+            }
+            else
+            {
+                if (colorFrameReader != null)
+                {
+                    colorFrameReader.Dispose();
+                    colorFrameReader = null;
+                    colorPixels = null;
+                }
+            }
+
+            if (ColorFeedChanged != null)
+            {
+                ThreadManager.invoke(() => ColorFeedChanged.Invoke(this));
+            }
+        }
+
+        void colorFrameReader_FrameArrived(object sender, ColorFrameArrivedEventArgs e)
+        {
+            if (processedLastColorFrame && useColorFeed)
+            {
+                processedLastColorFrame = false;
+                using (ColorFrame colorFrame = e.FrameReference.AcquireFrame())
+                {
+                    if (colorFrame != null)
+                    {
+                        FrameDescription colorFrameDescription = colorFrame.FrameDescription;
+                        //If the frame parameters don't match, don't process this frame
+                        if (colorFrameDescription.Width == ColorFrameSize.Width && colorFrameDescription.Height == ColorFrameSize.Height)
+                        {
+                            using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
+                            {
+                                colorFrame.CopyConvertedFrameDataToArray(colorPixels, ColorImageFormat.Rgba);
+                            }
+
+                            ThreadManager.invoke(() =>
+                            {
+                                if (SensorColorFrameReady != null)
+                                {
+                                    if (colorPixels != null)
+                                    {
+                                        SensorColorFrameReady.Invoke(colorPixels);
+                                    }
+                                }
+                                processedLastColorFrame = true;
+                            });
+                        }
+                        else
+                        {
+                            processedLastColorFrame = true;
+                        }
+                    }
+                }
+            }
         }
     }
 }

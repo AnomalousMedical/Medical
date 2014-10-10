@@ -42,6 +42,7 @@ namespace KinectPlugin
             ikController.AllowMovementChanged += ikController_AllowMovementChanged;
             this.sensorManager = sensorManager;
             sensorManager.StatusChanged += sensorManager_StatusChanged;
+            sensorManager.ColorFeedChanged += sensorManager_ColorFeedChanged;
             this.debugVisualizer = debugVisualizer;
 
             enableMotionButton = new CheckButton((Button)window.findWidget("EnableMotion"));
@@ -72,6 +73,7 @@ namespace KinectPlugin
         public override void Dispose()
         {
             sensorManager.StatusChanged -= sensorManager_StatusChanged;
+            sensorManager.ColorFeedChanged -= sensorManager_ColorFeedChanged;
             destroyColorTexture();
             base.Dispose();
         }
@@ -94,14 +96,6 @@ namespace KinectPlugin
         void enableVideoFeed_CheckedChanged(Widget source, EventArgs e)
         {
             sensorManager.UseColorFeed = enableVideoFeed.Checked;
-            if (enableVideoFeed.Checked)
-            {
-                createColorTexture();
-            }
-            else
-            {
-                destroyColorTexture();
-            }
         }
 
         void sensorManager_StatusChanged(KinectSensorManager sensorManager)
@@ -117,6 +111,18 @@ namespace KinectPlugin
                 {
                     destroyColorTexture();
                 }
+            }
+        }
+
+        void sensorManager_ColorFeedChanged(KinectSensorManager obj)
+        {
+            if (sensorManager.HasColorFeed)
+            {
+                createColorTexture();
+            }
+            else
+            {
+                destroyColorTexture();
             }
         }
 
@@ -139,13 +145,15 @@ namespace KinectPlugin
                 //We are having to create the texture as a rendertarget when we should probably use a dynamic texture instead, however,
                 //the D3D11 plugin will crash if we use any other kind of texture, so for now we are just using this.
                 //If putting the texture in mygui it is important to tell its render manager to destroy the texture also (like the RocketWidget does).
-                colorTexture = TextureManager.getInstance().createManual("KinectColorSensor", MyGUIInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, 640, 480, 1, 1, PixelFormat.PF_X8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+                PixelFormat pixelFormat = PixelFormat.PF_BYTE_RGBA;
+                IntSize2 colorFrameSize = sensorManager.ColorFrameSize;
+                colorTexture = TextureManager.getInstance().createManual("KinectColorSensor", MyGUIInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, (uint)colorFrameSize.Width, (uint)colorFrameSize.Height, 1, 1, pixelFormat, TextureUsage.TU_RENDERTARGET, false, 0);
                 hwBuffer = colorTexture.Value.getBuffer();
-                pixelBox = new PixelBox(0, 0, 640, 480, PixelFormat.PF_X8R8G8B8);
+                pixelBox = new PixelBox(0, 0, colorFrameSize.Width, colorFrameSize.Height, pixelFormat);
                 colorSensorImage.setItemResource(null); //Clear the "ItemResource" first since we are setting texture directly
                 colorSensorImage.setCoord(colorSensorImageOriginalPos.left, colorSensorImageOriginalPos.top, colorSensorImageOriginalPos.width, colorSensorImageOriginalPos.height);
                 colorSensorImage.setImageTexture(colorTexture.Value.getName());
-                colorSensorImage.setImageCoord(new IntCoord(0, 0, 640, 480));
+                colorSensorImage.setImageCoord(new IntCoord(0, 0, colorFrameSize.Width, colorFrameSize.Height));
             }
         }
 
