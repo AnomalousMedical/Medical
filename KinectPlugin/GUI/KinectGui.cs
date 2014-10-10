@@ -38,6 +38,8 @@ namespace KinectPlugin
         public KinectGui(KinectIkController ikController, KinectSensorManager sensorManager, KinectDebugVisualizer debugVisualizer)
             : base("KinectPlugin.GUI.KinectGui.layout")
         {
+            window.EventChangeCoord += window_EventChangeCoord;
+
             this.ikController = ikController;
             ikController.AllowMovementChanged += ikController_AllowMovementChanged;
             this.sensorManager = sensorManager;
@@ -188,6 +190,29 @@ namespace KinectPlugin
         {
             colorSensorImage.setItemResource("KinectPlugin.VideoStream");
             colorSensorImage.setCoord(colorSensorImageIconPos.left, colorSensorImageIconPos.top, colorSensorImageIconPos.width, colorSensorImageIconPos.height);
+        }
+
+        void window_EventChangeCoord(Widget source, EventArgs e)
+        {
+            sizeVideoOutput();
+        }
+
+        private void sizeVideoOutput()
+        {
+            IntCoord clientCoord = window.ClientCoord;
+            int width = clientCoord.width;
+            int height = (int)(width * (9.0f / 16.0f));
+            if (height > clientCoord.height - 126)
+            {
+                height = clientCoord.height - 126;
+                width = (int)(height * (16.0f / 9.0f));
+            }
+            if (colorTexture != null)
+            {
+                colorSensorImage.setSize(width, height);
+            }
+            colorSensorImageOriginalPos.width = width;
+            colorSensorImageOriginalPos.height = height;
         }
     }
 }
