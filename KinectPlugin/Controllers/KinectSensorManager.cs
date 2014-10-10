@@ -58,9 +58,8 @@ namespace KinectPlugin
 
             if (activeSensor != null)
             {
-                KinectSensor localSensor = activeSensor;
+                activeSensor.Close();
                 activeSensor = null;
-                localSensor.Close();
                 Connected = false;
             }
         }
