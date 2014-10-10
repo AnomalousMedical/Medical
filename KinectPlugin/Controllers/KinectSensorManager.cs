@@ -34,7 +34,6 @@ namespace KinectPlugin
 
         public KinectSensorManager()
         {
-            //KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
             ThreadPool.QueueUserWorkItem((state) =>
                 {
                     findSensor();
@@ -43,7 +42,19 @@ namespace KinectPlugin
 
         public void Dispose()
         {
-            disconnectSensor();
+            if (bodyFrameReader != null)
+            {
+                bodyFrameReader.Dispose();
+                bodyFrameReader = null;
+            }
+
+            if (activeSensor != null)
+            {
+                KinectSensor localSensor = activeSensor;
+                activeSensor = null;
+                localSensor.Close();
+                Connected = false;
+            }
         }
 
         public bool Connected
@@ -205,27 +216,6 @@ namespace KinectPlugin
         //        });
         //    }
         //}
-
-        private void disconnectSensor()
-        {
-            if(bodyFrameReader != null)
-            {
-                bodyFrameReader.Dispose();
-                bodyFrameReader = null;
-            }
-
-            if (activeSensor != null)
-            {
-                KinectSensor localSensor = activeSensor;
-                activeSensor = null;
-                localSensor.Close();
-                Connected = false;
-                //localSensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
-                //localSensor.ColorFrameReady -= sensor_ColorFrameReady;
-                //localSensor.Stop();
-                //localSensor.Dispose();
-            }
-        }
 
         private void setColorFeedEnabled(bool enabled, KinectSensor sensor)
         {
