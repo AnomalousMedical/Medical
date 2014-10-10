@@ -18,6 +18,7 @@ namespace KinectPlugin
         private bool connected;
         private bool useColorFeed = false;
         private byte[] colorPixels;
+        private Object colorPixelsLock = new object();
         private Body[] bodies;
         private BodyFrameReader bodyFrameReader;
         private ColorFrameReader colorFrameReader;
@@ -194,66 +195,75 @@ namespace KinectPlugin
 
         private void setColorFeedEnabled(bool enabled, KinectSensor sensor)
         {
-            if (enabled)
+            lock (colorPixelsLock)
             {
-                if (colorFrameReader == null)
+                if (enabled)
                 {
-                    colorFrameReader = sensor.ColorFrameSource.OpenReader();
-                    colorFrameReader.FrameArrived += colorFrameReader_FrameArrived;
-                    FrameDescription colorFrameDescription = sensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Rgba);
-                    ColorFrameSize = new IntSize2(colorFrameDescription.Width, colorFrameDescription.Height);
-                    colorPixels = new byte[colorFrameDescription.LengthInPixels * 4];
+                    if (colorFrameReader == null)
+                    {
+                        colorFrameReader = sensor.ColorFrameSource.OpenReader();
+                        colorFrameReader.FrameArrived += colorFrameReader_FrameArrived;
+                        FrameDescription colorFrameDescription = sensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Rgba);
+                        ColorFrameSize = new IntSize2(colorFrameDescription.Width, colorFrameDescription.Height);
+                        colorPixels = new byte[colorFrameDescription.LengthInPixels * 4];
+                    }
                 }
-            }
-            else
-            {
-                if (colorFrameReader != null)
+                else
                 {
-                    colorFrameReader.Dispose();
-                    colorFrameReader = null;
-                    colorPixels = null;
+                    if (colorFrameReader != null)
+                    {
+                        colorFrameReader.Dispose();
+                        colorFrameReader = null;
+                        colorPixels = null;
+                    }
                 }
-            }
 
-            if (ColorFeedChanged != null)
-            {
-                ThreadManager.invoke(() => ColorFeedChanged.Invoke(this));
+                if (ColorFeedChanged != null)
+                {
+                    ThreadManager.invoke(() => ColorFeedChanged.Invoke(this));
+                }
             }
         }
 
         void colorFrameReader_FrameArrived(object sender, ColorFrameArrivedEventArgs e)
         {
-            if (processedLastColorFrame && useColorFeed)
+            lock (colorPixelsLock)
             {
-                processedLastColorFrame = false;
-                using (ColorFrame colorFrame = e.FrameReference.AcquireFrame())
+                if (processedLastColorFrame && useColorFeed)
                 {
-                    if (colorFrame != null)
+                    processedLastColorFrame = false;
+                    using (ColorFrame colorFrame = e.FrameReference.AcquireFrame())
                     {
-                        FrameDescription colorFrameDescription = colorFrame.FrameDescription;
-                        //If the frame parameters don't match, don't process this frame
-                        if (colorFrameDescription.Width == ColorFrameSize.Width && colorFrameDescription.Height == ColorFrameSize.Height)
+                        if (colorFrame != null)
                         {
-                            using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
+                            FrameDescription colorFrameDescription = colorFrame.FrameDescription;
+                            //If the frame parameters don't match, don't process this frame
+                            if (colorFrameDescription.Width == ColorFrameSize.Width && colorFrameDescription.Height == ColorFrameSize.Height)
                             {
-                                colorFrame.CopyConvertedFrameDataToArray(colorPixels, ColorImageFormat.Rgba);
-                            }
-
-                            ThreadManager.invoke(() =>
-                            {
-                                if (SensorColorFrameReady != null)
+                                using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
                                 {
-                                    if (colorPixels != null)
-                                    {
-                                        SensorColorFrameReady.Invoke(colorPixels);
-                                    }
+                                    colorFrame.CopyConvertedFrameDataToArray(colorPixels, ColorImageFormat.Rgba);
                                 }
+
+                                ThreadManager.invoke(() =>
+                                {
+                                    lock (colorPixelsLock)
+                                    {
+                                        if (SensorColorFrameReady != null)
+                                        {
+                                            if (colorPixels != null)
+                                            {
+                                                SensorColorFrameReady.Invoke(colorPixels);
+                                            }
+                                        }
+                                        processedLastColorFrame = true;
+                                    }
+                                });
+                            }
+                            else
+                            {
                                 processedLastColorFrame = true;
-                            });
-                        }
-                        else
-                        {
-                            processedLastColorFrame = true;
+                            }
                         }
                     }
                 }
