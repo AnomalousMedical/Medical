@@ -159,11 +159,11 @@ namespace KinectPlugin
             }
         }
 
-        void sensorManager_SkeletonFrameReady(Skeleton[] skeletons)
+        void sensorManager_SkeletonFrameReady(Body[] skeletons)
         {
             if (skeletons.Length != 0)
             {
-                foreach (Skeleton skel in skeletons)
+                foreach (Body skel in skeletons)
                 {
                     ikController.updateControls(skel);
                     kinectDebugger.debugSkeleton(skel);

@@ -25,7 +25,7 @@ namespace KinectPlugin
             this.simObject = simObject;
         }
 
-        public void update(Skeleton skeleton)
+        public void update(Body skeleton)
         {
             Vector3 pos = skeleton.Joints[jointType].Position.toEngineCoords();
 
@@ -37,7 +37,7 @@ namespace KinectPlugin
             }
         }
 
-        private void update(Skeleton skeleton, Vector3 parentJointPosition, Vector3 parentSimObjectPosition)
+        private void update(Body skeleton, Vector3 parentJointPosition, Vector3 parentSimObjectPosition)
         {
             Vector3 pos = skeleton.Joints[jointType].Position.toEngineCoords();
 

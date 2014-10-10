@@ -17,11 +17,13 @@ namespace KinectPlugin
         private KinectStatus currentStatus;
         private bool useColorFeed = false;
         private byte[] colorPixels;
+        private Body[] bodies;
+        private BodyFrameReader bodyFrameReader;
 
         /// <summary>
         /// Called when a skeleton frame is ready, this event will fire on the main application thread.
         /// </summary>
-        public event Action<Skeleton[]> SkeletonFrameReady;
+        public event Action<Body[]> SkeletonFrameReady;
 
         /// <summary>
         /// Called when a color frame is ready, this event will fire on the main application thread.
@@ -32,7 +34,7 @@ namespace KinectPlugin
 
         public KinectSensorManager()
         {
-            KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
+            //KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
             ThreadPool.QueueUserWorkItem((state) =>
                 {
                     findSensor();
@@ -94,98 +96,92 @@ namespace KinectPlugin
             }
         }
 
-        void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
-        {
-            //This happens on its own thread
+        //void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
+        //{
+        //    //This happens on its own thread
 
-            if(SkeletonFrameReady != null)
-            {
-                Skeleton[] skeletons = new Skeleton[0];
+        //    if(SkeletonFrameReady != null)
+        //    {
+        //        Skeleton[] skeletons = new Skeleton[0];
 
-                //Get the skeletons
-                using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
-                {
-                    if (skeletonFrame != null)
-                    {
-                        skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
-                        skeletonFrame.CopySkeletonDataTo(skeletons);
-                    }
-                }
+        //        //Get the skeletons
+        //        using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
+        //        {
+        //            if (skeletonFrame != null)
+        //            {
+        //                skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
+        //                skeletonFrame.CopySkeletonDataTo(skeletons);
+        //            }
+        //        }
 
-                ThreadManager.invoke(() =>
-                {
-                    if (SkeletonFrameReady != null)
-                    {
-                        SkeletonFrameReady.Invoke(skeletons);
-                    }
-                });
-            }
-        }
+        //        ThreadManager.invoke(() =>
+        //        {
+        //            if (SkeletonFrameReady != null)
+        //            {
+        //                SkeletonFrameReady.Invoke(skeletons);
+        //            }
+        //        });
+        //    }
+        //}
 
-        void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
-        {
-            if (CurrentStatus != e.Status)
-            {
-                CurrentStatus = e.Status;
-                switch (currentStatus)
-                {
-                    case KinectStatus.Disconnected:
-                        if (e.Sensor == activeSensor)
-                        {
-                            disconnectSensor();
-                        }
-                        break;
-                    case KinectStatus.Connected:
-                        findSensor();
-                        break;
-                }
-            }
-        }
+        //void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
+        //{
+        //    if (CurrentStatus != e.Status)
+        //    {
+        //        CurrentStatus = e.Status;
+        //        switch (currentStatus)
+        //        {
+        //            case KinectStatus.Disconnected:
+        //                if (e.Sensor == activeSensor)
+        //                {
+        //                    disconnectSensor();
+        //                }
+        //                break;
+        //            case KinectStatus.Connected:
+        //                findSensor();
+        //                break;
+        //        }
+        //    }
+        //}
 
         private void findSensor()
         {
             if (activeSensor == null)
             {
-                KinectSensor localSensor = null;
-                // Look through all sensors and start the first connected one.
-                foreach (var potentialSensor in KinectSensor.KinectSensors)
-                {
-                    if (potentialSensor.Status == KinectStatus.Connected)
-                    {
-                        localSensor = potentialSensor;
-                        break;
-                    }
-                }
+                KinectSensor localSensor = KinectSensor.GetDefault();
 
                 //If a sensor was found start it and enable its skeleton listening.
                 if (localSensor != null)
                 {
                     // Turn on the skeleton stream to receive skeleton frames
 
-                    TransformSmoothParameters smoothParam = new TransformSmoothParameters()
-                    {
-                        Correction = 0.5f,
-                        JitterRadius = 0.1f,
-                        MaxDeviationRadius = 0.04f,
-                        Prediction = 0.0f,
-                        Smoothing = 0.5f,
-                    };
+                    //TransformSmoothParameters smoothParam = new TransformSmoothParameters()
+                    //{
+                    //    Correction = 0.5f,
+                    //    JitterRadius = 0.1f,
+                    //    MaxDeviationRadius = 0.04f,
+                    //    Prediction = 0.0f,
+                    //    Smoothing = 0.5f,
+                    //};
 
-                    localSensor.SkeletonStream.Enable(smoothParam);
+                    //localSensor.SkeletonStream.Enable(smoothParam);
 
-                    // Add an event handler to be called whenever there is new skeleton frame data
-                    localSensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
+                    //// Add an event handler to be called whenever there is new skeleton frame data
+                    //localSensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
 
-                    if (useColorFeed)
-                    {
-                        setColorFeedEnabled(true, localSensor);
-                    }
-                    localSensor.ColorFrameReady += sensor_ColorFrameReady;
+                    //if (useColorFeed)
+                    //{
+                    //    setColorFeedEnabled(true, localSensor);
+                    //}
+                    //localSensor.ColorFrameReady += sensor_ColorFrameReady;
+
+                    bodyFrameReader = localSensor.BodyFrameSource.OpenReader();
+                    bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
 
                     // Start the sensor!
                     try
                     {
-                        localSensor.Start();
+                        localSensor.Open();
                         CurrentStatus = KinectStatus.Connected;
                     }
                     catch (IOException)
@@ -198,60 +194,94 @@ namespace KinectPlugin
             }
         }
 
-        bool processedLastColorFrame = true;
-        void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
+        void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
-            //This happens on its own thread
-            KinectSensor sensor = sender as KinectSensor;
-            if (processedLastColorFrame && useColorFeed && SensorColorFrameReady != null && sensor != null)
-            {
-                processedLastColorFrame = false;
-                using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
-                {
-                    if (colorFrame != null)
-                    {
-                        // Copy the pixel data from the image to a temporary array
-                        colorFrame.CopyPixelDataTo(colorPixels);
-                    }
-                }
+            bool dataReceived = false;
 
-                ThreadManager.invoke(() =>
+            using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
+            {
+                if (bodyFrame != null)
                 {
-                    if (SensorColorFrameReady != null)
+                    if (bodies == null)
                     {
-                        SensorColorFrameReady.Invoke(colorPixels);
+                        bodies = new Body[bodyFrame.BodyCount];
                     }
-                    processedLastColorFrame = true;
-                });
+
+                    // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
+                    // As long as those body objects are not disposed and not set to null in the array,
+                    // those body objects will be re-used.
+                    bodyFrame.GetAndRefreshBodyData(bodies);
+                    dataReceived = true;
+                }
+            }
+
+            if (dataReceived && SkeletonFrameReady != null)
+            {
+                ThreadManager.invoke(() => SkeletonFrameReady.Invoke(bodies));
             }
         }
 
+        //bool processedLastColorFrame = true;
+        //void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
+        //{
+        //    //This happens on its own thread
+        //    KinectSensor sensor = sender as KinectSensor;
+        //    if (processedLastColorFrame && useColorFeed && SensorColorFrameReady != null && sensor != null)
+        //    {
+        //        processedLastColorFrame = false;
+        //        using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
+        //        {
+        //            if (colorFrame != null)
+        //            {
+        //                // Copy the pixel data from the image to a temporary array
+        //                colorFrame.CopyPixelDataTo(colorPixels);
+        //            }
+        //        }
+
+        //        ThreadManager.invoke(() =>
+        //        {
+        //            if (SensorColorFrameReady != null)
+        //            {
+        //                SensorColorFrameReady.Invoke(colorPixels);
+        //            }
+        //            processedLastColorFrame = true;
+        //        });
+        //    }
+        //}
+
         private void disconnectSensor()
         {
+            if(bodyFrameReader != null)
+            {
+                bodyFrameReader.Dispose();
+                bodyFrameReader = null;
+            }
+
             if (activeSensor != null)
             {
                 KinectSensor localSensor = activeSensor;
                 activeSensor = null;
+                localSensor.Close();
                 CurrentStatus = KinectStatus.Disconnected;
-                localSensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
-                localSensor.ColorFrameReady -= sensor_ColorFrameReady;
-                localSensor.Stop();
-                localSensor.Dispose();
+                //localSensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
+                //localSensor.ColorFrameReady -= sensor_ColorFrameReady;
+                //localSensor.Stop();
+                //localSensor.Dispose();
             }
         }
 
         private void setColorFeedEnabled(bool enabled, KinectSensor sensor)
         {
-            if (enabled)
-            {
-                sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
-                colorPixels = new byte[sensor.ColorStream.FramePixelDataLength];
-            }
-            else
-            {
-                sensor.ColorStream.Disable();
-                colorPixels = null;
-            }
+            //if (enabled)
+            //{
+            //    sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+            //    colorPixels = new byte[sensor.ColorStream.FramePixelDataLength];
+            //}
+            //else
+            //{
+            //    sensor.ColorStream.Disable();
+            //    colorPixels = null;
+            //}
         }
     }
 }

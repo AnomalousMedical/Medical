@@ -15,23 +15,28 @@ namespace KinectPlugin
 
         static KinectUtilities()
         {
-            parentJointTypeMap.Add(JointType.HipCenter, JointType.HipCenter);
-            parentJointTypeMap.Add(JointType.Spine, JointType.HipCenter);
-            parentJointTypeMap.Add(JointType.ShoulderCenter, JointType.Spine);
-            parentJointTypeMap.Add(JointType.Head, JointType.ShoulderCenter);
-            parentJointTypeMap.Add(JointType.ShoulderLeft, JointType.ShoulderCenter);
+            parentJointTypeMap.Add(JointType.SpineBase, JointType.SpineBase);
+            parentJointTypeMap.Add(JointType.SpineMid, JointType.SpineBase);
+            parentJointTypeMap.Add(JointType.SpineShoulder, JointType.SpineMid);
+            parentJointTypeMap.Add(JointType.Neck, JointType.SpineShoulder);
+            parentJointTypeMap.Add(JointType.Head, JointType.Neck);
+            parentJointTypeMap.Add(JointType.ShoulderLeft, JointType.SpineShoulder);
             parentJointTypeMap.Add(JointType.ElbowLeft, JointType.ShoulderLeft);
             parentJointTypeMap.Add(JointType.WristLeft, JointType.ElbowLeft);
+            parentJointTypeMap.Add(JointType.ThumbLeft, JointType.WristLeft);
             parentJointTypeMap.Add(JointType.HandLeft, JointType.WristLeft);
-            parentJointTypeMap.Add(JointType.ShoulderRight, JointType.ShoulderCenter);
+            parentJointTypeMap.Add(JointType.HandTipLeft, JointType.HandLeft);
+            parentJointTypeMap.Add(JointType.ShoulderRight, JointType.SpineShoulder);
             parentJointTypeMap.Add(JointType.ElbowRight, JointType.ShoulderRight);
             parentJointTypeMap.Add(JointType.WristRight, JointType.ElbowRight);
+            parentJointTypeMap.Add(JointType.ThumbRight, JointType.WristRight);
             parentJointTypeMap.Add(JointType.HandRight, JointType.WristRight);
-            parentJointTypeMap.Add(JointType.HipLeft, JointType.HipCenter);
+            parentJointTypeMap.Add(JointType.HandTipRight, JointType.HandRight);
+            parentJointTypeMap.Add(JointType.HipLeft, JointType.SpineBase);
             parentJointTypeMap.Add(JointType.KneeLeft, JointType.HipLeft);
             parentJointTypeMap.Add(JointType.AnkleLeft, JointType.KneeLeft);
             parentJointTypeMap.Add(JointType.FootLeft, JointType.AnkleLeft);
-            parentJointTypeMap.Add(JointType.HipRight, JointType.HipCenter);
+            parentJointTypeMap.Add(JointType.HipRight, JointType.SpineBase);
             parentJointTypeMap.Add(JointType.KneeRight, JointType.HipRight);
             parentJointTypeMap.Add(JointType.AnkleRight, JointType.KneeRight);
             parentJointTypeMap.Add(JointType.FootRight, JointType.AnkleRight);
@@ -42,7 +47,7 @@ namespace KinectPlugin
             return new Quaternion(src.X, src.Y, src.Z, src.W);
         }
 
-        public static Vector3 toEngineCoords(this SkeletonPoint position)
+        public static Vector3 toEngineCoords(this CameraSpacePoint position)
         {
             return new Vector3(position.X * 1000f * SimulationConfig.MMToUnits, (position.Y - 0.2f) * 1000f * SimulationConfig.MMToUnits - 85f, -((position.Z - 1.5f) * 1000f * SimulationConfig.MMToUnits));
             //return new Vector3(position.X * 1000f * SimulationConfig.MMToUnits, position.Y * 1000f * SimulationConfig.MMToUnits - 90f, (position.Z - 2) * 1000f * SimulationConfig.MMToUnits);

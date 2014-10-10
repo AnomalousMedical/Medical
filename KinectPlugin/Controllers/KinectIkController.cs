@@ -55,7 +55,7 @@ namespace KinectPlugin
             ikDebug = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("KinectIKDebug", subScene);
             ikDebug.setVisible(debugVisible);
 
-            hips = createKinectBone(JointType.HipCenter, "Pelvis", "Pelvis", null, scene, subScene);
+            hips = createKinectBone(JointType.SpineBase, "Pelvis", "Pelvis", null, scene, subScene);
 
             KinectIKBone skull = createKinectBone(JointType.Head, "CSpineMover", "CSpineMover", hips, scene, subScene);
 
@@ -89,9 +89,9 @@ namespace KinectPlugin
             ikDragSimObjects.Clear();
         }
 
-        public void updateControls(Skeleton skel)
+        public void updateControls(Body skel)
         {
-            if (hips != null && skel.TrackingState != SkeletonTrackingState.NotTracked)
+            if (hips != null && skel.IsTracked)
             {
                 hips.update(skel);
                 if (debugVisible)

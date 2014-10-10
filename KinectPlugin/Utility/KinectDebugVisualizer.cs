@@ -38,12 +38,12 @@ namespace KinectPlugin
             }
         }
 
-        public void debugSkeleton(Skeleton skel)
+        public void debugSkeleton(Body skel)
         {
-            if (debugVisible && skel.TrackingState != SkeletonTrackingState.NotTracked)
+            if (debugVisible && skel.IsTracked)
             {
                 debugDrawer.begin("SkeletonId" + skel.TrackingId, DrawingType.LineList);
-                foreach (Joint joint in skel.Joints)
+                foreach (Joint joint in skel.Joints.Values)
                 {
                     Vector3 pos = joint.Position.toEngineCoords();
 

@@ -112,10 +112,10 @@ namespace KinectPlugin
             {
                 switch (status)
                 {
-                    case Microsoft.Kinect.KinectStatus.Connected:
+                    case KinectStatus.Connected:
                         createColorTexture();
                         break;
-                    case Microsoft.Kinect.KinectStatus.Disconnected:
+                    case KinectStatus.Disconnected:
                         destroyColorTexture();
                         break;
                 }
