@@ -1,24 +1,25 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="19 33 333 419" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="19 33 333 337" layer="Overlapped">
         <Property key="Caption" value="Kinect"/>
-        <Widget type="Button" skin="Button" position="14 250 130 38" name="EnableMotion">
+        <Property key="MinSize" value="333 337"/>
+        <Widget type="Button" skin="Button" position="14 187 130 38" align="Left Bottom" name="EnableMotion">
             <Property key="Caption" value="Enable Motion"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="174 296 130 38" name="ShowIkSkeleton">
+        <Widget type="Button" skin="Button" position="174 233 130 38" align="Left Bottom" name="ShowIkSkeleton">
             <Property key="Caption" value="Show IK Skeleton"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="14 296 130 38" name="ShowSensorSkeleton">
+        <Widget type="Button" skin="Button" position="14 233 130 38" align="Left Bottom" name="ShowSensorSkeleton">
             <Property key="Caption" value="Show Sensor Skeleton"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="0 348 42 19">
+        <Widget type="TextBox" skin="TextBox" position="0 285 42 19" align="Left Bottom">
             <Property key="Caption" value="Status"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="45 348 121 20" name="StatusLabel">
+        <Widget type="TextBox" skin="TextBox" position="45 285 121 20" align="Left Bottom" name="StatusLabel">
             <Property key="Caption" value="Unknown"/>
         </Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="0 1 320 240" name="ColorSensorImageBox"/>
-        <Widget type="Button" skin="Button" position="174 250 130 38" name="EnableVideoFeed">
+        <Widget type="ImageBox" skin="ImageBox" position="0 1 320 180" name="ColorSensorImageBox"/>
+        <Widget type="Button" skin="Button" position="174 187 130 38" align="Left Bottom" name="EnableVideoFeed">
             <Property key="Caption" value="Enable Video Feed"/>
         </Widget>
     </Widget>
