@@ -59,7 +59,6 @@
     <Compile Include="Controllers\KinectIKBone.cs" />
     <Compile Include="Controllers\KinectIkController.cs" />
     <Compile Include="Controllers\KinectSensorManager.cs" />
-    <Compile Include="Controllers\KinectStatus.cs" />
     <Compile Include="GUI\KinectGui.cs" />
     <Compile Include="GUI\MovementSequenceRecorder.cs" />
     <Compile Include="KinectAtlasPlugin.cs" />

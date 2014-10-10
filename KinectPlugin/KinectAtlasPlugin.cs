@@ -74,7 +74,7 @@ namespace KinectPlugin
         void sensorManager_StatusChanged(KinectSensorManager obj)
         {
             //This function checks the status the first time the sensor is connected.
-            if (sensorManager.CurrentStatus == KinectStatus.Connected)
+            if (sensorManager.Connected)
             {
                 ikController.AllowMovement = true;
                 sensorManager.StatusChanged -= sensorManager_StatusChanged; //Remove the event, we only care the first time

@@ -14,7 +14,7 @@ namespace KinectPlugin
     class KinectSensorManager : IDisposable
     {
         private KinectSensor activeSensor;
-        private KinectStatus currentStatus;
+        private bool connected;
         private bool useColorFeed = false;
         private byte[] colorPixels;
         private Body[] bodies;
@@ -46,17 +46,17 @@ namespace KinectPlugin
             disconnectSensor();
         }
 
-        public KinectStatus CurrentStatus
+        public bool Connected
         {
             get
             {
-                return currentStatus;
+                return connected;
             }
             private set
             {
-                if (currentStatus != value)
+                if (connected != value)
                 {
-                    currentStatus = value;
+                    connected = value;
                     if(StatusChanged != null)
                     {
                         ThreadManager.invoke(() =>
@@ -96,54 +96,6 @@ namespace KinectPlugin
             }
         }
 
-        //void sensor_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
-        //{
-        //    //This happens on its own thread
-
-        //    if(SkeletonFrameReady != null)
-        //    {
-        //        Skeleton[] skeletons = new Skeleton[0];
-
-        //        //Get the skeletons
-        //        using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
-        //        {
-        //            if (skeletonFrame != null)
-        //            {
-        //                skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
-        //                skeletonFrame.CopySkeletonDataTo(skeletons);
-        //            }
-        //        }
-
-        //        ThreadManager.invoke(() =>
-        //        {
-        //            if (SkeletonFrameReady != null)
-        //            {
-        //                SkeletonFrameReady.Invoke(skeletons);
-        //            }
-        //        });
-        //    }
-        //}
-
-        //void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
-        //{
-        //    if (CurrentStatus != e.Status)
-        //    {
-        //        CurrentStatus = e.Status;
-        //        switch (currentStatus)
-        //        {
-        //            case KinectStatus.Disconnected:
-        //                if (e.Sensor == activeSensor)
-        //                {
-        //                    disconnectSensor();
-        //                }
-        //                break;
-        //            case KinectStatus.Connected:
-        //                findSensor();
-        //                break;
-        //        }
-        //    }
-        //}
-
         private void findSensor()
         {
             if (activeSensor == null)
@@ -153,7 +105,11 @@ namespace KinectPlugin
                 //If a sensor was found start it and enable its skeleton listening.
                 if (localSensor != null)
                 {
-                    // Turn on the skeleton stream to receive skeleton frames
+                    localSensor.IsAvailableChanged += localSensor_IsAvailableChanged;
+
+                    // Turn on the body stream to receive body frames
+                    bodyFrameReader = localSensor.BodyFrameSource.OpenReader();
+                    bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
 
                     //TransformSmoothParameters smoothParam = new TransformSmoothParameters()
                     //{
@@ -166,7 +122,6 @@ namespace KinectPlugin
 
                     //localSensor.SkeletonStream.Enable(smoothParam);
 
-                    //// Add an event handler to be called whenever there is new skeleton frame data
                     //localSensor.SkeletonFrameReady += sensor_SkeletonFrameReady;
 
                     //if (useColorFeed)
@@ -175,14 +130,11 @@ namespace KinectPlugin
                     //}
                     //localSensor.ColorFrameReady += sensor_ColorFrameReady;
 
-                    bodyFrameReader = localSensor.BodyFrameSource.OpenReader();
-                    bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
-
                     // Start the sensor!
                     try
                     {
                         localSensor.Open();
-                        CurrentStatus = KinectStatus.Connected;
+                        Connected = true;
                     }
                     catch (IOException)
                     {
@@ -192,6 +144,11 @@ namespace KinectPlugin
                     activeSensor = localSensor; //Make the class aware of the sensor
                 }
             }
+        }
+
+        void localSensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e)
+        {
+            Connected = e.IsAvailable;
         }
 
         void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
@@ -262,7 +219,7 @@ namespace KinectPlugin
                 KinectSensor localSensor = activeSensor;
                 activeSensor = null;
                 localSensor.Close();
-                CurrentStatus = KinectStatus.Disconnected;
+                Connected = false;
                 //localSensor.SkeletonFrameReady -= sensor_SkeletonFrameReady;
                 //localSensor.ColorFrameReady -= sensor_ColorFrameReady;
                 //localSensor.Stop();

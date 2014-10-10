@@ -61,7 +61,7 @@ namespace KinectPlugin
             enableVideoFeed.CheckedChanged += enableVideoFeed_CheckedChanged;
 
             statusLabel = (TextBox)window.findWidget("StatusLabel");
-            statusLabel.Caption = sensorManager.CurrentStatus.ToString();
+            setConnectedLabelText(sensorManager.Connected);
 
             colorSensorImage = (ImageBox)window.findWidget("ColorSensorImageBox");
             colorSensorImageOriginalPos = new IntCoord(colorSensorImage.Left, colorSensorImage.Top, colorSensorImage.Width, colorSensorImage.Height);
@@ -106,20 +106,23 @@ namespace KinectPlugin
 
         void sensorManager_StatusChanged(KinectSensorManager sensorManager)
         {
-            var status = sensorManager.CurrentStatus;
-            statusLabel.Caption = status.ToString();
+            setConnectedLabelText(sensorManager.Connected);
             if (sensorManager.UseColorFeed)
             {
-                switch (status)
+                if (sensorManager.Connected)
                 {
-                    case KinectStatus.Connected:
-                        createColorTexture();
-                        break;
-                    case KinectStatus.Disconnected:
-                        destroyColorTexture();
-                        break;
+                    createColorTexture();
+                }
+                else
+                {
+                    destroyColorTexture();
                 }
             }
+        }
+
+        private void setConnectedLabelText(bool connected)
+        {
+            statusLabel.Caption = connected ? "Connected" : "Disconnected";
         }
 
         void ikController_AllowMovementChanged(KinectIkController ikController)
