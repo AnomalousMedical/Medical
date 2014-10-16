@@ -155,6 +155,7 @@
     <Compile Include="ControlPoint\FossaState.cs" />
     <Compile Include="Mandible\Mandible.cs" />
     <Compile Include="Mandible\MandibleController.cs" />
+    <Compile Include="ManubriumBehavior.cs" />
     <Compile Include="Measurement\Measurement.cs" />
     <Compile Include="Measurement\MeasurementController.cs" />
     <Compile Include="Measurement\MeasurementDrawer.cs" />
