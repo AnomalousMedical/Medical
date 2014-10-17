@@ -1,6 +1,7 @@
 ﻿using BulletPlugin;
 using Engine;
 using Engine.Attributes;
+using Engine.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,13 @@ namespace Medical
     /// This is an FK Root that will schedule its update to run before the scene's bullet
     /// physics scene updates.
     /// </summary>
-    public class FKBulletRoot : BehaviorInterface, FKRoot
+    public class FKRootBehavior : Behavior, FKRoot
     {
         private const float FullBlend = 0.99999f;
 
         [DoNotCopy]
         [DoNotSave]
-        private BulletScene bulletScene;
+        private Action updateAction;
 
         [DoNotCopy]
         [DoNotSave]
@@ -28,11 +29,6 @@ namespace Medical
         protected override void link()
         {
             base.link();
-            bulletScene = Owner.SubScene.getSimElementManager<BulletScene>();
-            if(bulletScene == null)
-            {
-                blacklist("Cannot find bullet scene.");
-            }
 
             PoseableObjectsManager.addFkChainRoot(this);
         }
@@ -89,7 +85,7 @@ namespace Medical
 
         public void applyChainState(FKChainState chain)
         {
-            bulletScene.addPreSynchronizeTask(() =>
+            updateAction = () =>
             {
                 FKLinkState linkState = chain[Owner.Name];
 
@@ -102,7 +98,7 @@ namespace Medical
                 {
                     child.applyChainState(chain);
                 }
-            });
+            };
         }
 
         public void blendChainStates(FKChainState start, FKChainState end, float blend)
@@ -113,7 +109,7 @@ namespace Medical
                 blend = 1.0f;
             }
 
-            bulletScene.addPreSynchronizeTask(() =>
+            updateAction = () =>
             {
                 FKLinkState startState = start[Owner.Name];
                 FKLinkState endState = end[Owner.Name];
@@ -127,7 +123,16 @@ namespace Medical
                 {
                     child.blendChainStates(start, end, blend);
                 }
-            });
+            };
+        }
+
+        public override void update(Clock clock, EventManager eventManager)
+        {
+            if(updateAction != null)
+            {
+                updateAction.Invoke();
+                updateAction = null;
+            }
         }
     }
 }
