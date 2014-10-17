@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class ManubriumBehavior : Behavior
+    class ManubriumBehavior : BehaviorInterface
     {
         [Editable]
         private String chainStartSimObjectName = "this";
@@ -23,11 +23,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private BEPUikScene scene;
-
-        [DoNotCopy]
-        [DoNotSave]
-        List<IKJoint> joints;
+        private BEPUikSolver solver;
 
         protected override void link()
         {
@@ -44,29 +40,21 @@ namespace Medical
                 blacklist("Cannot find the ik bone '{0}' in chain start SimObject '{1}'", boneName, chainStartSimObjectName);
             }
 
-            scene = ikBone.Scene;
-            scene.Cheat_BgUpdateFinishing += scene_Cheat_BgUpdateFinishing;
-
-            //Find all joints
-            joints = scene.findAllJointsFrom(ikBone);
+            solver = ikBone.Scene.getSolver("Arms");
+            solver.BeforeUpdate += solver_BeforeUpdate;
 
             ikBone.Pinned = true;
         }
 
         protected override void destroy()
         {
-            scene.Cheat_BgUpdateFinishing -= scene_Cheat_BgUpdateFinishing;
+            solver.BeforeUpdate -= solver_BeforeUpdate;
             base.destroy();
         }
 
-        void scene_Cheat_BgUpdateFinishing(BEPUikScene obj)
+        void solver_BeforeUpdate(BEPUikSolver solver)
         {
-            scene.solveJoints(joints);
-        }
 
-        public override void update(Clock clock, EventManager eventManager)
-        {
-            
         }
     }
 }
