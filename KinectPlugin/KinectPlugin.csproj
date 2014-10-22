@@ -67,6 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\KinectDebugVisualizer.cs" />
     <Compile Include="Utility\KinectUtilities.cs" />
+    <Compile Include="Utility\FilterDoubleExponential.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

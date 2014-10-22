@@ -27,7 +27,7 @@ namespace KinectPlugin
 
         public void update(Body skeleton)
         {
-            Vector3 pos = skeleton.Joints[jointType].Position.toEngineCoords();
+            Vector3 pos = skeleton.Joints[jointType].Position.toSceneCoords();
 
             simObject.updateTranslation(ref pos, null);
 
@@ -39,7 +39,7 @@ namespace KinectPlugin
 
         private void update(Body skeleton, Vector3 parentJointPosition, Vector3 parentSimObjectPosition)
         {
-            Vector3 pos = skeleton.Joints[jointType].Position.toEngineCoords();
+            Vector3 pos = skeleton.Joints[jointType].Position.toSceneCoords();
 
             Vector3 direction = pos - parentJointPosition;
             direction.normalize();
@@ -48,6 +48,34 @@ namespace KinectPlugin
             simObject.updateTranslation(ref newPos, null);
 
             foreach(var child in children)
+            {
+                child.update(skeleton, pos, Translation);
+            }
+        }
+
+        public void update(IReadOnlyDictionary<JointType, Vector3> skeleton)
+        {
+            Vector3 pos = skeleton[jointType].toEngineCoords();
+
+            simObject.updateTranslation(ref pos, null);
+
+            foreach (var child in children)
+            {
+                child.update(skeleton, pos, Translation);
+            }
+        }
+
+        private void update(IReadOnlyDictionary<JointType, Vector3> skeleton, Vector3 parentJointPosition, Vector3 parentSimObjectPosition)
+        {
+            Vector3 pos = skeleton[jointType].toEngineCoords();
+
+            Vector3 direction = pos - parentJointPosition;
+            direction.normalize();
+
+            Vector3 newPos = parentSimObjectPosition + direction * distanceToParent;
+            simObject.updateTranslation(ref newPos, null);
+
+            foreach (var child in children)
             {
                 child.update(skeleton, pos, Translation);
             }
