@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace KinectPlugin
 {
-    class KinectIkController
+    class KinectIkController : KinectPoseController
     {
         private DebugDrawingSurface ikDebug;
 
@@ -27,7 +27,7 @@ namespace KinectPlugin
         private bool allowMovement = false;
         private List<SimObject> ikDragSimObjects = new List<SimObject>();
 
-        public event Action<KinectIkController> AllowMovementChanged;
+        public event Action<KinectPoseController> AllowMovementChanged;
 
         public KinectIkController(StandaloneController controller)
         {

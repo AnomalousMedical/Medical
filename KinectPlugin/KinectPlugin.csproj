@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Controllers\KinectIKBone.cs" />
     <Compile Include="Controllers\KinectIkController.cs" />
+    <Compile Include="Controllers\KinectPoseController.cs" />
     <Compile Include="Controllers\KinectSensorManager.cs" />
     <Compile Include="GUI\KinectGui.cs" />
     <Compile Include="GUI\MovementSequenceRecorder.cs" />

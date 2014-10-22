@@ -27,7 +27,7 @@ namespace KinectPlugin
         IntCoord colorSensorImageOriginalPos;
         IntCoord colorSensorImageIconPos;
 
-        KinectIkController ikController;
+        KinectPoseController poseController;
         KinectSensorManager sensorManager;
         KinectDebugVisualizer debugVisualizer;
 
@@ -35,24 +35,24 @@ namespace KinectPlugin
         HardwarePixelBufferSharedPtr hwBuffer;
         PixelBox pixelBox;
 
-        public KinectGui(KinectIkController ikController, KinectSensorManager sensorManager, KinectDebugVisualizer debugVisualizer)
+        public KinectGui(KinectPoseController poseController, KinectSensorManager sensorManager, KinectDebugVisualizer debugVisualizer)
             : base("KinectPlugin.GUI.KinectGui.layout")
         {
             window.EventChangeCoord += window_EventChangeCoord;
 
-            this.ikController = ikController;
-            ikController.AllowMovementChanged += ikController_AllowMovementChanged;
+            this.poseController = poseController;
+            poseController.AllowMovementChanged += ikController_AllowMovementChanged;
             this.sensorManager = sensorManager;
             sensorManager.StatusChanged += sensorManager_StatusChanged;
             sensorManager.ColorFeedChanged += sensorManager_ColorFeedChanged;
             this.debugVisualizer = debugVisualizer;
 
             enableMotionButton = new CheckButton((Button)window.findWidget("EnableMotion"));
-            enableMotionButton.Checked = ikController.AllowMovement;
+            enableMotionButton.Checked = poseController.AllowMovement;
             enableMotionButton.CheckedChanged += enableMotionButton_CheckedChanged;
 
             showIkSkeleton = new CheckButton((Button)window.findWidget("ShowIkSkeleton"));
-            showIkSkeleton.Checked = ikController.DebugVisible;
+            showIkSkeleton.Checked = poseController.DebugVisible;
             showIkSkeleton.CheckedChanged += showIkSkeleton_CheckedChanged;
 
             showSensorSkeleton = new CheckButton((Button)window.findWidget("ShowSensorSkeleton"));
@@ -82,7 +82,7 @@ namespace KinectPlugin
 
         void enableMotionButton_CheckedChanged(Widget source, EventArgs e)
         {
-            ikController.AllowMovement = enableMotionButton.Checked;
+            poseController.AllowMovement = enableMotionButton.Checked;
         }
 
         void showSensorSkeleton_CheckedChanged(Widget source, EventArgs e)
@@ -92,7 +92,7 @@ namespace KinectPlugin
 
         void showIkSkeleton_CheckedChanged(Widget source, EventArgs e)
         {
-            ikController.DebugVisible = showIkSkeleton.Checked;
+            poseController.DebugVisible = showIkSkeleton.Checked;
         }
 
         void enableVideoFeed_CheckedChanged(Widget source, EventArgs e)
@@ -133,9 +133,9 @@ namespace KinectPlugin
             statusLabel.Caption = connected ? "Connected" : "Disconnected";
         }
 
-        void ikController_AllowMovementChanged(KinectIkController ikController)
+        void ikController_AllowMovementChanged(KinectPoseController poseController)
         {
-            enableMotionButton.Checked = ikController.AllowMovement;
+            enableMotionButton.Checked = poseController.AllowMovement;
         }
 
         private void createColorTexture()

@@ -20,7 +20,7 @@ namespace KinectPlugin
     class KinectAtlasPlugin : AtlasPlugin
     {
         private KinectDebugVisualizer kinectDebugger;
-        private KinectIkController ikController;
+        private KinectPoseController poseController;
         private KinectSensorManager sensorManager;
 
         private KinectGui kinectGui;
@@ -53,13 +53,13 @@ namespace KinectPlugin
 
         public void initialize(StandaloneController standaloneController)
         {
-            ikController = new KinectIkController(standaloneController);
+            poseController = new KinectIkController(standaloneController);
             kinectDebugger = new KinectDebugVisualizer(standaloneController);
             sensorManager = new KinectSensorManager();
             sensorManager.SkeletonFrameReady += sensorManager_SkeletonFrameReady;
             sensorManager.StatusChanged += sensorManager_StatusChanged;
 
-            kinectGui = new KinectGui(ikController, sensorManager, kinectDebugger);
+            kinectGui = new KinectGui(poseController, sensorManager, kinectDebugger);
             standaloneController.GUIManager.addManagedDialog(kinectGui);
 
             sequenceRecorder = new MovementSequenceRecorder(standaloneController.MedicalController, standaloneController.MovementSequenceController);
@@ -76,20 +76,20 @@ namespace KinectPlugin
             //This function checks the status the first time the sensor is connected.
             if (sensorManager.Connected)
             {
-                ikController.AllowMovement = true;
+                poseController.AllowMovement = true;
                 sensorManager.StatusChanged -= sensorManager_StatusChanged; //Remove the event, we only care the first time
             }
         }
 
         public void sceneLoaded(SimScene scene)
         {
-            ikController.createIkControls(scene);
+            poseController.createIkControls(scene);
             kinectDebugger.createDebugObjects(scene);
         }
 
         public void sceneUnloading(SimScene scene)
         {
-            ikController.destroyIkControls(scene);
+            poseController.destroyIkControls(scene);
             kinectDebugger.destroyDebugObjects(scene);
         }
 
@@ -165,7 +165,7 @@ namespace KinectPlugin
             {
                 foreach (Body skel in skeletons)
                 {
-                    ikController.updateControls(skel);
+                    poseController.updateControls(skel);
                     kinectDebugger.debugSkeleton(skel);
                 }
             }

@@ -193,11 +193,15 @@ namespace Medical
             }
             if (tools != null)
             {
-                if (drawingSurface != null)
-                {
-                    tools.destroyToolDrawings(drawingSurface);
-                }
-                movableObjects.Remove(tools);
+                toolsRemoved(tools);
+            }
+        }
+
+        public void clearMovableObjects()
+        {
+            while(movableObjects.Count > 0)
+            {
+                toolsRemoved(movableObjects[0]);
             }
         }
 
@@ -301,6 +305,19 @@ namespace Medical
             {
                 ToolSize += ToolSizeIncrement;
             }
+        }
+
+        /// <summary>
+        /// Destroys resources and removes movable object tools, call when tools are removed.
+        /// </summary>
+        /// <param name="tools"></param>
+        private void toolsRemoved(MovableObjectTools tools)
+        {
+            if (drawingSurface != null)
+            {
+                tools.destroyToolDrawings(drawingSurface);
+            }
+            movableObjects.Remove(tools);
         }
     }
 }

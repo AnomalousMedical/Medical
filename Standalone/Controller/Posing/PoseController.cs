@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Medical.Controller
 {
-    class PoseController
+    public class PoseController
     {
         private static ButtonEvent PickAnatomy;
         private static FingerDragGesture moveAnatomyGesture;

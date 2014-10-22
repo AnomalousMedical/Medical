@@ -542,6 +542,14 @@ namespace Medical
             }
         }
 
+        public PoseController PoseController
+        {
+            get
+            {
+                return poseController;
+            }
+        }
+
         public DocumentController DocumentController { get; private set; }
 
         public DownloadController DownloadController
