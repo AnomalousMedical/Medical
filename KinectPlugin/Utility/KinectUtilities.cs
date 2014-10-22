@@ -52,7 +52,7 @@ namespace KinectPlugin
             return new Vector3(position.X * 1000f * SimulationConfig.MMToUnits, (position.Y - 0.2f) * 1000f * SimulationConfig.MMToUnits - 85f, -((position.Z - 1.5f) * 1000f * SimulationConfig.MMToUnits));
         }
 
-        public static Vector3 toEngineCoords(this Vector3 position)
+        public static Vector3 toSceneCoords(this Vector3 position)
         {
             return new Vector3(position.x * 1000f * SimulationConfig.MMToUnits, (position.y - 0.2f) * 1000f * SimulationConfig.MMToUnits - 85f, -((position.z - 1.5f) * 1000f * SimulationConfig.MMToUnits));
         }

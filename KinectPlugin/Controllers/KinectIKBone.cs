@@ -55,7 +55,7 @@ namespace KinectPlugin
 
         public void update(IReadOnlyDictionary<JointType, Vector3> skeleton)
         {
-            Vector3 pos = skeleton[jointType].toEngineCoords();
+            Vector3 pos = skeleton[jointType].toSceneCoords();
 
             simObject.updateTranslation(ref pos, null);
 
@@ -67,7 +67,7 @@ namespace KinectPlugin
 
         private void update(IReadOnlyDictionary<JointType, Vector3> skeleton, Vector3 parentJointPosition, Vector3 parentSimObjectPosition)
         {
-            Vector3 pos = skeleton[jointType].toEngineCoords();
+            Vector3 pos = skeleton[jointType].toSceneCoords();
 
             Vector3 direction = pos - parentJointPosition;
             direction.normalize();

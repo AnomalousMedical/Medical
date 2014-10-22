@@ -45,11 +45,11 @@ namespace KinectPlugin
                 debugDrawer.begin("SkeletonId" + skel.TrackingId, DrawingType.LineList);
                 foreach (Joint joint in skel.Joints.Values)
                 {
-                    Vector3 pos = joint.Position.toEngineCoords();
+                    Vector3 pos = joint.Position.toSceneCoords();
 
                     JointType parentJoint = KinectUtilities.GetParentJoint(joint.JointType);
                     Vector3 direction;
-                    Vector3 parentPos = skel.Joints[parentJoint].Position.toEngineCoords();
+                    Vector3 parentPos = skel.Joints[parentJoint].Position.toSceneCoords();
                     float length = 0;
                     if (parentJoint == joint.JointType)
                     {
