@@ -1,17 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI>
+  <Tag name="Medical_Movement_Theme_Texture">Medical.Movement.Resources.MovementSkin.png</Tag>
+
+  <!-- Lock Button Coords -->
+  <Tag name="Medical_Movement_ButtonPin_Unpinned_Coord">1 1 13 20</Tag>
+  <Tag name="Medical_Movement_ButtonPin_Pinned_Coord">15 1 13 20</Tag>
+
+  <!-- Lock Button Coords -->
+  <Tag name="Medical_Movement_ButtonLock_Unlocked_Coord">15 22 13 20</Tag>
+  <Tag name="Medical_Movement_ButtonLock_Locked_Coord">1 22 13 20</Tag>
+  
   <!-- Scene Control Button Colors -->
-  <Tag name="Anomalous_SceneControlButton_Disabled">#7c7c7c</Tag>
-  <Tag name="Anomalous_SceneControlButton_Normal">#d200ff</Tag>
-  <Tag name="Anomalous_SceneControlButton_Highlighted">#5588bb</Tag>
-  <Tag name="Anomalous_SceneControlButton_Pushed">#6699cc</Tag>
-  <Tag name="Anomalous_SceneControlButton_DisabledChecked">#95b0cb</Tag>
-  <Tag name="Anomalous_SceneControlButton_NormalChecked">#ff0000</Tag>
-  <Tag name="Anomalous_SceneControlButton_HighlightedChecked">#5588bb</Tag>
-  <Tag name="Anomalous_SceneControlButton_PushedChecked">#6699cc</Tag>
-
+  <Tag name="Medical_Movement_SceneControlButton_Disabled">#7c7c7c</Tag>
+  <Tag name="Medical_Movement_SceneControlButton_Normal">#ffffff</Tag>
+  <Tag name="Medical_Movement_SceneControlButton_Highlighted">#5588bb</Tag>
+  <Tag name="Medical_Movement_SceneControlButton_Pushed">#6699cc</Tag>
+  <Tag name="Medical_Movement_SceneControlButton_DisabledChecked">#96002a</Tag>
+  <Tag name="Medical_Movement_SceneControlButton_NormalChecked">#f60448</Tag>
+  <Tag name="Medical_Movement_SceneControlButton_HighlightedChecked">#cb053d</Tag>
+  <Tag name="Medical_Movement_SceneControlButton_PushedChecked">#ff0048</Tag>
 </MyGUI>
-
-
-
-<!--main blue=0090eb-->

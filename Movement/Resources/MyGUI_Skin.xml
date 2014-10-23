@@ -1,18 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <MyGUI type="Resource" version="1.1">
+  
   <!--*************************
 SceneButtonPinSkin
 *****************************-->
-  <Resource type="ResourceSkin" name = "SceneButtonPinSkin" size = "7 12" texture = "#{Anomalous_Theme_Texture}">
+  <Resource type="ResourceSkin" name = "SceneButtonPinSkin" size = "7 12" texture = "#{Medical_Movement_Theme_Texture}">
     <BasisSkin type="MainSkin" offset = "0 0 7 12" align = "Stretch">
-      <State name="disabled" offsetNamed="Anomalous_ButtonPin_Unpinned_Coord" colour="#{Anomalous_SceneControlButton_Disabled}"/>
-      <State name="normal" offsetNamed="Anomalous_ButtonPin_Unpinned_Coord" colour="#{Anomalous_SceneControlButton_Normal}"/>
-      <State name="highlighted" offsetNamed="Anomalous_ButtonPin_Unpinned_Coord" colour="#{Anomalous_SceneControlButton_Highlighted}"/>
-      <State name="pushed" offsetNamed="Anomalous_ButtonPin_Unpinned_Coord" colour="#{Anomalous_SceneControlButton_Pushed}"/>
-      <State name="disabled_checked" offsetNamed="Anomalous_ButtonPin_Pinned_Coord" colour="#{Anomalous_SceneControlButton_DisabledChecked}"/>
-      <State name="normal_checked" offsetNamed="Anomalous_ButtonPin_Pinned_Coord" colour="#{Anomalous_SceneControlButton_NormalChecked}"/>
-      <State name="highlighted_checked" offsetNamed="Anomalous_ButtonPin_Pinned_Coord" colour="#{Anomalous_SceneControlButton_HighlightedChecked}"/>
-      <State name="pushed_checked" offsetNamed="Anomalous_ButtonPin_Pinned_Coord" colour="#{Anomalous_SceneControlButton_PushedChecked}"/>
+      <State name="disabled" offsetNamed="Medical_Movement_ButtonPin_Unpinned_Coord" colour="#{Medical_Movement_SceneControlButton_Disabled}"/>
+      <State name="normal" offsetNamed="Medical_Movement_ButtonPin_Unpinned_Coord" colour="#{Medical_Movement_SceneControlButton_Normal}"/>
+      <State name="highlighted" offsetNamed="Medical_Movement_ButtonPin_Unpinned_Coord" colour="#{Medical_Movement_SceneControlButton_Highlighted}"/>
+      <State name="pushed" offsetNamed="Medical_Movement_ButtonPin_Unpinned_Coord" colour="#{Medical_Movement_SceneControlButton_Pushed}"/>
+      <State name="disabled_checked" offsetNamed="Medical_Movement_ButtonPin_Pinned_Coord" colour="#{Medical_Movement_SceneControlButton_DisabledChecked}"/>
+      <State name="normal_checked" offsetNamed="Medical_Movement_ButtonPin_Pinned_Coord" colour="#{Medical_Movement_SceneControlButton_NormalChecked}"/>
+      <State name="highlighted_checked" offsetNamed="Medical_Movement_ButtonPin_Pinned_Coord" colour="#{Medical_Movement_SceneControlButton_HighlightedChecked}"/>
+      <State name="pushed_checked" offsetNamed="Medical_Movement_ButtonPin_Pinned_Coord" colour="#{Medical_Movement_SceneControlButton_PushedChecked}"/>
     </BasisSkin>
   </Resource>
+  
+    <!--*************************
+SceneButtonLockSkin
+*****************************-->
+  <Resource type="ResourceSkin" name = "SceneButtonLockSkin" size = "7 12" texture = "#{Medical_Movement_Theme_Texture}">
+    <BasisSkin type="MainSkin" offset = "0 0 7 12" align = "Stretch">
+      <State name="disabled" offsetNamed="Medical_Movement_ButtonLock_Unlocked_Coord" colour="#{Medical_Movement_SceneControlButton_Disabled}"/>
+      <State name="normal" offsetNamed="Medical_Movement_ButtonLock_Unlocked_Coord" colour="#{Medical_Movement_SceneControlButton_Normal}"/>
+      <State name="highlighted" offsetNamed="Medical_Movement_ButtonLock_Unlocked_Coord" colour="#{Medical_Movement_SceneControlButton_Highlighted}"/>
+      <State name="pushed" offsetNamed="Medical_Movement_ButtonLock_Unlocked_Coord" colour="#{Medical_Movement_SceneControlButton_Pushed}"/>
+      <State name="disabled_checked" offsetNamed="Medical_Movement_ButtonLock_Locked_Coord" colour="#{Medical_Movement_SceneControlButton_DisabledChecked}"/>
+      <State name="normal_checked" offsetNamed="Medical_Movement_ButtonLock_Locked_Coord" colour="#{Medical_Movement_SceneControlButton_NormalChecked}"/>
+      <State name="highlighted_checked" offsetNamed="Medical_Movement_ButtonLock_Locked_Coord" colour="#{Medical_Movement_SceneControlButton_HighlightedChecked}"/>
+      <State name="pushed_checked" offsetNamed="Medical_Movement_ButtonLock_Locked_Coord" colour="#{Medical_Movement_SceneControlButton_PushedChecked}"/>
+    </BasisSkin>
+  </Resource>
+
+  
 </MyGUI>
