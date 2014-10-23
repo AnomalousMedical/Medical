@@ -15,18 +15,22 @@ namespace Medical.Movement.GUI
         private MedicalController medicalController;
         private MusclePosition restorePosition;
         private MusclePositionController musclePositionController;
+        private SceneControlManager sceneControlManager;
 
         CheckButton cSpineFlexExt;
         CheckButton cSpineLateral;
         CheckButton cSpineAxial;
 
+        CheckButton showPinControls;
+
         Button restoreButton;
 
-        public MovementDialog(MusclePositionController musclePositionController, MedicalController medicalController)
+        public MovementDialog(MusclePositionController musclePositionController, MedicalController medicalController, SceneControlManager sceneControlManager)
             : base("Medical.Movement.GUI.MovementDialog.layout")
         {
             this.medicalController = medicalController;
             this.musclePositionController = musclePositionController;
+            this.sceneControlManager = sceneControlManager;
 
             cSpineFlexExt = new CheckButton((Button)window.findWidget("CSpineFlexExt"));
             cSpineLateral = new CheckButton((Button)window.findWidget("CSpineLateral"));
@@ -35,6 +39,10 @@ namespace Medical.Movement.GUI
             cSpineFlexExt.CheckedChanged += cSpineFlexExt_CheckedChanged;
             cSpineLateral.CheckedChanged += cSpineLateral_CheckedChanged;
             cSpineAxial.CheckedChanged += cSpineAxial_CheckedChanged;
+
+            showPinControls = new CheckButton(window.findWidget("ShowPinControls") as Button);
+            showPinControls.Checked = sceneControlManager.Visible;
+            showPinControls.CheckedChanged += showPinControls_CheckedChanged;
 
             Button resetButton = (Button)window.findWidget("Reset");
             resetButton.MouseButtonClick += resetButton_MouseButtonClick;
@@ -89,6 +97,11 @@ namespace Medical.Movement.GUI
             {
                 ((BEPUikTwistLimit)joint.getElement("FlexExtLimit")).Locked = locked;
             }
+        }
+
+        void showPinControls_CheckedChanged(Widget source, EventArgs e)
+        {
+            sceneControlManager.Visible = showPinControls.Checked;
         }
 
         public IEnumerable<SimObject> cSpineJoints()

@@ -26,6 +26,9 @@
         <Widget type="Button" skin="Button" position="152 26 57 28" name="CSpineAxial">
             <Property key="Caption" value="Axial Rot"/>
         </Widget>
+        <Widget type="Button" skin="Button" position="6 69 121 32" name="ShowPinControls">
+            <Property key="Caption" value="Show Pin Controls"/>
+        </Widget>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>

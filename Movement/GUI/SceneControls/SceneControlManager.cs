@@ -14,6 +14,7 @@ namespace Medical.Movement.GUI
     {
         StandaloneController standaloneController;
         SceneViewController sceneViewController;
+        private bool visible = false;
 
         private List<SceneControlWidget> widgets = new List<SceneControlWidget>();
 
@@ -24,7 +25,6 @@ namespace Medical.Movement.GUI
 
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
-            standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
 
             createWidgets();
         }
@@ -33,7 +33,39 @@ namespace Medical.Movement.GUI
         {
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
+            standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
             destroyWidgets();
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                if(visible != value)
+                {
+                    visible = value;
+                    if(visible)
+                    {
+                        standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
+                        foreach (var widget in widgets)
+                        {
+                            widget.Visible = true;
+                        }
+                    }
+                    else
+                    {
+                        standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
+                        foreach (var widget in widgets)
+                        {
+                            widget.Visible = false;
+                        }
+                    }
+                }
+            }
         }
 
         void standaloneController_SceneUnloading(SimScene scene)
@@ -73,6 +105,7 @@ namespace Medical.Movement.GUI
             foreach (var sceneControl in SceneAnatomyControlManager.Controls)
             {
                 SceneControlWidget widget = new PinControlWidget(sceneControl);
+                widget.Visible = visible;
                 widgets.Add(widget);
             }
         }
