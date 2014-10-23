@@ -174,11 +174,13 @@ namespace Medical.Controller
 
                         if (RotateCamera.FirstFrameDown)
                         {
+                            eventLayer.makeFocusLayer();
                             currentlyInMotion = true;
                             eventLayer.alertEventsHandled();
                         }
                         else if (RotateCamera.FirstFrameUp)
                         {
+                            eventLayer.clearFocusLayer();
                             currentlyInMotion = false;
                         }
                         mouseCoords = eventLayer.Mouse.RelativePosition;

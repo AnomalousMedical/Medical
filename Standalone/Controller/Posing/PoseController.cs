@@ -63,6 +63,7 @@ namespace Medical.Controller
 
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
+            eventLayer.clearFocusLayer();
             PickAnatomy.OnHeldDown -= pickAnatomy_OnHeldDown;
             if (allowMousePosing)
             {
@@ -78,6 +79,7 @@ namespace Medical.Controller
         {
             if (allowMousePosing)
             {
+                eventLayer.makeFocusLayer();
                 travelTracker.reset();
                 if (eventLayer.EventProcessingAllowed && !PickAnatomy.DownAndUpThisFrame)
                 {
