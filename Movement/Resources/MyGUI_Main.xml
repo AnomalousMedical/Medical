@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MyGUI type="List">
+  <!--<List file="AnomalousThemeTexture.xml"/>-->
+  <List file="Medical.Movement.Resources.MyGUI_Theme.xml"/>
+  <List file="Medical.Movement.Resources.MyGUI_Skin.xml"/>
+</MyGUI>

@@ -34,6 +34,7 @@ namespace Medical.Movement
         public void loadGUIResources()
         {
             //ResourceManager.Instance.load("Medical.Resources.PremiumImagesets.xml");
+            ResourceManager.Instance.load("Medical.Movement.Resources.MyGUI_Main.xml");
         }
 
         public void initialize(StandaloneController standaloneController)

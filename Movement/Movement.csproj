@@ -74,6 +74,12 @@
     <EmbeddedResource Include="GUI\SceneControls\LockControl.layout" />
     <EmbeddedResource Include="GUI\SceneControls\PinControl.layout" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\MyGUI_Theme_Tag.xml" />
+    <EmbeddedResource Include="Resources\MyGUI_Skin.xml" />
+    <EmbeddedResource Include="Resources\MyGUI_Theme.xml" />
+    <EmbeddedResource Include="Resources\MyGUI_Main.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

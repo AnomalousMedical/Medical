@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI>
+  <!-- Scene Control Button Colors -->
+  <Tag name="Anomalous_SceneControlButton_Disabled">#7c7c7c</Tag>
+  <Tag name="Anomalous_SceneControlButton_Normal">#d200ff</Tag>
+  <Tag name="Anomalous_SceneControlButton_Highlighted">#5588bb</Tag>
+  <Tag name="Anomalous_SceneControlButton_Pushed">#6699cc</Tag>
+  <Tag name="Anomalous_SceneControlButton_DisabledChecked">#95b0cb</Tag>
+  <Tag name="Anomalous_SceneControlButton_NormalChecked">#ff0000</Tag>
+  <Tag name="Anomalous_SceneControlButton_HighlightedChecked">#5588bb</Tag>
+  <Tag name="Anomalous_SceneControlButton_PushedChecked">#6699cc</Tag>
+
+</MyGUI>
+
+
+
+<!--main blue=0090eb-->
