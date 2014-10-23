@@ -71,6 +71,7 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\MovementDialog.layout">
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SceneControls\LockControl.layout" />
     <EmbeddedResource Include="GUI\SceneControls\PinControl.layout" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

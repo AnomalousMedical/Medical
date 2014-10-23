@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    public enum SceneAnatomyControlType
+    {
+        Pin,
+        Lock
+    }
+
     public interface SceneAnatomyControl
     {
         bool Active { get; set; }
 
         Vector3 WorldPosition { get; }
+
+        SceneAnatomyControlType Type { get; }
     }
 }

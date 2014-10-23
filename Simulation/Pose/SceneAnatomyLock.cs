@@ -11,17 +11,18 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class SceneAnatomyPin : BehaviorInterface, SceneAnatomyControl
+    public class SceneAnatomyLock : BehaviorInterface, SceneAnatomyControl
     {
         [Editable]
         private String targetSimObjectName = "this";
 
-        [Editable]
-        private String targetIKBoneName = "IKBone";
-
-        [DoNotCopy]
         [DoNotSave]
-        BEPUikBone ikBone;
+        [DoNotCopy]
+        List<BEPUikLimit> ikLimits = new List<BEPUikLimit>();
+
+        [DoNotSave]
+        [DoNotCopy]
+        private Vector3 ownerOffset;
 
         protected override void link()
         {
@@ -32,10 +33,19 @@ namespace Medical
             {
                 blacklist("Could not find target SimObject {0}", targetSimObjectName);
             }
-            ikBone = targetSimObject.getElement(targetIKBoneName) as BEPUikBone;
-            if (ikBone == null)
+
+            if(targetSimObject != Owner)
             {
-                blacklist("Could not find target IKBone {0} in SimObject {1}", targetIKBoneName, targetSimObjectName);
+                ownerOffset = Quaternion.quatRotate(Owner.Rotation.inverse(), targetSimObject.Translation - Owner.Translation);
+            }
+
+            foreach (var element in targetSimObject.getElementIter())
+            {
+                BEPUikLimit limit = element as BEPUikLimit;
+                if (limit != null)
+                {
+                    ikLimits.Add(limit);
+                }
             }
 
             SceneAnatomyControlManager.addControl(this);
@@ -51,11 +61,18 @@ namespace Medical
         {
             get
             {
-                return ikBone.Pinned;
+                if(ikLimits.Count > 0)
+                {
+                    return ikLimits[0].Locked;
+                }
+                return false;
             }
             set
             {
-                ikBone.Pinned = value;
+                foreach(var limit in ikLimits)
+                {
+                    limit.Locked = value;
+                }
             }
         }
 
@@ -63,7 +80,7 @@ namespace Medical
         {
             get
             {
-                return Owner.Translation;
+                return Owner.Translation + Quaternion.quatRotate(Owner.Rotation, ownerOffset);
             }
         }
 
@@ -71,7 +88,7 @@ namespace Medical
         {
             get
             {
-                return SceneAnatomyControlType.Pin;
+                return SceneAnatomyControlType.Lock;
             }
         }
     }

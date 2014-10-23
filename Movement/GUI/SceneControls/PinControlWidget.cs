@@ -13,7 +13,7 @@ namespace Medical.Movement.GUI
         private CheckButton checkButton;
 
         public PinControlWidget(SceneAnatomyControl sceneAnatomyControl)
-            : base("Medical.Movement.GUI.SceneControls.PinControl.layout")
+            : base(String.Format("Medical.Movement.GUI.SceneControls.{0}Control.layout", sceneAnatomyControl.Type))
         {
             this.SceneAnatomyControl = sceneAnatomyControl;
             checkButton = new CheckButton(widget as Button);
