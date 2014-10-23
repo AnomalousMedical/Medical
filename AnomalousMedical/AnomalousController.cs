@@ -66,10 +66,12 @@ namespace Medical
             CertificateStoreManager.CertificateStoreLoaded += CertificateStoreManager_CertificateStoreLoaded;
             CertificateStoreManager.CertificateStoreLoadError += CertificateStoreManager_CertificateStoreLoadError;
 
+            //Cusom Config
+            MyGUIInterface.BeforeMainResourcesLoaded += MyGUIInterface_BeforeMainResourcesLoaded;
+
             //Core
             controller = new StandaloneController(this);
             controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
-            MyGUIInterface.Instance.CommonResourceGroup.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedResource", true);
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, FinishedPosition, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
@@ -79,6 +81,13 @@ namespace Medical
             ResourceManager.Instance.load("Medical.Resources.AnomalousBootstrapImagesets.xml");
 
             return true;
+        }
+
+        void MyGUIInterface_BeforeMainResourcesLoaded(MyGUIInterface obj)
+        {
+            MyGUIInterface.Instance.CommonResourceGroup.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedResource", true);
+            MyGUIInterface.LayerFile = "Medical.Resources.AnomalousMedical_MyGUI_Layer.xml";
+            MyGUIInterface.BeforeMainResourcesLoaded -= MyGUIInterface_BeforeMainResourcesLoaded;
         }
 
         void CertificateStoreManager_CertificateStoreLoaded()

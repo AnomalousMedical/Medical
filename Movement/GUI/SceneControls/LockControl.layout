@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-  <Widget type="Button" skin="SceneButtonLockSkin" position="0 0 13 20" align="Right Top" layer="Overlapped" name="Button"/>
+  <Widget type="Button" skin="SceneButtonLockSkin" position="0 0 13 20" align="Right Top" layer="SceneControls" name="Button"/>
     <CodeGeneratorSettings/>
 </MyGUI>
