@@ -162,9 +162,6 @@
     <Compile Include="GUI\Render\LicensePopup.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
-    <Compile Include="GUI\SceneControls\PinControlWidget.cs" />
-    <Compile Include="GUI\SceneControls\SceneControlManager.cs" />
-    <Compile Include="GUI\SceneControls\SceneControlWidget.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
     <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
     <Compile Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.cs" />
@@ -176,7 +173,6 @@
     <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
     <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
-    <EmbeddedResource Include="GUI\SceneControls\PinControl.layout" />
     <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
     <EmbeddedResource Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.layout" />
     <EmbeddedResource Include="MvcContexts\Login\Index.rml">

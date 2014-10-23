@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical.GUI
+namespace Medical.Movement.GUI
 {
     interface SceneControlWidget : IDisposable
     {

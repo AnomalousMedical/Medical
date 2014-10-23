@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical.GUI
+namespace Medical.Movement.GUI
 {
     class PinControlWidget : Component, SceneControlWidget
     {
         private CheckButton checkButton;
 
         public PinControlWidget(SceneAnatomyControl sceneAnatomyControl)
-            :base("Medical.GUI.SceneControls.PinControl.layout")
+            : base("Medical.Movement.GUI.SceneControls.PinControl.layout")
         {
             this.SceneAnatomyControl = sceneAnatomyControl;
             checkButton = new CheckButton(widget as Button);
