@@ -40,6 +40,7 @@ namespace Medical.GUI
         //Controllers
         private BookmarksController bookmarksController;
         private BuyScreenController buyScreens;
+        private SceneControlManager sceneControlManager;
 
         //Taskbar
         private AppButtonTaskbar taskbar;
@@ -69,6 +70,7 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(bookmarks);
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
+            IDisposableUtil.DisposeIfNotNull(sceneControlManager);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             selectionOperatorTask.Dispose();
@@ -122,6 +124,7 @@ namespace Medical.GUI
             downloadServer = new DownloadManagerServer(licenseManager);
             imageLicenseServer = new ImageLicenseServer(licenseManager);
             bookmarksController = new BookmarksController(standaloneController, ScaleHelper.Scaled(100), ScaleHelper.Scaled(100), hasPremium);
+            sceneControlManager = new SceneControlManager(standaloneController);
 
             //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);

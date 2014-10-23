@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Button" skin="SceneButtonPinSkin" position="0 0 15 22" align="Right Top" layer="Overlapped" name="PinButton"/>
+    <CodeGeneratorSettings/>
+</MyGUI>

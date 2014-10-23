@@ -59,8 +59,8 @@ namespace KinectPlugin
             KinectIKBone hipsRight = createKinectBone(JointType.HipLeft, "Pelvis", "Pelvis", hips, new Vector3(-15, 0, 0), scene, subScene);
 
             KinectIKBone neck = createKinectBone(JointType.SpineShoulder, "UpperTSpineMover", "UpperTSpineMover", hips, scene, subScene);
-            KinectIKBone leftShoulderSpine = createKinectBone(JointType.ShoulderRight, "UpperTSpineMover", "UpperTSpineMover", neck, new Vector3(15, 10, 0), scene, subScene, "SpineShoulder");
-            KinectIKBone rightShoulderSpine = createKinectBone(JointType.ShoulderLeft, "UpperTSpineMover", "UpperTSpineMover", neck, new Vector3(-15, 10, 0), scene, subScene, "SpineShoulder");
+            KinectIKBone leftShoulderSpine = createKinectBone(JointType.ShoulderRight, "UpperTSpineMover", "LeftScapula", neck, Vector3.Zero, scene, subScene, "SpineShoulder");
+            KinectIKBone rightShoulderSpine = createKinectBone(JointType.ShoulderLeft, "UpperTSpineMover", "RightScapula", neck, Vector3.Zero, scene, subScene, "SpineShoulder");
             KinectIKBone skull = createKinectBone(JointType.Head, "CSpineMover", "CSpineMover", neck, scene, subScene);            
 
             KinectIKBone leftKnee = createKinectBone( JointType.KneeRight,  "LeftFemur",    "LeftFemurTibiaJoint",    hipsLeft,                             scene, subScene);

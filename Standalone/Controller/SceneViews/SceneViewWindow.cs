@@ -248,7 +248,10 @@ namespace Medical.Controller
             
         }
 
-        public Vector3 getScreenPosition(Vector3 worldPosition)
+        /// <summary>
+        /// Get the projected position of the given vector3. Does not account for the position of this sceneviewwindow.
+        /// </summary>
+        public Vector3 getProjectedPosition(Vector3 worldPosition)
         {
             Matrix4x4 proj = sceneView.ProjectionMatrix;
             Matrix4x4 view = sceneView.ViewMatrix;
@@ -256,6 +259,21 @@ namespace Medical.Controller
             screenPos.x = (screenPos.x / 2.0f + 0.5f) * sceneView.RenderWidth;
             screenPos.y = (1 - (screenPos.y / 2.0f + 0.5f)) * sceneView.RenderHeight;
             return screenPos;
+        }
+
+        /// <summary>
+        /// Get the absolute screen position of the given Vector3, this will account for the screen position of this window.
+        /// </summary>
+        public IntVector2 getAbsoluteScreenPosition(Vector3 worldPosition)
+        {
+            Matrix4x4 proj = sceneView.ProjectionMatrix;
+            Matrix4x4 view = sceneView.ViewMatrix;
+            Vector3 projectedPos = proj * (view * worldPosition);
+            return new IntVector2
+            (
+                (int)((projectedPos.x / 2.0f + 0.5f) * sceneView.RenderWidth) + RenderXLoc,
+                (int)((1 - (projectedPos.y / 2.0f + 0.5f)) * sceneView.RenderHeight) + RenderYLoc
+            );
         }
 
         /// <summary>
@@ -394,6 +412,15 @@ namespace Medical.Controller
         public bool containsPoint(int x, int y)
         {
             return (x > Location.x && x < Location.x + WorkingSize.Width) && (y > Location.y && y < Location.y + WorkingSize.Height);
+        }
+
+        /// <summary>
+        /// Determine if the given x, y location is contained in this SceneViewWindow.
+        /// </summary>
+        /// <returns>True if the point is contained in this window. False if it is not.</returns>
+        public bool containsPoint(IntVector2 point)
+        {
+            return (point.x > Location.x && point.x < Location.x + WorkingSize.Width) && (point.y > Location.y && point.y < Location.y + WorkingSize.Height);
         }
 
         public override bool Visible
