@@ -34,24 +34,44 @@ namespace DentalSim.GUI
         private float rightCPPosition;
         private bool restoreEnabled = false;
 
-        public MandibleMovementDialog(MovementSequenceController movementSequenceController)
+        private MusclePositionController musclePositionController;
+        private MusclePosition slideStartMusclePosition = null;
+
+        public MandibleMovementDialog(MovementSequenceController movementSequenceController, MusclePositionController musclePositionController)
             : base("DentalSim.GUI.MandibleMovement.MandibleMovementDialog.layout")
-        {            
+        {
+            this.musclePositionController = musclePositionController;
+
             openTrackBar = new MandibleControlSlider(window.findWidget("Movement/HingeSlider") as ScrollBar);
             openTrackBar.Minimum = -3;
             openTrackBar.Maximum = 10;
+            openTrackBar.ValueChangeStarted += mandibleMotionTrackBar_ValueChangeStarted;
+            openTrackBar.ValueChangeEnded += mandibleMotionTrackBar_ValueChangeEnded;
+
             rightForwardBack = new MandibleControlSlider(window.findWidget("Movement/ExcursionRightSlider") as ScrollBar);
             rightForwardBack.Minimum = 0;
             rightForwardBack.Maximum = 1;
+            rightForwardBack.ValueChangeStarted += mandibleMotionTrackBar_ValueChangeStarted;
+            rightForwardBack.ValueChangeEnded += mandibleMotionTrackBar_ValueChangeEnded;
+            
             leftForwardBack = new MandibleControlSlider(window.findWidget("Movement/ExcursionLeftSlider") as ScrollBar);
             leftForwardBack.Minimum = 0;
             leftForwardBack.Maximum = 1;
+            leftForwardBack.ValueChangeStarted += mandibleMotionTrackBar_ValueChangeStarted;
+            leftForwardBack.ValueChangeEnded += mandibleMotionTrackBar_ValueChangeEnded;
+            
             bothForwardBack = new MandibleControlSlider(window.findWidget("Movement/ProtrusionSlider") as ScrollBar);
             bothForwardBack.Minimum = 0;
             bothForwardBack.Maximum = 1;
+            bothForwardBack.ValueChangeStarted += mandibleMotionTrackBar_ValueChangeStarted;
+            bothForwardBack.ValueChangeEnded += mandibleMotionTrackBar_ValueChangeEnded;
+            
             forceSlider = new MandibleControlSlider(window.findWidget("Movement/ForceSlider") as ScrollBar);
             forceSlider.Minimum = 0;
             forceSlider.Maximum = 100;
+            forceSlider.ValueChangeStarted += mandibleMotionTrackBar_ValueChangeStarted;
+            forceSlider.ValueChangeEnded += mandibleMotionTrackBar_ValueChangeEnded;
+
             resetButton = window.findWidget("Movement/Reset") as Button;
             restoreButton = window.findWidget("Movement/Restore") as Button;
             restoreButton.Enabled = false;
@@ -289,6 +309,20 @@ namespace DentalSim.GUI
         void movingMuscle_ForceChanged(MuscleBehavior source, float force)
         {
             synchronizeForce(movingMuscle, movingMuscle.getForce());
+        }
+
+        void mandibleMotionTrackBar_ValueChangeEnded(MandibleControlSlider source)
+        {
+            if (slideStartMusclePosition != null)
+            {
+                musclePositionController.pushUndoState(slideStartMusclePosition);
+                slideStartMusclePosition = null;
+            }
+        }
+
+        void mandibleMotionTrackBar_ValueChangeStarted(MandibleControlSlider source)
+        {
+            slideStartMusclePosition = new MusclePosition(true);
         }
     }
 }

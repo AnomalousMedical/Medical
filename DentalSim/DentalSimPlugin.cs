@@ -40,7 +40,7 @@ namespace DentalSim
             GUIManager guiManager = standaloneController.GUIManager;
 
             //Dialogs
-            mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
+            mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController, standaloneController.MusclePositionController);
             guiManager.addManagedDialog(mandibleMovementDialog);
 
             //Tasks Menu

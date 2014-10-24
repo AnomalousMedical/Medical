@@ -9,7 +9,20 @@ namespace DentalSim.GUI
 {
     class MandibleControlSlider
     {
+        /// <summary>
+        /// This event is fired when the value changes
+        /// </summary>
         public event EventHandler ValueChanged;
+
+        /// <summary>
+        /// This event fires when the value change starts, it will fire before ValueChanged is fired.
+        /// </summary>
+        public event Action<MandibleControlSlider> ValueChangeStarted;
+
+        /// <summary>
+        /// This event is fired when the value change ends, it will fire after ValueChanged is fired.
+        /// </summary>
+        public event Action<MandibleControlSlider> ValueChangeEnded;
 
         private float minimum = 0.0f;
         private float maximum = 0.0f;
@@ -20,7 +33,10 @@ namespace DentalSim.GUI
         public MandibleControlSlider(ScrollBar scrollBar)
         {
             this.scrollBar = scrollBar;
-            scrollBar.ScrollChangePosition += new MyGUIEvent(scrollBar_ScrollChangePosition);
+            scrollBar.ScrollIncrement = 0;
+            scrollBar.MouseButtonPressed += scrollBar_MouseButtonPressed;
+            scrollBar.MouseButtonReleased += scrollBar_MouseButtonReleased;
+            scrollBar.ScrollChangePosition += scrollBar_ScrollChangePosition;
         }
 
         public float Minimum
@@ -95,26 +111,6 @@ namespace DentalSim.GUI
             }
         }
 
-        void previousButton_Click(object sender, EventArgs e)
-        {
-            float time = this.CurrentTime - sequentialChange;
-            if (time < 0.0f)
-            {
-                time = 0.0f;
-            }
-            this.CurrentTime = time;
-        }
-
-        void nextButton_Click(object sender, EventArgs e)
-        {
-            float time = this.CurrentTime + sequentialChange;
-            if (time > this.MaximumTime)
-            {
-                time = this.MaximumTime;
-            }
-            this.CurrentTime = time;
-        }
-
         private float CurrentTime
         {
             get
@@ -136,6 +132,22 @@ namespace DentalSim.GUI
             set
             {
                 scrollBar.ScrollRange = (uint)(value * 1000.0f);
+            }
+        }
+
+        void scrollBar_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            if (ValueChangeEnded != null)
+            {
+                ValueChangeEnded.Invoke(this);
+            }
+        }
+
+        void scrollBar_MouseButtonPressed(Widget source, EventArgs e)
+        {
+            if(ValueChangeStarted != null)
+            {
+                ValueChangeStarted.Invoke(this);
             }
         }
     }

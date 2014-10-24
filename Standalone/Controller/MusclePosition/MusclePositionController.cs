@@ -122,6 +122,7 @@ namespace Medical
         {
             bindPosition = new MusclePosition();
             bindPosition.captureState();
+            poseUndoRedoBuffer.clear();
         }
     }
 }
