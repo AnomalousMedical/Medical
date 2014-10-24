@@ -17,7 +17,6 @@ namespace Medical.Movement.GUI
         private MusclePosition restorePosition;
         private MusclePositionController musclePositionController;
         private SceneControlManager sceneControlManager;
-        private PoseController poseController;
 
         CheckButton cSpineFlexExt;
         CheckButton cSpineLateral;
@@ -27,13 +26,12 @@ namespace Medical.Movement.GUI
 
         Button restoreButton;
 
-        public MovementDialog(MusclePositionController musclePositionController, MedicalController medicalController, SceneControlManager sceneControlManager, PoseController poseController)
+        public MovementDialog(MusclePositionController musclePositionController, MedicalController medicalController, SceneControlManager sceneControlManager)
             : base("Medical.Movement.GUI.MovementDialog.layout")
         {
             this.medicalController = medicalController;
             this.musclePositionController = musclePositionController;
             this.sceneControlManager = sceneControlManager;
-            this.poseController = poseController;
 
             cSpineFlexExt = new CheckButton((Button)window.findWidget("CSpineFlexExt"));
             cSpineLateral = new CheckButton((Button)window.findWidget("CSpineLateral"));
@@ -62,12 +60,12 @@ namespace Medical.Movement.GUI
 
         void redoButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            poseController.redo();
+            musclePositionController.redo();
         }
 
         void undoButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            poseController.undo();
+            musclePositionController.undo(); 
         }
 
         private void resetButton_MouseButtonClick(object sender, EventArgs e)

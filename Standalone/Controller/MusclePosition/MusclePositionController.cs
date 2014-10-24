@@ -1,5 +1,6 @@
 ﻿using Engine.ObjectManagement;
 using Engine.Platform;
+using Medical.Controller;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Medical
         private MusclePosition end;
 
         private MusclePosition bindPosition; //The default position of the muscles in the scene.
+        private UndoRedoBuffer poseUndoRedoBuffer = new UndoRedoBuffer(20);
 
         public MusclePositionController(UpdateTimer timer, StandaloneController controller)
         {
@@ -52,6 +54,42 @@ namespace Medical
             updateListener.subscribeToUpdates();
             blendPositionMicro = 0;
             durationMicro = Clock.SecondsToMicroseconds(duration);
+        }
+
+        /// <summary>
+        /// Undo the position buffer.
+        /// </summary>
+        public void undo()
+        {
+            poseUndoRedoBuffer.undo();
+        }
+
+        /// <summary>
+        /// Redo the position buffer.
+        /// </summary>
+        public void redo()
+        {
+            poseUndoRedoBuffer.execute();
+        }
+
+        /// <summary>
+        /// Push a new state onto the undo/redo buffer, will erase anything after the current undo.
+        /// This will use the passed state as the undo state and the current muscle position of the scene
+        /// as the redo state.
+        /// </summary>
+        public void pushUndoState(MusclePosition undoPosition)
+        {
+            poseUndoRedoBuffer.pushAndSkip(new TwoWayDelegateCommand<MusclePosition, MusclePosition>(new MusclePosition(true), undoPosition, new TwoWayDelegateCommand<MusclePosition, MusclePosition>.Funcs()
+            {
+                ExecuteFunc = position =>
+                {
+                    position.preview();
+                },
+                UndoFunc = position =>
+                {
+                    position.preview();
+                }
+            }));
         }
 
         /// <summary>

@@ -30,13 +30,13 @@ namespace Medical.Controller
         private BEPUikScene ikScene;
         private SceneViewController sceneViewController;
         private AnatomyController anatomyController;
+        private MusclePositionController musclePositionController;
         private ExternalDragControl dragControl = new ExternalDragControl();
         private float hitDistance;
         private bool allowPosing = false;
         private MouseTravelTracker travelTracker = new MouseTravelTracker();
         private bool allowMousePosing = true;
-        private UndoRedoBuffer poseUndoRedoBuffer = new UndoRedoBuffer(20);
-        private MusclePosition poseStartPosition;
+        private MusclePosition poseStartPosition = null;
 
         public PoseController(StandaloneController controller)
         {
@@ -44,6 +44,7 @@ namespace Medical.Controller
             controller.SceneUnloading += controller_SceneUnloading;
             sceneViewController = controller.SceneViewController;
             anatomyController = controller.AnatomyController;
+            musclePositionController = controller.MusclePositionController;
         }
 
         public bool AllowPosing
@@ -214,31 +215,11 @@ namespace Medical.Controller
             dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
         }
 
-        public void undo()
-        {
-            poseUndoRedoBuffer.undo();
-        }
-
-        public void redo()
-        {
-            poseUndoRedoBuffer.execute();
-        }
-
         private void clearDragTarget()
         {
-            if (dragControl.TargetBone != null && poseStartPosition != null)
+            if (poseStartPosition != null)
             {
-                poseUndoRedoBuffer.pushAndSkip(new TwoWayDelegateCommand<MusclePosition, MusclePosition>(new MusclePosition(true), poseStartPosition, new TwoWayDelegateCommand<MusclePosition, MusclePosition>.Funcs()
-                {
-                    ExecuteFunc = position =>
-                        {
-                            position.preview();
-                        },
-                    UndoFunc = position =>
-                        {
-                            position.preview();
-                        }
-                }));
+                musclePositionController.pushUndoState(poseStartPosition);
                 poseStartPosition = null;
             }
 

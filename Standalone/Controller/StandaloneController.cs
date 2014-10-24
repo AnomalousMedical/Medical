@@ -220,7 +220,6 @@ namespace Medical
 
             //Anatomy Controller
             anatomyController = new AnatomyController();
-            poseController = new PoseController(this);
 
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
@@ -232,6 +231,7 @@ namespace Medical
             movementSequenceController = new MovementSequenceController(medicalController);
             this.SceneLoaded += movementSequenceController.sceneLoaded;
             musclePositionController = new MusclePositionController(medicalController.MainTimer, this);
+            poseController = new PoseController(this);
 
             //Teeth mover
             teethMover = new SimObjectMover("Teeth", medicalController.PluginManager.RendererPlugin, medicalController.EventManager, sceneViewController);
