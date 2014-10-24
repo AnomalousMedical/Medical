@@ -35,6 +35,8 @@ namespace Medical.Controller
         private bool allowPosing = false;
         private MouseTravelTracker travelTracker = new MouseTravelTracker();
         private bool allowMousePosing = true;
+        private UndoRedoBuffer poseUndoRedoBuffer = new UndoRedoBuffer(20);
+        private MusclePosition poseStartPosition;
 
         public PoseController(StandaloneController controller)
         {
@@ -200,6 +202,7 @@ namespace Medical.Controller
                     dragControl.LinearMotor.Offset = (hitPosition - bone.Owner.Translation).toBepuVec3();
                     dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
                     ikScene.addExternalControl(dragControl);
+                    poseStartPosition = new MusclePosition(true);
                     return true;
                 }
             }
@@ -211,8 +214,34 @@ namespace Medical.Controller
             dragControl.LinearMotor.TargetPosition = (cameraRay.Direction * hitDistance + cameraRay.Origin).toBepuVec3();
         }
 
+        public void undo()
+        {
+            poseUndoRedoBuffer.undo();
+        }
+
+        public void redo()
+        {
+            poseUndoRedoBuffer.execute();
+        }
+
         private void clearDragTarget()
         {
+            if (dragControl.TargetBone != null && poseStartPosition != null)
+            {
+                poseUndoRedoBuffer.pushAndSkip(new TwoWayDelegateCommand<MusclePosition, MusclePosition>(new MusclePosition(true), poseStartPosition, new TwoWayDelegateCommand<MusclePosition, MusclePosition>.Funcs()
+                {
+                    ExecuteFunc = position =>
+                        {
+                            position.preview();
+                        },
+                    UndoFunc = position =>
+                        {
+                            position.preview();
+                        }
+                }));
+                poseStartPosition = null;
+            }
+
             ikScene.removeExternalControl(dragControl);
             dragControl.TargetBone = null;
         }

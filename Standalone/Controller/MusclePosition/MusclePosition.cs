@@ -22,6 +22,14 @@ namespace Medical
         {
         }
 
+        public MusclePosition(bool autoCapture)
+        {
+            if(autoCapture)
+            {
+                captureState();
+            }
+        }
+
         public void captureState()
         {
             MuscleBehavior movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");

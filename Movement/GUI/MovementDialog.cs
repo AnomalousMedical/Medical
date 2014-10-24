@@ -1,5 +1,6 @@
 ﻿using BEPUikPlugin;
 using Engine.ObjectManagement;
+using Medical.Controller;
 using Medical.GUI;
 using MyGUIPlugin;
 using System;
@@ -16,6 +17,7 @@ namespace Medical.Movement.GUI
         private MusclePosition restorePosition;
         private MusclePositionController musclePositionController;
         private SceneControlManager sceneControlManager;
+        private PoseController poseController;
 
         CheckButton cSpineFlexExt;
         CheckButton cSpineLateral;
@@ -25,12 +27,13 @@ namespace Medical.Movement.GUI
 
         Button restoreButton;
 
-        public MovementDialog(MusclePositionController musclePositionController, MedicalController medicalController, SceneControlManager sceneControlManager)
+        public MovementDialog(MusclePositionController musclePositionController, MedicalController medicalController, SceneControlManager sceneControlManager, PoseController poseController)
             : base("Medical.Movement.GUI.MovementDialog.layout")
         {
             this.medicalController = medicalController;
             this.musclePositionController = musclePositionController;
             this.sceneControlManager = sceneControlManager;
+            this.poseController = poseController;
 
             cSpineFlexExt = new CheckButton((Button)window.findWidget("CSpineFlexExt"));
             cSpineLateral = new CheckButton((Button)window.findWidget("CSpineLateral"));
@@ -44,11 +47,27 @@ namespace Medical.Movement.GUI
             showPinControls.Checked = sceneControlManager.Visible;
             showPinControls.CheckedChanged += showPinControls_CheckedChanged;
 
+            Button undoButton = window.findWidget("Undo") as Button;
+            undoButton.MouseButtonClick += undoButton_MouseButtonClick;
+
+            Button redoButton = window.findWidget("Redo") as Button;
+            redoButton.MouseButtonClick += redoButton_MouseButtonClick;
+
             Button resetButton = (Button)window.findWidget("Reset");
             resetButton.MouseButtonClick += resetButton_MouseButtonClick;
 
             restoreButton = (Button)window.findWidget("Restore");
             restoreButton.MouseButtonClick += restoreButton_MouseButtonClick;
+        }
+
+        void redoButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            poseController.redo();
+        }
+
+        void undoButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            poseController.undo();
         }
 
         private void resetButton_MouseButtonClick(object sender, EventArgs e)
@@ -58,7 +77,6 @@ namespace Medical.Movement.GUI
 
             musclePositionController.timedBlend(musclePositionController.BindPosition, MedicalConfig.CameraTransitionTime);
 
-            //bothForwardBack.Value = rightForwardBack.Value;
             restoreButton.Enabled = true;
         }
 

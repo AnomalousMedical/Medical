@@ -29,6 +29,12 @@
         <Widget type="Button" skin="Button" position="6 69 121 32" name="ShowPinControls">
             <Property key="Caption" value="Show Pin Controls"/>
         </Widget>
+        <Widget type="Button" skin="Button" position="13 127 80 32" name="Undo">
+            <Property key="Caption" value="Undo"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="115 128 79 31" name="Redo">
+            <Property key="Caption" value="Redo"/>
+        </Widget>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>
