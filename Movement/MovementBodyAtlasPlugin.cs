@@ -76,7 +76,7 @@ namespace Medical.Movement
         {
             get
             {
-                return -1;
+                return 48;
             }
         }
 
