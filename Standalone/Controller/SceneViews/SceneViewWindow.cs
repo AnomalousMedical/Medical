@@ -403,6 +403,11 @@ namespace Medical.Controller
             return Unproject(screenX, screenY, Camera.getViewMatrix(), Camera.getProjectionMatrix());
         }
 
+        public Vector3 unprojectScreen(int x, int y)
+        {
+            return Unproject((x - RenderXLoc) / (float)RenderWidth, (y - RenderYLoc) / (float)RenderHeight, Camera.getViewMatrix(), Camera.getProjectionMatrix());
+        }
+
         /// <summary>
         /// Determine if the given x, y location is contained in this SceneViewWindow.
         /// </summary>
