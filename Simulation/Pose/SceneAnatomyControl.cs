@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    [Flags]
     public enum SceneAnatomyControlType
     {
-        Pin,
-        Lock
+        Pin = 1,
+        Lock = 1 << 1
     }
 
     public interface SceneAnatomyControl

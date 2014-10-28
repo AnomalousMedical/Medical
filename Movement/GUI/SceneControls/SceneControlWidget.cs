@@ -13,6 +13,8 @@ namespace Medical.Movement.GUI
 
         SceneAnatomyControl SceneAnatomyControl { get; }
 
-        bool Visible { get; set; }
+        void setVisibleTypes(SceneAnatomyControlType visibleTypes);
+
+        void setCameraVisible(bool visible);
     }
 }

@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace Medical.Movement.GUI
 {
-    class PinControlWidget : Component, SceneControlWidget
+    class ToggleControlWidget : Component, SceneControlWidget
     {
         private CheckButton checkButton;
 
-        public PinControlWidget(SceneAnatomyControl sceneAnatomyControl)
+        private bool typeVisible = false;
+        private bool cameraVisible = false;
+
+        public ToggleControlWidget(SceneAnatomyControl sceneAnatomyControl)
             : base(String.Format("Medical.Movement.GUI.SceneControls.{0}Control.layout", sceneAnatomyControl.Type))
         {
             this.SceneAnatomyControl = sceneAnatomyControl;
@@ -38,6 +41,18 @@ namespace Medical.Movement.GUI
             }
         }
 
+        public void setVisibleTypes(SceneAnatomyControlType visibleTypes)
+        {
+            typeVisible = (visibleTypes & SceneAnatomyControl.Type) != 0;
+            toggleVisibility();
+        }
+
+        public void setCameraVisible(bool visible)
+        {
+            cameraVisible = visible;
+            toggleVisibility();
+        }
+
         public bool Visible
         {
             get
@@ -51,5 +66,10 @@ namespace Medical.Movement.GUI
         }
 
         public SceneAnatomyControl SceneAnatomyControl { get; private set; }
+
+        private void toggleVisibility()
+        {
+            widget.Visible = cameraVisible && typeVisible;
+        }
     }
 }

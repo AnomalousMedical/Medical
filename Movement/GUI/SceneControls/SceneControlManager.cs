@@ -14,7 +14,9 @@ namespace Medical.Movement.GUI
     {
         StandaloneController standaloneController;
         SceneViewController sceneViewController;
-        private bool visible = false;
+
+        private bool subscribedToUpdates = false;
+        private SceneAnatomyControlType visibleTypes;
 
         private List<SceneControlWidget> widgets = new List<SceneControlWidget>();
 
@@ -37,35 +39,37 @@ namespace Medical.Movement.GUI
             destroyWidgets();
         }
 
-        public bool Visible
+        public void setTypeVisible(SceneAnatomyControlType type, bool visible)
         {
-            get
+            if(visible)
             {
-                return visible;
+                visibleTypes |= type;
             }
-            set
+            else
             {
-                if(visible != value)
-                {
-                    visible = value;
-                    if(visible)
-                    {
-                        standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
-                        foreach (var widget in widgets)
-                        {
-                            widget.Visible = true;
-                        }
-                    }
-                    else
-                    {
-                        standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
-                        foreach (var widget in widgets)
-                        {
-                            widget.Visible = false;
-                        }
-                    }
-                }
+                visibleTypes &= ~type;
             }
+
+            foreach(var widget in widgets)
+            {
+                widget.setVisibleTypes(visibleTypes);
+            }
+
+            if(visibleTypes == 0 && subscribedToUpdates)
+            {
+                standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
+                subscribedToUpdates = false;
+            }
+            else if(visibleTypes != 0 && !subscribedToUpdates)
+            {
+                standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
+                subscribedToUpdates = true;
+            }
+        }
+
+        public bool isTypeVisible(SceneAnatomyControlType type)
+        {
+            return (type & visibleTypes) != 0;
         }
 
         void standaloneController_SceneUnloading(SimScene scene)
@@ -80,7 +84,6 @@ namespace Medical.Movement.GUI
 
         void MedicalController_OnLoopUpdate(Clock time)
         {
-            //Replace this polling with an event, will need to modify sceneviews some to do this
             var activeWindow = sceneViewController.ActiveWindow;
             if (activeWindow != null)
             {
@@ -88,14 +91,7 @@ namespace Medical.Movement.GUI
                 {
                     IntVector2 point = activeWindow.getAbsoluteScreenPosition(widget.SceneAnatomyControl.WorldPosition);
                     widget.Position = point;
-                    widget.Visible = activeWindow.containsPoint(point);
-                }
-            }
-            else if(widgets.Count > 0 && widgets[0].Visible)
-            {
-                foreach (var widget in widgets)
-                {
-                    widget.Visible = false;
+                    widget.setCameraVisible(activeWindow.containsPoint(point));
                 }
             }
         }
@@ -104,8 +100,8 @@ namespace Medical.Movement.GUI
         {
             foreach (var sceneControl in SceneAnatomyControlManager.Controls)
             {
-                SceneControlWidget widget = new PinControlWidget(sceneControl);
-                widget.Visible = visible;
+                SceneControlWidget widget = new ToggleControlWidget(sceneControl);
+                widget.setVisibleTypes(visibleTypes);
                 widgets.Add(widget);
             }
         }

@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GUI\MovementDialog.cs" />
-    <Compile Include="GUI\SceneControls\PinControlWidget.cs" />
+    <Compile Include="GUI\SceneControls\ToggleControlWidget.cs" />
     <Compile Include="GUI\SceneControls\SceneControlManager.cs" />
     <Compile Include="GUI\SceneControls\SceneControlWidget.cs" />
     <Compile Include="MovementPluginEntryPoint.cs" />

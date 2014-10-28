@@ -21,14 +21,17 @@
         <Widget type="Button" skin="Button" position="152 26 57 28" name="CSpineAxial">
             <Property key="Caption" value="Axial Rot"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="6 69 121 32" name="ShowPinControls">
-            <Property key="Caption" value="Show Pin Controls"/>
+        <Widget type="Button" skin="Button" position="2 63 103 32" name="ShowPinControls">
+            <Property key="Caption" value="Show Bone Pins"/>
         </Widget>
         <Widget type="Button" skin="Button" position="114 184 80 32" name="Undo">
             <Property key="Caption" value="Undo"/>
         </Widget>
         <Widget type="Button" skin="Button" position="115 220 79 31" name="Redo">
             <Property key="Caption" value="Redo"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="108 63 102 32" name="ShowLockControls">
+            <Property key="Caption" value="Show Joint Locks"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>

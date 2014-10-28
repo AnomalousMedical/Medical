@@ -22,6 +22,8 @@ namespace Medical.Movement.GUI
         CheckButton cSpineAxial;
 
         CheckButton showPinControls;
+        CheckButton showLockControls;
+
         Button undoButton;
         Button redoButton;
 
@@ -45,8 +47,12 @@ namespace Medical.Movement.GUI
             cSpineAxial.CheckedChanged += cSpineAxial_CheckedChanged;
 
             showPinControls = new CheckButton(window.findWidget("ShowPinControls") as Button);
-            showPinControls.Checked = sceneControlManager.Visible;
+            showPinControls.Checked = sceneControlManager.isTypeVisible(SceneAnatomyControlType.Pin);
             showPinControls.CheckedChanged += showPinControls_CheckedChanged;
+
+            showLockControls = new CheckButton(window.findWidget("ShowLockControls") as Button);
+            showLockControls.Checked = sceneControlManager.isTypeVisible(SceneAnatomyControlType.Lock);
+            showLockControls.CheckedChanged += showLockControls_CheckedChanged;
 
             undoButton = window.findWidget("Undo") as Button;
             undoButton.MouseButtonClick += undoButton_MouseButtonClick;
@@ -114,7 +120,12 @@ namespace Medical.Movement.GUI
 
         void showPinControls_CheckedChanged(Widget source, EventArgs e)
         {
-            sceneControlManager.Visible = showPinControls.Checked;
+            sceneControlManager.setTypeVisible(SceneAnatomyControlType.Pin, showPinControls.Checked);
+        }
+
+        void showLockControls_CheckedChanged(Widget source, EventArgs e)
+        {
+            sceneControlManager.setTypeVisible(SceneAnatomyControlType.Lock, showLockControls.Checked);
         }
 
         private IEnumerable<SimObject> cSpineJoints()
