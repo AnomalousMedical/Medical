@@ -9,16 +9,11 @@
             <Property key="Caption" value="Reset"/>
             <Property key="ImageResource" value="Movement/Reset"/>
         </Widget>
-        <Widget type="Button" skin="VerticalIconTextButton" position="111 187 101 64" align="HRelative Bottom" name="Restore">
-            <Property key="Caption" value="Restore"/>
-            <Property key="ImageResource" value="Movement/Restore"/>
-            <Property key="ModeImage" value="true"/>
-        </Widget>
         <Widget type="Button" skin="Button" position="0 24 69 33" name="CSpineFlexExt">
             <Property key="Caption" value="Flex / Ext"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="0 4 106 16">
-            <Property key="Caption" value="Cervical Spine"/>
+            <Property key="Caption" value="Spine Axis Lock"/>
         </Widget>
         <Widget type="Button" skin="Button" position="72 26 76 27" name="CSpineLateral">
             <Property key="Caption" value="Lateral"/>
@@ -29,10 +24,10 @@
         <Widget type="Button" skin="Button" position="6 69 121 32" name="ShowPinControls">
             <Property key="Caption" value="Show Pin Controls"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="13 127 80 32" name="Undo">
+        <Widget type="Button" skin="Button" position="114 184 80 32" name="Undo">
             <Property key="Caption" value="Undo"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="115 128 79 31" name="Redo">
+        <Widget type="Button" skin="Button" position="115 220 79 31" name="Redo">
             <Property key="Caption" value="Redo"/>
         </Widget>
     </Widget>

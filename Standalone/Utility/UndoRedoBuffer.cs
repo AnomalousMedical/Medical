@@ -21,12 +21,18 @@ namespace Medical
             this.maxItemCount = maxItemCount;
         }
 
+        /// <summary>
+        /// Push a command and run its execute (redo) funciton.
+        /// </summary>
         public void pushAndExecute(TwoWayCommand command)
         {
             push(command);
             execute();
         }
 
+        /// <summary>
+        /// Push a command and skip its execute (redo) function to only run when manually invoked.
+        /// </summary>
         public void pushAndSkip(TwoWayCommand command)
         {
             push(command);
@@ -74,6 +80,28 @@ namespace Medical
         public void clear()
         {
             buffer.clear();
+        }
+
+        /// <summary>
+        /// True if this buffer can undo.
+        /// </summary>
+        public bool HasUndo
+        {
+            get
+            {
+                return !buffer.OnFirst;
+            }
+        }
+
+        /// <summary>
+        /// True if this buffer can redo.
+        /// </summary>
+        public bool HasRedo
+        {
+            get
+            {
+                return !buffer.OnLast;
+            }
         }
     }
 }

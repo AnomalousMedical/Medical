@@ -14,7 +14,6 @@ namespace Medical.Movement.GUI
     class MovementDialog : MDIDialog
     {
         private MedicalController medicalController;
-        private MusclePosition restorePosition;
         private MusclePositionController musclePositionController;
         private SceneControlManager sceneControlManager;
 
@@ -23,8 +22,8 @@ namespace Medical.Movement.GUI
         CheckButton cSpineAxial;
 
         CheckButton showPinControls;
-
-        Button restoreButton;
+        Button undoButton;
+        Button redoButton;
 
         public MovementDialog(MusclePositionController musclePositionController, MedicalController medicalController, SceneControlManager sceneControlManager)
             : base("Medical.Movement.GUI.MovementDialog.layout")
@@ -32,6 +31,10 @@ namespace Medical.Movement.GUI
             this.medicalController = medicalController;
             this.musclePositionController = musclePositionController;
             this.sceneControlManager = sceneControlManager;
+
+            musclePositionController.OnUndoRedoChanged += musclePositionController_UndoRedoStateAltered;
+            musclePositionController.OnRedo += musclePositionController_UndoRedoStateAltered;
+            musclePositionController.OnUndo += musclePositionController_UndoRedoStateAltered;
 
             cSpineFlexExt = new CheckButton((Button)window.findWidget("CSpineFlexExt"));
             cSpineLateral = new CheckButton((Button)window.findWidget("CSpineLateral"));
@@ -45,17 +48,24 @@ namespace Medical.Movement.GUI
             showPinControls.Checked = sceneControlManager.Visible;
             showPinControls.CheckedChanged += showPinControls_CheckedChanged;
 
-            Button undoButton = window.findWidget("Undo") as Button;
+            undoButton = window.findWidget("Undo") as Button;
             undoButton.MouseButtonClick += undoButton_MouseButtonClick;
 
-            Button redoButton = window.findWidget("Redo") as Button;
+            redoButton = window.findWidget("Redo") as Button;
             redoButton.MouseButtonClick += redoButton_MouseButtonClick;
 
             Button resetButton = (Button)window.findWidget("Reset");
             resetButton.MouseButtonClick += resetButton_MouseButtonClick;
 
-            restoreButton = (Button)window.findWidget("Restore");
-            restoreButton.MouseButtonClick += restoreButton_MouseButtonClick;
+            musclePositionController_UndoRedoStateAltered(musclePositionController);
+        }
+
+        public override void Dispose()
+        {
+            musclePositionController.OnUndoRedoChanged -= musclePositionController_UndoRedoStateAltered;
+            musclePositionController.OnRedo -= musclePositionController_UndoRedoStateAltered;
+            musclePositionController.OnUndo -= musclePositionController_UndoRedoStateAltered;
+            base.Dispose();
         }
 
         void redoButton_MouseButtonClick(Widget source, EventArgs e)
@@ -70,22 +80,9 @@ namespace Medical.Movement.GUI
 
         private void resetButton_MouseButtonClick(object sender, EventArgs e)
         {
-            restorePosition = new MusclePosition();
-            restorePosition.captureState();
+            musclePositionController.pushUndoState(new MusclePosition(true), musclePositionController.BindPosition);
 
             musclePositionController.timedBlend(musclePositionController.BindPosition, MedicalConfig.CameraTransitionTime);
-
-            restoreButton.Enabled = true;
-        }
-
-        void restoreButton_MouseButtonClick(object sender, EventArgs e)
-        {
-            if (restorePosition != null)
-            {
-                musclePositionController.timedBlend(restorePosition, MedicalConfig.CameraTransitionTime);
-                restorePosition = null;
-            }
-            restoreButton.Enabled = false;
         }
 
         void cSpineAxial_CheckedChanged(Widget source, EventArgs e)
@@ -120,7 +117,7 @@ namespace Medical.Movement.GUI
             sceneControlManager.Visible = showPinControls.Checked;
         }
 
-        public IEnumerable<SimObject> cSpineJoints()
+        private IEnumerable<SimObject> cSpineJoints()
         {
             var first = medicalController.getSimObject("C_T_SpineJoint");
             if (first != null)
@@ -158,6 +155,12 @@ namespace Medical.Movement.GUI
                 yield return medicalController.getSimObject("SpineL4_L5_Joint");
                 yield return medicalController.getSimObject("SpineL5_PelvisJoint");
             }
+        }
+
+        void musclePositionController_UndoRedoStateAltered(MusclePositionController musclePositionController)
+        {
+            undoButton.Enabled = musclePositionController.HasUndo;
+            redoButton.Enabled = musclePositionController.HasRedo;
         }
     }
 }

@@ -121,9 +121,11 @@ namespace Medical
         {
             if (currentExecuteCommand != null)
             {
-                currentExecuteCommand.Data.execute();
+                //Update the state before running the command, makes the state easier to track if you are updating a ui to match.
+                var commandToRun = currentExecuteCommand;
                 currentUndoCommand = currentExecuteCommand;
                 currentExecuteCommand = currentExecuteCommand.Next;
+                commandToRun.Data.execute();
             }
         }
 
@@ -146,17 +148,33 @@ namespace Medical
         {
             if (currentUndoCommand != null)
             {
-                currentUndoCommand.Data.undo();
+                //Update the state before running the command, makes the state easier to track if you are updating a ui to match.
+                var commandToRun = currentUndoCommand;
                 currentExecuteCommand = currentUndoCommand;
                 currentUndoCommand = currentUndoCommand.Previous;
+                commandToRun.Data.undo();
             }
         }
 
+        /// <summary>
+        /// This is true if we are on the last command.
+        /// </summary>
         public bool OnLast
         {
             get
             {
                 return currentExecuteCommand == null;
+            }
+        }
+
+        /// <summary>
+        /// This is true if we are on the first command.
+        /// </summary>
+        public bool OnFirst
+        {
+            get
+            {
+                return currentUndoCommand == null;
             }
         }
 

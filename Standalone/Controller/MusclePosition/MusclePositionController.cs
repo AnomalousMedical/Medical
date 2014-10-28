@@ -21,6 +21,21 @@ namespace Medical
         private MusclePosition bindPosition; //The default position of the muscles in the scene.
         private UndoRedoBuffer poseUndoRedoBuffer = new UndoRedoBuffer(20);
 
+        /// <summary>
+        /// Fired when an undo is executed.
+        /// </summary>
+        public event Action<MusclePositionController> OnUndo;
+
+        /// <summary>
+        /// Fired when a redo is executed.
+        /// </summary>
+        public event Action<MusclePositionController> OnRedo;
+
+        /// <summary>
+        /// Fired when the Undo/Redo buffer is altered, either by being cleared or a new command added.
+        /// </summary>
+        public event Action<MusclePositionController> OnUndoRedoChanged;
+
         public MusclePositionController(UpdateTimer timer, StandaloneController controller)
         {
             updateListener = new SubscribingUpdateListener(timer);
@@ -79,17 +94,38 @@ namespace Medical
         /// </summary>
         public void pushUndoState(MusclePosition undoPosition)
         {
-            poseUndoRedoBuffer.pushAndSkip(new TwoWayDelegateCommand<MusclePosition, MusclePosition>(new MusclePosition(true), undoPosition, new TwoWayDelegateCommand<MusclePosition, MusclePosition>.Funcs()
+            pushUndoState(undoPosition, new MusclePosition(true));
+        }
+
+        /// <summary>
+        /// Push a new state onto the undo/redo buffer, will erase anything after the current undo.
+        /// This will use the passed states for undo and redo.
+        /// </summary>
+        public void pushUndoState(MusclePosition undoPosition, MusclePosition redoPosition)
+        {
+            poseUndoRedoBuffer.pushAndSkip(new TwoWayDelegateCommand<MusclePosition, MusclePosition>(redoPosition, undoPosition, new TwoWayDelegateCommand<MusclePosition, MusclePosition>.Funcs()
             {
                 ExecuteFunc = position =>
                 {
                     position.preview();
+                    if(OnRedo != null)
+                    {
+                        OnRedo.Invoke(this);
+                    }
                 },
                 UndoFunc = position =>
                 {
                     position.preview();
+                    if (OnUndo != null)
+                    {
+                        OnUndo.Invoke(this);
+                    }
                 }
             }));
+            if(OnUndoRedoChanged != null)
+            {
+                OnUndoRedoChanged.Invoke(this);
+            }
         }
 
         /// <summary>
@@ -100,6 +136,22 @@ namespace Medical
             get
             {
                 return bindPosition;
+            }
+        }
+
+        public bool HasUndo
+        {
+            get
+            {
+                return poseUndoRedoBuffer.HasUndo;
+            }
+        }
+
+        public bool HasRedo
+        {
+            get
+            {
+                return poseUndoRedoBuffer.HasRedo;
             }
         }
 
@@ -123,6 +175,10 @@ namespace Medical
             bindPosition = new MusclePosition();
             bindPosition.captureState();
             poseUndoRedoBuffer.clear();
+            if (OnUndoRedoChanged != null)
+            {
+                OnUndoRedoChanged.Invoke(this);
+            }
         }
     }
 }
