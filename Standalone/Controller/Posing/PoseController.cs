@@ -32,6 +32,7 @@ namespace Medical.Controller
         private AnatomyController anatomyController;
         private MusclePositionController musclePositionController;
         private ExternalDragControl dragControl = new ExternalDragControl();
+        private PoseableIdentifier currentIdentifier;
         private float hitDistance;
         private bool allowPosing = false;
         private MouseTravelTracker travelTracker = new MouseTravelTracker();
@@ -204,6 +205,13 @@ namespace Medical.Controller
                     dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
                     ikScene.addExternalControl(dragControl);
                     poseStartPosition = new MusclePosition(true);
+                    PoseableObjectsManager.syncControls();
+                    currentIdentifier = match.PoseableIdentifier;
+                    if(match.PoseableIdentifier.Control != null)
+                    {
+                        match.PoseableIdentifier.Control.Owner.Enabled = false;
+                    }
+
                     return true;
                 }
             }
@@ -221,6 +229,12 @@ namespace Medical.Controller
             {
                 musclePositionController.pushUndoState(poseStartPosition);
                 poseStartPosition = null;
+            }
+
+            if(currentIdentifier != null && currentIdentifier.Control != null)
+            {
+                currentIdentifier.Control.Owner.Enabled = true;
+                currentIdentifier = null;
             }
 
             ikScene.removeExternalControl(dragControl);

@@ -13,5 +13,9 @@ namespace Medical
         bool checkCollision(Ray3 ray, ref float distanceOnRay);
 
         BEPUikBone Bone { get; }
+
+        BEPUikDragControl Control { get; }
+
+        void syncControlToBone();
     }
 }

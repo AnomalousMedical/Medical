@@ -45,6 +45,17 @@ namespace Medical
         }
 
         /// <summary>
+        /// Sync the controls to their bones
+        /// </summary>
+        public static void syncControls()
+        {
+            foreach (var poseable in poseables)
+            {
+                poseable.syncControlToBone();
+            }
+        }
+
+        /// <summary>
         /// Find the poseables that collide with ray.
         /// </summary>
         /// <param name="ray">The ray to search with.</param>
