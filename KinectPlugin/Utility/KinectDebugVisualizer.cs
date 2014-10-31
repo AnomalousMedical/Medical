@@ -42,7 +42,7 @@ namespace KinectPlugin
         {
             if (debugVisible && skel.IsTracked)
             {
-                debugDrawer.begin("SkeletonId" + skel.TrackingId, DrawingType.LineList);
+                debugDrawer.begin("TrackedSkeleton", DrawingType.LineList);
                 foreach (Joint joint in skel.Joints.Values)
                 {
                     Vector3 pos = joint.Position.toSceneCoords();
