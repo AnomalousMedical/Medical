@@ -21,6 +21,8 @@ namespace KinectPlugin
         
         private Body[] bodies;
         private BodyFrameReader bodyFrameReader;
+        private Object bodyFrameLock = new object();
+        private bool processedLastBodyFrame = true;
 
         private ColorFrameReader colorFrameReader;
         private byte[] colorPixels;
@@ -191,39 +193,68 @@ namespace KinectPlugin
 
         void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
-            Body currentBody = null;
-
-            using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
+            lock (bodyFrameLock)
             {
-                if (bodyFrame != null)
+                if (processedLastBodyFrame)
                 {
-                    if (bodies == null)
-                    {
-                        bodies = new Body[bodyFrame.BodyCount];
-                    }
+                    processedLastBodyFrame = false;
+                    Body currentBody = null;
+                    float closestLen = float.MaxValue;
 
-                    // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
-                    // As long as those body objects are not disposed and not set to null in the array,
-                    // those body objects will be re-used.
-                    bodyFrame.GetAndRefreshBodyData(bodies);
-
-                    foreach(var body in bodies)
+                    using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
                     {
-                        if(body.IsTracked)
+                        if (bodyFrame != null)
                         {
-                            currentBody = body;
-                            if (faceFrameSource != null)
+                            if (bodies == null)
                             {
-                                faceFrameSource.TrackingId = body.TrackingId;
+                                bodies = new Body[bodyFrame.BodyCount];
+                            }
+
+                            // The first time GetAndRefreshBodyData is called, Kinect will allocate each Body in the array.
+                            // As long as those body objects are not disposed and not set to null in the array,
+                            // those body objects will be re-used.
+                            bodyFrame.GetAndRefreshBodyData(bodies);
+
+                            foreach (var body in bodies)
+                            {
+                                if (body.IsTracked)
+                                {
+                                    float distance = body.Joints[JointType.SpineBase].Position.toSceneCoords().distance2(ref Vector3.Zero);
+                                    if (distance < closestLen)
+                                    {
+                                        currentBody = body;
+                                        closestLen = distance;
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
 
-            if (currentBody != null && SkeletonFrameReady != null)
-            {
-                ThreadManager.invoke(() => SkeletonFrameReady.Invoke(currentBody));
+                    if (currentBody != null && SkeletonFrameReady != null)
+                    {
+                        if (faceFrameSource != null)
+                        {
+                            faceFrameSource.TrackingId = currentBody.TrackingId;
+                        }
+
+                        ThreadManager.invoke(() =>
+                        {
+                            lock (bodyFrameLock)
+                            {
+                                SkeletonFrameReady.Invoke(currentBody);
+                                processedLastBodyFrame = true;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        if (faceFrameSource != null)
+                        {
+                            faceFrameSource.TrackingId = 0;
+                        }
+                        processedLastBodyFrame = true;
+                    }
+                }
             }
         }
 
