@@ -6,6 +6,7 @@ using Engine.Saving;
 using Medical;
 using Medical.Controller;
 using Microsoft.Kinect;
+using Microsoft.Kinect.Face;
 using MyGUIPlugin;
 using OgrePlugin;
 using System;
@@ -58,6 +59,7 @@ namespace KinectPlugin
             sensorManager = new KinectSensorManager();
             sensorManager.SkeletonFrameReady += sensorManager_SkeletonFrameReady;
             sensorManager.StatusChanged += sensorManager_StatusChanged;
+            sensorManager.FaceFrameReady += sensorManager_FaceFrameReady;
 
             kinectGui = new KinectGui(poseController, sensorManager, kinectDebugger);
             standaloneController.GUIManager.addManagedDialog(kinectGui);
@@ -159,16 +161,15 @@ namespace KinectPlugin
             }
         }
 
-        void sensorManager_SkeletonFrameReady(Body[] skeletons)
+        void sensorManager_SkeletonFrameReady(Body skeleton)
         {
-            if (skeletons.Length != 0)
-            {
-                foreach (Body skel in skeletons)
-                {
-                    poseController.updateControls(skel);
-                    kinectDebugger.debugSkeleton(skel);
-                }
-            }
+            poseController.updateControls(skeleton);
+            kinectDebugger.debugSkeleton(skeleton);
+        }
+
+        void sensorManager_FaceFrameReady(FaceAlignment face)
+        {
+            poseController.updateFace(face);
         }
     }
 }

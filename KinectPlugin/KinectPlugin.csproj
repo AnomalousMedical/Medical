@@ -39,6 +39,7 @@
       <HintPath>S:\Engine\Release\Engine.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Kinect.Face, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
@@ -58,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Controllers\KinectIKBone.cs" />
     <Compile Include="Controllers\KinectIkController.cs" />
+    <Compile Include="Controllers\KinectIKFace.cs" />
     <Compile Include="Controllers\KinectPoseController.cs" />
     <Compile Include="Controllers\KinectSensorManager.cs" />
     <Compile Include="GUI\KinectGui.cs" />

@@ -55,6 +55,17 @@ namespace Medical
             }
         }
 
+        public static void setControlsEnabled(bool enabled)
+        {
+            foreach(var poseable in poseables)
+            {
+                if (poseable.Control != null)
+                {
+                    poseable.Control.Owner.Enabled = enabled;
+                }
+            }
+        }
+
         /// <summary>
         /// Find the poseables that collide with ray.
         /// </summary>

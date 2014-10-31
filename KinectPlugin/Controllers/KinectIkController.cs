@@ -6,6 +6,7 @@ using Engine.Saving;
 using Medical;
 using Medical.Controller;
 using Microsoft.Kinect;
+using Microsoft.Kinect.Face;
 using OgrePlugin;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace KinectPlugin
         private GenericSimObjectDefinition dragSimObjectDefinition;
         private BEPUikDragControlDefinition dragControl;
         private KinectIKBone hips;
+        private KinectIKFace face;
         private bool debugVisible = true;
         private bool allowMovement = false;
         private List<SimObject> ikDragSimObjects = new List<SimObject>();
@@ -80,6 +82,8 @@ namespace KinectPlugin
             KinectIKBone rightElbow = createKinectBone(JointType.ElbowLeft, "RightHumerus", "RightHumerusUlnaJoint", rightShoulder, scene, subScene);
             KinectIKBone rightWrist = createKinectBone(JointType.WristLeft, "RightUlna", "RightRadiusHandBaseJoint", rightElbow, scene, subScene);
             KinectIKBone rightHand = createKinectBone(JointType.HandLeft, "RightHandBase", "RightHandBase", rightWrist, new Vector3(0, -5, 2), scene, subScene);
+
+            face = createKinectFace("CSpineMover", "CSpineMover", skull, Vector3.Forward * 20, scene, subScene);
         }
 
         public void destroyIkControls(SimScene scene)
@@ -101,14 +105,21 @@ namespace KinectPlugin
 
                 //hips.update(filter.FilteredJoints);
                 hips.update(skel);
+                face.skeletonUpdated();
                 if (debugVisible)
                 {
                     ikDebug.begin("Main", DrawingType.LineList);
                     ikDebug.Color = Color.Red;
                     hips.render(ikDebug);
+                    face.render(ikDebug);
                     ikDebug.end();
                 }
             }
+        }
+
+        public void updateFace(FaceAlignment faceAlignment)
+        {
+            face.update(faceAlignment);
         }
 
         public bool DebugVisible
@@ -142,6 +153,7 @@ namespace KinectPlugin
                     {
                         simObj.Enabled = allowMovement;
                     }
+                    PoseableObjectsManager.setControlsEnabled(!allowMovement);
                     if(AllowMovementChanged != null)
                     {
                         AllowMovementChanged.Invoke(this);
@@ -185,6 +197,32 @@ namespace KinectPlugin
                 parent.addChild(bone);
             }
             return bone;
+        }
+
+        private KinectIKFace createKinectFace(String boneSimObjectName, String translationSimObjectName, KinectIKBone parent, Vector3 additionalOffset, SimScene scene, SimSubScene subScene)
+        {
+            dragControl.BoneSimObjectName = boneSimObjectName;
+
+            var targetSimObject = medicalController.getSimObject(dragControl.BoneSimObjectName);
+            var ikBone = targetSimObject.getElement("IKBone") as BEPUikBone;
+            ikBone.Pinned = false;
+
+            dragSimObjectDefinition.Name = "KinectFaceControl";
+            dragSimObjectDefinition.Enabled = allowMovement;
+            dragSimObjectDefinition.Translation = medicalController.getSimObject(translationSimObjectName).Translation + additionalOffset;
+            SimObjectBase instance = dragSimObjectDefinition.register(subScene);
+            medicalController.addSimObject(instance);
+            scene.buildScene();
+
+            ikDragSimObjects.Add(instance);
+
+            float distanceToParent = 0;
+            if (parent != null)
+            {
+                distanceToParent = (instance.Translation - parent.Translation).length();
+            }
+
+            return new KinectIKFace(parent, distanceToParent, instance);
         }
 
         /// <summary>

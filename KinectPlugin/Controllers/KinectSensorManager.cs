@@ -2,6 +2,7 @@
 using Logging;
 using Medical.Controller;
 using Microsoft.Kinect;
+using Microsoft.Kinect.Face;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,22 +18,34 @@ namespace KinectPlugin
         private KinectSensor activeSensor;
         private bool connected;
         private bool useColorFeed = false;
-        private byte[] colorPixels;
-        private Object colorPixelsLock = new object();
+        
         private Body[] bodies;
         private BodyFrameReader bodyFrameReader;
+
         private ColorFrameReader colorFrameReader;
+        private byte[] colorPixels;
+        private Object colorPixelsLock = new object();
+
+        private HighDefinitionFaceFrameSource faceFrameSource;
+        private HighDefinitionFaceFrameReader faceFrameReader;
+        private FaceAlignment currentFaceAlignment; //Might have threading issues with this
+        
         bool processedLastColorFrame = true;
 
         /// <summary>
         /// Called when a skeleton frame is ready, this event will fire on the main application thread.
         /// </summary>
-        public event Action<Body[]> SkeletonFrameReady;
+        public event Action<Body> SkeletonFrameReady;
 
         /// <summary>
         /// Called when a color frame is ready, this event will fire on the main application thread.
         /// </summary>
         public event Action<byte[]> SensorColorFrameReady;
+
+        /// <summary>
+        /// Called when a face frame is ready. This event will be fired on the main application thread.
+        /// </summary>
+        public event Action<FaceAlignment> FaceFrameReady;
 
         public event Action<KinectSensorManager> StatusChanged;
 
@@ -52,6 +65,11 @@ namespace KinectPlugin
             {
                 bodyFrameReader.Dispose();
                 bodyFrameReader = null;
+            }
+
+            if(faceFrameReader != null)
+            {
+                faceFrameReader.Dispose();
             }
 
             setColorFeedEnabled(false, activeSensor);
@@ -139,6 +157,11 @@ namespace KinectPlugin
                     bodyFrameReader = localSensor.BodyFrameSource.OpenReader();
                     bodyFrameReader.FrameArrived += bodyFrameReader_FrameArrived;
 
+                    faceFrameSource = new HighDefinitionFaceFrameSource(localSensor);
+                    faceFrameReader = faceFrameSource.OpenReader();
+                    faceFrameReader.FrameArrived += faceFrameReader_FrameArrived;
+                    currentFaceAlignment = new FaceAlignment();
+
                     if(useColorFeed)
                     {
                         setColorFeedEnabled(true, localSensor);
@@ -167,7 +190,7 @@ namespace KinectPlugin
 
         void bodyFrameReader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
         {
-            bool dataReceived = false;
+            Body currentBody = null;
 
             using (BodyFrame bodyFrame = e.FrameReference.AcquireFrame())
             {
@@ -182,13 +205,43 @@ namespace KinectPlugin
                     // As long as those body objects are not disposed and not set to null in the array,
                     // those body objects will be re-used.
                     bodyFrame.GetAndRefreshBodyData(bodies);
+
+                    foreach(var body in bodies)
+                    {
+                        if(body.IsTracked)
+                        {
+                            currentBody = body;
+                            if (faceFrameSource != null)
+                            {
+                                faceFrameSource.TrackingId = body.TrackingId;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (currentBody != null && SkeletonFrameReady != null)
+            {
+                ThreadManager.invoke(() => SkeletonFrameReady.Invoke(currentBody));
+            }
+        }
+
+        void faceFrameReader_FrameArrived(object sender, HighDefinitionFaceFrameArrivedEventArgs e)
+        {
+            bool dataReceived = false;
+
+            using(HighDefinitionFaceFrame faceFrame = e.FrameReference.AcquireFrame())
+            {
+                if(faceFrame != null && faceFrame.IsFaceTracked)
+                {
+                    faceFrame.GetAndRefreshFaceAlignmentResult(currentFaceAlignment);
                     dataReceived = true;
                 }
             }
 
-            if (dataReceived && SkeletonFrameReady != null)
+            if(dataReceived && FaceFrameReady != null)
             {
-                ThreadManager.invoke(() => SkeletonFrameReady.Invoke(bodies));
+                ThreadManager.invoke(() => FaceFrameReady.Invoke(currentFaceAlignment));
             }
         }
 

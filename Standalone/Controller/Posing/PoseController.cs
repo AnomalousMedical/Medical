@@ -33,6 +33,7 @@ namespace Medical.Controller
         private MusclePositionController musclePositionController;
         private ExternalDragControl dragControl = new ExternalDragControl();
         private PoseableIdentifier currentIdentifier;
+        private bool repinBone = false;
         private float hitDistance;
         private bool allowPosing = false;
         private MouseTravelTracker travelTracker = new MouseTravelTracker();
@@ -196,8 +197,18 @@ namespace Medical.Controller
             foreach (var match in matches.Results)
             {
                 var bone = match.PoseableIdentifier.Bone;
-                if (bone != null && !bone.Pinned)
+                if (bone != null)
                 {
+                    if(bone.Pinned)
+                    {
+                        repinBone = true;
+                        bone.Pinned = false;
+                    }
+                    else
+                    {
+                        repinBone = false;
+                    }
+
                     dragControl.TargetBone = bone;
                     hitDistance = match.Distance;
                     Vector3 hitPosition = cameraRay.Direction * hitDistance + cameraRay.Origin;
@@ -235,6 +246,11 @@ namespace Medical.Controller
             {
                 currentIdentifier.Control.Owner.Enabled = true;
                 currentIdentifier = null;
+            }
+
+            if(dragControl.TargetBone != null)
+            {
+                dragControl.TargetBone.Pinned = repinBone;
             }
 
             ikScene.removeExternalControl(dragControl);

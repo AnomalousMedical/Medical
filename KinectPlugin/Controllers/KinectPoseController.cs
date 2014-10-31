@@ -1,5 +1,6 @@
 ﻿using Engine.ObjectManagement;
 using Microsoft.Kinect;
+using Microsoft.Kinect.Face;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,7 @@ namespace KinectPlugin
         bool DebugVisible { get; set; }
 
         bool AllowMovement { get; set; }
+
+        void updateFace(FaceAlignment face);
     }
 }
