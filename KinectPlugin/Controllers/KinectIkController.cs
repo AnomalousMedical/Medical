@@ -99,7 +99,7 @@ namespace KinectPlugin
 
         public void updateControls(Body skel)
         {
-            if (hips != null && skel.IsTracked)
+            if (allowMovement && hips != null && skel.IsTracked)
             {
                 //filter.Update(skel);
 
@@ -119,7 +119,10 @@ namespace KinectPlugin
 
         public void updateFace(FaceAlignment faceAlignment)
         {
-            face.update(faceAlignment);
+            if (allowMovement && face != null)
+            {
+                face.update(faceAlignment);
+            }
         }
 
         public bool DebugVisible
