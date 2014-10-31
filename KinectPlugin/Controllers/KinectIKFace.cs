@@ -56,34 +56,39 @@ namespace KinectPlugin
         {
             currentOrientation = face.FaceOrientation.toEngineQuat().inverse();
 
-            float openInterpolate = Math.Min(face.AnimationUnits[FaceShapeAnimations.JawOpen] / openMaxValue, 1.0f);
-            float protrusion = neutralProtrusion.interpolate(fullyOpenProtrusion, openInterpolate);
+            if (JawTracking)
+            {
+                float openInterpolate = Math.Min(face.AnimationUnits[FaceShapeAnimations.JawOpen] / openMaxValue, 1.0f);
+                float protrusion = neutralProtrusion.interpolate(fullyOpenProtrusion, openInterpolate);
 
-            float leftAdditiontalSlide = 0f;
-            float rightAdditiontalSlide = 0f;
+                float leftAdditiontalSlide = 0f;
+                float rightAdditiontalSlide = 0f;
 
-            //Uncomment to try left/right sliding
-            //float slide = face.AnimationUnits[FaceShapeAnimations.JawSlideRight];
-            //if(slide > 0)
-            //{
-            //    rightAdditiontalSlide = 0f.interpolate(additionalOneSideProtrusion, Math.Min(slide / protrusionMaxValue, 1.0f));
-            //}
-            //else
-            //{
-            //    leftAdditiontalSlide = 0f.interpolate(additionalOneSideProtrusion, Math.Min(-slide / protrusionMaxValue, 1.0f));
-            //}
+                //Uncomment to try left/right sliding
+                //float slide = face.AnimationUnits[FaceShapeAnimations.JawSlideRight];
+                //if(slide > 0)
+                //{
+                //    rightAdditiontalSlide = 0f.interpolate(additionalOneSideProtrusion, Math.Min(slide / protrusionMaxValue, 1.0f));
+                //}
+                //else
+                //{
+                //    leftAdditiontalSlide = 0f.interpolate(additionalOneSideProtrusion, Math.Min(-slide / protrusionMaxValue, 1.0f));
+                //}
 
-            leftCP.setLocation(Math.Min(protrusion + leftAdditiontalSlide, 1.0f));
-            rightCP.setLocation(Math.Min(protrusion + rightAdditiontalSlide, 1.0f));
-            movingMuscleTarget.Offset = new Vector3(0, 0f.interpolate(fullyOpenHinge, openInterpolate), 0.0f);
-            movingMuscle.changeForce(70);
+                leftCP.setLocation(Math.Min(protrusion + leftAdditiontalSlide, 1.0f));
+                rightCP.setLocation(Math.Min(protrusion + rightAdditiontalSlide, 1.0f));
+                movingMuscleTarget.Offset = new Vector3(0, 0f.interpolate(fullyOpenHinge, openInterpolate), 0.0f);
+                movingMuscle.changeForce(70);
 
-            //Logging.Log.Debug("Jaw pos {0} slide {1}", face.AnimationUnits[FaceShapeAnimations.JawOpen], face.AnimationUnits[FaceShapeAnimations.JawSlideRight]);
+                //Logging.Log.Debug("Jaw pos {0} slide {1}", face.AnimationUnits[FaceShapeAnimations.JawOpen], face.AnimationUnits[FaceShapeAnimations.JawSlideRight]);
+            }
         }
 
         public void render(DebugDrawingSurface debugDraw)
         {
             debugDraw.drawLine(parentBone.Translation, faceTargetSimObject.Translation);
         }
+
+        public bool JawTracking { get; set; }
     }
 }

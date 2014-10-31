@@ -22,6 +22,8 @@ namespace KinectPlugin
         CheckButton showIkSkeleton;
         CheckButton showSensorSkeleton;
         CheckButton enableVideoFeed;
+        CheckButton jawTracking;
+        CheckButton skeletonTracking;
         TextBox statusLabel;
         ImageBox colorSensorImage;
         IntCoord colorSensorImageOriginalPos;
@@ -63,6 +65,14 @@ namespace KinectPlugin
             enableVideoFeed.Checked = sensorManager.UseColorFeed;
             enableVideoFeed.CheckedChanged += enableVideoFeed_CheckedChanged;
 
+            jawTracking = new CheckButton(window.findWidget("JawTracking") as Button);
+            jawTracking.Checked = poseController.JawTracking;
+            jawTracking.CheckedChanged += jawTracking_CheckedChanged;
+
+            skeletonTracking = new CheckButton(window.findWidget("SkeletonTracking") as Button);
+            skeletonTracking.Checked = poseController.SkeletonTracking;
+            skeletonTracking.CheckedChanged += skeletonTracking_CheckedChanged;
+
             statusLabel = (TextBox)window.findWidget("StatusLabel");
             setConnectedLabelText(sensorManager.Connected);
 
@@ -98,6 +108,16 @@ namespace KinectPlugin
         void enableVideoFeed_CheckedChanged(Widget source, EventArgs e)
         {
             sensorManager.UseColorFeed = enableVideoFeed.Checked;
+        }
+
+        void jawTracking_CheckedChanged(Widget source, EventArgs e)
+        {
+            poseController.JawTracking = jawTracking.Checked;
+        }
+
+        void skeletonTracking_CheckedChanged(Widget source, EventArgs e)
+        {
+            poseController.SkeletonTracking = skeletonTracking.Checked;
         }
 
         void sensorManager_StatusChanged(KinectSensorManager sensorManager)

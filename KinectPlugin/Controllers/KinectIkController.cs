@@ -27,6 +27,8 @@ namespace KinectPlugin
         private KinectIKFace face;
         private bool debugVisible = true;
         private bool allowMovement = false;
+        private bool jawTracking = true;
+        private bool skeletonTracking = true;
         private List<SimObject> ikDragSimObjects = new List<SimObject>();
         //private FilterDoubleExponential filter = new FilterDoubleExponential();
 
@@ -86,6 +88,7 @@ namespace KinectPlugin
             KinectIKBone rightHand = createKinectBone(JointType.HandLeft, "RightHandBase", "RightHandBase", rightWrist, new Vector3(0, -15, 2), scene, subScene);
 
             face = createKinectFace("CSpineMover", "CSpineMover", skull, Vector3.Forward * 20, scene, subScene);
+            face.JawTracking = jawTracking;
         }
 
         public void destroyIkControls(SimScene scene)
@@ -106,8 +109,11 @@ namespace KinectPlugin
                 //filter.Update(skel);
 
                 //hips.update(filter.FilteredJoints);
-                hips.update(skel);
-                face.skeletonUpdated();
+                if (skeletonTracking)
+                {
+                    hips.update(skel);
+                    face.skeletonUpdated();
+                }
                 if (debugVisible)
                 {
                     ikDebug.begin("Main", DrawingType.LineList);
@@ -163,6 +169,34 @@ namespace KinectPlugin
                     {
                         AllowMovementChanged.Invoke(this);
                     }
+                }
+            }
+        }
+
+        public bool SkeletonTracking
+        {
+            get
+            {
+                return skeletonTracking;
+            }
+            set
+            {
+                skeletonTracking = value;
+            }
+        }
+
+        public bool JawTracking
+        {
+            get
+            {
+                return jawTracking;
+            }
+            set
+            {
+                jawTracking = value;
+                if (face != null)
+                {
+                    face.JawTracking = value;
                 }
             }
         }

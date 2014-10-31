@@ -23,6 +23,10 @@ namespace KinectPlugin
 
         bool AllowMovement { get; set; }
 
+        bool SkeletonTracking { get; set; }
+
+        bool JawTracking { get; set; }
+
         void updateFace(FaceAlignment face);
     }
 }
