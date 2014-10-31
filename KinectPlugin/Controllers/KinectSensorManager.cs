@@ -25,12 +25,13 @@ namespace KinectPlugin
         private ColorFrameReader colorFrameReader;
         private byte[] colorPixels;
         private Object colorPixelsLock = new object();
+        private bool processedLastColorFrame = true;
 
         private HighDefinitionFaceFrameSource faceFrameSource;
         private HighDefinitionFaceFrameReader faceFrameReader;
-        private FaceAlignment currentFaceAlignment; //Might have threading issues with this
-        
-        bool processedLastColorFrame = true;
+        private FaceAlignment currentFaceAlignment;
+        private Object faceFrameLock = new object();
+        private bool processedLastFaceFrame = true;
 
         /// <summary>
         /// Called when a skeleton frame is ready, this event will fire on the main application thread.
@@ -228,20 +229,38 @@ namespace KinectPlugin
 
         void faceFrameReader_FrameArrived(object sender, HighDefinitionFaceFrameArrivedEventArgs e)
         {
-            bool dataReceived = false;
-
-            using(HighDefinitionFaceFrame faceFrame = e.FrameReference.AcquireFrame())
+            lock (faceFrameLock)
             {
-                if(faceFrame != null && faceFrame.IsFaceTracked)
+                if (processedLastFaceFrame)
                 {
-                    faceFrame.GetAndRefreshFaceAlignmentResult(currentFaceAlignment);
-                    dataReceived = true;
-                }
-            }
+                    processedLastFaceFrame = false;
+                    bool dataReceived = false;
 
-            if(dataReceived && FaceFrameReady != null)
-            {
-                ThreadManager.invoke(() => FaceFrameReady.Invoke(currentFaceAlignment));
+                    using (HighDefinitionFaceFrame faceFrame = e.FrameReference.AcquireFrame())
+                    {
+                        if (faceFrame != null && faceFrame.IsFaceTracked)
+                        {
+                            faceFrame.GetAndRefreshFaceAlignmentResult(currentFaceAlignment);
+                            dataReceived = true;
+                        }
+                    }
+
+                    if (dataReceived && FaceFrameReady != null)
+                    {
+                        ThreadManager.invoke(() =>
+                        {
+                            lock (faceFrameLock)
+                            {
+                                FaceFrameReady.Invoke(currentFaceAlignment);
+                                processedLastFaceFrame = true;
+                            }
+                        });
+                    }
+                    else
+                    {
+                        processedLastFaceFrame = true;
+                    }
+                }
             }
         }
 
