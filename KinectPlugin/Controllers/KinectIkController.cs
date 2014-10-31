@@ -76,12 +76,14 @@ namespace KinectPlugin
             KinectIKBone leftShoulder = createKinectBone(JointType.ShoulderRight, "LeftScapula", "LeftScapula", neck, scene, subScene);
             KinectIKBone leftElbow = createKinectBone(JointType.ElbowRight, "LeftHumerus", "LeftHumerusUlnaJoint", leftShoulder, scene, subScene);
             KinectIKBone leftWrist = createKinectBone(JointType.WristRight, "LeftUlna", "LeftRadiusHandBaseJoint", leftElbow, scene, subScene);
-            KinectIKBone leftHand = createKinectBone(JointType.HandRight, "LeftHandBase", "LeftHandBase", leftWrist, new Vector3(0, -5, 2), scene, subScene);
+            KinectIKBone leftThumb = createKinectBone(JointType.ThumbRight, "LeftHandBase", "LeftHandBase", leftWrist, new Vector3(10, 0, 0), scene, subScene);
+            KinectIKBone leftHand = createKinectBone(JointType.HandRight, "LeftHandBase", "LeftHandBase", leftWrist, new Vector3(0, -15, 2), scene, subScene);
 
             KinectIKBone rightShoulder = createKinectBone(JointType.ShoulderLeft, "RightScapula", "RightScapula", neck, scene, subScene);
             KinectIKBone rightElbow = createKinectBone(JointType.ElbowLeft, "RightHumerus", "RightHumerusUlnaJoint", rightShoulder, scene, subScene);
             KinectIKBone rightWrist = createKinectBone(JointType.WristLeft, "RightUlna", "RightRadiusHandBaseJoint", rightElbow, scene, subScene);
-            KinectIKBone rightHand = createKinectBone(JointType.HandLeft, "RightHandBase", "RightHandBase", rightWrist, new Vector3(0, -5, 2), scene, subScene);
+            KinectIKBone rightThumb = createKinectBone(JointType.ThumbLeft, "RightHandBase", "RightHandBase", rightWrist, new Vector3(-10, 0, 0), scene, subScene);
+            KinectIKBone rightHand = createKinectBone(JointType.HandLeft, "RightHandBase", "RightHandBase", rightWrist, new Vector3(0, -15, 2), scene, subScene);
 
             face = createKinectFace("CSpineMover", "CSpineMover", skull, Vector3.Forward * 20, scene, subScene);
         }
