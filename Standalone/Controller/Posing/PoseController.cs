@@ -3,6 +3,7 @@ using BEPUikPlugin;
 using Engine;
 using Engine.ObjectManagement;
 using Engine.Platform;
+using Medical.Pose.Commands;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -218,10 +219,11 @@ namespace Medical.Controller
                     poseStartPosition = new MusclePosition(true);
                     PoseableObjectsManager.syncControls();
                     currentIdentifier = match.PoseableIdentifier;
-                    if(match.PoseableIdentifier.Control != null)
+                    if (currentIdentifier.Control != null)
                     {
-                        match.PoseableIdentifier.Control.Owner.Enabled = false;
+                        currentIdentifier.Control.Owner.Enabled = false;
                     }
+                    PoseCommandManager.runPosingStarted(currentIdentifier.PoseCommandName);
 
                     return true;
                 }
@@ -242,9 +244,13 @@ namespace Medical.Controller
                 poseStartPosition = null;
             }
 
-            if(currentIdentifier != null && currentIdentifier.Control != null)
+            if (currentIdentifier != null)
             {
-                currentIdentifier.Control.Owner.Enabled = true;
+                PoseCommandManager.runPosingEnded(currentIdentifier.PoseCommandName);
+                if (currentIdentifier.Control != null)
+                {
+                    currentIdentifier.Control.Owner.Enabled = true;
+                }
                 currentIdentifier = null;
             }
 

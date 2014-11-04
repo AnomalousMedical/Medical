@@ -85,10 +85,10 @@ namespace Medical
             }
             //Must look this up this way to get the correct pose index.
             int poseCount = mesh.Value.getPoseCount();
-            Pose pose = null;
+            OgreWrapper.Pose pose = null;
             for(ushort i = 0; i < poseCount; ++i)
             {
-                Pose innerPose = mesh.Value.getPose(i);
+                OgreWrapper.Pose innerPose = mesh.Value.getPose(i);
                 if(innerPose.getName() == poseName)
                 {
                     pose = innerPose;

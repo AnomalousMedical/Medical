@@ -16,6 +16,8 @@ namespace Medical
 
         BEPUikDragControl Control { get; }
 
+        String PoseCommandName { get; }
+
         void syncControlToBone();
     }
 }

@@ -36,6 +36,9 @@ namespace Medical
         [Editable]
         private String controlName;
 
+        [Editable]
+        private String poseCommandName = null;
+
         [DoNotCopy]
         [DoNotSave]
         private AnatomyIdentifier anatomy;
@@ -133,6 +136,14 @@ namespace Medical
             get
             {
                 return control;
+            }
+        }
+
+        public String PoseCommandName
+        {
+            get
+            {
+                return poseCommandName;
             }
         }
     }

@@ -155,7 +155,6 @@
     <Compile Include="ControlPoint\FossaState.cs" />
     <Compile Include="Mandible\Mandible.cs" />
     <Compile Include="Mandible\MandibleController.cs" />
-    <Compile Include="ManubriumBehavior.cs" />
     <Compile Include="Measurement\Measurement.cs" />
     <Compile Include="Measurement\MeasurementController.cs" />
     <Compile Include="Measurement\MeasurementDrawer.cs" />
@@ -187,12 +186,19 @@
     <Compile Include="Plugin\SimulationScene.cs" />
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
+    <Compile Include="Pose\Commands\DisableObjectAction.cs" />
+    <Compile Include="Pose\Commands\PinBoneAction.cs" />
+    <Compile Include="Pose\Commands\PoseCommand.cs" />
+    <Compile Include="Pose\Commands\PoseCommandAction.cs" />
+    <Compile Include="Pose\Commands\LockJointAction.cs" />
+    <Compile Include="Pose\Commands\PoseCommandManager.cs" />
     <Compile Include="Pose\FKRootBehavior.cs" />
     <Compile Include="Pose\FKChainState.cs" />
     <Compile Include="Pose\FKElement.cs" />
     <Compile Include="Pose\FKLink.cs" />
     <Compile Include="Pose\FKLinkState.cs" />
     <Compile Include="Pose\FKRoot.cs" />
+    <Compile Include="Pose\IKChainParentBehavior.cs" />
     <Compile Include="Pose\PoseableByAnatomyIdentifier.cs" />
     <Compile Include="Pose\PoseableRaycastResult.cs" />
     <Compile Include="Pose\PoseableIdentifier.cs" />
