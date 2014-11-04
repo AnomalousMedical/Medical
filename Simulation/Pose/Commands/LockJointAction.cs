@@ -37,8 +37,6 @@ namespace Medical.Pose.Commands
             {
                 blacklist("Cannot find BEPUik limit '{0}' on '{1}'", limitName, limitSimObjectName);
             }
-
-            PoseCommandManager.addAction(this);
         }
 
         protected override void destroy()

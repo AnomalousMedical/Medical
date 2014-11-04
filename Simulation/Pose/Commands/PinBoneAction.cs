@@ -37,8 +37,6 @@ namespace Medical.Pose.Commands
             {
                 blacklist("Cannot find BEPUik bone '{0}' on '{1}'", boneName, boneSimObjectName);
             }
-
-            PoseCommandManager.addAction(this);
         }
 
         protected override void destroy()

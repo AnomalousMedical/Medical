@@ -29,8 +29,6 @@ namespace Medical.Pose.Commands
             {
                 blacklist("Cannot find Disabling SimObject named '{0}'", simObjectName);
             }
-
-            PoseCommandManager.addAction(this);
         }
 
         protected override void destroy()

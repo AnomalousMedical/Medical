@@ -187,6 +187,7 @@
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
     <Compile Include="Pose\Commands\DisableObjectAction.cs" />
+    <Compile Include="Pose\Commands\EnableAndSynchronizePositionAction.cs" />
     <Compile Include="Pose\Commands\PinBoneAction.cs" />
     <Compile Include="Pose\Commands\PoseCommand.cs" />
     <Compile Include="Pose\Commands\PoseCommandAction.cs" />

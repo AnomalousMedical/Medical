@@ -23,6 +23,8 @@ namespace Medical.Pose.Commands
             {
                 blacklist("No command names specified.");
             }
+
+            PoseCommandManager.addAction(this);
         }
 
         public abstract void posingEnded();

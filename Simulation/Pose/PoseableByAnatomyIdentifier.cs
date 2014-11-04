@@ -92,7 +92,7 @@ namespace Medical
                 }
 
                 control = controlSimObject.getElement(controlName) as BEPUikDragControl;
-                if (bone == null)
+                if (control == null)
                 {
                     blacklist("Cannot find BEPUikDragControl '{0}' in Control SimObject '{1}'", controlName, controlSimObjectName);
                 }
