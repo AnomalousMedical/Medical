@@ -217,12 +217,7 @@ namespace Medical.Controller
                     dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
                     ikScene.addExternalControl(dragControl);
                     poseStartPosition = new MusclePosition(true);
-                    PoseableObjectsManager.syncControls();
                     currentIdentifier = match.PoseableIdentifier;
-                    if (currentIdentifier.Control != null)
-                    {
-                        currentIdentifier.Control.Owner.Enabled = false;
-                    }
                     PoseCommandManager.runPosingStarted(currentIdentifier.PoseCommandName);
 
                     return true;
@@ -247,10 +242,6 @@ namespace Medical.Controller
             if (currentIdentifier != null)
             {
                 PoseCommandManager.runPosingEnded(currentIdentifier.PoseCommandName);
-                if (currentIdentifier.Control != null)
-                {
-                    currentIdentifier.Control.Owner.Enabled = true;
-                }
                 currentIdentifier = null;
             }
 

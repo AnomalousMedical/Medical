@@ -31,12 +31,6 @@ namespace Medical
         private String boneName = "IKBone";
 
         [Editable]
-        private String controlSimObjectName;
-
-        [Editable]
-        private String controlName;
-
-        [Editable]
         private String poseCommandName = null;
 
         [DoNotCopy]
@@ -46,14 +40,6 @@ namespace Medical
         [DoNotCopy]
         [DoNotSave]
         private BEPUikBone bone;
-
-        [DoNotCopy]
-        [DoNotSave]
-        private BEPUikDragControl control;
-
-        [DoNotCopy]
-        [DoNotSave]
-        private Vector3 controlBoneOffset;
 
         protected override void link()
         {
@@ -82,24 +68,6 @@ namespace Medical
                 blacklist("Cannot find BEPUikBone '{0}' in Bone SimObject '{1}'", boneName, boneSimObjectName);
             }
 
-            //Control is optional, so make sure both names are defined.
-            if(!String.IsNullOrEmpty(controlSimObjectName) && !String.IsNullOrEmpty(controlName))
-            {
-                SimObject controlSimObject = Owner.getOtherSimObject(controlSimObjectName);
-                if (controlSimObject == null)
-                {
-                    blacklist("Cannot find Control SimObject named '{0}'", controlSimObjectName);
-                }
-
-                control = controlSimObject.getElement(controlName) as BEPUikDragControl;
-                if (control == null)
-                {
-                    blacklist("Cannot find BEPUikDragControl '{0}' in Control SimObject '{1}'", controlName, controlSimObjectName);
-                }
-
-                controlBoneOffset = Quaternion.quatRotate(bone.Owner.Rotation.inverse(), control.Owner.Translation - bone.Owner.Translation);
-            }
-
             PoseableObjectsManager.add(this);
         }
 
@@ -114,28 +82,11 @@ namespace Medical
             return anatomy.CurrentAlpha > 0.0f && anatomy.checkCollision(ray, ref distanceOnRay);
         }
 
-        public void syncControlToBone()
-        {
-            if(control != null)
-            {
-                var boneOwner = bone.Owner;
-                control.TargetPosition = boneOwner.Translation + Quaternion.quatRotate(boneOwner.Rotation, controlBoneOffset);
-            }
-        }
-
         public BEPUikBone Bone
         {
             get
             {
                 return bone;
-            }
-        }
-
-        public BEPUikDragControl Control
-        {
-            get
-            {
-                return control;
             }
         }
 

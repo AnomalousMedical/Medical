@@ -164,7 +164,6 @@ namespace KinectPlugin
                     {
                         simObj.Enabled = allowMovement;
                     }
-                    PoseableObjectsManager.setControlsEnabled(!allowMovement);
                     if(AllowMovementChanged != null)
                     {
                         AllowMovementChanged.Invoke(this);
