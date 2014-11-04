@@ -191,6 +191,7 @@
     <Compile Include="Pose\Commands\PoseCommand.cs" />
     <Compile Include="Pose\Commands\PoseCommandAction.cs" />
     <Compile Include="Pose\Commands\LockJointAction.cs" />
+    <Compile Include="Pose\Commands\PoseCommandActionBase.cs" />
     <Compile Include="Pose\Commands\PoseCommandManager.cs" />
     <Compile Include="Pose\FKRootBehavior.cs" />
     <Compile Include="Pose\FKChainState.cs" />

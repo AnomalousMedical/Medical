@@ -12,24 +12,30 @@ namespace Medical.Pose.Commands
 
         internal static void addAction(PoseCommandAction action)
         {
-            PoseCommand command;
-            if (!poseCommands.TryGetValue(action.CommandName, out command))
+            foreach (String commandName in action.CommandNames)
             {
-                command = new PoseCommand();
-                poseCommands.Add(action.CommandName, command);
+                PoseCommand command;
+                if (!poseCommands.TryGetValue(commandName, out command))
+                {
+                    command = new PoseCommand();
+                    poseCommands.Add(commandName, command);
+                }
+                command.addAction(action);
             }
-            command.addAction(action);
         }
 
         internal static void removeAction(PoseCommandAction action)
         {
-            PoseCommand command;
-            if (poseCommands.TryGetValue(action.CommandName, out command))
+            foreach (String commandName in action.CommandNames)
             {
-                command.removeAction(action);
-                if(command.IsEmpty)
+                PoseCommand command;
+                if (poseCommands.TryGetValue(commandName, out command))
                 {
-                    poseCommands.Remove(action.CommandName);
+                    command.removeAction(action);
+                    if (command.IsEmpty)
+                    {
+                        poseCommands.Remove(commandName);
+                    }
                 }
             }
         }

@@ -10,11 +10,8 @@ using System.Threading.Tasks;
 
 namespace Medical.Pose.Commands
 {
-    class PinBoneAction : BehaviorInterface, PoseCommandAction
+    class PinBoneAction : PoseCommandActionBase
     {
-        [Editable]
-        private String commandName;
-
         [Editable]
         private String boneSimObjectName = "this";
 
@@ -28,11 +25,6 @@ namespace Medical.Pose.Commands
         protected override void link()
         {
             base.link();
-
-            if (commandName == null)
-            {
-                blacklist("No command name specified.");
-            }
 
             var simObject = Owner.getOtherSimObject(boneSimObjectName);
             if (simObject == null)
@@ -55,22 +47,14 @@ namespace Medical.Pose.Commands
             base.destroy();
         }
 
-        public void posingStarted()
+        public override void posingStarted()
         {
             bone.Pinned = true;
         }
 
-        public void posingEnded()
+        public override void posingEnded()
         {
             bone.Pinned = false;
-        }
-
-        public String CommandName
-        {
-            get
-            {
-                return commandName;
-            }
         }
     }
 }

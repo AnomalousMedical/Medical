@@ -10,11 +10,8 @@ using System.Threading.Tasks;
 
 namespace Medical.Pose.Commands
 {
-    class LockJointAction : BehaviorInterface, PoseCommandAction
+    class LockJointAction : PoseCommandActionBase
     {
-        [Editable]
-        private String commandName;
-
         [Editable]
         private String limitSimObjectName = "this";
 
@@ -28,11 +25,6 @@ namespace Medical.Pose.Commands
         protected override void link()
         {
             base.link();
-
-            if(commandName == null)
-            {
-                blacklist("No command name specified.");
-            }
 
             var limitSimObject = Owner.getOtherSimObject(limitSimObjectName);
             if(limitSimObject == null)
@@ -55,22 +47,14 @@ namespace Medical.Pose.Commands
             base.destroy();
         }
 
-        public void posingStarted()
+        public override void posingStarted()
         {
             limit.Locked = true;
         }
 
-        public void posingEnded()
+        public override void posingEnded()
         {
             limit.Locked = false;
-        }
-
-        public String CommandName
-        {
-            get
-            {
-                return commandName;
-            }
         }
     }
 }

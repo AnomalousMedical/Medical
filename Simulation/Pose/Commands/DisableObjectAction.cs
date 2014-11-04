@@ -11,11 +11,8 @@ using System.Threading.Tasks;
 
 namespace Medical.Pose.Commands
 {
-    class DisableObjectAction : BehaviorInterface, PoseCommandAction
+    class DisableObjectAction : PoseCommandActionBase
     {
-        [Editable]
-        private String commandName;
-
         [Editable]
         private String simObjectName = "this";
 
@@ -26,11 +23,6 @@ namespace Medical.Pose.Commands
         protected override void link()
         {
             base.link();
-
-            if (commandName == null)
-            {
-                blacklist("No command name specified.");
-            }
 
             simObject = Owner.getOtherSimObject(simObjectName);
             if (simObject == null)
@@ -47,22 +39,14 @@ namespace Medical.Pose.Commands
             base.destroy();
         }
 
-        public void posingStarted()
+        public override void posingStarted()
         {
             simObject.Enabled = false;
         }
 
-        public void posingEnded()
+        public override void posingEnded()
         {
             simObject.Enabled = true;
-        }
-
-        public String CommandName
-        {
-            get
-            {
-                return commandName;
-            }
         }
     }
 }
