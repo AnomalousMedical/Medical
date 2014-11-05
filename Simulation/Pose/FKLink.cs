@@ -37,6 +37,13 @@ namespace Medical
         [DoNotSave]
         private List<FKElement> children = new List<FKElement>();
 
+        /// <summary>
+        /// This will fire when a chain state is applied to this element.
+        /// </summary>
+        [DoNotCopy]
+        [DoNotSave]
+        public event FKElementUpdatedDelegate ChainStateApplied;
+
         protected override void link()
         {
             base.link();
@@ -146,35 +153,14 @@ namespace Medical
 
             this.updatePosition(ref newTrans, ref newRot);
 
+            if (ChainStateApplied != null)
+            {
+                ChainStateApplied.Invoke(this, chain);
+            }
+
             foreach (var child in children)
             {
                 child.applyChainState(chain);
-            }
-        }
-
-        public void blendChainStates(FKChainState start, FKChainState end, float blend)
-        {
-            Vector3 startTranslation = parent.Translation;
-            Quaternion startRotation = parent.Rotation;
-
-            FKLinkState startState = start[Owner.Name];
-            FKLinkState endState = end[Owner.Name];
-
-            Vector3 trans = startState.getBlendedLocalTranslation(endState, blend);
-            Quaternion rot = startState.getBlendedLocalRotation(endState, blend);
-
-            //Figure out the new position using the parent's position.
-            Vector3 newTrans = startTranslation + Quaternion.quatRotate(startRotation, trans);
-            Quaternion newRot = startRotation * rot;
-
-            //Transform to the real center point from the center of rotation
-            newTrans -= Quaternion.quatRotate(ref newRot, ref centerOfRotationOffset);
-
-            this.updatePosition(ref newTrans, ref newRot);
-
-            foreach (var child in children)
-            {
-                child.blendChainStates(start, end, blend);
             }
         }
     }

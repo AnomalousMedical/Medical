@@ -68,7 +68,17 @@ namespace Medical
             lastRotation = Owner.Rotation;
 
             //Do a late link to update the chain, since we don't know if the entire thing has been built yet.
-            registerLateLinkAction(updateFKChain);
+            registerLateLinkAction(() =>
+                {
+                    updateFKChain();
+                    fkElement.ChainStateApplied += fkElement_ChainStateApplied;
+                });
+        }
+
+        protected override void destroy()
+        {
+            fkElement.ChainStateApplied -= fkElement_ChainStateApplied;
+            base.destroy();
         }
 
         protected override void positionUpdated()
@@ -102,6 +112,15 @@ namespace Medical
             set
             {
                 allowFKUpdates = value;
+            }
+        }
+
+        void fkElement_ChainStateApplied(FKElement element, FKChainState chainState)
+        {
+            foreach (String name in chain.ChainStateNames)
+            {
+                var state = chainState[name];
+                chain.setLinkState(name, state.LocalTranslation, state.LocalRotation);
             }
         }
     }

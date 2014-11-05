@@ -102,7 +102,10 @@ namespace Medical
             FKRoot pelvis;
             if (pelvisChainState != null && targetState.pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvis))
             {
-                pelvis.blendChainStates(pelvisChainState, targetState.pelvisChainState, modifiedBlendFactor);
+                //This creates garbage, but it is unknown if this has negative effects
+                FKChainState blendedState = new FKChainState();
+                blendedState.setToBlendOf(pelvisChainState, targetState.pelvisChainState, modifiedBlendFactor);
+                pelvis.applyChainState(blendedState);
             }
         }
 
