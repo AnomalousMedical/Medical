@@ -171,8 +171,6 @@
     <Compile Include="MouthInterior\TongueCollisionSection.cs" />
     <Compile Include="MouthInterior\TongueController.cs" />
     <Compile Include="MouthInterior\TopLipSection.cs" />
-    <Compile Include="Muscles\MovementSequence.cs" />
-    <Compile Include="Muscles\MovementSequenceState.cs" />
     <Compile Include="Muscles\MovingMuscleTarget.cs" />
     <Compile Include="Muscles\MuscleBehavior.cs" />
     <Compile Include="Muscles\MuscleController.cs" />

@@ -169,6 +169,8 @@
     <Compile Include="Controller\AnomalousMvc\Model\Models\Navigation\NavigationModel.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
     <Compile Include="Controller\Background\BackgroundScene.cs" />
+    <Compile Include="Controller\MusclePosition\MovementSequence.cs" />
+    <Compile Include="Controller\MusclePosition\MovementSequenceState.cs" />
     <Compile Include="Controller\Plugin\Dependency\AtlasDependency.cs" />
     <Compile Include="Controller\Plugin\PluginLoadStatus.cs" />
     <Compile Include="Controller\SceneViews\CameraInputController.cs" />

@@ -171,6 +171,18 @@ namespace Medical
             }
         }
 
+        public FKChainState PelvisChainState
+        {
+            get
+            {
+                return pelvisChainState;
+            }
+            set
+            {
+                pelvisChainState = value;
+            }
+        }
+
         #region Saveable Members
 
         private const String LEFT_CP_POSITION = "leftCPPosition";
@@ -190,8 +202,8 @@ namespace Medical
             easingFunction = info.GetValue(EASING_FUNCTION, EasingFunction.None); //We use no easing for older muscle positions because this is how they were originally created, the new default is to use InOutQuadratic, however.
             if (info.Version == 0)
             {
-                leftCPPosition = MovementSequenceState.UpgradeCpPosition(leftCPPosition);
-                rightCPPosition = MovementSequenceState.UpgradeCpPosition(rightCPPosition);
+                leftCPPosition = UpgradeCpPosition(leftCPPosition);
+                rightCPPosition = UpgradeCpPosition(rightCPPosition);
             }
         }
 
@@ -205,6 +217,23 @@ namespace Medical
             info.AddValue(MUSCLE_FORCE, muscleForce);
             info.AddValue(PELIVS_CHAIN_STATE, pelvisChainState);
             info.AddValue(EASING_FUNCTION, easingFunction);
+        }
+
+        /// <summary>
+        /// Conversion function to update old simulation cp positions to the new ones.
+        /// </summary>
+        /// <param name="oldValue"></param>
+        /// <returns></returns>
+        public static float UpgradeCpPosition(float oldValue)
+        {
+            if (oldValue < 0.515f)
+            {
+                return oldValue - 0.01f;
+            }
+            else
+            {
+                return (oldValue - .515f) * 1.1590909090909090909090909090909f + .505f;
+            }
         }
 
         #endregion
