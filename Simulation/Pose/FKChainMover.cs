@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class IKChainParentBehavior : BehaviorInterface
+    class FKChainMover : BehaviorInterface
     {
         [Editable]
         private String chainStartSimObjectName = "this";

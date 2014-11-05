@@ -186,7 +186,7 @@
     <Compile Include="Plugin\SimulationScene.cs" />
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
-    <Compile Include="Pose\Commands\ActivateFKSolverCommand.cs" />
+    <Compile Include="Pose\Commands\ActivateFKMoverCommand.cs" />
     <Compile Include="Pose\Commands\CaptureFKChainStateCommand.cs" />
     <Compile Include="Pose\Commands\DisableObjectAction.cs" />
     <Compile Include="Pose\Commands\EnableAndSynchronizePositionAction.cs" />
@@ -202,7 +202,7 @@
     <Compile Include="Pose\FKLink.cs" />
     <Compile Include="Pose\FKLinkState.cs" />
     <Compile Include="Pose\FKRoot.cs" />
-    <Compile Include="Pose\IKChainParentBehavior.cs" />
+    <Compile Include="Pose\FKChainMover.cs" />
     <Compile Include="Pose\PoseableByAnatomyIdentifier.cs" />
     <Compile Include="Pose\PoseableRaycastResult.cs" />
     <Compile Include="Pose\PoseableIdentifier.cs" />

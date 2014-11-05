@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Medical.Pose.Commands
 {
-    class CaptureFKChainStateCommand : PoseCommandActionBase
+    class ActivateFKMoverCommand : PoseCommandActionBase
     {
         [Editable]
         private String chainMoverSimObjectName = "this";
@@ -23,13 +23,13 @@ namespace Medical.Pose.Commands
         protected override void link()
         {
             var chainParentSimObject = Owner.getOtherSimObject(chainMoverSimObjectName);
-            if(chainParentSimObject == null)
+            if (chainParentSimObject == null)
             {
                 blacklist("Cannot find FK Chain Mover SimObject '{0}'", chainMoverSimObjectName);
             }
 
             chainMover = chainParentSimObject.getElement(chainMoverName) as FKChainMover;
-            if(chainMover == null)
+            if (chainMover == null)
             {
                 blacklist("Cannot find FKChainMover '{0}' on SimObject '{1}'", chainMoverName, chainMoverSimObjectName);
             }
@@ -39,12 +39,12 @@ namespace Medical.Pose.Commands
 
         public override void posingEnded()
         {
-            chainMover.updateFKChain();
+            chainMover.AllowFKUpdates = false;
         }
 
         public override void posingStarted()
         {
-            
+            chainMover.AllowFKUpdates = true;
         }
     }
 }
