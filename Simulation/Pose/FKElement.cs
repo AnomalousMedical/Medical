@@ -53,5 +53,10 @@ namespace Medical
         /// <param name="end">The end chain state.</param>
         /// <param name="blend">The blend factor between 0 and 1.</param>
         void blendChainStates(FKChainState start, FKChainState end, float blend);
+
+        /// <summary>
+        /// An enumerator over the children of this element.
+        /// </summary>
+        IEnumerable<FKElement> Children { get; }
     }
 }

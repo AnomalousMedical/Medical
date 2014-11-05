@@ -186,6 +186,8 @@
     <Compile Include="Plugin\SimulationScene.cs" />
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
+    <Compile Include="Pose\Commands\ActivateFKSolverCommand.cs" />
+    <Compile Include="Pose\Commands\CaptureFKChainStateCommand.cs" />
     <Compile Include="Pose\Commands\DisableObjectAction.cs" />
     <Compile Include="Pose\Commands\EnableAndSynchronizePositionAction.cs" />
     <Compile Include="Pose\Commands\PinBoneAction.cs" />

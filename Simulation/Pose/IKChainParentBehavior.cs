@@ -2,6 +2,8 @@
 using Engine;
 using Engine.Attributes;
 using Engine.Editing;
+using Medical.Animation.Proxy;
+using Medical.Pose.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,11 +21,7 @@ namespace Medical
         private String boneName = "IKBone";
 
         [Editable]
-        private String solverName;
-
-        [DoNotCopy]
-        [DoNotSave]
-        private BEPUikSolver solver;
+        private String fkElementName = "FKLink";
 
         [DoNotCopy]
         [DoNotSave]
@@ -35,7 +33,15 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        bool moved = false;
+        private FKElement fkElement;
+
+        [DoNotCopy]
+        [DoNotSave]
+        FKChainState chain = new FKChainState();
+
+        [DoNotCopy]
+        [DoNotSave]
+        private bool allowFKUpdates = false;
 
         protected override void link()
         {
@@ -52,60 +58,50 @@ namespace Medical
                 blacklist("Cannot find the ik bone '{0}' in chain start SimObject '{1}'", boneName, chainStartSimObjectName);
             }
 
-            solver = ikBone.Scene.getSolver(solverName);
-            if(solver == null)
+            fkElement = chainStartSimObject.getElement(fkElementName) as FKElement;
+            if (fkElement == null)
             {
-                blacklist("Solver '{0}' cannot be found.", solverName);
+                blacklist("Cannot find the fk element '{0}' in chain start SimObject '{1}'", fkElementName, chainStartSimObjectName);
             }
-            solver.BeforeUpdate += solver_BeforeUpdate;
 
             lastTranslation = Owner.Translation;
             lastRotation = Owner.Rotation;
-        }
 
-        protected override void destroy()
-        {
-            solver.BeforeUpdate -= solver_BeforeUpdate;
-            base.destroy();
+            //Do a late link to update the chain, since we don't know if the entire thing has been built yet.
+            registerLateLinkAction(updateFKChain);
         }
 
         protected override void positionUpdated()
         {
-            moved = true;
+            //Need way to identify that we are moving as part of ik solving
+            if(allowFKUpdates && (lastTranslation != Owner.Translation || lastRotation != Owner.Rotation))
+            {
+                //Update the element's children, skip the element itself it has already been set (and causes an infinite loop).
+                foreach(var child in fkElement.Children)
+                {
+                    child.applyChainState(chain);
+                }
+
+                lastTranslation = Owner.Translation;
+                lastRotation = Owner.Rotation;
+            }
             base.positionUpdated();
         }
 
-        void solver_BeforeUpdate(BEPUikSolver solver)
+        public void updateFKChain()
         {
-            //Need way to identify that we are moving as part of ik solving
-            if (moved)
-            {
-                //solver.hack_movePinnedBonesAndControls(Owner.Translation - lastTranslation, lastRotation * Owner.Rotation.inverse());
-                moved = false;
-                lastTranslation = Owner.Translation;
-                lastRotation = Owner.Rotation;
-
-                //was calling the following 
-                /*
-                         public void hack_movePinnedBonesAndControls(Engine.Vector3 trans, Engine.Quaternion rot)
-        {
-            foreach(var bone in bones)
-            {
-                if(bone.Pinned)
-                {
-                    //nothing
-                }
-            }
-            foreach(var control in controls)
-            {
-                BEPUikDragControl drag = control as BEPUikDragControl;
-                if(drag != null)
-                {
-                    drag.TargetPosition = drag.Owner.Translation + trans;
-                }
-            }
+            fkElement.addToChainState(chain);
         }
-                 */
+
+        public bool AllowFKUpdates
+        {
+            get
+            {
+                return allowFKUpdates;
+            }
+            set
+            {
+                allowFKUpdates = value;
             }
         }
     }

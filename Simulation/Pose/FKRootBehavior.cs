@@ -73,6 +73,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<FKElement> Children
+        {
+            get
+            {
+                return children;
+            }
+        }
+
         public void addToChainState(FKChainState chain)
         {
             chain.setLinkState(Owner.Name, Owner.Translation, Owner.Rotation);

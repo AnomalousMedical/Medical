@@ -101,6 +101,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<FKElement> Children
+        {
+            get
+            {
+                return children;
+            }
+        }
+
         public void addToChainState(FKChainState chain)
         {
             Quaternion inverseParentRot = parent.Rotation.inverse();
