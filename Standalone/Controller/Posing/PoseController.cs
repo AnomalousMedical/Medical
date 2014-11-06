@@ -3,6 +3,7 @@ using BEPUikPlugin;
 using Engine;
 using Engine.ObjectManagement;
 using Engine.Platform;
+using Medical.Pose;
 using Medical.Pose.Commands;
 using MyGUIPlugin;
 using System;
@@ -197,7 +198,7 @@ namespace Medical.Controller
             var matches = PoseableObjectsManager.findPoseable(cameraRay);
             foreach (var match in matches.Results)
             {
-                var bone = match.PoseableIdentifier.Bone;
+                var bone = match.PoseableIdentifier.PoseHandler.Bone;
                 if (bone != null)
                 {
                     if(bone.Pinned)

@@ -2,6 +2,7 @@
 using Engine;
 using Engine.Attributes;
 using Engine.Platform;
+using Medical.Pose;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical
+namespace Medical.Pose
 {
     public static class PoseableObjectsManager
     {

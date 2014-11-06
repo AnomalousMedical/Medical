@@ -6,6 +6,7 @@ using Engine.Saving;
 using Engine;
 using Engine.Editing;
 using Medical.Muscles;
+using Medical.Pose;
 
 namespace Medical
 {

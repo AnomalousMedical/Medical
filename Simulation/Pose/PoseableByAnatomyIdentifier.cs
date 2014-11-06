@@ -3,6 +3,7 @@ using Engine;
 using Engine.Attributes;
 using Engine.Editing;
 using Engine.ObjectManagement;
+using Medical.Pose;
 using OgrePlugin;
 using OgreWrapper;
 using System;
@@ -25,10 +26,10 @@ namespace Medical
         private String anatomyName = "Anatomy";
 
         [Editable]
-        private String boneSimObjectName = "this";
+        private String poseHandlerSimObjectName = "this";
 
         [Editable]
-        private String boneName = "IKBone";
+        private String poseHandlerName = "PoseHandler";
 
         [Editable]
         private String poseCommandName = null;
@@ -39,7 +40,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private BEPUikBone bone;
+        private PoseHandler poseHandler;
 
         protected override void link()
         {
@@ -56,16 +57,16 @@ namespace Medical
                 blacklist("Cannot find AnatomyIdentifier '{0}' on Anatomy SimObject '{1}'", anatomyName, anatomySimObjectName);
             }
 
-            SimObject boneSimObject = Owner.getOtherSimObject(boneSimObjectName);
-            if(boneSimObject == null)
+            SimObject poseHandlerSimObject = Owner.getOtherSimObject(poseHandlerSimObjectName);
+            if(poseHandlerSimObject == null)
             {
-                blacklist("Cannot find Bone SimObject named '{0}'", boneSimObjectName);
+                blacklist("Cannot find PoseHandler SimObject named '{0}'", poseHandlerSimObjectName);
             }
 
-            bone = boneSimObject.getElement(boneName) as BEPUikBone;
-            if (bone == null)
+            poseHandler = poseHandlerSimObject.getElement(poseHandlerName) as PoseHandler;
+            if (poseHandler == null)
             {
-                blacklist("Cannot find BEPUikBone '{0}' in Bone SimObject '{1}'", boneName, boneSimObjectName);
+                blacklist("Cannot find PoseHandler '{0}' in SimObject '{1}'", poseHandlerName, poseHandlerSimObjectName);
             }
 
             PoseableObjectsManager.add(this);
@@ -82,11 +83,11 @@ namespace Medical
             return anatomy.CurrentAlpha > 0.0f && anatomy.checkCollision(ray, ref distanceOnRay);
         }
 
-        public BEPUikBone Bone
+        public PoseHandler PoseHandler
         {
             get
             {
-                return bone;
+                return poseHandler;
             }
         }
 

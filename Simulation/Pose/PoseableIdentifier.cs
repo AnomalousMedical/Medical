@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical
+namespace Medical.Pose
 {
     public interface PoseableIdentifier
     {
         bool checkCollision(Ray3 ray, ref float distanceOnRay);
 
-        BEPUikBone Bone { get; }
+        PoseHandler PoseHandler { get; }
 
         String PoseCommandName { get; }
     }

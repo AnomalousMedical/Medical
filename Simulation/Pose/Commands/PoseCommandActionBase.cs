@@ -15,6 +15,9 @@ namespace Medical.Pose.Commands
         [DoNotSave]
         private LinkedList<String> commandNames = new LinkedList<string>();
 
+        [DoNotSave]
+        private LinkedList<PoseHandlerMapping> poseHandlerMappings = new LinkedList<PoseHandlerMapping>();
+
         protected override void link()
         {
             base.link();
@@ -55,6 +58,7 @@ namespace Medical.Pose.Commands
         {
             base.customizeEditInterface(editInterface);
             editInterface.addSubInterface(new StringListlikeEditInterface(commandNames, "Command Names").EditInterface);
+            editInterface.addSubInterface(new ReflectedListLikeEditInterface<PoseHandlerMapping>(poseHandlerMappings, "Pose Handler Mappings", () => new PoseHandlerMapping()).EditInterface);
         }
     }
 }

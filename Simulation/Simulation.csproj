@@ -194,6 +194,7 @@
     <Compile Include="Pose\Commands\LockJointAction.cs" />
     <Compile Include="Pose\Commands\PoseCommandActionBase.cs" />
     <Compile Include="Pose\Commands\PoseCommandManager.cs" />
+    <Compile Include="Pose\Commands\PoseHandlerMapping.cs" />
     <Compile Include="Pose\FKRootBehavior.cs" />
     <Compile Include="Pose\FKChainState.cs" />
     <Compile Include="Pose\FKElement.cs" />
@@ -201,10 +202,12 @@
     <Compile Include="Pose\FKLinkState.cs" />
     <Compile Include="Pose\FKRoot.cs" />
     <Compile Include="Pose\FKChainMover.cs" />
+    <Compile Include="Pose\IKPoseHandler.cs" />
     <Compile Include="Pose\PoseableByAnatomyIdentifier.cs" />
     <Compile Include="Pose\PoseableRaycastResult.cs" />
     <Compile Include="Pose\PoseableIdentifier.cs" />
     <Compile Include="Pose\PoseableObjectsManager.cs" />
+    <Compile Include="Pose\PoseHandler.cs" />
     <Compile Include="Pose\SceneAnatomyControl.cs" />
     <Compile Include="Pose\SceneAnatomyControlManager.cs" />
     <Compile Include="Pose\SceneAnatomyLock.cs" />
