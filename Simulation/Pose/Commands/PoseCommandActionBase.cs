@@ -1,6 +1,7 @@
 ﻿using Engine;
 using Engine.Attributes;
 using Engine.Editing;
+using Engine.ObjectManagement;
 using Engine.Saving;
 using System;
 using System.Collections.Generic;
@@ -13,51 +14,71 @@ namespace Medical.Pose.Commands
     abstract class PoseCommandActionBase : BehaviorInterface, PoseCommandAction
     {
         [DoNotSave]
-        private LinkedList<String> commandNames = new LinkedList<string>();
-
-        [DoNotSave]
         private LinkedList<PoseHandlerMapping> poseHandlerMappings = new LinkedList<PoseHandlerMapping>();
 
         protected override void link()
         {
             base.link();
 
-            if (commandNames.Count == 0)
+            if (poseHandlerMappings.Count == 0)
             {
-                blacklist("No command names specified.");
+                blacklist("No pose handler mappings specified.");
             }
 
-            PoseCommandManager.addAction(this);
+            foreach(var mapping in poseHandlerMappings)
+            {
+                SimObject mappedSimObject = Owner.getOtherSimObject(mapping.SimObjectName);
+                if(mappedSimObject == null)
+                {
+                    blacklist("Cannot find mapped SimObject '{0}' The scene will be unstable, since this error is not handled in any way.", mapping.SimObjectName);
+                }
+
+                var poseHandler = mappedSimObject.getElement(mapping.PoseHandlerName) as PoseHandler;
+                if(poseHandler == null)
+                {
+                    blacklist("Cannot find PoseHandler '{0}' on SimObject '{1}' The scene will be unstable, since this error is not handled in any way.", mapping.PoseHandlerName, mapping.SimObjectName);
+                }
+
+                poseHandler.addPoseCommandAction(this);
+            }
+        }
+
+        protected override void destroy()
+        {
+            foreach (var mapping in poseHandlerMappings)
+            {
+                SimObject mappedSimObject = Owner.getOtherSimObject(mapping.SimObjectName);
+                if (mappedSimObject != null)
+                {
+                    var poseHandler = mappedSimObject.getElement(mapping.PoseHandlerName) as PoseHandler;
+                    if (poseHandler != null)
+                    {
+                        poseHandler.removePoseCommandAction(this);
+                    }
+                }
+            }
+            base.destroy();
         }
 
         public abstract void posingEnded();
 
         public abstract void posingStarted();
 
-        public IEnumerable<String> CommandNames
-        {
-            get
-            {
-                return commandNames;
-            }
-        }
-
         protected override void customLoad(LoadInfo info)
         {
             base.customLoad(info);
-            info.RebuildLinkedList("CommandName", commandNames);
+            info.RebuildLinkedList("PoseHandlerMapping", poseHandlerMappings);
         }
 
         protected override void customSave(SaveInfo info)
         {
             base.customSave(info);
-            info.ExtractLinkedList("CommandName", commandNames);
+            info.ExtractLinkedList("PoseHandlerMapping", poseHandlerMappings);
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
-            editInterface.addSubInterface(new StringListlikeEditInterface(commandNames, "Command Names").EditInterface);
             editInterface.addSubInterface(new ReflectedListLikeEditInterface<PoseHandlerMapping>(poseHandlerMappings, "Pose Handler Mappings", () => new PoseHandlerMapping()).EditInterface);
         }
     }

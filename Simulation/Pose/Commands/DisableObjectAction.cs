@@ -22,19 +22,13 @@ namespace Medical.Pose.Commands
 
         protected override void link()
         {
-            base.link();
-
             simObject = Owner.getOtherSimObject(simObjectName);
             if (simObject == null)
             {
                 blacklist("Cannot find Disabling SimObject named '{0}'", simObjectName);
             }
-        }
 
-        protected override void destroy()
-        {
-            PoseCommandManager.removeAction(this);
-            base.destroy();
+            base.link();
         }
 
         public override void posingStarted()

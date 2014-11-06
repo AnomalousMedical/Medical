@@ -219,7 +219,7 @@ namespace Medical.Controller
                     ikScene.addExternalControl(dragControl);
                     poseStartPosition = new MusclePosition(true);
                     currentIdentifier = match.PoseableIdentifier;
-                    PoseCommandManager.runPosingStarted(currentIdentifier.PoseCommandName);
+                    currentIdentifier.PoseHandler.posingStarted();
 
                     return true;
                 }
@@ -242,7 +242,7 @@ namespace Medical.Controller
 
             if (currentIdentifier != null)
             {
-                PoseCommandManager.runPosingEnded(currentIdentifier.PoseCommandName);
+                currentIdentifier.PoseHandler.posingEnded();
                 currentIdentifier = null;
             }
 

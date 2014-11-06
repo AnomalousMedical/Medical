@@ -11,7 +11,5 @@ namespace Medical.Pose.Commands
         void posingEnded();
 
         void posingStarted();
-
-        IEnumerable<String> CommandNames { get; }
     }
 }

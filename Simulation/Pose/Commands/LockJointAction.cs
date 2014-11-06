@@ -24,8 +24,6 @@ namespace Medical.Pose.Commands
 
         protected override void link()
         {
-            base.link();
-
             var limitSimObject = Owner.getOtherSimObject(limitSimObjectName);
             if(limitSimObject == null)
             {
@@ -37,12 +35,8 @@ namespace Medical.Pose.Commands
             {
                 blacklist("Cannot find BEPUik limit '{0}' on '{1}'", limitName, limitSimObjectName);
             }
-        }
 
-        protected override void destroy()
-        {
-            PoseCommandManager.removeAction(this);
-            base.destroy();
+            base.link();
         }
 
         public override void posingStarted()

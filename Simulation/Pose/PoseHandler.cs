@@ -15,6 +15,10 @@ namespace Medical.Pose
 
         void removePoseCommandAction(PoseCommandAction action);
 
+        void posingStarted();
+
+        void posingEnded();
+
         /// <summary>
         /// Probably temporary, will investigate moving the actual posing behind this interface as well.
         /// </summary>

@@ -24,8 +24,6 @@ namespace Medical.Pose.Commands
 
         protected override void link()
         {
-            base.link();
-
             var simObject = Owner.getOtherSimObject(boneSimObjectName);
             if (simObject == null)
             {
@@ -37,12 +35,8 @@ namespace Medical.Pose.Commands
             {
                 blacklist("Cannot find BEPUik bone '{0}' on '{1}'", boneName, boneSimObjectName);
             }
-        }
 
-        protected override void destroy()
-        {
-            PoseCommandManager.removeAction(this);
-            base.destroy();
+            base.link();
         }
 
         public override void posingStarted()

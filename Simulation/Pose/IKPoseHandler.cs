@@ -55,6 +55,16 @@ namespace Medical.Pose
             poseCommand.removeAction(action);
         }
 
+        public void posingStarted()
+        {
+            poseCommand.posingStarted();
+        }
+
+        public void posingEnded()
+        {
+            poseCommand.posingEnded();
+        }
+
         public BEPUikBone Bone
         {
             get
