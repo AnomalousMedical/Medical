@@ -34,7 +34,7 @@ namespace Medical.Controller
         private AnatomyController anatomyController;
         private MusclePositionController musclePositionController;
         private ExternalDragControl dragControl = new ExternalDragControl();
-        private PoseableIdentifier currentIdentifier;
+        private PoseHandler currentHandler;
         private bool repinBone = false;
         private float hitDistance;
         private bool allowPosing = false;
@@ -218,8 +218,8 @@ namespace Medical.Controller
                     dragControl.LinearMotor.TargetPosition = hitPosition.toBepuVec3();
                     ikScene.addExternalControl(dragControl);
                     poseStartPosition = new MusclePosition(true);
-                    currentIdentifier = match.PoseableIdentifier;
-                    currentIdentifier.PoseHandler.posingStarted();
+                    currentHandler = match.PoseableIdentifier.PoseHandler;
+                    currentHandler.posingStarted();
 
                     return true;
                 }
@@ -240,10 +240,10 @@ namespace Medical.Controller
                 poseStartPosition = null;
             }
 
-            if (currentIdentifier != null)
+            if (currentHandler != null)
             {
-                currentIdentifier.PoseHandler.posingEnded();
-                currentIdentifier = null;
+                currentHandler.posingEnded();
+                currentHandler = null;
             }
 
             if(dragControl.TargetBone != null)

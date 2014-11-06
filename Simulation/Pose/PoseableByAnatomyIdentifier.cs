@@ -31,9 +31,6 @@ namespace Medical
         [Editable]
         private String poseHandlerName = "PoseHandler";
 
-        [Editable]
-        private String poseCommandName = null;
-
         [DoNotCopy]
         [DoNotSave]
         private AnatomyIdentifier anatomy;
@@ -88,14 +85,6 @@ namespace Medical
             get
             {
                 return poseHandler;
-            }
-        }
-
-        public String PoseCommandName
-        {
-            get
-            {
-                return poseCommandName;
             }
         }
     }

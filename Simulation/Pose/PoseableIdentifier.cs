@@ -13,7 +13,5 @@ namespace Medical.Pose
         bool checkCollision(Ray3 ray, ref float distanceOnRay);
 
         PoseHandler PoseHandler { get; }
-
-        String PoseCommandName { get; }
     }
 }
