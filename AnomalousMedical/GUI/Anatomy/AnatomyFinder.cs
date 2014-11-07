@@ -41,6 +41,7 @@ namespace Medical.GUI
         private AnatomyController anatomyController;
         private int lastWidth = -1;
         private int lastHeight = -1;
+        private MouseTravelTracker travelTracker = new MouseTravelTracker();
 
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
 
@@ -77,6 +78,8 @@ namespace Medical.GUI
             clearButton.EventToolTip += button_UserObject_EventToolTip;
             clearButton.UserObject = "Clear Search";
 
+            PickAnatomy.FirstFrameDownEvent += PickAnatomy_FirstFrameDownEvent;
+            PickAnatomy.OnHeldDown += PickAnatomy_OnHeldDown;
             PickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
             OpenAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
 
@@ -88,6 +91,8 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            PickAnatomy.FirstFrameDownEvent -= PickAnatomy_FirstFrameDownEvent;
+            PickAnatomy.OnHeldDown -= PickAnatomy_OnHeldDown;
             PickAnatomy.FirstFrameUpEvent -= pickAnatomy_FirstFrameUpEvent;
             OpenAnatomyFinder.FirstFrameUpEvent -= openAnatomyFinder_FirstFrameUpEvent;
 
@@ -177,10 +182,20 @@ namespace Medical.GUI
             clearButton.Visible = !String.IsNullOrEmpty(search);
         }
 
+        void PickAnatomy_FirstFrameDownEvent(EventLayer eventLayer)
+        {
+            travelTracker.reset();
+        }
+
+        void PickAnatomy_OnHeldDown(EventLayer eventLayer)
+        {
+            travelTracker.traveled(eventLayer.Mouse.RelativePosition);
+        }
+
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)
         {
             IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
-            if (eventLayer.EventProcessingAllowed)
+            if (eventLayer.EventProcessingAllowed && !travelTracker.TraveledOverLimit)
             {
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
                 DisplayHintLocation = new IntVector2(absMouse.x, absMouse.y);
