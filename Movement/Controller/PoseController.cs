@@ -49,6 +49,11 @@ namespace Medical.Controller
             sceneViewController = controller.SceneViewController;
             anatomyController = controller.AnatomyController;
             musclePositionController = controller.MusclePositionController;
+
+            if(controller.MedicalController.CurrentScene != null)
+            {
+                controller_SceneLoaded(controller.MedicalController.CurrentScene);
+            }
         }
 
         public bool AllowPosing
@@ -62,7 +67,6 @@ namespace Medical.Controller
                 if(allowPosing != value)
                 {
                     allowPosing = value;
-                    anatomyController.setCommandPermission(AnatomyCommandPermissions.Posing, allowPosing);
                     togglePicking();
                 }
             }
@@ -179,6 +183,7 @@ namespace Medical.Controller
 
         void togglePicking()
         {
+            anatomyController.setCommandPermission(AnatomyCommandPermissions.Posing, allowPosing);
             if (ikScene != null && allowPosing)
             {
                 PickAnatomy.FirstFrameDownEvent += pickAnatomy_FirstFrameDownEvent;

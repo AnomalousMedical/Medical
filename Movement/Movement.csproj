@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PoseController.cs" />
     <Compile Include="GUI\MovementDialog.cs" />
     <Compile Include="GUI\SceneControls\ToggleControlWidget.cs" />
     <Compile Include="GUI\SceneControls\SceneControlManager.cs" />

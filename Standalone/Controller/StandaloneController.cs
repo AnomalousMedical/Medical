@@ -58,7 +58,6 @@ namespace Medical
         private IdleHandler idleHandler;
         private SceneStatsDisplayManager sceneStatsDisplayManager;
         private SceneViewLightManager lightManager;
-        private PoseController poseController;
 
         //GUI
         private GUIManager guiManager;
@@ -231,7 +230,6 @@ namespace Medical
             movementSequenceController = new MovementSequenceController(medicalController);
             this.SceneLoaded += movementSequenceController.sceneLoaded;
             musclePositionController = new MusclePositionController(medicalController.MainTimer, this);
-            poseController = new PoseController(this);
 
             //Teeth mover
             teethMover = new SimObjectMover("Teeth", medicalController.PluginManager.RendererPlugin, medicalController.EventManager, sceneViewController);
@@ -539,14 +537,6 @@ namespace Medical
             get
             {
                 return anatomyController;
-            }
-        }
-
-        public PoseController PoseController
-        {
-            get
-            {
-                return poseController;
             }
         }
 

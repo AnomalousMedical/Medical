@@ -14,7 +14,7 @@ namespace Medical.Movement
 {
     public class MovementBodyAtlasPlugin : AtlasPlugin
     {
-        private StandaloneController standaloneController;
+        private PoseController poseController;
 
         private SceneControlManager sceneControlManager;
 
@@ -40,6 +40,7 @@ namespace Medical.Movement
         public void initialize(StandaloneController standaloneController)
         {
             sceneControlManager = new SceneControlManager(standaloneController);
+            poseController = new PoseController(standaloneController);
 
             GUIManager guiManager = standaloneController.GUIManager;
             var resources = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
