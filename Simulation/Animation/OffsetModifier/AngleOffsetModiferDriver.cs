@@ -53,10 +53,6 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        float startingAngle;
-
-        [DoNotCopy]
-        [DoNotSave]
         float blend = 0.0f;
 
         [DoNotCopy]
@@ -96,8 +92,6 @@ namespace Medical
                 blacklist("The second angle SimObject '{0}' does not have a position broadcaster named '{1}'.", secondAngleSimObjectName, secondAngleBroadcasterName);
             }
 
-            startingAngle = getAngle();
-
             firstAngleBroadcaster.PositionChanged += angleBroadcaster_PositionChanged;
             secondAngleBroadcaster.PositionChanged += angleBroadcaster_PositionChanged;
 
@@ -121,7 +115,7 @@ namespace Medical
 
         void angleBroadcaster_PositionChanged(SimObject obj)
         {
-            blend = (getAngle() - startingAngle) / maximumAngle;
+            blend = getAngle() / maximumAngle;
             if(blend < 0.0f)
             {
                 blend = 0.0f;
@@ -152,7 +146,7 @@ namespace Medical
         float getAngle()
         {
             Vector3 localAngle = Quaternion.quatRotate(firstAngleSimObject.Rotation.inverse(), Quaternion.quatRotate(secondAngleSimObject.Rotation, secondTestVector));
-            //Logging.Log.Debug("{0} angle {1}", Owner.Name, firstTestVector.angle(ref localAngle));
+            //Logging.Log.Debug("{0} angle {1} - {2} || {3}", Owner.Name, firstTestVector.angle(ref localAngle), localAngle, firstTestVector);
             return firstTestVector.angle(ref localAngle);
         }
     }
