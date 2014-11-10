@@ -3,6 +3,7 @@ using Engine.Attributes;
 using Engine.Behaviors.Animation;
 using Engine.Editing;
 using Engine.ObjectManagement;
+using Engine.Renderer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,10 @@ namespace Medical
         String secondAngleBroadcasterName = "PositionBroadcaster";
 
         [Editable]
-        Vector3 testVector = Vector3.Up;
+        Vector3 firstTestVector = Vector3.Up;
+
+        [Editable]
+        Vector3 secondTestVector = Vector3.Up;
 
         [Editable]
         float maximumAngle;
@@ -130,10 +134,24 @@ namespace Medical
             }
         }
 
+        public override void drawDebugInfo(DebugDrawingSurface debugDrawing)
+        {
+            Vector3 localAngle = Quaternion.quatRotate(firstAngleSimObject.Rotation.inverse(), Quaternion.quatRotate(secondAngleSimObject.Rotation, secondTestVector));
+            
+            debugDrawing.begin(String.Format("AngleOffsetModifierDriver_{0}_{1}", Owner.Name, Name), DrawingType.LineList);
+            debugDrawing.Color = Color.Green;
+            debugDrawing.drawLine(firstAngleSimObject.Translation, firstAngleSimObject.Translation + Quaternion.quatRotate(firstAngleSimObject.Rotation, firstTestVector));
+            debugDrawing.Color = Color.Red;
+            debugDrawing.drawLine(firstAngleSimObject.Translation, firstAngleSimObject.Translation + Quaternion.quatRotate(firstAngleSimObject.Rotation, localAngle));
+
+            debugDrawing.end();
+        }
+
         float getAngle()
         {
-            Vector3 localAngle = secondAngleSimObject.Translation.toLocalTrans(firstAngleSimObject.Translation, firstAngleSimObject.Rotation);
-            return testVector.angle(ref localAngle);
+            Vector3 localAngle = Quaternion.quatRotate(firstAngleSimObject.Rotation.inverse(), Quaternion.quatRotate(secondAngleSimObject.Rotation, secondTestVector));
+            //Logging.Log.Debug("{0} angle {1}", Owner.Name, firstTestVector.angle(ref localAngle));
+            return firstTestVector.angle(ref localAngle);
         }
     }
 }
