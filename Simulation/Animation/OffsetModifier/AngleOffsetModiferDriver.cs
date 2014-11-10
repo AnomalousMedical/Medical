@@ -100,6 +100,8 @@ namespace Medical
 
             firstAngleBroadcaster.PositionChanged += angleBroadcaster_PositionChanged;
             secondAngleBroadcaster.PositionChanged += angleBroadcaster_PositionChanged;
+
+            addToDebugDrawing();
         }
 
         protected override void destroy()

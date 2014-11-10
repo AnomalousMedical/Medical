@@ -65,6 +65,8 @@ namespace Medical
 
             bulletScene = actor.Scene;
             bulletScene.Tick += bulletScene_Tick;
+
+            addToDebugDrawing();
         }
 
         protected override void destroy()

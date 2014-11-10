@@ -44,7 +44,6 @@ namespace Medical.Movement
 
             GUIManager guiManager = standaloneController.GUIManager;
             var resources = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            Console.WriteLine(resources);
             movementDialog = new MovementDialog(standaloneController.MusclePositionController, standaloneController.MedicalController, sceneControlManager);
             guiManager.addManagedDialog(movementDialog);
 
