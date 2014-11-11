@@ -136,6 +136,7 @@
     <Compile Include="Animation\PoseManipulatorStateEntry.cs" />
     <Compile Include="Animation\Proxy\TranslatedDoubleRotationSegment.cs" />
     <Compile Include="Animation\Proxy\ProxyChainSegmentBehavior.cs" />
+    <Compile Include="Animation\MultiSimObjectFollowerWithRotation.cs" />
     <Compile Include="Animation\SimObjectFollowerWithRotation.cs" />
     <Compile Include="Animation\Tracer.cs" />
     <Compile Include="Animation\WorldSpaceBoneFollower.cs" />
