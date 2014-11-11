@@ -14,7 +14,7 @@ namespace Medical
     public class SimObjectFollowerWithRotation : BehaviorInterface
     {
         [Editable]
-        String targetSimObjectName;
+        String targetSimObjectName = null;
 
         [Editable]
         String targetPositionBroadcasterName = "PositionBroadcaster";

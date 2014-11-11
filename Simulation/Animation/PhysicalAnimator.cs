@@ -11,7 +11,7 @@ using OgrePlugin;
 
 namespace Medical
 {
-    class PhysicalAnimator : BehaviorInterface
+    class PhysicalAnimator : BehaviorScheduledUpdate
     {
         [Editable]
         String targetSimObject;
@@ -75,6 +75,11 @@ namespace Medical
         }
 
         protected override void positionUpdated()
+        {
+            schedule();
+        }
+
+        protected override void scheduledUpdate(Clock clock, EventManager eventManager)
         {
             Vector3 localTrans = Owner.Translation - targetObject.Translation;
             Quaternion worldRot = targetObject.Rotation.inverse();

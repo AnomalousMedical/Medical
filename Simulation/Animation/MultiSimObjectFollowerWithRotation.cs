@@ -12,6 +12,9 @@ using Engine.Saving;
 
 namespace Medical
 {
+    /// <summary>
+    /// This class uses lerp and slerp to blend between multiple sim object world positions to move an individual object.
+    /// </summary>
     public class MultiSimObjectFollowerWithRotation : BehaviorScheduledUpdate
     {
         [DoNotSave]
