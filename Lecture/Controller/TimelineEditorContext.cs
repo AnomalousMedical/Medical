@@ -46,26 +46,41 @@ namespace Lecture
             mvcContext.Models.add(new EditMenuManager());
             mvcContext.Models.add(new EditInterfaceHandler());
 
-            var timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline, timelineController, editorController, propEditController);
+            var timelineEditorView = new TimelineEditorView("TimelineEditor", currentTimeline, timelineController, editorController, propEditController)
+                {
+                    DisplayTitle = "Main Timeline"
+                };
             timelineEditorView.ComponentCreated += timelineEditorView_ComponentCreated;
             mvcContext.Views.add(timelineEditorView);
 
-            ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback);
+            ExpandingGenericEditorView genericEditor = new ExpandingGenericEditorView("TimelinePropertiesEditor", currentTimeline.getEditInterface(), editorController, uiCallback)
+                {
+                    DisplayTitle = "Properties"
+                };
             genericEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Left)
             {
                 AllowedDockLocations = DockLocation.Left | DockLocation.Right | DockLocation.Floating
             };
             mvcContext.Views.add(genericEditor);
-            
-            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController, propFactory);
+
+            PropTimelineView propTimelineView = new PropTimelineView("PropTimeline", propEditController, propFactory)
+                {
+                    DisplayTitle = "Prop Timeline"
+                };
             propTimelineView.Buttons.add(new CloseButtonDefinition("Close", "PropTimeline/Close"));
             mvcContext.Views.add(propTimelineView);
 
-            OpenPropManagerView propManagerView = new OpenPropManagerView("PropManager", propEditController);
+            OpenPropManagerView propManagerView = new OpenPropManagerView("PropManager", propEditController)
+                {
+                    DisplayTitle = "Prop Manager"
+                };
             propManagerView.Buttons.add(new CloseButtonDefinition("Close", "PropManager/Close"));
             mvcContext.Views.add(propManagerView);
 
-            MovementSequenceEditorView movementSequenceEditor = new MovementSequenceEditorView("MovementSequenceEditor", listenForSequenceChanges: true);
+            MovementSequenceEditorView movementSequenceEditor = new MovementSequenceEditorView("MovementSequenceEditor", listenForSequenceChanges: true)
+                {
+                    DisplayTitle = "Movement Sequence"
+                };
             movementSequenceEditor.Buttons.add(new CloseButtonDefinition("Close", "MovementSequenceEditor/Close"));
             movementSequenceEditor.ElementName = new MDILayoutElementName(GUILocationNames.MDI, DockLocation.Top)
             {

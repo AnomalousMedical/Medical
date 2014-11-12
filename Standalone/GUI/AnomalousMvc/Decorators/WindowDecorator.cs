@@ -15,7 +15,7 @@ namespace Medical.GUI.AnomalousMvc
         protected Window window;
         private String closeAction = null;
 
-        public WindowDecorator(ViewHostComponent child, ButtonCollection buttons)
+        public WindowDecorator(ViewHostComponent child, ButtonCollection buttons, MyGUIView view)
         {
             if (buttons.Count > 0)
             {
@@ -53,6 +53,8 @@ namespace Medical.GUI.AnomalousMvc
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
             child.topLevelResized();
+
+            window.Caption = view.DisplayTitle;
         }
 
         void window_WindowButtonPressed(Widget source, EventArgs e)

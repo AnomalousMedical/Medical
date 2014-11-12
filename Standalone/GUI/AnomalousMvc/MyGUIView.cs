@@ -15,6 +15,7 @@ namespace Medical.GUI.AnomalousMvc
     public class MyGUIView : View
     {
         private ButtonCollection buttons;
+        private String displayTitle;
         [DoNotSave]
         private GetDesiredSizeDelegate getDesiredSizeOverride;
         [DoNotSave]
@@ -33,6 +34,22 @@ namespace Medical.GUI.AnomalousMvc
             get
             {
                 return buttons;
+            }
+        }
+
+        /// <summary>
+        /// A title to display if appropriate for the decorator, only used to
+        /// display a title on the ui can be null for nothing.
+        /// </summary>
+        public String DisplayTitle
+        {
+            get
+            {
+                return displayTitle;
+            }
+            set
+            {
+                displayTitle = value;
             }
         }
 

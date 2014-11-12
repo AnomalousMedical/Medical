@@ -44,6 +44,7 @@ namespace Medical.GUI.AnomalousMvc
             fireCloseEvent = closeAction != null;
 
             window.Visible = true;
+            window.Caption = view.DisplayTitle;
 
             IntCoord clientCoord = window.ClientCoord;
             int widthDifference = window.Width - clientCoord.width;
