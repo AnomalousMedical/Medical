@@ -9,10 +9,10 @@ namespace Medical
     public class AnatomyTagGroup : Anatomy
     {
         private List<Anatomy> groupAnatomy = new List<Anatomy>();
-        bool showInBasicVersion = true;
+        bool showInBasicVersion = false;
         bool showInTextSearch = true;
         bool showInClickSearch = true;
-        bool showInTree = true;
+        bool showInTree = false;
 
         public AnatomyTagGroup(String anatomicalName)
         {

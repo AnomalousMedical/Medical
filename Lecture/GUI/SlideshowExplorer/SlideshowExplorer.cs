@@ -72,7 +72,7 @@ namespace Lecture.GUI
             MenuControl fileMenu = menuBar.createItemPopupMenuChild(fileMenuItem);
             menuActions.Add(fileMenu.addItem("New"), createNewProject);
             menuActions.Add(fileMenu.addItem("Open"), openProject);
-            menuActions.Add(fileMenu.addItem("Close"), slideEditController.closeProject);
+            menuActions.Add(fileMenu.addItem("Close"), closeProject);
             menuActions.Add(fileMenu.addItem("Save"), slideEditController.safeSave);
             menuActions.Add(fileMenu.addItem("Save As"), saveAs);
             fileMenu.addItem("Sep", MenuItemType.Separator);
@@ -109,6 +109,15 @@ namespace Lecture.GUI
             slideGrid.Dispose();
             slideImageManager.Dispose();
             base.Dispose();
+        }
+
+        protected override void onShown(EventArgs args)
+        {
+            base.onShown(args);
+            if(slideshow != null)
+            {
+                showEditorsForSelectedSlide();
+            }
         }
 
         void createNewProject()
@@ -291,6 +300,20 @@ namespace Lecture.GUI
             }
         }
 
+        void closeProject()
+        {
+            if (slideshow != null)
+            {
+                MessageBox.show("Are you sure you want to close the current Smart Lecture?\nAny unsaved changes will be lost.", "Close", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        slideEditController.closeProject();
+                    }
+                });
+            }
+        }
+
         void menuItemAccept(Widget source, EventArgs e)
         {
             MenuCtrlAcceptEventArgs menuEventArgs = (MenuCtrlAcceptEventArgs)e;
@@ -378,6 +401,11 @@ namespace Lecture.GUI
         }
 
         void slideGrid_SelectedValueChanged(object sender, EventArgs e)
+        {
+            showEditorsForSelectedSlide();
+        }
+
+        private void showEditorsForSelectedSlide()
         {
             ButtonGridItem item = slideGrid.SelectedItem;
             if (item != null)
