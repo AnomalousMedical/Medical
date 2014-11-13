@@ -136,19 +136,13 @@ namespace Medical
         public void addTag(AnatomyTag tag)
         {
             tags.Add(tag);
-            if (mainEditInterface != null)
-            {
-                this.addTagProperty(tag);
-            }
+            mainEditInterface.safeAlertSubInterfaceDataContentsChanged(tags);
         }
 
         public void removeTag(AnatomyTag tag)
         {
             tags.Remove(tag);
-            if (mainEditInterface != null)
-            {
-                this.removeTagProperty(tag);
-            }
+            mainEditInterface.safeAlertSubInterfaceDataContentsChanged(tags);
         }
 
         [DoNotCopy]
@@ -278,13 +272,13 @@ namespace Medical
         public void addCommand(AnatomyCommand command)
         {
             commands.Add(command);
-            createCommandEditInterface(command);
+            mainEditInterface.safeAddSubInterface(command);
         }
 
         public void removeCommand(AnatomyCommand command)
         {
             commands.Remove(command);
-            removeCommandEditInterface(command);
+            mainEditInterface.safeRemoveSubInterface(command);
         }
 
         internal bool checkCollision(Ray3 ray, ref float distanceOnRay)
@@ -348,113 +342,38 @@ namespace Medical
 
             this.mainEditInterface = editInterface;
 
-            //Tags
-            tagEditInterface = new EditInterface("Tags", addTag, removeTag, () =>
-            {
-                if (this.Tags.Any(t => t.Tag == null || t.Tag == String.Empty))
+            editInterface.addSubInterfaceForObject(tags, new ReflectedListLikeEditInterface<AnatomyTag>(tags, "Tags", () => new AnatomyTag(), 
+                validateCallback: () =>
                 {
-                    throw new ValidationException("Cannot accept empty tags. Please remove any blank entries.");
-                }
-            });
-            tagEditInterface.setPropertyInfo(AnatomyTag.Property.Info);
-            foreach (AnatomyTag tag in this.Tags)
-            {
-                addTagProperty(tag);
-            }
-            mainEditInterface.addSubInterface(tagEditInterface);
-
+                    if (this.Tags.Any(t => t.Tag == null || t.Tag == String.Empty))
+                    {
+                        throw new ValidationException("Cannot accept empty tags. Please remove any blank entries.");
+                    }
+                }));
             editInterface.addSubInterfaceForObject(systems, new StringListlikeEditInterface(systems, "Systems"));
             editInterface.addSubInterfaceForObject(connectedTo, new StringListlikeEditInterface(connectedTo, "Connected To"));
 
             //Commands
-            mainEditInterface.addCommand(new EditInterfaceCommand("Add Command", createCommand));
-            var commandEditInterfaces = mainEditInterface.createEditInterfaceManager<AnatomyCommand>();
-            foreach (AnatomyCommand command in this.Commands)
-            {
-                createCommandEditInterface(command);
-            }
-        }
-
-        #region Command EditInterface
-
-        private void createCommand(EditUICallback callback)
-        {
-            if (anatomyCommandBrowser == null)
-            {
-                anatomyCommandBrowser = new AnatomyCommandBrowser();
-            }
-            callback.showBrowser(anatomyCommandBrowser, delegate(Object result, ref String errorMessage)
-            {
-                Type commandType = result as Type;
-                if (commandType != null)
+            mainEditInterface.addCommand(new EditInterfaceCommand("Add Command", cb =>
                 {
-                    this.addCommand((AnatomyCommand)Activator.CreateInstance(commandType));
-                    return true;
-                }
-                return false;
-            });
+                    if (anatomyCommandBrowser == null)
+                    {
+                        anatomyCommandBrowser = new AnatomyCommandBrowser();
+                    }
+                    cb.showBrowser(anatomyCommandBrowser, delegate(Object result, ref String errorMessage)
+                    {
+                        Type commandType = result as Type;
+                        if (commandType != null)
+                        {
+                            this.addCommand((AnatomyCommand)Activator.CreateInstance(commandType));
+                            return true;
+                        }
+                        return false;
+                    });
+                }));
+
+            var commandEditInterfaces = mainEditInterface.createEditInterfaceManager<AnatomyCommand>(i => i.createEditInterface(), Commands);
+            commandEditInterfaces.addCommand(new EditInterfaceCommand("Remove", cb => this.removeCommand(mainEditInterface.resolveSourceObject<AnatomyCommand>(cb.getSelectedEditInterface()))));
         }
-
-        private void destroyCommand(EditUICallback callback)
-        {
-            this.removeCommand(mainEditInterface.resolveSourceObject<AnatomyCommand>(callback.getSelectedEditInterface()));
-        }
-
-        private void createCommandEditInterface(AnatomyCommand command)
-        {
-            if (mainEditInterface != null)
-            {
-                EditInterface commandEdit = command.createEditInterface();
-                commandEdit.addCommand(new EditInterfaceCommand("Remove", destroyCommand));
-                mainEditInterface.addSubInterface(command, commandEdit);
-            }
-        }
-
-        private void removeCommandEditInterface(AnatomyCommand command)
-        {
-            if (mainEditInterface != null)
-            {
-                mainEditInterface.removeSubInterface(command);
-            }
-        }
-
-        #endregion
-
-        #region Tag EditInterface
-
-        [DoNotCopy]
-        [DoNotSave]
-        private EditInterface tagEditInterface;
-
-        /// <summary>
-        /// Callback to add a resource.
-        /// </summary>
-        /// <param name="callback"></param>
-        private void addTag(EditUICallback callback)
-        {
-            this.addTag(new AnatomyTag());
-        }
-
-        /// <summary>
-        /// Callback to remove a resource.
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <param name="property"></param>
-        private void removeTag(EditUICallback callback, EditableProperty property)
-        {
-            this.removeTag(tagEditInterface.getKeyObjectForProperty<AnatomyTag>(property));
-        }
-
-        private void addTagProperty(AnatomyTag tag)
-        {
-            tagEditInterface.addEditableProperty(tag, new AnatomyTag.Property(tag));
-        }
-
-        private void removeTagProperty(AnatomyTag tag)
-        {
-            tagEditInterface.removeEditableProperty(tag);
-        }
-
-        #endregion Tag EditInterface
     }
 }
