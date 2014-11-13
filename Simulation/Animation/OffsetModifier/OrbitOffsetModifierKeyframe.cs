@@ -158,10 +158,7 @@ namespace Medical
 
         private void fireDataNeedsRefresh()
         {
-            if (editInterface != null)
-            {
-                editInterface.fireDataNeedsRefresh();
-            }
+            editInterface.safeFireDataNeedsRefresh();
         }
 
         protected OrbitOffsetModifierKeyframe(LoadInfo info)

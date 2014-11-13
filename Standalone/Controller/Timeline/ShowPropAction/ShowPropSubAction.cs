@@ -161,7 +161,7 @@ namespace Medical
 
         protected void fireDataNeedsRefresh()
         {
-            editInterface.fireDataNeedsRefresh();
+            editInterface.safeFireDataNeedsRefresh();
         }
 
         [DoNotCopy]

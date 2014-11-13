@@ -44,10 +44,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 
         protected void fireRefreshEditInterface()
         {
-            if (editInterface != null)
-            {
-                editInterface.fireDataNeedsRefresh();
-            }
+            editInterface.safeFireDataNeedsRefresh();
         }
     }
 }

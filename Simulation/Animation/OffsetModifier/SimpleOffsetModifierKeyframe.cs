@@ -104,10 +104,7 @@ namespace Medical
 
         private void fireDataNeedsRefresh()
         {
-            if (editInterface != null)
-            {
-                editInterface.fireDataNeedsRefresh();
-            }
+            editInterface.safeFireDataNeedsRefresh();
         }
 
         protected SimpleOffsetModifierKeyframe(LoadInfo info)
