@@ -121,7 +121,7 @@ namespace Medical
                         anatomyTags.Add(tag.Tag);
                     }
                 }
-                foreach (AnatomyTagGroup tagGroup in TagManager.Groups)
+                foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
                 {
                     if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
                     {
@@ -144,7 +144,7 @@ namespace Medical
             }
             else
             {
-                foreach (var anatomy in SearchList.TopLevelAnatomy)
+                foreach (var anatomy in anatomySearchList.TopLevelAnatomy)
                 {
                     fireDisplayAnatomy(anatomy);
                 }
@@ -160,14 +160,14 @@ namespace Medical
             fireClearDisplayedAnatomy();
             if (String.IsNullOrEmpty(searchTerm))
             {
-                foreach (Anatomy anatomy in SearchList.TopLevelAnatomy)
+                foreach (Anatomy anatomy in anatomySearchList.TopLevelAnatomy)
                 {
                     fireDisplayAnatomy(anatomy);
                 }
             }
             else
             {
-                foreach (Anatomy anatomy in SearchList.findMatchingAnatomy(searchTerm, 35))
+                foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
                 {
                     fireDisplayAnatomy(anatomy);
                 }
@@ -184,22 +184,6 @@ namespace Medical
                 fireDisplayAnatomy(relatedAnatomy);
             }
             fireSearchEnded();
-        }
-
-        public AnatomyTagManager TagManager
-        {
-            get
-            {
-                return anatomyTagManager;
-            }
-        }
-
-        public AnatomySearchList SearchList
-        {
-            get
-            {
-                return anatomySearchList;
-            }
         }
 
         public AnatomyPickingMode PickingMode

@@ -32,6 +32,12 @@ namespace Medical
         bool showInTree = false;
 
         [Editable]
+        private String region;
+
+        [Editable]
+        private String classification;
+
+        [Editable]
         private String nodeName = "Node";
 
         [Editable]
@@ -45,6 +51,12 @@ namespace Medical
 
         [DoNotSave]
         private List<AnatomyCommand> commands = new List<AnatomyCommand>();
+
+        [DoNotSave]
+        private List<String> systems = new List<String>();
+
+        [DoNotSave]
+        private List<String> connectedTo = new List<String>();
 
         [DoNotCopy]
         [DoNotSave]
@@ -296,19 +308,50 @@ namespace Medical
             base.customSave(info);
             info.ExtractList<AnatomyTag>("AnatomyTag", tags);
             info.ExtractList<AnatomyCommand>("AnatomyCommand", commands);
+            info.ExtractList("System", systems);
+            info.ExtractList("ConnectedTo", connectedTo);
         }
 
+        //Erase this static property when finished upgrading
+        static String[] classificationUpgrades = { "Bone", "Ligament", "Muscle" };
+        static String[] regions = { "Arm", "Leg" };
         protected override void customLoad(LoadInfo info)
         {
             base.customLoad(info);
             info.RebuildList<AnatomyTag>("AnatomyTag", tags);
             info.RebuildList<AnatomyCommand>("AnatomyCommand", commands);
+            info.RebuildList("System", systems);
+            info.RebuildList("ConnectedTo", connectedTo);
+
+            
+            //Custom conversion code from tags to new style, remove this after updating
+            bool updateSystems = systems.Count == 0;
+            List<AnatomyTag> toRemove = new List<AnatomyTag>();
+            foreach(var tag in tags)
+            {
+                if (updateSystems && tag.Tag.Contains("System") && !systems.Contains(tag.Tag))
+                {
+                    systems.Add(tag.Tag);
+                    toRemove.Add(tag);
+                }
+                if(classification == null && classificationUpgrades.Contains(tag.Tag))
+                {
+                    classification = tag.Tag;
+                }
+                if(region == null && regions.Contains(tag.Tag))
+                {
+                    region = tag.Tag;
+                }
+            }
+            tags.RemoveAll(i => toRemove.Contains(i));
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
             anatomyIdentifierEditInterface = new AnatomyIdentifierEditInterface(this, editInterface);
+            editInterface.addSubInterface(new StringListlikeEditInterface(systems, "Systems").EditInterface);
+            editInterface.addSubInterface(new StringListlikeEditInterface(connectedTo, "Connected To").EditInterface);
         }
     }
 
