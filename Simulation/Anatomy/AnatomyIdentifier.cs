@@ -60,7 +60,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private EditInterface mainEditInterface;
+        private EditInterface editInterface;
 
         [DoNotCopy]
         [DoNotSave]
@@ -136,13 +136,13 @@ namespace Medical
         public void addTag(AnatomyTag tag)
         {
             tags.Add(tag);
-            mainEditInterface.safeAlertSubInterfaceDataContentsChanged(tags);
+            editInterface.safeAlertSubInterfaceDataContentsChanged(tags);
         }
 
         public void removeTag(AnatomyTag tag)
         {
             tags.Remove(tag);
-            mainEditInterface.safeAlertSubInterfaceDataContentsChanged(tags);
+            editInterface.safeAlertSubInterfaceDataContentsChanged(tags);
         }
 
         [DoNotCopy]
@@ -272,13 +272,13 @@ namespace Medical
         public void addCommand(AnatomyCommand command)
         {
             commands.Add(command);
-            mainEditInterface.safeAddSubInterface(command);
+            editInterface.safeAddSubInterfaceForObject(commands, command);
         }
 
         public void removeCommand(AnatomyCommand command)
         {
             commands.Remove(command);
-            mainEditInterface.safeRemoveSubInterface(command);
+            editInterface.safeRemoveSubInterfaceForObject(commands, command);
         }
 
         internal bool checkCollision(Ray3 ray, ref float distanceOnRay)
@@ -340,7 +340,7 @@ namespace Medical
         {
             base.customizeEditInterface(editInterface);
 
-            this.mainEditInterface = editInterface;
+            this.editInterface = editInterface;
 
             editInterface.addSubInterfaceForObject(tags, new ReflectedListLikeEditInterface<AnatomyTag>(tags, "Tags", () => new AnatomyTag(), 
                 validateCallback: () =>
@@ -354,26 +354,29 @@ namespace Medical
             editInterface.addSubInterfaceForObject(connectedTo, new StringListlikeEditInterface(connectedTo, "Connected To"));
 
             //Commands
-            mainEditInterface.addCommand(new EditInterfaceCommand("Add Command", cb =>
-                {
-                    if (anatomyCommandBrowser == null)
-                    {
-                        anatomyCommandBrowser = new AnatomyCommandBrowser();
-                    }
-                    cb.showBrowser(anatomyCommandBrowser, delegate(Object result, ref String errorMessage)
-                    {
-                        Type commandType = result as Type;
-                        if (commandType != null)
-                        {
-                            this.addCommand((AnatomyCommand)Activator.CreateInstance(commandType));
-                            return true;
-                        }
-                        return false;
-                    });
-                }));
+            EditInterface commandsEditInterface = new EditInterface("Commands");
 
-            var commandEditInterfaces = mainEditInterface.createEditInterfaceManager<AnatomyCommand>(i => i.createEditInterface(), Commands);
-            commandEditInterfaces.addCommand(new EditInterfaceCommand("Remove", cb => this.removeCommand(mainEditInterface.resolveSourceObject<AnatomyCommand>(cb.getSelectedEditInterface()))));
+            commandsEditInterface.addCommand(new EditInterfaceCommand("Add Command", cb =>
+            {
+                if (anatomyCommandBrowser == null)
+                {
+                    anatomyCommandBrowser = new AnatomyCommandBrowser();
+                }
+                cb.showBrowser(anatomyCommandBrowser, delegate(Object result, ref String errorMessage)
+                {
+                    Type commandType = result as Type;
+                    if (commandType != null)
+                    {
+                        this.addCommand((AnatomyCommand)Activator.CreateInstance(commandType));
+                        return true;
+                    }
+                    return false;
+                });
+            }));
+
+            var commandEditInterfaces = commandsEditInterface.createEditInterfaceManager<AnatomyCommand>(i => i.createEditInterface(), Commands);
+            commandEditInterfaces.addCommand(new EditInterfaceCommand("Remove", cb => this.removeCommand(commandsEditInterface.resolveSourceObject<AnatomyCommand>(cb.getSelectedEditInterface()))));
+            editInterface.addSubInterfaceForObject(commands, commandsEditInterface);
         }
     }
 }
