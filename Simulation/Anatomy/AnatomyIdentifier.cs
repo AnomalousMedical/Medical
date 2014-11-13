@@ -56,7 +56,7 @@ namespace Medical
         private List<String> systems = new List<String>();
 
         [DoNotSave]
-        private List<String> connectedTo = new List<String>();
+        private List<String> connections = new List<String>();
 
         [DoNotCopy]
         [DoNotSave]
@@ -297,7 +297,7 @@ namespace Medical
             info.ExtractList<String>("AnatomyTag", tags);
             info.ExtractList<AnatomyCommand>("AnatomyCommand", commands);
             info.ExtractList("System", systems);
-            info.ExtractList("ConnectedTo", connectedTo);
+            info.ExtractList("Connection", connections);
         }
 
         //Erase this static property when finished upgrading
@@ -309,7 +309,7 @@ namespace Medical
             //info.RebuildList<String>("AnatomyTag", tags); //Add this back after conversion completed, can remove AnatomyTag class then also.
             info.RebuildList<AnatomyCommand>("AnatomyCommand", commands);
             info.RebuildList("System", systems);
-            info.RebuildList("ConnectedTo", connectedTo);
+            info.RebuildList("Connection", connections);
 
             
             //Custom conversion code from tags to new style, remove this after updating
@@ -355,8 +355,22 @@ namespace Medical
                         throw new ValidationException("Cannot accept blank tags. Please remove any blank entries.");
                     }
                 }));
-            editInterface.addSubInterfaceForObject(systems, new StringListlikeEditInterface(systems, "Systems"));
-            editInterface.addSubInterfaceForObject(connectedTo, new StringListlikeEditInterface(connectedTo, "Connected To"));
+            editInterface.addSubInterfaceForObject(systems, new StringListlikeEditInterface(systems, "Systems",
+                validateCallback: () =>
+                {
+                    if (this.systems.Any(t => String.IsNullOrWhiteSpace(t)))
+                    {
+                        throw new ValidationException("Cannot accept blank systems. Please remove any blank entries.");
+                    }
+                }));
+            editInterface.addSubInterfaceForObject(connections, new StringListlikeEditInterface(connections, "Connections",
+                validateCallback: () =>
+                {
+                    if (this.connections.Any(t => String.IsNullOrWhiteSpace(t)))
+                    {
+                        throw new ValidationException("Cannot accept blank connections. Please remove any blank entries.");
+                    }
+                }));
 
             //Commands
             EditInterface commandsEditInterface = new EditInterface("Commands");
