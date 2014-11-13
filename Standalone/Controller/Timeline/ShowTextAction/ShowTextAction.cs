@@ -293,7 +293,7 @@ namespace Medical
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
-            editInterface.addCommand(new EditInterfaceCommand("Set Color", (callback, caller) =>
+            editInterface.addCommand(new EditInterfaceCommand("Set Color", callback =>
                 {
                     callback.runCustomQuery<Color>(CustomQueries.ChooseColor, delegate(Color color, ref String message)
                     {

@@ -87,7 +87,7 @@ namespace Medical.Controller.AnomalousMvc
             editInterface = new EditInterface(Name, null);
             editInterface.IconReferenceTag = "MvcContextEditor/RunCommandsIcon";
 
-            editInterface.addCommand(new EditInterfaceCommand("Add Command", delegate(EditUICallback callback, EditInterfaceCommand command)
+            editInterface.addCommand(new EditInterfaceCommand("Add Command", callback =>
             {
                 callback.runCustomQuery(CustomQueries.ShowCommandBrowser, delegate(Type resultType, ref string errorMessage)
                 {
@@ -107,7 +107,7 @@ namespace Medical.Controller.AnomalousMvc
             return editInterface;
         }
 
-        private void removeCommand(EditUICallback callback, EditInterfaceCommand caller)
+        private void removeCommand(EditUICallback callback)
         {
             removeCommand(editInterface.resolveSourceObject<ActionCommand>(callback.getSelectedEditInterface()));
         }

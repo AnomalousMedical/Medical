@@ -117,7 +117,7 @@ namespace Medical
             }
         }
 
-        private void copyCallback(EditUICallback callback, EditInterfaceCommand caller)
+        private void copyCallback(EditUICallback callback)
         {
             SaveableClipboard clipboard = null;
             callback.runCustomQuery(ScratchAreaCustomQueries.GetClipboard, delegate(SaveableClipboard result, ref String errorMessage)

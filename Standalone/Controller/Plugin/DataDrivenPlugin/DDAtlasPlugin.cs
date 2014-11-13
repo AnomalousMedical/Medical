@@ -277,7 +277,7 @@ namespace Medical
             }
         }
 
-        private void addStartMvcContextTask(EditUICallback callback, EditInterfaceCommand caller)
+        private void addStartMvcContextTask(EditUICallback callback)
         {
             callback.getInputString("Enter a name for this task.", delegate(String result, ref string errorPrompt)
             {
@@ -299,7 +299,7 @@ namespace Medical
             }
         }
 
-        private void removeDDPluginTask(EditUICallback callback, EditInterfaceCommand caller)
+        private void removeDDPluginTask(EditUICallback callback)
         {
             DDPluginTask task = editInterface.resolveSourceObject<DDPluginTask>(callback.getSelectedEditInterface());
             removeTask(task);

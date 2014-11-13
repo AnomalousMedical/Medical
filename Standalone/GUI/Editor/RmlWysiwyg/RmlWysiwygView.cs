@@ -91,18 +91,13 @@ namespace Medical.GUI
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addCommand(new EditInterfaceCommand("Edit", openFileInViewer));
+            editInterface.addCommand(new EditInterfaceCommand("Edit", callback => callback.runOneWayCustomQuery(CustomQueries.OpenFileInRmlViewer, RmlFile)));
             base.customizeEditInterface(editInterface);
         }
 
         public enum CustomQueries
         {
             OpenFileInRmlViewer
-        }
-
-        private void openFileInViewer(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.runOneWayCustomQuery(CustomQueries.OpenFileInRmlViewer, RmlFile);
         }
 
         internal void _fireComponentCreated(RmlWysiwygComponent component)

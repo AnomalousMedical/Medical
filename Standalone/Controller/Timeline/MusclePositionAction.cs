@@ -104,10 +104,7 @@ namespace Medical
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
-            editInterface.addCommand(new EditInterfaceCommand("Capture", (callback, caller) =>
-            {
-                capture();
-            }));
+            editInterface.addCommand(new EditInterfaceCommand("Capture", capture));
         }
 
         [Editable]

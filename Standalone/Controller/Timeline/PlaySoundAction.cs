@@ -110,7 +110,7 @@ namespace Medical
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
-            editInterface.addCommand(new EditInterfaceCommand("Record", (callback, caller) =>
+            editInterface.addCommand(new EditInterfaceCommand("Record", callback =>
                 {
                     callback.runCustomQuery<String, String>(CustomQueries.Record, (String soundFileName, ref String errorPrompt) =>
                     {
@@ -118,7 +118,7 @@ namespace Medical
                         return true;
                     }, SoundFile);
                 }));
-            editInterface.addCommand(new EditInterfaceCommand("Edit Externally", (callback, caller) =>
+            editInterface.addCommand(new EditInterfaceCommand("Edit Externally", callback =>
             {
                 callback.runOneWayCustomQuery(CustomQueries.EditExternally, SoundFile);
             }));

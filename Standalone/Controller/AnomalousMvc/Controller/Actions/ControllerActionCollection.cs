@@ -113,7 +113,7 @@ namespace Medical.Controller.AnomalousMvc
         public override void customizeEditInterface(Engine.Editing.EditInterface editInterface, Engine.Editing.EditInterfaceManager<ControllerAction> itemEdits)
         {
             createActionTemplates();
-            editInterface.addCommand(new EditInterfaceCommand("Add Action", (callback, caller) =>
+            editInterface.addCommand(new EditInterfaceCommand("Add Action", callback =>
             {
                 Medical.GUI.AddItemDialog.AddItem(actionTemplates, itemTemplate =>
                 {

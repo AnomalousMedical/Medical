@@ -113,7 +113,7 @@ namespace Medical
             }
         }
 
-        void addChild(EditUICallback callback, EditInterfaceCommand caller)
+        void addChild(EditUICallback callback)
         {
             callback.getInputString("Enter a name for the child anatomy tag group.", delegate(String result, ref String message)
             {
@@ -138,7 +138,7 @@ namespace Medical
             }
         }
 
-        void removeChild(EditUICallback callback, EditInterfaceCommand caller)
+        void removeChild(EditUICallback callback)
         {
             AnatomyTreeNode child = editInterface.resolveSourceObject<AnatomyTreeNode>(callback.getSelectedEditInterface());
             removeChild(child);
@@ -152,7 +152,7 @@ namespace Medical
             }
         }
 
-        void renameChild(EditUICallback callback, EditInterfaceCommand caller)
+        void renameChild(EditUICallback callback)
         {
             callback.getInputString("Enter a new name for the child anatomy tag group.", delegate(String result, ref String message)
             {

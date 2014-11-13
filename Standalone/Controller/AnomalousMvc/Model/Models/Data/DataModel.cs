@@ -100,7 +100,7 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        private void addData(EditUICallback callback, EditInterfaceCommand command)
+        private void addData(EditUICallback callback)
         {
             callback.getInputString("Enter a name for this data item", delegate(String result, ref String errorMessage)
             {
@@ -117,7 +117,7 @@ namespace Medical.Controller.AnomalousMvc
             });
         }
 
-        private void removeItem(EditUICallback callback, EditInterfaceCommand command)
+        private void removeItem(EditUICallback callback)
         {
             DataModelItem item = editInterface.resolveSourceObject<DataModelItem>(callback.getSelectedEditInterface());
             removeItem(item);

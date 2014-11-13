@@ -355,11 +355,11 @@ namespace Medical
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
-            editInterface.addCommand(new EditInterfaceCommand("Keep Open", (callback, caller) =>
+            editInterface.addCommand(new EditInterfaceCommand("Keep Open", callback =>
             {
                 callback.runOneWayCustomQuery<ShowPropAction>(CustomQueries.KeepOpenToggle, this);
             }));
-            editInterface.addCommand(new EditInterfaceCommand("Move to Start Position", (callback, caller) =>
+            editInterface.addCommand(new EditInterfaceCommand("Move to Start Position", callback =>
             {
                 moveToPropStartPosition();
             }));

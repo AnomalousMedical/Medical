@@ -39,7 +39,7 @@ namespace Medical.Controller.AnomalousMvc
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             editInterface.IconReferenceTag = "MvcContextEditor/IndividualViewIcon";
-            editInterface.addCommand(new EditInterfaceCommand("Create Controller", (uiCallback, caller) =>
+            editInterface.addCommand(new EditInterfaceCommand("Create Controller", uiCallback =>
             {
                 uiCallback.runOneWayCustomQuery(CustomQueries.AddControllerForView, this);
             }));

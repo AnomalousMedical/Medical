@@ -83,7 +83,7 @@ namespace Lecture.GUI
             currentAction = editingAction;
             EditInterface editInterface = editingAction.getEditInterface();
             editingAction.ChangesMade += editingAction_ChangesMade;
-            editInterface.addCommand(new EditInterfaceCommand("Change Type", (callback, caller) =>
+            editInterface.addCommand(new EditInterfaceCommand("Change Type", callback =>
             {
                 callback.showBrowser<Func<String, SlideAction>>(actionTypeBrowser, delegate(Func<String, SlideAction> result, ref string errorPrompt)
                 {
@@ -98,7 +98,7 @@ namespace Lecture.GUI
             }));
             if (editingAction.AllowPreview)
             {
-                editInterface.addCommand(new EditInterfaceCommand("Preview", (callback, caller) =>
+                editInterface.addCommand(new EditInterfaceCommand("Preview", callback =>
                     {
                         previewTriggerAction.clear();
                         currentAction.setupAction(slide, previewTriggerAction);

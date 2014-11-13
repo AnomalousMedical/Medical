@@ -173,10 +173,7 @@ namespace Medical.GUI
                 hiddenAdvancedProperties.AddLast(property);
                 if (showAdvancedButton == null)
                 {
-                    showAdvancedButton = new PropertiesFormButton(currentEditInterface, new EditInterfaceCommand("Show Advanced", (sender, callback) =>
-                        {
-                            addHiddenProperties();
-                        }), uiCallback, widget);
+                    showAdvancedButton = new PropertiesFormButton(currentEditInterface, new EditInterfaceCommand("Show Advanced", addHiddenProperties), uiCallback, widget);
                     components.Add(showAdvancedButton);
                 }
             }

@@ -393,7 +393,7 @@ namespace Medical
 
         #region Command EditInterface
 
-        private void createCommand(EditUICallback callback, EditInterfaceCommand caller)
+        private void createCommand(EditUICallback callback)
         {
             if (anatomyCommandBrowser == null)
             {
@@ -411,7 +411,7 @@ namespace Medical
             });
         }
 
-        private void destroyCommand(EditUICallback callback, EditInterfaceCommand caller)
+        private void destroyCommand(EditUICallback callback)
         {
             anatomyIdentifier.removeCommand(mainEditInterface.resolveSourceObject<AnatomyCommand>(callback.getSelectedEditInterface()));
         }

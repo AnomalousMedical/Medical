@@ -131,7 +131,7 @@ namespace Medical.Editor
         /// </summary>
         protected void addItemMovementCommands()
         {
-            editInterface.addCommand(new EditInterfaceCommand("Move Up", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            editInterface.addCommand(new EditInterfaceCommand("Move Up", callback =>
             {
                 ItemType item = editInterface.resolveSourceObject<ItemType>(callback.getSelectedEditInterface());
                 int index = items.IndexOf(item) - 1;
@@ -143,7 +143,7 @@ namespace Medical.Editor
                 insert(index, item);
             }));
 
-            editInterface.addCommand(new EditInterfaceCommand("Move Down", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            editInterface.addCommand(new EditInterfaceCommand("Move Down", callback =>
             {
                 ItemType item = editInterface.resolveSourceObject<ItemType>(callback.getSelectedEditInterface());
                 int index = items.IndexOf(item) + 1;
@@ -162,31 +162,29 @@ namespace Medical.Editor
 
         public void addItemCreation(String commandText, CreateEditableItemCommand<ItemType>.CreateItem createCallback)
         {
-            editInterface.addCommand(new CreateEditableItemCommand<ItemType>(commandText, createNewItem, createCallback));
-        }
-
-        private void createNewItem(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
-            {
-                if (!hasItem(input))
+            editInterface.addCommand(new EditInterfaceCommand(commandText, callback =>
                 {
-                    ItemType item = ((CreateEditableItemCommand<ItemType>)command).createItem(input);
-                    add(item);
-                    return true;
-                }
-                errorPrompt = String.Format("An item named {0} already exists. Please input another name.", input);
-                return false;
-            });
+                    callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
+                    {
+                        if (!hasItem(input))
+                        {
+                            ItemType item = createCallback(input);
+                            add(item);
+                            return true;
+                        }
+                        errorPrompt = String.Format("An item named {0} already exists. Please input another name.", input);
+                        return false;
+                    });
+                }));
         }
 
-        private void deleteAction(EditUICallback callback, EditInterfaceCommand command)
+        private void deleteAction(EditUICallback callback)
         {
             ItemType item = editInterface.resolveSourceObject<ItemType>(callback.getSelectedEditInterface());
             remove(item);
         }
 
-        private void renameAction(EditUICallback callback, EditInterfaceCommand command)
+        private void renameAction(EditUICallback callback)
         {
             callback.getInputString("Enter a new name.", delegate(String input, ref String errorPrompt)
             {

@@ -29,7 +29,7 @@ namespace Medical
                 editInterface.addSubInterface(preActionEdit.getEditInterface());
                 editInterface.addSubInterface(postActionEdit.getEditInterface());
 
-                editInterface.addCommand(new EditInterfaceCommand("Reverse Sides", reverseSides));
+                editInterface.addCommand(new EditInterfaceCommand("Reverse Sides", callback => timeline.reverseSides()));
             }
             return editInterface;
         }
@@ -48,11 +48,6 @@ namespace Medical
             {
                 return postActionEdit;
             }
-        }
-
-        private void reverseSides(EditUICallback callback, EditInterfaceCommand caller)
-        {
-            timeline.reverseSides();
         }
     }
 
@@ -102,7 +97,7 @@ namespace Medical
             editInterface.removeSubInterface(action);
         }
 
-        private void addAction(EditUICallback callback, EditInterfaceCommand caller)
+        private void addAction(EditUICallback callback)
         {
             var browser = callback.runSyncCustomQuery<Browser>(CustomQueries.BuildActionBrowser);
             if (browser != null)
@@ -117,7 +112,7 @@ namespace Medical
             }
         }
 
-        private void removeAction(EditUICallback callback, EditInterfaceCommand caller)
+        private void removeAction(EditUICallback callback)
         {
             timeline.removePreAction(editInterface.resolveSourceObject<TimelineInstantAction>(callback.getSelectedEditInterface()));
         }
@@ -169,7 +164,7 @@ namespace Medical
             editInterface.removeSubInterface(action);
         }
 
-        private void addAction(EditUICallback callback, EditInterfaceCommand caller)
+        private void addAction(EditUICallback callback)
         {
             var browser = callback.runSyncCustomQuery<Browser>(CustomQueries.BuildActionBrowser);
             if (browser != null)
@@ -184,7 +179,7 @@ namespace Medical
             }
         }
 
-        private void removeAction(EditUICallback callback, EditInterfaceCommand caller)
+        private void removeAction(EditUICallback callback)
         {
             timeline.removePostAction(editInterface.resolveSourceObject<TimelineInstantAction>(callback.getSelectedEditInterface()));
         }

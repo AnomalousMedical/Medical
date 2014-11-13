@@ -72,7 +72,7 @@ namespace Medical
             }
         }
 
-        private void addTrack(EditUICallback callback, EditInterfaceCommand caller)
+        private void addTrack(EditUICallback callback)
         {
             callback.getInputString("Enter a name for the track.", delegate(String trackName, ref String trackErrorPrompt)
             {
@@ -93,7 +93,7 @@ namespace Medical
             });
         }
 
-        private void removeTrack(EditUICallback callback, EditInterfaceCommand caller)
+        private void removeTrack(EditUICallback callback)
         {
             removeTrack(editInterface.resolveSourceObject<ShowPropSubActionPrototype>(callback.getSelectedEditInterface()));
         }

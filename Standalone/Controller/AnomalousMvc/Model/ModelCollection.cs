@@ -20,7 +20,7 @@ namespace Medical.Controller.AnomalousMvc
 
         public override void customizeEditInterface(EditInterface editInterface, EditInterfaceManager<MvcModel> itemEdits)
         {
-            editInterface.addCommand(new EditInterfaceCommand("Add Model", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            editInterface.addCommand(new EditInterfaceCommand("Add Model", callback =>
             {
                 callback.runCustomQuery(CustomQueries.CreateModelBrowser, delegate(Browser modelBrowser, ref string errorPrompt)
                 {

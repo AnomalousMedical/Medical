@@ -67,25 +67,14 @@ namespace Medical.GUI.AnomalousMvc
     {
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.addCommand(new EditInterfaceCommand("Add Thumbnail", addThumbnail));
+            editInterface.addCommand(new EditInterfaceCommand("Add Thumbnail", callback => addThumbnail(new NotesThumbnail())));
             var dataFieldEdits = editInterface.createEditInterfaceManager<NotesThumbnail>();
-            dataFieldEdits.addCommand(new EditInterfaceCommand("Remove", removeThumbnail));
+            dataFieldEdits.addCommand(new EditInterfaceCommand("Remove", cb => removeThumbnail(editInterface.resolveSourceObject<NotesThumbnail>(cb.getSelectedEditInterface()))));
             foreach (NotesThumbnail thumb in thumbnails)
             {
                 onThumbnailAdded(thumb);
             }
             base.customizeEditInterface(editInterface);
-        }
-
-        private void addThumbnail(EditUICallback callback, EditInterfaceCommand command)
-        {
-            addThumbnail(new NotesThumbnail());
-        }
-
-        private void removeThumbnail(EditUICallback callback, EditInterfaceCommand command)
-        {
-            NotesThumbnail thumb = editInterface.resolveSourceObject<NotesThumbnail>(callback.getSelectedEditInterface());
-            removeThumbnail(thumb);
         }
 
         private void onThumbnailAdded(NotesThumbnail notesThumbnail)

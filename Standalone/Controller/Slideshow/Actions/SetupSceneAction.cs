@@ -83,7 +83,7 @@ namespace Medical.SlideshowActions
             if (editInterface == null)
             {
                 editInterface = ReflectedEditInterface.createEditInterface(this, "Setup Scene");
-                editInterface.addCommand(new EditInterfaceCommand("Capture", (callback, caller) =>
+                editInterface.addCommand(new EditInterfaceCommand("Capture", callback =>
                     {
                         captureSceneState(callback);
                         fireChangesMade();

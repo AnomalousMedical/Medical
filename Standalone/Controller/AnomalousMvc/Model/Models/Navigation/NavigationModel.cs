@@ -208,18 +208,18 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        private void addLink(EditUICallback callback, EditInterfaceCommand command)
+        private void addLink(EditUICallback callback)
         {
             addNavigationLink(new NavigationLink());
         }
 
-        private void removeLink(EditUICallback callback, EditInterfaceCommand command)
+        private void removeLink(EditUICallback callback)
         {
             NavigationLink link = editInterface.resolveSourceObject<NavigationLink>(callback.getSelectedEditInterface());
             removeNavigationLink(link);
         }
 
-        private void moveUp(EditUICallback callback, EditInterfaceCommand command)
+        private void moveUp(EditUICallback callback)
         {
             NavigationLink link = editInterface.resolveSourceObject<NavigationLink>(callback.getSelectedEditInterface());
             int index = links.IndexOf(link) - 1;
@@ -230,7 +230,7 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        private void moveDown(EditUICallback callback, EditInterfaceCommand command)
+        private void moveDown(EditUICallback callback)
         {
             NavigationLink link = editInterface.resolveSourceObject<NavigationLink>(callback.getSelectedEditInterface());
             int index = links.IndexOf(link) + 1;
@@ -241,7 +241,7 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        private void insert(EditUICallback callback, EditInterfaceCommand command)
+        private void insert(EditUICallback callback)
         {
             NavigationLink link = editInterface.resolveSourceObject<NavigationLink>(callback.getSelectedEditInterface());
             int index = links.IndexOf(link);

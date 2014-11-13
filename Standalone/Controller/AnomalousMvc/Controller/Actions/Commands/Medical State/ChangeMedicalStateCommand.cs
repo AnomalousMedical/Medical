@@ -94,7 +94,7 @@ namespace Medical.Controller.AnomalousMvc
             editInterface.addCommand(new EditInterfaceCommand("Capture State", captureState));
         }
 
-        private void captureState(EditUICallback callback, EditInterfaceCommand caller)
+        private void captureState(EditUICallback callback)
         {
             callback.runCustomQuery<PresetState>(CustomEditQueries.CapturePresetState, presetStateResult);
         }

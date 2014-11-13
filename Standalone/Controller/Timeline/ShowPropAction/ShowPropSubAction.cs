@@ -172,7 +172,7 @@ namespace Medical
                 if (editInterface == null)
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, GetType().Name, null);
-                    editInterface.addCommand(new EditInterfaceCommand("Remove", (callback, caller) =>
+                    editInterface.addCommand(new EditInterfaceCommand("Remove", callback =>
                         {
                             showProp.removeSubAction(this);
                         }));

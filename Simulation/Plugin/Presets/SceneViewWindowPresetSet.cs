@@ -106,7 +106,7 @@ namespace Medical
             }
         }
 
-        private void createNewItem(EditUICallback callback, EditInterfaceCommand command)
+        private void createNewItem(EditUICallback callback)
         {
             callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
             {
@@ -121,7 +121,7 @@ namespace Medical
             });
         }
 
-        private void removeItem(EditUICallback callback, EditInterfaceCommand command)
+        private void removeItem(EditUICallback callback)
         {
             SceneViewWindowPreset item = editInterface.resolveSourceObject<SceneViewWindowPreset>(callback.getSelectedEditInterface());
             removePreset(item);

@@ -252,14 +252,8 @@ namespace Medical
             if (editInterface == null)
             {
                 editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, name, null);
-                editInterface.addCommand(new EditInterfaceCommand("Capture", delegate(EditUICallback callback, EditInterfaceCommand caller)
-                {
-                    captureState();
-                }));
-                editInterface.addCommand(new EditInterfaceCommand("Preview", delegate(EditUICallback callback, EditInterfaceCommand caller)
-                {
-                    preview();
-                }));
+                editInterface.addCommand(new EditInterfaceCommand("Capture", captureState));
+                editInterface.addCommand(new EditInterfaceCommand("Preview", preview));
             }
             return editInterface;
         }

@@ -68,7 +68,7 @@ namespace Medical
             {
                 editInterface = ReflectedEditInterface.createEditInterface(this, scanner, memberName, null);
                 editInterface.addCommand(new EditInterfaceCommand("Capture Camera Position", captureCameraPosition));
-                editInterface.addCommand(new EditInterfaceCommand("Preview", delegate(EditUICallback callback, EditInterfaceCommand caller)
+                editInterface.addCommand(new EditInterfaceCommand("Preview", callback =>
                 {
                     callback.runOneWayCustomQuery(CustomEditQueries.PreviewCameraPosition, this);
                 }));
@@ -76,7 +76,7 @@ namespace Medical
             return editInterface;
         }
 
-        private void captureCameraPosition(EditUICallback callback, EditInterfaceCommand caller)
+        private void captureCameraPosition(EditUICallback callback)
         {
             callback.runOneWayCustomQuery(CustomEditQueries.CaptureCameraPosition, this);
             editInterface.fireDataNeedsRefresh();

@@ -203,7 +203,7 @@ namespace Medical
             }
         }
 
-        private void addFolderCallback(EditUICallback callback, EditInterfaceCommand caller)
+        private void addFolderCallback(EditUICallback callback)
         {
             callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
             {
@@ -217,13 +217,13 @@ namespace Medical
             });
         }
 
-        private void removeFolderCallback(EditUICallback callback, EditInterfaceCommand caller)
+        private void removeFolderCallback(EditUICallback callback)
         {
             ScratchAreaFolder folder = editInterface.resolveSourceObject<ScratchAreaFolder>(callback.getSelectedEditInterface());
             removeFolder(folder);
         }
 
-        private void pasteCallback(EditUICallback callback, EditInterfaceCommand caller)
+        private void pasteCallback(EditUICallback callback)
         {
             SaveableClipboard clipboard = null;
             callback.runCustomQuery(ScratchAreaCustomQueries.GetClipboard, delegate(SaveableClipboard result, ref String errorMessage)
@@ -246,7 +246,7 @@ namespace Medical
             }
         }
 
-        private void renameItemCallback(EditUICallback callback, EditInterfaceCommand caller)
+        private void renameItemCallback(EditUICallback callback)
         {
             callback.getInputString("Enter a name.", delegate(String input, ref String errorPrompt)
             {
@@ -263,7 +263,7 @@ namespace Medical
             });
         }
 
-        private void removeItemCallback(EditUICallback callback, EditInterfaceCommand caller)
+        private void removeItemCallback(EditUICallback callback)
         {
             ScratchAreaItem item = editInterface.resolveSourceObject<ScratchAreaItem>(callback.getSelectedEditInterface());
             removeItem(item);

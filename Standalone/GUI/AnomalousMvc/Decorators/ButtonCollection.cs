@@ -22,7 +22,7 @@ namespace Medical.GUI.AnomalousMvc
                 return new ButtonDefinition(name);
             });
 
-            editInterface.addCommand(new EditInterfaceCommand("Add Close Button", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            editInterface.addCommand(new EditInterfaceCommand("Add Close Button", callback =>
             {
                 if (!hasItem("Close"))
                 {
@@ -30,7 +30,7 @@ namespace Medical.GUI.AnomalousMvc
                 }
             }));
 
-            editInterface.addCommand(new EditInterfaceCommand("Add Navigation Buttons", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            editInterface.addCommand(new EditInterfaceCommand("Add Navigation Buttons", callback =>
             {
                 if (!hasItem("Cancel") &&
                     !hasItem("Previous") &&

@@ -91,7 +91,7 @@ namespace Medical
             editInterface.addSubInterface(rootNode.EditInterface);
         }
 
-        void addProperty(EditUICallback callback, EditInterfaceCommand caller)
+        void addProperty(EditUICallback callback)
         {
             callback.getInputString("Enter a name for the child anatomy tag group.", delegate(String result, ref String message)
             {
@@ -116,7 +116,7 @@ namespace Medical
             }
         }
 
-        void removeProperty(EditUICallback callback, EditInterfaceCommand caller)
+        void removeProperty(EditUICallback callback)
         {
             AnatomyTagProperties prop = tagPropertiesInterface.resolveSourceObject<AnatomyTagProperties>(callback.getSelectedEditInterface());
             removeProperty(prop);
@@ -130,7 +130,7 @@ namespace Medical
             }
         }
 
-        void renameProperty(EditUICallback callback, EditInterfaceCommand caller)
+        void renameProperty(EditUICallback callback)
         {
             callback.getInputString("Enter a new name for the child anatomy tag group.", delegate(String result, ref String message)
             {

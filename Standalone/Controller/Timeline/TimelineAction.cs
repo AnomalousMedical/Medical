@@ -183,10 +183,7 @@ namespace Medical
 
         protected void addRemoveCommand(EditInterface editInterface)
         {
-            editInterface.addCommand(new EditInterfaceCommand("Remove", (callback, caller) =>
-                {
-                    timeline.removeAction(this);
-                }));
+            editInterface.addCommand(new EditInterfaceCommand("Remove", () => timeline.removeAction(this)));
         }
     }
 }

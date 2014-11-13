@@ -27,20 +27,10 @@ namespace Medical
             if (editInterface == null)
             {
                 editInterface = ReflectedEditInterface.createEditInterface(this, scanner, memberName, null);
-                editInterface.addCommand(new EditInterfaceCommand("Capture Layers", captureLayerState));
-                editInterface.addCommand(new EditInterfaceCommand("Preview", preview));
+                editInterface.addCommand(new EditInterfaceCommand("Capture Layers", callback => captureState()));
+                editInterface.addCommand(new EditInterfaceCommand("Preview", callback => apply()));
             }
             return editInterface;
-        }
-
-        private void captureLayerState(EditUICallback callback, EditInterfaceCommand caller)
-        {
-            captureState();
-        }
-
-        private void preview(EditUICallback callback, EditInterfaceCommand caller)
-        {
-            apply();
         }
 
         #region Saving

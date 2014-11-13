@@ -686,14 +686,9 @@ namespace Medical.Controller.AnomalousMvc
                 editInterface.addSubInterface(views.getEditInterface("Views"));
                 editInterface.addSubInterface(controllers.getEditInterface("Controllers"));
                 editInterface.addSubInterface(models.getEditInterface("Models"));
-                editInterface.addCommand(new EditInterfaceCommand("Preview", preview));
+                editInterface.addCommand(new EditInterfaceCommand("Preview", callback => callback.runOneWayCustomQuery(CustomQueries.Preview, this)));
             }
             return editInterface;
-        }
-
-        private void preview(EditUICallback callback, EditInterfaceCommand command)
-        {
-            callback.runOneWayCustomQuery(CustomQueries.Preview, this);
         }
     }
 }

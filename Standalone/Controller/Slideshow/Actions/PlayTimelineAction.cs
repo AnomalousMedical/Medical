@@ -33,7 +33,7 @@ namespace Medical.SlideshowActions
             if (editInterface == null)
             {
                 editInterface = new EditInterface("Play Timeline");
-                editInterface.addCommand(new EditInterfaceCommand("Edit Timeline", (callback, caller) =>
+                editInterface.addCommand(new EditInterfaceCommand("Edit Timeline", callback =>
                 {
                     callback.runOneWayCustomQuery(CustomActions.EditTimeline, this);
                 }));
