@@ -116,9 +116,9 @@ namespace Medical
                 foreach (AnatomyIdentifier anatomy in matches.Anatomy)
                 {
                     fireDisplayAnatomy(anatomy);
-                    foreach (AnatomyTag tag in anatomy.Tags)
+                    foreach (var tag in anatomy.Tags)
                     {
-                        anatomyTags.Add(tag.Tag);
+                        anatomyTags.Add(tag);
                     }
                 }
                 foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
@@ -132,9 +132,9 @@ namespace Medical
                 if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
                 {
                     AnatomyTagGroup tagGroup;
-                    foreach (AnatomyTag tag in firstMatch.Tags)
+                    foreach (var tag in firstMatch.Tags)
                     {
-                        if (anatomyTagManager.tryGetTagGroup(tag.Tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
+                        if (anatomyTagManager.tryGetTagGroup(tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
                         {
                             bestMatchAnatomy = tagGroup;
                             break;

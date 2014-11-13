@@ -25,13 +25,13 @@ namespace Medical
 
         public void addAnatomyIdentifier(AnatomyIdentifier anatomyIdentifier)
         {
-            foreach (AnatomyTag tag in anatomyIdentifier.Tags)
+            foreach (var tag in anatomyIdentifier.Tags)
             {
                 AnatomyTagGroup tagGroup;
-                if (!anatomyTagGroups.TryGetValue(tag.Tag, out tagGroup))
+                if (!anatomyTagGroups.TryGetValue(tag, out tagGroup))
                 {
-                    tagGroup = new AnatomyTagGroup(tag.Tag);
-                    anatomyTagGroups.Add(tag.Tag, tagGroup);
+                    tagGroup = new AnatomyTagGroup(tag);
+                    anatomyTagGroups.Add(tag, tagGroup);
                 }
                 tagGroup.addAnatomy(anatomyIdentifier);
             }

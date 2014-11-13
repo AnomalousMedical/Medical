@@ -47,7 +47,7 @@ namespace Medical
         private Vector3 previewCameraDirection = Vector3.Backward;
 
         [DoNotSave]
-        private List<AnatomyTag> tags = new List<AnatomyTag>();
+        private List<String> tags = new List<String>();
 
         [DoNotSave]
         private List<AnatomyCommand> commands = new List<AnatomyCommand>();
@@ -125,7 +125,7 @@ namespace Medical
         }
 
         [DoNotCopy]
-        public IEnumerable<AnatomyTag> Tags
+        public IEnumerable<String> Tags
         {
             get
             {
@@ -133,13 +133,13 @@ namespace Medical
             }
         }
 
-        public void addTag(AnatomyTag tag)
+        public void addTag(String tag)
         {
             tags.Add(tag);
             editInterface.safeAlertSubInterfaceDataContentsChanged(tags);
         }
 
-        public void removeTag(AnatomyTag tag)
+        public void removeTag(String tag)
         {
             tags.Remove(tag);
             editInterface.safeAlertSubInterfaceDataContentsChanged(tags);
@@ -294,7 +294,7 @@ namespace Medical
         protected override void customSave(SaveInfo info)
         {
             base.customSave(info);
-            info.ExtractList<AnatomyTag>("AnatomyTag", tags);
+            info.ExtractList<String>("AnatomyTag", tags);
             info.ExtractList<AnatomyCommand>("AnatomyCommand", commands);
             info.ExtractList("System", systems);
             info.ExtractList("ConnectedTo", connectedTo);
@@ -306,16 +306,18 @@ namespace Medical
         protected override void customLoad(LoadInfo info)
         {
             base.customLoad(info);
-            info.RebuildList<AnatomyTag>("AnatomyTag", tags);
+            //info.RebuildList<String>("AnatomyTag", tags); //Add this back after conversion completed, can remove AnatomyTag class then also.
             info.RebuildList<AnatomyCommand>("AnatomyCommand", commands);
             info.RebuildList("System", systems);
             info.RebuildList("ConnectedTo", connectedTo);
 
             
             //Custom conversion code from tags to new style, remove this after updating
+            List<AnatomyTag> anatomyTags = new List<AnatomyTag>();
+            info.RebuildList<AnatomyTag>("AnatomyTag", anatomyTags);
             bool updateSystems = systems.Count == 0;
             List<AnatomyTag> toRemove = new List<AnatomyTag>();
-            foreach(var tag in tags)
+            foreach (var tag in anatomyTags)
             {
                 if (updateSystems && tag.Tag.Contains("System") && !systems.Contains(tag.Tag))
                 {
@@ -325,13 +327,16 @@ namespace Medical
                 if(classification == null && classificationUpgrades.Contains(tag.Tag))
                 {
                     classification = tag.Tag;
+                    toRemove.Add(tag);
                 }
                 if(region == null && regions.Contains(tag.Tag))
                 {
                     region = tag.Tag;
+                    toRemove.Add(tag);
                 }
             }
-            tags.RemoveAll(i => toRemove.Contains(i));
+            anatomyTags.RemoveAll(i => toRemove.Contains(i));
+            tags.AddRange(anatomyTags.Select(t => t.Tag));
         }
 
         private static AnatomyCommandBrowser anatomyCommandBrowser = null;
@@ -342,12 +347,12 @@ namespace Medical
 
             this.editInterface = editInterface;
 
-            editInterface.addSubInterfaceForObject(tags, new ReflectedListLikeEditInterface<AnatomyTag>(tags, "Tags", () => new AnatomyTag(), 
+            editInterface.addSubInterfaceForObject(tags, new StringListlikeEditInterface(tags, "Tags",
                 validateCallback: () =>
                 {
-                    if (this.Tags.Any(t => t.Tag == null || t.Tag == String.Empty))
+                    if (this.Tags.Any(t => String.IsNullOrWhiteSpace(t)))
                     {
-                        throw new ValidationException("Cannot accept empty tags. Please remove any blank entries.");
+                        throw new ValidationException("Cannot accept blank tags. Please remove any blank entries.");
                     }
                 }));
             editInterface.addSubInterfaceForObject(systems, new StringListlikeEditInterface(systems, "Systems"));

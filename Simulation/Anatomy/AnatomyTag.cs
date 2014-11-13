@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    public class AnatomyTag : Saveable
+    class AnatomyTag : Saveable
     {
         public AnatomyTag()
         {
