@@ -60,7 +60,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private AnatomyIdentifierEditInterface anatomyIdentifierEditInterface;
+        private EditInterface mainEditInterface;
 
         [DoNotCopy]
         [DoNotSave]
@@ -136,18 +136,18 @@ namespace Medical
         public void addTag(AnatomyTag tag)
         {
             tags.Add(tag);
-            if (anatomyIdentifierEditInterface != null)
+            if (mainEditInterface != null)
             {
-                anatomyIdentifierEditInterface.addTagProperty(tag);
+                this.addTagProperty(tag);
             }
         }
 
         public void removeTag(AnatomyTag tag)
         {
             tags.Remove(tag);
-            if (anatomyIdentifierEditInterface != null)
+            if (mainEditInterface != null)
             {
-                anatomyIdentifierEditInterface.removeTagProperty(tag);
+                this.removeTagProperty(tag);
             }
         }
 
@@ -278,19 +278,13 @@ namespace Medical
         public void addCommand(AnatomyCommand command)
         {
             commands.Add(command);
-            if (anatomyIdentifierEditInterface != null)
-            {
-                anatomyIdentifierEditInterface.createCommandEditInterface(command);
-            }
+            createCommandEditInterface(command);
         }
 
         public void removeCommand(AnatomyCommand command)
         {
             commands.Remove(command);
-            if (anatomyIdentifierEditInterface != null)
-            {
-                anatomyIdentifierEditInterface.removeCommandEditInterface(command);
-            }
+            removeCommandEditInterface(command);
         }
 
         internal bool checkCollision(Ray3 ray, ref float distanceOnRay)
@@ -346,46 +340,36 @@ namespace Medical
             tags.RemoveAll(i => toRemove.Contains(i));
         }
 
+        private static AnatomyCommandBrowser anatomyCommandBrowser = null;
+
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
-            anatomyIdentifierEditInterface = new AnatomyIdentifierEditInterface(this, editInterface);
-            editInterface.addSubInterfaceForObject(systems, new StringListlikeEditInterface(systems, "Systems"));
-            editInterface.addSubInterfaceForObject(connectedTo, new StringListlikeEditInterface(connectedTo, "Connected To"));
-        }
-    }
 
-    class AnatomyIdentifierEditInterface
-    {
-        private static AnatomyCommandBrowser anatomyCommandBrowser = null;
-
-        private EditInterface mainEditInterface;
-        private AnatomyIdentifier anatomyIdentifier;
-
-        public AnatomyIdentifierEditInterface(AnatomyIdentifier anatomyIdentifier, EditInterface mainEditInterface)
-        {
-            this.mainEditInterface = mainEditInterface;
-            this.anatomyIdentifier = anatomyIdentifier;
+            this.mainEditInterface = editInterface;
 
             //Tags
             tagEditInterface = new EditInterface("Tags", addTag, removeTag, () =>
             {
-                if (anatomyIdentifier.Tags.Any(t => t.Tag == null || t.Tag == String.Empty))
+                if (this.Tags.Any(t => t.Tag == null || t.Tag == String.Empty))
                 {
                     throw new ValidationException("Cannot accept empty tags. Please remove any blank entries.");
                 }
             });
             tagEditInterface.setPropertyInfo(AnatomyTag.Property.Info);
-            foreach (AnatomyTag tag in anatomyIdentifier.Tags)
+            foreach (AnatomyTag tag in this.Tags)
             {
                 addTagProperty(tag);
             }
             mainEditInterface.addSubInterface(tagEditInterface);
 
+            editInterface.addSubInterfaceForObject(systems, new StringListlikeEditInterface(systems, "Systems"));
+            editInterface.addSubInterfaceForObject(connectedTo, new StringListlikeEditInterface(connectedTo, "Connected To"));
+
             //Commands
             mainEditInterface.addCommand(new EditInterfaceCommand("Add Command", createCommand));
             var commandEditInterfaces = mainEditInterface.createEditInterfaceManager<AnatomyCommand>();
-            foreach (AnatomyCommand command in anatomyIdentifier.Commands)
+            foreach (AnatomyCommand command in this.Commands)
             {
                 createCommandEditInterface(command);
             }
@@ -404,7 +388,7 @@ namespace Medical
                 Type commandType = result as Type;
                 if (commandType != null)
                 {
-                    anatomyIdentifier.addCommand((AnatomyCommand)Activator.CreateInstance(commandType));
+                    this.addCommand((AnatomyCommand)Activator.CreateInstance(commandType));
                     return true;
                 }
                 return false;
@@ -413,19 +397,25 @@ namespace Medical
 
         private void destroyCommand(EditUICallback callback)
         {
-            anatomyIdentifier.removeCommand(mainEditInterface.resolveSourceObject<AnatomyCommand>(callback.getSelectedEditInterface()));
+            this.removeCommand(mainEditInterface.resolveSourceObject<AnatomyCommand>(callback.getSelectedEditInterface()));
         }
 
-        public void createCommandEditInterface(AnatomyCommand command)
+        private void createCommandEditInterface(AnatomyCommand command)
         {
-            EditInterface commandEdit = command.createEditInterface();
-            commandEdit.addCommand(new EditInterfaceCommand("Remove", destroyCommand));
-            mainEditInterface.addSubInterface(command, commandEdit);
+            if (mainEditInterface != null)
+            {
+                EditInterface commandEdit = command.createEditInterface();
+                commandEdit.addCommand(new EditInterfaceCommand("Remove", destroyCommand));
+                mainEditInterface.addSubInterface(command, commandEdit);
+            }
         }
 
-        public void removeCommandEditInterface(AnatomyCommand command)
+        private void removeCommandEditInterface(AnatomyCommand command)
         {
-            mainEditInterface.removeSubInterface(command);
+            if (mainEditInterface != null)
+            {
+                mainEditInterface.removeSubInterface(command);
+            }
         }
 
         #endregion
@@ -442,7 +432,7 @@ namespace Medical
         /// <param name="callback"></param>
         private void addTag(EditUICallback callback)
         {
-            anatomyIdentifier.addTag(new AnatomyTag());
+            this.addTag(new AnatomyTag());
         }
 
         /// <summary>
@@ -452,15 +442,15 @@ namespace Medical
         /// <param name="property"></param>
         private void removeTag(EditUICallback callback, EditableProperty property)
         {
-            anatomyIdentifier.removeTag(tagEditInterface.getKeyObjectForProperty<AnatomyTag>(property));
+            this.removeTag(tagEditInterface.getKeyObjectForProperty<AnatomyTag>(property));
         }
 
-        internal void addTagProperty(AnatomyTag tag)
+        private void addTagProperty(AnatomyTag tag)
         {
             tagEditInterface.addEditableProperty(tag, new AnatomyTag.Property(tag));
         }
 
-        internal void removeTagProperty(AnatomyTag tag)
+        private void removeTagProperty(AnatomyTag tag)
         {
             tagEditInterface.removeEditableProperty(tag);
         }
