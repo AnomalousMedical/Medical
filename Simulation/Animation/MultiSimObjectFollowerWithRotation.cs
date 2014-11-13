@@ -81,7 +81,7 @@ namespace Medical
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
-            editInterface.addSubInterface(new ReflectedListLikeEditInterface<Entry>(weightedEntries, "Weighted Broadcasters", () => new Entry()).EditInterface);
+            editInterface.addSubInterfaceForObject(weightedEntries, new ReflectedListLikeEditInterface<Entry>(weightedEntries, "Weighted Broadcasters", () => new Entry()));
         }
 
         protected override void customLoad(LoadInfo info)

@@ -350,8 +350,8 @@ namespace Medical
         {
             base.customizeEditInterface(editInterface);
             anatomyIdentifierEditInterface = new AnatomyIdentifierEditInterface(this, editInterface);
-            editInterface.addSubInterface(new StringListlikeEditInterface(systems, "Systems").EditInterface);
-            editInterface.addSubInterface(new StringListlikeEditInterface(connectedTo, "Connected To").EditInterface);
+            editInterface.addSubInterfaceForObject(systems, new StringListlikeEditInterface(systems, "Systems"));
+            editInterface.addSubInterfaceForObject(connectedTo, new StringListlikeEditInterface(connectedTo, "Connected To"));
         }
     }
 

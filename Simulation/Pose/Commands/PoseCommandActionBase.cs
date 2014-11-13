@@ -79,7 +79,7 @@ namespace Medical.Pose.Commands
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
-            editInterface.addSubInterface(new ReflectedListLikeEditInterface<PoseHandlerMapping>(poseHandlerMappings, "Pose Handler Mappings", () => new PoseHandlerMapping()).EditInterface);
+            editInterface.addSubInterfaceForObject(poseHandlerMappings, new ReflectedListLikeEditInterface<PoseHandlerMapping>(poseHandlerMappings, "Pose Handler Mappings", () => new PoseHandlerMapping()));
         }
     }
 }
