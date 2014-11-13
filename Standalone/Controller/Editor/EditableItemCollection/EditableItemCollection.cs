@@ -11,6 +11,8 @@ namespace Medical.Editor
     public abstract partial class EditableItemCollection<ItemType> : IEnumerable<ItemType>
         where ItemType : EditableItem
     {
+        public delegate ItemType CreateItem(String name);
+
         protected List<ItemType> items = new List<ItemType>();
 
         public EditableItemCollection()
@@ -160,7 +162,7 @@ namespace Medical.Editor
 
         }
 
-        public void addItemCreation(String commandText, CreateEditableItemCommand<ItemType>.CreateItem createCallback)
+        public void addItemCreation(String commandText, CreateItem createCallback)
         {
             editInterface.addCommand(new EditInterfaceCommand(commandText, callback =>
                 {

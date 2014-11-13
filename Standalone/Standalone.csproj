@@ -529,7 +529,6 @@
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlView.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHostFactoryCompound.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\ActionBrowserEditableProperty.cs" />
-    <Compile Include="Controller\Editor\EditableItemCollection\CreateEditableItemCommand.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableActionAttribute.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\EditableFileAttribute.cs" />
     <Compile Include="Controller\AnomalousMvc\View\View.cs" />
