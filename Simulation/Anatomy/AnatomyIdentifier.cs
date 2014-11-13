@@ -368,7 +368,13 @@ namespace Medical
             this.anatomyIdentifier = anatomyIdentifier;
 
             //Tags
-            tagEditInterface = new EditInterface("Tags", addTag, removeTag, validateTag);
+            tagEditInterface = new EditInterface("Tags", addTag, removeTag, () =>
+            {
+                if (anatomyIdentifier.Tags.Any(t => t.Tag == null || t.Tag == String.Empty))
+                {
+                    throw new ValidationException("Cannot accept empty tags. Please remove any blank entries.");
+                }
+            });
             tagEditInterface.setPropertyInfo(AnatomyTag.Property.Info);
             foreach (AnatomyTag tag in anatomyIdentifier.Tags)
             {
@@ -447,25 +453,6 @@ namespace Medical
         private void removeTag(EditUICallback callback, EditableProperty property)
         {
             anatomyIdentifier.removeTag(tagEditInterface.getKeyObjectForProperty<AnatomyTag>(property));
-        }
-
-        /// <summary>
-        /// Callback to validate the resources.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        private bool validateTag(out String message)
-        {
-            foreach (AnatomyTag tag in anatomyIdentifier.Tags)
-            {
-                if (tag.Tag == null || tag.Tag == String.Empty)
-                {
-                    message = "Cannot accept empty tags. Please remove any blank entries.";
-                    return false;
-                }
-            }
-            message = null;
-            return true;
         }
 
         internal void addTagProperty(AnatomyTag tag)
