@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +22,7 @@ namespace Medical
 
         public override TokenStream TokenStream(string fieldName, TextReader reader)
         {
-            return new PorterStemFilter(new ASCIIFoldingFilter(new LowerCaseTokenizer(reader)));
+            return new LowerCaseFilter(new StandardTokenizer(AnatomyLuceneSearch.LuceneVersion, reader));
         }
     }
 }

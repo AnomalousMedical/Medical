@@ -16,7 +16,7 @@ namespace Medical
 {
     class AnatomyLuceneSearch : IDisposable
     {
-        private const Lucene.Net.Util.Version LuceneVersion = Lucene.Net.Util.Version.LUCENE_30;
+        public const Lucene.Net.Util.Version LuceneVersion = Lucene.Net.Util.Version.LUCENE_30;
 
         private Directory directory;
         private IndexSearcher searcher;
@@ -126,7 +126,7 @@ namespace Medical
             }
             else
             {
-                if (searchTerm.Length > 2)
+                if (searchTerm.Length > 1)
                 {
                     try
                     {
@@ -181,6 +181,8 @@ namespace Medical
                 }
                 query = boolQuery;
             }
+
+            //Logging.Log.Debug(query.ToString());
             return query;
         }
 
