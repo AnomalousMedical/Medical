@@ -124,15 +124,6 @@ namespace Medical
             }
         }
 
-        [DoNotCopy]
-        public IEnumerable<String> Tags
-        {
-            get
-            {
-                return tags;
-            }
-        }
-
         public void addTag(String tag)
         {
             tags.Add(tag);
@@ -253,6 +244,61 @@ namespace Medical
                     yield return transparencyCommand.TransparencyInterfaceName;
                 }
                 yield break;
+            }
+        }
+
+        /// <summary>
+        /// The systems this anatomy is part of.
+        /// </summary>
+        public IEnumerable<String> Systems
+        {
+            get
+            {
+                return systems;
+            }
+        }
+
+        /// <summary>
+        /// The connections for this anatomy.
+        /// </summary>
+        public IEnumerable<String> Connections
+        {
+            get
+            {
+                return connections;
+            }
+        }
+
+        /// <summary>
+        /// The tags for this anatomy.
+        /// </summary>
+        public IEnumerable<String> Tags
+        {
+            get
+            {
+                return tags;
+            }
+        }
+
+        /// <summary>
+        /// The region for this anatomy.
+        /// </summary>
+        public String Region
+        {
+            get
+            {
+                return region;
+            }
+        }
+
+        /// <summary>
+        /// The classificaiton for this anatomy.
+        /// </summary>
+        public String Classification
+        {
+            get
+            {
+                return classification;
             }
         }
 

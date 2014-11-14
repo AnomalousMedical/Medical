@@ -142,6 +142,7 @@ namespace Medical
                 guiManager.saveUI(configFile);
                 configFile.writeConfigFile();
             }
+            IDisposableUtil.DisposeIfNotNull(anatomyController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
             IDisposableUtil.DisposeIfNotNull(notificationManager);
             IDisposableUtil.DisposeIfNotNull(guiManager);

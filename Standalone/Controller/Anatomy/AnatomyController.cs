@@ -6,6 +6,7 @@ using Engine;
 using Medical.Controller;
 using MyGUIPlugin;
 using System.Reflection;
+using Medical.Utility.LuceneUtil;
 
 namespace Medical
 {
@@ -23,12 +24,13 @@ namespace Medical
         Remove
     }
 
-    public class AnatomyController
+    public class AnatomyController : IDisposable
     {
         public event EventHandler AnatomyChanged;
 
         private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
         private AnatomySearchList anatomySearchList = new AnatomySearchList();
+        private AnatomyLuceneSearch luceneSearch = new AnatomyLuceneSearch();
 
         private AnatomyPickingMode pickingMode = AnatomyPickingMode.Group;
         private SelectionOperator selectionOperator = SelectionOperator.Select;
@@ -64,6 +66,11 @@ namespace Medical
 
         }
 
+        public void Dispose()
+        {
+            luceneSearch.Dispose();
+        }
+
         public void sceneLoaded()
         {
             AnatomyOrganizer organizer = AnatomyManager.AnatomyOrganizer;
@@ -80,6 +87,7 @@ namespace Medical
             {
                 anatomySearchList.addAnatomy(tagGroup);
             }
+            luceneSearch.setAnatomy(AnatomyManager.AnatomyList);
             if (AnatomyChanged != null)
             {
                 AnatomyChanged.Invoke(this, EventArgs.Empty);
@@ -167,10 +175,16 @@ namespace Medical
             }
             else
             {
-                foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
+                var sw = new System.Diagnostics.Stopwatch();
+                sw.Start();
+                //foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
+                //String.Format("{0} {0}*", searchTerm)
+                foreach(var anatomy in luceneSearch.search(searchTerm, IEnumerableUtil<Facet>.EmptyIterator, 35))
                 {
                     fireDisplayAnatomy(anatomy);
                 }
+                sw.Stop();
+                Logging.Log.Debug("Search took {0} {1}", sw.ElapsedMilliseconds, sw.ElapsedTicks);
             }
             fireSearchEnded();
         }
