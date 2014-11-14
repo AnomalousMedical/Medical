@@ -72,7 +72,7 @@ namespace Medical
                     document.Add(new Field("Name", anatomy.AnatomicalName, Field.Store.YES, Field.Index.ANALYZED));
                     foreach (String system in anatomy.Systems)
                     {
-                        document.Add(new Field("System", system, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                        document.Add(new Field("Systems", system, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     }
                     if (anatomy.Classification != null)
                     {
@@ -181,8 +181,6 @@ namespace Medical
                 }
                 query = boolQuery;
             }
-
-            Logging.Log.Debug(query.ToString());
             return query;
         }
 

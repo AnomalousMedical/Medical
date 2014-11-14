@@ -175,15 +175,14 @@ namespace Medical
             }
             else
             {
-                var sw = new System.Diagnostics.Stopwatch();
-                sw.Start();
                 //foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
+                //List<Facet> facets = new List<Facet>();
+                //facets.Add(new Facet("Systems", "Muscular System"));
+                //facets.Add(new Facet("Systems", "Nervous System"));
                 foreach(var anatomy in luceneSearch.search(searchTerm, IEnumerableUtil<Facet>.EmptyIterator, 35))
                 {
                     fireDisplayAnatomy(anatomy);
                 }
-                sw.Stop();
-                Logging.Log.Debug("Search took {0} {1}", sw.ElapsedMilliseconds, sw.ElapsedTicks);
             }
             fireSearchEnded();
         }
