@@ -178,7 +178,6 @@ namespace Medical
                 var sw = new System.Diagnostics.Stopwatch();
                 sw.Start();
                 //foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
-                //String.Format("{0} {0}*", searchTerm)
                 foreach(var anatomy in luceneSearch.search(searchTerm, IEnumerableUtil<Facet>.EmptyIterator, 35))
                 {
                     fireDisplayAnatomy(anatomy);

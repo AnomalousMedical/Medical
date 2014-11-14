@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Tokenattributes;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
@@ -20,7 +21,7 @@ namespace Medical
         private Directory directory;
         private IndexSearcher searcher;
         private FacetManager facetManager;
-        private Analyzer analyzer = new AnatomyAnalyzer();
+        private AnatomyAnalyzer analyzer = new AnatomyAnalyzer();
 
         private List<AnatomyIdentifier> anatomyList = new List<AnatomyIdentifier>();
 
@@ -42,8 +43,7 @@ namespace Medical
         /// <param name="facets">The facets to apply to the search. Can be null, which matches all facets.</param>
         public IEnumerable<AnatomyIdentifier> search(String searchTerm, IEnumerable<Facet> facets, int maxHits)
         {
-            ActiveFacetCollection activeFacets;
-            Query query = buildQuery(searchTerm, facets, out activeFacets);
+            Query query = buildQuery(searchTerm, facets);
             TopDocs results = searcher.Search(query, maxHits);
             foreach(var scoreDoc in results.ScoreDocs)
             {
@@ -70,11 +70,11 @@ namespace Medical
                     document.Add(new Field("Id", index.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
                     document.Add(new Field("DataIndex", BitConverter.GetBytes(index), 0, sizeof(int), Field.Store.YES));
                     document.Add(new Field("Name", anatomy.AnatomicalName, Field.Store.YES, Field.Index.ANALYZED));
-                    foreach(String system in anatomy.Systems)
+                    foreach (String system in anatomy.Systems)
                     {
                         document.Add(new Field("System", system, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     }
-                    if(anatomy.Classification != null)
+                    if (anatomy.Classification != null)
                     {
                         document.Add(new Field("Classification", anatomy.Classification, Field.Store.YES, Field.Index.NOT_ANALYZED));
                     }
@@ -117,9 +117,8 @@ namespace Medical
             }
         }
 
-        private Query buildQuery(String searchTerm, IEnumerable<Facet> facets, out ActiveFacetCollection activeFacets)
+        private Query buildQuery(String searchTerm, IEnumerable<Facet> facets)
         {
-            activeFacets = new ActiveFacetCollection();
             Query query;
             if (String.IsNullOrWhiteSpace(searchTerm))
             {
@@ -127,17 +126,45 @@ namespace Medical
             }
             else
             {
-                try
+                if (searchTerm.Length > 2)
                 {
-                    query = new QueryParser(LuceneVersion, "Name", analyzer).Parse(searchTerm);
+                    try
+                    {
+                        BooleanQuery boolQuery = new BooleanQuery();
+                        using (TokenStream source = analyzer.ReusableTokenStream("Name", new System.IO.StringReader(searchTerm)))
+                        {
+                            var termAtt = source.GetAttribute<ITermAttribute>();
+                            bool moreTokens = source.IncrementToken();
+                            if (moreTokens)
+                            {
+                                while (moreTokens)
+                                {
+                                    var analyzedTerm = termAtt.Term;
+
+                                    boolQuery.Add(new TermQuery(new Term("Name", analyzedTerm)), Occur.SHOULD);
+                                    boolQuery.Add(new PrefixQuery(new Term("Name", analyzedTerm)), Occur.SHOULD);
+
+                                    moreTokens = source.IncrementToken();
+                                }
+                                query = boolQuery;
+                            }
+                            else
+                            {
+                                query = buildEmptyQuery();
+                            }
+                        }
+                    }
+                    catch(Exception)
+                    {
+                        query = buildEmptyQuery();
+                    }
                 }
-                catch (Exception)
+                else
                 {
-                    BooleanQuery noDocsQuery = new BooleanQuery();
-                    noDocsQuery.Add(new MatchAllDocsQuery(), Occur.MUST_NOT);
-                    query = noDocsQuery;
+                    query = new PrefixQuery(new Term("Name", searchTerm.ToLower()));
                 }
             }
+
             if (facets != null && facets.Count() > 0)
             {
                 BooleanQuery boolQuery = new BooleanQuery();
@@ -150,10 +177,21 @@ namespace Medical
                     {
                         boolQuery.Add(new TermQuery(new Term(cleanedField, cleanedValue)), Occur.MUST);
                     }
-                    activeFacets.add(cleanedField, cleanedValue);
+                    //activeFacets.add(cleanedField, cleanedValue);
                 }
                 query = boolQuery;
             }
+
+            Logging.Log.Debug(query.ToString());
+            return query;
+        }
+
+        private static Query buildEmptyQuery()
+        {
+            Query query;
+            BooleanQuery noDocsQuery = new BooleanQuery();
+            noDocsQuery.Add(new MatchAllDocsQuery(), Occur.MUST_NOT);
+            query = noDocsQuery;
             return query;
         }
     }
