@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical
 {
-    public class AnatomyTagGroup : Anatomy
+    public class AnatomyGroup : Anatomy
     {
         private List<Anatomy> groupAnatomy = new List<Anatomy>();
         bool showInBasicVersion = false;
@@ -14,12 +14,12 @@ namespace Medical
         bool showInClickSearch = true;
         bool showInTree = false;
 
-        public AnatomyTagGroup(String anatomicalName)
+        public AnatomyGroup(String anatomicalName)
         {
             this.AnatomicalName = anatomicalName;
         }
 
-        public AnatomyTagGroup(String anatomicalName, bool showInBasicVersion, bool showInTextSearch, bool showInClickSearch, bool showInTree)
+        public AnatomyGroup(String anatomicalName, bool showInBasicVersion, bool showInTextSearch, bool showInClickSearch, bool showInTree)
         {
             this.AnatomicalName = anatomicalName;
             this.showInBasicVersion = showInBasicVersion;
