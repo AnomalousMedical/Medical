@@ -64,26 +64,29 @@ namespace Medical
             {
                 foreach (var anatomy in anatomyIdentifiers)
                 {
-                    Document document = new Document();
-                    int index = anatomyList.Count;
-                    anatomyList.Add(anatomy);
-                    document.Add(new Field("Id", index.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    document.Add(new Field("DataIndex", BitConverter.GetBytes(index), 0, sizeof(int), Field.Store.YES));
-                    document.Add(new Field("Name", anatomy.AnatomicalName, Field.Store.YES, Field.Index.ANALYZED));
-                    foreach (String system in anatomy.Systems)
+                    if (anatomy.ShowInTextSearch)
                     {
-                        document.Add(new Field("Systems", system, Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    }
-                    if (anatomy.Classification != null)
-                    {
-                        document.Add(new Field("Classification", anatomy.Classification, Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    }
-                    if (anatomy.Region != null)
-                    {
-                        document.Add(new Field("Region", anatomy.Region, Field.Store.YES, Field.Index.NOT_ANALYZED));
-                    }
+                        Document document = new Document();
+                        int index = anatomyList.Count;
+                        anatomyList.Add(anatomy);
+                        document.Add(new Field("Id", index.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                        document.Add(new Field("DataIndex", BitConverter.GetBytes(index), 0, sizeof(int), Field.Store.YES));
+                        document.Add(new Field("Name", anatomy.AnatomicalName, Field.Store.YES, Field.Index.ANALYZED));
+                        foreach (String system in anatomy.Systems)
+                        {
+                            document.Add(new Field("Systems", system, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                        }
+                        if (anatomy.Classification != null)
+                        {
+                            document.Add(new Field("Classification", anatomy.Classification, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                        }
+                        if (anatomy.Region != null)
+                        {
+                            document.Add(new Field("Region", anatomy.Region, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                        }
 
-                    indexWriter.UpdateDocument(new Term("Id", index.ToString()), document);
+                        indexWriter.UpdateDocument(new Term("Id", index.ToString()), document);
+                    }
                 }
 
                 indexWriter.Optimize();

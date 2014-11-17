@@ -62,7 +62,7 @@ namespace Medical
         {
             get
             {
-                AxisAlignedBox box = new AxisAlignedBox();
+                AxisAlignedBox box = AxisAlignedBox.MinMaxable;
                 foreach (Anatomy anatomy in groupAnatomy)
                 {
                     box.merge(anatomy.WorldBoundingBox);
