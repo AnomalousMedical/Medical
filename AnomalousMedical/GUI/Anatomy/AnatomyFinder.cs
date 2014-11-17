@@ -34,6 +34,8 @@ namespace Medical.GUI
         private EditBox searchBox;
         private Button clearButton;
 
+        private ButtonGridItemNaturalSort naturalSort = new ButtonGridItemNaturalSort();
+
         private AnatomyContextWindowManager anatomyWindowManager;
 
         private SceneViewController sceneViewController;
@@ -62,7 +64,7 @@ namespace Medical.GUI
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
 
             ScrollView anatomyScroll = (ScrollView)window.findWidget("AnatomyList");
-            anatomyList = new HashSetMultiSelectButtonGrid(anatomyScroll, new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
+            anatomyList = new HashSetMultiSelectButtonGrid(anatomyScroll, new ButtonGridListLayout(), naturalSort);
             anatomyList.ItemActivated += anatomyList_ItemActivated;
             anatomyList.ItemAdded += anatomyList_ItemAdded;
             anatomyList.ItemRemoved += anatomyList_ItemRemoved;
@@ -119,7 +121,7 @@ namespace Medical.GUI
             }
             clearButton.Visible = true;
             searchBox.Caption = caption;
-            anatomyController.displayAnatomy(anatomyToDisplay);
+            anatomyController.displayAnatomy(anatomyToDisplay, SuggestedDisplaySortMode.Alphabetical);
         }
 
         public IntCoord DeadZone
@@ -349,9 +351,17 @@ namespace Medical.GUI
             buttonGridThumbs.itemRemoved(arg2);
         }
 
-        void anatomyController_SearchStarted()
+        void anatomyController_SearchStarted(SuggestedDisplaySortMode sortMode)
         {
             anatomyList.SuppressLayout = true;
+            if (sortMode == SuggestedDisplaySortMode.Alphabetical)
+            {
+                anatomyList.ItemComprarer = naturalSort;
+            }
+            else
+            {
+                anatomyList.ItemComprarer = null;
+            }
         }
 
         void anatomyController_SearchEnded()

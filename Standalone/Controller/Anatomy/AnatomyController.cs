@@ -24,6 +24,12 @@ namespace Medical
         Remove
     }
 
+    public enum SuggestedDisplaySortMode
+    {
+        None,
+        Alphabetical
+    }
+
     public class AnatomyController : IDisposable
     {
         public event EventHandler AnatomyChanged;
@@ -54,7 +60,7 @@ namespace Medical
         /// <summary>
         /// Fired when a search is started. This fires for all types of searches.
         /// </summary>
-        public event Action SearchStarted;
+        public event Action<SuggestedDisplaySortMode> SearchStarted;
 
         /// <summary>
         /// Fired when a search is ended. This fires for all types of searches.
@@ -111,7 +117,7 @@ namespace Medical
         public Anatomy findAnatomy(Ray3 ray)
         {
             Anatomy bestMatchAnatomy = null;
-            fireSearchStarted();
+            fireSearchStarted(SuggestedDisplaySortMode.None);
             fireClearDisplayedAnatomy();
 
             var matches = AnatomyManager.findAnatomy(ray);
@@ -164,10 +170,11 @@ namespace Medical
 
         public void findAnatomy(String searchTerm)
         {
-            fireSearchStarted();
-            fireClearDisplayedAnatomy();
             if (String.IsNullOrEmpty(searchTerm))
             {
+                fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
+                fireClearDisplayedAnatomy();
+
                 foreach (Anatomy anatomy in anatomySearchList.TopLevelAnatomy)
                 {
                     fireDisplayAnatomy(anatomy);
@@ -175,6 +182,9 @@ namespace Medical
             }
             else
             {
+                fireSearchStarted(SuggestedDisplaySortMode.None);
+                fireClearDisplayedAnatomy();
+
                 //foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
                 //List<Facet> facets = new List<Facet>();
                 //facets.Add(new Facet("Systems", "Muscular System"));
@@ -187,9 +197,9 @@ namespace Medical
             fireSearchEnded();
         }
 
-        public void displayAnatomy(IEnumerable<Anatomy> anatomyToDisplay)
+        public void displayAnatomy(IEnumerable<Anatomy> anatomyToDisplay, SuggestedDisplaySortMode sortMode)
         {
-            fireSearchStarted();
+            fireSearchStarted(sortMode);
             fireClearDisplayedAnatomy();
             foreach (Anatomy relatedAnatomy in anatomyToDisplay)
             {
@@ -327,11 +337,11 @@ namespace Medical
             }
         }
 
-        private void fireSearchStarted()
+        private void fireSearchStarted(SuggestedDisplaySortMode suggestedSortMode)
         {
             if (SearchStarted != null)
             {
-                SearchStarted.Invoke();
+                SearchStarted.Invoke(suggestedSortMode);
             }
         }
 
