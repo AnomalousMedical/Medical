@@ -676,9 +676,7 @@
     <Compile Include="Controller\Resources\ResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineStaticInfo.cs" />
     <Compile Include="Controller\Resources\VirtualFilesystemResourceProvider.cs" />
-    <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
+    <Compile Include="Controller\Anatomy\AnatomyGroup.cs" />
     <Compile Include="Controller\Update\UpdateController.cs" />
     <Compile Include="GUI\AbstractFullscreenGUIPopup.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHost.cs" />

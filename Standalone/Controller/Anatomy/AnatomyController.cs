@@ -30,12 +30,18 @@ namespace Medical
         Alphabetical
     }
 
+    public enum TopLevelMode
+    {
+        System,
+        Region,
+        Tag,
+        Classification
+    }
+
     public class AnatomyController : IDisposable
     {
         public event EventHandler AnatomyChanged;
 
-        private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
-        private AnatomySearchList anatomySearchList = new AnatomySearchList();
         private AnatomyLuceneSearch luceneSearch = new AnatomyLuceneSearch();
 
         private AnatomyPickingMode pickingMode = AnatomyPickingMode.Group;
@@ -46,6 +52,7 @@ namespace Medical
         public event EventDelegate<AnatomyController, SelectionOperator> SelectionOperatorChanged;
         private bool showPremiumAnatomy = true;
         private AnatomyCommandPermissions commandPermissions = AnatomyCommandPermissions.None;
+        private TopLevelMode currentTopLevelMode = TopLevelMode.System;
 
         /// <summary>
         /// Called when a piece of anatomy has been searched for and should be displayed.
@@ -82,16 +89,7 @@ namespace Medical
             AnatomyOrganizer organizer = AnatomyManager.AnatomyOrganizer;
             if (organizer != null)
             {
-                anatomyTagManager.setupPropertyGroups(organizer.TagProperties);
-            }
-            foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
-            {
-                anatomySearchList.addAnatomy(anatomy);
-                anatomyTagManager.addAnatomyIdentifier(anatomy);
-            }
-            foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
-            {
-                anatomySearchList.addAnatomy(tagGroup);
+                luceneSearch.setAnatomyOrganizer(organizer);
             }
             luceneSearch.setAnatomy(AnatomyManager.AnatomyList);
             if (AnatomyChanged != null)
@@ -102,8 +100,7 @@ namespace Medical
 
         public void sceneUnloading()
         {
-            anatomyTagManager.clear();
-            anatomySearchList.clear();
+            luceneSearch.clear();
         }
 
         /// <summary>
@@ -130,25 +127,27 @@ namespace Medical
                 foreach (AnatomyIdentifier anatomy in matches.Anatomy)
                 {
                     fireDisplayAnatomy(anatomy);
-                    foreach (var tag in anatomy.Tags)
+                    foreach (var system in anatomy.Systems)
                     {
-                        anatomyTags.Add(tag);
+                        anatomyTags.Add(system);
                     }
                 }
-                foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
+                //Show related tag anatomy
+                AnatomyGroup tagAnatomy;
+                foreach(String tag in anatomyTags)
                 {
-                    if (tagGroup.ShowInClickSearch && anatomyTags.Contains(tagGroup.AnatomicalName))
+                    if(luceneSearch.tryGetSystem(tag, out tagAnatomy) && tagAnatomy.ShowInClickSearch)
                     {
-                        fireDisplayAnatomy(tagGroup);
+                        fireDisplayAnatomy(tagAnatomy);
                     }
                 }
 
                 if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
                 {
-                    AnatomyTagGroup tagGroup;
-                    foreach (var tag in firstMatch.Tags)
+                    AnatomyGroup tagGroup;
+                    foreach (var tag in firstMatch.Systems)
                     {
-                        if (anatomyTagManager.tryGetTagGroup(tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
+                        if (luceneSearch.tryGetSystem(tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
                         {
                             bestMatchAnatomy = tagGroup;
                             break;
@@ -158,7 +157,7 @@ namespace Medical
             }
             else
             {
-                foreach (var anatomy in anatomySearchList.TopLevelAnatomy)
+                foreach (var anatomy in topLevelSelections())
                 {
                     fireDisplayAnatomy(anatomy);
                 }
@@ -175,7 +174,7 @@ namespace Medical
                 fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
                 fireClearDisplayedAnatomy();
 
-                foreach (Anatomy anatomy in anatomySearchList.TopLevelAnatomy)
+                foreach (Anatomy anatomy in topLevelSelections())
                 {
                     fireDisplayAnatomy(anatomy);
                 }
@@ -350,6 +349,23 @@ namespace Medical
             if (SearchEnded != null)
             {
                 SearchEnded.Invoke();
+            }
+        }
+
+        private IEnumerable<AnatomyGroup> topLevelSelections()
+        {
+            switch(currentTopLevelMode)
+            {
+                case TopLevelMode.Classification:
+                    return luceneSearch.Classifications;
+                case TopLevelMode.Region:
+                    return luceneSearch.Regions;
+                case TopLevelMode.System:
+                    return luceneSearch.Systems;
+                case TopLevelMode.Tag:
+                    return luceneSearch.Tags;
+                default:
+                    throw new NotImplementedException();
             }
         }
     }

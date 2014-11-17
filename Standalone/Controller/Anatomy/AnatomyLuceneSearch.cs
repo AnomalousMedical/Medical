@@ -24,6 +24,10 @@ namespace Medical
         private AnatomyAnalyzer analyzer = new AnatomyAnalyzer();
 
         private List<AnatomyIdentifier> anatomyList = new List<AnatomyIdentifier>();
+        private Dictionary<String, AnatomyGroup> systems = new Dictionary<String, AnatomyGroup>();
+        private Dictionary<String, AnatomyGroup> regions = new Dictionary<String, AnatomyGroup>();
+        private Dictionary<String, AnatomyGroup> classifications = new Dictionary<String, AnatomyGroup>();
+        private Dictionary<String, AnatomyGroup> tags = new Dictionary<String, AnatomyGroup>();
 
         public AnatomyLuceneSearch()
         {
@@ -32,7 +36,7 @@ namespace Medical
 
         public void Dispose()
         {
-            destroySearcherAndDirectory();
+            clear();
             analyzer.Dispose();
         }
 
@@ -53,9 +57,18 @@ namespace Medical
             }
         }
 
+        public void setAnatomyOrganizer(AnatomyOrganizer organizer)
+        {
+            foreach (AnatomyTagProperties prop in organizer.TagProperties)
+            {
+                AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                tags.Add(prop.Name, group);
+            }
+        }
+
         public void setAnatomy(IEnumerable<AnatomyIdentifier> anatomyIdentifiers)
         {
-            destroySearcherAndDirectory();
+            clear();
 
             directory = new RAMDirectory();
 
@@ -72,17 +85,30 @@ namespace Medical
                         document.Add(new Field("Id", index.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
                         document.Add(new Field("DataIndex", BitConverter.GetBytes(index), 0, sizeof(int), Field.Store.YES));
                         document.Add(new Field("Name", anatomy.AnatomicalName, Field.Store.YES, Field.Index.ANALYZED));
+                        document.Add(new Field("AnatomyType", "Individual", Field.Store.YES, Field.Index.NOT_ANALYZED));
                         foreach (String system in anatomy.Systems)
                         {
                             document.Add(new Field("Systems", system, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                            AnatomyGroup systemGroup = getSystemGroup(system);
+                            systemGroup.addAnatomy(anatomy);
+                        }
+                        foreach(String tag in anatomy.Tags)
+                        {
+                            document.Add(new Field("Tags", tag, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                            AnatomyGroup tagGroup = getTagGroup(tag);
+                            tagGroup.addAnatomy(anatomy);
                         }
                         if (anatomy.Classification != null)
                         {
                             document.Add(new Field("Classification", anatomy.Classification, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                            AnatomyGroup classificationGroup = getClassificationGroup(anatomy.Classification);
+                            classificationGroup.addAnatomy(anatomy);
                         }
                         if (anatomy.Region != null)
                         {
                             document.Add(new Field("Region", anatomy.Region, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                            AnatomyGroup regionGorup = getRegionGroup(anatomy.Region);
+                            regionGorup.addAnatomy(anatomy);
                         }
 
                         indexWriter.UpdateDocument(new Term("Id", index.ToString()), document);
@@ -96,17 +122,13 @@ namespace Medical
             facetManager = new FacetManager(searcher.IndexReader, analyzer, getFacets(), LuceneVersion);
         }
 
-        private IEnumerable<String> getFacets()
+        public void clear()
         {
-            yield return "Systems";
-            yield return "Connections";
-            yield return "Tags";
-            yield return "Region";
-            yield return "Classification";
-        }
+            systems.Clear();
+            regions.Clear();
+            classifications.Clear();
+            tags.Clear();
 
-        private void destroySearcherAndDirectory()
-        {
             if (searcher != null)
             {
                 searcher.Dispose();
@@ -118,6 +140,112 @@ namespace Medical
                 directory.Dispose();
                 directory = null;
             }
+        }
+
+        public IEnumerable<AnatomyGroup> Systems
+        {
+            get
+            {
+                return systems.Values;
+            }
+        }
+
+        public bool tryGetSystem(String name, out AnatomyGroup group)
+        {
+            return systems.TryGetValue(name, out group);
+        }
+
+        public IEnumerable<AnatomyGroup> Tags
+        {
+            get
+            {
+                return tags.Values;
+            }
+        }
+
+        public bool tryGetTag(String name, out AnatomyGroup group)
+        {
+            return tags.TryGetValue(name, out group);
+        }
+
+        public IEnumerable<AnatomyGroup> Regions
+        {
+            get
+            {
+                return regions.Values;
+            }
+        }
+
+        public bool tryGetRegion(String name, out AnatomyGroup group)
+        {
+            return regions.TryGetValue(name, out group);
+        }
+
+        public IEnumerable<AnatomyGroup> Classifications
+        {
+            get
+            {
+                return classifications.Values;
+            }
+        }
+
+        public bool tryGetClassification(String name, out AnatomyGroup group)
+        {
+            return classifications.TryGetValue(name, out group);
+        }
+
+        private AnatomyGroup getSystemGroup(String system)
+        {
+            AnatomyGroup group;
+            if(!systems.TryGetValue(system, out group))
+            {
+                group = new AnatomyGroup(system);
+                systems.Add(system, group);
+            }
+            return group;
+        }
+
+        private AnatomyGroup getTagGroup(String tag)
+        {
+            AnatomyGroup group;
+            if (!tags.TryGetValue(tag, out group))
+            {
+                group = new AnatomyGroup(tag);
+                tags.Add(tag, group);
+            }
+            return group;
+        }
+
+        private AnatomyGroup getRegionGroup(String region)
+        {
+            AnatomyGroup group;
+            if (!regions.TryGetValue(region, out group))
+            {
+                group = new AnatomyGroup(region);
+                regions.Add(region, group);
+            }
+            return group;
+        }
+
+        private AnatomyGroup getClassificationGroup(String classification)
+        {
+            AnatomyGroup group;
+            if (!classifications.TryGetValue(classification, out group))
+            {
+                group = new AnatomyGroup(classification);
+                classifications.Add(classification, group);
+            }
+            return group;
+        }
+
+        private IEnumerable<String> getFacets()
+        {
+            yield return "Systems";
+            yield return "Connections";
+            yield return "Tags";
+            yield return "Region";
+            yield return "Classification";
+            yield return "AnatomyType";
         }
 
         private Query buildQuery(String searchTerm, IEnumerable<Facet> facets)

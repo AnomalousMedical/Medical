@@ -47,10 +47,10 @@ namespace Medical
         private Vector3 previewCameraDirection = Vector3.Backward;
 
         [DoNotSave]
-        private List<String> tags = new List<String>();
+        private List<AnatomyCommand> commands = new List<AnatomyCommand>();
 
         [DoNotSave]
-        private List<AnatomyCommand> commands = new List<AnatomyCommand>();
+        private List<String> tags = new List<String>();
 
         [DoNotSave]
         private List<String> systems = new List<String>();
