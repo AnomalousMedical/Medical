@@ -144,9 +144,9 @@ namespace Medical
                 if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
                 {
                     AnatomyGroup tagGroup;
-                    foreach (var tag in firstMatch.Systems)
+                    foreach (var tag in firstMatch.Tags)
                     {
-                        if (luceneSearch.tryGetSystem(tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
+                        if (luceneSearch.tryGetTag(tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
                         {
                             bestMatchAnatomy = tagGroup;
                             break;
