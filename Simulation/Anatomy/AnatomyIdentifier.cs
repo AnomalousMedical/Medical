@@ -339,50 +339,54 @@ namespace Medical
 
         protected override void customSave(SaveInfo info)
         {
+            info.Version = 1;
             base.customSave(info);
-            info.ExtractList<String>("AnatomyTag", tags);
-            info.ExtractList<AnatomyCommand>("AnatomyCommand", commands);
+            info.ExtractList("AnatomyTag", tags);
             info.ExtractList("System", systems);
             info.ExtractList("Connection", connections);
+            info.ExtractList("AnatomyCommand", commands);
         }
 
-        //Erase this static property when finished upgrading
-        static String[] classificationUpgrades = { "Bone", "Ligament", "Muscle" };
-        static String[] regions = { "Arm", "Leg" };
+        //Custom conversion code from tags to new style, remove this after updating
+        public static readonly String[] classificationUpgrades = { "Bone", "Ligament", "Muscle" };
+        public static readonly String[] regions = { "Arm", "Leg" };
+
         protected override void customLoad(LoadInfo info)
         {
             base.customLoad(info);
-            //info.RebuildList<String>("AnatomyTag", tags); //Add this back after conversion completed, can remove AnatomyTag class then also.
-            info.RebuildList<AnatomyCommand>("AnatomyCommand", commands);
-            info.RebuildList("System", systems);
-            info.RebuildList("Connection", connections);
-
-            
-            //Custom conversion code from tags to new style, remove this after updating
-            List<AnatomyTag> anatomyTags = new List<AnatomyTag>();
-            info.RebuildList<AnatomyTag>("AnatomyTag", anatomyTags);
-            bool updateSystems = systems.Count == 0;
-            List<AnatomyTag> toRemove = new List<AnatomyTag>();
-            foreach (var tag in anatomyTags)
+            //Can remove after everything is converted.
+            if (info.Version < 1)
             {
-                if (updateSystems && tag.Tag.Contains("System") && !systems.Contains(tag.Tag))
+                List<AnatomyTag> anatomyTags = new List<AnatomyTag>();
+                info.RebuildList<AnatomyTag>("AnatomyTag", anatomyTags);
+                List<AnatomyTag> toRemove = new List<AnatomyTag>();
+                foreach (var tag in anatomyTags)
                 {
-                    systems.Add(tag.Tag);
-                    toRemove.Add(tag);
+                    if (tag.Tag.Contains("System"))
+                    {
+                        systems.Add(tag.Tag);
+                        toRemove.Add(tag);
+                    }
+                    if (classification == null && classificationUpgrades.Contains(tag.Tag))
+                    {
+                        classification = tag.Tag;
+                        toRemove.Add(tag);
+                    }
+                    if (region == null && regions.Contains(tag.Tag))
+                    {
+                        region = tag.Tag;
+                        toRemove.Add(tag);
+                    }
                 }
-                if(classification == null && classificationUpgrades.Contains(tag.Tag))
-                {
-                    classification = tag.Tag;
-                    toRemove.Add(tag);
-                }
-                if(region == null && regions.Contains(tag.Tag))
-                {
-                    region = tag.Tag;
-                    toRemove.Add(tag);
-                }
+                tags.AddRange(anatomyTags.Where(i => !toRemove.Contains(i)).Select(t => t.Tag));
             }
-            anatomyTags.RemoveAll(i => toRemove.Contains(i));
-            tags.AddRange(anatomyTags.Select(t => t.Tag));
+            else
+            {
+                info.RebuildList("AnatomyTag", tags);
+                info.RebuildList("System", systems);
+                info.RebuildList("Connection", connections);
+            }
+            info.RebuildList("AnatomyCommand", commands);
         }
 
         private static AnatomyCommandBrowser anatomyCommandBrowser = null;

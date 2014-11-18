@@ -28,6 +28,20 @@ namespace Medical
 
         [DoNotCopy]
         [Editable]
+        public String Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
+
+        [DoNotCopy]
+        [Editable]
         public bool ShowInTextSearch
         {
             get
@@ -79,19 +93,6 @@ namespace Medical
             set
             {
                 showInBasicVersion = value;
-            }
-        }
-
-        [DoNotCopy]
-        public String Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
             }
         }
 

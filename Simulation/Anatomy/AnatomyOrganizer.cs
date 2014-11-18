@@ -11,14 +11,26 @@ namespace Medical
 {
     public partial class AnatomyOrganizer : BehaviorInterface
     {
-        private AnatomyTreeNode rootNode;
+        [DoNotSave]
+        private List<AnatomyTagProperties> tagProperties = new List<AnatomyTagProperties>();
 
         [DoNotSave]
-        private List<AnatomyTagProperties> tagPropertiesList = new List<AnatomyTagProperties>();
+        private List<AnatomyTagProperties> systemProperties = new List<AnatomyTagProperties>();
+
+        [DoNotSave]
+        private List<AnatomyTagProperties> regionProperties = new List<AnatomyTagProperties>();
+
+        [DoNotSave]
+        private List<AnatomyTagProperties> classificationProperties = new List<AnatomyTagProperties>();
 
         public AnatomyOrganizer()
         {
-            rootNode = new AnatomyTreeNode("Anatomy Tree");
+            
+        }
+
+        protected override void link()
+        {
+            AnatomyManager.AnatomyOrganizer = this;
         }
 
         protected override void destroy()
@@ -27,127 +39,115 @@ namespace Medical
             AnatomyManager.AnatomyOrganizer = null;
         }
 
-        public void addProperty(AnatomyTagProperties prop)
-        {
-            tagPropertiesList.Add(prop);
-            onPropertyAdded(prop);
-        }
-
-        public void removeProperty(AnatomyTagProperties prop)
-        {
-            tagPropertiesList.Remove(prop);
-            onPropertyRemoved(prop);
-        }
-
-        public IEnumerable<AnatomyTreeNode> RootNodeChildren
-        {
-            get
-            {
-                return rootNode.Children;
-            }
-        }
-
         public IEnumerable<AnatomyTagProperties> TagProperties
         {
             get
             {
-                return tagPropertiesList;
+                return tagProperties;
             }
         }
 
-        protected override void link()
+        public IEnumerable<AnatomyTagProperties> SystemProperties
         {
-            AnatomyManager.AnatomyOrganizer = this;
+            get
+            {
+                return systemProperties;
+            }
+        }
+
+        public IEnumerable<AnatomyTagProperties> RegionProperties
+        {
+            get
+            {
+                return regionProperties;
+            }
+        }
+
+        public IEnumerable<AnatomyTagProperties> ClassificationProperties
+        {
+            get
+            {
+                return classificationProperties;
+            }
         }
 
         protected override void customLoad(LoadInfo info)
         {
-            info.RebuildList<AnatomyTagProperties>("TagProperty", tagPropertiesList);
+            base.customLoad(info);
+            if (info.Version < 1)
+            {
+                List<AnatomyTagProperties> oldProperties = new List<AnatomyTagProperties>();
+                info.RebuildList("TagProperty", oldProperties);
+                List<AnatomyTagProperties> toRemove = new List<AnatomyTagProperties>();
+                foreach (var oldProp in oldProperties)
+                {
+                    if (oldProp.Name.Contains("System"))
+                    {
+                        systemProperties.Add(oldProp);
+                        toRemove.Add(oldProp);
+                    }
+                    else if (AnatomyIdentifier.classificationUpgrades.Contains(oldProp.Name))
+                    {
+                        classificationProperties.Add(oldProp);
+                        toRemove.Add(oldProp);
+                    }
+                    else if (AnatomyIdentifier.regions.Contains(oldProp.Name))
+                    {
+                        regionProperties.Add(oldProp);
+                        toRemove.Add(oldProp);
+                    }
+                }
+                tagProperties.AddRange(oldProperties.Where(i => !toRemove.Contains(i)).Select(t => t));
+            }
+            else
+            {
+                info.RebuildList<AnatomyTagProperties>("TagProperty", tagProperties);
+                info.RebuildList<AnatomyTagProperties>("SystemProperty", systemProperties);
+                info.RebuildList<AnatomyTagProperties>("RegionProperty", regionProperties);
+                info.RebuildList<AnatomyTagProperties>("ClassificationProperty", classificationProperties);
+            }
         }
 
         protected override void customSave(SaveInfo info)
         {
-            info.ExtractList<AnatomyTagProperties>("TagProperty", tagPropertiesList);
+            base.customSave(info);
+            info.Version = 1;
+            info.ExtractList<AnatomyTagProperties>("TagProperty", tagProperties);
+            info.ExtractList<AnatomyTagProperties>("SystemProperty", systemProperties);
+            info.ExtractList<AnatomyTagProperties>("RegionProperty", regionProperties);
+            info.ExtractList<AnatomyTagProperties>("ClassificationProperty", classificationProperties);
         }
     }
 
     partial class AnatomyOrganizer
     {
-        private EditInterface tagPropertiesInterface;
-
         protected override void customizeEditInterface(EditInterface editInterface)
-        {
-            tagPropertiesInterface = ReflectedEditInterface.createUnscannedEditInterface("Tag Properties", null);
-            tagPropertiesInterface.addCommand(new EditInterfaceCommand("Add Tag Property", addProperty));
-            var propertyManager = tagPropertiesInterface.createEditInterfaceManager<AnatomyTagProperties>();
-            propertyManager.addCommand(new EditInterfaceCommand("Remove", removeProperty));
-            propertyManager.addCommand(new EditInterfaceCommand("Rename", renameProperty));
-            foreach (AnatomyTagProperties prop in tagPropertiesList)
-            {
-                onPropertyAdded(prop);
-            }
-
-            editInterface.addSubInterface(tagPropertiesInterface);
-            editInterface.addSubInterface(rootNode.EditInterface);
+        {                
+            editInterface.addSubInterfaceForObject(tagProperties, 
+                new ReflectedListLikeEditInterface<AnatomyTagProperties>(tagProperties, "Tag Properties", () => new AnatomyTagProperties(), validateCallback: () => validateProperties(tagProperties)));
+            editInterface.addSubInterfaceForObject(systemProperties,
+                new ReflectedListLikeEditInterface<AnatomyTagProperties>(systemProperties, "System Properties", () => new AnatomyTagProperties(), validateCallback: () => validateProperties(systemProperties)));
+            editInterface.addSubInterfaceForObject(regionProperties,
+                new ReflectedListLikeEditInterface<AnatomyTagProperties>(regionProperties, "Region Properties", () => new AnatomyTagProperties(), validateCallback: () => validateProperties(regionProperties)));
+            editInterface.addSubInterfaceForObject(classificationProperties,
+                new ReflectedListLikeEditInterface<AnatomyTagProperties>(classificationProperties, "Classification Properties", () => new AnatomyTagProperties(), validateCallback: () => validateProperties(classificationProperties)));
         }
 
-        void addProperty(EditUICallback callback)
+        private void validateProperties(IEnumerable<AnatomyTagProperties> properties)
         {
-            callback.getInputString("Enter a name for the child anatomy tag group.", delegate(String result, ref String message)
+            HashSet<String> names = new HashSet<string>();
+            foreach (var prop in properties)
             {
-                foreach (AnatomyTagProperties prop in tagPropertiesList)
+                if (String.IsNullOrWhiteSpace(prop.Name))
                 {
-                    if (prop.Name == result)
-                    {
-                        message = String.Format("Tag group properties for {0} already exists. Please enter another name.", result);
-                        return false;
-                    }
+                    throw new ValidationException("Cannot include empty names.");
                 }
-                addProperty(new AnatomyTagProperties(result));
-                return true;
-            });
-        }
-
-        void onPropertyAdded(AnatomyTagProperties prop)
-        {
-            if (tagPropertiesInterface != null)
-            {
-                tagPropertiesInterface.addSubInterface(prop, prop.EditInterface);
-            }
-        }
-
-        void removeProperty(EditUICallback callback)
-        {
-            AnatomyTagProperties prop = tagPropertiesInterface.resolveSourceObject<AnatomyTagProperties>(callback.getSelectedEditInterface());
-            removeProperty(prop);
-        }
-
-        void onPropertyRemoved(AnatomyTagProperties prop)
-        {
-            if (tagPropertiesInterface != null)
-            {
-                tagPropertiesInterface.removeSubInterface(prop);
-            }
-        }
-
-        void renameProperty(EditUICallback callback)
-        {
-            callback.getInputString("Enter a new name for the child anatomy tag group.", delegate(String result, ref String message)
-            {
-                foreach (AnatomyTagProperties prop in tagPropertiesList)
+                if (names.Contains(prop.Name))
                 {
-                    if (prop.Name == result)
-                    {
-                        message = String.Format("Tag group properties for {0} already exists. Please enter another name.", result);
-                        return false;
-                    }
+                    throw new ValidationException("The name {0} exists more than once, please remove duplicates.", prop.Name);
                 }
-                var selectedEditInterface = callback.getSelectedEditInterface();
-                AnatomyTagProperties oldProp = tagPropertiesInterface.resolveSourceObject<AnatomyTagProperties>(selectedEditInterface);
-                oldProp.Name = result;
-                selectedEditInterface.setName(oldProp.Name);
-                return true;
-            });
+                names.Add(prop.Name);
+            }
         }
     }
 }
