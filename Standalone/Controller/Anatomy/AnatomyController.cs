@@ -126,7 +126,7 @@ namespace Medical
                 foreach (AnatomyIdentifier anatomy in matches.Anatomy)
                 {
                     fireDisplayAnatomy(anatomy);
-                    foreach (var system in anatomy.Systems)
+                    foreach (var system in anatomy.Tags)
                     {
                         anatomyTags.Add(system);
                     }
@@ -135,7 +135,7 @@ namespace Medical
                 AnatomyGroup tagAnatomy;
                 foreach(String tag in anatomyTags)
                 {
-                    if(luceneSearch.tryGetSystem(tag, out tagAnatomy) && tagAnatomy.ShowInClickSearch)
+                    if(luceneSearch.tryGetTag(tag, out tagAnatomy) && tagAnatomy.ShowInClickSearch)
                     {
                         fireDisplayAnatomy(tagAnatomy);
                     }
