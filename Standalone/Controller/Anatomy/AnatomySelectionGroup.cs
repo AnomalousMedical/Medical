@@ -44,17 +44,12 @@ namespace Medical
                 {
                     foreach (var command in anatomy.Commands)
                     {
-                        yield return command;
+                        if (command.DisplayInGroup)
+                        {
+                            yield return command;
+                        }
                     }
                 }
-            }
-        }
-
-        public IEnumerable<Anatomy> RelatedAnatomy
-        {
-            get
-            {
-                return relatedAnatomy;
             }
         }
 

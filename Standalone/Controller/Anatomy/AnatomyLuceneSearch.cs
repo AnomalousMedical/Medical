@@ -21,15 +21,17 @@ namespace Medical
         private IndexSearcher searcher;
         private AnatomyAnalyzer analyzer = new AnatomyAnalyzer();
 
+        private AnatomyController anatomyController;
+
         private List<AnatomyIdentifier> anatomyList = new List<AnatomyIdentifier>();
         private Dictionary<String, AnatomyGroup> systems = new Dictionary<String, AnatomyGroup>();
         private Dictionary<String, AnatomyGroup> regions = new Dictionary<String, AnatomyGroup>();
         private Dictionary<String, AnatomyGroup> classifications = new Dictionary<String, AnatomyGroup>();
         private Dictionary<String, AnatomyGroup> tags = new Dictionary<String, AnatomyGroup>();
 
-        public AnatomyLuceneSearch()
+        public AnatomyLuceneSearch(AnatomyController anatomyController)
         {
-            
+            this.anatomyController = anatomyController;
         }
 
         public void Dispose()
@@ -66,7 +68,7 @@ namespace Medical
             foreach (AnatomyTagProperties prop in organizer.SystemProperties)
             {
                 AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
-                systems.Add(prop.Name, group);
+                setupSystemGroup(group);
             }
 
             foreach (AnatomyTagProperties prop in organizer.RegionProperties)
@@ -91,6 +93,12 @@ namespace Medical
             {
                 foreach (var anatomy in anatomyIdentifiers)
                 {
+                    anatomy.addExternalCommand(new CallbackAnatomyCommand("Show Systems", () =>
+                        anatomyController.displayAnatomy(String.Format("{0} Systems", anatomy.AnatomicalName), anatomy.Systems.Select(i => systems[i]), SuggestedDisplaySortMode.Alphabetical))
+                        {
+                            DisplayInGroup = false
+                        });
+
                     if (anatomy.ShowInTextSearch)
                     {
                         Document document = new Document();
@@ -213,9 +221,15 @@ namespace Medical
             if(!systems.TryGetValue(system, out group))
             {
                 group = new AnatomyGroup(system);
-                systems.Add(system, group);
+                setupSystemGroup(group);
             }
             return group;
+        }
+
+        private void setupSystemGroup(AnatomyGroup group)
+        {
+            group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "System")));
+            systems.Add(group.AnatomicalName, group);
         }
 
         private AnatomyGroup getTagGroup(String tag)
@@ -321,6 +335,12 @@ namespace Medical
             }
 
             return query;
+        }
+
+        private void displayAnatomyForFacet(String groupName, String facet)
+        {
+            anatomyController.displayAnatomy(String.Format("{0} Anatomy", groupName),
+                search("", new AnatomyFacet[] { new AnatomyFacet(facet, groupName) }, int.MaxValue), SuggestedDisplaySortMode.Alphabetical);
         }
 
         private static Query buildEmptyQuery()

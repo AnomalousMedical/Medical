@@ -22,11 +22,6 @@ namespace Medical
         IEnumerable<AnatomyCommand> Commands { get; }
 
         /// <summary>
-        /// Get an enumeration over all linked related anatomy.
-        /// </summary>
-        IEnumerable<Anatomy> RelatedAnatomy { get; }
-
-        /// <summary>
         /// Get an enumerator over all anatomy that can be added to a selection from this piece of antomy.
         /// </summary>
         IEnumerable<Anatomy> SelectableAnatomy { get; }

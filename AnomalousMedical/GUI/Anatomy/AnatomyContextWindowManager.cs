@@ -114,11 +114,6 @@ namespace Medical.GUI
             }
         }
 
-        internal void showRelatedAnatomy(Anatomy anatomy)
-        {
-            anatomyFinder.displayAnatomy(String.Format("Related to {0}", anatomy.AnatomicalName), anatomy.RelatedAnatomy);
-        }
-
         internal void alertWindowPinned(AnatomyContextWindow window)
         {
             currentAnatomyWindow = null;

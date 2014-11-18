@@ -50,6 +50,9 @@ namespace Medical
         private List<AnatomyCommand> commands = new List<AnatomyCommand>();
 
         [DoNotSave]
+        private List<CallbackAnatomyCommand> externalCommands = new List<CallbackAnatomyCommand>();
+
+        [DoNotSave]
         private List<String> tags = new List<String>();
 
         [DoNotSave]
@@ -65,10 +68,6 @@ namespace Medical
         [DoNotCopy]
         [DoNotSave]
         private Entity entity;
-
-        [DoNotCopy]
-        [DoNotSave]
-        private LinkedList<Anatomy> relatedAnatomy = new LinkedList<Anatomy>();
 
         [DoNotCopy]
         [DoNotSave]
@@ -111,11 +110,6 @@ namespace Medical
             }
         }
 
-        public void addRelatedAnatomy(Anatomy anatomy)
-        {
-            relatedAnatomy.AddLast(anatomy);
-        }
-
         public String AnatomicalName
         {
             get
@@ -141,16 +135,14 @@ namespace Medical
         {
             get
             {
-                return commands;
-            }
-        }
-
-        [DoNotCopy]
-        public IEnumerable<Anatomy> RelatedAnatomy
-        {
-            get
-            {
-                return relatedAnatomy;
+                foreach(var command in externalCommands)
+                {
+                    yield return command;
+                }
+                foreach (var command in commands)
+                {
+                    yield return command;
+                }
             }
         }
 
@@ -325,6 +317,15 @@ namespace Medical
         {
             commands.Remove(command);
             editInterface.safeRemoveSubInterfaceForObject(commands, command);
+        }
+
+        /// <summary>
+        /// Add an external command, these commands are not saved.
+        /// </summary>
+        /// <param name="command"></param>
+        public void addExternalCommand(CallbackAnatomyCommand command)
+        {
+            externalCommands.Add(command);
         }
 
         internal bool checkCollision(Ray3 ray, ref float distanceOnRay)

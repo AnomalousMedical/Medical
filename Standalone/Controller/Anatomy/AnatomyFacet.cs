@@ -14,6 +14,12 @@ namespace Medical
             this.Values = values;
         }
 
+        public AnatomyFacet(String field, String value)
+        {
+            this.Field = field;
+            this.Values = new String[]{ value };
+        }
+
         public String Field { get; set; }
 
         public IEnumerable<String> Values { get; set; }

@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Anatomy\AbstractAnatomyCommand.cs" />
     <Compile Include="Anatomy\AbstractBooleanAnatomyCommand.cs" />
+    <Compile Include="Anatomy\AbstractExecuteAnatomyCommand.cs" />
     <Compile Include="Anatomy\AbstractNumericAnatomyCommand.cs" />
     <Compile Include="Anatomy\Anatomy.cs" />
     <Compile Include="Anatomy\AnatomyCommand.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Anatomy\AnatomyOrganizer.cs" />
     <Compile Include="Anatomy\AnatomyTreeNode.cs" />
     <Compile Include="Anatomy\AnatomyClickResult.cs" />
+    <Compile Include="Anatomy\CallbackAnatomyCommand.cs" />
     <Compile Include="Anatomy\LockIKLimitAnatomyCommand.cs" />
     <Compile Include="Anatomy\SortedAnatomyClickResults.cs" />
     <Compile Include="Anatomy\TransparencyAnatomyCommand.cs" />

@@ -116,5 +116,10 @@ namespace Medical
         /// </summary>
         /// <returns>The newly created EditInterface.</returns>
         EditInterface createEditInterface();
+
+        /// <summary>
+        /// True to display when in a group, false to hide in a group.
+        /// </summary>
+        bool DisplayInGroup { get; }
     }
 }

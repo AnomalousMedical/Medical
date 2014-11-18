@@ -42,6 +42,7 @@ namespace Medical.GUI
             {
                 command.BooleanValueChanged -= command_BooleanValueChanged;
             }
+            commands.Clear();
         }
 
         public override void layout()

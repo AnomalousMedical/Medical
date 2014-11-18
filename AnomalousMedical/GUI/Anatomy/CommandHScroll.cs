@@ -50,6 +50,7 @@ namespace Medical.GUI
             {
                 command.NumericValueChanged -= command_NumericValueChanged;
             }
+            commands.Clear();
         }
 
         public override void layout()

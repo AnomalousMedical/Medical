@@ -27,6 +27,11 @@ namespace Medical
         public event AnatomyNumericValueChanged NumericValueChanged;
         public event AnatomyBooleanValueChanged BooleanValueChanged;
 
+        public AbstractAnatomyCommand()
+        {
+            DisplayInGroup = true;
+        }
+
         public abstract bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage);
 
         public abstract void destroy();
@@ -44,6 +49,11 @@ namespace Medical
         public abstract bool BooleanValue { get; set; }
 
         public abstract String UIText { get; }
+
+        /// <summary>
+        /// True to display when in a group, false to hide in a group.
+        /// </summary>
+        public bool DisplayInGroup { get; set; }
 
         public abstract void execute();
 

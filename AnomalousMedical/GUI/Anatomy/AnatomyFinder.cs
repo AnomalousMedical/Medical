@@ -61,6 +61,7 @@ namespace Medical.GUI
             anatomyController.SelectedAnatomy.SelectedAnatomyChanged += anatomyController_SelectedAnatomyChanged;
             anatomyController.SearchStarted += anatomyController_SearchStarted;
             anatomyController.SearchEnded += anatomyController_SearchEnded;
+            anatomyController.SuggestSearchCaption += anatomyController_SuggestSearchCaption;
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
             anatomyFilter = new AnatomyFilter();
@@ -118,17 +119,6 @@ namespace Medical.GUI
         public void sceneUnloading()
         {
             anatomyWindowManager.sceneUnloading();
-        }
-
-        public void displayAnatomy(String caption, IEnumerable<Anatomy> anatomyToDisplay)
-        {
-            if (!Visible)
-            {
-                Visible = true;
-            }
-            clearButton.Visible = true;
-            searchBox.Caption = caption;
-            anatomyController.displayAnatomy(anatomyToDisplay, SuggestedDisplaySortMode.Alphabetical);
         }
 
         public IntCoord DeadZone
@@ -407,6 +397,16 @@ namespace Medical.GUI
         void filter_MouseButtonClick(Widget source, EventArgs e)
         {
             anatomyFilter.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+        }
+
+        void anatomyController_SuggestSearchCaption(String caption)
+        {
+            if (!Visible)
+            {
+                Visible = true;
+            }
+            clearButton.Visible = true;
+            searchBox.Caption = caption;
         }
     }
 }

@@ -141,6 +141,7 @@
     <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
     <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
     <Compile Include="GUI\Anatomy\ButtonGridItemNaturalSort.cs" />
+    <Compile Include="GUI\Anatomy\CommandButton.cs" />
     <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />

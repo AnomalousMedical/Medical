@@ -9,6 +9,7 @@ namespace Medical
     public class AnatomyGroup : Anatomy
     {
         private List<Anatomy> groupAnatomy = new List<Anatomy>();
+        private List<AnatomyCommand> additionalCommands = new List<AnatomyCommand>();
         bool showInBasicVersion = false;
         bool showInTextSearch = true;
         bool showInClickSearch = true;
@@ -30,11 +31,12 @@ namespace Medical
 
         public void addAnatomy(AnatomyIdentifier anatomy)
         {
-            if (showInTree)
-            {
-                anatomy.addRelatedAnatomy(this);
-            }
             groupAnatomy.Add(anatomy);
+        }
+
+        public void addCommand(AnatomyCommand command)
+        {
+            additionalCommands.Add(command);
         }
 
         public String AnatomicalName { get; private set; }
@@ -43,21 +45,23 @@ namespace Medical
         {
             get
             {
-                foreach(var anatomy in groupAnatomy)
+                foreach(var command in additionalCommands)
                 {
-                    foreach(var command in anatomy.Commands)
+                    if (command.DisplayInGroup)
                     {
                         yield return command;
                     }
                 }
-            }
-        }
-
-        public IEnumerable<Anatomy> RelatedAnatomy
-        {
-            get
-            {
-                return groupAnatomy;
+                foreach(var anatomy in groupAnatomy)
+                {
+                    foreach(var command in anatomy.Commands)
+                    {
+                        if (command.DisplayInGroup)
+                        {
+                            yield return command;
+                        }
+                    }
+                }
             }
         }
 

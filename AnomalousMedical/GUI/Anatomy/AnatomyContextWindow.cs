@@ -25,7 +25,6 @@ namespace Medical.GUI
         private IntVector2 mouseOffset;
 
         private Button pinButton;
-        private Button relatedAnatomyButton;
 
         private AnatomyContextWindowLiveThumbHost thumbHost;
         private ScrollView commandScroller;
@@ -58,9 +57,6 @@ namespace Medical.GUI
 
             Button highlightButton = (Button)widget.findWidget("HighlightButton");
             highlightButton.MouseButtonClick += new MyGUIEvent(highlightMenuItem_MouseButtonClick);
-
-            relatedAnatomyButton = (Button)widget.findWidget("RelatedAnatomyButton");
-            relatedAnatomyButton.MouseButtonClick += new MyGUIEvent(showRelated_MouseButtonClick);
 
             Button hideButton = (Button)widget.findWidget("HideButton");
             hideButton.MouseButtonClick += new MyGUIEvent(hideButton_MouseButtonClick);
@@ -125,7 +121,8 @@ namespace Medical.GUI
                                 addCommandUI(command.UIText, commandUI);
                                 break;
                             case AnatomyCommandUIType.Executable:
-                                //Need to implement this
+                                commandUI = new CommandButton(commandScroller);
+                                addCommandUI(command.UIText, commandUI);
                                 break;
                             case AnatomyCommandUIType.Boolean:
                                 commandUI = new CommandCheckBox(commandScroller);
@@ -144,10 +141,12 @@ namespace Medical.GUI
                     }
                 }
 
-                layoutContainer.SuppressLayout = false;
-                layoutContainer.layout();
-
                 IntSize2 desiredSize = layoutContainer.DesiredSize;
+                desiredSize.Width = commandScroller.Width;
+
+                layoutContainer.SuppressLayout = false;
+                layoutContainer.WorkingSize = desiredSize;
+                layoutContainer.layout();
 
                 int scrollHeight = desiredSize.Height;
                 if(scrollHeight > MaxScrollerSize)
@@ -202,11 +201,6 @@ namespace Medical.GUI
         void centerMenuItem_MouseButtonClick(Widget source, EventArgs e)
         {
             windowManager.centerAnatomy(this);
-        }
-
-        void showRelated_MouseButtonClick(Widget source, EventArgs e)
-        {
-            windowManager.showRelatedAnatomy(anatomy);
         }
 
         void showButton_MouseButtonClick(Widget source, EventArgs e)
