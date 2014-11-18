@@ -157,7 +157,7 @@ namespace Medical
             }
             else
             {
-                foreach (var anatomy in topLevelSelections())
+                foreach (var anatomy in currentSelectionEnum().Where(i => i.ShowInTree))
                 {
                     fireDisplayAnatomy(anatomy);
                 }
@@ -174,7 +174,7 @@ namespace Medical
                 fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
                 fireClearDisplayedAnatomy();
 
-                foreach (Anatomy anatomy in topLevelSelections())
+                foreach (Anatomy anatomy in currentSelectionEnum().Where(i => i.ShowInTree))
                 {
                     fireDisplayAnatomy(anatomy);
                 }
@@ -352,7 +352,7 @@ namespace Medical
             }
         }
 
-        private IEnumerable<AnatomyGroup> topLevelSelections()
+        private IEnumerable<AnatomyGroup> currentSelectionEnum()
         {
             switch(currentTopLevelMode)
             {

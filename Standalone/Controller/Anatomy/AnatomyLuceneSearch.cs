@@ -64,12 +64,28 @@ namespace Medical
                 AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
                 tags.Add(prop.Name, group);
             }
+
+            foreach (AnatomyTagProperties prop in organizer.SystemProperties)
+            {
+                AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                systems.Add(prop.Name, group);
+            }
+
+            foreach (AnatomyTagProperties prop in organizer.RegionProperties)
+            {
+                AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                regions.Add(prop.Name, group);
+            }
+
+            foreach (AnatomyTagProperties prop in organizer.ClassificationProperties)
+            {
+                AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                classifications.Add(prop.Name, group);
+            }
         }
 
         public void setAnatomy(IEnumerable<AnatomyIdentifier> anatomyIdentifiers)
         {
-            clear();
-
             directory = new RAMDirectory();
 
             //Update index
