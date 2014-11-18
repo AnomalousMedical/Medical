@@ -166,7 +166,7 @@ namespace Medical
             return bestMatchAnatomy;
         }
 
-        public void findAnatomy(String searchTerm)
+        public void findAnatomy(String searchTerm, IEnumerable<AnatomyFacet> facets)
         {
             if (String.IsNullOrEmpty(searchTerm))
             {
@@ -183,12 +183,7 @@ namespace Medical
                 fireSearchStarted(SuggestedDisplaySortMode.None);
                 fireClearDisplayedAnatomy();
 
-                //List<AnatomyFacet> facets = new List<AnatomyFacet>();
-                //facets.Add(new AnatomyFacet("Systems", new String[] {"Muscular System", "Nervous System", "Circulatory System"}));
-                //facets.Add(new AnatomyFacet("Classification", new String[] { "Muscle" }));
-                //facets.Add(new AnatomyFacet("Systems", new String[] { "Muscular System" }));
-                foreach(var anatomy in luceneSearch.search(searchTerm, IEnumerableUtil<AnatomyFacet>.EmptyIterator, 35))
-                //foreach (var anatomy in luceneSearch.search(searchTerm, facets, 35))
+                foreach(var anatomy in luceneSearch.search(searchTerm, facets, 35))
                 {
                     fireDisplayAnatomy(anatomy);
                 }

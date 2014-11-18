@@ -180,7 +180,7 @@ namespace Medical.GUI
         private void updateSearch()
         {
             String search = searchBox.Caption;
-            anatomyController.findAnatomy(search);
+            anatomyController.findAnatomy(search, IEnumerableUtil<AnatomyFacet>.EmptyIterator);
             clearButton.Visible = !String.IsNullOrEmpty(search);
         }
 
