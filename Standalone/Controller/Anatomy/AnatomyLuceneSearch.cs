@@ -251,16 +251,6 @@ namespace Medical
             return group;
         }
 
-        private IEnumerable<String> getFacets()
-        {
-            yield return "Systems";
-            yield return "Connections";
-            yield return "Tags";
-            yield return "Region";
-            yield return "Classification";
-            yield return "AnatomyType";
-        }
-
         private Query buildQuery(String searchTerm, IEnumerable<AnatomyFacet> facets)
         {
             Query query;
