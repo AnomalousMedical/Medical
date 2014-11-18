@@ -145,6 +145,7 @@ namespace Medical
 
         public void clear()
         {
+            anatomyList.Clear();
             systems.Clear();
             regions.Clear();
             classifications.Clear();
