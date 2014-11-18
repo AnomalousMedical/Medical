@@ -5,7 +5,6 @@ using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-using Medical.Utility.LuceneUtil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,6 @@ namespace Medical
 
         private Directory directory;
         private IndexSearcher searcher;
-        private FacetManager facetManager;
         private AnatomyAnalyzer analyzer = new AnatomyAnalyzer();
 
         private List<AnatomyIdentifier> anatomyList = new List<AnatomyIdentifier>();
@@ -45,7 +43,7 @@ namespace Medical
         /// </summary>
         /// <param name="searchTerm">The search term to search product names for. Can be null or empty, which matches everything.</param>
         /// <param name="facets">The facets to apply to the search. Can be null, which matches all facets.</param>
-        public IEnumerable<AnatomyIdentifier> search(String searchTerm, IEnumerable<Facet> facets, int maxHits)
+        public IEnumerable<AnatomyIdentifier> search(String searchTerm, IEnumerable<AnatomyFacet> facets, int maxHits)
         {
             Query query = buildQuery(searchTerm, facets);
             TopDocs results = searcher.Search(query, maxHits);
@@ -135,7 +133,6 @@ namespace Medical
             }
 
             searcher = new IndexSearcher(directory, true);
-            facetManager = new FacetManager(searcher.IndexReader, analyzer, getFacets(), LuceneVersion);
         }
 
         public void clear()
@@ -264,7 +261,7 @@ namespace Medical
             yield return "AnatomyType";
         }
 
-        private Query buildQuery(String searchTerm, IEnumerable<Facet> facets)
+        private Query buildQuery(String searchTerm, IEnumerable<AnatomyFacet> facets)
         {
             Query query;
             if (String.IsNullOrWhiteSpace(searchTerm))
@@ -318,18 +315,16 @@ namespace Medical
                 boolQuery.Add(query, Occur.MUST);
                 foreach (var facet in facets)
                 {
-                    //Map the fields back to the case sensitive versions, if the field can't be found it will be skipped.
-                    String cleanedField, cleanedValue;
-                    if (facetManager.getCaseSensitiveFacet(facet.Field, facet.Value, out cleanedField, out cleanedValue))
+                    BooleanQuery facetQuery = new BooleanQuery();
+                    foreach(var value in facet.Values)
                     {
-                        boolQuery.Add(new TermQuery(new Term(cleanedField, cleanedValue)), Occur.MUST);
+                        facetQuery.Add(new TermQuery(new Term(facet.Field, value)), Occur.SHOULD);
                     }
-                    //activeFacets.add(cleanedField, cleanedValue);
+                    boolQuery.Add(facetQuery, Occur.MUST);
                 }
                 query = boolQuery;
             }
 
-            //Logging.Log.Debug(query.ToString());
             return query;
         }
 

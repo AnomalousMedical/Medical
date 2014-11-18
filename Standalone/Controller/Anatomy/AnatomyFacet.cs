@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical.Utility.LuceneUtil
+namespace Medical
 {
-    public class Facet
+    public class AnatomyFacet
     {
-        public Facet(String field, String value)
+        public AnatomyFacet(String field, IEnumerable<String> values)
         {
             this.Field = field;
-            this.Value = value;
+            this.Values = values;
         }
 
         public String Field { get; set; }
 
-        public String Value { get; set; }
+        public IEnumerable<String> Values { get; set; }
     }
 }

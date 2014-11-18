@@ -6,7 +6,6 @@ using Engine;
 using Medical.Controller;
 using MyGUIPlugin;
 using System.Reflection;
-using Medical.Utility.LuceneUtil;
 
 namespace Medical
 {
@@ -184,11 +183,12 @@ namespace Medical
                 fireSearchStarted(SuggestedDisplaySortMode.None);
                 fireClearDisplayedAnatomy();
 
-                //foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
-                //List<Facet> facets = new List<Facet>();
-                //facets.Add(new Facet("Systems", "Muscular System"));
-                //facets.Add(new Facet("Systems", "Nervous System"));
-                foreach(var anatomy in luceneSearch.search(searchTerm, IEnumerableUtil<Facet>.EmptyIterator, 35))
+                //List<AnatomyFacet> facets = new List<AnatomyFacet>();
+                //facets.Add(new AnatomyFacet("Systems", new String[] {"Muscular System", "Nervous System", "Circulatory System"}));
+                //facets.Add(new AnatomyFacet("Classification", new String[] { "Muscle" }));
+                //facets.Add(new AnatomyFacet("Systems", new String[] { "Muscular System" }));
+                foreach(var anatomy in luceneSearch.search(searchTerm, IEnumerableUtil<AnatomyFacet>.EmptyIterator, 35))
+                //foreach (var anatomy in luceneSearch.search(searchTerm, facets, 35))
                 {
                     fireDisplayAnatomy(anatomy);
                 }

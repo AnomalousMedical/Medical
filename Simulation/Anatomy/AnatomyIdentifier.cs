@@ -349,6 +349,7 @@ namespace Medical
 
         //Custom conversion code from tags to new style, remove this after updating
         public static readonly String[] classificationUpgrades = { "Bone", "Ligament", "Muscle" };
+        public static readonly String[] autoClassifications = { "Artery", "Vein" };
         public static readonly String[] regions = { "Arm", "Leg" };
 
         protected override void customLoad(LoadInfo info)
@@ -367,10 +368,21 @@ namespace Medical
                         systems.Add(tag.Tag);
                         toRemove.Add(tag);
                     }
-                    if (classification == null && classificationUpgrades.Contains(tag.Tag))
+                    if (classification == null)
                     {
-                        classification = tag.Tag;
-                        toRemove.Add(tag);
+                        if (classificationUpgrades.Contains(tag.Tag))
+                        {
+                            classification = tag.Tag;
+                            toRemove.Add(tag);
+                        }
+                        else
+                        {
+                            var query = from q in autoClassifications
+                                        where AnatomicalName.Contains(q)
+                                        select q;
+
+                            classification = query.FirstOrDefault();
+                        }
                     }
                     if (region == null && regions.Contains(tag.Tag))
                     {

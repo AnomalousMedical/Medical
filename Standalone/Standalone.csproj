@@ -107,13 +107,7 @@
     <Compile Include="Controller\Anatomy\AnatomyLuceneSearch.cs" />
     <Compile Include="Controller\Anatomy\AnatomySelection.cs" />
     <Compile Include="Controller\Anatomy\AnatomySelectionGroup.cs" />
-    <Compile Include="Utility\LuceneUtil\ActiveFacetCollection.cs" />
-    <Compile Include="Utility\LuceneUtil\Facet.cs" />
-    <Compile Include="Utility\LuceneUtil\FacetHit.cs" />
-    <Compile Include="Utility\LuceneUtil\FacetManager.cs" />
-    <Compile Include="Utility\LuceneUtil\FacetPrettyNameCollection.cs" />
-    <Compile Include="Utility\LuceneUtil\InsensitiveSearchMap.cs" />
-    <Compile Include="Utility\LuceneUtil\TermEnumExtensions.cs" />
+    <Compile Include="Controller\Anatomy\AnatomyFacet.cs" />
     <Compile Include="Controller\AnomalousMvc\ActiveContextManager.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcContext.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />
