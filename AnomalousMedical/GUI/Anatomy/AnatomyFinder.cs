@@ -37,6 +37,7 @@ namespace Medical.GUI
         private ButtonGridItemNaturalSort naturalSort = new ButtonGridItemNaturalSort();
 
         private AnatomyContextWindowManager anatomyWindowManager;
+        private AnatomyFilter anatomyFilter;
 
         private SceneViewController sceneViewController;
 
@@ -53,7 +54,7 @@ namespace Medical.GUI
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
             this.anatomyController = anatomyController;
-            anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
+            anatomyController.AnatomyChanged += anatomyController_AnatomyChanged;
             anatomyController.ShowPremiumAnatomyChanged += anatomyController_ShowPremiumAnatomyChanged;
             anatomyController.ClearDisplayedAnatomy += anatomyController_ClearDisplayedAnatomy;
             anatomyController.DisplayAnatomy += anatomyController_DisplayAnatomy;
@@ -62,6 +63,11 @@ namespace Medical.GUI
             anatomyController.SearchEnded += anatomyController_SearchEnded;
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
+            anatomyFilter = new AnatomyFilter();
+            anatomyFilter.refreshCategories(anatomyController);
+
+            Button filter = window.findWidget("Filter") as Button;
+            filter.MouseButtonClick += filter_MouseButtonClick;
 
             ScrollView anatomyScroll = (ScrollView)window.findWidget("AnatomyList");
             anatomyList = new HashSetMultiSelectButtonGrid(anatomyScroll, new ButtonGridListLayout(), naturalSort);
@@ -99,6 +105,7 @@ namespace Medical.GUI
             OpenAnatomyFinder.FirstFrameUpEvent -= openAnatomyFinder_FirstFrameUpEvent;
 
             buttonGridThumbs.Dispose();
+            anatomyFilter.Dispose();
             anatomyWindowManager.Dispose();
             base.Dispose();
         }
@@ -167,9 +174,10 @@ namespace Medical.GUI
             }
         }
 
-        void anatomyController_AnatomyChanged(object sender, EventArgs e)
+        void anatomyController_AnatomyChanged(AnatomyController anatomyController)
         {
             updateSearch();
+            anatomyFilter.refreshCategories(anatomyController);
         }
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
@@ -180,7 +188,7 @@ namespace Medical.GUI
         private void updateSearch()
         {
             String search = searchBox.Caption;
-            anatomyController.findAnatomy(search, IEnumerableUtil<AnatomyFacet>.EmptyIterator);
+            anatomyController.findAnatomy(search, anatomyFilter.ActiveFacets);
             clearButton.Visible = !String.IsNullOrEmpty(search);
         }
 
@@ -394,6 +402,11 @@ namespace Medical.GUI
             LayerState layers = new LayerState(anatomy.TransparencyNames, 1.0f);
 
             buttonGridThumbs.itemAdded(arg2, layers, translation, center, anatomy);
+        }
+
+        void filter_MouseButtonClick(Widget source, EventArgs e)
+        {
+            anatomyFilter.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
     }
 }

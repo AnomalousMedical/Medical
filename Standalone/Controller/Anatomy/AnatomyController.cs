@@ -39,19 +39,19 @@ namespace Medical
 
     public class AnatomyController : IDisposable
     {
-        public event EventHandler AnatomyChanged;
-
         private AnatomyLuceneSearch luceneSearch = new AnatomyLuceneSearch();
 
         private AnatomyPickingMode pickingMode = AnatomyPickingMode.Group;
         private SelectionOperator selectionOperator = SelectionOperator.Select;
+        private bool showPremiumAnatomy = true;
+        private AnatomyCommandPermissions commandPermissions = AnatomyCommandPermissions.None;
+        private TopLevelMode currentTopLevelMode = TopLevelMode.System;
+
+        public event EventDelegate<AnatomyController> AnatomyChanged;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
         public event EventDelegate<AnatomyController, bool> ShowPremiumAnatomyChanged;
         public event EventDelegate<AnatomyController, AnatomyCommandPermissions> CommandPermissionsChanged;
         public event EventDelegate<AnatomyController, SelectionOperator> SelectionOperatorChanged;
-        private bool showPremiumAnatomy = true;
-        private AnatomyCommandPermissions commandPermissions = AnatomyCommandPermissions.None;
-        private TopLevelMode currentTopLevelMode = TopLevelMode.System;
 
         /// <summary>
         /// Called when a piece of anatomy has been searched for and should be displayed.
@@ -93,7 +93,7 @@ namespace Medical
             luceneSearch.setAnatomy(AnatomyManager.AnatomyList);
             if (AnatomyChanged != null)
             {
-                AnatomyChanged.Invoke(this, EventArgs.Empty);
+                AnatomyChanged.Invoke(this);
             }
         }
 
@@ -312,6 +312,38 @@ namespace Medical
             get
             {
                 return selectedAnatomy;
+            }
+        }
+
+        public IEnumerable<AnatomyGroup> Systems
+        {
+            get
+            {
+                return luceneSearch.Systems;
+            }
+        }
+
+        public IEnumerable<AnatomyGroup> Tags
+        {
+            get
+            {
+                return luceneSearch.Tags;
+            }
+        }
+
+        public IEnumerable<AnatomyGroup> Regions
+        {
+            get
+            {
+                return luceneSearch.Regions;
+            }
+        }
+
+        public IEnumerable<AnatomyGroup> Classifications
+        {
+            get
+            {
+                return luceneSearch.Classifications;
             }
         }
 

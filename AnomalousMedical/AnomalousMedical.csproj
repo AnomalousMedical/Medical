@@ -137,6 +137,7 @@
     <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindowLiveThumbHost.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyFilter.cs" />
     <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
     <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
     <Compile Include="GUI\Anatomy\ButtonGridItemNaturalSort.cs" />
@@ -170,6 +171,9 @@
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyFilter.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
     <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />

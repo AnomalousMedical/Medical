@@ -102,13 +102,13 @@ namespace Medical
                         document.Add(new Field("AnatomyType", "Individual", Field.Store.YES, Field.Index.NOT_ANALYZED));
                         foreach (String system in anatomy.Systems)
                         {
-                            document.Add(new Field("Systems", system, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                            document.Add(new Field("System", system, Field.Store.YES, Field.Index.NOT_ANALYZED));
                             AnatomyGroup systemGroup = getSystemGroup(system);
                             systemGroup.addAnatomy(anatomy);
                         }
                         foreach(String tag in anatomy.Tags)
                         {
-                            document.Add(new Field("Tags", tag, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                            document.Add(new Field("Tag", tag, Field.Store.YES, Field.Index.NOT_ANALYZED));
                             AnatomyGroup tagGroup = getTagGroup(tag);
                             tagGroup.addAnatomy(anatomy);
                         }
@@ -305,12 +305,17 @@ namespace Medical
                 boolQuery.Add(query, Occur.MUST);
                 foreach (var facet in facets)
                 {
+                    bool add = false;
                     BooleanQuery facetQuery = new BooleanQuery();
                     foreach(var value in facet.Values)
                     {
                         facetQuery.Add(new TermQuery(new Term(facet.Field, value)), Occur.SHOULD);
+                        add = true;
                     }
-                    boolQuery.Add(facetQuery, Occur.MUST);
+                    if (add)
+                    {
+                        boolQuery.Add(facetQuery, Occur.MUST);
+                    }
                 }
                 query = boolQuery;
             }
