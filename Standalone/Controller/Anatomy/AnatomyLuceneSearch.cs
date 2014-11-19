@@ -62,7 +62,7 @@ namespace Medical
             foreach (AnatomyTagProperties prop in organizer.TagProperties)
             {
                 AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
-                tags.Add(prop.Name, group);
+                setupTagGroup(group);
             }
 
             foreach (AnatomyTagProperties prop in organizer.SystemProperties)
@@ -74,13 +74,13 @@ namespace Medical
             foreach (AnatomyTagProperties prop in organizer.RegionProperties)
             {
                 AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
-                regions.Add(prop.Name, group);
+                setupRegionGroup(group);
             }
 
             foreach (AnatomyTagProperties prop in organizer.ClassificationProperties)
             {
                 AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
-                classifications.Add(prop.Name, group);
+                setupClassificationGroup(group);
             }
         }
 
@@ -239,9 +239,15 @@ namespace Medical
             if (!tags.TryGetValue(tag, out group))
             {
                 group = new AnatomyGroup(tag);
-                tags.Add(tag, group);
+                setupTagGroup(group);
             }
             return group;
+        }
+
+        private void setupTagGroup(AnatomyGroup group)
+        {
+            group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Tag")));
+            tags.Add(group.AnatomicalName, group);
         }
 
         private AnatomyGroup getRegionGroup(String region)
@@ -250,9 +256,15 @@ namespace Medical
             if (!regions.TryGetValue(region, out group))
             {
                 group = new AnatomyGroup(region);
-                regions.Add(region, group);
+                setupRegionGroup(group);
             }
             return group;
+        }
+
+        private void setupRegionGroup(AnatomyGroup group)
+        {
+            group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Region")));
+            regions.Add(group.AnatomicalName, group);
         }
 
         private AnatomyGroup getClassificationGroup(String classification)
@@ -261,9 +273,15 @@ namespace Medical
             if (!classifications.TryGetValue(classification, out group))
             {
                 group = new AnatomyGroup(classification);
-                classifications.Add(classification, group);
+                setupClassificationGroup(group);
             }
             return group;
+        }
+
+        private void setupClassificationGroup(AnatomyGroup group)
+        {
+            group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Classification")));
+            classifications.Add(group.AnatomicalName, group);
         }
 
         private Query buildQuery(String searchTerm, IEnumerable<AnatomyFacet> facets)
