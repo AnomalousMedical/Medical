@@ -16,6 +16,7 @@ namespace Medical.GUI
         private List<Widget> childWidgets = new List<Widget>();
         private List<AnatomyFacet> activeFacets = new List<AnatomyFacet>();
         private AnatomyController anatomyController;
+        private ButtonGroup<TopLevelMode> topLevelButtons = new ButtonGroup<TopLevelMode>();
 
         /// <summary>
         /// Fired when the filter settings change.
@@ -32,6 +33,7 @@ namespace Medical.GUI
         {
             scrollView = widget as ScrollView;
             this.anatomyController = anatomyController;
+            topLevelButtons.clear();
         }
 
         public override void Dispose()
@@ -49,6 +51,7 @@ namespace Medical.GUI
             createGroup("Systems", "System", TopLevelMode.System, anatomyController.Systems.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
             createGroup("Regions", "Region", TopLevelMode.Region, anatomyController.Regions.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
             createGroup("Classificatons", "Classification", TopLevelMode.Classification, anatomyController.Classifications.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
+            topLevelButtons.Selection = anatomyController.TopLevelMode;
 
             var size = flowLayout.DesiredSize;
             size.Width = scrollView.Width;
@@ -59,6 +62,7 @@ namespace Medical.GUI
 
         public void clear()
         {
+            topLevelButtons.clear();
             foreach (var widget in childWidgets)
             {
                 Gui.Instance.destroyWidget(widget);
@@ -81,17 +85,18 @@ namespace Medical.GUI
             List<String> activeFacetValues = new List<string>();
             AnatomyFacet facet = new AnatomyFacet(facetName, activeFacetValues);
 
-            Button label = scrollView.createWidgetT("Button", "Button", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as Button;
-            label.TextAlign = Align.Left | Align.VCenter;
-            label.Caption = caption;
-            label.ForwardMouseWheelToParent = true;
-            label.MouseButtonClick += (sender, e) =>
+            Button labelButton = scrollView.createWidgetT("Button", "Button", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as Button;
+            labelButton.TextAlign = Align.Left | Align.VCenter;
+            labelButton.Caption = caption;
+            labelButton.ForwardMouseWheelToParent = true;
+            labelButton.MouseButtonClick += (sender, e) =>
                 {
                     anatomyController.TopLevelMode = topLevelMode;
                     fireTopLevelAnatomyChanged();
                 };
-            flowLayout.addChild(new MyGUILayoutContainer(label));
-            childWidgets.Add(label);
+            flowLayout.addChild(new MyGUILayoutContainer(labelButton));
+            childWidgets.Add(labelButton);
+            topLevelButtons.addButton(topLevelMode, labelButton);
 
             Button button = scrollView.createWidgetT("Button", "CheckBox", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as Button;
             button.Caption = "Include All";
