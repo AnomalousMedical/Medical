@@ -23,7 +23,7 @@ namespace Medical
 
         private AnatomyController anatomyController;
 
-        private List<AnatomyIdentifier> anatomyList = new List<AnatomyIdentifier>();
+        private List<Anatomy> anatomyList = new List<Anatomy>();
         private Dictionary<String, AnatomyGroup> systems = new Dictionary<String, AnatomyGroup>();
         private Dictionary<String, AnatomyGroup> regions = new Dictionary<String, AnatomyGroup>();
         private Dictionary<String, AnatomyGroup> classifications = new Dictionary<String, AnatomyGroup>();
@@ -45,11 +45,11 @@ namespace Medical
         /// </summary>
         /// <param name="searchTerm">The search term to search product names for. Can be null or empty, which matches everything.</param>
         /// <param name="facets">The facets to apply to the search. Can be null, which matches all facets.</param>
-        public IEnumerable<AnatomyIdentifier> search(String searchTerm, IEnumerable<AnatomyFacet> facets, int maxHits)
+        public IEnumerable<Anatomy> search(String searchTerm, IEnumerable<AnatomyFacet> facets, int maxHits)
         {
             Query query = buildQuery(searchTerm, facets);
             TopDocs results = searcher.Search(query, maxHits);
-            foreach(var scoreDoc in results.ScoreDocs)
+            foreach (var scoreDoc in results.ScoreDocs)
             {
                 var doc = searcher.Doc(scoreDoc.Doc);
                 int index = BitConverter.ToInt32(doc.GetBinaryValue("DataIndex"), 0);
@@ -57,35 +57,35 @@ namespace Medical
             }
         }
 
-        public void setAnatomyOrganizer(AnatomyOrganizer organizer)
+        public void setAnatomy(IEnumerable<AnatomyIdentifier> anatomyIdentifiers, AnatomyOrganizer organizer)
         {
-            foreach (AnatomyTagProperties prop in organizer.TagProperties)
+            if (organizer != null)
             {
-                AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
-                setupTagGroup(group);
+                foreach (AnatomyTagProperties prop in organizer.TagProperties)
+                {
+                    AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                    setupTagGroup(group);
+                }
+
+                foreach (AnatomyTagProperties prop in organizer.SystemProperties)
+                {
+                    AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                    setupSystemGroup(group);
+                }
+
+                foreach (AnatomyTagProperties prop in organizer.RegionProperties)
+                {
+                    AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                    setupRegionGroup(group);
+                }
+
+                foreach (AnatomyTagProperties prop in organizer.ClassificationProperties)
+                {
+                    AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                    setupClassificationGroup(group);
+                }
             }
 
-            foreach (AnatomyTagProperties prop in organizer.SystemProperties)
-            {
-                AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
-                setupSystemGroup(group);
-            }
-
-            foreach (AnatomyTagProperties prop in organizer.RegionProperties)
-            {
-                AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
-                setupRegionGroup(group);
-            }
-
-            foreach (AnatomyTagProperties prop in organizer.ClassificationProperties)
-            {
-                AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
-                setupClassificationGroup(group);
-            }
-        }
-
-        public void setAnatomy(IEnumerable<AnatomyIdentifier> anatomyIdentifiers)
-        {
             directory = new RAMDirectory();
 
             //Update index
@@ -114,7 +114,7 @@ namespace Medical
                             AnatomyGroup systemGroup = getSystemGroup(system);
                             systemGroup.addAnatomy(anatomy);
                         }
-                        foreach(String tag in anatomy.Tags)
+                        foreach (String tag in anatomy.Tags)
                         {
                             document.Add(new Field("Tag", tag, Field.Store.YES, Field.Index.NOT_ANALYZED));
                             AnatomyGroup tagGroup = getTagGroup(tag);
@@ -135,6 +135,27 @@ namespace Medical
 
                         indexWriter.UpdateDocument(new Term("Id", index.ToString()), document);
                     }
+                }
+
+                //Add the groups to the index last so we can be sure they actually have anatomy in them.
+                foreach(var group in tags.Values)
+                {
+                    setupGroupDocument(indexWriter, group, "Tag");
+                }
+
+                foreach (var group in systems.Values)
+                {
+                    setupGroupDocument(indexWriter, group, "System");
+                }
+
+                foreach (var group in regions.Values)
+                {
+                    setupGroupDocument(indexWriter, group, "Region");
+                } 
+                
+                foreach (var group in classifications.Values)
+                {
+                    setupGroupDocument(indexWriter, group, "Classification");
                 }
 
                 indexWriter.Optimize();
@@ -219,7 +240,7 @@ namespace Medical
         private AnatomyGroup getSystemGroup(String system)
         {
             AnatomyGroup group;
-            if(!systems.TryGetValue(system, out group))
+            if (!systems.TryGetValue(system, out group))
             {
                 group = new AnatomyGroup(system);
                 setupSystemGroup(group);
@@ -229,7 +250,7 @@ namespace Medical
 
         private void setupSystemGroup(AnatomyGroup group)
         {
-            group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "System")));
+            group.addCommand(new CallbackAnatomyCommand("Show System Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "System")));
             systems.Add(group.AnatomicalName, group);
         }
 
@@ -263,7 +284,7 @@ namespace Medical
 
         private void setupRegionGroup(AnatomyGroup group)
         {
-            group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Region")));
+            group.addCommand(new CallbackAnatomyCommand("Show Region Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Region")));
             regions.Add(group.AnatomicalName, group);
         }
 
@@ -321,7 +342,7 @@ namespace Medical
                             }
                         }
                     }
-                    catch(Exception)
+                    catch (Exception)
                     {
                         query = buildEmptyQuery();
                     }
@@ -340,7 +361,7 @@ namespace Medical
                 {
                     bool add = false;
                     BooleanQuery facetQuery = new BooleanQuery();
-                    foreach(var value in facet.Values)
+                    foreach (var value in facet.Values)
                     {
                         facetQuery.Add(new TermQuery(new Term(facet.Field, value)), Occur.SHOULD);
                         add = true;
@@ -369,6 +390,21 @@ namespace Medical
             noDocsQuery.Add(new MatchAllDocsQuery(), Occur.MUST_NOT);
             query = noDocsQuery;
             return query;
+        }
+
+        private void setupGroupDocument(IndexWriter indexWriter, AnatomyGroup group, String anatomyType)
+        {
+            if (group.ShowInTextSearch)
+            {
+                Document document = new Document();
+                int index = anatomyList.Count;
+                anatomyList.Add(group);
+                document.Add(new Field("Id", index.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                document.Add(new Field("DataIndex", BitConverter.GetBytes(index), 0, sizeof(int), Field.Store.YES));
+                document.Add(new Field("Name", group.AnatomicalName, Field.Store.YES, Field.Index.ANALYZED));
+                document.Add(new Field("AnatomyType", anatomyType, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                indexWriter.UpdateDocument(new Term("Id", index.ToString()), document);
+            }
         }
     }
 }

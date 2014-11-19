@@ -90,12 +90,7 @@ namespace Medical
 
         public void sceneLoaded()
         {
-            AnatomyOrganizer organizer = AnatomyManager.AnatomyOrganizer;
-            if (organizer != null)
-            {
-                luceneSearch.setAnatomyOrganizer(organizer);
-            }
-            luceneSearch.setAnatomy(AnatomyManager.AnatomyList);
+            luceneSearch.setAnatomy(AnatomyManager.AnatomyList, AnatomyManager.AnatomyOrganizer);
             if (AnatomyChanged != null)
             {
                 AnatomyChanged.Invoke(this);
