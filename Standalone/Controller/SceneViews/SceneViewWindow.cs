@@ -697,8 +697,8 @@ namespace Medical.Controller
         {
             if (borderPanel0 == null)
             {
-                borderPanel0 = Gui.Instance.createWidgetT("Widget", "SceneViewBorder", 0, 0, 1, 1, Align.Default, "Back", "");
-                borderPanel1 = Gui.Instance.createWidgetT("Widget", "SceneViewBorder", 0, 0, 1, 1, Align.Default, "Back", "");
+                borderPanel0 = Gui.Instance.createWidgetT("Widget", "Medical.SceneViewBorder", 0, 0, 1, 1, Align.Default, "Back", "");
+                borderPanel1 = Gui.Instance.createWidgetT("Widget", "Medical.SceneViewBorder", 0, 0, 1, 1, Align.Default, "Back", "");
             }
         }
 

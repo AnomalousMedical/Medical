@@ -120,7 +120,7 @@ namespace Medical.GUI
             {
                 taskbarItems.Insert(index, item);
             }
-            item._configureForTaskbar(this, taskbarWidget.createWidgetT("Button", "TaskbarButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button);
+            item._configureForTaskbar(this, taskbarWidget.createWidgetT("Button", "Medical.TaskbarButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button);
         }
 
         public void removeItem(TaskbarItem item)

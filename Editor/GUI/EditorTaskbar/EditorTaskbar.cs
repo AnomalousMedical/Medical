@@ -39,7 +39,7 @@ namespace Medical.GUI
             int left = 1;
             foreach (Task task in view.Tasks)
             {
-                Button taskButton = (Button)widget.createWidgetT("Button", "TaskbarButton", left, TaskButtonTop, TaskButtonWidth, TaskButtonHeight, Align.Left | Align.Top, task.UniqueName);
+                Button taskButton = (Button)widget.createWidgetT("Button", "Medical.TaskbarButton", left, TaskButtonTop, TaskButtonWidth, TaskButtonHeight, Align.Left | Align.Top, task.UniqueName);
                 taskButton.UserObject = task;
                 taskButton.NeedToolTip = true;
                 taskButton.ImageBox.setItemResource(task.IconName);

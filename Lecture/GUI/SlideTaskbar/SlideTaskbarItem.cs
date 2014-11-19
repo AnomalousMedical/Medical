@@ -17,7 +17,7 @@ namespace Lecture.GUI
         {
             this.task = task;
 
-            taskButton = (Button)parent.createWidgetT("Button", "TaskbarButton", position.Left, position.Top, position.Width, position.Height, Align.Left | Align.Top, task.UniqueName);
+            taskButton = (Button)parent.createWidgetT("Button", "Medical.TaskbarButton", position.Left, position.Top, position.Width, position.Height, Align.Left | Align.Top, task.UniqueName);
             taskButton.NeedToolTip = true;
             taskButton.ImageBox.setItemResource(task.IconName);
             taskButton.MouseButtonClick += new MyGUIEvent(taskButton_MouseButtonClick);
