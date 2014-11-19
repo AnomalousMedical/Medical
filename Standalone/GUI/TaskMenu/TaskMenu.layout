@@ -1,30 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="TaskMenuBackground" position="0 40 584 482" layer="Overlapped">
+    <Widget type="Widget" skin="Medical.TaskMenuBackground" position="0 40 584 482" layer="Overlapped">
         <Property key="Alpha" value="1"/>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 574 432" align="Stretch" name="IconScroller">
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="CanvasSize" value="381 437"/>
-            <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
+            <UserString key="ButtonSkin" value="Medical.TaskMenuButtonGridButton"/>
             <UserString key="ItemHeight" value="54"/>
             <UserString key="ItemWidth" value="100"/>
-            <UserString key="GroupCaptionSkin" value="TaskMenuCategoryText"/>
+            <UserString key="GroupCaptionSkin" value="Medical.TaskMenuCategoryText"/>
             <UserString key="GroupPaddingY" value="11"/>
         </Widget>
-        <Widget type="Button" skin="TaskMenuTopLevelCategoryButton" position="2 11 66 22" name="Tasks">
+        <Widget type="Button" skin="Medical.TaskMenuTopLevelCategoryButton" position="2 11 66 22" name="Tasks">
             <Property key="Caption" value="Tasks"/>
         </Widget>
-        <Widget type="Button" skin="TaskMenuTopLevelCategoryButton" position="70 11 76 22" name="Documents">
+        <Widget type="Button" skin="Medical.TaskMenuTopLevelCategoryButton" position="70 11 76 22" name="Documents">
             <Property key="Caption" value="Documents"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 280 432" align="Stretch" name="DocumentScroller">
             <Property key="CanvasSize" value="300 300"/>
             <Property key="Visible" value="true"/>
             <Property key="CanvasAlign" value="Left Top"/>
-            <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
+            <UserString key="ButtonSkin" value="Medical.TaskMenuButtonGridButton"/>
             <UserString key="ItemHeight" value="54"/>
             <UserString key="ItemWidth" value="100"/>
-            <UserString key="GroupCaptionSkin" value="TaskMenuCategoryText"/>
+            <UserString key="GroupCaptionSkin" value="Medical.TaskMenuCategoryText"/>
             <UserString key="GroupPaddingY" value="11"/>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="554 10 24 20" align="Right Top" name="CloseButton"/>

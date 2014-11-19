@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="TaskMenuBackground" position="224 51 347 537" layer="Overlapped">
+    <Widget type="Widget" skin="Medical.TaskMenuBackground" position="224 51 347 537" layer="Overlapped">
         <Widget type="Button" skin="Button" position="167 28 57 20" align="Left Top" name="AddButton">
             <Property key="Caption" value="Add"/>
         </Widget>
@@ -8,7 +8,7 @@
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="CanvasSize" value="209 10"/>
             <Property key="VisibleHScroll" value="false"/>
-            <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
+            <UserString key="ButtonSkin" value="Medical.BookmarkListIconButtonButton"/>
             <UserString key="ItemHeight" value="122"/>
             <UserString key="ItemWidth" value="122"/>
             <UserString key="ShowGroupCaptions" value="false"/>

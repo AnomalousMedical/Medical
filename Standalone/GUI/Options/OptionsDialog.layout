@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="TaskMenuBackground" position="116 97 800 600" layer="Overlapped">
+    <Widget type="Widget" skin="Medical.TaskMenuBackground" position="116 97 800 600" layer="Overlapped">
         <Widget type="TextBox" skin="TextBox" position="6 146 76 15">
             <Property key="Caption" value="Anti Aliasing"/>
             <Property key="TextColour" value="#FFFFFF"/>
