@@ -117,39 +117,35 @@ namespace Medical
         /// <returns></returns>
         public Anatomy findAnatomy(Ray3 ray)
         {
+            fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
+            fireClearDisplayedAnatomy();
+
             Anatomy bestMatchAnatomy = null;
 
             var matches = AnatomyManager.findAnatomy(ray);
 
-            HashSet<String> anatomyTags = new HashSet<String>();
             if (matches.Count > 0)
             {
-                fireSearchStarted(SuggestedDisplaySortMode.None);
-                fireClearDisplayedAnatomy();
-
-                AnatomyIdentifier firstMatch = matches.Closest;
-                bestMatchAnatomy = firstMatch;
+                //Display found anatomy and related groups
+                HashSet<String> displayedGroups = new HashSet<String>();
                 foreach (AnatomyIdentifier anatomy in matches.Anatomy)
                 {
                     fireDisplayAnatomy(anatomy);
-                    foreach (var system in anatomy.Tags)
+                    foreach (var group in relatedGroupsFor(anatomy))
                     {
-                        anatomyTags.Add(system);
-                    }
-                }
-                //Show related tag anatomy
-                AnatomyGroup tagAnatomy;
-                foreach(String tag in anatomyTags)
-                {
-                    if(luceneSearch.tryGetTag(tag, out tagAnatomy) && tagAnatomy.ShowInClickSearch)
-                    {
-                        fireDisplayAnatomy(tagAnatomy);
+                        if (group.ShowInClickSearch && displayedGroups.Add(group.AnatomicalName))
+                        {
+                            fireDisplayAnatomy(group);
+                        }
                     }
                 }
 
+                //Choose which anatomy to select, start with the closest match
+                AnatomyIdentifier firstMatch = matches.Closest;
+                bestMatchAnatomy = firstMatch;
                 if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
                 {
-                    foreach (var group in anatomyGroupSelectionCandidates(firstMatch))
+                    foreach (var group in relatedGroupsFor(firstMatch))
                     {
                         if (group.ShowInClickSearch && (showPremiumAnatomy || group.ShowInBasicVersion))
                         {
@@ -161,9 +157,6 @@ namespace Medical
             }
             else
             {
-                fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
-                fireClearDisplayedAnatomy();
-
                 foreach (var anatomy in currentSelectionEnum().Where(i => i.ShowInTree))
                 {
                     fireDisplayAnatomy(anatomy);
@@ -431,7 +424,7 @@ namespace Medical
         /// </summary>
         /// <param name="anatomyIdentifier">The AnatomyIdentifier to scan.</param>
         /// <returns>Enumerates over all AnatomyGroups that could be a group selection mode.</returns>
-        private IEnumerable<AnatomyGroup> anatomyGroupSelectionCandidates(AnatomyIdentifier anatomyIdentifier)
+        private IEnumerable<AnatomyGroup> relatedGroupsFor(AnatomyIdentifier anatomyIdentifier)
         {
             AnatomyGroup group;
 
