@@ -427,13 +427,14 @@ namespace Medical
 
         /// <summary>
         /// This function provdies an enumeration over all possible group selection mode candidates.
-        /// Starts with tags and then does systems.
+        /// Starts with tags and then does systems, then classification and finally region.
         /// </summary>
         /// <param name="anatomyIdentifier">The AnatomyIdentifier to scan.</param>
         /// <returns>Enumerates over all AnatomyGroups that could be a group selection mode.</returns>
         private IEnumerable<AnatomyGroup> anatomyGroupSelectionCandidates(AnatomyIdentifier anatomyIdentifier)
         {
             AnatomyGroup group;
+
             foreach (var name in anatomyIdentifier.Tags)
             {
                 if (luceneSearch.tryGetTag(name, out group))
@@ -448,6 +449,16 @@ namespace Medical
                 {
                     yield return group;
                 }
+            }
+
+            if (anatomyIdentifier.Classification != null && luceneSearch.tryGetSystem(anatomyIdentifier.Classification, out group))
+            {
+                yield return group;
+            }
+
+            if (anatomyIdentifier.Region != null && luceneSearch.tryGetSystem(anatomyIdentifier.Region, out group))
+            {
+                yield return group;
             }
         }
     }
