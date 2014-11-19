@@ -144,6 +144,9 @@ namespace Medical
             splashScreen.updateStatus(CreatingGuiPosition, "Creating GUI");
             yield return IdleStatus.Ok;
 
+            //Load gui resources
+            ResourceManager.Instance.load("Medical.Resources.AnomalousMedical_MainPlugin_MyGUI_Skin.xml");
+
             //Layout Chain
             LayoutChain layoutChain = new LayoutChain();
             layoutChain.addLink(new SingleChildChainLink(GUILocationNames.Notifications, controller.NotificationManager.LayoutContainer), true);
