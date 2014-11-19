@@ -88,11 +88,13 @@ namespace Medical
                     }
                     else if (AnatomyIdentifier.classificationUpgrades.Contains(oldProp.Name))
                     {
+                        oldProp.ShowInTree = true;
                         classificationProperties.Add(oldProp);
                         toRemove.Add(oldProp);
                     }
                     else if (AnatomyIdentifier.regions.Contains(oldProp.Name))
                     {
+                        oldProp.ShowInTree = true;
                         regionProperties.Add(oldProp);
                         toRemove.Add(oldProp);
                     }

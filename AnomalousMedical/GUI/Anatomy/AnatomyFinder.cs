@@ -64,8 +64,10 @@ namespace Medical.GUI
             anatomyController.SuggestSearchCaption += anatomyController_SuggestSearchCaption;
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
-            anatomyFilter = new AnatomyFilter();
-            anatomyFilter.refreshCategories(anatomyController);
+            anatomyFilter = new AnatomyFilter(anatomyController);
+            anatomyFilter.refreshCategories();
+            anatomyFilter.FilterChanged += anatomyFilter_FilterChanged;
+            anatomyFilter.TopLevelAnatomyChanged += anatomyFilter_TopLevelAnatomyChanged;
 
             Button filter = window.findWidget("Filter") as Button;
             filter.MouseButtonClick += filter_MouseButtonClick;
@@ -167,7 +169,7 @@ namespace Medical.GUI
         void anatomyController_AnatomyChanged(AnatomyController anatomyController)
         {
             updateSearch();
-            anatomyFilter.refreshCategories(anatomyController);
+            anatomyFilter.refreshCategories();
         }
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
@@ -407,6 +409,19 @@ namespace Medical.GUI
             }
             clearButton.Visible = true;
             searchBox.Caption = caption;
+        }
+
+        void anatomyFilter_FilterChanged(AnatomyFilter source)
+        {
+            updateSearch();
+        }
+
+        void anatomyFilter_TopLevelAnatomyChanged(AnatomyFilter source)
+        {
+            if (String.IsNullOrEmpty(searchBox.Caption))
+            {
+                updateSearch();
+            }
         }
     }
 }

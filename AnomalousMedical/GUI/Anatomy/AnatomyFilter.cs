@@ -15,11 +15,23 @@ namespace Medical.GUI
 
         private List<Widget> childWidgets = new List<Widget>();
         private List<AnatomyFacet> activeFacets = new List<AnatomyFacet>();
+        private AnatomyController anatomyController;
 
-        public AnatomyFilter()
+        /// <summary>
+        /// Fired when the filter settings change.
+        /// </summary>
+        public event EventDelegate<AnatomyFilter> FilterChanged;
+
+        /// <summary>
+        /// Fired when the top level anatomy is changed.
+        /// </summary>
+        public event EventDelegate<AnatomyFilter> TopLevelAnatomyChanged;
+
+        public AnatomyFilter(AnatomyController anatomyController)
             : base("Medical.GUI.Anatomy.AnatomyFilter.layout")
         {
             scrollView = widget as ScrollView;
+            this.anatomyController = anatomyController;
         }
 
         public override void Dispose()
@@ -28,15 +40,15 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void refreshCategories(AnatomyController anatomyController)
+        public void refreshCategories()
         {
             clear();
 
             NaturalSort<String> sort = new NaturalSort<string>();
 
-            createGroup("Systems", "System", anatomyController.Systems.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
-            createGroup("Regions", "Region", anatomyController.Regions.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
-            createGroup("Classificatons", "Classification", anatomyController.Classifications.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
+            createGroup("Systems", "System", TopLevelMode.System, anatomyController.Systems.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
+            createGroup("Regions", "Region", TopLevelMode.Region, anatomyController.Regions.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
+            createGroup("Classificatons", "Classification", TopLevelMode.Classification, anatomyController.Classifications.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
 
             var size = flowLayout.DesiredSize;
             size.Width = scrollView.Width;
@@ -63,16 +75,21 @@ namespace Medical.GUI
             }
         }
 
-        private void createGroup(String caption, String facetName, IEnumerable<String> items)
+        private void createGroup(String caption, String facetName, TopLevelMode topLevelMode, IEnumerable<String> items)
         {
             List<CheckButton> groupCheckButtons = new List<CheckButton>();
             List<String> activeFacetValues = new List<string>();
             AnatomyFacet facet = new AnatomyFacet(facetName, activeFacetValues);
 
-            TextBox label = scrollView.createWidgetT("TextBox", "TextBox", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as TextBox;
+            Button label = scrollView.createWidgetT("Button", "Button", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as Button;
             label.TextAlign = Align.Left | Align.VCenter;
             label.Caption = caption;
             label.ForwardMouseWheelToParent = true;
+            label.MouseButtonClick += (sender, e) =>
+                {
+                    anatomyController.TopLevelMode = topLevelMode;
+                    fireTopLevelAnatomyChanged();
+                };
             flowLayout.addChild(new MyGUILayoutContainer(label));
             childWidgets.Add(label);
 
@@ -90,6 +107,7 @@ namespace Medical.GUI
                             groupButton.Checked = false;
                         }
                         activeFacets.Remove(facet);
+                        fireFilterChanged();
                     }
                 };
             flowLayout.addChild(new MyGUILayoutContainer(button));
@@ -111,6 +129,7 @@ namespace Medical.GUI
                                 activeFacets.Add(facet);
                             }
                             activeFacetValues.Add(item);
+                            fireFilterChanged();
                         }
                         else
                         {
@@ -120,11 +139,31 @@ namespace Medical.GUI
                                 allCheckButton.Checked = true;
                                 //The allCheckButton.CheckedChanged is triggered here
                             }
+                            else
+                            {
+                                fireFilterChanged();
+                            }
                         }
                     };
                 flowLayout.addChild(new MyGUILayoutContainer(button));
                 childWidgets.Add(button);
                 groupCheckButtons.Add(checkButton);
+            }
+        }
+
+        private void fireFilterChanged()
+        {
+            if(FilterChanged != null)
+            {
+                FilterChanged.Invoke(this);
+            }
+        }
+
+        private void fireTopLevelAnatomyChanged()
+        {
+            if (TopLevelAnatomyChanged != null)
+            {
+                TopLevelAnatomyChanged.Invoke(this);
             }
         }
     }

@@ -269,6 +269,18 @@ namespace Medical
             }
         }
 
+        public TopLevelMode TopLevelMode
+        {
+            get
+            {
+                return currentTopLevelMode;
+            }
+            set
+            {
+                currentTopLevelMode = value;
+            }
+        }
+
         public void setCommandPermission(AnatomyCommandPermissions permission, bool enabled)
         {
             if (enabled)

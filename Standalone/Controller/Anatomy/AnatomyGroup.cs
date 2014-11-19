@@ -13,7 +13,7 @@ namespace Medical
         bool showInBasicVersion = false;
         bool showInTextSearch = true;
         bool showInClickSearch = true;
-        bool showInTree = false;
+        bool showInTree = true;
 
         public AnatomyGroup(String anatomicalName)
         {
