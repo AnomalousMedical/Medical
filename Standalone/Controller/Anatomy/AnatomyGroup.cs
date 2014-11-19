@@ -29,9 +29,14 @@ namespace Medical
             this.showInTree = showInTree;
         }
 
-        public void addAnatomy(AnatomyIdentifier anatomy)
+        public void addAnatomy(Anatomy anatomy)
         {
             groupAnatomy.Add(anatomy);
+        }
+
+        public void addAnatomy(IEnumerable<Anatomy> anatomy)
+        {
+            groupAnatomy.AddRange(anatomy);
         }
 
         public void addCommand(AnatomyCommand command)
@@ -157,6 +162,17 @@ namespace Medical
             get
             {
                 return showInBasicVersion;
+            }
+        }
+
+        /// <summary>
+        /// The number of anatomy items in this group.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return groupAnatomy.Count;
             }
         }
     }

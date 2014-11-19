@@ -251,6 +251,7 @@ namespace Medical
         private void setupSystemGroup(AnatomyGroup group)
         {
             group.addCommand(new CallbackAnatomyCommand("Show System Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "System")));
+            group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", "System", group, "Region", regions.Values)));
             systems.Add(group.AnatomicalName, group);
         }
 
@@ -285,6 +286,7 @@ namespace Medical
         private void setupRegionGroup(AnatomyGroup group)
         {
             group.addCommand(new CallbackAnatomyCommand("Show Region Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Region")));
+            group.addCommand(new CallbackAnatomyCommand("Breakdown by System", () => breakdownGroup("{1} of the {0}", "Region", group, "System", systems.Values)));
             regions.Add(group.AnatomicalName, group);
         }
 
@@ -302,6 +304,7 @@ namespace Medical
         private void setupClassificationGroup(AnatomyGroup group)
         {
             group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Classification")));
+            group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", "Classification", group, "Region", regions.Values)));
             classifications.Add(group.AnatomicalName, group);
         }
 
@@ -381,6 +384,32 @@ namespace Medical
         {
             anatomyController.displayAnatomy(String.Format("{0} Anatomy", groupName),
                 search("", new AnatomyFacet[] { new AnatomyFacet(facet, groupName) }, int.MaxValue), SuggestedDisplaySortMode.Alphabetical);
+        }
+
+        private void breakdownGroup(String groupTitleFormat, String mainFacet, AnatomyGroup group, String breakdownFacet, IEnumerable<AnatomyGroup> breakdownGroups)
+        {
+            anatomyController.displayAnatomy(String.Format("{0} by {1}", group.AnatomicalName, breakdownFacet),
+                breakdownGroupSearch(groupTitleFormat, mainFacet, group.AnatomicalName, breakdownFacet, breakdownGroups.Select(i => i.AnatomicalName)), 
+                SuggestedDisplaySortMode.Alphabetical);
+        }
+
+        private IEnumerable<AnatomyGroup> breakdownGroupSearch(String groupTitleFormat, String mainFacet, String mainFacetValue, String breakdownFacet, IEnumerable<String> breakdownValues)
+        {
+            List<AnatomyFacet> facets = new List<AnatomyFacet>();
+            facets.Add(new AnatomyFacet(mainFacet, mainFacetValue));
+            String[] breakdownValueArray = new String[1];
+            facets.Add(new AnatomyFacet(breakdownFacet, breakdownValueArray));
+
+            foreach (var breakdownValue in breakdownValues)
+            {
+                breakdownValueArray[0] = breakdownValue;
+                AnatomyGroup resultGroup = new AnatomyGroup(String.Format(groupTitleFormat, mainFacetValue, breakdownValue));
+                resultGroup.addAnatomy(search(null, facets, int.MaxValue));
+                if (resultGroup.Count > 0)
+                {
+                    yield return resultGroup;
+                }
+            }
         }
 
         private static Query buildEmptyQuery()
