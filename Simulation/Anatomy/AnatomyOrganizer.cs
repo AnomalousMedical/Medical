@@ -23,6 +23,9 @@ namespace Medical
         [DoNotSave]
         private List<AnatomyTagProperties> classificationProperties = new List<AnatomyTagProperties>();
 
+        [DoNotSave]
+        private List<AnatomyTagProperties> structureProperties = new List<AnatomyTagProperties>();
+
         public AnatomyOrganizer()
         {
             
@@ -71,6 +74,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<AnatomyTagProperties> StructureProperties
+        {
+            get
+            {
+                return structureProperties;
+            }
+        }
+
         protected override void customLoad(LoadInfo info)
         {
             base.customLoad(info);
@@ -107,6 +118,7 @@ namespace Medical
                 info.RebuildList<AnatomyTagProperties>("SystemProperty", systemProperties);
                 info.RebuildList<AnatomyTagProperties>("RegionProperty", regionProperties);
                 info.RebuildList<AnatomyTagProperties>("ClassificationProperty", classificationProperties);
+                info.RebuildList<AnatomyTagProperties>("StructureProperty", structureProperties);
             }
         }
 
@@ -118,6 +130,7 @@ namespace Medical
             info.ExtractList<AnatomyTagProperties>("SystemProperty", systemProperties);
             info.ExtractList<AnatomyTagProperties>("RegionProperty", regionProperties);
             info.ExtractList<AnatomyTagProperties>("ClassificationProperty", classificationProperties);
+            info.ExtractList<AnatomyTagProperties>("StructureProperty", structureProperties);
         }
     }
 
@@ -133,6 +146,8 @@ namespace Medical
                 new ReflectedListLikeEditInterface<AnatomyTagProperties>(regionProperties, "Region Properties", () => new AnatomyTagProperties(), validateCallback: () => validateProperties(regionProperties)));
             editInterface.addSubInterfaceForObject(classificationProperties,
                 new ReflectedListLikeEditInterface<AnatomyTagProperties>(classificationProperties, "Classification Properties", () => new AnatomyTagProperties(), validateCallback: () => validateProperties(classificationProperties)));
+            editInterface.addSubInterfaceForObject(structureProperties,
+                new ReflectedListLikeEditInterface<AnatomyTagProperties>(structureProperties, "Structure Properties", () => new AnatomyTagProperties(), validateCallback: () => validateProperties(structureProperties)));
         }
 
         private void validateProperties(IEnumerable<AnatomyTagProperties> properties)

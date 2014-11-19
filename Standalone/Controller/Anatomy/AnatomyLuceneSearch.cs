@@ -28,6 +28,7 @@ namespace Medical
         private Dictionary<String, AnatomyGroup> regions = new Dictionary<String, AnatomyGroup>();
         private Dictionary<String, AnatomyGroup> classifications = new Dictionary<String, AnatomyGroup>();
         private Dictionary<String, AnatomyGroup> tags = new Dictionary<String, AnatomyGroup>();
+        private Dictionary<String, AnatomyGroup> structures = new Dictionary<String, AnatomyGroup>();
 
         public AnatomyLuceneSearch(AnatomyController anatomyController)
         {
@@ -84,6 +85,12 @@ namespace Medical
                     AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
                     setupClassificationGroup(group);
                 }
+
+                foreach (AnatomyTagProperties prop in organizer.StructureProperties)
+                {
+                    AnatomyGroup group = new AnatomyGroup(prop.Name, prop.ShowInBasicVersion, prop.ShowInTextSearch, prop.ShowInClickSearch, prop.ShowInTree);
+                    setupStructureGroup(group);
+                }
             }
 
             directory = new RAMDirectory();
@@ -129,8 +136,14 @@ namespace Medical
                         if (anatomy.Region != null)
                         {
                             document.Add(new Field("Region", anatomy.Region, Field.Store.YES, Field.Index.NOT_ANALYZED));
-                            AnatomyGroup regionGorup = getRegionGroup(anatomy.Region);
-                            regionGorup.addAnatomy(anatomy);
+                            AnatomyGroup regionGroup = getRegionGroup(anatomy.Region);
+                            regionGroup.addAnatomy(anatomy);
+                        }
+                        if(anatomy.Structure != null)
+                        {
+                            document.Add(new Field("Structure", anatomy.Structure, Field.Store.YES, Field.Index.NOT_ANALYZED));
+                            AnatomyGroup structureGroup = getStructureGroup(anatomy.Structure);
+                            structureGroup.addAnatomy(anatomy);
                         }
 
                         indexWriter.UpdateDocument(new Term("Id", index.ToString()), document);
@@ -156,6 +169,11 @@ namespace Medical
                 foreach (var group in classifications.Values)
                 {
                     setupGroupDocument(indexWriter, group, "Classification");
+                }
+
+                foreach (var group in structures.Values)
+                {
+                    setupGroupDocument(indexWriter, group, "Structure");
                 }
 
                 indexWriter.Optimize();
@@ -237,6 +255,19 @@ namespace Medical
             return classifications.TryGetValue(name, out group);
         }
 
+        public IEnumerable<AnatomyGroup> Structures
+        {
+            get
+            {
+                return structures.Values;
+            }
+        }
+
+        public bool tryGetStructure(String name, out AnatomyGroup group)
+        {
+            return structures.TryGetValue(name, out group);
+        }
+
         private AnatomyGroup getSystemGroup(String system)
         {
             AnatomyGroup group;
@@ -307,6 +338,23 @@ namespace Medical
             group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Classification")));
             group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", "Classification", group, "Region", regions.Values)));
             classifications.Add(group.AnatomicalName, group);
+        }
+
+        private AnatomyGroup getStructureGroup(String tag)
+        {
+            AnatomyGroup group;
+            if (!structures.TryGetValue(tag, out group))
+            {
+                group = new AnatomyGroup(tag);
+                setupStructureGroup(group);
+            }
+            return group;
+        }
+
+        private void setupStructureGroup(AnatomyGroup group)
+        {
+            group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Structure")));
+            structures.Add(group.AnatomicalName, group);
         }
 
         private Query buildQuery(String searchTerm, IEnumerable<AnatomyFacet> facets)

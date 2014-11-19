@@ -51,6 +51,7 @@ namespace Medical.GUI
             createGroup("Systems", "System", TopLevelMode.System, anatomyController.Systems.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
             createGroup("Regions", "Region", TopLevelMode.Region, anatomyController.Regions.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
             createGroup("Classificatons", "Classification", TopLevelMode.Classification, anatomyController.Classifications.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
+            createGroup("Structures", "Structure", TopLevelMode.Structure, anatomyController.Structures.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
             topLevelButtons.Selection = anatomyController.TopLevelMode;
 
             var size = flowLayout.DesiredSize;

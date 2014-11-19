@@ -34,7 +34,8 @@ namespace Medical
         System,
         Region,
         Tag,
-        Classification
+        Classification,
+        Structure
     }
 
     public class AnatomyController : IDisposable
@@ -356,6 +357,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<AnatomyGroup> Structures
+        {
+            get
+            {
+                return luceneSearch.Structures;
+            }
+        }
+
         private void fireDisplayAnatomy(Anatomy anatomy)
         {
             if (DisplayAnatomy != null)
@@ -408,6 +417,8 @@ namespace Medical
                     return luceneSearch.Systems;
                 case TopLevelMode.Tag:
                     return luceneSearch.Tags;
+                case TopLevelMode.Structure:
+                    return luceneSearch.Structures;
                 default:
                     throw new NotImplementedException();
             }
@@ -422,6 +433,11 @@ namespace Medical
         private IEnumerable<AnatomyGroup> relatedGroupsFor(AnatomyIdentifier anatomyIdentifier)
         {
             AnatomyGroup group;
+
+            if (anatomyIdentifier.Structure != null && luceneSearch.tryGetStructure(anatomyIdentifier.Structure, out group))
+            {
+                yield return group;
+            }
 
             foreach (var name in anatomyIdentifier.Tags)
             {
@@ -439,12 +455,12 @@ namespace Medical
                 }
             }
 
-            if (anatomyIdentifier.Classification != null && luceneSearch.tryGetSystem(anatomyIdentifier.Classification, out group))
+            if (anatomyIdentifier.Classification != null && luceneSearch.tryGetClassification(anatomyIdentifier.Classification, out group))
             {
                 yield return group;
             }
 
-            if (anatomyIdentifier.Region != null && luceneSearch.tryGetSystem(anatomyIdentifier.Region, out group))
+            if (anatomyIdentifier.Region != null && luceneSearch.tryGetRegion(anatomyIdentifier.Region, out group))
             {
                 yield return group;
             }

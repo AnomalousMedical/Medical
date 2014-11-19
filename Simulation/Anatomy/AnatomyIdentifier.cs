@@ -38,6 +38,9 @@ namespace Medical
         private String classification;
 
         [Editable]
+        private String structure;
+
+        [Editable]
         private String nodeName = "Node";
 
         [Editable]
@@ -284,6 +287,17 @@ namespace Medical
         }
 
         /// <summary>
+        /// The structure for this anatomy.
+        /// </summary>
+        public String Structure
+        {
+            get
+            {
+                return structure;
+            }
+        }
+
+        /// <summary>
         /// The classificaiton for this anatomy.
         /// </summary>
         public String Classification
@@ -351,6 +365,7 @@ namespace Medical
         //Custom conversion code from tags to new style, remove this after updating
         public static readonly String[] classificationUpgrades = { "Bone", "Ligament", "Muscle" };
         public static readonly String[] autoClassifications = { "Artery", "Vein", "Tooth" };
+        public static readonly String[] autoStructures = { "Foot", "Leg", "Arm", "Hand", "Spine" };
         public static readonly String[] regions = { "Arm", "Leg" };
 
         protected override void customLoad(LoadInfo info)
@@ -390,6 +405,19 @@ namespace Medical
                         //region = tag.Tag;
                         toRemove.Add(tag);
                     }
+                    if(structure == null)
+                    {
+                        var query = from q in anatomyTags
+                                    where autoStructures.Any(i => q.Tag.Contains(i))
+                                    select q;
+
+                        AnatomyTag result = query.FirstOrDefault();
+                        if (result != null)
+                        {
+                            toRemove.Add(result);
+                            structure = makeLeftRight(result.Tag);
+                        }
+                    }
                 }
                 
                 //We can assume most things are in the head and neck region
@@ -426,6 +454,24 @@ namespace Medical
                 info.RebuildList("Connection", connections);
             }
             info.RebuildList("AnatomyCommand", commands);
+        }
+
+        private String makeLeftRight(String structureName)
+        {
+            if(structureName == null)
+            {
+                return structureName;
+            }
+
+            if (anatomicalName.Contains("Left"))
+            {
+                return String.Format("Left {0}", structureName);
+            }
+            else if(anatomicalName.Contains("Right"))
+            {
+                return String.Format("Right {0}", structureName);
+            }
+            return structureName;
         }
 
         private static AnatomyCommandBrowser anatomyCommandBrowser = null;
