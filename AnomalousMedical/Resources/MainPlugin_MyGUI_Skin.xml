@@ -6,7 +6,7 @@ Medical.AnatomyFilterButton
 *****************************-->
   <Resource type="ResourceSkin" name = "Medical.AnatomyFilterButton" size = "29 26" texture = "#{Anomalous_Theme_Texture}">
     <Property key="FontName" value="Default"/>
-    <Property key="TextAlign" value="Center"/>
+    <Property key="TextAlign" value="Left VCenter"/>
     <!--Center-->
     <BasisSkin type="SubSkin" offset = "0 0 29 26" align = "Stretch">
       <State name="disabled" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Disabled}"/>
@@ -19,7 +19,7 @@ Medical.AnatomyFilterButton
       <State name="pushed_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_PushedChecked}"/>
     </BasisSkin>
     <!--Text-->
-    <BasisSkin type="SimpleText" offset = "0 0 29 26" align = "Stretch">
+    <BasisSkin type="SimpleText" offset = "2 0 25 26" align = "Stretch">
       <State name="disabled" colour="#{Anomalous_Button_Text_Disabled}" shift = "false"/>
       <State name="normal" colour="#{Anomalous_Button_Text_Normal}" shift = "false"/>
       <State name="highlighted" colour="#{Anomalous_Button_Text_Highlighted}" shift = "false"/>

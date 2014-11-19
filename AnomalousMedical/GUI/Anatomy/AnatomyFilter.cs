@@ -10,7 +10,7 @@ namespace Medical.GUI
 {
     class AnatomyFilter : PopupContainer
     {
-        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, ScaleHelper.Scaled(2), new IntVector2());
+        private StretchLayoutContainer flowLayout = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, ScaleHelper.Scaled(2), new IntVector2());
         private ScrollView scrollView;
 
         private List<Widget> childWidgets = new List<Widget>();
@@ -56,6 +56,7 @@ namespace Medical.GUI
             var size = flowLayout.DesiredSize;
             size.Width = scrollView.Width;
             scrollView.CanvasSize = size;
+            size.Width = scrollView.ViewCoord.width - scrollView.ViewCoord.left;
             flowLayout.WorkingSize = size;
             flowLayout.layout();
         }
@@ -85,8 +86,7 @@ namespace Medical.GUI
             List<String> activeFacetValues = new List<string>();
             AnatomyFacet facet = new AnatomyFacet(facetName, activeFacetValues);
 
-            Button labelButton = scrollView.createWidgetT("Button", "Medical.AnatomyFilterButton", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as Button;
-            labelButton.TextAlign = Align.Left | Align.VCenter;
+            Button labelButton = scrollView.createWidgetT("Button", "Medical.AnatomyFilterButton", 0, 0, widget.Width, ScaleHelper.Scaled(25), Align.Left | Align.Top, "") as Button;
             labelButton.Caption = caption;
             labelButton.ForwardMouseWheelToParent = true;
             labelButton.MouseButtonClick += (sender, e) =>
