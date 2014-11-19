@@ -67,6 +67,9 @@ namespace Medical.GUI
 
             MyGUIInterface.Instance.CommonResourceGroup.addResource(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedScalableResource", true);
 
+            //Load Core Resources
+            ResourceManager.Instance.load("Medical.Resources.Core_Custom_MyGUI_Skin.xml");
+
             screenLayoutManager = new ScreenLayoutManager(window);
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
 
