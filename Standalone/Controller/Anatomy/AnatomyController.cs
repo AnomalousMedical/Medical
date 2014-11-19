@@ -149,12 +149,11 @@ namespace Medical
 
                 if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
                 {
-                    AnatomyGroup tagGroup;
-                    foreach (var tag in firstMatch.Tags)
+                    foreach (var group in anatomyGroupSelectionCandidates(firstMatch))
                     {
-                        if (luceneSearch.tryGetTag(tag, out tagGroup) && tagGroup.ShowInClickSearch && (showPremiumAnatomy || tagGroup.ShowInBasicVersion))
+                        if (group.ShowInClickSearch && (showPremiumAnatomy || group.ShowInBasicVersion))
                         {
-                            bestMatchAnatomy = tagGroup;
+                            bestMatchAnatomy = group;
                             break;
                         }
                     }
@@ -423,6 +422,32 @@ namespace Medical
                     return luceneSearch.Tags;
                 default:
                     throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// This function provdies an enumeration over all possible group selection mode candidates.
+        /// Starts with tags and then does systems.
+        /// </summary>
+        /// <param name="anatomyIdentifier">The AnatomyIdentifier to scan.</param>
+        /// <returns>Enumerates over all AnatomyGroups that could be a group selection mode.</returns>
+        private IEnumerable<AnatomyGroup> anatomyGroupSelectionCandidates(AnatomyIdentifier anatomyIdentifier)
+        {
+            AnatomyGroup group;
+            foreach (var name in anatomyIdentifier.Tags)
+            {
+                if (luceneSearch.tryGetTag(name, out group))
+                {
+                    yield return group;
+                }
+            }
+
+            foreach (var name in anatomyIdentifier.Systems)
+            {
+                if (luceneSearch.tryGetSystem(name, out group))
+                {
+                    yield return group;
+                }
             }
         }
     }
