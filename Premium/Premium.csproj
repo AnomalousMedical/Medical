@@ -78,6 +78,8 @@
   <ItemGroup>
     <Compile Include="Documents\PatientDocumentHandler.cs" />
     <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
+    <Compile Include="GUI\FileManagement\OpenPatientDialog.cs" />
+    <Compile Include="GUI\FileManagement\SavePatientDialog.cs" />
     <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\Notes\NotesDialog.cs" />
     <Compile Include="GUI\StateList\StateListDialog.cs" />
@@ -90,6 +92,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\CloneWindow\CloneWindowDialog.layout" />
+    <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />
+    <EmbeddedResource Include="GUI\FileManagement\SavePatientDialog.layout" />
     <EmbeddedResource Include="Resources\PremiumImagesets.xml" />
   </ItemGroup>
   <ItemGroup>

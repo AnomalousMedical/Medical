@@ -772,9 +772,6 @@
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
-    <Compile Include="GUI\FileManagement\ChooseSceneDialog.cs" />
-    <Compile Include="GUI\FileManagement\OpenPatientDialog.cs" />
-    <Compile Include="GUI\FileManagement\SavePatientDialog.cs" />
     <Compile Include="GUI\ColorMenu\ColorMenu.cs" />
     <Compile Include="GUI\DialogManager.cs" />
     <Compile Include="GUI\Options\OptionsDialog.cs" />
@@ -1030,9 +1027,6 @@
     <EmbeddedResource Include="GUI\ExamViewer\ExamViewer.layout" />
     <EmbeddedResource Include="GUI\ExamViewer\GenericExamOverview.layout" />
     <EmbeddedResource Include="GUI\ExamViewer\TextAnalysisViewer.layout" />
-    <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
-    <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />
-    <EmbeddedResource Include="GUI\FileManagement\SavePatientDialog.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
     <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />

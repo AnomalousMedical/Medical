@@ -20,7 +20,7 @@ namespace Medical.GUI
         private Widget loadingWidget;
 
         public ChooseSceneDialog(GUIManager guiManager)
-            : base("Medical.GUI.FileManagement.ChooseSceneDialog.layout", guiManager)
+            : base("Medical.GUI.ChooseSceneDialog.ChooseSceneDialog.layout", guiManager)
         {
             Button cancelButton = widget.findWidget("ChooseScene/Cancel") as Button;
             sceneFileGrid = new SingleSelectButtonGrid(widget.findWidget("ChooseScene/FileSelect") as ScrollView);
