@@ -350,7 +350,7 @@ namespace Medical
 
         //Custom conversion code from tags to new style, remove this after updating
         public static readonly String[] classificationUpgrades = { "Bone", "Ligament", "Muscle" };
-        public static readonly String[] autoClassifications = { "Artery", "Vein" };
+        public static readonly String[] autoClassifications = { "Artery", "Vein", "Tooth" };
         public static readonly String[] regions = { "Arm", "Leg" };
 
         protected override void customLoad(LoadInfo info)
@@ -387,10 +387,36 @@ namespace Medical
                     }
                     if (region == null && regions.Contains(tag.Tag))
                     {
-                        region = tag.Tag;
+                        //region = tag.Tag;
                         toRemove.Add(tag);
                     }
                 }
+                
+                //We can assume most things are in the head and neck region
+                if (region == null)
+                {
+                    if (classification != "Bone" || anatomyTags.Any(i => i.Tag.Contains("C-Spine")) || AnatomicalName == "Mandible" || AnatomicalName.Contains("Skull"))
+                    {
+                        region = "Head and Neck";
+                    }
+                    else if (anatomyTags.Any(i => i.Tag.Contains("Hand") || i.Tag.Contains("Arm") || i.Tag.Contains("Shoulder Blade") || i.Tag.Contains("Clavicle")))
+                    {
+                        region = "Upper Limb";
+                    }
+                    else if (anatomyTags.Any(i => i.Tag.Contains("Foot") || i.Tag.Contains("Leg") ))
+                    {
+                        region = "Lower Limb";
+                    }
+                    else if (anatomyTags.Any(i => i.Tag.Contains("T-Spine") || i.Tag.Contains("Chest")))
+                    {
+                        region = "Thorax";
+                    }
+                    else if (anatomyTags.Any(i => i.Tag.Contains("L-Spine") || AnatomicalName == "Pelvis" || AnatomicalName == "Sacrum"))
+                    {
+                        region = "Abdomen";
+                    }
+                }
+
                 tags.AddRange(anatomyTags.Where(i => !toRemove.Contains(i)).Select(t => t.Tag));
             }
             else

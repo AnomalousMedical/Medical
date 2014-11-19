@@ -287,6 +287,7 @@ namespace Medical
         {
             group.addCommand(new CallbackAnatomyCommand("Show Region Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, "Region")));
             group.addCommand(new CallbackAnatomyCommand("Breakdown by System", () => breakdownGroup("{1} of the {0}", "Region", group, "System", systems.Values)));
+            group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", () => breakdownGroup("{1} of the {0}", "Region", group, "Classification", classifications.Values)));
             regions.Add(group.AnatomicalName, group);
         }
 
