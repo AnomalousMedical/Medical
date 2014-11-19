@@ -8,7 +8,7 @@
         <Widget type="ScrollView" skin="ScrollView" position="0 34 256 314" align="Stretch" name="AnatomyList">
             <Property key="CanvasSize" value="238 10"/>
             <Property key="CanvasAlign" value="Left Top"/>
-            <UserString key="ButtonSkin" value="AnatomyFinderListItem"/>
+            <UserString key="ButtonSkin" value="Medical.AnatomyFinderListItem"/>
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>

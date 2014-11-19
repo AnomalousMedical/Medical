@@ -85,7 +85,7 @@ namespace Medical.GUI
             List<String> activeFacetValues = new List<string>();
             AnatomyFacet facet = new AnatomyFacet(facetName, activeFacetValues);
 
-            Button labelButton = scrollView.createWidgetT("Button", "Button", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as Button;
+            Button labelButton = scrollView.createWidgetT("Button", "Medical.AnatomyFilterButton", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as Button;
             labelButton.TextAlign = Align.Left | Align.VCenter;
             labelButton.Caption = caption;
             labelButton.ForwardMouseWheelToParent = true;

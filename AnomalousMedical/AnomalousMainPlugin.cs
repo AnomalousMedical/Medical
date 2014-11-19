@@ -89,6 +89,7 @@ namespace Medical.GUI
 
         public void loadGUIResources()
         {
+            ResourceManager.Instance.load("Medical.Resources.AnomalousMedical_MainPlugin_MyGUI_Skin.xml");
             ResourceManager.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
         }
 
