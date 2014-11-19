@@ -35,6 +35,7 @@ namespace Lecture
 
         public void loadGUIResources()
         {
+            ResourceManager.Instance.load("Lecture.Resources.LecturePlugin_MyGUI_Skin.xml");
             ResourceManager.Instance.load("Lecture.Resources.Imagesets.xml");
         }
 

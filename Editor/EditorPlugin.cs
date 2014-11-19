@@ -72,6 +72,7 @@ namespace Medical
 
         public void loadGUIResources()
         {
+            ResourceManager.Instance.load("Medical.Resources.EditorPlugin_MyGUI_Skin.xml");
             ResourceManager.Instance.load("Medical.Resources.EditorImagesets.xml");
         }
 

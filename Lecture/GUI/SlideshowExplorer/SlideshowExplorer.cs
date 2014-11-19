@@ -97,7 +97,7 @@ namespace Lecture.GUI
 
             dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, 32, 32, Align.Default, "Info", "SlideDragAndDropPreview");
             dragIconPreview.Visible = false;
-            dropLocationPreview = Gui.Instance.createWidgetT("Widget", "SlideDropPreview", 0, 0, 100, 10, Align.Default, "Info", "SlideDropPreview");
+            dropLocationPreview = Gui.Instance.createWidgetT("Widget", "Lecture.SlideDropPreview", 0, 0, 100, 10, Align.Default, "Info", "SlideDropPreview");
             dropLocationPreview.Visible = false;
 
             window.WindowButtonPressed += window_WindowButtonPressed;

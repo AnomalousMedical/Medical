@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MyGUI type="Resource" version="1.1">
+
+  <!--*************************
+Lecture.SlideDropPreview
+*****************************-->
+  <Resource type="ResourceSkin" name = "Lecture.SlideDropPreview" size = "11 11" texture = "#{Anomalous_Theme_Texture}">
+    <!--Middle-->
+    <BasisSkin type="SubSkin" offset = "0 0 11 11" align = "HStretch VStretch">
+      <State name="normal" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_SlideDropPreview_Center_Normal}"/>
+    </BasisSkin>
+  </Resource>
+
+  <!--*************************
+Lecture.SlidePreviewListItem
+*****************************-->
+  <Resource type="ResourceSkin" name = "Lecture.SlidePreviewListItem" size = "189 132" texture = "#{Anomalous_Theme_Texture}">
+    <Property key="FontName" value = "Default" />
+    <Property key="TextAlign" value = "Left Top" />
+    <Child type="ImageBox" skin="ButtonStaticImage" offset = "3 3 183 101" align = "Left Top" name = "Image"/>
+    <BasisSkin type="SimpleText" offset = "3 115 185 20" align = "Left Bottom">
+      <State name="disabled" colour="#{Anomalous_ListItem_Text_Disabled}" shift = "false"/>
+      <State name="normal" colour="#{Anomalous_ListItem_Text_Normal}" shift = "false"/>
+      <State name="highlighted" colour="#{Anomalous_ListItem_Text_Highlighted}" shift = "false"/>
+      <State name="pushed" colour="#{Anomalous_ListItem_Text_Pushed}" shift = "false"/>
+      <State name="disabled_checked" colour="#{Anomalous_ListItem_Text_DisabledChecked}" shift = "false"/>
+      <State name="normal_checked" colour="#{Anomalous_ListItem_Text_NormalChecked}" shift = "false"/>
+      <State name="highlighted_checked" colour="#{Anomalous_ListItem_Text_HighlightedChecked}" shift = "false"/>
+      <State name="pushed_checked" colour="#{Anomalous_ListItem_Text_PushedChecked}" shift = "false"/>
+    </BasisSkin>
+    <!--Middle-->
+    <BasisSkin type="SubSkin" offset = "0 0 189 132" align = "HStretch VStretch">
+      <State name="disabled" offsetNamed="Anomalous_Invisible_Coord"/>
+      <State name="normal" offsetNamed="Anomalous_Invisible_Coord"/>
+      <State name="highlighted" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_Highlighted}"/>
+      <State name="pushed" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_Pushed}"/>
+      <State name="disabled_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_DisabledChecked}"/>
+      <State name="normal_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_NormalChecked}"/>
+      <State name="highlighted_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_HighlightedChecked}"/>
+      <State name="pushed_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_PushedChecked}"/>
+    </BasisSkin>
+    <!-- Border -->
+    <Border width="1">
+      <State name="disabled" offsetNamed="Anomalous_Invisible_Coord"/>
+      <State name="normal" offsetNamed="Anomalous_Invisible_Coord"/>
+      <State name="highlighted" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_Highlighted}"/>
+      <State name="pushed" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_Pushed}"/>
+      <State name="disabled_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_DisabledChecked}"/>
+      <State name="normal_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_NormalChecked}"/>
+      <State name="highlighted_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_HighlightedChecked}"/>
+      <State name="pushed_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_PushedChecked}"/>
+    </Border>
+  </Resource>
+  
+</MyGUI>
