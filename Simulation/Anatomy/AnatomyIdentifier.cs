@@ -379,7 +379,7 @@ namespace Medical
                 List<AnatomyTag> toRemove = new List<AnatomyTag>();
                 foreach (var tag in anatomyTags)
                 {
-                    if (tag.Tag.Contains("System"))
+                    if (tag.Tag.Contains("System") && tag.Tag != "Masticatory System")
                     {
                         systems.Add(tag.Tag);
                         toRemove.Add(tag);

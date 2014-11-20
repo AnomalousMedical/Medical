@@ -175,5 +175,7 @@ namespace Medical
                 return groupAnatomy.Count;
             }
         }
+
+        public IEnumerable<AnatomyFacet> Facets { get; set; }
     }
 }

@@ -31,6 +31,7 @@ namespace Medical
         {
             AnatomyGroup group = new AnatomyGroup(properties.Name, properties.ShowInBasicVersion, properties.ShowInTextSearch, properties.ShowInClickSearch, properties.ShowInTree);
             setupGroup(group);
+            group.Facets = facetsForGroup(group);
             groups.Add(group.AnatomicalName, group);
         }
 
@@ -41,6 +42,7 @@ namespace Medical
             {
                 group = new AnatomyGroup(name);
                 setupGroup(group);
+                group.Facets = facetsForGroup(group);
                 groups.Add(group.AnatomicalName, group);
             }
             return group;
@@ -91,6 +93,11 @@ namespace Medical
                     indexWriter.UpdateDocument(new Term("Id", index.ToString()), document);
                 }
             }
+        }
+
+        private IEnumerable<AnatomyFacet> facetsForGroup(AnatomyGroup group)
+        {
+            yield return new AnatomyFacet(FacetName, group.AnatomicalName);
         }
     }
 }

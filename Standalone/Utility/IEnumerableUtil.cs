@@ -26,4 +26,16 @@ namespace Medical
             }
         }
     }
+
+    public static class IEnumerableUtil
+    {
+        public static IEnumerable<T> AddSingle<T>(this IEnumerable<T> source, T single)
+        {
+            foreach (T item in source)
+            {
+                yield return item;
+            }
+            yield return single;
+        }
+    }
 }
