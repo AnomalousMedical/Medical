@@ -364,7 +364,7 @@ namespace Medical
 
         //Custom conversion code from tags to new style, remove this after updating
         public static readonly String[] classificationUpgrades = { "Bone", "Ligament", "Muscle" };
-        public static readonly String[] autoClassifications = { "Artery", "Vein", "Tooth", "Skin", "Lymph Node", "Nerve", "Brain", "Cartilage", "Membrane", "Gland", "Sinus", "Hair", "Capsule", "Disc" };
+        public static readonly String[] autoClassifications = { "Artery", "Vein", "Tooth", "Skin", "Lymph Node", "Nerve", "Brain", "Cartilage", "Membrane", "Gland", "Sinus", "Hair", "Capsule", "Disc", "Eye", "Membrane" };
         public static readonly String[] autoStructures = { "Foot", "Leg", "Arm", "Hand", "Spine" };
         public static readonly String[] regions = { "Arm", "Leg" };
         public static readonly Tuple<String, String>[] autoRenames = { Tuple.Create("Thyroid", "Thyroid Gland"),
@@ -377,7 +377,18 @@ namespace Medical
                                                                        Tuple.Create("VDiscC5C6", "Vertebral Disc C5 C6"),
                                                                        Tuple.Create("VDiscC6C7", "Vertebral Disc C6 C7"),
                                                                        Tuple.Create("VDiscC7T1", "Vertebral Disc C7 T1"),
+                                                                       Tuple.Create("Lips", "Interior Cheek and Lips"),
+                                                                       Tuple.Create("Posterior Atlanto Occip Memb", "Posterior Atlantooccipital Membrane"),
                                                                      };
+
+        public static readonly Tuple<String, String>[] mappedClassifications = { Tuple.Create("Tongue", "Muscle"),
+                                                                                 Tuple.Create("Gum", "Mucosal Tissue"),
+                                                                                 Tuple.Create("Pharynx", "Mucosal Tissue"),
+                                                                                 Tuple.Create("Uvula", "Mucosal Tissue"),
+                                                                                 Tuple.Create("Airway", "Mucosal Tissue"),
+                                                                                 Tuple.Create("Nasal Cavity", "Mucosal Tissue"),
+                                                                                 Tuple.Create("Lips", "Mucosal Tissue"),
+                                                                               };
 
         protected override void customLoad(LoadInfo info)
         {
@@ -448,13 +459,15 @@ namespace Medical
 
                 if (classification == null)
                 {
-                    if (anatomicalName.Contains("Eye"))
+                    var autoClassificationMatch = mappedClassifications.FirstOrDefault(i => anatomicalName.Contains(i.Item1));
+                    if (autoClassificationMatch != null)
                     {
-                        classification = "Eye";
+                        classification = autoClassificationMatch.Item2;
                     }
                     else
                     {
-                        classification = "Unknown";
+                        //Remaining stuff is in the brain
+                        classification = "Brain";
                     }
                 }
 
