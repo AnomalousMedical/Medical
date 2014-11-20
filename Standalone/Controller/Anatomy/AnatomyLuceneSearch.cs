@@ -353,9 +353,15 @@ namespace Medical
                 resultGroup.addAnatomy(search(null, facets, int.MaxValue));
                 if (resultGroup.Count > 0)
                 {
+                    resultGroup.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForGroup(resultGroup)));
                     yield return resultGroup;
                 }
             }
+        }
+
+        private void displayAnatomyForGroup(AnatomyGroup group)
+        {
+            anatomyController.displayAnatomy(String.Format("{0} Anatomy", group.AnatomicalName), group.SelectableAnatomy, SuggestedDisplaySortMode.Alphabetical);
         }
 
         private static Query buildEmptyQuery()
