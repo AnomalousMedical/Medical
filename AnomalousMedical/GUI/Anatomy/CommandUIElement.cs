@@ -9,8 +9,6 @@ namespace Medical.GUI
 {
     abstract class CommandUIElement : LayoutContainer, IDisposable
     {
-        public static readonly int SIDE_PADDING = ScaleHelper.Scaled(10);
-
         public abstract void Dispose();
 
         public override void bringToFront()

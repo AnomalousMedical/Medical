@@ -14,7 +14,7 @@ namespace Medical.GUI
 
         public CommandCheckBox(Widget parentWidget)
         {
-            checkButton = (Button)parentWidget.createWidgetT("Button", "CheckBox", 0, 0, parentWidget.Width - SIDE_PADDING, ScaleHelper.Scaled(20), Align.Default, "");
+            checkButton = (Button)parentWidget.createWidgetT("Button", "CheckBox", 0, 0, parentWidget.Width, ScaleHelper.Scaled(20), Align.Default, "");
             checkButton.MouseButtonClick += new MyGUIEvent(checkButton_MouseButtonClick);
             checkButton.ForwardMouseWheelToParent = true;
         }

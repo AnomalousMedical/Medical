@@ -14,7 +14,7 @@ namespace Medical.GUI
         private AnatomyContextWindowManager windowManager;
         private Anatomy anatomy;
         private Dictionary<String, CommandUIElement> dynamicWidgets = new Dictionary<String, CommandUIElement>();
-        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5, new IntVector2(0, 0));
+        private StretchLayoutContainer layoutContainer = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 5, new IntVector2(0, 0));
 
         private IntSize2 windowStartSize;
 
@@ -142,21 +142,27 @@ namespace Medical.GUI
                 }
 
                 IntSize2 desiredSize = layoutContainer.DesiredSize;
+                int scrollHeight = desiredSize.Height;
+                if(scrollHeight > MaxScrollerSize) //Height of controls larger than scroll area
+                {
+                    scrollHeight = MaxScrollerSize;
+                }
+
+                commandScroller.setSize(commandScroller.Width, scrollHeight);
+                widget.setSize(width, commandScroller.Bottom + ScaleHelper.Scaled(3));
+
                 desiredSize.Width = commandScroller.Width;
+                commandScroller.CanvasSize = new IntSize2(desiredSize.Width, desiredSize.Height); //Note that the width may have changed.
+
+                var viewCoord = commandScroller.ViewCoord;
+                if (viewCoord.width < desiredSize.Width)
+                {
+                    desiredSize.Width = commandScroller.ViewCoord.width - ScaleHelper.Scaled(2);
+                }
 
                 layoutContainer.SuppressLayout = false;
                 layoutContainer.WorkingSize = desiredSize;
                 layoutContainer.layout();
-
-                int scrollHeight = desiredSize.Height;
-                if(scrollHeight > MaxScrollerSize)
-                {
-                    scrollHeight = MaxScrollerSize;
-                }
-                commandScroller.setSize(commandScroller.Width, scrollHeight);
-                commandScroller.CanvasSize = new IntSize2(commandScroller.Width, desiredSize.Height);
-
-                widget.setSize(width, commandScroller.Bottom + 3);
             }
         }
 

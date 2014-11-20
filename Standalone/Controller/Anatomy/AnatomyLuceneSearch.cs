@@ -375,6 +375,12 @@ namespace Medical
                 search("", new AnatomyFacet[] { new AnatomyFacet(facet, groupName) }, int.MaxValue), SuggestedDisplaySortMode.Alphabetical);
         }
 
+        /// <summary>
+        /// Breakdown a group
+        /// </summary>
+        /// <param name="groupTitleFormat">The format for the group title, {0} is the group name and {1} is the breakdown facet name.</param>
+        /// <param name="group">The group to break down.</param>
+        /// <param name="breakdownFacet">The facet to breakdown the group by.</param>
         private void breakdownGroup(String groupTitleFormat, AnatomyGroup group, AnatomyGroupFacetManager breakdownFacet)
         {
             anatomyController.displayAnatomy(String.Format("{0} by {1}", group.AnatomicalName, breakdownFacet.FacetName),

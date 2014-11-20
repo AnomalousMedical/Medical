@@ -14,7 +14,7 @@ namespace Medical.GUI
 
         public CommandButton(Widget parentWidget)
         {
-            button = (Button)parentWidget.createWidgetT("Button", "Button", 0, 0, parentWidget.Width - SIDE_PADDING, ScaleHelper.Scaled(26), Align.Default, "");
+            button = (Button)parentWidget.createWidgetT("Button", "Button", 0, 0, parentWidget.Width, ScaleHelper.Scaled(26), Align.Default, "");
             button.MouseButtonClick += button_MouseButtonClick;
             button.ForwardMouseWheelToParent = true;
         }
