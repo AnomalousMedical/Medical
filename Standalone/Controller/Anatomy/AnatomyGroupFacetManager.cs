@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class FacetGroupManager : IEnumerable<AnatomyGroup>
+    class AnatomyGroupFacetManager : IEnumerable<AnatomyGroup>
     {
         private Dictionary<String, AnatomyGroup> groups = new Dictionary<String, AnatomyGroup>();
         private Action<AnatomyGroup> setupGroup;
 
-        public FacetGroupManager(String facetName, Action<AnatomyGroup> setupGroup)
+        public AnatomyGroupFacetManager(String facetName, Action<AnatomyGroup> setupGroup)
         {
             this.setupGroup = setupGroup;
             this.FacetName = facetName;

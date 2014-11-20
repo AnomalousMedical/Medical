@@ -108,7 +108,7 @@
     <Compile Include="Controller\Anatomy\AnatomySelection.cs" />
     <Compile Include="Controller\Anatomy\AnatomySelectionGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyFacet.cs" />
-    <Compile Include="Controller\Anatomy\FacetGroupManager.cs" />
+    <Compile Include="Controller\Anatomy\AnatomyGroupFacetManager.cs" />
     <Compile Include="Controller\AnomalousMvc\ActiveContextManager.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcContext.cs" />
     <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />

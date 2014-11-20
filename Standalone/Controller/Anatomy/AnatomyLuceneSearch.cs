@@ -24,43 +24,45 @@ namespace Medical
         private AnatomyController anatomyController;
 
         private List<Anatomy> anatomyList = new List<Anatomy>();
-        private FacetGroupManager systems;
-        private FacetGroupManager regions;
-        private FacetGroupManager classifications;
-        private FacetGroupManager tags;
-        private FacetGroupManager structures;
+        private AnatomyGroupFacetManager systems;
+        private AnatomyGroupFacetManager regions;
+        private AnatomyGroupFacetManager classifications;
+        private AnatomyGroupFacetManager tags;
+        private AnatomyGroupFacetManager structures;
 
         public AnatomyLuceneSearch(AnatomyController anatomyController)
         {
             this.anatomyController = anatomyController;
 
-            systems = new FacetGroupManager("System", group =>
+            systems = new AnatomyGroupFacetManager("System", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show System Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, systems.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", systems.FacetName, group, regions)));
             });
 
-            regions = new FacetGroupManager("Region", group =>
+            regions = new AnatomyGroupFacetManager("Region", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Region Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, regions.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by System", () => breakdownGroup("{1} of the {0}", regions.FacetName, group, systems)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", () => breakdownGroup("{1} of the {0}", regions.FacetName, group, classifications)));
             });
 
-            classifications = new FacetGroupManager("Classification", group =>
+            classifications = new AnatomyGroupFacetManager("Classification", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, classifications.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", classifications.FacetName, group, regions)));
             });
 
-            tags = new FacetGroupManager("Tag", group =>
+            tags = new AnatomyGroupFacetManager("Tag", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, tags.FacetName)));
             });
 
-            structures = new FacetGroupManager("Structure", group =>
+            structures = new AnatomyGroupFacetManager("Structure", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, structures.FacetName)));
+                group.addCommand(new CallbackAnatomyCommand("Breakdown by System", () => breakdownGroup("{1} of the {0}", structures.FacetName, group, systems)));
+                group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", () => breakdownGroup("{1} of the {0}", structures.FacetName, group, classifications)));
             });
         }
 
@@ -332,7 +334,7 @@ namespace Medical
                 search("", new AnatomyFacet[] { new AnatomyFacet(facet, groupName) }, int.MaxValue), SuggestedDisplaySortMode.Alphabetical);
         }
 
-        private void breakdownGroup(String groupTitleFormat, String mainFacet, AnatomyGroup group, FacetGroupManager breakdownFacet)
+        private void breakdownGroup(String groupTitleFormat, String mainFacet, AnatomyGroup group, AnatomyGroupFacetManager breakdownFacet)
         {
             anatomyController.displayAnatomy(String.Format("{0} by {1}", group.AnatomicalName, breakdownFacet.FacetName),
                 breakdownGroupSearch(groupTitleFormat, mainFacet, group.AnatomicalName, breakdownFacet.FacetName, breakdownFacet.Select(i => i.AnatomicalName)),
