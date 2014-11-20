@@ -257,7 +257,7 @@ namespace Medical
         private Query buildQuery(String searchTerm, IEnumerable<AnatomyFacet> facets)
         {
             Query query;
-            if (String.IsNullOrWhiteSpace(searchTerm))
+            if (String.IsNullOrWhiteSpace(searchTerm) || searchTerm == "*")
             {
                 query = new MatchAllDocsQuery();
             }
