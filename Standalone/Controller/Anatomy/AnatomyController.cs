@@ -33,7 +33,6 @@ namespace Medical
     {
         System,
         Region,
-        Tag,
         Classification,
         Structure
     }
@@ -127,7 +126,7 @@ namespace Medical
                 foreach (AnatomyIdentifier anatomy in matches.Anatomy)
                 {
                     fireDisplayAnatomy(anatomy);
-                    foreach (var group in relatedGroupsFor(anatomy))
+                    foreach (var group in luceneSearch.relatedGroupsFor(anatomy))
                     {
                         if (group.ShowInClickSearch && displayedGroups.Add(group.AnatomicalName))
                         {
@@ -139,15 +138,19 @@ namespace Medical
                 //Choose which anatomy to select, start with the closest match
                 AnatomyIdentifier firstMatch = matches.Closest;
                 bestMatchAnatomy = firstMatch;
-                if (PickingMode == AnatomyPickingMode.Group && firstMatch.AllowGroupSelection || !showPremiumAnatomy)
+                if (PickingMode == AnatomyPickingMode.Group || !showPremiumAnatomy)
                 {
-                    foreach (var group in relatedGroupsFor(firstMatch))
+                    try
                     {
-                        if (group.ShowInClickSearch && (showPremiumAnatomy || group.ShowInBasicVersion))
+                        Anatomy groupSelection = currentClickGroupSelectionFor(firstMatch);
+                        if (groupSelection != null)
                         {
-                            bestMatchAnatomy = group;
-                            break;
+                            bestMatchAnatomy = groupSelection;
                         }
+                    }
+                    catch(Exception)
+                    {
+                        //Ignore exceptions, in this case we just use the selected anatomy.
                     }
                 }
             }
@@ -415,8 +418,6 @@ namespace Medical
                     return luceneSearch.Regions;
                 case TopLevelMode.System:
                     return luceneSearch.Systems;
-                case TopLevelMode.Tag:
-                    return luceneSearch.Tags;
                 case TopLevelMode.Structure:
                     return luceneSearch.Structures;
                 default:
@@ -424,45 +425,30 @@ namespace Medical
             }
         }
 
-        /// <summary>
-        /// This function provdies an enumeration over all possible group selection mode candidates.
-        /// Starts with tags and then does systems, then classification and finally region.
-        /// </summary>
-        /// <param name="anatomyIdentifier">The AnatomyIdentifier to scan.</param>
-        /// <returns>Enumerates over all AnatomyGroups that could be a group selection mode.</returns>
-        private IEnumerable<AnatomyGroup> relatedGroupsFor(AnatomyIdentifier anatomyIdentifier)
+        private Anatomy currentClickGroupSelectionFor(AnatomyIdentifier anatomy)
         {
-            AnatomyGroup group;
-
-            if (anatomyIdentifier.Structure != null && luceneSearch.tryGetStructure(anatomyIdentifier.Structure, out group))
+            if (showPremiumAnatomy)
             {
-                yield return group;
-            }
-
-            foreach (var name in anatomyIdentifier.Tags)
-            {
-                if (luceneSearch.tryGetTag(name, out group))
+                String system = anatomy.Systems.FirstOrDefault();
+                switch (currentTopLevelMode)
                 {
-                    yield return group;
+                    case TopLevelMode.Classification:
+                        return luceneSearch.buildGroupFromFacets(String.Format("{0} of the {1}", anatomy.Classification, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("Classification", anatomy.Classification), new AnatomyFacet("Region", anatomy.Region)));
+                    case TopLevelMode.Region:
+                        return luceneSearch.buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Region", anatomy.Region)));
+                    case TopLevelMode.System:
+                        return luceneSearch.buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Region", anatomy.Region)));
+                    case TopLevelMode.Structure:
+                        return luceneSearch.buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Structure), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Structure", anatomy.Structure)));
+                    default:
+                        throw new NotImplementedException();
                 }
             }
-
-            foreach (var name in anatomyIdentifier.Systems)
+            else
             {
-                if (luceneSearch.tryGetSystem(name, out group))
-                {
-                    yield return group;
-                }
-            }
-
-            if (anatomyIdentifier.Classification != null && luceneSearch.tryGetClassification(anatomyIdentifier.Classification, out group))
-            {
-                yield return group;
-            }
-
-            if (anatomyIdentifier.Region != null && luceneSearch.tryGetRegion(anatomyIdentifier.Region, out group))
-            {
-                yield return group;
+                AnatomyGroup groupSelection;
+                luceneSearch.tryGetSystem(anatomy.Systems.FirstOrDefault(), out groupSelection);
+                return groupSelection;
             }
         }
     }

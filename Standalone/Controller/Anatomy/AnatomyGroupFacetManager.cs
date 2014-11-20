@@ -50,6 +50,11 @@ namespace Medical
 
         public bool tryGetGroup(String name, out AnatomyGroup group)
         {
+            if(name == null)
+            {
+                group = null;
+                return false;
+            }
             return groups.TryGetValue(name, out group);
         }
 

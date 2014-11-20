@@ -364,9 +364,20 @@ namespace Medical
 
         //Custom conversion code from tags to new style, remove this after updating
         public static readonly String[] classificationUpgrades = { "Bone", "Ligament", "Muscle" };
-        public static readonly String[] autoClassifications = { "Artery", "Vein", "Tooth" };
+        public static readonly String[] autoClassifications = { "Artery", "Vein", "Tooth", "Skin", "Lymph Node", "Nerve", "Brain", "Cartilage", "Membrane", "Gland", "Sinus", "Hair", "Capsule", "Disc" };
         public static readonly String[] autoStructures = { "Foot", "Leg", "Arm", "Hand", "Spine" };
         public static readonly String[] regions = { "Arm", "Leg" };
+        public static readonly Tuple<String, String>[] autoRenames = { Tuple.Create("Thyroid", "Thyroid Gland"),
+                                                                       Tuple.Create("Transverse sinus", "Transverse Sinus"),
+                                                                       Tuple.Create("Left TMJ", "Left TMJ Disc"),
+                                                                       Tuple.Create("Right TMJ", "Right TMJ Disc"),
+                                                                       Tuple.Create("VDiscC2C3", "Vertebral Disc C2 C3"),
+                                                                       Tuple.Create("VDiscC3C4", "Vertebral Disc C3 C4"),
+                                                                       Tuple.Create("VDiscC4C5", "Vertebral Disc C4 C5"),
+                                                                       Tuple.Create("VDiscC5C6", "Vertebral Disc C5 C6"),
+                                                                       Tuple.Create("VDiscC6C7", "Vertebral Disc C6 C7"),
+                                                                       Tuple.Create("VDiscC7T1", "Vertebral Disc C7 T1"),
+                                                                     };
 
         protected override void customLoad(LoadInfo info)
         {
@@ -374,6 +385,13 @@ namespace Medical
             //Can remove after everything is converted.
             if (info.Version < 1)
             {
+                //Do Renames
+                var autoRenameMatch = autoRenames.FirstOrDefault(i => i.Item1 == anatomicalName);
+                if(autoRenameMatch != null)
+                {
+                    anatomicalName = autoRenameMatch.Item2;
+                }
+
                 List<AnatomyTag> anatomyTags = new List<AnatomyTag>();
                 info.RebuildList<AnatomyTag>("AnatomyTag", anatomyTags);
                 List<AnatomyTag> toRemove = new List<AnatomyTag>();
@@ -417,7 +435,32 @@ namespace Medical
                             toRemove.Add(result);
                             structure = makeLeftRight(result.Tag);
                         }
+                        else if(anatomyTags.Any(i => i.Tag.Equals("Chest")))
+                        {
+                            structure = "Ribcage";
+                        }
+                        else if(anatomyTags.Any(i => i.Tag.Equals("Shoulder Blade") || i.Tag.Equals("Clavicle")))
+                        {
+                            structure = makeLeftRight("Arm");
+                        }
                     }
+                }
+
+                if (classification == null)
+                {
+                    if (anatomicalName.Contains("Eye"))
+                    {
+                        classification = "Eye";
+                    }
+                    else
+                    {
+                        classification = "Unknown";
+                    }
+                }
+
+                if(structure == null)
+                {
+                    structure = "Head and Neck";
                 }
                 
                 //We can assume most things are in the head and neck region
