@@ -92,8 +92,9 @@ namespace Medical
                 List<AnatomyTagProperties> toRemove = new List<AnatomyTagProperties>();
                 foreach (var oldProp in oldProperties)
                 {
-                    if (oldProp.Name.Contains("System"))
+                    if (oldProp.Name.Contains("System") && oldProp.Name != "Masticatory System")
                     {
+                        oldProp.ShowInTree = true;
                         systemProperties.Add(oldProp);
                         toRemove.Add(oldProp);
                     }
