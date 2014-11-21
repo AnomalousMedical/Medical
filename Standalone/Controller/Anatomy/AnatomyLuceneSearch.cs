@@ -38,6 +38,8 @@ namespace Medical
             {
                 group.addCommand(new CallbackAnatomyCommand("Show System Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, systems.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", group, regions)));
+                group.addCommand(new CallbackAnatomyCommand("Breakdown by Structure", () => breakdownGroup("{0} of the {1}", group, structures)));
+                group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", () => breakdownGroup("{1} of the {0}", group, classifications)));
             },
             anatomy =>
             {
@@ -61,6 +63,7 @@ namespace Medical
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, classifications.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", group, regions)));
+                group.addCommand(new CallbackAnatomyCommand("Breakdown by Structure", () => breakdownGroup("{0} of the {1}", group, structures)));
             },
             anatomy =>
             {
