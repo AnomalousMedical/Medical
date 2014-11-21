@@ -72,6 +72,9 @@
             <Widget type="TextBox" skin="TextBox" position="5 196 135 13" name="LuceneNetLink">
               <Property key="Caption" value="Lucene.Net"/>
             </Widget>
+            <Widget type="TextBox" skin="TextBox" position="140 20 135 13" name="BEPUPhysicsLink">
+              <Property key="Caption" value="BEPUPhysics"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

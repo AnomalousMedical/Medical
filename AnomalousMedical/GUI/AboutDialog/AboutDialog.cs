@@ -72,6 +72,9 @@ namespace Medical.GUI
             TextBox luceneNetLink = window.findWidget("LuceneNetLink") as TextBox;
             luceneNetLink.MouseButtonClick += luceneNetLink_MouseButtonClick;
 
+            TextBox bepuPhysicsLink = window.findWidget("BEPUPhysicsLink") as TextBox;
+            bepuPhysicsLink.MouseButtonClick += bepuPhysicsLink_MouseButtonClick;
+
             TextBox copyrightText = window.findWidget("CopyrightText") as TextBox;
             copyrightText.Caption = String.Format("Copyright 2009-{0} Anomalous Medical, LLC", DateTime.Now.Year);
 
@@ -145,6 +148,11 @@ namespace Medical.GUI
         void luceneNetLink_MouseButtonClick(Widget source, EventArgs e)
         {
             OtherProcessManager.openUrlInBrowser("http://lucenenet.apache.org/");
+        }
+
+        void bepuPhysicsLink_MouseButtonClick(Widget source, EventArgs e)
+        {
+            OtherProcessManager.openUrlInBrowser("http://bepuphysics.codeplex.com/");
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
