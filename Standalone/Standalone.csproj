@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="Controller\Anatomy\AnatomyAnalyzer.cs" />
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
+    <Compile Include="Controller\Anatomy\AnatomyFilterEntry.cs" />
     <Compile Include="Controller\Anatomy\AnatomyLuceneSearch.cs" />
     <Compile Include="Controller\Anatomy\AnatomySelection.cs" />
     <Compile Include="Controller\Anatomy\AnatomySelectionGroup.cs" />

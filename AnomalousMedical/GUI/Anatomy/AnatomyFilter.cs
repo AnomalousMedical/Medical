@@ -16,7 +16,7 @@ namespace Medical.GUI
         private List<Widget> childWidgets = new List<Widget>();
         private List<AnatomyFacet> activeFacets = new List<AnatomyFacet>();
         private AnatomyController anatomyController;
-        private ButtonGroup<TopLevelMode> topLevelButtons = new ButtonGroup<TopLevelMode>();
+        private ButtonGroup<AnatomyFilterEntry> topLevelButtons = new ButtonGroup<AnatomyFilterEntry>();
 
         /// <summary>
         /// Fired when the filter settings change.
@@ -48,10 +48,11 @@ namespace Medical.GUI
 
             NaturalSort<String> sort = new NaturalSort<string>();
 
-            createGroup("Systems", "System", TopLevelMode.System, anatomyController.Systems.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
-            createGroup("Regions", "Region", TopLevelMode.Region, anatomyController.Regions.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
-            createGroup("Classificatons", "Classification", TopLevelMode.Classification, anatomyController.Classifications.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
-            createGroup("Structures", "Structure", TopLevelMode.Structure, anatomyController.Structures.Select(i => i.AnatomicalName).OrderBy(i => i, sort));
+            foreach(AnatomyFilterEntry filterEntry in anatomyController.FilterEntries)
+            {
+                createGroup(filterEntry, filterEntry.FilterableItems.OrderBy(i => i, sort));
+            }
+
             topLevelButtons.Selection = anatomyController.TopLevelMode;
 
             var size = flowLayout.DesiredSize;
@@ -82,23 +83,23 @@ namespace Medical.GUI
             }
         }
 
-        private void createGroup(String caption, String facetName, TopLevelMode topLevelMode, IEnumerable<String> items)
+        private void createGroup(AnatomyFilterEntry filterEntry, IEnumerable<String> items)
         {
             List<CheckButton> groupCheckButtons = new List<CheckButton>();
             List<String> activeFacetValues = new List<string>();
-            AnatomyFacet facet = new AnatomyFacet(facetName, activeFacetValues);
+            AnatomyFacet facet = new AnatomyFacet(filterEntry.FacetName, activeFacetValues);
 
             Button labelButton = scrollView.createWidgetT("Button", "Medical.AnatomyFilterButton", 0, 0, widget.Width, ScaleHelper.Scaled(25), Align.Left | Align.Top, "") as Button;
-            labelButton.Caption = caption;
+            labelButton.Caption = filterEntry.Caption;
             labelButton.ForwardMouseWheelToParent = true;
             labelButton.MouseButtonClick += (sender, e) =>
                 {
-                    anatomyController.TopLevelMode = topLevelMode;
+                    anatomyController.TopLevelMode = filterEntry;
                     fireTopLevelAnatomyChanged();
                 };
             flowLayout.addChild(new MyGUILayoutContainer(labelButton));
             childWidgets.Add(labelButton);
-            topLevelButtons.addButton(topLevelMode, labelButton);
+            topLevelButtons.addButton(filterEntry, labelButton);
 
             Button button = scrollView.createWidgetT("Button", "CheckBox", 0, 0, widget.Width, ScaleHelper.Scaled(20), Align.Left | Align.Top, "") as Button;
             button.Caption = "Include All";

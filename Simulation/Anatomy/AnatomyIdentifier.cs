@@ -412,6 +412,10 @@ namespace Medical
                     {
                         systems.Add(tag.Tag);
                         toRemove.Add(tag);
+                        if(tag.Tag == "Lymphatic System")
+                        {
+                            systems.Add("Immune System");
+                        }
                     }
                     if (classification == null)
                     {

@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class AnatomyGroupFacetManager : IEnumerable<AnatomyGroup>
+    class AnatomyGroupFacetManager : IEnumerable<AnatomyGroup>, AnatomyFilterEntry
     {
         private Dictionary<String, AnatomyGroup> groups = new Dictionary<String, AnatomyGroup>();
         private Action<AnatomyGroup> setupGroup;
+        private Func<AnatomyIdentifier, Anatomy> buildGroupSelection;
 
-        public AnatomyGroupFacetManager(String facetName, Action<AnatomyGroup> setupGroup)
+        public AnatomyGroupFacetManager(String caption, String facetName, Action<AnatomyGroup> setupGroup, Func<AnatomyIdentifier, Anatomy> buildGroupSelection)
         {
             this.setupGroup = setupGroup;
+            this.buildGroupSelection = buildGroupSelection;
             this.FacetName = facetName;
+            this.Caption = caption;
         }
 
         public void createGroups(IEnumerable<AnatomyTagProperties> properties)
@@ -103,6 +106,30 @@ namespace Medical
         private IEnumerable<AnatomyFacet> facetsForGroup(AnatomyGroup group)
         {
             yield return new AnatomyFacet(FacetName, group.AnatomicalName);
+        }
+
+        public string Caption { get; private set; }
+
+        public IEnumerable<string> FilterableItems
+        {
+            get
+            {
+                return groups.Values.Select(i => i.AnatomicalName);
+            }
+        }
+
+
+        public IEnumerable<Anatomy> TopLevelItems
+        {
+            get
+            {
+                return this.Where(i => i.ShowInTree);
+            }
+        }
+
+        public Anatomy buildGroupSelectionFor(AnatomyIdentifier anatomy)
+        {
+            return buildGroupSelection(anatomy);
         }
     }
 }

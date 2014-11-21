@@ -29,14 +29,6 @@ namespace Medical
         Alphabetical
     }
 
-    public enum TopLevelMode
-    {
-        System,
-        Region,
-        Classification,
-        Structure
-    }
-
     public class AnatomyController : IDisposable
     {
         private AnatomyLuceneSearch luceneSearch;
@@ -45,7 +37,7 @@ namespace Medical
         private SelectionOperator selectionOperator = SelectionOperator.Select;
         private bool showPremiumAnatomy = true;
         private AnatomyCommandPermissions commandPermissions = AnatomyCommandPermissions.None;
-        private TopLevelMode currentTopLevelMode = TopLevelMode.System;
+        private AnatomyFilterEntry currentTopLevelMode = null;
 
         public event EventDelegate<AnatomyController> AnatomyChanged;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
@@ -81,6 +73,7 @@ namespace Medical
         public AnatomyController()
         {
             luceneSearch = new AnatomyLuceneSearch(this);
+            currentTopLevelMode = luceneSearch.FilterEntries.First();
         }
 
         public void Dispose()
@@ -156,7 +149,7 @@ namespace Medical
             }
             else
             {
-                foreach (var anatomy in currentSelectionEnum().Where(i => i.ShowInTree))
+                foreach (var anatomy in currentTopLevelMode.TopLevelItems)
                 {
                     fireDisplayAnatomy(anatomy);
                 }
@@ -173,7 +166,7 @@ namespace Medical
                 fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
                 fireClearDisplayedAnatomy();
 
-                foreach (Anatomy anatomy in currentSelectionEnum().Where(i => i.ShowInTree))
+                foreach (Anatomy anatomy in currentTopLevelMode.TopLevelItems)
                 {
                     fireDisplayAnatomy(anatomy);
                 }
@@ -260,7 +253,7 @@ namespace Medical
             }
         }
 
-        public TopLevelMode TopLevelMode
+        public AnatomyFilterEntry TopLevelMode
         {
             get
             {
@@ -328,43 +321,11 @@ namespace Medical
             }
         }
 
-        public IEnumerable<AnatomyGroup> Systems
+        public IEnumerable<AnatomyFilterEntry> FilterEntries
         {
             get
             {
-                return luceneSearch.Systems;
-            }
-        }
-
-        public IEnumerable<AnatomyGroup> Tags
-        {
-            get
-            {
-                return luceneSearch.Tags;
-            }
-        }
-
-        public IEnumerable<AnatomyGroup> Regions
-        {
-            get
-            {
-                return luceneSearch.Regions;
-            }
-        }
-
-        public IEnumerable<AnatomyGroup> Classifications
-        {
-            get
-            {
-                return luceneSearch.Classifications;
-            }
-        }
-
-        public IEnumerable<AnatomyGroup> Structures
-        {
-            get
-            {
-                return luceneSearch.Structures;
+                return luceneSearch.FilterEntries;
             }
         }
 
@@ -408,41 +369,11 @@ namespace Medical
             }
         }
 
-        private IEnumerable<AnatomyGroup> currentSelectionEnum()
-        {
-            switch(currentTopLevelMode)
-            {
-                case TopLevelMode.Classification:
-                    return luceneSearch.Classifications;
-                case TopLevelMode.Region:
-                    return luceneSearch.Regions;
-                case TopLevelMode.System:
-                    return luceneSearch.Systems;
-                case TopLevelMode.Structure:
-                    return luceneSearch.Structures;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
-
         private Anatomy currentClickGroupSelectionFor(AnatomyIdentifier anatomy)
         {
             if (showPremiumAnatomy)
             {
-                String system = anatomy.Systems.FirstOrDefault();
-                switch (currentTopLevelMode)
-                {
-                    case TopLevelMode.Classification:
-                        return luceneSearch.buildGroupFromFacets(String.Format("{0} of the {1}", anatomy.Classification, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("Classification", anatomy.Classification), new AnatomyFacet("Region", anatomy.Region)));
-                    case TopLevelMode.Region:
-                        return luceneSearch.buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Region", anatomy.Region)));
-                    case TopLevelMode.System:
-                        return luceneSearch.buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Region", anatomy.Region)));
-                    case TopLevelMode.Structure:
-                        return luceneSearch.buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Structure), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Structure", anatomy.Structure)));
-                    default:
-                        throw new NotImplementedException();
-                }
+                return currentTopLevelMode.buildGroupSelectionFor(anatomy);
             }
             else
             {

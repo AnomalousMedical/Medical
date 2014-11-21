@@ -34,35 +34,55 @@ namespace Medical
         {
             this.anatomyController = anatomyController;
 
-            systems = new AnatomyGroupFacetManager("System", group =>
+            systems = new AnatomyGroupFacetManager("Systems", "System", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show System Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, systems.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", group, regions)));
+            },
+            anatomy =>
+            {
+                String system = anatomy.Systems.FirstOrDefault();
+                return buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Region", anatomy.Region)));
             });
 
-            regions = new AnatomyGroupFacetManager("Region", group =>
+            regions = new AnatomyGroupFacetManager("Regions", "Region", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Region Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, regions.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by System", () => breakdownGroup("{1} of the {0}", group, systems)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", () => breakdownGroup("{1} of the {0}", group, classifications)));
+            },
+            anatomy =>
+            {
+                String system = anatomy.Systems.FirstOrDefault();
+                return buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Region", anatomy.Region)));
             });
 
-            classifications = new AnatomyGroupFacetManager("Classification", group =>
+            classifications = new AnatomyGroupFacetManager("Classifications", "Classification", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, classifications.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", () => breakdownGroup("{0} of the {1}", group, regions)));
+            },
+            anatomy =>
+            {
+                return buildGroupFromFacets(String.Format("{0} of the {1}", anatomy.Classification, anatomy.Region), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("Classification", anatomy.Classification), new AnatomyFacet("Region", anatomy.Region)));
             });
 
-            tags = new AnatomyGroupFacetManager("Tag", group =>
+            tags = new AnatomyGroupFacetManager("Tags", "Tag", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, tags.FacetName)));
-            });
+            },
+            anatomy => { throw new NotImplementedException(); });
 
-            structures = new AnatomyGroupFacetManager("Structure", group =>
+            structures = new AnatomyGroupFacetManager("Structures", "Structure", group =>
             {
                 group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", () => displayAnatomyForFacet(group.AnatomicalName, structures.FacetName)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by System", () => breakdownGroup("{1} of the {0}", group, systems)));
                 group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", () => breakdownGroup("{1} of the {0}", group, classifications)));
+            },
+            anatomy =>
+            {
+                String system = anatomy.Systems.FirstOrDefault();
+                return buildGroupFromFacets(String.Format("{0} of the {1}", system, anatomy.Structure), IEnumerableUtil<AnatomyFacet>.Iter(new AnatomyFacet("System", system), new AnatomyFacet("Structure", anatomy.Structure)));
             });
         }
 
@@ -210,26 +230,10 @@ namespace Medical
                 directory = null;
             }
         }
-
-        public IEnumerable<AnatomyGroup> Systems
-        {
-            get
-            {
-                return systems;
-            }
-        }
-
+        
         public bool tryGetSystem(String name, out AnatomyGroup group)
         {
             return systems.tryGetGroup(name, out group);
-        }
-
-        public IEnumerable<AnatomyGroup> Tags
-        {
-            get
-            {
-                return tags;
-            }
         }
 
         public bool tryGetTag(String name, out AnatomyGroup group)
@@ -237,25 +241,9 @@ namespace Medical
             return tags.tryGetGroup(name, out group);
         }
 
-        public IEnumerable<AnatomyGroup> Regions
-        {
-            get
-            {
-                return regions;
-            }
-        }
-
         public bool tryGetRegion(String name, out AnatomyGroup group)
         {
             return regions.tryGetGroup(name, out group);
-        }
-
-        public IEnumerable<AnatomyGroup> Classifications
-        {
-            get
-            {
-                return classifications;
-            }
         }
 
         public bool tryGetClassification(String name, out AnatomyGroup group)
@@ -263,17 +251,20 @@ namespace Medical
             return classifications.tryGetGroup(name, out group);
         }
 
-        public IEnumerable<AnatomyGroup> Structures
-        {
-            get
-            {
-                return structures;
-            }
-        }
-
         public bool tryGetStructure(String name, out AnatomyGroup group)
         {
             return structures.tryGetGroup(name, out group);
+        }
+
+        public IEnumerable<AnatomyFilterEntry> FilterEntries
+        {
+            get
+            {
+                yield return systems;
+                yield return regions;
+                yield return classifications;
+                yield return structures;
+            }
         }
 
         /// <summary>
