@@ -103,12 +103,12 @@ namespace Medical
         /// </summary>
         /// <param name="ray"></param>
         /// <returns></returns>
-        public Anatomy findAnatomy(Ray3 ray)
+        public IEnumerable<Anatomy> findAnatomy(Ray3 ray)
         {
             fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
             fireClearDisplayedAnatomy();
 
-            Anatomy bestMatchAnatomy = null;
+            IEnumerable<Anatomy> bestMatchAnatomy = null;
 
             var matches = AnatomyManager.findAnatomy(ray);
 
@@ -128,24 +128,7 @@ namespace Medical
                     }
                 }
 
-                //Choose which anatomy to select, start with the closest match
-                AnatomyIdentifier firstMatch = matches.Closest;
-                bestMatchAnatomy = firstMatch;
-                if (PickingMode == AnatomyPickingMode.Group || !showPremiumAnatomy)
-                {
-                    try
-                    {
-                        Anatomy groupSelection = currentClickGroupSelectionFor(firstMatch);
-                        if (groupSelection != null)
-                        {
-                            bestMatchAnatomy = groupSelection;
-                        }
-                    }
-                    catch(Exception)
-                    {
-                        //Ignore exceptions, in this case we just use the selected anatomy.
-                    }
-                }
+                bestMatchAnatomy = currentClickGroupSelectionFor(matches);
             }
             else
             {
@@ -369,17 +352,35 @@ namespace Medical
             }
         }
 
-        private Anatomy currentClickGroupSelectionFor(AnatomyIdentifier anatomy)
+        private IEnumerable<Anatomy> currentClickGroupSelectionFor(SortedAnatomyClickResults matches)
         {
             if (showPremiumAnatomy)
             {
-                return currentTopLevelMode.buildGroupSelectionFor(anatomy);
+                switch(PickingMode)
+                {
+                    case AnatomyPickingMode.Group:
+                        Anatomy groupSelection = null;
+                        try
+                        {
+                            groupSelection = currentTopLevelMode.buildGroupSelectionFor(matches.Closest);
+                        }
+                        catch (Exception) { } //Ignore any exceptions.
+                        if(groupSelection != null)
+                        {
+                            yield return groupSelection;
+                        }
+                        yield return matches.Closest;
+                        break;
+                    case AnatomyPickingMode.Individual:
+                        yield return matches.Closest;
+                        break;
+                }
             }
             else
             {
                 AnatomyGroup groupSelection;
-                luceneSearch.tryGetSystem(anatomy.Systems.FirstOrDefault(), out groupSelection);
-                return groupSelection;
+                luceneSearch.tryGetSystem(matches.Closest.Systems.FirstOrDefault(), out groupSelection);
+                yield return groupSelection;
             }
         }
     }

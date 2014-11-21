@@ -11,6 +11,7 @@ namespace Medical.GUI
 {
     public class AnatomyFinder : MDIDialog
     {
+        private static readonly int MouseClickWindowOffset = ScaleHelper.Scaled(5);
         private static readonly int ThumbSize = ScaleHelper.Scaled(50);
         private static readonly int ThumbRenderSize = ScaleHelper.Scaled(200);
         private static readonly int lockSize = ScaleHelper.Scaled(18);
@@ -45,6 +46,7 @@ namespace Medical.GUI
         private int lastWidth = -1;
         private int lastHeight = -1;
         private MouseTravelTracker travelTracker = new MouseTravelTracker();
+        private ClickedAnatomyManager clickedAnatomy = new ClickedAnatomyManager();
 
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
 
@@ -199,30 +201,42 @@ namespace Medical.GUI
             IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
             if (eventLayer.EventProcessingAllowed && !travelTracker.TraveledOverLimit)
             {
-                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-                DisplayHintLocation = new IntVector2(absMouse.x, absMouse.y);
-                Ray3 cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
-
-                Anatomy bestMatch = anatomyController.findAnatomy(cameraRay);
-
-                if (anatomyController.PickingMode != AnatomyPickingMode.None)
+                if (clickedAnatomy.DoNewClickSearch)
                 {
-                    anatomyController.processSelection(bestMatch);
-                }
+                    SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+                    DisplayHintLocation = new IntVector2(absMouse.x + MouseClickWindowOffset, absMouse.y + MouseClickWindowOffset);
+                    Ray3 cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
 
-                if (bestMatch != null)
-                {
-                    searchBox.Caption = "Clicked";
-                    clearButton.Visible = true;
-                    if (MedicalConfig.AutoOpenAnatomyFinder && !Visible && anatomyController.SelectionOperator != SelectionOperator.Remove && anatomyController.PickingMode != AnatomyPickingMode.None)
+                    IEnumerable<Anatomy> bestMatch = anatomyController.findAnatomy(cameraRay);
+
+                    if (bestMatch != null)
                     {
-                        Visible = true;
+                        clickedAnatomy.setNewResults(bestMatch, eventLayer);
+                        if (clickedAnatomy.CurrentMatch != null && anatomyController.PickingMode != AnatomyPickingMode.None)
+                        {
+                            anatomyController.processSelection(clickedAnatomy.CurrentMatch);
+                            clickedAnatomy.moveNext();
+                        }
+
+                        searchBox.Caption = "Clicked";
+                        clearButton.Visible = true;
+                        if (MedicalConfig.AutoOpenAnatomyFinder && !Visible && anatomyController.SelectionOperator != SelectionOperator.Remove && anatomyController.PickingMode != AnatomyPickingMode.None)
+                        {
+                            Visible = true;
+                        }
+                    }
+                    else
+                    {
+                        clickedAnatomy.clear();
+                        anatomyController.processSelection(null);
+                        clearButton.Visible = false;
+                        searchBox.Caption = "";
                     }
                 }
                 else
                 {
-                    clearButton.Visible = false;
-                    searchBox.Caption = "";
+                    anatomyController.processSelection(clickedAnatomy.CurrentMatch);
+                    clickedAnatomy.moveNext();
                 }
             }
         }
