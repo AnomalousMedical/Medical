@@ -38,6 +38,7 @@ namespace Medical
         private bool showPremiumAnatomy = true;
         private AnatomyCommandPermissions commandPermissions = AnatomyCommandPermissions.None;
         private AnatomyFilterEntry currentTopLevelMode = null;
+        private AnatomySelection selectedAnatomy = new AnatomySelection();
 
         public event EventDelegate<AnatomyController> AnatomyChanged;
         public event EventDelegate<AnatomyController, AnatomyPickingMode> PickingModeChanged;
@@ -74,6 +75,7 @@ namespace Medical
         {
             luceneSearch = new AnatomyLuceneSearch(this);
             currentTopLevelMode = luceneSearch.FilterEntries.First();
+            selectedAnatomy.DisplaySelectedAnatomy += selectedAnatomy_DisplaySelectedAnatomy;
         }
 
         public void Dispose()
@@ -301,7 +303,6 @@ namespace Medical
             }
         }
 
-        private AnatomySelection selectedAnatomy = new AnatomySelection();
         public AnatomySelection SelectedAnatomy
         {
             get
@@ -396,6 +397,11 @@ namespace Medical
                 luceneSearch.tryGetGroup(matches.Closest.Systems.FirstOrDefault(), out groupSelection);
                 yield return groupSelection;
             }
+        }
+
+        void selectedAnatomy_DisplaySelectedAnatomy(IEnumerable<Anatomy> items)
+        {
+            displayAnatomy("Selected", items, SuggestedDisplaySortMode.Alphabetical);
         }
     }
 }

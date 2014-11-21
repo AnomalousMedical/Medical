@@ -13,6 +13,11 @@ namespace Medical
         /// </summary>
         public event Action<AnatomySelection> SelectedAnatomyChanged;
 
+        /// <summary>
+        /// Called when a selection wishes to display its anatomy.
+        /// </summary>
+        internal event Action<IEnumerable<Anatomy>> DisplaySelectedAnatomy;
+
         private HashSet<Anatomy> selectedAnatomy = new HashSet<Anatomy>();
 
         public void setSelection(Anatomy anatomy)
@@ -59,7 +64,9 @@ namespace Medical
                     case 1:
                         return selectedAnatomy.First();
                     default:
-                        return new AnatomySelectionGroup(this.SelectedAnatomy);
+                        AnatomySelectionGroup selectionGroup = new AnatomySelectionGroup(this.SelectedAnatomy);
+                        selectionGroup.DisplayContents += selectionGroup_DisplayContents;
+                        return selectionGroup;
                 }
             }
         }
@@ -85,6 +92,14 @@ namespace Medical
             if (SelectedAnatomyChanged != null)
             {
                 SelectedAnatomyChanged.Invoke(this);
+            }
+        }
+
+        void selectionGroup_DisplayContents(IEnumerable<Anatomy> items)
+        {
+            if (DisplaySelectedAnatomy != null)
+            {
+                DisplaySelectedAnatomy(items);
             }
         }
     }

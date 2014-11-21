@@ -1,5 +1,6 @@
 ﻿using Engine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,11 +14,21 @@ namespace Medical
     /// </summary>
     class AnatomySelectionGroup : Anatomy
     {
+        public event Action<IEnumerable<Anatomy>> DisplayContents;
+
         private HashSet<Anatomy> groupAnatomy = new HashSet<Anatomy>();
         private List<Anatomy> relatedAnatomy = new List<Anatomy>(3);
+        private CallbackAnatomyCommand displayContentsCommand;
 
         public AnatomySelectionGroup(IEnumerable<Anatomy> selectedAnatomy)
         {
+            displayContentsCommand = new CallbackAnatomyCommand("Show Selected Items", () =>
+            {
+                if (DisplayContents != null)
+                {
+                    DisplayContents(relatedAnatomy);
+                }
+            });
             foreach (var anatomy in selectedAnatomy)
             {
                 relatedAnatomy.Add(anatomy);
@@ -40,6 +51,7 @@ namespace Medical
         {
             get
             {
+                yield return displayContentsCommand;
                 foreach (var anatomy in groupAnatomy)
                 {
                     foreach (var command in anatomy.Commands)
