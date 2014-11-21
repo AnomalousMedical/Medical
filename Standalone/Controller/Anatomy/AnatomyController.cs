@@ -97,18 +97,17 @@ namespace Medical
 
         /// <summary>
         /// Find the anatomy along a given ray. Will fire search events. Returns the best match anatomy based
-        /// on position and selection mode (group or individual). Note that this will still return non null anatomy
-        /// if the picking mode is none, the caller must deal with that case. Returns null if no anatomy was found
-        /// along the ray.
+        /// on position and selection mode (group or individual). Returns null if no anatomy was found
+        /// along the ray or if the picking mode is null. If a value is returned it will have at least one result.
         /// </summary>
-        /// <param name="ray"></param>
-        /// <returns></returns>
+        /// <param name="ray">The ray to check for anatomy along.</param>
+        /// <returns>An enumerator over results or null if there are no results to enumerate.</returns>
         public IEnumerable<Anatomy> findAnatomy(Ray3 ray)
         {
             fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
             fireClearDisplayedAnatomy();
 
-            IEnumerable<Anatomy> bestMatchAnatomy = null;
+            IEnumerable<Anatomy> results = null;
 
             var matches = AnatomyManager.findAnatomy(ray);
 
@@ -128,7 +127,10 @@ namespace Medical
                     }
                 }
 
-                bestMatchAnatomy = currentClickGroupSelectionFor(matches);
+                if (pickingMode != AnatomyPickingMode.None)
+                {
+                    results = currentClickGroupSelectionFor(matches);
+                }
             }
             else
             {
@@ -139,7 +141,7 @@ namespace Medical
             }
             fireSearchEnded();
 
-            return bestMatchAnatomy;
+            return results;
         }
 
         public void findAnatomy(String searchTerm, IEnumerable<AnatomyFacet> facets)

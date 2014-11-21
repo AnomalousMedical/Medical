@@ -207,16 +207,13 @@ namespace Medical.GUI
                     DisplayHintLocation = new IntVector2(absMouse.x + MouseClickWindowOffset, absMouse.y + MouseClickWindowOffset);
                     Ray3 cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
 
-                    IEnumerable<Anatomy> bestMatch = anatomyController.findAnatomy(cameraRay);
+                    IEnumerable<Anatomy> matches = anatomyController.findAnatomy(cameraRay);
 
-                    if (bestMatch != null)
+                    if (matches != null)
                     {
-                        clickedAnatomy.setNewResults(bestMatch, eventLayer);
-                        if (clickedAnatomy.CurrentMatch != null && anatomyController.PickingMode != AnatomyPickingMode.None)
-                        {
-                            anatomyController.processSelection(clickedAnatomy.CurrentMatch);
-                            clickedAnatomy.moveNext();
-                        }
+                        clickedAnatomy.setNewResults(matches, eventLayer);
+                        anatomyController.processSelection(clickedAnatomy.CurrentMatch);
+                        clickedAnatomy.moveNext();
 
                         searchBox.Caption = "Clicked";
                         clearButton.Visible = true;
