@@ -111,7 +111,7 @@ namespace Medical
                         toRemove.Add(oldProp);
                     }
                 }
-                tagProperties.AddRange(oldProperties.Where(i => !toRemove.Contains(i)).Select(t => t));
+                tagProperties.AddRange(oldProperties.Where(i => !(toRemove.Contains(i) || AnatomyIdentifier.alwaysRemoveTags.Contains(i.Name) )).Select(t => t));
             }
             else
             {
