@@ -35,6 +35,7 @@ namespace Medical.GUI
             stopListeningToEvents();
             this.currentEventLayer = eventLayer;
             currentClickAnatomy = matches.GetEnumerator();
+            PreviousMatch = null;
             if(currentClickAnatomy.MoveNext())
             {
                 currentEventLayer.Mouse.Moved += Mouse_Moved;
@@ -53,10 +54,12 @@ namespace Medical.GUI
         {
             if(currentClickAnatomy != null)
             {
+                PreviousMatch = CurrentMatch;
                 if(!currentClickAnatomy.MoveNext())
                 {
                     stopListeningToEvents();
                     currentClickAnatomy = null;
+                    PreviousMatch = null;
                 }
             }
         }
@@ -68,6 +71,7 @@ namespace Medical.GUI
         {
             stopListeningToEvents();
             currentClickAnatomy = null;
+            PreviousMatch = null;
         }
 
         /// <summary>
@@ -93,6 +97,11 @@ namespace Medical.GUI
             }
         }
 
+        /// <summary>
+        /// The anatomy that was selected previously.
+        /// </summary>
+        public Anatomy PreviousMatch { get; private set; }
+
         void Mouse_Moved(Mouse mouse)
         {
             travelTracker.traveled(mouse.RelativePosition);
@@ -100,6 +109,7 @@ namespace Medical.GUI
             {
                 stopListeningToEvents();
                 currentClickAnatomy = null;
+                PreviousMatch = null;
             }
         }
 

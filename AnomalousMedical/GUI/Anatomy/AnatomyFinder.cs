@@ -212,7 +212,7 @@ namespace Medical.GUI
                     if (matches != null)
                     {
                         clickedAnatomy.setNewResults(matches, eventLayer);
-                        anatomyController.processSelection(clickedAnatomy.CurrentMatch);
+                        anatomyController.processSelection(clickedAnatomy.CurrentMatch, clickedAnatomy.PreviousMatch);
                         clickedAnatomy.moveNext();
 
                         searchBox.Caption = "Clicked";
@@ -225,14 +225,14 @@ namespace Medical.GUI
                     else
                     {
                         clickedAnatomy.clear();
-                        anatomyController.processSelection(null);
+                        anatomyController.processSelection(null, null);
                         clearButton.Visible = false;
                         searchBox.Caption = "";
                     }
                 }
                 else
                 {
-                    anatomyController.processSelection(clickedAnatomy.CurrentMatch);
+                    anatomyController.processSelection(clickedAnatomy.CurrentMatch, clickedAnatomy.PreviousMatch);
                     clickedAnatomy.moveNext();
                 }
             }
@@ -256,7 +256,7 @@ namespace Medical.GUI
             if (anatomyController.ShowPremiumAnatomy || anatomy.ShowInBasicVersion)
             {
                 DisplayHintLocation = new IntVector2(window.Right, item.AbsoluteTop);
-                anatomyController.processSelection(anatomy);
+                anatomyController.processSelection(anatomy, null);
             }
             else
             {

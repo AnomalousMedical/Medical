@@ -262,7 +262,7 @@ namespace Medical
             }
         }
 
-        public void processSelection(Anatomy anatomy)
+        public void processSelection(Anatomy anatomy, Anatomy previousAnatomy)
         {
             switch (SelectionOperator)
             {
@@ -271,6 +271,10 @@ namespace Medical
                     break;
                 case SelectionOperator.Add:
                     SelectedAnatomy.addSelection(anatomy);
+                    if (previousAnatomy != null)
+                    {
+                        SelectedAnatomy.removeSelection(previousAnatomy);
+                    }
                     break;
                 case SelectionOperator.Remove:
                     SelectedAnatomy.removeSelection(anatomy);
