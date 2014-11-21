@@ -57,8 +57,8 @@
             <Widget type="TextBox" skin="TextBox" position="5 116 63 13" name="FreeimageLink">
                 <Property key="Caption" value="Freeimage"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position="5 132 48 13" name="OpenALLink">
-                <Property key="Caption" value="OpenAL"/>
+            <Widget type="TextBox" skin="TextBox" position="5 132 135 13" name="OpenALSoftLink">
+              <Property key="Caption" value="OpenAL Soft"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position="5 148 65 13" name="OggVorbisLink">
                 <Property key="Caption" value="Ogg Vorbis"/>
@@ -69,8 +69,8 @@
             <Widget type="TextBox" skin="TextBox" position="5 180 135 13" name="LibRocketLink">
               <Property key="Caption" value="libRocket"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position="5 196 135 13" name="OpenALSoftLink">
-              <Property key="Caption" value="OpenAL Soft"/>
+            <Widget type="TextBox" skin="TextBox" position="5 196 135 13" name="LuceneNetLink">
+              <Property key="Caption" value="Lucene.Net"/>
             </Widget>
         </Widget>
     </Widget>

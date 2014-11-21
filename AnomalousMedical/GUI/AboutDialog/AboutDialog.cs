@@ -57,9 +57,6 @@ namespace Medical.GUI
             TextBox freeimageText = window.findWidget("FreeimageLink") as TextBox;
             freeimageText.MouseButtonClick += new MyGUIEvent(freeimageText_MouseButtonClick);
 
-            TextBox openALText = window.findWidget("OpenALLink") as TextBox;
-            openALText.MouseButtonClick += new MyGUIEvent(openALText_MouseButtonClick);
-
             TextBox oggVorbisText = window.findWidget("OggVorbisLink") as TextBox;
             oggVorbisText.MouseButtonClick += new MyGUIEvent(oggVorbisText_MouseButtonClick);
 
@@ -71,6 +68,9 @@ namespace Medical.GUI
 
             TextBox openAlSoftLink = window.findWidget("OpenALSoftLink") as TextBox;
             openAlSoftLink.MouseButtonClick += openAlSoftLink_MouseButtonClick;
+
+            TextBox luceneNetLink = window.findWidget("LuceneNetLink") as TextBox;
+            luceneNetLink.MouseButtonClick += luceneNetLink_MouseButtonClick;
 
             TextBox copyrightText = window.findWidget("CopyrightText") as TextBox;
             copyrightText.Caption = String.Format("Copyright 2009-{0} Anomalous Medical, LLC", DateTime.Now.Year);
@@ -140,6 +140,11 @@ namespace Medical.GUI
         void openAlSoftLink_MouseButtonClick(Widget source, EventArgs e)
         {
             OtherProcessManager.openUrlInBrowser("http://kcat.strangesoft.net/openal.html");
+        }
+
+        void luceneNetLink_MouseButtonClick(Widget source, EventArgs e)
+        {
+            OtherProcessManager.openUrlInBrowser("http://lucenenet.apache.org/");
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
