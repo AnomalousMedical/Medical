@@ -371,6 +371,14 @@ namespace Medical
                         {
                             yield return groupSelection;
                         }
+
+                        AnatomyGroup precursor;
+                        if(matches.Closest.IndividualSelectionPrecursor != null
+                             && luceneSearch.tryGetGroup(matches.Closest.IndividualSelectionPrecursor, out precursor))
+                        {
+                            yield return precursor;
+                        }
+
                         yield return matches.Closest;
                         break;
                     case AnatomyPickingMode.Individual:
@@ -381,7 +389,7 @@ namespace Medical
             else
             {
                 AnatomyGroup groupSelection;
-                luceneSearch.tryGetSystem(matches.Closest.Systems.FirstOrDefault(), out groupSelection);
+                luceneSearch.tryGetGroup(matches.Closest.Systems.FirstOrDefault(), out groupSelection);
                 yield return groupSelection;
             }
         }

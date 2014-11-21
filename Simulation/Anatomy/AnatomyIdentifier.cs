@@ -47,6 +47,9 @@ namespace Medical
         private String entityName = "Entity";
 
         [Editable]
+        private String individualSelectionPrecursor;
+
+        [Editable]
         private Vector3 previewCameraDirection = Vector3.Backward;
 
         [DoNotSave]
@@ -308,6 +311,18 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// A group to select before this actual identifier when doing
+        /// individual selection.
+        /// </summary>
+        public String IndividualSelectionPrecursor
+        {
+            get
+            {
+                return individualSelectionPrecursor;
+            }
+        }
+
         [DoNotCopy]
         public Vector3 PreviewCameraDirection
         {
@@ -401,6 +416,16 @@ namespace Medical
                 if(autoRenameMatch != null)
                 {
                     anatomicalName = autoRenameMatch.Item2;
+                }
+
+                if(AnatomicalName == "Inner Skull" || AnatomicalName == "Outer Skull")
+                {
+                    individualSelectionPrecursor = "Skull";
+                }
+
+                if(AnatomicalName.Contains("Tooth"))
+                {
+                    individualSelectionPrecursor = "Teeth";
                 }
 
                 List<AnatomyTag> anatomyTags = new List<AnatomyTag>();

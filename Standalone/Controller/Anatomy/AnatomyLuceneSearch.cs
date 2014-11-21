@@ -230,30 +230,14 @@ namespace Medical
                 directory = null;
             }
         }
-        
-        public bool tryGetSystem(String name, out AnatomyGroup group)
-        {
-            return systems.tryGetGroup(name, out group);
-        }
 
-        public bool tryGetTag(String name, out AnatomyGroup group)
+        public bool tryGetGroup(String name, out AnatomyGroup group)
         {
-            return tags.tryGetGroup(name, out group);
-        }
-
-        public bool tryGetRegion(String name, out AnatomyGroup group)
-        {
-            return regions.tryGetGroup(name, out group);
-        }
-
-        public bool tryGetClassification(String name, out AnatomyGroup group)
-        {
-            return classifications.tryGetGroup(name, out group);
-        }
-
-        public bool tryGetStructure(String name, out AnatomyGroup group)
-        {
-            return structures.tryGetGroup(name, out group);
+            return tags.tryGetGroup(name, out group)
+                || systems.tryGetGroup(name, out group) 
+                || regions.tryGetGroup(name, out group) 
+                || classifications.tryGetGroup(name, out group) 
+                || structures.tryGetGroup(name, out group);
         }
 
         public IEnumerable<AnatomyFilterEntry> FilterEntries
@@ -278,7 +262,7 @@ namespace Medical
 
             foreach (var name in anatomyIdentifier.Tags)
             {
-                if (tryGetTag(name, out group))
+                if (tags.tryGetGroup(name, out group))
                 {
                     yield return group;
                 }
@@ -286,23 +270,23 @@ namespace Medical
 
             foreach (var name in anatomyIdentifier.Systems)
             {
-                if (tryGetSystem(name, out group))
+                if (systems.tryGetGroup(name, out group))
                 {
                     yield return group;
                 }
             }
 
-            if (anatomyIdentifier.Structure != null && tryGetStructure(anatomyIdentifier.Structure, out group))
+            if (anatomyIdentifier.Structure != null && structures.tryGetGroup(anatomyIdentifier.Structure, out group))
             {
                 yield return group;
             }
 
-            if (anatomyIdentifier.Classification != null && tryGetClassification(anatomyIdentifier.Classification, out group))
+            if (anatomyIdentifier.Classification != null && classifications.tryGetGroup(anatomyIdentifier.Classification, out group))
             {
                 yield return group;
             }
 
-            if (anatomyIdentifier.Region != null && tryGetRegion(anatomyIdentifier.Region, out group))
+            if (anatomyIdentifier.Region != null && regions.tryGetGroup(anatomyIdentifier.Region, out group))
             {
                 yield return group;
             }
