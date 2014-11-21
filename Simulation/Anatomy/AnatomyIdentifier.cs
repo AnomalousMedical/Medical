@@ -477,7 +477,7 @@ namespace Medical
 
                 if(structure == null)
                 {
-                    structure = "Head and Neck";
+                    structure = "Head";
                 }
                 
                 //We can assume most things are in the head and neck region
