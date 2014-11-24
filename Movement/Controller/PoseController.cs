@@ -241,7 +241,11 @@ namespace Medical.Controller
         {
             if (poseStartPosition != null)
             {
-                musclePositionController.pushUndoState(poseStartPosition);
+                //Only record undo if we moved far enough
+                if (travelTracker.TraveledOverLimit)
+                {
+                    musclePositionController.pushUndoState(poseStartPosition);
+                }
                 poseStartPosition = null;
             }
 
