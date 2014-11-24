@@ -85,42 +85,12 @@ namespace Medical
         protected override void customLoad(LoadInfo info)
         {
             base.customLoad(info);
-            if (info.Version < 1)
-            {
-                List<AnatomyTagProperties> oldProperties = new List<AnatomyTagProperties>();
-                info.RebuildList("TagProperty", oldProperties);
-                List<AnatomyTagProperties> toRemove = new List<AnatomyTagProperties>();
-                foreach (var oldProp in oldProperties)
-                {
-                    if (oldProp.Name.Contains("System") && oldProp.Name != "Masticatory System")
-                    {
-                        oldProp.ShowInTree = true;
-                        systemProperties.Add(oldProp);
-                        toRemove.Add(oldProp);
-                    }
-                    else if (AnatomyIdentifier.classificationUpgrades.Contains(oldProp.Name))
-                    {
-                        oldProp.ShowInTree = true;
-                        classificationProperties.Add(oldProp);
-                        toRemove.Add(oldProp);
-                    }
-                    else if (AnatomyIdentifier.regions.Contains(oldProp.Name))
-                    {
-                        oldProp.ShowInTree = true;
-                        regionProperties.Add(oldProp);
-                        toRemove.Add(oldProp);
-                    }
-                }
-                tagProperties.AddRange(oldProperties.Where(i => !(toRemove.Contains(i) || AnatomyIdentifier.alwaysRemoveTags.Contains(i.Name) )).Select(t => t));
-            }
-            else
-            {
-                info.RebuildList<AnatomyTagProperties>("TagProperty", tagProperties);
-                info.RebuildList<AnatomyTagProperties>("SystemProperty", systemProperties);
-                info.RebuildList<AnatomyTagProperties>("RegionProperty", regionProperties);
-                info.RebuildList<AnatomyTagProperties>("ClassificationProperty", classificationProperties);
-                info.RebuildList<AnatomyTagProperties>("StructureProperty", structureProperties);
-            }
+            //Note that we are currently on version 1, but that conversion code was removed.
+            info.RebuildList<AnatomyTagProperties>("TagProperty", tagProperties);
+            info.RebuildList<AnatomyTagProperties>("SystemProperty", systemProperties);
+            info.RebuildList<AnatomyTagProperties>("RegionProperty", regionProperties);
+            info.RebuildList<AnatomyTagProperties>("ClassificationProperty", classificationProperties);
+            info.RebuildList<AnatomyTagProperties>("StructureProperty", structureProperties);
         }
 
         protected override void customSave(SaveInfo info)

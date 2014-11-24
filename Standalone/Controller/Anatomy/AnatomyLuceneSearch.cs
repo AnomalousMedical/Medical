@@ -176,19 +176,19 @@ namespace Medical
                             AnatomyGroup tagGroup = tags.getOrCreateGroup(tag);
                             tagGroup.addAnatomy(anatomy);
                         }
-                        if (anatomy.Classification != null)
+                        if (!String.IsNullOrEmpty(anatomy.Classification))
                         {
                             document.Add(new Field(classifications.FacetName, anatomy.Classification, Field.Store.YES, Field.Index.NOT_ANALYZED));
                             AnatomyGroup classificationGroup = classifications.getOrCreateGroup(anatomy.Classification);
                             classificationGroup.addAnatomy(anatomy);
                         }
-                        if (anatomy.Region != null)
+                        if (!String.IsNullOrEmpty(anatomy.Region))
                         {
                             document.Add(new Field(regions.FacetName, anatomy.Region, Field.Store.YES, Field.Index.NOT_ANALYZED));
                             AnatomyGroup regionGroup = regions.getOrCreateGroup(anatomy.Region);
                             regionGroup.addAnatomy(anatomy);
                         }
-                        if (anatomy.Structure != null)
+                        if (!String.IsNullOrEmpty(anatomy.Structure))
                         {
                             document.Add(new Field(structures.FacetName, anatomy.Structure, Field.Store.YES, Field.Index.NOT_ANALYZED));
                             AnatomyGroup structureGroup = structures.getOrCreateGroup(anatomy.Structure);
