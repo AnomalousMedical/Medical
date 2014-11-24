@@ -387,24 +387,6 @@ namespace Medical
             info.RebuildList("AnatomyCommand", commands);
         }
 
-        private String makeLeftRight(String structureName)
-        {
-            if(structureName == null)
-            {
-                return structureName;
-            }
-
-            if (anatomicalName.Contains("Left"))
-            {
-                return String.Format("Left {0}", structureName);
-            }
-            else if(anatomicalName.Contains("Right"))
-            {
-                return String.Format("Right {0}", structureName);
-            }
-            return structureName;
-        }
-
         private static AnatomyCommandBrowser anatomyCommandBrowser = null;
 
         protected override void customizeEditInterface(EditInterface editInterface)

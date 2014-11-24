@@ -208,10 +208,6 @@
     <Compile Include="Pose\PoseableIdentifier.cs" />
     <Compile Include="Pose\PoseableObjectsManager.cs" />
     <Compile Include="Pose\PoseHandler.cs" />
-    <Compile Include="Pose\SceneAnatomyControl.cs" />
-    <Compile Include="Pose\SceneAnatomyControlManager.cs" />
-    <Compile Include="Pose\SceneAnatomyLock.cs" />
-    <Compile Include="Pose\SceneAnatomyPin.cs" />
     <Compile Include="Pose\SortedPoseableRaycastResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />

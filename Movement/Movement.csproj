@@ -51,9 +51,6 @@
   <ItemGroup>
     <Compile Include="Controller\PoseController.cs" />
     <Compile Include="GUI\MovementDialog.cs" />
-    <Compile Include="GUI\SceneControls\ToggleControlWidget.cs" />
-    <Compile Include="GUI\SceneControls\SceneControlManager.cs" />
-    <Compile Include="GUI\SceneControls\SceneControlWidget.cs" />
     <Compile Include="MovementPluginEntryPoint.cs" />
     <Compile Include="MovementBodyAtlasPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,8 +69,6 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\MovementDialog.layout">
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\SceneControls\LockControl.layout" />
-    <EmbeddedResource Include="GUI\SceneControls\PinControl.layout" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\MyGUI_Theme_Tag.xml" />

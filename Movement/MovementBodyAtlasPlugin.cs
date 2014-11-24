@@ -16,8 +16,6 @@ namespace Medical.Movement
     {
         private PoseController poseController;
 
-        private SceneControlManager sceneControlManager;
-
         private MovementDialog movementDialog;
 
         public MovementBodyAtlasPlugin()
@@ -27,7 +25,6 @@ namespace Medical.Movement
 
         public void Dispose()
         {
-            IDisposableUtil.DisposeIfNotNull(sceneControlManager);
             movementDialog.Dispose();
         }
 
@@ -39,12 +36,11 @@ namespace Medical.Movement
 
         public void initialize(StandaloneController standaloneController)
         {
-            sceneControlManager = new SceneControlManager(standaloneController);
             poseController = new PoseController(standaloneController);
 
             GUIManager guiManager = standaloneController.GUIManager;
             var resources = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            movementDialog = new MovementDialog(standaloneController.MusclePositionController, standaloneController.MedicalController, sceneControlManager);
+            movementDialog = new MovementDialog(standaloneController.MusclePositionController, standaloneController.MedicalController);
             guiManager.addManagedDialog(movementDialog);
 
             var taskController = standaloneController.TaskController;
