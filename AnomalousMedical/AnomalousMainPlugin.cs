@@ -52,6 +52,7 @@ namespace Medical.GUI
         private SelectionModeTask selectionModeTask;
         private SelectionOperatorTask selectionOperatorTask;
         private Task downloadsTask;
+        private SetCameraAngleTask setCameraAngle;
 
         public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
         {
@@ -69,6 +70,7 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(bookmarks);
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
+            IDisposableUtil.DisposeIfNotNull(setCameraAngle);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             selectionOperatorTask.Dispose();
@@ -169,6 +171,9 @@ namespace Medical.GUI
             selectionOperatorTask = new SelectionOperatorTask(standaloneController.AnatomyController);
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
+
+            setCameraAngle = new SetCameraAngleTask(standaloneController.SceneViewController);
+            taskController.addTask(setCameraAngle);
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Patient, 0));
