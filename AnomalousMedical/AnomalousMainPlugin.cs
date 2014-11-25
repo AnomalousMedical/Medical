@@ -172,7 +172,7 @@ namespace Medical.GUI
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
-            setCameraAngle = new SetCameraAngleTask(standaloneController.SceneViewController);
+            setCameraAngle = new SetCameraAngleTask(standaloneController.SceneViewController, standaloneController.AnatomyController);
             taskController.addTask(setCameraAngle);
 
             //Patient Section

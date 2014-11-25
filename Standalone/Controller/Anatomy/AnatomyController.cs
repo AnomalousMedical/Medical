@@ -319,6 +319,36 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Get the bounding box around all currently visible objects for the currently
+        /// active camera. This is computed each time this function is called and enumerates
+        /// all anatomy in the scene.
+        /// </summary>
+        public AxisAlignedBox VisibleObjectsBoundingBox
+        {
+            get
+            {
+                AxisAlignedBox box = AxisAlignedBox.MinMaxable;
+                bool foundSomething = false;
+                foreach (Anatomy anatomy in AnatomyManager.AnatomyList)
+                {
+                    if (anatomy.CurrentAlpha > 0.0f)
+                    {
+                        box.merge(anatomy.WorldBoundingBox);
+                        foundSomething = true;
+                    }
+                }
+                if (foundSomething)
+                {
+                    return box;
+                }
+                else
+                {
+                    return new AxisAlignedBox(); //Return a box with 0 bounds
+                }
+            }
+        }
+
         private void fireDisplayAnatomy(Anatomy anatomy)
         {
             if (DisplayAnatomy != null)

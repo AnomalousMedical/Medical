@@ -15,11 +15,13 @@ namespace Medical.GUI
 
         private PopupMenu cameraAngleMenu;
         private SceneViewController sceneViewController;
+        private AnatomyController anatomyController;
 
-        public SetCameraAngleTask(SceneViewController sceneViewController)
+        public SetCameraAngleTask(SceneViewController sceneViewController, AnatomyController anatomyController)
             :base("Medical.SetCameraAngle", "Set Camera Angle", CommonResources.NoIcon, "Navigation")
         {
             this.sceneViewController = sceneViewController;
+            this.anatomyController = anatomyController;
 
             cameraAngleMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
             cameraAngleMenu.Visible = false;
@@ -41,6 +43,9 @@ namespace Medical.GUI
 
             sequenceItem = cameraAngleMenu.addItem("Bottom", MenuItemType.Normal);
             sequenceItem.MouseButtonClick += (s, e) => setTopBottomView(-1);
+
+            sequenceItem = cameraAngleMenu.addItem("Show All Visible Anatomy", MenuItemType.Normal);
+            sequenceItem.MouseButtonClick += (s, e) => showAllVisibleAnatomy();
         }
 
         public void Dispose()
@@ -102,26 +107,55 @@ namespace Medical.GUI
                 float localY = transMinusLookAt.y;
                 transMinusLookAt.y = 0;
                 float yaw = Vector3.Backward.angle(ref transMinusLookAt);
-                if (transMinusLookAt.x < 0)
+                if (!float.IsNaN(yaw))
                 {
-                    yaw = -yaw;
+                    if (transMinusLookAt.x < 0)
+                    {
+                        yaw = -yaw;
+                    }
+
+                    Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
+                    Quaternion pitchRot = new Quaternion(Vector3.Left, HALF_PI * direction);
+
+                    Quaternion rotation = yawRot * pitchRot;
+                    Vector3 normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
+                    Vector3 newTrans = normalDirection * length + lookAt;
+
+                    activeWindow.setPosition(new CameraPosition()
+                    {
+                        Translation = newTrans,
+                        LookAt = lookAt,
+                    }, MedicalConfig.CameraTransitionTime);
                 }
-
-                Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
-                Quaternion pitchRot = new Quaternion(Vector3.Left, HALF_PI * direction);
-
-                Quaternion rotation = yawRot * pitchRot;
-                Vector3 normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
-                Vector3 newTrans = normalDirection * length + lookAt;
-
-                activeWindow.setPosition(new CameraPosition()
-                {
-                    Translation = newTrans,
-                    LookAt = lookAt,
-                }, MedicalConfig.CameraTransitionTime);
             }
 
             cameraAngleMenu.setVisibleSmooth(false);
+        }
+
+        void showAllVisibleAnatomy()
+        {
+            AxisAlignedBox boundingBox = anatomyController.VisibleObjectsBoundingBox;
+            SceneViewWindow window = sceneViewController.ActiveWindow;
+            Vector3 center = boundingBox.Center;
+
+            float nearPlane = window.Camera.getNearClipDistance();
+            float theta = window.Camera.getFOVy();
+            float aspectRatio = window.Camera.getAspectRatio();
+            if (aspectRatio < 1.0f)
+            {
+                theta *= aspectRatio;
+            }
+
+            Vector3 translation = center;
+            Vector3 direction = (window.Translation - window.LookAt).normalized();
+            translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
+            CameraPosition cameraPosition = new CameraPosition()
+            {
+                Translation = translation,
+                LookAt = center
+            };
+
+            window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
         }
     }
 }
