@@ -58,6 +58,7 @@ namespace Medical
         private IdleHandler idleHandler;
         private SceneStatsDisplayManager sceneStatsDisplayManager;
         private SceneViewLightManager lightManager;
+        private LayerController layerController;
 
         //GUI
         private GUIManager guiManager;
@@ -269,6 +270,8 @@ namespace Medical
 
             //Notifications
             notificationManager = new NotificationGUIManager(this);
+
+            layerController = new LayerController();
         }
 
         public void createGUI(LayoutChain layoutChain)
@@ -588,6 +591,14 @@ namespace Medical
             get
             {
                 return notificationManager;
+            }
+        }
+
+        public LayerController LayerController
+        {
+            get
+            {
+                return layerController;
             }
         }
 

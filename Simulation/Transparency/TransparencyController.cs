@@ -6,9 +6,11 @@ using Engine;
 
 namespace Medical
 {
-    public class TransparencyController
+    public static class TransparencyController
     {
-        public static event EventHandler ActiveTransparencyStateChanged;
+        public static event Action<String> ActiveTransparencyStateChanged;
+        public static event Action<String> TransparencyStateAdded;
+        public static event Action<String> TransparencyStateRemoved;
 
         public static readonly String DefaultTransparencyState = "Default";
 
@@ -83,6 +85,10 @@ namespace Medical
                     transInterface.createTransparencyState();
                 }
                 transparencyStateNames.Add(name);
+                if(TransparencyStateAdded != null)
+                {
+                    TransparencyStateAdded.Invoke(name);
+                }
             }
             else
             {
@@ -107,6 +113,10 @@ namespace Medical
                 else if (TransparencyStateIndex > stateIndex)
                 {
                     TransparencyStateIndex--;
+                }
+                if(TransparencyStateRemoved != null)
+                {
+                    TransparencyStateRemoved.Invoke(name);
                 }
             }
         }
@@ -149,7 +159,7 @@ namespace Medical
                     
                     if (ActiveTransparencyStateChanged != null)
                     {
-                        ActiveTransparencyStateChanged.Invoke(null, EventArgs.Empty);
+                        ActiveTransparencyStateChanged.Invoke(value);
                     }
                 }
             }
@@ -169,6 +179,14 @@ namespace Medical
                 {
                     transInterface.ActiveTransparencyState = transparencyStateIndex;
                 }
+            }
+        }
+
+        public static IEnumerable<String> TransparencyStateNames
+        {
+            get
+            {
+                return transparencyStateNames;
             }
         }
     }

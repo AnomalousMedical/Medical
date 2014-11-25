@@ -15,6 +15,7 @@ namespace Medical.GUI
         private Anatomy anatomy;
         private Dictionary<String, CommandUIElement> dynamicWidgets = new Dictionary<String, CommandUIElement>();
         private StretchLayoutContainer layoutContainer = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 5, new IntVector2(0, 0));
+        private LayerController layerController;
 
         private IntSize2 windowStartSize;
 
@@ -29,10 +30,11 @@ namespace Medical.GUI
         private AnatomyContextWindowLiveThumbHost thumbHost;
         private ScrollView commandScroller;
 
-        public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
+        public AnatomyContextWindow(AnatomyContextWindowManager windowManager, LayerController layerController)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
         {
             this.windowManager = windowManager;
+            this.layerController = layerController;
             KeepOpen = true;
 
             widget.MouseDrag += new MyGUIEvent(widget_MouseDrag);
@@ -49,6 +51,7 @@ namespace Medical.GUI
             captionToBorderDelta = widget.Width - anatomyName.Right;
 
             transparencySlider = new AnatomyTransparencySlider((ScrollBar)widget.findWidget("TransparencySlider"));
+            transparencySlider.RecordUndo += transparencySlider_RecordUndo;
 
             windowStartSize = new IntSize2(widget.Width, widget.Height);
 
@@ -211,12 +214,16 @@ namespace Medical.GUI
 
         void showButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            LayerState undoState = LayerState.CreateAndCapture();
             anatomy.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            layerController.pushUndoState(undoState);
         }
 
         void hideButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            LayerState undoState = LayerState.CreateAndCapture();
             anatomy.smoothBlend(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            layerController.pushUndoState(undoState);
         }
 
         void widget_MouseButtonPressed(Widget source, EventArgs e)
@@ -249,6 +256,11 @@ namespace Medical.GUI
         {
             layoutContainer.addChild(commandUI);
             dynamicWidgets.Add(key, commandUI);
+        }
+
+        void transparencySlider_RecordUndo(LayerState undoState)
+        {
+            layerController.pushUndoState(undoState);
         }
     }
 }

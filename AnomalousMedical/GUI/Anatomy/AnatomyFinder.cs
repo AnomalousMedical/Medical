@@ -52,7 +52,7 @@ namespace Medical.GUI
 
         public event Action ShowBuyMessage;
 
-        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
+        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, LayerController layerController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
             this.anatomyController = anatomyController;
@@ -65,7 +65,7 @@ namespace Medical.GUI
             anatomyController.SearchEnded += anatomyController_SearchEnded;
             anatomyController.SuggestSearchCaption += anatomyController_SuggestSearchCaption;
             this.sceneViewController = sceneViewController;
-            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, this);
+            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, layerController, this);
             anatomyFilter = new AnatomyFilter(anatomyController);
             anatomyFilter.refreshCategories();
             anatomyFilter.FilterChanged += anatomyFilter_FilterChanged;

@@ -53,6 +53,7 @@ namespace Medical.GUI
         private SelectionOperatorTask selectionOperatorTask;
         private Task downloadsTask;
         private SetCameraAngleTask setCameraAngle;
+        private ManageLayerStateTask manageLayerState;
 
         public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
         {
@@ -71,6 +72,7 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
             IDisposableUtil.DisposeIfNotNull(setCameraAngle);
+            IDisposableUtil.DisposeIfNotNull(manageLayerState);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             selectionOperatorTask.Dispose();
@@ -133,7 +135,7 @@ namespace Medical.GUI
             chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
 
             standaloneController.AnatomyController.ShowPremiumAnatomyChanged += AnatomyController_ShowPremiumAnatomyChanged;
-            anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController);
+            anatomyFinder = new AnatomyFinder(standaloneController.AnatomyController, standaloneController.SceneViewController, standaloneController.LayerController);
             guiManager.addManagedDialog(anatomyFinder);
 
             options = new OptionsDialog(guiManager);
@@ -174,6 +176,9 @@ namespace Medical.GUI
 
             setCameraAngle = new SetCameraAngleTask(standaloneController.SceneViewController, standaloneController.AnatomyController);
             taskController.addTask(setCameraAngle);
+
+            manageLayerState = new ManageLayerStateTask(standaloneController.LayerController);
+            taskController.addTask(manageLayerState);
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Patient, 0));

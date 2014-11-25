@@ -13,6 +13,9 @@ namespace Medical.GUI
 
         private ScrollBar slider;
         private List<AnatomyCommand> transparencyCommands = new List<AnatomyCommand>();
+        private LayerState undoState;
+
+        public event Action<LayerState> RecordUndo;
 
         public AnatomyTransparencySlider(ScrollBar slider)
         {
@@ -20,6 +23,8 @@ namespace Medical.GUI
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
             slider.ScrollRange = (int)SCROLL_MAX;
             slider.ScrollIncrement = 1000;
+            slider.MouseButtonPressed += slider_MouseButtonPressed;
+            slider.MouseButtonReleased += slider_MouseButtonReleased;
         }
 
         public void Dispose()
@@ -71,6 +76,20 @@ namespace Medical.GUI
         void command_NumericValueChanged(AnatomyCommand command, float value)
         {
             slider.ScrollPosition = getSliderValueFromCommand(command);
+        }
+
+        void slider_MouseButtonPressed(Widget source, EventArgs e)
+        {
+            undoState = LayerState.CreateAndCapture();
+        }
+
+        void slider_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            if(RecordUndo != null)
+            {
+                RecordUndo.Invoke(undoState);
+            }
+            undoState = null;
         }
     }
 }

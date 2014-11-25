@@ -18,16 +18,18 @@ namespace Medical.GUI
         private AnatomyFinder anatomyFinder;
 
         private AnatomyController anatomyController;
+        private LayerController layerController;
         private List<AnatomyContextWindow> pinnedWindows = new List<AnatomyContextWindow>();
 
         private LiveThumbnailController liveThumbnailController;
 
-        public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController, AnatomyFinder anatomyFinder)
+        public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController, LayerController layerController, AnatomyFinder anatomyFinder)
         {
             this.sceneViewController = sceneViewController;
             this.anatomyController = anatomyController;
             this.anatomyController.SelectedAnatomy.SelectedAnatomyChanged += anatomyController_SelectedAnatomyChanged;
             this.anatomyFinder = anatomyFinder;
+            this.layerController = layerController;
 
             liveThumbnailController = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
             liveThumbnailController.MaxPoolSize = 1;
@@ -61,7 +63,7 @@ namespace Medical.GUI
         {
             if (currentAnatomyWindow == null)
             {
-                currentAnatomyWindow = new AnatomyContextWindow(this);
+                currentAnatomyWindow = new AnatomyContextWindow(this, layerController);
                 currentAnatomyWindow.SmoothShow = true;
             }
             currentAnatomyWindow.show(position.x, position.y);
@@ -200,8 +202,10 @@ namespace Medical.GUI
 
         internal void showOnly(Anatomy anatomy)
         {
+            LayerState currentLayers = LayerState.CreateAndCapture();
             TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
             anatomy.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            layerController.pushUndoState(currentLayers);
         }
 
         void anatomyController_SelectedAnatomyChanged(AnatomySelection anatomySelection)

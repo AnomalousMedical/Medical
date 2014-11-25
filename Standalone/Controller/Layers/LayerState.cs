@@ -13,6 +13,18 @@ namespace Medical
     {
         private LinkedList<LayerEntry> entries = new LinkedList<LayerEntry>();
 
+        /// <summary>
+        /// Convienence method to create a layer state and capture the current state in one call.
+        /// It is still safe to use the constructors directly as well.
+        /// </summary>
+        /// <returns></returns>
+        public static LayerState CreateAndCapture()
+        {
+            LayerState layerState = new LayerState();
+            layerState.captureState();
+            return layerState;
+        }
+
         public LayerState()
         {
             Easing = EasingFunction.EaseOutQuadratic;
