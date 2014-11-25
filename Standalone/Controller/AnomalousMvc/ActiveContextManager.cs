@@ -47,8 +47,10 @@ namespace Medical.Controller.AnomalousMvc
 
         public void removeContext(AnomalousMvcContext context)
         {
-            context.removedFromStack();
-            activeContexts.Remove(context);
+            if(activeContexts.Remove(context))
+            {
+                context.removedFromStack();
+            }
         }
 
         public AnomalousMvcContext CurrentContext
