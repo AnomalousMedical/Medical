@@ -44,7 +44,7 @@ namespace Medical.GUI
             sequenceItem = cameraAngleMenu.addItem("Bottom", MenuItemType.Normal);
             sequenceItem.MouseButtonClick += (s, e) => setTopBottomView(-1);
 
-            sequenceItem = cameraAngleMenu.addItem("Show All Visible Anatomy", MenuItemType.Normal);
+            sequenceItem = cameraAngleMenu.addItem("Center Visible Anatomy", MenuItemType.Normal);
             sequenceItem.MouseButtonClick += (s, e) => showAllVisibleAnatomy();
         }
 
@@ -148,14 +148,18 @@ namespace Medical.GUI
 
             Vector3 translation = center;
             Vector3 direction = (window.Translation - window.LookAt).normalized();
-            translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
-            CameraPosition cameraPosition = new CameraPosition()
+            float diagonalDistance = boundingBox.DiagonalDistance;
+            if (diagonalDistance > float.Epsilon)
             {
-                Translation = translation,
-                LookAt = center
-            };
+                translation += direction * diagonalDistance / (float)Math.Tan(theta);
+                CameraPosition cameraPosition = new CameraPosition()
+                {
+                    Translation = translation,
+                    LookAt = center
+                };
 
-            window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
+                window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
+            }
         }
     }
 }

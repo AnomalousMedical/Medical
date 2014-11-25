@@ -55,8 +55,8 @@ namespace Medical.GUI
             Button centerButton = (Button)widget.findWidget("CenterButton");
             centerButton.MouseButtonClick += new MyGUIEvent(centerMenuItem_MouseButtonClick);
 
-            Button highlightButton = (Button)widget.findWidget("HighlightButton");
-            highlightButton.MouseButtonClick += new MyGUIEvent(highlightMenuItem_MouseButtonClick);
+            Button featureButton = (Button)widget.findWidget("FeatureButton");
+            featureButton.MouseButtonClick += new MyGUIEvent(featureButton_MouseButtonClick);
 
             Button hideButton = (Button)widget.findWidget("HideButton");
             hideButton.MouseButtonClick += new MyGUIEvent(hideButton_MouseButtonClick);
@@ -199,9 +199,9 @@ namespace Medical.GUI
             }
         }
 
-        void highlightMenuItem_MouseButtonClick(Widget source, EventArgs e)
+        void featureButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            windowManager.highlightAnatomy(this);
+            windowManager.showOnly(this.anatomy);
         }
 
         void centerMenuItem_MouseButtonClick(Widget source, EventArgs e)

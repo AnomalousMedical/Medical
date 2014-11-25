@@ -17,8 +17,6 @@ namespace Medical.GUI
         private SceneViewController sceneViewController;
         private AnatomyFinder anatomyFinder;
 
-        private LayerState beforeFocusLayerState = null;
-        private AnatomyContextWindow lastHighlightRequestWindow = null;
         private AnatomyController anatomyController;
         private List<AnatomyContextWindow> pinnedWindows = new List<AnatomyContextWindow>();
 
@@ -94,7 +92,6 @@ namespace Medical.GUI
                     currentAnatomyWindow.setPosition(deadzoneLeft - windowWidth, currentAnatomyWindow.Top);
                 }
             }
-            beforeFocusLayerState = null;
             return currentAnatomyWindow;
         }
 
@@ -180,58 +177,31 @@ namespace Medical.GUI
             AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
             SceneViewWindow window = sceneViewController.ActiveWindow;
             Vector3 center = boundingBox.Center;
+
+            float nearPlane = window.Camera.getNearClipDistance();
+            float theta = window.Camera.getFOVy();
+            float aspectRatio = window.Camera.getAspectRatio();
+            if (aspectRatio < 1.0f)
+            {
+                theta *= aspectRatio;
+            }
+
+            Vector3 translation = center;
+            Vector3 direction = (window.Translation - window.LookAt).normalized();
+            translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
             CameraPosition cameraPosition = new CameraPosition()
             {
-                Translation = window.Translation,
-                LookAt = center,
+                Translation = translation,
+                LookAt = center
             };
 
             window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
         }
 
-        internal void highlightAnatomy(AnatomyContextWindow requestingWindow)
+        internal void showOnly(Anatomy anatomy)
         {
-            if (requestingWindow == lastHighlightRequestWindow && beforeFocusLayerState != null)
-            {
-                beforeFocusLayerState.apply();
-                beforeFocusLayerState = null;
-                lastHighlightRequestWindow = null;
-            }
-            else
-            {
-                if (beforeFocusLayerState == null)
-                {
-                    beforeFocusLayerState = new LayerState();
-                    beforeFocusLayerState.captureState();
-                }
-
-                TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
-                requestingWindow.Anatomy.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
-                lastHighlightRequestWindow = requestingWindow;
-
-                AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
-                SceneViewWindow window = sceneViewController.ActiveWindow;
-                Vector3 center = boundingBox.Center;
-
-                float nearPlane = window.Camera.getNearClipDistance();
-                float theta = window.Camera.getFOVy();
-                float aspectRatio = window.Camera.getAspectRatio();
-                if (aspectRatio < 1.0f)
-                {
-                    theta *= aspectRatio;
-                }
-
-                Vector3 translation = center;
-                Vector3 direction = (window.Translation - window.LookAt).normalized();
-                translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
-                CameraPosition cameraPosition = new CameraPosition()
-                {
-                    Translation = translation,
-                    LookAt = center
-                };
-
-                window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
-            }
+            TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+            anatomy.smoothBlend(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         void anatomyController_SelectedAnatomyChanged(AnatomySelection anatomySelection)

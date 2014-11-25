@@ -20,8 +20,8 @@
         <Widget type="Button" skin="Button" position="58 24 61 26" align="HRelative Top" name="CenterButton">
             <Property key="Caption" value="Center"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="126 24 61 26" align="HRelative Top" name="HighlightButton">
-            <Property key="Caption" value="Highlight"/>
+        <Widget type="Button" skin="Button" position="126 24 61 26" align="HRelative Top" name="FeatureButton">
+            <Property key="Caption" value="Feature"/>
         </Widget>
         <Widget type="Button" skin="Button" position="3 55 42 26" name="HideButton">
             <Property key="Caption" value="Hide"/>
