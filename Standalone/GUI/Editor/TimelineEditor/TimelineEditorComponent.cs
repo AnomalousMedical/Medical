@@ -263,26 +263,29 @@ namespace Medical.GUI
 
         void timelineView_ActiveDataChanged(object sender, EventArgs e)
         {
-            if (currentActionData != null)
-            {
-                currentActionData.editingCompleted();
-            }
-            currentActionData = (TimelineActionData)timelineView.CurrentData;
-            if (currentActionData != null)
-            {
-                currentActionData.editingStarted();
-            }
-
-            EditInterfaceHandler editInterfaceHandler = ViewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
-            if (editInterfaceHandler != null)
+            if (currentActionData != (TimelineActionData)timelineView.CurrentData) //Did it actually change
             {
                 if (currentActionData != null)
                 {
-                    editInterfaceHandler.changeEditInterface(currentActionData.Action.getEditInterface());
+                    currentActionData.editingCompleted();
                 }
-                else if (currentTimeline != null)
+                currentActionData = (TimelineActionData)timelineView.CurrentData;
+                if (currentActionData != null)
                 {
-                    editInterfaceHandler.changeEditInterface(currentTimeline.getEditInterface());
+                    currentActionData.editingStarted();
+                }
+
+                EditInterfaceHandler editInterfaceHandler = ViewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
+                if (editInterfaceHandler != null)
+                {
+                    if (currentActionData != null)
+                    {
+                        editInterfaceHandler.changeEditInterface(currentActionData.Action.getEditInterface());
+                    }
+                    else if (currentTimeline != null)
+                    {
+                        editInterfaceHandler.changeEditInterface(currentTimeline.getEditInterface());
+                    }
                 }
             }
         }

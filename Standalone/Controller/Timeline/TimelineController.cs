@@ -347,6 +347,14 @@ namespace Medical
             }
         }
 
+        public LayerController LayerController
+        {
+            get
+            {
+                return standaloneController.LayerController;
+            }
+        }
+
         public MedicalStateController MedicalStateController
         {
             get

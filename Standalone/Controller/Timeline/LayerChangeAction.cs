@@ -117,10 +117,12 @@ namespace Medical
 
         public override void editing()
         {
+            LayerState undo = LayerState.CreateAndCapture();
             String currentTransparencyState = TransparencyController.ActiveTransparencyState;
             TransparencyController.ActiveTransparencyState = TransparencyState;
             LayerState.timedApply(MedicalConfig.CameraTransitionTime);
             TransparencyController.ActiveTransparencyState = currentTransparencyState;
+            TimelineController.LayerController.pushUndoState(undo);
         }
 
         public override void findFileReference(TimelineStaticInfo info)

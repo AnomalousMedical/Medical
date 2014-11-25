@@ -164,7 +164,7 @@ namespace Lecture
         private bool openEditorContextForSlide(Slide slide)
         {
             bool openedEditContext = false;
-            slideEditorContext = new SlideEditorContext(slide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, standaloneController.NotificationManager, (panelName, rml) =>
+            slideEditorContext = new SlideEditorContext(slide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, standaloneController.NotificationManager, standaloneController.LayerController, (panelName, rml) =>
             {
                 slideEditorContext.setWysiwygRml(panelName, rml, true);
             });

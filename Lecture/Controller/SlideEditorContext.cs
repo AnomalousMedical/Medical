@@ -51,7 +51,7 @@ namespace Lecture
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
 
-        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, NotificationGUIManager notificationManager, Action<String, String> wysiwygUndoCallback)
+        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, NotificationGUIManager notificationManager, LayerController layerController, Action<String, String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
@@ -207,7 +207,17 @@ namespace Lecture
             mvcContext.Views.add(taskbar);
 
             setupScene = new RunCommandsAction("SetupScene");
+            LayerState undoState = null;
+            setupScene.addCommand(new CallbackCommand(context =>
+                {
+                    undoState = LayerState.CreateAndCapture();
+                }));
             slide.populateCommand(setupScene);
+            setupScene.addCommand(new CallbackCommand(context =>
+            {
+                layerController.pushUndoState(undoState);
+                undoState = null;
+            }));
 
             mvcContext.Controllers.add(new MvcController("Editor",
                 setupScene,
