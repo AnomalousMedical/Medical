@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Medical.Controller
 {
     class CameraInputController : IDisposable
     {
+        private const int UPDATE_DELAY = 500;
+
         enum Gesture : int
         {
             None = 0,
@@ -96,12 +99,19 @@ namespace Medical.Controller
         private MouseTravelTracker travelTracker = new MouseTravelTracker();
         private SceneViewController sceneViewController;
         private Gesture currentGesture = Gesture.None;
+        private Timer mouseWheelTimer;
+        private CameraPosition mouseUndoPosition;
 
         public CameraInputController(SceneViewController sceneViewController, EventManager eventManager)
         {
             this.sceneViewController = sceneViewController;
             this.eventManager = eventManager;
             eventManager[EventLayers.Cameras].OnUpdate += processInputEvents;
+
+            mouseWheelTimer = new Timer(UPDATE_DELAY);
+            mouseWheelTimer.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
+            mouseWheelTimer.AutoReset = false;
+            mouseWheelTimer.Elapsed += mouseWheelTimer_Elapsed;
 
             RotateCamera.FirstFrameDownEvent += rotateCamera_FirstFrameDownEvent;
             RotateCamera.FirstFrameUpEvent += rotateCamera_FirstFrameUpEvent;
@@ -145,6 +155,7 @@ namespace Medical.Controller
                 panGesture.MomentumStarted -= panGesture_MomentumStarted;
                 panGesture.MomentumEnded -= panGesture_MomentumEnded;
             }
+            mouseWheelTimer.Dispose();
         }
 
         void rotateCamera_FirstFrameDownEvent(EventLayer eventLayer)
@@ -159,8 +170,6 @@ namespace Medical.Controller
                 eventLayer.alertEventsHandled();
             }
         }
-
-        private CameraPosition movementStartedPosition;
 
         void processInputEvents(EventLayer eventLayer)
         {
@@ -179,14 +188,21 @@ namespace Medical.Controller
                             eventLayer.makeFocusLayer();
                             currentlyInMotion = true;
                             eventLayer.alertEventsHandled();
-                            movementStartedPosition = activeWindow.createCameraPosition();
+                            if (mouseUndoPosition == null)
+                            {
+                                mouseUndoPosition = activeWindow.createCameraPosition();
+                            }
                         }
                         else if (RotateCamera.FirstFrameUp)
                         {
                             eventLayer.clearFocusLayer();
                             currentlyInMotion = false;
-                            activeWindow.pushUndoState(movementStartedPosition);
-                            movementStartedPosition = null;
+
+                            if (mouseUndoPosition != null)
+                            {
+                                activeWindow.pushUndoState(mouseUndoPosition);
+                                mouseUndoPosition = null;
+                            }
                         }
                         mouseCoords = eventLayer.Mouse.RelativePosition;
                         if (currentlyInMotion)
@@ -234,11 +250,23 @@ namespace Medical.Controller
                         {
                             if (ZoomInCamera.Down)
                             {
+                                if (mouseUndoPosition == null)
+                                {
+                                    mouseUndoPosition = activeWindow.createCameraPosition();
+                                }
+                                mouseWheelTimer.Stop();
+                                mouseWheelTimer.Start();
                                 cameraMover.incrementZoom(-1);
                                 eventLayer.alertEventsHandled();
                             }
                             else if (ZoomOutCamera.Down)
                             {
+                                if (mouseUndoPosition == null)
+                                {
+                                    mouseUndoPosition = activeWindow.createCameraPosition();
+                                }
+                                mouseWheelTimer.Stop();
+                                mouseWheelTimer.Start();
                                 cameraMover.incrementZoom(1);
                                 eventLayer.alertEventsHandled();
                             }
@@ -371,6 +399,19 @@ namespace Medical.Controller
         void Touches_AllFingersReleased(Touches obj)
         {
             currentGesture = Gesture.None;
+        }
+
+        void mouseWheelTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (!currentlyInMotion && mouseUndoPosition != null)
+            {
+                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+                if (activeWindow != null)
+                {
+                    activeWindow.pushUndoState(mouseUndoPosition);
+                }
+                mouseUndoPosition = null;
+            }
         }
     }
 }
