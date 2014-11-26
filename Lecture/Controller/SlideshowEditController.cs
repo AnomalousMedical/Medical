@@ -38,7 +38,6 @@ namespace Lecture
         private ShowTypeController showTypeController;
         private LectureUICallback uiCallback;
         private Slideshow slideshow;
-        private ImageRenderer imageRenderer;
         private MedicalSlideItemTemplate medicalSlideTemplate;
         private SlideImageManager slideImageManager;
         private TimelineTypeController timelineTypeController;
@@ -54,7 +53,6 @@ namespace Lecture
             this.uiCallback = uiCallback;
             this.propEditController = propEditController;
             this.editorController = editorController;
-            this.imageRenderer = standaloneController.ImageRenderer;
             this.timelineController = timelineController;
             editorController.ProjectChanged += editorController_ProjectChanged;
             slideImageManager = new SlideImageManager(this);
@@ -164,7 +162,7 @@ namespace Lecture
         private bool openEditorContextForSlide(Slide slide)
         {
             bool openedEditContext = false;
-            slideEditorContext = new SlideEditorContext(slide, "Slide " + (slideshow.indexOf(slide) + 1), this, uiCallback, undoBuffer, imageRenderer, medicalSlideTemplate, standaloneController.NotificationManager, standaloneController.LayerController, (panelName, rml) =>
+            slideEditorContext = new SlideEditorContext(slide, "Slide " + (slideshow.indexOf(slide) + 1), this, standaloneController, uiCallback, undoBuffer, medicalSlideTemplate, (panelName, rml) =>
             {
                 slideEditorContext.setWysiwygRml(panelName, rml, true);
             });

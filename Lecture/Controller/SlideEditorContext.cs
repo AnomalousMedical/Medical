@@ -47,11 +47,15 @@ namespace Lecture
         private DragAndDropTaskManager<WysiwygDragDropItem> htmlDragDrop;
         private SlideshowStyleManager styleManager;
         private SlideDisplayManager displayManager;
+        private LayerState undoState = null;
+        private CameraPosition undoCamera = null;
+        private LayerController layerController;
+        private SceneViewController sceneViewController;
 
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
 
-        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, ImageRenderer imageRenderer, MedicalSlideItemTemplate itemTemplate, NotificationGUIManager notificationManager, LayerController layerController, Action<String, String> wysiwygUndoCallback)
+        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, StandaloneController standaloneController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, MedicalSlideItemTemplate itemTemplate, Action<String, String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
@@ -62,10 +66,12 @@ namespace Lecture
             uiCallback.addOneWayCustomQuery(PlayTimelineAction.CustomActions.EditTimeline, new Action<PlayTimelineAction>(action_EditTimeline));
             this.slideEditorController = editorController;
             this.undoBuffer = undoBuffer;
-            this.imageRenderer = imageRenderer;
+            this.imageRenderer = standaloneController.ImageRenderer;
             this.itemTemplate = itemTemplate;
             this.wysiwygUndoCallback = wysiwygUndoCallback;
             this.editorController = editorController;
+            this.layerController = standaloneController.LayerController;
+            this.sceneViewController = standaloneController.SceneViewController;
             panelResizeWidget = new PanelResizeWidget();
             panelResizeWidget.RecordResizeUndo += panelResizeWidget_RecordResizeUndo;
 
@@ -74,7 +80,7 @@ namespace Lecture
             RunCommandsAction previewTriggerAction = new RunCommandsAction("PreviewTrigger");
 
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
-            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", notificationManager, previewTriggerAction);
+            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", standaloneController.NotificationManager, previewTriggerAction);
             triggerStrategy.PreviewTrigger += triggerStrategy_PreviewTrigger;
 
             mvcContext = new AnomalousMvcContext();
@@ -207,16 +213,27 @@ namespace Lecture
             mvcContext.Views.add(taskbar);
 
             setupScene = new RunCommandsAction("SetupScene");
-            LayerState undoState = null;
             setupScene.addCommand(new CallbackCommand(context =>
                 {
                     undoState = LayerState.CreateAndCapture();
+                    undoCamera = sceneViewController.ActiveWindow != null ? sceneViewController.ActiveWindow.createCameraPosition() : null;
                 }));
             slide.populateCommand(setupScene);
             setupScene.addCommand(new CallbackCommand(context =>
             {
-                layerController.pushUndoState(undoState);
-                undoState = null;
+                if (undoState != null)
+                {
+                    layerController.pushUndoState(undoState);
+                    undoState = null;
+                }
+                if(undoCamera != null)
+                {
+                    if(sceneViewController.ActiveWindow != null)
+                    {
+                        sceneViewController.ActiveWindow.pushUndoState(undoCamera);
+                    }
+                    undoCamera = null;
+                }
             }));
 
             mvcContext.Controllers.add(new MvcController("Editor",
