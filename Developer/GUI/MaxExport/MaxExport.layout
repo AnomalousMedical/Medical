@@ -1,15 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCX" position="19 33 167 160" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="19 33 167 203" layer="Overlapped">
         <Property key="Caption" value="Max Export"/>
         <Widget type="Button" skin="Button" position="3 6 148 37" name="SaveAll">
-            <Property key="Caption" value="Save All Positions to Max"/>
+            <Property key="Caption" value="Save All"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="3 48 148 37" name="SaveLeftTeethAsRight">
+        <Widget type="Button" skin="Button" position="3 90 148 37" name="SaveLeftTeethAsRight">
             <Property key="Caption" value="Save Left Teeth as Right"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="3 90 148 37" name="SaveRighteethAsLeft">
+        <Widget type="Button" skin="Button" position="3 132 148 37" name="SaveRighteethAsLeft">
             <Property key="Caption" value="Save Right Teeth as Left"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="3 48 148 37" name="SaveAllVisible">
+            <Property key="Caption" value="Save Visible"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>

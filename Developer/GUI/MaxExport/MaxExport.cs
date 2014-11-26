@@ -25,6 +25,9 @@ namespace Developer.GUI
             Button saveAll = (Button)window.findWidget("SaveAll");
             saveAll.MouseButtonClick += saveAll_MouseButtonClick;
 
+            Button saveAllVisible = (Button)window.findWidget("SaveAllVisible");
+            saveAllVisible.MouseButtonClick += saveAllVisible_MouseButtonClick;
+
             Button saveLeftTeethAsRight = (Button)window.findWidget("SaveLeftTeethAsRight");
             saveLeftTeethAsRight.MouseButtonClick += saveLeftTeethAsRight_MouseButtonClick;
 
@@ -47,6 +50,21 @@ namespace Developer.GUI
                     using (MaxWriter maxWriter = new MaxWriter(path))
                     {
                         maxWriter.write(medicalController.SimObjects.Select(so => new MaxWriterInfo(so)));
+                    }
+                }
+            });
+        }
+
+        void saveAllVisible_MouseButtonClick(Widget source, EventArgs e)
+        {
+            FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Dump Positions to 3ds Max", Environment.CurrentDirectory, "AnomalousMedicalSimObjects.ms", "MaxScript (*.ms)|*.ms");
+            saveDialog.showModal((result, path) =>
+            {
+                if (result == NativeDialogResult.OK)
+                {
+                    using (MaxWriter maxWriter = new MaxWriter(path))
+                    {
+                        maxWriter.write(AnatomyManager.AnatomyList.Where(a => a.CurrentAlpha > 0.0f).Select(a => new MaxWriterInfo(a.Owner)));
                     }
                 }
             });
