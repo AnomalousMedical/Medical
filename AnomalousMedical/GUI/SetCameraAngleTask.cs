@@ -16,6 +16,10 @@ namespace Medical.GUI
         private PopupMenu cameraAngleMenu;
         private SceneViewController sceneViewController;
         private AnatomyController anatomyController;
+        private SceneViewWindow activeWindow = null;
+
+        private MenuItem undoItem;
+        private MenuItem redoItem;
 
         public SetCameraAngleTask(SceneViewController sceneViewController, AnatomyController anatomyController)
             :base("Medical.SetCameraAngle", "Set Camera Angle", CommonResources.NoIcon, "Navigation")
@@ -47,11 +51,14 @@ namespace Medical.GUI
             sequenceItem = cameraAngleMenu.addItem("Center Visible Anatomy", MenuItemType.Normal);
             sequenceItem.MouseButtonClick += (s, e) => showAllVisibleAnatomy();
 
-            sequenceItem = cameraAngleMenu.addItem("Undo", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => undo();
+            undoItem = cameraAngleMenu.addItem("Undo", MenuItemType.Normal);
+            undoItem.MouseButtonClick += (s, e) => undo();
 
-            sequenceItem = cameraAngleMenu.addItem("Redo", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => redo();
+            redoItem = cameraAngleMenu.addItem("Redo", MenuItemType.Normal);
+            redoItem.MouseButtonClick += (s, e) => redo();
+
+            sceneViewController.ActiveWindowChanged += sceneViewController_ActiveWindowChanged;
+            sceneViewController_ActiveWindowChanged(sceneViewController.ActiveWindow);
         }
 
         public void Dispose()
@@ -183,6 +190,30 @@ namespace Medical.GUI
         {
             SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
             activeWindow.redo();
+        }
+
+        void sceneViewController_ActiveWindowChanged(SceneViewWindow window)
+        {
+            if (activeWindow != null)
+            {
+                activeWindow.OnUndoRedoChanged -= setupUndoRedo;
+                activeWindow.OnRedo -= setupUndoRedo;
+                activeWindow.OnUndo -= setupUndoRedo;
+            }
+            this.activeWindow = window;
+            if (activeWindow != null)
+            {
+                activeWindow.OnUndoRedoChanged += setupUndoRedo;
+                activeWindow.OnRedo += setupUndoRedo;
+                activeWindow.OnUndo += setupUndoRedo;
+                setupUndoRedo(activeWindow);
+            }
+        }
+
+        void setupUndoRedo(SceneViewWindow win)
+        {
+            redoItem.Enabled = win.HasRedo;
+            undoItem.Enabled = win.HasUndo;
         }
     }
 }
