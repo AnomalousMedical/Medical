@@ -11,7 +11,7 @@ namespace Medical
 {
     public class LayerState : Saveable
     {
-        private LinkedList<LayerEntry> entries = new LinkedList<LayerEntry>();
+        private List<LayerEntry> entries = new List<LayerEntry>();
 
         /// <summary>
         /// Convienence method to create a layer state and capture the current state in one call.
@@ -34,7 +34,7 @@ namespace Medical
         {
             foreach (String name in transparencyInterfaceNames)
             {
-                entries.AddLast(new LayerEntry(name, overrideAlpha));
+                entries.Add(new LayerEntry(name, overrideAlpha));
             }
         }
 
@@ -44,22 +44,25 @@ namespace Medical
         public void captureState()
         {
             entries.Clear();
+            entries.Capacity = TransparencyController.TransparencyInterfaceCount; //We aren't going to have a capacity greater than this
             foreach (TransparencyInterface trans in TransparencyController.TransparencyInterfaces)
             {
                 if (trans.CurrentAlpha > Single.Epsilon)
                 {
                     LayerEntry entry = new LayerEntry(trans);
-                    entries.AddLast(entry);
+                    entries.Add(entry);
                 }
             }
+            entries.Capacity = entries.Count; //Trim the capcity down to the actual number of elements
         }
 
         public void copyFrom(LayerState source)
         {
             entries.Clear();
+            entries.Capacity = source.entries.Count;
             foreach (LayerEntry entry in source.entries)
             {
-                entries.AddLast(CopySaver.Default.copy(entry));
+                entries.Add(CopySaver.Default.copy(entry));
             }
         }
 
@@ -133,13 +136,13 @@ namespace Medical
         /// </summary>
         private void trimLayers()
         {
-            LinkedList<LayerEntry> originalList = entries;
-            entries = new LinkedList<LayerEntry>();
+            List<LayerEntry> originalList = entries;
+            entries = new List<LayerEntry>(originalList.Count);
             foreach (LayerEntry entry in originalList)
             {
                 if (entry.AlphaValue > Single.Epsilon)
                 {
-                    entries.AddLast(entry);
+                    entries.Add(entry);
                 }
             }
         }
@@ -152,7 +155,9 @@ namespace Medical
         protected LayerState(LoadInfo info)
         {
             Easing = info.GetValue(EASING, EasingFunction.EaseOutQuadratic);
-            info.RebuildLinkedList<LayerEntry>(ENTRIES, entries);
+            entries.Capacity = TransparencyController.TransparencyInterfaceCount; //We aren't likely going to have a capacity greater than this, this helps reduce the number of resizes as we rebuild the list
+            info.RebuildList<LayerEntry>(ENTRIES, entries);
+            entries.Capacity = entries.Count; //Reduce the count down to the actual number needed.
         }
 
         public void getInfo(SaveInfo info)
@@ -162,7 +167,7 @@ namespace Medical
             info.AddValue("Name", "None");
 
             info.AddValue(EASING, EasingFunction.EaseOutQuadratic);
-            info.ExtractLinkedList<LayerEntry>(ENTRIES, entries);
+            info.ExtractList<LayerEntry>(ENTRIES, entries);
         }
 
         #endregion

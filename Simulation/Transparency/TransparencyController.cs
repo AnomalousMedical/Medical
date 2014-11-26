@@ -60,6 +60,14 @@ namespace Medical
             }
         }
 
+        public static int TransparencyInterfaceCount
+        {
+            get
+            {
+                return transparencyInterfaces.Count;
+            }
+        }
+
         public static void setAllAlphas(float alpha)
         {
             foreach (TransparencyInterface transInterface in transparencyInterfaces)
