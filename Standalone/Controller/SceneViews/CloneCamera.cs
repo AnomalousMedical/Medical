@@ -82,5 +82,21 @@ namespace Medical.Controller
                 return Vector3.Zero;
             }
         }
+
+        public override Vector3 TargetLookAt
+        {
+            get
+            {
+                return LookAt;
+            }
+        }
+
+        public override Vector3 TargetTranslation
+        {
+            get
+            {
+                return Translation;
+            }
+        }
     }
 }

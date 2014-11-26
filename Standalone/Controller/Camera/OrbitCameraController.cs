@@ -41,7 +41,7 @@ namespace Medical
         private float startOrbitDistance;
         private Quaternion startRotation;
         private Vector3 targetLookAt;
-        private Vector3 targetPosition;
+        private Vector3 targetTranslation;
         private float targetOrbitDistance;
         private Quaternion targetRotation;
         float targetYaw;
@@ -58,8 +58,8 @@ namespace Medical
         public OrbitCameraController(Vector3 translation, Vector3 lookAt, Vector3 boundMin, Vector3 boundMax, float minOrbitDistance, float maxOrbitDistance)
         {
             this.camera = null;
-            this.translation = translation;
-            this.lookAt = lookAt;
+            this.translation = targetTranslation = translation;
+            this.lookAt = targetLookAt = lookAt;
             this.boundMax = boundMax;
             this.boundMin = boundMin;
             this.minOrbitDistance = minOrbitDistance;
@@ -131,6 +131,8 @@ namespace Medical
             lookAt += rotatedUp * (y / (areaHeight * SCROLL_SCALE) * scaleFactor);
             moveLookAt();
             stopMaintainingIncludePoint();
+            targetTranslation = translation;
+            targetLookAt = lookAt;
         }
 
         public override void zoomFromMotion(int y)
@@ -138,6 +140,8 @@ namespace Medical
             orbitDistance += ZoomMultiple * y + y;
             moveZoom();
             stopMaintainingIncludePoint();
+            targetTranslation = translation;
+            targetLookAt = lookAt;
         }
 
         public override void rotateFromMotion(int x, int y)
@@ -146,6 +150,8 @@ namespace Medical
             pitch += y / 100.0f;
             moveCameraYawPitch();
             stopMaintainingIncludePoint();
+            targetTranslation = translation;
+            targetLookAt = lookAt;
         }
 
         public override void incrementZoom(int zoomDirection)
@@ -154,6 +160,8 @@ namespace Medical
             orbitDistance += zoomAmount;
             moveZoom();
             stopMaintainingIncludePoint();
+            targetTranslation = translation;
+            targetLookAt = lookAt;
         }
 
         public float ZoomMultiple
@@ -243,7 +251,7 @@ namespace Medical
             this.camera = camera;
         }
 
-        public override void setNewPosition(Vector3 position, Vector3 lookAt, float duration, EasingFunction easingFunction)
+        public override void setNewPosition(Vector3 translation, Vector3 lookAt, float duration, EasingFunction easingFunction)
         {
             this.easingFunction = easingFunction;
             animationDuration = duration;
@@ -264,10 +272,10 @@ namespace Medical
                 startOrbitDistance = orbitDistance;
 
                 //Target position
-                Vector3 localVec = position - lookAt;
+                Vector3 localVec = translation - lookAt;
                 computeStartingValues(localVec, out targetOrbitDistance, out targetYaw, out targetPitch, out targetNormal, out targetRotatedUp, out targetRotatedLeft);
                 this.targetLookAt = lookAt;
-                this.targetPosition = position;
+                this.targetTranslation = translation;
 
                 //Rotations
                 Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
@@ -309,6 +317,8 @@ namespace Medical
                 updateTranslation(translation);
                 camera.LookAt = lookAt;
             }
+            targetTranslation = translation;
+            targetLookAt = lookAt;
         }
 
         public override void processIncludePoint(Camera camera)
@@ -322,7 +332,7 @@ namespace Medical
                 {
                     duration = animationDuration - totalTime;
                     inclLookAt = targetLookAt;
-                    inclTrans = targetPosition;
+                    inclTrans = targetTranslation;
                 }
                 setNewPosition(SceneViewWindow.computeIncludePointAdjustedPosition(camera.getAspectRatio(), camera.getFOVy(), camera.getProjectionMatrix(), inclTrans, inclLookAt, currentIncludePoint.Value), inclLookAt, duration, easingFunction);
             }
@@ -385,6 +395,22 @@ namespace Medical
             get
             {
                 return lookAt;
+            }
+        }
+
+        public override Vector3 TargetLookAt
+        {
+            get
+            {
+                return targetLookAt;
+            }
+        }
+
+        public override Vector3 TargetTranslation
+        {
+            get
+            {
+                return targetTranslation;
             }
         }
 

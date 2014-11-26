@@ -164,7 +164,9 @@ namespace Medical.GUI
                     LookAt = center
                 };
 
+                CameraPosition position = window.createCameraPosition();
                 window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
+                window.pushUndoState(position);
             }
         }
 

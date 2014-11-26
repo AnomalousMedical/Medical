@@ -66,12 +66,36 @@ namespace Medical
 
         #endregion
 
+        /// <summary>
+        /// The current translation.
+        /// </summary>
         public abstract Vector3 Translation
         {
             get;
         }
 
+        /// <summary>
+        /// The current look at.
+        /// </summary>
         public abstract Vector3 LookAt
+        {
+            get;
+        }
+
+        /// <summary>
+        /// The target translation, if the camera is automatically moving this will not
+        /// match the Translation, but will be where the camera will end up.
+        /// </summary>
+        public abstract Vector3 TargetTranslation
+        {
+            get;
+        }
+
+        /// <summary>
+        /// The target look at, if the camera is automatically moving this will not
+        /// match the look at, but will be where the camera will end up. 
+        /// </summary>
+        public abstract Vector3 TargetLookAt
         {
             get;
         }

@@ -446,7 +446,7 @@ namespace Medical.Controller
         }
 
         /// <summary>
-        /// Create a camera position from the current position, this will not include an
+        /// Create a camera position from the target position, this will not include an
         /// include point and is mostly suitable for undo / redo.
         /// </summary>
         /// <returns></returns>
@@ -454,8 +454,8 @@ namespace Medical.Controller
         {
             return new CameraPosition()
             {
-                Translation = cameraMover.Translation,
-                LookAt = cameraMover.LookAt,
+                Translation = cameraMover.TargetTranslation,
+                LookAt = cameraMover.TargetLookAt,
             };
         }
 
