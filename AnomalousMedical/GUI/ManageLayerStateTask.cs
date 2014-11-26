@@ -27,6 +27,15 @@ namespace Medical.GUI
             popupMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
             popupMenu.Visible = false;
 
+            MenuItem sequenceItem = popupMenu.addItem("Unhide All", MenuItemType.Normal);
+            sequenceItem.MouseButtonClick += (s, e) =>
+            {
+                LayerState undo = LayerState.CreateAndCapture();
+                this.layerController.unhideAll();
+                this.layerController.pushUndoState(undo);
+                popupMenu.setVisibleSmooth(false);
+            };
+
             undoItem = popupMenu.addItem("Undo", MenuItemType.Normal);
             undoItem.MouseButtonClick += (s, e) => layerController.undo();
 

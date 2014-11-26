@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +42,14 @@ namespace Medical
             {
                 addBuffer(name);
             }
+        }
+
+        /// <summary>
+        /// Unhide everything
+        /// </summary>
+        public void unhideAll()
+        {
+            TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
         }
 
         /// <summary>

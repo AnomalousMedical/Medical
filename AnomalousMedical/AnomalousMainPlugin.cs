@@ -220,7 +220,9 @@ namespace Medical.GUI
 
             CallbackTask unhideAllAnatomy = new CallbackTask("Medical.UnhideAllAnatomy", "Unhide All", "AnatomyFinder.ShowAll", TaskMenuCategories.Navigation, int.MaxValue - 2, false, (item) =>
             {
-                TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.CameraTransitionTime, EasingFunction.EaseOutQuadratic);
+                LayerState undo = LayerState.CreateAndCapture();
+                standaloneController.LayerController.unhideAll();
+                standaloneController.LayerController.pushUndoState(undo);
             });
             taskController.addTask(unhideAllAnatomy);
 
