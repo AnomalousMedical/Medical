@@ -491,28 +491,32 @@ namespace Medical.Controller
         /// </summary>
         public void pushUndoState(CameraPosition undoState, CameraPosition redoState)
         {
-            undoRedoBuffer.pushAndSkip(new TwoWayDelegateCommand<CameraPosition, CameraPosition>(redoState, undoState, new TwoWayDelegateCommand<CameraPosition, CameraPosition>.Funcs()
+            //Make sure the undo and redo states are sufficiently different, otherwise ignore this new entry
+            if ((undoState.Translation - redoState.Translation).length2() > 0.001 || (undoState.LookAt - redoState.LookAt).length2() > 0.001)
             {
-                ExecuteFunc = state =>
+                undoRedoBuffer.pushAndSkip(new TwoWayDelegateCommand<CameraPosition, CameraPosition>(redoState, undoState, new TwoWayDelegateCommand<CameraPosition, CameraPosition>.Funcs()
                 {
-                    this.setPosition(state, MedicalConfig.CameraTransitionTime);
-                    if (OnRedo != null)
+                    ExecuteFunc = state =>
                     {
-                        OnRedo.Invoke(this);
+                        this.setPosition(state, MedicalConfig.CameraTransitionTime);
+                        if (OnRedo != null)
+                        {
+                            OnRedo.Invoke(this);
+                        }
+                    },
+                    UndoFunc = state =>
+                    {
+                        this.setPosition(state, MedicalConfig.CameraTransitionTime);
+                        if (OnUndo != null)
+                        {
+                            OnUndo.Invoke(this);
+                        }
                     }
-                },
-                UndoFunc = state =>
+                }));
+                if (OnUndoRedoChanged != null)
                 {
-                    this.setPosition(state, MedicalConfig.CameraTransitionTime);
-                    if (OnUndo != null)
-                    {
-                        OnUndo.Invoke(this);
-                    }
+                    OnUndoRedoChanged.Invoke(this);
                 }
-            }));
-            if (OnUndoRedoChanged != null)
-            {
-                OnUndoRedoChanged.Invoke(this);
             }
         }
 
