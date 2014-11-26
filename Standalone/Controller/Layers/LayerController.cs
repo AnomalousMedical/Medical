@@ -75,28 +75,31 @@ namespace Medical
         /// </summary>
         public void pushUndoState(LayerState undoState, LayerState redoState)
         {
-            undoRedoBuffers[activeStateName].pushAndSkip(new TwoWayDelegateCommand<LayerState, LayerState>(redoState, undoState, new TwoWayDelegateCommand<LayerState, LayerState>.Funcs()
+            if (!undoState.isTheSameAs(redoState)) //This uses the slightly unreliable isTheSameAs function, but worse case scenerio we end up with a duplicate undo.
             {
-                ExecuteFunc = state =>
+                undoRedoBuffers[activeStateName].pushAndSkip(new TwoWayDelegateCommand<LayerState, LayerState>(redoState, undoState, new TwoWayDelegateCommand<LayerState, LayerState>.Funcs()
                 {
-                    state.apply();
-                    if (OnRedo != null)
+                    ExecuteFunc = state =>
                     {
-                        OnRedo.Invoke(this);
+                        state.apply();
+                        if (OnRedo != null)
+                        {
+                            OnRedo.Invoke(this);
+                        }
+                    },
+                    UndoFunc = state =>
+                    {
+                        state.apply();
+                        if (OnUndo != null)
+                        {
+                            OnUndo.Invoke(this);
+                        }
                     }
-                },
-                UndoFunc = state =>
+                }));
+                if (OnUndoRedoChanged != null)
                 {
-                    state.apply();
-                    if (OnUndo != null)
-                    {
-                        OnUndo.Invoke(this);
-                    }
+                    OnUndoRedoChanged.Invoke(this);
                 }
-            }));
-            if (OnUndoRedoChanged != null)
-            {
-                OnUndoRedoChanged.Invoke(this);
             }
         }
 

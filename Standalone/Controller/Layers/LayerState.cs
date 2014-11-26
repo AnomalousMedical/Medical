@@ -118,6 +118,34 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Tries to determine if this layer state is the same as the given one. This will check the sizes of the entries lists,
+        /// if they are not the same it will be false. If they are the same it will compare each entry, if the entries do not
+        /// match name for name and alpha value for alpha value they will not be the same. Note that the order of the entries in
+        /// both layer states must be the same or else they will still be considered different. The entries list is only enumerated
+        /// one time. This is mostly useful to see if two layer states generated on the same program run with the same scene are the
+        /// same (since the entries should always come out in the same order).
+        /// </summary>
+        /// <param name="other">The other entry.</param>
+        /// <returns>True if they are the same and false otherwise.</returns>
+        public bool isTheSameAs(LayerState other)
+        {
+            if(entries.Count == other.entries.Count)
+            {
+                for(int i = 0; i < entries.Count; ++i)
+                {
+                    var mine = entries[i];
+                    var theirs = other.entries[i];
+                    if(mine.TransparencyObject != theirs.TransparencyObject || mine.AlphaValue != theirs.AlphaValue)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
         public IEnumerable<LayerEntry> Entries
         {
             get
