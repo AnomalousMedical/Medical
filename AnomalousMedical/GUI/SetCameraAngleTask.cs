@@ -87,11 +87,13 @@ namespace Medical.GUI
                                                lookAt.y * lookAtMask.y + length * translationMask.y,
                                                lookAt.z * lookAtMask.z + length * translationMask.z);
 
+                CameraPosition undoPosition = activeWindow.createCameraPosition();
                 activeWindow.setPosition(new CameraPosition()
                 {
                     Translation = newTrans,
                     LookAt = lookAt,
                 }, MedicalConfig.CameraTransitionTime);
+                activeWindow.pushUndoState(undoPosition);
             }
 
             cameraAngleMenu.setVisibleSmooth(false);
@@ -127,11 +129,13 @@ namespace Medical.GUI
                     Vector3 normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
                     Vector3 newTrans = normalDirection * length + lookAt;
 
+                    CameraPosition undoPosition = activeWindow.createCameraPosition();
                     activeWindow.setPosition(new CameraPosition()
                     {
                         Translation = newTrans,
                         LookAt = lookAt,
                     }, MedicalConfig.CameraTransitionTime);
+                    activeWindow.pushUndoState(undoPosition);
                 }
             }
 
@@ -141,32 +145,31 @@ namespace Medical.GUI
         void showAllVisibleAnatomy()
         {
             AxisAlignedBox boundingBox = anatomyController.VisibleObjectsBoundingBox;
-            SceneViewWindow window = sceneViewController.ActiveWindow;
+            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
             Vector3 center = boundingBox.Center;
 
-            float nearPlane = window.Camera.getNearClipDistance();
-            float theta = window.Camera.getFOVy();
-            float aspectRatio = window.Camera.getAspectRatio();
+            float nearPlane = activeWindow.Camera.getNearClipDistance();
+            float theta = activeWindow.Camera.getFOVy();
+            float aspectRatio = activeWindow.Camera.getAspectRatio();
             if (aspectRatio < 1.0f)
             {
                 theta *= aspectRatio;
             }
 
             Vector3 translation = center;
-            Vector3 direction = (window.Translation - window.LookAt).normalized();
+            Vector3 direction = (activeWindow.Translation - activeWindow.LookAt).normalized();
             float diagonalDistance = boundingBox.DiagonalDistance;
             if (diagonalDistance > float.Epsilon)
             {
                 translation += direction * diagonalDistance / (float)Math.Tan(theta);
-                CameraPosition cameraPosition = new CameraPosition()
+
+                CameraPosition undoPosition = activeWindow.createCameraPosition();
+                activeWindow.setPosition(new CameraPosition()
                 {
                     Translation = translation,
                     LookAt = center
-                };
-
-                CameraPosition position = window.createCameraPosition();
-                window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
-                window.pushUndoState(position);
+                }, MedicalConfig.CameraTransitionTime);
+                activeWindow.pushUndoState(undoPosition);
             }
         }
 
