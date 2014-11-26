@@ -26,6 +26,11 @@ namespace Medical
         /// </summary>
         public event Action<LayerController> OnUndoRedoChanged;
 
+        /// <summary>
+        /// Fired when the active transparency state changes.
+        /// </summary>
+        public event Action<LayerController> OnActiveTransparencyStateChanged;
+
         public LayerController()
         {
             TransparencyController.ActiveTransparencyStateChanged += TransparencyController_ActiveTransparencyStateChanged;
@@ -95,9 +100,29 @@ namespace Medical
             }
         }
 
+        public bool HasUndo
+        {
+            get
+            {
+                return undoRedoBuffers[activeStateName].HasUndo;
+            }
+        }
+
+        public bool HasRedo
+        {
+            get
+            {
+                return undoRedoBuffers[activeStateName].HasRedo;
+            }
+        }
+
         void TransparencyController_ActiveTransparencyStateChanged(String name)
         {
             activeStateName = name;
+            if(OnActiveTransparencyStateChanged != null)
+            {
+                OnActiveTransparencyStateChanged.Invoke(this);
+            }
         }
 
         void TransparencyController_TransparencyStateRemoved(String name)
