@@ -28,7 +28,15 @@ namespace Medical
         {
             if (!popupContainer.Visible)
             {
-                IntVector2 loc = positioner.findGoodWindowPosition(popupContainer.Width, popupContainer.Height);
+                IntVector2 loc;
+                if (positioner != null)
+                {
+                    loc = positioner.findGoodWindowPosition(popupContainer.Width, popupContainer.Height);
+                }
+                else
+                {
+                    loc = new IntVector2(0, 0);
+                }
                 popupContainer.show(loc.x, loc.y);
             }
         }

@@ -33,6 +33,7 @@ namespace Medical
         private ManagePluginInstructions managePluginInstructions;
         private HashSet<long> usedPluginIds = new HashSet<long>();
         private HashSet<long> loadedDependencyPluginIds = new HashSet<long>();
+        private Version minimumAssemblyVersion;
 
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
@@ -48,6 +49,7 @@ namespace Medical
 
         public AtlasPluginManager(StandaloneController standaloneController, DataFileVerifier dataFileVerifier)
         {
+            minimumAssemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
             this.dataFileVerifier = dataFileVerifier;
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
@@ -133,20 +135,31 @@ namespace Medical
                             //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
                             loadedPluginNames.Add(dllFileName);
 
-                            AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
-                            if (attributes.Length > 0)
+                            Version version = assembly.GetName().Version;
+                            if (version.Major <= minimumAssemblyVersion.Major && version.Minor <= minimumAssemblyVersion.Minor)
                             {
-                                foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                                AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                                if (attributes.Length > 0)
                                 {
-                                    entryPointAttribute.createPlugin(standaloneController);
+                                    foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                                    {
+                                        entryPointAttribute.createPlugin(standaloneController);
+                                    }
+                                    loadedPlugin = true;
                                 }
-                                loadedPlugin = true;
+                                else
+                                {
+                                    String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                                    firePluginLoadError(errorMessage);
+                                    Log.Error(errorMessage);
+                                }
                             }
                             else
                             {
-                                String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
-                                firePluginLoadError(errorMessage);
-                                Log.Error(errorMessage);
+                                String error = String.Format("The plugin '{0}' is for a newer version of Anomalous Medical {1}.", dllFileName, version);
+                                firePluginLoadError(error);
+                                Log.Error(error);
+                                loadedPlugin = true; //This loaded, but we didnt inititalize it, however, return true anyway since we did load sucessfully
                             }
                         }
                         catch (Exception e)
