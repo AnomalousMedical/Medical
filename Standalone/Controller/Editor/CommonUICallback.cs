@@ -46,7 +46,9 @@ namespace Medical
                 SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
                 if (activeWindow != null)
                 {
+                    CameraPosition undo = activeWindow.createCameraPosition();
                     activeWindow.setPosition(camPos, MedicalConfig.CameraTransitionTime);
+                    activeWindow.pushUndoState(undo);
                 }
             });
 

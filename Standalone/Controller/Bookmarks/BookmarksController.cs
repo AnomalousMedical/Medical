@@ -105,11 +105,13 @@ namespace Medical.Controller
 
         public void applyBookmark(Bookmark bookmark)
         {
-            LayerState undo = LayerState.CreateAndCapture();
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
+            LayerState undoLayers = LayerState.CreateAndCapture();
+            CameraPosition undoCameraPosition = window.createCameraPosition();
             window.setPosition(bookmark.CameraPosition, MedicalConfig.CameraTransitionTime);
             bookmark.Layers.timedApply(MedicalConfig.CameraTransitionTime);
-            standaloneController.LayerController.pushUndoState(undo);
+            standaloneController.LayerController.pushUndoState(undoLayers);
+            window.pushUndoState(undoCameraPosition);
         }
 
         public void loadSavedBookmarks()

@@ -149,7 +149,9 @@ namespace Medical
                 SceneViewWindow window = TimelineController.SceneViewController.ActiveWindow;
                 if (window != null)
                 {
+                    CameraPosition undo = window.createCameraPosition();
                     window.setPosition(CameraPosition, MedicalConfig.CameraTransitionTime);
+                    window.pushUndoState(undo);
                 }
             }
         }
