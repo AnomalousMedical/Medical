@@ -160,6 +160,8 @@ namespace Medical.Controller
             }
         }
 
+        private CameraPosition movementStartedPosition;
+
         void processInputEvents(EventLayer eventLayer)
         {
             if (currentGesture == Gesture.None)
@@ -177,11 +179,14 @@ namespace Medical.Controller
                             eventLayer.makeFocusLayer();
                             currentlyInMotion = true;
                             eventLayer.alertEventsHandled();
+                            movementStartedPosition = activeWindow.createCameraPosition();
                         }
                         else if (RotateCamera.FirstFrameUp)
                         {
                             eventLayer.clearFocusLayer();
                             currentlyInMotion = false;
+                            activeWindow.pushUndoState(movementStartedPosition);
+                            movementStartedPosition = null;
                         }
                         mouseCoords = eventLayer.Mouse.RelativePosition;
                         if (currentlyInMotion)

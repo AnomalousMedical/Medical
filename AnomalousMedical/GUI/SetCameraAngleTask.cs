@@ -46,6 +46,12 @@ namespace Medical.GUI
 
             sequenceItem = cameraAngleMenu.addItem("Center Visible Anatomy", MenuItemType.Normal);
             sequenceItem.MouseButtonClick += (s, e) => showAllVisibleAnatomy();
+
+            sequenceItem = cameraAngleMenu.addItem("Undo", MenuItemType.Normal);
+            sequenceItem.MouseButtonClick += (s, e) => undo();
+
+            sequenceItem = cameraAngleMenu.addItem("Redo", MenuItemType.Normal);
+            sequenceItem.MouseButtonClick += (s, e) => redo();
         }
 
         public void Dispose()
@@ -160,6 +166,18 @@ namespace Medical.GUI
 
                 window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
             }
+        }
+
+        void undo()
+        {
+            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+            activeWindow.undo();
+        }
+
+        void redo()
+        {
+            SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+            activeWindow.redo();
         }
     }
 }

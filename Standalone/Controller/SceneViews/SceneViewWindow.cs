@@ -25,6 +25,21 @@ namespace Medical.Controller
         public event SceneViewWindowResizedEvent Resized;
         public event SceneViewWindowEvent Disposed;
 
+        /// <summary>
+        /// Fired when an undo is executed.
+        /// </summary>
+        public event Action<SceneViewWindow> OnUndo;
+
+        /// <summary>
+        /// Fired when a redo is executed.
+        /// </summary>
+        public event Action<SceneViewWindow> OnRedo;
+
+        /// <summary>
+        /// Fired when the Undo/Redo buffer is altered, either by being cleared or a new command added.
+        /// </summary>
+        public event Action<SceneViewWindow> OnUndoRedoChanged;
+
         private SceneView sceneView;
         private CameraMover cameraMover;
         private RendererWindow window;
@@ -51,6 +66,8 @@ namespace Medical.Controller
         private int zOffset = 0;
         private RenderingMode renderingMode = RenderingMode.Solid;
         private bool clearEveryFrame = false;
+
+        private UndoRedoBuffer undoRedoBuffer = new UndoRedoBuffer(20);
 
         public SceneViewWindow(SceneViewController controller, CameraMover cameraMover, String name, BackgroundScene background, int zIndexStart)
         {
@@ -426,6 +443,93 @@ namespace Medical.Controller
         public bool containsPoint(IntVector2 point)
         {
             return (point.x > Location.x && point.x < Location.x + WorkingSize.Width) && (point.y > Location.y && point.y < Location.y + WorkingSize.Height);
+        }
+
+        /// <summary>
+        /// Create a camera position from the current position, this will not include an
+        /// include point and is mostly suitable for undo / redo.
+        /// </summary>
+        /// <returns></returns>
+        public CameraPosition createCameraPosition()
+        {
+            return new CameraPosition()
+            {
+                Translation = cameraMover.Translation,
+                LookAt = cameraMover.LookAt,
+            };
+        }
+
+        /// <summary>
+        /// Undo the layer buffer for the active state.
+        /// </summary>
+        public void undo()
+        {
+            undoRedoBuffer.undo();
+        }
+
+        /// <summary>
+        /// Redo the layer buffer for the active state..
+        /// </summary>
+        public void redo()
+        {
+            undoRedoBuffer.execute();
+        }
+
+        /// <summary>
+        /// Push a new state onto the undo/redo buffer, will erase anything after the current undo.
+        /// This will use the passed state as the undo state and the current muscle position of the scene
+        /// as the redo state.
+        /// </summary>
+        public void pushUndoState(CameraPosition cameraPosition)
+        {
+            pushUndoState(cameraPosition, createCameraPosition());
+        }
+
+        /// <summary>
+        /// Push a new state onto the undo/redo buffer, will erase anything after the current undo.
+        /// This will use the passed states for undo and redo.
+        /// </summary>
+        public void pushUndoState(CameraPosition undoState, CameraPosition redoState)
+        {
+            undoRedoBuffer.pushAndSkip(new TwoWayDelegateCommand<CameraPosition, CameraPosition>(redoState, undoState, new TwoWayDelegateCommand<CameraPosition, CameraPosition>.Funcs()
+            {
+                ExecuteFunc = state =>
+                {
+                    this.setPosition(state, MedicalConfig.CameraTransitionTime);
+                    if (OnRedo != null)
+                    {
+                        OnRedo.Invoke(this);
+                    }
+                },
+                UndoFunc = state =>
+                {
+                    this.setPosition(state, MedicalConfig.CameraTransitionTime);
+                    if (OnUndo != null)
+                    {
+                        OnUndo.Invoke(this);
+                    }
+                }
+            }));
+            if (OnUndoRedoChanged != null)
+            {
+                OnUndoRedoChanged.Invoke(this);
+            }
+        }
+
+        public bool HasUndo
+        {
+            get
+            {
+                return undoRedoBuffer.HasUndo;
+            }
+        }
+
+        public bool HasRedo
+        {
+            get
+            {
+                return undoRedoBuffer.HasRedo;
+            }
         }
 
         public override bool Visible
