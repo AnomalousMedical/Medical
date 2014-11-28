@@ -9,77 +9,53 @@ using System.Threading.Tasks;
 
 namespace Medical.GUI
 {
-    class SetCameraAngleTask : Task, IDisposable
+    class CameraAngleGui : PinableMDIDialog
     {
         private const float HALF_PI = (float)Math.PI / 2.0f - 0.001f;
 
-        private PopupMenu cameraAngleMenu;
         private SceneViewController sceneViewController;
         private AnatomyController anatomyController;
         private SceneViewWindow activeWindow = null;
 
-        private MenuItem undoItem;
-        private MenuItem redoItem;
+        private Button undoItem;
+        private Button redoItem;
 
-        public SetCameraAngleTask(SceneViewController sceneViewController, AnatomyController anatomyController)
-            :base("Medical.SetCameraAngle", "Set Camera Angle", CommonResources.NoIcon, "Navigation")
+
+        public CameraAngleGui(SceneViewController sceneViewController, AnatomyController anatomyController)
+            :base("Medical.GUI.CameraAngleGui.CameraAngleGui.layout")
         {
             this.sceneViewController = sceneViewController;
             this.anatomyController = anatomyController;
 
-            cameraAngleMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
-            cameraAngleMenu.Visible = false;
+            Button button = window.findWidget("Front") as Button;
+            button.MouseButtonClick += (s, e) => setStraightAngleView(new Vector3(1.0f, 1.0f, 0.0f), new Vector3(0.0f, 0.0f, 1.0f));
 
-            MenuItem sequenceItem = cameraAngleMenu.addItem("Front", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => setStraightAngleView(new Vector3(1.0f, 1.0f, 0.0f), new Vector3(0.0f, 0.0f, 1.0f));
+            button = window.findWidget("Back") as Button;
+            button.MouseButtonClick += (s, e) => setStraightAngleView(new Vector3(1.0f, 1.0f, 0.0f), new Vector3(0.0f, 0.0f, -1.0f));
 
-            sequenceItem = cameraAngleMenu.addItem("Back", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => setStraightAngleView(new Vector3(1.0f, 1.0f, 0.0f), new Vector3(0.0f, 0.0f, -1.0f));
+            button = window.findWidget("Left") as Button;
+            button.MouseButtonClick += (s, e) => setStraightAngleView(new Vector3(0.0f, 1.0f, 1.0f), new Vector3(1.0f, 0.0f, 0.0f));
 
-            sequenceItem = cameraAngleMenu.addItem("Left", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => setStraightAngleView(new Vector3(0.0f, 1.0f, 1.0f), new Vector3(1.0f, 0.0f, 0.0f));
+            button = window.findWidget("Right") as Button;
+            button.MouseButtonClick += (s, e) => setStraightAngleView(new Vector3(0.0f, 1.0f, 1.0f), new Vector3(-1.0f, 0.0f, 0.0f));
 
-            sequenceItem = cameraAngleMenu.addItem("Right", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => setStraightAngleView(new Vector3(0.0f, 1.0f, 1.0f), new Vector3(-1.0f, 0.0f, 0.0f));
+            button = window.findWidget("Top") as Button;
+            button.MouseButtonClick += (s, e) => setTopBottomView(1);
 
-            sequenceItem = cameraAngleMenu.addItem("Top", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => setTopBottomView(1);
+            button = window.findWidget("Bottom") as Button;
+            button.MouseButtonClick += (s, e) => setTopBottomView(-1);
 
-            sequenceItem = cameraAngleMenu.addItem("Bottom", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => setTopBottomView(-1);
+            button = window.findWidget("CenterVisible") as Button;
+            button.MouseButtonClick += (s, e) => showAllVisibleAnatomy();
 
-            sequenceItem = cameraAngleMenu.addItem("Center Visible Anatomy", MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += (s, e) => showAllVisibleAnatomy();
-
-            undoItem = cameraAngleMenu.addItem("Undo", MenuItemType.Normal);
+            undoItem = window.findWidget("Undo") as Button;
             undoItem.MouseButtonClick += (s, e) => undo();
 
-            redoItem = cameraAngleMenu.addItem("Redo", MenuItemType.Normal);
+            redoItem = window.findWidget("Redo") as Button;
             redoItem.MouseButtonClick += (s, e) => redo();
 
             sceneViewController.ActiveWindowChanged += sceneViewController_ActiveWindowChanged;
             sceneViewController_ActiveWindowChanged(sceneViewController.ActiveWindow);
-        }
-
-        public void Dispose()
-        {
-            Gui.Instance.destroyWidget(cameraAngleMenu);
-        }
-
-        public override void clicked(TaskPositioner taskPositioner)
-        {
-            cameraAngleMenu.setVisibleSmooth(true);
-            LayerManager.Instance.upLayerItem(cameraAngleMenu);
-            IntVector2 loc = taskPositioner.findGoodWindowPosition(cameraAngleMenu.Width, cameraAngleMenu.Height);
-            cameraAngleMenu.setPosition(loc.x, loc.y);
-        }
-
-        public override bool Active
-        {
-            get
-            {
-                return false;
-            }
         }
 
         void setStraightAngleView(Vector3 lookAtMask, Vector3 translationMask)
@@ -102,8 +78,6 @@ namespace Medical.GUI
                 }, MedicalConfig.CameraTransitionTime);
                 activeWindow.pushUndoState(undoPosition);
             }
-
-            cameraAngleMenu.setVisibleSmooth(false);
         }
 
         void setTopBottomView(int direction)
@@ -145,8 +119,6 @@ namespace Medical.GUI
                     activeWindow.pushUndoState(undoPosition);
                 }
             }
-
-            cameraAngleMenu.setVisibleSmooth(false);
         }
 
         void showAllVisibleAnatomy()

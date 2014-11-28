@@ -36,6 +36,8 @@ namespace Medical.GUI
         private DownloadManagerGUI downloadManagerGUI;
         private SequencePlayer sequencePlayer = null;
         private BookmarksGUI bookmarks;
+        private AnatomyLayerManager anatomyLayerManager;
+        private CameraAngleGui cameraAngleGui;
         
         //Controllers
         private BookmarksController bookmarksController;
@@ -52,8 +54,6 @@ namespace Medical.GUI
         private SelectionModeTask selectionModeTask;
         private SelectionOperatorTask selectionOperatorTask;
         private Task downloadsTask;
-        private SetCameraAngleTask setCameraAngle;
-        private ManageLayerStateTask manageLayerState;
 
         public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
         {
@@ -71,8 +71,8 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(bookmarks);
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
-            IDisposableUtil.DisposeIfNotNull(setCameraAngle);
-            IDisposableUtil.DisposeIfNotNull(manageLayerState);
+            IDisposableUtil.DisposeIfNotNull(cameraAngleGui);
+            IDisposableUtil.DisposeIfNotNull(anatomyLayerManager);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             selectionOperatorTask.Dispose();
@@ -149,6 +149,12 @@ namespace Medical.GUI
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager, standaloneController.SceneViewController);
 
+            anatomyLayerManager = new AnatomyLayerManager(standaloneController.LayerController);
+            guiManager.addManagedDialog(anatomyLayerManager);
+
+            cameraAngleGui = new CameraAngleGui(standaloneController.SceneViewController, standaloneController.AnatomyController);
+            guiManager.addManagedDialog(cameraAngleGui);
+
             //Taskbar
             taskbar = new AppButtonTaskbar();
             taskbar.OpenTaskMenu += taskbar_OpenTaskMenu;
@@ -174,11 +180,9 @@ namespace Medical.GUI
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
-            setCameraAngle = new SetCameraAngleTask(standaloneController.SceneViewController, standaloneController.AnatomyController);
-            taskController.addTask(setCameraAngle);
+            taskController.addTask(new MDIDialogOpenTask(cameraAngleGui, "Medical.CameraAngleGui", "Camera Angles", CommonResources.NoIcon, TaskMenuCategories.Navigation));
 
-            manageLayerState = new ManageLayerStateTask(standaloneController.LayerController);
-            taskController.addTask(manageLayerState);
+            taskController.addTask(new MDIDialogOpenTask(anatomyLayerManager, "Medical.AnatomyLayerManager", "Layer Manager", CommonResources.NoIcon, TaskMenuCategories.Navigation));
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Patient, 0));

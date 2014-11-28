@@ -148,6 +148,7 @@
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
     <Compile Include="GUI\BuyScreen\BuyScreen.cs" />
+    <Compile Include="GUI\CameraAngleGui\CameraAngleGui.cs" />
     <Compile Include="GUI\ChooseSceneDialog\ChooseSceneDialog.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadGUIInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadingPanel.cs" />
@@ -160,9 +161,9 @@
     <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
     <Compile Include="Controller\ImageLicenseServer.cs" />
+    <Compile Include="GUI\AnatomyLayerManager\AnatomyLayerManager.cs" />
     <Compile Include="GUI\LicenseDisplay\LicenseDisplay.cs" />
     <Compile Include="GUI\LicenseDisplay\LicenseDisplayManager.cs" />
-    <Compile Include="GUI\ManageLayerStateTask.cs" />
     <Compile Include="GUI\PremiumFeaturesTaskMenuAd.cs" />
     <Compile Include="GUI\Render\LicensePopup.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
@@ -173,7 +174,6 @@
     <Compile Include="GUI\SelectionOperatorChooser\SelectionOperatorTask.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
-    <Compile Include="GUI\SetCameraAngleTask.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFilter.layout">
@@ -181,7 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
     <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
+    <EmbeddedResource Include="GUI\CameraAngleGui\CameraAngleGui.layout" />
     <EmbeddedResource Include="GUI\ChooseSceneDialog\ChooseSceneDialog.layout" />
+    <EmbeddedResource Include="GUI\AnatomyLayerManager\AnatomyLayerManager.layout" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
     <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
     <EmbeddedResource Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.layout" />

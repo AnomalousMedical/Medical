@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCXP" position="98 59 200 219" layer="Overlapped">
+        <Property key="Caption" value="Camera Angles"/>
+        <UserString key="CurrentDockLocation" value="Floating"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <UserString key="PinByDefault" value="false"/>
+        <Widget type="Button" skin="Button" position="0 5 92 33" name="Undo">
+            <Property key="Caption" value="Undo"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="96 5 92 33" name="Redo">
+            <Property key="Caption" value="Redo"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 42 188 33" name="CenterVisible">
+            <Property key="Caption" value="Center Visible Anatomy"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 79 92 33" name="Front">
+            <Property key="Caption" value="Front"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 116 92 33" name="Left">
+            <Property key="Caption" value="Left"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="0 153 92 33" name="Top">
+            <Property key="Caption" value="Top"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="96 79 92 33" name="Back">
+            <Property key="Caption" value="Back"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="96 116 92 33" name="Right">
+            <Property key="Caption" value="Right"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="96 153 92 33" name="Bottom">
+            <Property key="Caption" value="Bottom"/>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
