@@ -9,7 +9,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class AnatomyFinder : MDIDialog
+    public class AnatomyFinder : PinableMDIDialog
     {
         private static readonly int MouseClickWindowOffset = ScaleHelper.Scaled(5);
         private static readonly int ThumbSize = ScaleHelper.Scaled(50);

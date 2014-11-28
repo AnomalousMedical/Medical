@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class DiscControl : FixedSizeMDIDialog
+    class DiscControl : MDIDialog
     {
         private bool allowSynchronization = true;
 

@@ -12,7 +12,7 @@ using FreeImageAPI;
 
 namespace Developer.GUI
 {
-    public class DeveloperRenderPropertiesDialog : FixedSizeMDIDialog
+    public class DeveloperRenderPropertiesDialog : MDIDialog
     {
         private NumericEdit width;
         private NumericEdit height;

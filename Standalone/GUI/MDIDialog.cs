@@ -232,7 +232,7 @@ namespace Medical.GUI
             }
         }
 
-        public virtual void serialize(ConfigFile configFile)
+        public void serialize(ConfigFile configFile)
         {
             if (Serialize)
             {
@@ -241,10 +241,22 @@ namespace Medical.GUI
                 section.setValue("DockLocation", CurrentDockLocation.ToString());
                 section.setValue("Scale", Scale);
                 section.setValue("DockedSize", dockedSize.ToString());
+
+                customSerialize(section, configFile);
             }
         }
 
-        public virtual void deserialize(ConfigFile configFile)
+        /// <summary>
+        /// Save any custom info for this dialog. The passed section is the section for the persistName for this dialog.
+        /// </summary>
+        /// <param name="section">The section for this dialog's persist name.</param>
+        /// <param name="file">The full config file.</param>
+        protected virtual void customSerialize(ConfigSection section, ConfigFile file)
+        {
+
+        }
+
+        public void deserialize(ConfigFile configFile)
         {
             ConfigSection section = configFile.createOrRetrieveConfigSection(persistName);
             loadDockProperties(section);
@@ -271,6 +283,18 @@ namespace Medical.GUI
             {
                 Size = (IntSize2)dockedSize;
             }
+
+            customDeserialize(section, configFile);
+        }
+
+        /// <summary>
+        /// Load any custom info for this dialog. The passed section is the section for the persistName for this dialog.
+        /// </summary>
+        /// <param name="section">The section for this dialog's persist name.</param>
+        /// <param name="file">The full config file.</param>
+        protected virtual void customDeserialize(ConfigSection section, ConfigFile file)
+        {
+
         }
 
         internal override void restoreToMDILayout(MDIWindow mdiWindow, WindowAlignment windowAlignment)
@@ -412,14 +436,6 @@ namespace Medical.GUI
             set
             {
                 window.setSize(value.Width, value.Height);
-            }
-        }
-
-        protected String PersistName
-        {
-            get
-            {
-                return persistName;
             }
         }
 

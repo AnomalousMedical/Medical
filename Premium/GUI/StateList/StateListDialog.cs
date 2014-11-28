@@ -53,9 +53,9 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public override void deserialize(ConfigFile configFile)
+        protected override void customDeserialize(ConfigSection section, ConfigFile configFile)
         {
-            base.deserialize(configFile);
+            base.customDeserialize(section, configFile);
             fixListItemWidth();
         }
 

@@ -10,7 +10,7 @@ using FreeImageAPI;
 
 namespace Medical.GUI
 {
-    public class RenderPropertiesDialog : FixedSizeMDIDialog
+    public class RenderPropertiesDialog : MDIDialog
     {
         private NumericEdit width;
         private NumericEdit height;

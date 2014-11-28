@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="98 59 268 381" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSXP" position="98 59 268 381" layer="Overlapped">
         <Property key="Caption" value="Anatomy Finder"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <UserString key="PinByDefault" value="true"/>
         <Widget type="EditBox" skin="EditBoxClear" position="0 4 235 26" align="HStretch Top" name="SearchBox"/>
         <Widget type="ScrollView" skin="ScrollView" position="0 34 256 314" align="Stretch" name="AnatomyList">
             <Property key="CanvasSize" value="238 10"/>
