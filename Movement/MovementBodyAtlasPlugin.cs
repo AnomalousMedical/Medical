@@ -44,7 +44,7 @@ namespace Medical.Movement
             guiManager.addManagedDialog(movementDialog);
 
             var taskController = standaloneController.TaskController;
-            var movementDialogTask = new MDIDialogOpenTask(movementDialog, "Medical.Movement.MovementDialogTask", "Movement", CommonResources.NoIcon, "Movement");
+            var movementDialogTask = new PinableMDIDialogOpenTask(movementDialog, "Medical.Movement.MovementDialogTask", "Movement", CommonResources.NoIcon, "Movement");
             taskController.addTask(movementDialogTask);
         }
 

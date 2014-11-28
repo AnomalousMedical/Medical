@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Medical.Movement.GUI
 {
-    class MovementDialog : MDIDialog
+    class MovementDialog : PinableMDIDialog
     {
         private MedicalController medicalController;
         private MusclePositionController musclePositionController;
@@ -19,9 +19,6 @@ namespace Medical.Movement.GUI
         CheckButton cSpineFlexExt;
         CheckButton cSpineLateral;
         CheckButton cSpineAxial;
-
-        CheckButton showPinControls;
-        CheckButton showLockControls;
 
         Button undoButton;
         Button redoButton;

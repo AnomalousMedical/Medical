@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="132 108 224 288" layer="Overlapped">
+    <Widget type="Window" skin="WindowCXP" position="132 108 224 288" layer="Overlapped">
         <Property key="Caption" value="Movement"/>
         <Property key="MinSize" value="178 273"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
