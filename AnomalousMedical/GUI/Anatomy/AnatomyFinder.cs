@@ -427,5 +427,10 @@ namespace Medical.GUI
                 updateSearch();
             }
         }
+
+        protected override bool keepOpenFromPoint(int x, int y)
+        {
+            return anatomyFilter.contains(x, y) || base.keepOpenFromPoint(x, y);
+        }
     }
 }

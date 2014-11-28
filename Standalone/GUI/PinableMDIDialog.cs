@@ -15,8 +15,7 @@ namespace Medical.GUI
     /// </summary>
     public class PinableMDIDialog : MDIDialog
     {
-        CheckButton pinButton;
-        private IEnumerable<Widget> childPopups = null;
+        private CheckButton pinButton;
 
         public PinableMDIDialog(String layoutFile)
             :base(layoutFile)
@@ -65,6 +64,11 @@ namespace Medical.GUI
             section.setValue("Pinned", pinButton.Checked);
         }
 
+        protected virtual bool keepOpenFromPoint(int x, int y)
+        {
+            return false;
+        }
+
         private void setupPinButton()
         {
             pinButton = new CheckButton(window.findWidgetChildSkin("PinButton") as Button);
@@ -92,27 +96,9 @@ namespace Medical.GUI
             int bottom = top + window.Height;
             if (x < left || x > right || y < top || y > bottom)
             {
-                if(MDIManager != null && MDIManager.isControlWidgetAtPosition(x, y))
+                if(MDIManager != null && MDIManager.isControlWidgetAtPosition(x, y) || keepOpenFromPoint(x, y))
                 {
                     return;
-                }
-                if (childPopups != null)
-                {
-                    foreach (Widget childWidget in childPopups)
-                    {
-                        if (childWidget.Visible)
-                        {
-                            left = childWidget.AbsoluteLeft;
-                            top = childWidget.AbsoluteTop;
-                            right = left + childWidget.Width;
-                            bottom = top + childWidget.Height;
-                            if (x > left && x < right && y > top && y < bottom)
-                            {
-                                //inside of child. return.
-                                return;
-                            }
-                        }
-                    }
                 }
                 Visible = false;
             }

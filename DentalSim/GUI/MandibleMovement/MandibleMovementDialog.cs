@@ -12,7 +12,7 @@ using Medical;
 
 namespace DentalSim.GUI
 {
-    class MandibleMovementDialog : MDIDialog
+    class MandibleMovementDialog : PinableMDIDialog
     {
         private ControlPointBehavior leftCP;
         private ControlPointBehavior rightCP;

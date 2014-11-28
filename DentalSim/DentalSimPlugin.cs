@@ -48,7 +48,7 @@ namespace DentalSim
 
             taskController.addTask(new ShowToothContactsTask(0));
 
-            MDIDialogOpenTask mandibleMovementTask = new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "DentalSimIcons/ManualMovement", "Dental Simulation", 2);
+            PinableMDIDialogOpenTask mandibleMovementTask = new PinableMDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "DentalSimIcons/ManualMovement", "Dental Simulation", 2);
             taskController.addTask(mandibleMovementTask);
 
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.Eminence", "Eminence", "DentalSimIcons/Eminence", "Dental Simulation", GetType(), "DentalSim.Timeline.", "Eminence.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
