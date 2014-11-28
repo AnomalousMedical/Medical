@@ -210,7 +210,7 @@ namespace Medical.GUI
 
         internal bool isContextWindowAtPoint(int x, int y)
         {
-            if (currentAnatomyWindow != null && currentAnatomyWindow.contains(x, y))
+            if (currentAnatomyWindow != null && currentAnatomyWindow.Visible && currentAnatomyWindow.contains(x, y))
             {
                 return true;
             }

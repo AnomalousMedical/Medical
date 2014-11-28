@@ -88,10 +88,25 @@ namespace Medical.GUI
             {
                 InputManager.Instance.MouseButtonPressed -= InputManager_MouseButtonPressed;
             }
-            else
+            else if(Visible)
             {
                 InputManager.Instance.MouseButtonPressed += InputManager_MouseButtonPressed;
             }
+        }
+
+        protected override void onShown(EventArgs args)
+        {
+            if(!pinButton.Checked)
+            {
+                InputManager.Instance.MouseButtonPressed += InputManager_MouseButtonPressed;
+            }
+            base.onShown(args);
+        }
+
+        protected override void onClosing(DialogCancelEventArgs args)
+        {
+            InputManager.Instance.MouseButtonPressed -= InputManager_MouseButtonPressed;
+            base.onClosing(args);
         }
 
         void InputManager_MouseButtonPressed(int x, int y, MouseButtonCode button)
