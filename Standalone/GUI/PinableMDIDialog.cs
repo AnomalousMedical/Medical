@@ -64,6 +64,12 @@ namespace Medical.GUI
             section.setValue("Pinned", pinButton.Checked);
         }
 
+        /// <summary>
+        /// Determine if this dialog should stay open given that a point was clicked when it is not pinned.
+        /// </summary>
+        /// <param name="x">The x coord.</param>
+        /// <param name="y">The y coord.</param>
+        /// <returns>True to stay open, false to allow close.</returns>
         protected virtual bool keepOpenFromPoint(int x, int y)
         {
             return false;
@@ -94,12 +100,8 @@ namespace Medical.GUI
             int top = window.AbsoluteTop;
             int right = left + window.Width;
             int bottom = top + window.Height;
-            if (x < left || x > right || y < top || y > bottom)
+            if ((x < left || x > right || y < top || y > bottom) && !(MDIManager != null && MDIManager.isControlWidgetAtPosition(x, y) || keepOpenFromPoint(x, y)))
             {
-                if(MDIManager != null && MDIManager.isControlWidgetAtPosition(x, y) || keepOpenFromPoint(x, y))
-                {
-                    return;
-                }
                 Visible = false;
             }
         }

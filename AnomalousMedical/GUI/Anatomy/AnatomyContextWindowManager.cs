@@ -208,6 +208,24 @@ namespace Medical.GUI
             layerController.pushUndoState(currentLayers);
         }
 
+        internal bool isContextWindowAtPoint(int x, int y)
+        {
+            if (currentAnatomyWindow != null && currentAnatomyWindow.contains(x, y))
+            {
+                return true;
+            }
+
+            foreach(var window in pinnedWindows)
+            {
+                if(window.contains(x, y))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         void anatomyController_SelectedAnatomyChanged(AnatomySelection anatomySelection)
         {
             Anatomy anatomy = anatomySelection.Anatomy;

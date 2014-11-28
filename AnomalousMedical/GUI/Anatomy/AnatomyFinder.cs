@@ -430,7 +430,7 @@ namespace Medical.GUI
 
         protected override bool keepOpenFromPoint(int x, int y)
         {
-            return anatomyFilter.contains(x, y) || base.keepOpenFromPoint(x, y);
+            return (anatomyFilter.Visible && anatomyFilter.contains(x, y)) || anatomyWindowManager.isContextWindowAtPoint(x, y) || base.keepOpenFromPoint(x, y);
         }
     }
 }
