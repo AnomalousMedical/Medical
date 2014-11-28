@@ -90,5 +90,10 @@ namespace Medical
                 stopButton.Enabled = false;
             }
         }
+
+        protected override bool keepOpenFromPoint(int x, int y)
+        {
+            return sequenceMenu.contains(x, y) || base.keepOpenFromPoint(x, y);
+        }
     }
 }

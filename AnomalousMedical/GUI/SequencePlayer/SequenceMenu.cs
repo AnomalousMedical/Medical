@@ -48,6 +48,25 @@ namespace Medical
             sequenceMenu.setVisibleSmooth(false);
         }
 
+        public bool contains(int x, int y)
+        {
+            if(sequenceMenu.Visible)
+            {
+                if(sequenceMenu.contains(x, y))
+                {
+                    return true;
+                }
+                foreach(var ctrl in groupMenuCtrls.Values)
+                {
+                    if(ctrl.contains(x, y))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         void sequenceItem_Click(Widget sender, EventArgs e)
         {
             MenuItem item = sender as MenuItem;
