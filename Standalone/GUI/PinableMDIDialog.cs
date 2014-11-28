@@ -80,6 +80,10 @@ namespace Medical.GUI
             int bottom = top + window.Height;
             if (x < left || x > right || y < top || y > bottom)
             {
+                if(MDIManager != null && MDIManager.isControlWidgetAtPosition(x, y))
+                {
+                    return;
+                }
                 if (childPopups != null)
                 {
                     foreach (Widget childWidget in childPopups)

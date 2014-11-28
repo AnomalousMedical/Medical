@@ -565,6 +565,11 @@ namespace Medical.GUI
             return this;
         }
 
+        protected internal override bool isControlWidgetAtPosition(int x, int y)
+        {
+            return false;
+        }
+
         public override void bringToFront()
         {
             LayerManager.Instance.upLayerItem(window);

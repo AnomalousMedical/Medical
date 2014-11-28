@@ -423,6 +423,14 @@ namespace Medical.Controller
             return null;
         }
 
+        protected internal override bool isControlWidgetAtPosition(int x, int y)
+        {
+            return left.isControlWidgetAtPosition(x, y)
+                || right.isControlWidgetAtPosition(x, y)
+                || top.isControlWidgetAtPosition(x, y)
+                || bottom.isControlWidgetAtPosition(x, y);
+        }
+
         public override void setAlpha(float alpha)
         {
             top.setAlpha(alpha);

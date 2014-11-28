@@ -132,6 +132,11 @@ namespace Medical.Controller
             return layoutContainer.findWindowAtPosition(mouseX, mouseY);
         }
 
+        protected internal override bool isControlWidgetAtPosition(int x, int y)
+        {
+            return separator.contains(x, y) || layoutContainer.isControlWidgetAtPosition(x, y);
+        }
+
         public override void bringToFront()
         {
             layoutContainer.bringToFront();

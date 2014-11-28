@@ -37,6 +37,14 @@ namespace Medical.Controller
 
         public abstract MDIWindow findWindowAtPosition(float mouseX, float mouseY);
 
+        /// <summary>
+        /// Find out if there is a control widget at the given position, these are things like MDISeparators.
+        /// </summary>
+        /// <param name="x">The X coord</param>
+        /// <param name="y">The Y coord</param>
+        /// <returns>True if there is a control widget at this position.</returns>
+        protected internal abstract bool isControlWidgetAtPosition(int x, int y);
+
         public DockLocation CurrentDockLocation
         {
             get

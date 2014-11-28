@@ -31,8 +31,6 @@ namespace Medical.Controller
         private MDIBorderContainer rootContainer;
         private MDIWindow activeWindow = null;
 
-        
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -163,6 +161,17 @@ namespace Medical.Controller
             rootContainer.WorkingSize = WorkingSize;
             rootContainer.Location = Location;
             rootContainer.layout();
+        }
+
+        /// <summary>
+        /// Determine is a control widget like a separator bar is at the given coordinates.
+        /// </summary>
+        /// <param name="x">The x coord</param>
+        /// <param name="y">The y coord</param>
+        /// <returns>True if there is a control widget at the given coords and false if not.</returns>
+        internal bool isControlWidgetAtPosition(int x, int y)
+        {
+            return rootContainer.isControlWidgetAtPosition(x, y);
         }
 
         internal StoredMDILayout storeCurrentLayout()

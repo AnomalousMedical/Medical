@@ -126,6 +126,11 @@ namespace Medical.Controller
             return this;
         }
 
+        protected internal override bool isControlWidgetAtPosition(int x, int y)
+        {
+            return false;
+        }
+
         /// <summary>
         /// LayoutContainer property.
         /// </summary>

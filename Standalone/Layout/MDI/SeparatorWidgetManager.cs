@@ -69,6 +69,18 @@ namespace Medical.Controller
             separatorWidgets[index].setCoord(x, y, width, height);
         }
 
+        public bool isControlWidgetAtPosition(int x, int y)
+        {
+            foreach(Widget widget in separatorWidgets)
+            {
+                if(widget.contains(x, y))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         protected abstract void separator_MouseDrag(Widget source, EventArgs e);
 
         protected abstract void separator_MouseButtonPressed(Widget source, EventArgs e);

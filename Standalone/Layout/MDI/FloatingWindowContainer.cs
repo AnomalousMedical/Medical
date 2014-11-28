@@ -40,6 +40,11 @@ namespace Medical.Controller
             return null;
         }
 
+        protected internal override bool isControlWidgetAtPosition(int mouseX, int mouseY)
+        {
+            return false;
+        }
+
         public override void bringToFront()
         {
             

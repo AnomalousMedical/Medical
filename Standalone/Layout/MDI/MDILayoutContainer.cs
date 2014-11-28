@@ -219,6 +219,22 @@ namespace Medical.Controller
             return null;
         }
 
+        protected internal override bool isControlWidgetAtPosition(int x, int y)
+        {
+            if(separatorWidgetManager.isControlWidgetAtPosition(x, y))
+            {
+                return true;
+            }
+            foreach(MDIContainerBase child in children)
+            {
+                if(child.isControlWidgetAtPosition(x, y))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         internal StoredMDILayoutContainer storeCurrentLayout()
         {
             StoredMDILayoutContainer storedLayout = new StoredMDILayoutContainer();
