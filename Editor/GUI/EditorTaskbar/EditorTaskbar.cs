@@ -75,7 +75,7 @@ namespace Medical.GUI
 
         void taskButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            ((Task)source.UserObject).clicked(null);
+            ((Task)source.UserObject).clicked(EmptyTaskPositioner.Instance);
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)

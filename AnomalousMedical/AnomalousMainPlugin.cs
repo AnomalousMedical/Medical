@@ -180,9 +180,9 @@ namespace Medical.GUI
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
-            taskController.addTask(new MDIDialogOpenTask(cameraAngleGui, "Medical.CameraAngleGui", "Camera Angles", CommonResources.NoIcon, TaskMenuCategories.Navigation));
+            taskController.addTask(new PinableMDIDialogOpenTask(cameraAngleGui, "Medical.CameraAngleGui", "Camera Angles", CommonResources.NoIcon, TaskMenuCategories.Navigation));
 
-            taskController.addTask(new MDIDialogOpenTask(anatomyLayerManager, "Medical.AnatomyLayerManager", "Layer Manager", CommonResources.NoIcon, TaskMenuCategories.Navigation));
+            taskController.addTask(new PinableMDIDialogOpenTask(anatomyLayerManager, "Medical.AnatomyLayerManager", "Layer Manager", CommonResources.NoIcon, TaskMenuCategories.Navigation));
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Patient, 0));
@@ -235,7 +235,7 @@ namespace Medical.GUI
             taskController.addTask(renderTask);
 
             //Navigation Section
-            MDIDialogOpenTask anatomyFinderTask = new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "AnomalousMedical/SearchIcon", TaskMenuCategories.Navigation);
+            PinableMDIDialogOpenTask anatomyFinderTask = new PinableMDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "AnomalousMedical/SearchIcon", TaskMenuCategories.Navigation);
             taskController.addTask(anatomyFinderTask);
             Slideshow.AdditionalTasks.addTask(anatomyFinderTask);
 
@@ -306,7 +306,7 @@ namespace Medical.GUI
                 Task commandLineTask = standaloneController.TaskController.getTask(MedicalConfig.StartupTask);
                 if (commandLineTask != null)
                 {
-                    commandLineTask.clicked(null);
+                    commandLineTask.clicked(EmptyTaskPositioner.Instance);
                 }
                 else
                 {
@@ -319,7 +319,7 @@ namespace Medical.GUI
                 Task introTask = standaloneController.TaskController.getTask("DDPlugin.IntroductionTutorial.Task");
                 if (introTask != null)
                 {
-                    introTask.clicked(null);
+                    introTask.clicked(EmptyTaskPositioner.Instance);
                 }
             }
 
@@ -452,7 +452,7 @@ namespace Medical.GUI
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController, standaloneController.MusclePositionController);
             guiManager.addManagedDialog(sequencePlayer);
 
-            MDIDialogOpenTask sequencePlayerTask = new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Tools);
+            PinableMDIDialogOpenTask sequencePlayerTask = new PinableMDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Tools);
             standaloneController.TaskController.addTask(sequencePlayerTask);
 
             //We only care about the first one of these events that fires.
@@ -544,7 +544,7 @@ namespace Medical.GUI
             var downloadGUITask = standaloneController.DownloadController.OpenDownloadGUITask;
             if (downloadGUITask != null)
             {
-                downloadGUITask.clicked(null);
+                downloadGUITask.clicked(EmptyTaskPositioner.Instance);
             }
         }
     }

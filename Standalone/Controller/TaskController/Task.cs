@@ -31,7 +31,9 @@ namespace Medical
         }
 
         /// <summary>
-        /// Called when this item is clicked.
+        /// Called when this item is clicked. If you don't have a TaskPositioner to use send the EmptyTaskPositioner instance,
+        /// don't pass null, creates too many checks. Some tasks will have checked for null, but that is because they are old
+        /// always provide an instance when calling this function.
         /// </summary>
         public abstract void clicked(TaskPositioner taskPositioner);
 

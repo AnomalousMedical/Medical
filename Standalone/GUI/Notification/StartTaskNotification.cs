@@ -17,7 +17,7 @@ namespace Medical.GUI
 
         public override void clicked()
         {
-            task.clicked(null);
+            task.clicked(EmptyTaskPositioner.Instance);
         }
     }
 }

@@ -769,7 +769,7 @@ namespace Medical
                 Task downloadGUITask = downloadController.OpenDownloadGUITask;
                 if (downloadGUITask != null)
                 {
-                    downloadGUITask.clicked(null);
+                    downloadGUITask.clicked(EmptyTaskPositioner.Instance);
                 }
             });
         }

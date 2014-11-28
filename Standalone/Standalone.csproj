@@ -278,8 +278,10 @@
     <Compile Include="Controller\TaskController\ArgumentCallbackTask.cs" />
     <Compile Include="Controller\TaskController\ArgumentTask.cs" />
     <Compile Include="Controller\TaskController\CallbackTaskWithObject.cs" />
+    <Compile Include="Controller\TaskController\PinableMDIDialogOpenTask.cs" />
     <Compile Include="Controller\TaskController\RunMvcContextActionTask.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
+    <Compile Include="Controller\TaskController\EmptyTaskPositioner.cs" />
     <Compile Include="Controller\Timeline\ActionSequencer.cs" />
     <Compile Include="Controller\Tools\MovableObject.cs" />
     <Compile Include="Controller\Tools\MovableObjectTools.cs" />

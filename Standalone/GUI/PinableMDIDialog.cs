@@ -36,6 +36,18 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        public bool Pinned
+        {
+            get
+            {
+                return pinButton.Checked;
+            }
+            set
+            {
+                pinButton.Checked = value;
+            }
+        }
+
         protected override void customDeserialize(ConfigSection section, ConfigFile configFile)
         {
             base.customDeserialize(section, configFile);
