@@ -8,7 +8,7 @@ using Medical.GUI;
 
 namespace Medical
 {
-    public class SequencePlayer : MDIDialog
+    public class SequencePlayer : PinableMDIDialog
     {
         private MovementSequenceController sequenceController;
         private SequenceMenu sequenceMenu;

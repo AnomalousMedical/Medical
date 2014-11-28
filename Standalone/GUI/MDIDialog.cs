@@ -457,6 +457,19 @@ namespace Medical.GUI
                 updateUndockedMinMaxSize();
                 window.MinSize = DOCKED_MIN_SIZE;
                 window.MaxSize = DOCKED_MAX_SIZE;
+
+                switch(newLocation)
+                {
+                    case DockLocation.Left:
+                    case DockLocation.Right:
+                        dockedSize.Width = window.Width;
+                        break;
+
+                    case DockLocation.Top:
+                    case DockLocation.Bottom:
+                        dockedSize.Height = window.Height;
+                        break;
+                }
                 Size = dockedSize;
 
                 window.setActionWidgetsEnabled(false);
