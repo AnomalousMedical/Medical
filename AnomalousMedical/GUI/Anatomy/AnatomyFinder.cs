@@ -309,13 +309,6 @@ namespace Medical.GUI
             return anatomyItem;
         }
 
-        protected override void onShown(EventArgs args)
-        {
-            base.onShown(args);
-            int itemCount = anatomyList.Count;
-            float fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
-        }
-
         private void showBuyMessage()
         {
             if(ShowBuyMessage != null)
