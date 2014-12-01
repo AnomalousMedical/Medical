@@ -36,13 +36,13 @@ namespace Medical.GUI
             this.windowManager = windowManager;
             this.layerController = layerController;
 
-            captionWidget = (Button)window.findWidgetChildSkin("Caption") as Button;
+            captionWidget = window.CaptionWidget as Button;
 
             pinButton = (Button)window.findWidgetChildSkin("PinButton");
             pinButton.MouseButtonClick += new MyGUIEvent(pinButton_MouseButtonClick);
 
             thumbnailImage = (ImageBox)window.findWidget("ThumbnailImage");
-            captionToBorderDelta = window.Width - captionWidget.getTextRegion().Right;// ScaleHelper.Scaled(5);// = widget.Width - anatomyName.Right;
+            captionToBorderDelta = window.Width - captionWidget.getTextRegion().width;
 
             transparencySlider = new AnatomyTransparencySlider((ScrollBar)window.findWidget("TransparencySlider"));
             transparencySlider.RecordUndo += transparencySlider_RecordUndo;

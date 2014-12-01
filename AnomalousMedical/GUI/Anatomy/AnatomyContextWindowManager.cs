@@ -10,8 +10,7 @@ namespace Medical.GUI
 {
     public class AnatomyContextWindowManager : IDisposable
     {
-        private static readonly int ThumbSize = ScaleHelper.Scaled(66);
-        private static readonly int ThumbRenderSize = ThumbSize;
+        private static readonly int ThumbRenderSize = ScaleHelper.Scaled(150);
 
         private AnatomyContextWindow currentAnatomyWindow;
         private SceneViewController sceneViewController;
@@ -133,13 +132,6 @@ namespace Medical.GUI
             //Generate thumbnail
             AxisAlignedBox boundingBox = anatomy.WorldBoundingBox;
             Vector3 center = boundingBox.Center;
-
-            //PROBABLY DON'T NEED THIS, ASPECT IS A SQUARE
-            float aspectRatio = (float)ThumbSize / ThumbSize;
-            if (aspectRatio < 1.0f)
-            {
-                theta *= aspectRatio;
-            }
 
             Vector3 translation = center;
             Vector3 direction = anatomy.PreviewCameraDirection;
