@@ -239,12 +239,15 @@ namespace Medical.GUI
         /// <param name="y"></param>
         internal void showAnatomyFinderFromContextDialog(int x, int y)
         {
-            if(!anatomyFinder.Pinned && anatomyFinder.CurrentDockLocation == DockLocation.Floating)
+            if (!anatomyFinder.Visible)
             {
-                anatomyFinder.Position = new Vector2(x, y);
+                if (!anatomyFinder.Pinned && anatomyFinder.CurrentDockLocation == DockLocation.Floating)
+                {
+                    anatomyFinder.Position = new Vector2(x, y);
+                }
+                anatomyFinder.ensureVisible();
+                anatomyFinder.Visible = true;
             }
-            anatomyFinder.ensureVisible();
-            anatomyFinder.Visible = true;
             anatomyFinder.bringToFront();
         }
     }
