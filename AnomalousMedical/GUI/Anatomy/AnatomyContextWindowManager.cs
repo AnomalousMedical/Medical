@@ -94,6 +94,9 @@ namespace Medical.GUI
                     currentAnatomyWindow.Position = new Vector2(deadzoneLeft - windowWidth, currentAnatomyWindow.Top);
                 }
             }
+
+            currentAnatomyWindow.ensureVisible();
+
             return currentAnatomyWindow;
         }
 
