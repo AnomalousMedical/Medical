@@ -1,28 +1,28 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSXP" position="97 162 259 92" layer="Overlapped">
-        <Widget type="ImageBox" skin="ImageBox" position="0 1 54 54" name="ThumbnailImage">
+    <Widget type="Window" skin="WindowCXP" position="97 162 261 104" layer="Overlapped">
+        <Widget type="ImageBox" skin="ImageBox" position="0 1 57 57" name="ThumbnailImage">
             <Property key="NeedMouse" value="false"/>
             <Property key="NeedKey" value="false"/>
         </Widget>
-        <Widget type="ScrollBar" skin="SliderH" position="102 43 100 16" align="HStretch Top" name="TransparencySlider"/>
-        <Widget type="TextBox" skin="TextBox" position="112 29 78 13" align="HRelative Top">
+        <Widget type="ScrollBar" skin="SliderH" position="84 14 141 24" align="HStretch Top" name="TransparencySlider"/>
+        <Widget type="TextBox" skin="TextBox" position="112 1 78 13" align="HRelative Top">
             <Property key="Caption" value="Transparency"/>
             <Property key="NeedMouse" value="false"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="67 1 71 26" align="HRelative Top" name="CenterButton">
+        <Widget type="Button" skin="Button" position="60 41 92 26" align="HRelative Top" name="CenterButton">
             <Property key="Caption" value="Center"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="146 1 71 26" align="HRelative Top" name="FeatureButton">
+        <Widget type="Button" skin="Button" position="157 41 92 26" align="HRelative Top" name="FeatureButton">
             <Property key="Caption" value="Feature"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="57 30 42 26" name="HideButton">
+        <Widget type="Button" skin="ButtonLeftSkin" position="58 14 24 24" name="HideButton">
             <Property key="Caption" value="Hide"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="205 30 42 26" align="Right Top" name="ShowButton">
+        <Widget type="Button" skin="ButtonRightSkin" position="227 14 24 24" align="Right Top" name="ShowButton">
             <Property key="Caption" value="Show"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 59 248 0" align="HStretch Top" name="CommandScroller">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 71 250 0" align="HStretch Top" name="CommandScroller">
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="VisibleHScroll" value="false"/>
         </Widget>
