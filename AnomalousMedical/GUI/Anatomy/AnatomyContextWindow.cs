@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class AnatomyContextWindow : PopupContainer
+    public class AnatomyContextWindow : Dialog
     {
         private static readonly int MaxScrollerSize = ScaleHelper.Scaled(300);
 
@@ -20,7 +20,7 @@ namespace Medical.GUI
         private IntSize2 windowStartSize;
 
         private ImageBox thumbnailImage;
-        private TextBox anatomyName;
+        private Button captionWidget;
         private AnatomyTransparencySlider transparencySlider;
         int captionToBorderDelta = 0;
         private IntVector2 mouseOffset;
@@ -35,39 +35,33 @@ namespace Medical.GUI
         {
             this.windowManager = windowManager;
             this.layerController = layerController;
-            KeepOpen = true;
 
-            widget.MouseDrag += new MyGUIEvent(widget_MouseDrag);
-            widget.MouseButtonPressed += new MyGUIEvent(widget_MouseButtonPressed);
+            captionWidget = (Button)window.findWidgetChildSkin("Caption") as Button;
 
-            pinButton = (Button)widget.findWidget("PinButton");
+            pinButton = (Button)window.findWidgetChildSkin("PinButton");
             pinButton.MouseButtonClick += new MyGUIEvent(pinButton_MouseButtonClick);
 
-            Button closeButton = (Button)widget.findWidget("CloseButton");
-            closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
+            thumbnailImage = (ImageBox)window.findWidget("ThumbnailImage");
+            captionToBorderDelta = window.Width - captionWidget.getTextRegion().Right;// ScaleHelper.Scaled(5);// = widget.Width - anatomyName.Right;
 
-            thumbnailImage = (ImageBox)widget.findWidget("ThumbnailImage");
-            anatomyName = (TextBox)widget.findWidget("AnatomyName");
-            captionToBorderDelta = widget.Width - anatomyName.Right;
-
-            transparencySlider = new AnatomyTransparencySlider((ScrollBar)widget.findWidget("TransparencySlider"));
+            transparencySlider = new AnatomyTransparencySlider((ScrollBar)window.findWidget("TransparencySlider"));
             transparencySlider.RecordUndo += transparencySlider_RecordUndo;
 
-            windowStartSize = new IntSize2(widget.Width, widget.Height);
+            windowStartSize = new IntSize2(window.Width, window.Height);
 
-            Button centerButton = (Button)widget.findWidget("CenterButton");
+            Button centerButton = (Button)window.findWidget("CenterButton");
             centerButton.MouseButtonClick += new MyGUIEvent(centerMenuItem_MouseButtonClick);
 
-            Button featureButton = (Button)widget.findWidget("FeatureButton");
+            Button featureButton = (Button)window.findWidget("FeatureButton");
             featureButton.MouseButtonClick += new MyGUIEvent(featureButton_MouseButtonClick);
 
-            Button hideButton = (Button)widget.findWidget("HideButton");
+            Button hideButton = (Button)window.findWidget("HideButton");
             hideButton.MouseButtonClick += new MyGUIEvent(hideButton_MouseButtonClick);
 
-            Button showButton = (Button)widget.findWidget("ShowButton");
+            Button showButton = (Button)window.findWidget("ShowButton");
             showButton.MouseButtonClick += new MyGUIEvent(showButton_MouseButtonClick);
 
-            commandScroller = (ScrollView)widget.findWidget("CommandScroller");
+            commandScroller = (ScrollView)window.findWidget("CommandScroller");
         }
 
         public override void Dispose()
@@ -97,17 +91,16 @@ namespace Medical.GUI
                 dynamicWidgets.Clear();
                 layoutContainer.clearChildren();
                 this.anatomy = value;
-                anatomyName.Caption = anatomy.AnatomicalName;
+                window.Caption = anatomy.AnatomicalName;
                 thumbHost = windowManager.getThumbnail(this);
                 int width = windowStartSize.Width;
-                int captionWidth = (int)anatomyName.getTextSize().Width;
-                int totalWidth = captionWidth + anatomyName.Left + captionToBorderDelta;
+                int captionWidth = (int)captionWidget.getTextSize().Width;
+                int totalWidth = captionWidth + captionToBorderDelta;
                 if (totalWidth > width)
                 {
                     width = totalWidth;
                 }
-                widget.setSize(width, windowStartSize.Height);
-                anatomyName.setSize(captionWidth, anatomyName.Height);
+                window.setSize(width, windowStartSize.Height);
                 transparencySlider.clearCommands();
                 var commandPermissions = windowManager.CommandPermissions;
                 foreach (AnatomyCommand command in anatomy.Commands.Where(c => c.allowDisplay(commandPermissions)))
@@ -152,7 +145,7 @@ namespace Medical.GUI
                 }
 
                 commandScroller.setSize(commandScroller.Width, scrollHeight);
-                widget.setSize(width, commandScroller.Bottom + ScaleHelper.Scaled(3));
+                window.setSize(width, window.ClientCoord.top + commandScroller.Bottom + ScaleHelper.Scaled(3));
 
                 desiredSize.Width = commandScroller.Width;
                 commandScroller.CanvasSize = new IntSize2(desiredSize.Width, desiredSize.Height); //Note that the width may have changed.
@@ -173,7 +166,7 @@ namespace Medical.GUI
         {
             windowManager.alertWindowPinned(this);
             pinButton.Selected = true;
-            this.Hidden += new EventHandler(AnatomyContextWindow_Hidden);
+            this.Closed += AnatomyContextWindow_Hidden;
         }
 
         internal void setTextureInfo(string name, IntCoord coord)
@@ -194,7 +187,7 @@ namespace Medical.GUI
         {
             if (pinButton.Selected)
             {
-                this.hide();
+                this.Visible = false;
             }
             else
             {
@@ -226,17 +219,17 @@ namespace Medical.GUI
             layerController.pushUndoState(undoState);
         }
 
-        void widget_MouseButtonPressed(Widget source, EventArgs e)
-        {
-            MouseEventArgs me = (MouseEventArgs)e;
-            mouseOffset = new IntVector2(widget.AbsoluteLeft, widget.AbsoluteTop) - me.Position;
-        }
+        //void widget_MouseButtonPressed(Widget source, EventArgs e)
+        //{
+        //    MouseEventArgs me = (MouseEventArgs)e;
+        //    mouseOffset = new IntVector2(window.AbsoluteLeft, window.AbsoluteTop) - me.Position;
+        //}
 
-        void widget_MouseDrag(Widget source, EventArgs e)
-        {
-            MouseEventArgs me = (MouseEventArgs)e;
-            widget.setPosition(me.Position.x + mouseOffset.x, me.Position.y + mouseOffset.y);
-        }
+        //void widget_MouseDrag(Widget source, EventArgs e)
+        //{
+        //    MouseEventArgs me = (MouseEventArgs)e;
+        //    window.setPosition(me.Position.x + mouseOffset.x, me.Position.y + mouseOffset.y);
+        //}
 
         void AnatomyContextWindow_Hidden(object sender, EventArgs e)
         {
@@ -244,10 +237,10 @@ namespace Medical.GUI
             this.Dispose();
         }
 
-        void closeButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            this.hide();
-        }
+        //void closeButton_MouseButtonClick(Widget source, EventArgs e)
+        //{
+        //    this.hide();
+        //}
 
         /// <summary>
         /// Add a command ui to the window.

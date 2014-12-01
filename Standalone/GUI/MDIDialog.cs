@@ -148,6 +148,21 @@ namespace Medical.GUI
         }
 
         /// <summary>
+        /// Determine if the given point is contained in this PopupContainer.
+        /// </summary>
+        /// <param name="x">The x value to check.</param>
+        /// <param name="y">The y valid to check.</param>
+        /// <returns>True if the point is contained in this container.</returns>
+        public bool contains(int x, int y)
+        {
+            int left = window.AbsoluteLeft;
+            int right = left + window.Width;
+            int top = window.AbsoluteTop;
+            int bottom = top + window.Height;
+            return !(x < left || x > right || y < top || y > bottom);
+        }
+
+        /// <summary>
         /// True if the window is shown, false otherwise. Setting to true will
         /// show the window with the current properties.
         /// </summary>
@@ -396,6 +411,38 @@ namespace Medical.GUI
             {
                 window.setSize(value.Width, value.Height);
                 updateDesiredLocation();
+            }
+        }
+
+        public int Left
+        {
+            get
+            {
+                return window.Left;
+            }
+        }
+
+        public int Top
+        {
+            get
+            {
+                return window.Top;
+            }
+        }
+
+        public int AbsoluteLeft
+        {
+            get
+            {
+                return window.AbsoluteLeft;
+            }
+        }
+
+        public int AbsoluteTop
+        {
+            get
+            {
+                return window.AbsoluteTop;
             }
         }
 

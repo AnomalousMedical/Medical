@@ -66,7 +66,8 @@ namespace Medical.GUI
                 currentAnatomyWindow = new AnatomyContextWindow(this, layerController);
                 currentAnatomyWindow.SmoothShow = true;
             }
-            currentAnatomyWindow.show(position.x, position.y);
+            currentAnatomyWindow.Position = new Vector2(position.x, position.y);
+            currentAnatomyWindow.Visible = true;
             currentAnatomyWindow.Anatomy = anatomy;
             int windowTop = currentAnatomyWindow.Top;
             int windowBottom = windowTop + currentAnatomyWindow.Height;
@@ -87,11 +88,11 @@ namespace Medical.GUI
             {
                 if (windowWidth < RenderManager.Instance.ViewWidth - deadzoneRight)
                 {
-                    currentAnatomyWindow.setPosition(deadzoneRight, currentAnatomyWindow.Top);
+                    currentAnatomyWindow.Position = new Vector2(deadzoneRight, currentAnatomyWindow.Top);
                 }
                 else
                 {
-                    currentAnatomyWindow.setPosition(deadzoneLeft - windowWidth, currentAnatomyWindow.Top);
+                    currentAnatomyWindow.Position = new Vector2(deadzoneLeft - windowWidth, currentAnatomyWindow.Top);
                 }
             }
             return currentAnatomyWindow;
@@ -101,7 +102,7 @@ namespace Medical.GUI
         {
             if (currentAnatomyWindow != null)
             {
-                currentAnatomyWindow.hide();
+                currentAnatomyWindow.Visible = false;
             }
         }
 
