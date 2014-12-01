@@ -16,10 +16,11 @@ namespace Medical
         private String uiText;
         private Action callback;
 
-        public CallbackAnatomyCommand(String uiText, Action callback)
+        public CallbackAnatomyCommand(String uiText, bool showAnatomyFinder, Action callback)
         {
             this.uiText = uiText;
             this.callback = callback;
+            this.ShowAnatomyFinder = showAnatomyFinder;
         }
 
         public override bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref string errorMessage)

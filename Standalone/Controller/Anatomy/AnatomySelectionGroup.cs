@@ -22,7 +22,7 @@ namespace Medical
 
         public AnatomySelectionGroup(IEnumerable<Anatomy> selectedAnatomy)
         {
-            displayContentsCommand = new CallbackAnatomyCommand("Show Selected Items", () =>
+            displayContentsCommand = new CallbackAnatomyCommand("Show Selected Items", true, () =>
             {
                 if (DisplayContents != null)
                 {

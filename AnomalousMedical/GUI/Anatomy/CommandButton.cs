@@ -11,12 +11,14 @@ namespace Medical.GUI
     {
         private Button button;
         private List<AnatomyCommand> commands = new List<AnatomyCommand>();
+        private AnatomyContextWindow window;
 
-        public CommandButton(Widget parentWidget)
+        public CommandButton(Widget parentWidget, AnatomyContextWindow window)
         {
             button = (Button)parentWidget.createWidgetT("Button", "Medical.AnatomyContextWindowCommandButton", 0, 0, parentWidget.Width, ScaleHelper.Scaled(26), Align.Default, "");
             button.MouseButtonClick += button_MouseButtonClick;
             button.ForwardMouseWheelToParent = true;
+            this.window = window;
         }
 
         public override void Dispose()
@@ -63,9 +65,15 @@ namespace Medical.GUI
 
         void button_MouseButtonClick(Widget source, EventArgs e)
         {
+            bool showAnatomyFinder = false;
             foreach (var command in commands)
             {
                 command.execute();
+                showAnatomyFinder |= command.ShowAnatomyFinder;
+            }
+            if(showAnatomyFinder)
+            {
+                window.showAnatomyFinder();
             }
         }
     }

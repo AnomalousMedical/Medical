@@ -55,6 +55,11 @@ namespace Medical
         /// </summary>
         public bool DisplayInGroup { get; set; }
 
+        /// <summary>
+        /// True to auto show the anatomy finder when this command is clicked.
+        /// </summary>
+        public bool ShowAnatomyFinder { get; set; }
+
         public abstract void execute();
 
         public virtual bool allowDisplay(AnatomyCommandPermissions permissions)

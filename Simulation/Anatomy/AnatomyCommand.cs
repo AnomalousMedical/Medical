@@ -121,5 +121,10 @@ namespace Medical
         /// True to display when in a group, false to hide in a group.
         /// </summary>
         bool DisplayInGroup { get; }
+
+        /// <summary>
+        /// True to auto show the anatomy finder when this command is clicked.
+        /// </summary>
+        bool ShowAnatomyFinder { get; }
     }
 }

@@ -407,10 +407,6 @@ namespace Medical.GUI
 
         void anatomyController_SuggestSearchCaption(String caption)
         {
-            if (!Visible)
-            {
-                Visible = true;
-            }
             clearButton.Visible = true;
             searchBox.Caption = caption;
         }

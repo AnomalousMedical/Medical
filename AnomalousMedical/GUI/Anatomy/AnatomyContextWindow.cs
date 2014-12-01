@@ -22,8 +22,7 @@ namespace Medical.GUI
         private ImageBox thumbnailImage;
         private Button captionWidget;
         private AnatomyTransparencySlider transparencySlider;
-        int captionToBorderDelta = 0;
-        private IntVector2 mouseOffset;
+        private int captionToBorderDelta = 0;
 
         private Button pinButton;
 
@@ -120,7 +119,7 @@ namespace Medical.GUI
                                 addCommandUI(command.UIText, commandUI);
                                 break;
                             case AnatomyCommandUIType.Executable:
-                                commandUI = new CommandButton(commandScroller);
+                                commandUI = new CommandButton(commandScroller, this);
                                 addCommandUI(command.UIText, commandUI);
                                 break;
                             case AnatomyCommandUIType.Boolean:
@@ -170,6 +169,11 @@ namespace Medical.GUI
             windowManager.alertWindowPinned(this);
             pinButton.Selected = true;
             this.Closed += AnatomyContextWindow_Hidden;
+        }
+
+        internal void showAnatomyFinder()
+        {
+            windowManager.showAnatomyFinderFromContextDialog(window.AbsoluteLeft + window.Width, window.Top);
         }
 
         internal void setTextureInfo(string name, IntCoord coord)
@@ -224,7 +228,7 @@ namespace Medical.GUI
 
         void anatomyFinderButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            windowManager.showAnatomyFinderFromContextDialog(window.AbsoluteLeft + window.Width, window.Top);
+            showAnatomyFinder();
         }
 
         void AnatomyContextWindow_Hidden(object sender, EventArgs e)
