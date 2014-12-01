@@ -243,6 +243,7 @@ namespace Medical.GUI
             {
                 anatomyFinder.Position = new Vector2(x, y);
             }
+            anatomyFinder.ensureVisible();
             anatomyFinder.Visible = true;
             anatomyFinder.bringToFront();
         }
