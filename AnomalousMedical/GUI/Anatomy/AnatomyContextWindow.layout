@@ -11,10 +11,10 @@
             <Property key="NeedMouse" value="false"/>
             <Property key="TextAlign" value="Center"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="66 41 74 26" align="HRelative Top" name="CenterButton">
+        <Widget type="Button" skin="Button" position="66 41 74 26" align="Left Top" name="CenterButton">
             <Property key="Caption" value="Center"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="144 41 75 26" align="HRelative Top" name="FeatureButton">
+        <Widget type="Button" skin="Button" position="144 41 75 26" align="Right Top" name="FeatureButton">
             <Property key="Caption" value="Feature"/>
         </Widget>
         <Widget type="Button" skin="ButtonLeftBigSkin" position="66 14 18 24" name="HideButton">

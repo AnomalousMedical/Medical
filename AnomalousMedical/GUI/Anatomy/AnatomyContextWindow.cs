@@ -9,12 +9,13 @@ namespace Medical.GUI
 {
     public class AnatomyContextWindow : Dialog
     {
+        private static readonly int PaddingSize = ScaleHelper.Scaled(4);
         private static readonly int MaxScrollerSize = ScaleHelper.Scaled(300);
 
         private AnatomyContextWindowManager windowManager;
         private Anatomy anatomy;
         private Dictionary<String, CommandUIElement> dynamicWidgets = new Dictionary<String, CommandUIElement>();
-        private StretchLayoutContainer layoutContainer = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, ScaleHelper.Scaled(4), new IntVector2(0, 0));
+        private StretchLayoutContainer layoutContainer = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, PaddingSize, new IntVector2(0, 0));
         private LayerController layerController;
 
         private IntSize2 windowStartSize;
@@ -25,6 +26,9 @@ namespace Medical.GUI
         private int captionToBorderDelta = 0;
 
         private Button pinButton;
+        private Button centerButton;
+        private Button featureButton;
+        private Button anatomyFinderButton;
 
         private AnatomyContextWindowLiveThumbHost thumbHost;
         private ScrollView commandScroller;
@@ -48,10 +52,10 @@ namespace Medical.GUI
 
             windowStartSize = new IntSize2(window.Width, window.Height);
 
-            Button centerButton = (Button)window.findWidget("CenterButton");
+            centerButton = (Button)window.findWidget("CenterButton");
             centerButton.MouseButtonClick += new MyGUIEvent(centerMenuItem_MouseButtonClick);
 
-            Button featureButton = (Button)window.findWidget("FeatureButton");
+            featureButton = (Button)window.findWidget("FeatureButton");
             featureButton.MouseButtonClick += new MyGUIEvent(featureButton_MouseButtonClick);
 
             Button hideButton = (Button)window.findWidget("HideButton");
@@ -60,7 +64,7 @@ namespace Medical.GUI
             Button showButton = (Button)window.findWidget("ShowButton");
             showButton.MouseButtonClick += new MyGUIEvent(showButton_MouseButtonClick);
 
-            Button anatomyFinderButton = (Button)window.findWidget("AnatomyFinder");
+            anatomyFinderButton = (Button)window.findWidget("AnatomyFinder");
             anatomyFinderButton.MouseButtonClick +=anatomyFinderButton_MouseButtonClick;
 
             commandScroller = (ScrollView)window.findWidget("CommandScroller");
@@ -161,6 +165,14 @@ namespace Medical.GUI
                 layoutContainer.SuppressLayout = false;
                 layoutContainer.WorkingSize = desiredSize;
                 layoutContainer.layout();
+
+                //special layout for feature and center buttons. They center between the anatomy finder and the thumbnail
+                int centerLeft = thumbnailImage.Right;
+                int featureRight = anatomyFinderButton.Left - PaddingSize;
+                int buttonWidth = (featureRight - centerLeft - PaddingSize) / 2;
+                centerButton.setSize(buttonWidth, centerButton.Height);
+                int featureLeft = centerButton.Right + PaddingSize;
+                featureButton.setCoord(featureLeft, featureButton.Top, featureRight - featureLeft, featureButton.Height);
             }
         }
 
