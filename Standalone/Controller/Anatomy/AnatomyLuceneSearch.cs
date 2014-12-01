@@ -117,17 +117,25 @@ namespace Medical
         /// </summary>
         /// <param name="name">The name to give the group.</param>
         /// <param name="facets">The facets to build the group with.</param>
-        /// <returns>A new AnatomyGroup based on the search results.</returns>
+        /// <returns>A new AnatomyGroup based on the search results. Will return null if there are no results.</returns>
         public AnatomyGroup buildGroupFromFacets(String name, IEnumerable<AnatomyFacet> facets)
         {
             Query query = buildQuery(null, facets);
             TopDocs results = searcher.Search(query, int.MaxValue);
-            AnatomyGroup group = new AnatomyGroup(name);
-            foreach (var scoreDoc in results.ScoreDocs)
+            AnatomyGroup group = null;
+            if (results.TotalHits > 0)
             {
-                var doc = searcher.Doc(scoreDoc.Doc);
-                int index = BitConverter.ToInt32(doc.GetBinaryValue("DataIndex"), 0);
-                group.addAnatomy(anatomyList[index]);
+                group = new AnatomyGroup(name);
+                foreach (var scoreDoc in results.ScoreDocs)
+                {
+                    var doc = searcher.Doc(scoreDoc.Doc);
+                    int index = BitConverter.ToInt32(doc.GetBinaryValue("DataIndex"), 0);
+                    group.addAnatomy(anatomyList[index]);
+                }
+                group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", true, () =>
+                {
+                    anatomyController.displayAnatomy(String.Format("{0} Anatomy", group.AnatomicalName), group.SelectableAnatomy, SuggestedDisplaySortMode.Alphabetical);
+                }));
             }
             return group;
         }
