@@ -14,7 +14,7 @@ namespace Medical.GUI
         private AnatomyContextWindowManager windowManager;
         private Anatomy anatomy;
         private Dictionary<String, CommandUIElement> dynamicWidgets = new Dictionary<String, CommandUIElement>();
-        private StretchLayoutContainer layoutContainer = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, 5, new IntVector2(0, 0));
+        private StretchLayoutContainer layoutContainer = new StretchLayoutContainer(StretchLayoutContainer.LayoutType.Vertical, ScaleHelper.Scaled(4), new IntVector2(0, 0));
         private LayerController layerController;
 
         private IntSize2 windowStartSize;

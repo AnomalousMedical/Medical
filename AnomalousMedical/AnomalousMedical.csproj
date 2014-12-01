@@ -268,7 +268,9 @@
     <EmbeddedResource Include="Resources\AnatomyFinderIcons%402x.png" />
     <EmbeddedResource Include="Resources\AnatomyFinderIcons%402x.xml" />
     <EmbeddedResource Include="Resources\AnomalousMedical_MyGUI_Layer.xml" />
-    <EmbeddedResource Include="Resources\MainPlugin_MyGUI_Skin.xml" />
+    <EmbeddedResource Include="Resources\MainPlugin_MyGUI_Skin.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

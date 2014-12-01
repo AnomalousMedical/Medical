@@ -15,7 +15,8 @@ namespace Medical.GUI
 
         public CommandButton(Widget parentWidget, AnatomyContextWindow window)
         {
-            button = (Button)parentWidget.createWidgetT("Button", "Medical.AnatomyContextWindowCommandButton", 0, 0, parentWidget.Width, ScaleHelper.Scaled(26), Align.Default, "");
+            //Note that the height on this button is weird and must be set 3 pixels larger than the actual desired size, the cause of this is unknown
+            button = (Button)parentWidget.createWidgetT("Button", "Medical.AnatomyContextWindowCommandButton", 0, 0, parentWidget.Width, ScaleHelper.Scaled(29), Align.Default, "");
             button.MouseButtonClick += button_MouseButtonClick;
             button.ForwardMouseWheelToParent = true;
             this.window = window;
