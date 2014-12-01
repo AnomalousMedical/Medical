@@ -6,9 +6,10 @@
             <Property key="NeedKey" value="false"/>
         </Widget>
         <Widget type="ScrollBar" skin="SliderH" position="87 14 141 24" align="HStretch Top" name="TransparencySlider"/>
-        <Widget type="TextBox" skin="TextBox" position="112 1 78 13" align="HRelative Top">
+        <Widget type="TextBox" skin="TextBox" position="66 1 183 13" align="HStretch Top">
             <Property key="Caption" value="Transparency"/>
             <Property key="NeedMouse" value="false"/>
+            <Property key="TextAlign" value="Center"/>
         </Widget>
         <Widget type="Button" skin="Button" position="66 41 89 26" align="HRelative Top" name="CenterButton">
             <Property key="Caption" value="Center"/>
