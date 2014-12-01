@@ -11,10 +11,10 @@
             <Property key="NeedMouse" value="false"/>
             <Property key="TextAlign" value="Center"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="66 41 89 26" align="HRelative Top" name="CenterButton">
+        <Widget type="Button" skin="Button" position="66 41 74 26" align="HRelative Top" name="CenterButton">
             <Property key="Caption" value="Center"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="160 41 89 26" align="HRelative Top" name="FeatureButton">
+        <Widget type="Button" skin="Button" position="144 41 75 26" align="HRelative Top" name="FeatureButton">
             <Property key="Caption" value="Feature"/>
         </Widget>
         <Widget type="Button" skin="ButtonLeftBigSkin" position="66 14 18 24" name="HideButton">
@@ -26,6 +26,9 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 71 250 0" align="HStretch Top" name="CommandScroller">
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="VisibleHScroll" value="false"/>
+        </Widget>
+        <Widget type="Button" skin="Medical.AnatomyContextWindowSearchButton" position="223 41 26 26" align="Right Top" name="AnatomyFinder">
+            <Property key="ImageResource" value="AnomalousMedical/SearchIcon"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>

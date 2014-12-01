@@ -80,10 +80,10 @@ namespace Medical.GUI
             int deadzoneRight = deadZone.Right;
 
             //Check to see if the window is in the dead zone.
-            if (((windowTop > deadzoneTop && windowTop < deadzoneBottom) ||
-                (windowBottom > deadzoneTop && windowBottom < deadzoneBottom)) &&
-                ((windowLeft > deadzoneLeft && windowLeft < deadzoneRight) ||
-                (windowRight > deadzoneLeft && windowRight < deadzoneRight)))
+            if (((windowTop >= deadzoneTop && windowTop <= deadzoneBottom) ||
+                (windowBottom >= deadzoneTop && windowBottom <= deadzoneBottom)) &&
+                ((windowLeft >= deadzoneLeft && windowLeft <= deadzoneRight) ||
+                (windowRight >= deadzoneLeft && windowRight <= deadzoneRight)))
             {
                 if (windowWidth < RenderManager.Instance.ViewWidth - deadzoneRight)
                 {
@@ -230,6 +230,21 @@ namespace Medical.GUI
             {
                 closeUnpinnedWindow();
             }
+        }
+
+        /// <summary>
+        /// Callback from a context dialog to show the anatomy finder if its show button was pressed.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        internal void showAnatomyFinderFromContextDialog(int x, int y)
+        {
+            if(!anatomyFinder.Pinned && anatomyFinder.CurrentDockLocation == DockLocation.Floating)
+            {
+                anatomyFinder.Position = new Vector2(x, y);
+            }
+            anatomyFinder.Visible = true;
+            anatomyFinder.bringToFront();
         }
     }
 }

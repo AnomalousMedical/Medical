@@ -61,6 +61,9 @@ namespace Medical.GUI
             Button showButton = (Button)window.findWidget("ShowButton");
             showButton.MouseButtonClick += new MyGUIEvent(showButton_MouseButtonClick);
 
+            Button anatomyFinderButton = (Button)window.findWidget("AnatomyFinder");
+            anatomyFinderButton.MouseButtonClick +=anatomyFinderButton_MouseButtonClick;
+
             commandScroller = (ScrollView)window.findWidget("CommandScroller");
         }
 
@@ -219,28 +222,16 @@ namespace Medical.GUI
             layerController.pushUndoState(undoState);
         }
 
-        //void widget_MouseButtonPressed(Widget source, EventArgs e)
-        //{
-        //    MouseEventArgs me = (MouseEventArgs)e;
-        //    mouseOffset = new IntVector2(window.AbsoluteLeft, window.AbsoluteTop) - me.Position;
-        //}
-
-        //void widget_MouseDrag(Widget source, EventArgs e)
-        //{
-        //    MouseEventArgs me = (MouseEventArgs)e;
-        //    window.setPosition(me.Position.x + mouseOffset.x, me.Position.y + mouseOffset.y);
-        //}
+        void anatomyFinderButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            windowManager.showAnatomyFinderFromContextDialog(window.AbsoluteLeft + window.Width, window.Top);
+        }
 
         void AnatomyContextWindow_Hidden(object sender, EventArgs e)
         {
             windowManager.alertPinnedWindowClosed(this);
             this.Dispose();
         }
-
-        //void closeButton_MouseButtonClick(Widget source, EventArgs e)
-        //{
-        //    this.hide();
-        //}
 
         /// <summary>
         /// Add a command ui to the window.

@@ -129,7 +129,7 @@ namespace Medical.GUI
         {
             get
             {
-                if (window.Visible)
+                if (window.Visible && window.Alpha >= 0.999f)
                 {
                     return new IntCoord(window.Left, window.Top, window.Width, window.Height);
                 }

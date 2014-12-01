@@ -112,6 +112,36 @@ Medical.AnatomyContextWindowCommandButton
   </Resource>
 
   <!--*************************
+Medical.AnatomyContextWindowSearchButton
+*****************************-->
+  <Resource type="ResourceSkin" name = "Medical.AnatomyContextWindowSearchButton" size = "23 23" texture = "#{Anomalous_Theme_Texture}">
+    <Property key="FontName" value = "Default" />
+    <Property key="TextAlign" value = "Left VCenter" />
+    <Child type="ImageBox" skin="ButtonStaticImage" offset = "0 0 23 23" align = "Center" name = "Image"/>
+    <BasisSkin type="SimpleText" offset = "39 1 68 122" align = "HStretch VStretch">
+      <State name="disabled" colour="#{Anomalous_Button_Text_Disabled}" shift = "false"/>
+      <State name="normal" colour="#{Anomalous_Button_Text_Normal}" shift = "false"/>
+      <State name="highlighted" colour="#{Anomalous_Button_Text_Highlighted}" shift = "false"/>
+      <State name="pushed" colour="#{Anomalous_Button_Text_Pushed}" shift = "true"/>
+      <State name="disabled_checked" colour="#{Anomalous_Button_Text_DisabledChecked}" shift = "true"/>
+      <State name="normal_checked" colour="#{Anomalous_Button_Text_NormalChecked}" shift = "true"/>
+      <State name="highlighted_checked" colour="#{Anomalous_Button_Text_HighlightedChecked}" shift = "true"/>
+      <State name="pushed_checked" colour="#{Anomalous_Button_Text_PushedChecked}" shift = "true"/>
+    </BasisSkin>
+    <!--Center-->
+    <BasisSkin type="SubSkin" offset = "0 0 23 23" align = "Stretch">
+      <State name="disabled" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Disabled}"/>
+      <State name="normal" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Normal}"/>
+      <State name="highlighted" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Highlighted}"/>
+      <State name="pushed" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Pushed}"/>
+      <State name="disabled_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_DisabledChecked}"/>
+      <State name="normal_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_NormalChecked}"/>
+      <State name="highlighted_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_HighlightedChecked}"/>
+      <State name="pushed_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_PushedChecked}"/>
+    </BasisSkin>
+  </Resource>
+
+  <!--*************************
 Medical.BookmarkListIconButtonButton
 *****************************-->
   <Resource type="ResourceSkin" name = "Medical.BookmarkListIconButtonButton" size = "122 122" texture = "#{Anomalous_Theme_Texture}">
