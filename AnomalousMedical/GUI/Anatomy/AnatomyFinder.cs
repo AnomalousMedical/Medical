@@ -402,7 +402,7 @@ namespace Medical.GUI
 
         void filter_MouseButtonClick(Widget source, EventArgs e)
         {
-            anatomyFilter.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+            anatomyFilter.show(source.AbsoluteLeft + source.Width, source.AbsoluteTop);
         }
 
         void anatomyController_SuggestSearchCaption(String caption)

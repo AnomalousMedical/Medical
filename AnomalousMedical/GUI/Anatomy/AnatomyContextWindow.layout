@@ -5,7 +5,7 @@
             <Property key="NeedMouse" value="false"/>
             <Property key="NeedKey" value="false"/>
         </Widget>
-        <Widget type="ScrollBar" skin="SliderH" position="90 14 137 24" align="HStretch Top" name="TransparencySlider"/>
+        <Widget type="ScrollBar" skin="SliderH" position="87 14 141 24" align="HStretch Top" name="TransparencySlider"/>
         <Widget type="TextBox" skin="TextBox" position="112 1 78 13" align="HRelative Top">
             <Property key="Caption" value="Transparency"/>
             <Property key="NeedMouse" value="false"/>
@@ -16,10 +16,10 @@
         <Widget type="Button" skin="Button" position="160 41 89 26" align="HRelative Top" name="FeatureButton">
             <Property key="Caption" value="Feature"/>
         </Widget>
-        <Widget type="Button" skin="ButtonLeftSkin" position="66 14 24 24" name="HideButton">
+        <Widget type="Button" skin="ButtonLeftBigSkin" position="66 14 18 24" name="HideButton">
             <Property key="Caption" value="Hide"/>
         </Widget>
-        <Widget type="Button" skin="ButtonRightSkin" position="227 14 24 24" align="Right Top" name="ShowButton">
+        <Widget type="Button" skin="ButtonRightBigSkin" position="231 14 18 24" align="Right Top" name="ShowButton">
             <Property key="Caption" value="Show"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 71 250 0" align="HStretch Top" name="CommandScroller">

@@ -5,7 +5,7 @@
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <UserString key="PinByDefault" value="true"/>
-        <Widget type="EditBox" skin="EditBoxClear" position="0 4 235 26" align="HStretch Top" name="SearchBox"/>
+        <Widget type="EditBox" skin="EditBoxClear" position="0 4 237 26" align="HStretch Top" name="SearchBox"/>
         <Widget type="ScrollView" skin="ScrollView" position="0 34 256 314" align="Stretch" name="AnatomyList">
             <Property key="CanvasSize" value="238 10"/>
             <Property key="CanvasAlign" value="Left Top"/>
@@ -14,7 +14,7 @@
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
-        <Widget type="Button" skin="ButtonDownSkin" position="236 8 20 20" align="Right Top" name="Filter">
+        <Widget type="Button" skin="ButtonRightBigSkin" position="240 5 16 24" align="Right Top" name="Filter">
             <Property key="Caption" value="Filter"/>
         </Widget>
     </Widget>
