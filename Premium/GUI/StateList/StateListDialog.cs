@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class StateListDialog : MDIDialog
+    public class StateListDialog : PinableMDIDialog
     {
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new IntSize2(100, 100));
         private SingleSelectButtonGrid stateListBox;

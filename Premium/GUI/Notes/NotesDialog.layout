@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="89 65 223 400" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSXP" position="89 65 223 400" layer="Overlapped">
         <Property key="Visible" value="true"/>
         <Property key="Caption" value="Notes"/>
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <UserString key="PinByDefault" value="true"/>
         <Widget type="TextBox" skin="TextBox" position="0 4 109 15">
             <Property key="Caption" value="Distortion Name"/>
         </Widget>

@@ -89,10 +89,10 @@ namespace Medical
             saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
             taskController.addTask(saveAsTaskItem);
 
-            MDIDialogOpenTask statesTask = new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "PremiumFeatures/StatesIcon", TaskMenuCategories.Patient);
+            PinableMDIDialogOpenTask statesTask = new PinableMDIDialogOpenTask(stateList, "Medical.StateList", "States", "PremiumFeatures/StatesIcon", TaskMenuCategories.Patient);
             taskController.addTask(statesTask);
 
-            MDIDialogOpenTask notesTask = new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "PremiumFeatures/NotesIcon", TaskMenuCategories.Patient);
+            PinableMDIDialogOpenTask notesTask = new PinableMDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "PremiumFeatures/NotesIcon", TaskMenuCategories.Patient);
             taskController.addTask(notesTask);
 
             taskController.addTask(new ChangeBackgroundColorTask(standaloneController.SceneViewController));
