@@ -9,6 +9,7 @@
             <UserString key="ItemHeight" value="54"/>
             <UserString key="ItemWidth" value="100"/>
             <UserString key="GroupCaptionSkin" value="Medical.TaskMenuCategoryText"/>
+            <UserString key="GroupSeparatorSkin" value="SeparatorInverseSkin"/>
             <UserString key="GroupPaddingY" value="11"/>
         </Widget>
         <Widget type="Button" skin="Medical.TaskMenuTopLevelCategoryButton" position="2 11 66 22" name="Tasks">
@@ -25,6 +26,7 @@
             <UserString key="ItemHeight" value="54"/>
             <UserString key="ItemWidth" value="100"/>
             <UserString key="GroupCaptionSkin" value="Medical.TaskMenuCategoryText"/>
+            <UserString key="GroupSeparatorSkin" value="SeparatorInverseSkin"/>
             <UserString key="GroupPaddingY" value="11"/>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="554 10 24 20" align="Right Top" name="CloseButton"/>
