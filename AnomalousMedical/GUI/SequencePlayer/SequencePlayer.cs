@@ -93,7 +93,7 @@ namespace Medical
 
         protected override bool keepOpenFromPoint(int x, int y)
         {
-            return sequenceMenu.contains(x, y) || base.keepOpenFromPoint(x, y);
+            return (sequenceMenu.Visible && sequenceMenu.contains(x, y)) || base.keepOpenFromPoint(x, y);
         }
     }
 }

@@ -8,102 +8,38 @@ using Medical.Muscles;
 
 namespace Medical
 {
-    class SequenceMenu : IDisposable
+    class SequenceMenu : PopupContainer
     {
         private MovementSequenceController sequenceController;
-        private PopupMenu sequenceMenu;
-        private Dictionary<MovementSequenceGroup, MenuControl> groupMenuCtrls = new Dictionary<MovementSequenceGroup, MenuControl>();
+        private ButtonGrid buttonGrid;
 
         public SequenceMenu(MovementSequenceController sequenceController)
+            :base("Medical.GUI.SequencePlayer.SequenceMenu.layout")
         {
             this.sequenceController = sequenceController;
 
-            sequenceController.GroupAdded += new MovementSequenceGroupEvent(sequenceController_GroupAdded);
-            sequenceController.SequenceAdded += new MovementSequenceInfoEvent(sequenceController_SequenceAdded);
+            sequenceController.SequenceAdded += sequenceController_SequenceAdded;
 
-            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
-            sequenceMenu.Visible = false;
+            buttonGrid = new ButtonGrid(widget as ScrollView, new SingleSelectionStrategy(), new ButtonGridListLayout());
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            if (sequenceMenu != null)
-            {
-                Gui.Instance.destroyWidget(sequenceMenu);
-            }
-        }
-
-        public void show(int left, int top)
-        {
-            if (sequenceMenu != null)
-            {
-                sequenceMenu.setVisibleSmooth(true);
-                LayerManager.Instance.upLayerItem(sequenceMenu);
-                sequenceMenu.setPosition(left, top);
-            }
-        }
-
-        public void hide()
-        {
-            sequenceMenu.setVisibleSmooth(false);
-        }
-
-        public bool contains(int x, int y)
-        {
-            if(sequenceMenu.Visible)
-            {
-                if(sequenceMenu.contains(x, y))
-                {
-                    return true;
-                }
-                foreach(var ctrl in groupMenuCtrls.Values)
-                {
-                    if(ctrl.contains(x, y))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        void sequenceItem_Click(Widget sender, EventArgs e)
-        {
-            MenuItem item = sender as MenuItem;
-            if (item != null)
-            {
-                MovementSequence sequence = sequenceController.loadSequence((MovementSequenceInfo)item.UserObject);
-                sequenceController.stopPlayback();
-                sequenceController.CurrentSequence = sequence;
-                sequenceController.playCurrentSequence();
-            }
-            sequenceMenu.setVisibleSmooth(false);
+            buttonGrid.Dispose();
+            base.Dispose();
         }
 
         void sequenceController_SequenceAdded(MovementSequenceController controller, MovementSequenceGroup group, MovementSequenceInfo sequenceInfo)
         {
-            MenuControl groupItemChild;
-            groupMenuCtrls.TryGetValue(group, out groupItemChild);
-            //Double check that we have the group.
-            if (groupItemChild == null)
-            {
-                sequenceController_GroupAdded(controller, group);
-                groupItemChild = groupMenuCtrls[group];
-            }
-
-            MenuItem sequenceItem = groupItemChild.addItem(sequenceInfo.Name, MenuItemType.Normal);
-            sequenceItem.MouseButtonClick += sequenceItem_Click;
-            sequenceItem.UserObject = sequenceInfo;
-            sequenceItem.ImageBox.setItemResource("SequenceToolstrip/Sequence");
-            sequenceItem.ImageBox.setItemGroup("Icons");
-            sequenceItem.ImageBox.setItemName("Icon");
-        }
-
-        void sequenceController_GroupAdded(MovementSequenceController controller, MovementSequenceGroup group)
-        {
-            MenuItem groupItem = sequenceMenu.addItem(group.Name, MenuItemType.Popup);
-            MenuControl groupItemChild = groupItem.createItemChild();
-            groupMenuCtrls.Add(group, groupItemChild);
+            ButtonGridItem item = buttonGrid.addItem(group.Name, sequenceInfo.Name);
+            item.ItemClicked += (s, e) =>
+                {
+                    MovementSequence sequence = sequenceController.loadSequence(sequenceInfo);
+                    sequenceController.stopPlayback();
+                    sequenceController.CurrentSequence = sequence;
+                    sequenceController.playCurrentSequence();
+                    this.hide();
+                };
         }
     }
 }

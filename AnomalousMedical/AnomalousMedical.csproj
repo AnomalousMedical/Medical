@@ -187,6 +187,9 @@
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
     <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
     <EmbeddedResource Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.layout" />
+    <EmbeddedResource Include="GUI\SequencePlayer\SequenceMenu.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MvcContexts\Login\Index.rml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="ScrollView" skin="ScrollView" position="18 9 245 480" layer="Overlapped">
+        <Property key="CanvasAlign" value="Left Top"/>
+        <Property key="VisibleVScroll" value="true"/>
+        <Property key="CanvasSize" value="188, 207"/>
+        <Property key="VisibleHScroll" value="false"/>
+        <UserString key="ButtonSkin" value="Medical.SequenceListItem"/>
+        <UserString key="ItemHeight" value="50"/>
+        <UserString key="ItemWidth" value="245"/>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
