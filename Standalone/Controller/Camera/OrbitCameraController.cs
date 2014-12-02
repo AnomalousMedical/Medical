@@ -264,7 +264,7 @@ namespace Medical
                 //If the camera is currently moving the final positions are not yet recorded so do that now.
                 if (automaticMovement)
                 {
-                    computeStartingValues(translation - this.lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
+                    computeStartingValues(this.translation - this.lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
                 }
 
                 //Starting position
