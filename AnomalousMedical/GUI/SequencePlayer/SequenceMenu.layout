@@ -6,7 +6,7 @@
         <Property key="CanvasSize" value="188, 207"/>
         <Property key="VisibleHScroll" value="false"/>
         <UserString key="ButtonSkin" value="Medical.SequenceListItem"/>
-        <UserString key="ItemHeight" value="50"/>
+        <UserString key="ItemHeight" value="35"/>
         <UserString key="ItemWidth" value="245"/>
     </Widget>
     <CodeGeneratorSettings/>
