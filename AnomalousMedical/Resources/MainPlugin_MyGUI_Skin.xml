@@ -216,44 +216,4 @@ Medical.BookmarkListIconButtonButton
     </Border>
   </Resource>
 
-  <!--*************************
-Medical.SequenceListItem
-*****************************-->
-  <Resource type="ResourceSkin" name = "Medical.SequenceListItem" size = "75 52" texture = "#{Anomalous_Theme_Texture}">
-    <Property key="FontName" value = "Default" />
-    <Property key="TextAlign" value = "Left VCenter" />
-    <BasisSkin type="SimpleText" offset = "3 1 70 50" align = "HStretch VStretch">
-      <State name="disabled" colour="#{Anomalous_ListItem_Text_Disabled}" shift = "false"/>
-      <State name="normal" colour="#{Anomalous_ListItem_Text_Normal}" shift = "false"/>
-      <State name="highlighted" colour="#{Anomalous_ListItem_Text_Highlighted}" shift = "false"/>
-      <State name="pushed" colour="#{Anomalous_ListItem_Text_Pushed}" shift = "false"/>
-      <State name="disabled_checked" colour="#{Anomalous_ListItem_Text_DisabledChecked}" shift = "false"/>
-      <State name="normal_checked" colour="#{Anomalous_ListItem_Text_NormalChecked}" shift = "false"/>
-      <State name="highlighted_checked" colour="#{Anomalous_ListItem_Text_HighlightedChecked}" shift = "false"/>
-      <State name="pushed_checked" colour="#{Anomalous_ListItem_Text_PushedChecked}" shift = "false"/>
-    </BasisSkin>
-    <!--Middle-->
-    <BasisSkin type="SubSkin" offset = "0 0 75 52" align = "HStretch VStretch">
-      <State name="disabled" offsetNamed="Anomalous_Invisible_Coord"/>
-      <State name="normal" offsetNamed="Anomalous_Invisible_Coord"/>
-      <State name="highlighted" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_Highlighted}"/>
-      <State name="pushed" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_Pushed}"/>
-      <State name="disabled_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_DisabledChecked}"/>
-      <State name="normal_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_NormalChecked}"/>
-      <State name="highlighted_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_HighlightedChecked}"/>
-      <State name="pushed_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_PushedChecked}"/>
-    </BasisSkin>
-    <!-- Border -->
-    <Border width="1">
-      <State name="disabled" offsetNamed="Anomalous_Invisible_Coord"/>
-      <State name="normal" offsetNamed="Anomalous_Invisible_Coord"/>
-      <State name="highlighted" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_Highlighted}"/>
-      <State name="pushed" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_Pushed}"/>
-      <State name="disabled_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_DisabledChecked}"/>
-      <State name="normal_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_NormalChecked}"/>
-      <State name="highlighted_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_HighlightedChecked}"/>
-      <State name="pushed_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Border_PushedChecked}"/>
-    </Border>
-  </Resource>
-
 </MyGUI>

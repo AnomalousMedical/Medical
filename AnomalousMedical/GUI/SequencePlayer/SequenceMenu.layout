@@ -5,7 +5,7 @@
         <Property key="VisibleVScroll" value="true"/>
         <Property key="CanvasSize" value="188, 207"/>
         <Property key="VisibleHScroll" value="false"/>
-        <UserString key="ButtonSkin" value="Medical.SequenceListItem"/>
+        <UserString key="ButtonSkin" value="ButtonGridListButton"/>
         <UserString key="ItemHeight" value="35"/>
         <UserString key="ItemWidth" value="245"/>
     </Widget>
