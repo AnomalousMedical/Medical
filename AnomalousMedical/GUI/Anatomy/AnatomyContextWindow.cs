@@ -23,7 +23,8 @@ namespace Medical.GUI
         private ImageBox thumbnailImage;
         private Button captionWidget;
         private AnatomyTransparencySlider transparencySlider;
-        private int captionToBorderDelta = 0;
+        private int captionToBorderDelta;
+        private int windowBottomPaddingSize;
 
         private Button pinButton;
         private Button centerButton;
@@ -46,6 +47,8 @@ namespace Medical.GUI
 
             thumbnailImage = (ImageBox)window.findWidget("ThumbnailImage");
             captionToBorderDelta = window.Width - captionWidget.getTextRegion().width;
+            IntCoord clientCoord = window.ClientCoord;
+            windowBottomPaddingSize = window.Height - clientCoord.top - clientCoord.height;
 
             transparencySlider = new AnatomyTransparencySlider((ScrollBar)window.findWidget("TransparencySlider"));
             transparencySlider.RecordUndo += transparencySlider_RecordUndo;
@@ -151,16 +154,13 @@ namespace Medical.GUI
                 }
 
                 commandScroller.setSize(commandScroller.Width, scrollHeight);
-                window.setSize(width, window.ClientCoord.top + commandScroller.Bottom + ScaleHelper.Scaled(3));
+                window.setSize(width, window.ClientCoord.top + commandScroller.Bottom + windowBottomPaddingSize);
 
                 desiredSize.Width = commandScroller.Width;
                 commandScroller.CanvasSize = new IntSize2(desiredSize.Width, desiredSize.Height); //Note that the width may have changed.
 
-                var viewCoord = commandScroller.ViewCoord;
-                if (viewCoord.width < desiredSize.Width)
-                {
-                    desiredSize.Width = commandScroller.ViewCoord.width - ScaleHelper.Scaled(2);
-                }
+                //Line the buttons up with the anatomy finder button's right side.
+                desiredSize.Width = anatomyFinderButton.Right;
 
                 layoutContainer.SuppressLayout = false;
                 layoutContainer.WorkingSize = desiredSize;
