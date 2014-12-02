@@ -20,7 +20,7 @@ namespace Medical
 
             sequenceController.SequenceAdded += sequenceController_SequenceAdded;
 
-            buttonGrid = new ButtonGrid(widget as ScrollView, new SingleSelectionStrategy(), new ButtonGridListLayout(), new ButtonGridItemNaturalSort(), null, new VerticalButtonGridCaptionFactory());
+            buttonGrid = new ButtonGrid(widget as ScrollView, new SingleSelectionStrategy(), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
         }
 
         public override void Dispose()

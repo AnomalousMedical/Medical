@@ -8,6 +8,7 @@
         <UserString key="ButtonSkin" value="ButtonGridListButton"/>
         <UserString key="ItemHeight" value="35"/>
         <UserString key="ItemWidth" value="245"/>
+        <UserString key="CaptionType" value="Vertical"/>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>
