@@ -96,7 +96,7 @@ namespace Medical.Controller
 
         private bool currentlyInMotion;
         private EventManager eventManager;
-        private MouseTravelTracker travelTracker = new MouseTravelTracker();
+        private TravelTracker travelTracker = new TravelTracker();
         private SceneViewController sceneViewController;
         private Gesture currentGesture = Gesture.None;
         private Timer mouseWheelTimer;

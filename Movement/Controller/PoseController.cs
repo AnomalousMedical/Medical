@@ -38,7 +38,7 @@ namespace Medical.Controller
         private bool repinBone = false;
         private float hitDistance;
         private bool allowPosing = false;
-        private MouseTravelTracker travelTracker = new MouseTravelTracker();
+        private TravelTracker travelTracker = new TravelTracker();
         private bool allowMousePosing = true;
         private MusclePosition poseStartPosition = null;
 

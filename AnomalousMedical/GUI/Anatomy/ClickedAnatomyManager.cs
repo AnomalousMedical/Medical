@@ -1,4 +1,5 @@
-﻿using Engine.Platform;
+﻿using Engine;
+using Engine.Platform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Medical.GUI
     class ClickedAnatomyManager
     {
         private EventLayer currentEventLayer = null;
-        private MouseTravelTracker travelTracker = new MouseTravelTracker();
+        private TravelTracker travelTracker = new TravelTracker();
         private IEnumerator<Anatomy> currentClickAnatomy = null;
 
         /// <summary>

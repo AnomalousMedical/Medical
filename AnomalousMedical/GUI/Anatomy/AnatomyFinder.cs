@@ -45,7 +45,7 @@ namespace Medical.GUI
         private AnatomyController anatomyController;
         private int lastWidth = -1;
         private int lastHeight = -1;
-        private MouseTravelTracker travelTracker = new MouseTravelTracker();
+        private TravelTracker travelTracker = new TravelTracker();
         private ClickedAnatomyManager clickedAnatomy = new ClickedAnatomyManager();
 
         private ButtonGridLiveThumbnailController<Anatomy> buttonGridThumbs;
