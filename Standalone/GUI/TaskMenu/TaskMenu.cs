@@ -56,11 +56,7 @@ namespace Medical.GUI
             taskController.TaskRemoved += new TaskDelegate(taskController_TaskRemoved);
 
             iconScroller = (ScrollView)widget.findWidget("IconScroller");
-            iconGrid = new NoSelectButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout()
-                {
-                    ItemPaddingX = ScaleHelper.Scaled(15),
-                    ItemPaddingY = ScaleHelper.Scaled(15)
-                }, new TaskMenuItemComparer(), GroupCompare);
+            iconGrid = new NoSelectButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout(), new TaskMenuItemComparer(), GroupCompare);
 
             iconGrid.defineGroup(TaskMenuCategories.Patient, 0);
             iconGrid.defineGroup(TaskMenuCategories.Navigation, 1);

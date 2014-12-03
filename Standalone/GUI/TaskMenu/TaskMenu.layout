@@ -12,6 +12,8 @@
             <UserString key="GroupSeparatorAdditionalPaddingTop" value="9"/>
             <UserString key="GroupSeparatorAdditionalPaddingBottom" value="11"/>
             <UserString key="CaptionType" value="TopSeparator"/>
+            <UserString key="ItemPaddingX" value="15"/>
+            <UserString key="ItemPaddingY" value="15"/>
         </Widget>
         <Widget type="Button" skin="Medical.TaskMenuTopLevelCategoryButton" position="2 11 66 22" name="Tasks">
             <Property key="Caption" value="Tasks"/>
@@ -30,6 +32,8 @@
             <UserString key="GroupSeparatorAdditionalPaddingTop" value="9"/>
             <UserString key="GroupSeparatorAdditionalPaddingBottom" value="11"/>
             <UserString key="CaptionType" value="TopSeparator"/>
+            <UserString key="ItemPaddingX" value="15"/>
+            <UserString key="ItemPaddingY" value="15"/>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="554 10 24 20" align="Right Top" name="CloseButton"/>
         <Widget type="Widget" skin="PanelEmpty" position="284 45 292 432" align="Right Top" name="DocumentInfoPanel">
