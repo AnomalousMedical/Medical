@@ -6,7 +6,7 @@
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="CanvasSize" value="381 437"/>
             <UserString key="ButtonSkin" value="Medical.TaskMenuButtonGridButton"/>
-            <UserString key="ItemHeight" value="60"/>
+            <UserString key="ItemHeight" value="58"/>
             <UserString key="ItemWidth" value="100"/>
             <UserString key="GroupSeparatorSkin" value="SeparatorInverseSkin"/>
             <UserString key="GroupSeparatorAdditionalPaddingTop" value="9"/>
@@ -26,7 +26,7 @@
             <Property key="Visible" value="true"/>
             <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="Medical.TaskMenuButtonGridButton"/>
-            <UserString key="ItemHeight" value="54"/>
+            <UserString key="ItemHeight" value="58"/>
             <UserString key="ItemWidth" value="100"/>
             <UserString key="GroupSeparatorSkin" value="SeparatorInverseSkin"/>
             <UserString key="GroupSeparatorAdditionalPaddingTop" value="9"/>
