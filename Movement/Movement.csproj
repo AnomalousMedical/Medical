@@ -71,13 +71,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\MyGUI_Theme_Tag.xml" />
-    <EmbeddedResource Include="Resources\MyGUI_Skin.xml" />
-    <EmbeddedResource Include="Resources\MyGUI_Theme.xml" />
-    <EmbeddedResource Include="Resources\MyGUI_Main.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\MovementSkin.png" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
