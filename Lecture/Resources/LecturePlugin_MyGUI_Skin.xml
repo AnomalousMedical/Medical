@@ -7,7 +7,7 @@ Lecture.SlideDropPreview
   <Resource type="ResourceSkin" name = "Lecture.SlideDropPreview" size = "11 11" texture = "#{Anomalous_Theme_Texture}">
     <!--Middle-->
     <BasisSkin type="SubSkin" offset = "0 0 11 11" align = "HStretch VStretch">
-      <State name="normal" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_SlideDropPreview_Center_Normal}"/>
+      <State name="normal" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_ListItem_Center_Highlighted}"/>
     </BasisSkin>
   </Resource>
 
