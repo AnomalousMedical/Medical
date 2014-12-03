@@ -46,10 +46,10 @@ namespace Medical.GUI
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(typeof(RocketInterface).Assembly));
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(typeof(MyGUIInterface).Assembly));
 
-            FontDatabase.LoadFontFace("MyGUIPlugin_DejaVuSans.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_NORMAL);
-            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-Bold.ttf", "DejaVuSans", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_BOLD);
-            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-BoldOblique.ttf", "DejaVuSans", Font.Style.STYLE_ITALIC, Font.Weight.WEIGHT_BOLD);
-            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.MyGUIPlugin_DejaVuSans-Oblique.ttf", "DejaVuSans", Font.Style.STYLE_ITALIC, Font.Weight.WEIGHT_NORMAL);
+            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.Fonts.Roboto-Regular.ttf", "Roboto", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_NORMAL);
+            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.Fonts.Roboto-Bold.ttf", "Roboto", Font.Style.STYLE_NORMAL, Font.Weight.WEIGHT_BOLD);
+            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.Fonts.Roboto-BoldItalic.ttf", "Roboto", Font.Style.STYLE_ITALIC, Font.Weight.WEIGHT_BOLD);
+            FontDatabase.LoadFontFace("MyGUIPlugin.Resources.Fonts.Roboto-Italic.ttf", "Roboto", Font.Style.STYLE_ITALIC, Font.Weight.WEIGHT_NORMAL);
         }
 
         public static void clearAllCaches()
