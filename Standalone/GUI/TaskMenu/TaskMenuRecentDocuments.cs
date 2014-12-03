@@ -61,7 +61,7 @@ namespace Medical.GUI
 
         public void resizeAndLayout()
         {
-            documentGrid.resizeAndLayout(documentScroller.Width);
+            documentGrid.resizeAndLayout(documentScroller.ViewCoord.width);
         }
 
         public void moveAndResize(IntCoord coord)
