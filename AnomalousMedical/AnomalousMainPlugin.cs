@@ -36,7 +36,6 @@ namespace Medical.GUI
         private DownloadManagerGUI downloadManagerGUI;
         private SequencePlayer sequencePlayer = null;
         private BookmarksGUI bookmarks;
-        private AnatomyLayerManager anatomyLayerManager;
         private CameraAngleGui cameraAngleGui;
         
         //Controllers
@@ -72,7 +71,6 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
             IDisposableUtil.DisposeIfNotNull(cameraAngleGui);
-            IDisposableUtil.DisposeIfNotNull(anatomyLayerManager);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             selectionOperatorTask.Dispose();
@@ -149,9 +147,6 @@ namespace Medical.GUI
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager, standaloneController.SceneViewController);
 
-            anatomyLayerManager = new AnatomyLayerManager(standaloneController.LayerController);
-            guiManager.addManagedDialog(anatomyLayerManager);
-
             cameraAngleGui = new CameraAngleGui(standaloneController.SceneViewController, standaloneController.AnatomyController);
             guiManager.addManagedDialog(cameraAngleGui);
 
@@ -181,8 +176,6 @@ namespace Medical.GUI
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
             taskController.addTask(new PinableMDIDialogOpenTask(cameraAngleGui, "Medical.CameraAngleGui", "Camera Angles", CommonResources.NoIcon, TaskMenuCategories.Explore));
-
-            taskController.addTask(new PinableMDIDialogOpenTask(anatomyLayerManager, "Medical.AnatomyLayerManager", "Layer Manager", CommonResources.NoIcon, TaskMenuCategories.Explore));
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Explore, 0));

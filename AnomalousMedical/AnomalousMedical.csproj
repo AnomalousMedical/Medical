@@ -161,7 +161,6 @@
     <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
     <Compile Include="Controller\ImageLicenseServer.cs" />
-    <Compile Include="GUI\AnatomyLayerManager\AnatomyLayerManager.cs" />
     <Compile Include="GUI\LicenseDisplay\LicenseDisplay.cs" />
     <Compile Include="GUI\LicenseDisplay\LicenseDisplayManager.cs" />
     <Compile Include="GUI\PremiumFeaturesTaskMenuAd.cs" />
@@ -183,7 +182,6 @@
     <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
     <EmbeddedResource Include="GUI\CameraAngleGui\CameraAngleGui.layout" />
     <EmbeddedResource Include="GUI\ChooseSceneDialog\ChooseSceneDialog.layout" />
-    <EmbeddedResource Include="GUI\AnatomyLayerManager\AnatomyLayerManager.layout" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
     <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
     <EmbeddedResource Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.layout" />
