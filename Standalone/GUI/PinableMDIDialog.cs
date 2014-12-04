@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Engine.Platform;
+using Medical.Controller;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,9 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        /// <summary>
+        /// True if this window is pinned and false if it is in popup mode.
+        /// </summary>
         public bool Pinned
         {
             get
@@ -44,6 +48,17 @@ namespace Medical.GUI
             set
             {
                 pinButton.Checked = value;
+            }
+        }
+
+        /// <summary>
+        /// This will be true if this dialog should be allowd to auto move based on where it was openend.
+        /// </summary>
+        public bool AllowAutoPosition
+        {
+            get
+            {
+                return !Pinned && CurrentDockLocation == DockLocation.Floating;
             }
         }
 

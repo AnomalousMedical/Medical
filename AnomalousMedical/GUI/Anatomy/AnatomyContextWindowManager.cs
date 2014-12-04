@@ -227,7 +227,7 @@ namespace Medical.GUI
         /// <param name="y"></param>
         internal void showAnatomyFinderFromContextDialog(AnatomyContextWindow window)
         {
-            if (!anatomyFinder.Pinned && anatomyFinder.CurrentDockLocation == DockLocation.Floating)
+            if (anatomyFinder.AllowAutoPosition)
             {
                 IntCoord deadzone = new IntCoord(window.AbsoluteLeft, window.AbsoluteTop, window.Width, window.Height);
                 IntCoord anatomyFinderCoord = new IntCoord(deadzone.Right, deadzone.top, anatomyFinder.Width, anatomyFinder.Height);

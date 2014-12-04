@@ -47,7 +47,7 @@ namespace Medical
         {
             if (!dialog.Visible)
             {
-                if(!dialog.Pinned && dialog.CurrentDockLocation == DockLocation.Floating)
+                if(dialog.AllowAutoPosition)
                 {
                     dialog.Position = positioner.findGoodWindowPosition(dialog.Width, dialog.Height);
                 }
