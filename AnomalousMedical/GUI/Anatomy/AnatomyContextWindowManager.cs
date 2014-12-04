@@ -231,7 +231,14 @@ namespace Medical.GUI
             {
                 IntCoord deadzone = new IntCoord(window.AbsoluteLeft, window.AbsoluteTop, window.Width, window.Height);
                 IntCoord anatomyFinderCoord = new IntCoord(deadzone.Right, deadzone.top, anatomyFinder.Width, anatomyFinder.Height);
-                anatomyFinder.Position = calculateChildPosition(deadzone, anatomyFinderCoord, false);
+                bool eitherSide = false;
+                if(anatomyFinder.Visible)
+                {
+                    anatomyFinderCoord.left = anatomyFinder.AbsoluteLeft;
+                    anatomyFinderCoord.top = anatomyFinder.AbsoluteTop;
+                    eitherSide = true;
+                }
+                anatomyFinder.Position = calculateChildPosition(deadzone, anatomyFinderCoord, eitherSide);
             }
             anatomyFinder.ensureVisible();
             anatomyFinder.Visible = true;
