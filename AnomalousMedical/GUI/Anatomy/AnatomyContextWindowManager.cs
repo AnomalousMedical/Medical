@@ -66,29 +66,40 @@ namespace Medical.GUI
                 currentAnatomyWindow.SmoothShow = true;
             }
             currentAnatomyWindow.Anatomy = anatomy;
+            currentAnatomyWindow.Visible = true;
 
-            if(anatomyFinder.TriggeredSelection && position.x < deadZone.left) //If we were triggerd by the anatomy finder and are trying to be to the right make sure that we are.
+            IntCoord windowCoord = new IntCoord(position.x, position.y, currentAnatomyWindow.Width, currentAnatomyWindow.Height);
+            currentAnatomyWindow.Position = calculateChildPosition(anatomyFinder.DeadZone, windowCoord, anatomyFinder.TriggeredSelection);
+            
+            currentAnatomyWindow.ensureVisible();
+
+            return currentAnatomyWindow;
+        }
+
+        private static IntVector2 calculateChildPosition(IntCoord parent, IntCoord child, bool eitherSide)
+        {
+            IntVector2 position = new IntVector2(child.left, child.top);
+            if (eitherSide && position.x < parent.left) //If we were triggerd by the anatomy finder and are trying to be to the right make sure that we are.
             {
-                int widthOffset = currentAnatomyWindow.Width + 1;
-                if (widthOffset < deadZone.left)
+                int widthOffset = child.width + 1;
+                if (widthOffset < parent.left)
                 {
-                    position.x = deadZone.left - widthOffset;
+                    position.x = parent.left - widthOffset;
                 }
             }
 
-            currentAnatomyWindow.Position = new Vector2(position.x, position.y);
-            currentAnatomyWindow.Visible = true;
+            child.left = position.x;
 
-            int windowTop = currentAnatomyWindow.Top;
-            int windowBottom = windowTop + currentAnatomyWindow.Height;
-            int windowLeft = currentAnatomyWindow.Left;
-            int windowWidth = currentAnatomyWindow.Width;
-            int windowRight = windowLeft + windowWidth;
+            int windowTop = child.top;
+            int windowBottom = child.Bottom;
+            int windowLeft = child.left;
+            int windowWidth = child.width;
+            int windowRight = child.Right;
 
-            int deadzoneTop = deadZone.top;
-            int deadzoneBottom = deadZone.Bottom;
-            int deadzoneLeft = deadZone.left;
-            int deadzoneRight = deadZone.Right;
+            int deadzoneTop = parent.top;
+            int deadzoneBottom = parent.Bottom;
+            int deadzoneLeft = parent.left;
+            int deadzoneRight = parent.Right;
 
             //Check to see if the window is in the dead zone.
             if (((windowTop >= deadzoneTop && windowTop <= deadzoneBottom) ||
@@ -98,17 +109,15 @@ namespace Medical.GUI
             {
                 if (windowWidth < RenderManager.Instance.ViewWidth - deadzoneRight) //We can fit to the right, but don't want to be on top of the window
                 {
-                    currentAnatomyWindow.Position = new Vector2(deadzoneRight, currentAnatomyWindow.Top);
+                    position = new IntVector2(deadzoneRight, windowTop);
                 }
                 else //Cannot fit to the right go to the left instead
                 {
-                    currentAnatomyWindow.Position = new Vector2(deadzoneLeft - windowWidth, currentAnatomyWindow.Top);
+                    position = new IntVector2(deadzoneLeft - windowWidth, windowTop);
                 }
             }
 
-            currentAnatomyWindow.ensureVisible();
-
-            return currentAnatomyWindow;
+            return position;
         }
 
         public void closeUnpinnedWindow()
