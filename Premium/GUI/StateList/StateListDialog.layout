@@ -6,15 +6,16 @@
         <UserString key="CurrentDockLocation" value="Right"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <UserString key="PinByDefault" value="true"/>
-        <Widget type="ScrollView" skin="ScrollView" position="0 27 236 419" align="Stretch" name="StateList/ScrollView">
+        <Widget type="ScrollView" skin="ScrollView" position="0 4 236 412" align="Stretch" name="StateList/ScrollView">
             <Property key="CanvasAlign" value="Left Top"/>
             <Property key="CanvasSize" value="209 10"/>
             <UserString key="ButtonSkin" value="ButtonListIconButton"/>
             <UserString key="ItemHeight" value="102"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="0 4 68 20" align="Left Top" name="StateList/DeleteButton">
+        <Widget type="Button" skin="Button" position="0 420 68 26" align="Left Bottom" name="StateList/DeleteButton">
             <Property key="Caption" value="Delete"/>
         </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>
