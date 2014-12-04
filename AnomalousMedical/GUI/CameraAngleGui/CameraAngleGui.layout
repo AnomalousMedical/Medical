@@ -11,25 +11,25 @@
         <Widget type="Button" skin="Button" position="96 5 92 33" name="Redo">
             <Property key="Caption" value="Redo"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="0 42 188 33" name="CenterVisible">
+        <Widget type="Button" skin="ButtonFlat" position="0 42 188 33" name="CenterVisible">
             <Property key="Caption" value="Center Visible Anatomy"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="0 79 92 33" name="Front">
+        <Widget type="Button" skin="ButtonFlat" position="0 79 92 33" name="Front">
             <Property key="Caption" value="Front"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="0 116 92 33" name="Left">
+        <Widget type="Button" skin="ButtonFlat" position="0 116 92 33" name="Left">
             <Property key="Caption" value="Left"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="0 153 92 33" name="Top">
+        <Widget type="Button" skin="ButtonFlat" position="0 153 92 33" name="Top">
             <Property key="Caption" value="Top"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="96 79 92 33" name="Back">
+        <Widget type="Button" skin="ButtonFlat" position="96 79 92 33" name="Back">
             <Property key="Caption" value="Back"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="96 116 92 33" name="Right">
+        <Widget type="Button" skin="ButtonFlat" position="96 116 92 33" name="Right">
             <Property key="Caption" value="Right"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="96 153 92 33" name="Bottom">
+        <Widget type="Button" skin="ButtonFlat" position="96 153 92 33" name="Bottom">
             <Property key="Caption" value="Bottom"/>
         </Widget>
     </Widget>

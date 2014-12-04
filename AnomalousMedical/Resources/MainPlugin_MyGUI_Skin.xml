@@ -84,13 +84,15 @@ Medical.AnatomyFinderListItem
   </Resource>
 
   <!--*************************
-Medical.AnatomyContextWindowCommandButtonSkin
+Medical.AnatomyContextWindowCommandButton
 *****************************-->
-  <Resource type="ResourceSkin" name = "Medical.AnatomyContextWindowCommandButtonSkin" size = "29 26" texture = "#{Anomalous_Theme_Texture}">
+  <Resource type="ResourceSkin" name = "Medical.AnatomyContextWindowCommandButton" size = "29 26" texture = "#{Anomalous_Theme_Texture}">
+    <Property key="FontName" value = "Default" />
+    <Property key="TextAlign" value = "Left VCenter" />
     <!--Center-->
     <BasisSkin type="SubSkin" offset = "0 0 29 26" align = "Stretch">
-      <State name="disabled" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Disabled}"/>
-      <State name="normal" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Normal}"/>
+      <State name="disabled" offsetNamed="Anomalous_Invisible_Coord"/>
+      <State name="normal" offsetNamed="Anomalous_Invisible_Coord"/>
       <State name="highlighted" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Highlighted}"/>
       <State name="pushed" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_Pushed}"/>
       <State name="disabled_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Center_DisabledChecked}"/>
@@ -104,33 +106,11 @@ Medical.AnatomyContextWindowCommandButtonSkin
       <State name="normal" colour="#{Anomalous_Button_Text_Normal}" shift = "false"/>
       <State name="highlighted" colour="#{Anomalous_Button_Text_Highlighted}" shift = "false"/>
       <State name="pushed" colour="#{Anomalous_Button_Text_Pushed}" shift = "true"/>
-      <State name="disabled_checked" colour="#{Anomalous_Button_Text_DisabledChecked}" shift = "false"/>
-      <State name="normal_checked" colour="#{Anomalous_Button_Text_NormalChecked}" shift = "false"/>
-      <State name="highlighted_checked" colour="#{Anomalous_Button_Text_HighlightedChecked}" shift = "false"/>
+      <State name="disabled_checked" colour="#{Anomalous_Button_Text_DisabledChecked}" shift = "true"/>
+      <State name="normal_checked" colour="#{Anomalous_Button_Text_NormalChecked}" shift = "true"/>
+      <State name="highlighted_checked" colour="#{Anomalous_Button_Text_HighlightedChecked}" shift = "true"/>
       <State name="pushed_checked" colour="#{Anomalous_Button_Text_PushedChecked}" shift = "true"/>
     </BasisSkin>
-    <!--Border-->
-    <Border width="1">
-      <State name="disabled" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Border_Disabled}"/>
-      <State name="normal" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Border_Normal}"/>
-      <State name="highlighted" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Border_Highlighted}"/>
-      <State name="pushed" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Border_Pushed}"/>
-      <State name="disabled_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Border_DisabledChecked}"/>
-      <State name="normal_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Border_NormalChecked}"/>
-      <State name="highlighted_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Border_HighlightedChecked}"/>
-      <State name="pushed_checked" offsetNamed="Anomalous_Solid_Coord" colour="#{Anomalous_Button_Border_PushedChecked}"/>
-    </Border>
-  </Resource>
-
-  <!--*************************
-Medical.AnatomyContextWindowCommandButton
-*****************************-->
-  <Resource type="ResourceLayout" name="Medical.AnatomyContextWindowCommandButton" version="3.2.0">
-    <Widget type="Widget" skin="Medical.AnatomyContextWindowCommandButtonSkin" position="20 25 29 26" name="Root">
-      <Property key="FontName" value="Default"/>
-      <Property key="TextAlign" value="Left VCenter"/>
-      <UserString key="LE_TargetWidgetType" value="Button"/>
-    </Widget>
   </Resource>
 
   <!--*************************
