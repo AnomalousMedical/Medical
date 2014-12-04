@@ -11,7 +11,7 @@ namespace Medical.GUI
         private SelectionModeChooser selectionModeChooser;
 
         public SelectionModeTask(AnatomyController anatomyController)
-            :base("Medical.SelectionMode", "Selection Mode", "", TaskMenuCategories.Navigation)
+            :base("Medical.SelectionMode", "Selection Mode", "", TaskMenuCategories.Explore)
         {
             this.ShowOnTaskbar = false;
             selectionModeChooser = new SelectionModeChooser(anatomyController);

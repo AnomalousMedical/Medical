@@ -180,27 +180,27 @@ namespace Medical.GUI
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
-            taskController.addTask(new PinableMDIDialogOpenTask(cameraAngleGui, "Medical.CameraAngleGui", "Camera Angles", CommonResources.NoIcon, TaskMenuCategories.Navigation));
+            taskController.addTask(new PinableMDIDialogOpenTask(cameraAngleGui, "Medical.CameraAngleGui", "Camera Angles", CommonResources.NoIcon, TaskMenuCategories.Explore));
 
-            taskController.addTask(new PinableMDIDialogOpenTask(anatomyLayerManager, "Medical.AnatomyLayerManager", "Layer Manager", CommonResources.NoIcon, TaskMenuCategories.Navigation));
+            taskController.addTask(new PinableMDIDialogOpenTask(anatomyLayerManager, "Medical.AnatomyLayerManager", "Layer Manager", CommonResources.NoIcon, TaskMenuCategories.Explore));
 
             //Patient Section
-            taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Patient, 0));
+            taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Explore, 0));
 
             //System Section
-            CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Store", "AnomalousMedical/Store", TaskMenuCategories.AnomalousMedical, int.MaxValue - 6, false);
+            CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Store", "AnomalousMedical/Store", TaskMenuCategories.System, int.MaxValue - 6, false);
             shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
             taskController.addTask(shopTaskItem);
 
-            CallbackTask blogTaskItem = new CallbackTask("Medical.Blog", "Blog", "StandaloneIcons/Blog", TaskMenuCategories.AnomalousMedical, int.MaxValue - 7, false);
+            CallbackTask blogTaskItem = new CallbackTask("Medical.Blog", "Blog", "StandaloneIcons/Blog", TaskMenuCategories.System, int.MaxValue - 7, false);
             blogTaskItem.OnClicked += new CallbackTask.ClickedCallback(blogTaskItem_OnClicked);
             taskController.addTask(blogTaskItem);
 
-            downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.AnomalousMedical, int.MaxValue - 5);
+            downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5);
             standaloneController.DownloadController.OpenDownloadGUITask = downloadsTask;
             taskController.addTask(downloadsTask);
 
-            CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "AnomalousMedical/Help", TaskMenuCategories.AnomalousMedical, int.MaxValue - 4, false);
+            CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "AnomalousMedical/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
             taskController.addTask(helpTaskItem);
 
@@ -222,7 +222,7 @@ namespace Medical.GUI
             });
             taskController.addTask(toggleFullscreen);
 
-            CallbackTask unhideAllAnatomy = new CallbackTask("Medical.UnhideAllAnatomy", "Unhide All", "AnatomyFinder.ShowAll", TaskMenuCategories.Navigation, int.MaxValue - 2, false, (item) =>
+            CallbackTask unhideAllAnatomy = new CallbackTask("Medical.UnhideAllAnatomy", "Unhide All", "AnatomyFinder.ShowAll", TaskMenuCategories.Explore, int.MaxValue - 2, false, (item) =>
             {
                 LayerState undo = LayerState.CreateAndCapture();
                 standaloneController.LayerController.unhideAll();
@@ -231,15 +231,15 @@ namespace Medical.GUI
             taskController.addTask(unhideAllAnatomy);
 
             //Tools Section
-            MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Tools);
+            MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Create);
             taskController.addTask(renderTask);
 
             //Navigation Section
-            PinableMDIDialogOpenTask anatomyFinderTask = new PinableMDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "AnomalousMedical/SearchIcon", TaskMenuCategories.Navigation);
+            PinableMDIDialogOpenTask anatomyFinderTask = new PinableMDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "AnomalousMedical/SearchIcon", TaskMenuCategories.Explore);
             taskController.addTask(anatomyFinderTask);
             Slideshow.AdditionalTasks.addTask(anatomyFinderTask);
 
-            ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "AnomalousMedical/FavoritesIcon", TaskMenuCategories.Navigation);
+            ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "AnomalousMedical/FavoritesIcon", TaskMenuCategories.Explore);
             taskController.addTask(bookmarkTask);
             Slideshow.AdditionalTasks.addTask(bookmarkTask);
 
@@ -452,7 +452,7 @@ namespace Medical.GUI
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController, standaloneController.MusclePositionController);
             guiManager.addManagedDialog(sequencePlayer);
 
-            PinableMDIDialogOpenTask sequencePlayerTask = new PinableMDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Tools);
+            PinableMDIDialogOpenTask sequencePlayerTask = new PinableMDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceToolstrip/Sequence", TaskMenuCategories.Explore);
             standaloneController.TaskController.addTask(sequencePlayerTask);
 
             //We only care about the first one of these events that fires.

@@ -19,7 +19,7 @@ namespace Medical
         private MenuItem oneOne;
 
         public AspectRatioTask(SceneViewController sceneViewController)
-            : base("Editor.AspectRatio", "Aspect Ratio", "EditorIcons.AspectRatioIcon", TaskMenuCategories.Editor)
+            : base("Editor.AspectRatio", "Aspect Ratio", "EditorIcons.AspectRatioIcon", TaskMenuCategories.Create)
         {
             this.ShowOnTaskbar = false;
             this.sceneViewController = sceneViewController;

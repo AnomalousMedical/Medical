@@ -11,7 +11,7 @@ namespace Medical.GUI
         private SelectionOperatorChooser selectionOperatorChooser;
 
         public SelectionOperatorTask(AnatomyController anatomyController)
-            :base("Medical.SelectionOperator", "Selection Operator", "", TaskMenuCategories.Navigation)
+            :base("Medical.SelectionOperator", "Selection Operator", "", TaskMenuCategories.Explore)
         {
             this.ShowOnTaskbar = false;
             selectionOperatorChooser = new SelectionOperatorChooser(anatomyController);

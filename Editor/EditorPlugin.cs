@@ -114,8 +114,8 @@ namespace Medical
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
-            taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "EditorIcons.ScratchAreaIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.EditorTools", "Editor Tools", "EditorIcons.EditorTools", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(scratchArea, "Medical.ScratchArea", "Scratch Area", "EditorIcons.ScratchAreaIcon", TaskMenuCategories.Create));
+            taskController.addTask(new MDIDialogOpenTask(projectExplorer, "Medical.EditorTools", "Editor Tools", "EditorIcons.EditorTools", TaskMenuCategories.Create));
 
             aspectRatioTask = new AspectRatioTask(standaloneController.SceneViewController);
             taskController.addTask(aspectRatioTask);
