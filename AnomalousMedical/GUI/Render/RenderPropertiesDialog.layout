@@ -25,7 +25,7 @@
             <UserString key="MinValue" value="1"/>
             <UserString key="AllowFloat" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="6 220 72 26" name="RenderingTab/Render">
+        <Widget type="Button" skin="Button" position="0 220 78 26" name="RenderingTab/Render">
             <Property key="Caption" value="Render"/>
             <Property key="ImageResource" value="AnomalousMedical/RenderIcon"/>
         </Widget>
