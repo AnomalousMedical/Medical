@@ -50,7 +50,7 @@ namespace Medical.GUI.AnomalousMvc
             int widthDifference = window.Width - clientCoord.width;
             int heightDifference = window.Height - clientCoord.height;
 
-            Position = new Vector2(child.Widget.Left, child.Widget.Top);
+            Position = new IntVector2(child.Widget.Left, child.Widget.Top);
             Size = new IntSize2(child.Widget.Width + widthDifference, child.Widget.Height + heightDifference);
             dockedSize = Size;
 
