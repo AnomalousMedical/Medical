@@ -234,8 +234,10 @@ namespace Medical.GUI
                 bool eitherSide = false;
                 if(anatomyFinder.Visible)
                 {
-                    anatomyFinderCoord.left = anatomyFinder.AbsoluteLeft;
-                    anatomyFinderCoord.top = anatomyFinder.AbsoluteTop;
+                    if (anatomyFinder.Left < deadzone.left)
+                    {
+                        anatomyFinderCoord.left = anatomyFinder.AbsoluteLeft;
+                    }
                     eitherSide = true;
                 }
                 anatomyFinder.Position = calculateChildPosition(deadzone, anatomyFinderCoord, eitherSide);

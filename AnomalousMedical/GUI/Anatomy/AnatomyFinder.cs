@@ -34,6 +34,8 @@ namespace Medical.GUI
         private HashSetMultiSelectButtonGrid anatomyList;
         private EditBox searchBox;
         private Button clearButton;
+        private Button undoButton;
+        private Button redoButton;
 
         private ButtonGridItemNaturalSort naturalSort = new ButtonGridItemNaturalSort();
 
@@ -41,8 +43,9 @@ namespace Medical.GUI
         private AnatomyFilter anatomyFilter;
 
         private SceneViewController sceneViewController;
-
+        private LayerController layerController;
         private AnatomyController anatomyController;
+
         private int lastWidth = -1;
         private int lastHeight = -1;
         private TravelTracker travelTracker = new TravelTracker();
@@ -64,7 +67,16 @@ namespace Medical.GUI
             anatomyController.SearchStarted += anatomyController_SearchStarted;
             anatomyController.SearchEnded += anatomyController_SearchEnded;
             anatomyController.SuggestSearchCaption += anatomyController_SuggestSearchCaption;
+            
             this.sceneViewController = sceneViewController;
+
+            this.layerController = layerController;
+            this.layerController = layerController;
+            layerController.OnRedo += updateUndoRedo;
+            layerController.OnUndo += updateUndoRedo;
+            layerController.OnUndoRedoChanged += updateUndoRedo;
+            layerController.OnActiveTransparencyStateChanged += updateUndoRedo;
+
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, layerController, this);
             anatomyFilter = new AnatomyFilter(anatomyController);
             anatomyFilter.refreshCategories();
@@ -90,6 +102,20 @@ namespace Medical.GUI
             clearButton.NeedToolTip = true;
             clearButton.EventToolTip += button_UserObject_EventToolTip;
             clearButton.UserObject = "Clear Search";
+
+            Button unhideAll = window.findWidget("UnhideAll") as Button;
+            unhideAll.MouseButtonClick += (s, e) =>
+            {
+                LayerState undo = LayerState.CreateAndCapture();
+                this.layerController.unhideAll();
+                this.layerController.pushUndoState(undo);
+            };
+
+            undoButton = window.findWidget("Undo") as Button;
+            undoButton.MouseButtonClick += (s, e) => layerController.undo();
+
+            redoButton = window.findWidget("Redo") as Button;
+            redoButton.MouseButtonClick += (s, e) => layerController.redo();
 
             PickAnatomy.FirstFrameDownEvent += PickAnatomy_FirstFrameDownEvent;
             PickAnatomy.OnHeldDown += PickAnatomy_OnHeldDown;
@@ -437,6 +463,12 @@ namespace Medical.GUI
         protected override bool keepOpenFromPoint(int x, int y)
         {
             return (anatomyFilter.Visible && anatomyFilter.contains(x, y)) || anatomyWindowManager.isContextWindowAtPoint(x, y) || base.keepOpenFromPoint(x, y);
+        }
+
+        void updateUndoRedo(LayerController obj)
+        {
+            undoButton.Enabled = layerController.HasUndo;
+            redoButton.Enabled = layerController.HasRedo;
         }
     }
 }

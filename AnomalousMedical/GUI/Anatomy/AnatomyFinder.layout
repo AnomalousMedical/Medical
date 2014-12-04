@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSXP" position="98 59 268 381" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSXP" position="98 59 268 418" layer="Overlapped">
         <Property key="Caption" value="Anatomy Finder"/>
         <UserString key="CurrentDockLocation" value="Left"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
@@ -9,6 +9,7 @@
         <Widget type="ScrollView" skin="ScrollView" position="0 34 256 314" align="Stretch" name="AnatomyList">
             <Property key="CanvasSize" value="238 10"/>
             <Property key="CanvasAlign" value="Left Top"/>
+            <Property key="VisibleHScroll" value="false"/>
             <UserString key="ButtonSkin" value="Medical.AnatomyFinderListItem"/>
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="238"/>
@@ -16,6 +17,15 @@
         </Widget>
         <Widget type="Button" skin="ButtonRightBigSkin" position="240 5 16 24" align="Right Top" name="Filter">
             <Property key="Caption" value="Filter"/>
+        </Widget>
+        <Widget type="Button" skin="ButtonFlat" position="0 352 82 33" align="HRelative Bottom" name="Undo">
+            <Property key="Caption" value="Undo"/>
+        </Widget>
+        <Widget type="Button" skin="ButtonFlat" position="86 352 82 33" align="HRelative Bottom" name="Redo">
+            <Property key="Caption" value="Redo"/>
+        </Widget>
+        <Widget type="Button" skin="ButtonFlat" position="172 352 84 33" align="HRelative Bottom" name="UnhideAll">
+            <Property key="Caption" value="Unhide All"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
