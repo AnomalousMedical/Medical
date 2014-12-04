@@ -185,7 +185,7 @@ namespace Medical.GUI
 
         internal void showAnatomyFinder()
         {
-            windowManager.showAnatomyFinderFromContextDialog(window.AbsoluteLeft + window.Width, window.Top);
+            windowManager.showAnatomyFinderFromContextDialog(this);
         }
 
         internal void setTextureInfo(string name, IntCoord coord)

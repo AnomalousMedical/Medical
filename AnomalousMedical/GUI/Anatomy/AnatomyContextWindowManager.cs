@@ -76,50 +76,6 @@ namespace Medical.GUI
             return currentAnatomyWindow;
         }
 
-        private static IntVector2 calculateChildPosition(IntCoord parent, IntCoord child, bool eitherSide)
-        {
-            IntVector2 position = new IntVector2(child.left, child.top);
-            if (eitherSide && position.x < parent.left) //If we were triggerd by the anatomy finder and are trying to be to the right make sure that we are.
-            {
-                int widthOffset = child.width + 1;
-                if (widthOffset < parent.left)
-                {
-                    position.x = parent.left - widthOffset;
-                }
-            }
-
-            child.left = position.x;
-
-            int windowTop = child.top;
-            int windowBottom = child.Bottom;
-            int windowLeft = child.left;
-            int windowWidth = child.width;
-            int windowRight = child.Right;
-
-            int deadzoneTop = parent.top;
-            int deadzoneBottom = parent.Bottom;
-            int deadzoneLeft = parent.left;
-            int deadzoneRight = parent.Right;
-
-            //Check to see if the window is in the dead zone.
-            if (((windowTop >= deadzoneTop && windowTop <= deadzoneBottom) ||
-                (windowBottom >= deadzoneTop && windowBottom <= deadzoneBottom)) &&
-                ((windowLeft >= deadzoneLeft && windowLeft <= deadzoneRight) ||
-                (windowRight >= deadzoneLeft && windowRight <= deadzoneRight)))
-            {
-                if (windowWidth < RenderManager.Instance.ViewWidth - deadzoneRight) //We can fit to the right, but don't want to be on top of the window
-                {
-                    position = new IntVector2(deadzoneRight, windowTop);
-                }
-                else //Cannot fit to the right go to the left instead
-                {
-                    position = new IntVector2(deadzoneLeft - windowWidth, windowTop);
-                }
-            }
-
-            return position;
-        }
-
         public void closeUnpinnedWindow()
         {
             if (currentAnatomyWindow != null)
@@ -269,18 +225,71 @@ namespace Medical.GUI
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        internal void showAnatomyFinderFromContextDialog(int x, int y)
+        internal void showAnatomyFinderFromContextDialog(AnatomyContextWindow window)
         {
-            if (!anatomyFinder.Visible)
+            if (!anatomyFinder.Pinned && anatomyFinder.CurrentDockLocation == DockLocation.Floating)
             {
-                if (!anatomyFinder.Pinned && anatomyFinder.CurrentDockLocation == DockLocation.Floating)
-                {
-                    anatomyFinder.Position = new Vector2(x, y);
-                }
-                anatomyFinder.ensureVisible();
-                anatomyFinder.Visible = true;
+                IntCoord deadzone = new IntCoord(window.AbsoluteLeft, window.AbsoluteTop, window.Width, window.Height);
+                IntCoord anatomyFinderCoord = new IntCoord(deadzone.Right, deadzone.top, anatomyFinder.Width, anatomyFinder.Height);
+                anatomyFinder.Position = calculateChildPosition(deadzone, anatomyFinderCoord, false);
             }
+            anatomyFinder.ensureVisible();
+            anatomyFinder.Visible = true;
             anatomyFinder.bringToFront();
+        }
+
+        /// <summary>
+        /// Compare two coordinates to find a position that a window can be opened relative to another. This will
+        /// make sure the windows do not overlap and that they are in the desired orientation to one another. If eitherSide
+        /// is true and child is to the left of parent it will be opened attached to parent's left side and to the right otherwise
+        /// if eitherSide is false the child will always open to the right.
+        /// </summary>
+        /// <param name="parent">The coords of the parent window.</param>
+        /// <param name="child">The coords of the child window.</param>
+        /// <param name="eitherSide">True to determine the side based on a comparison of the lefts and false to always open to the right.</param>
+        /// <returns>A new IntVector of coords to put the child window at.</returns>
+        private static IntVector2 calculateChildPosition(IntCoord parent, IntCoord child, bool eitherSide)
+        {
+            IntVector2 position = new IntVector2(child.left, child.top);
+            if (eitherSide && position.x < parent.left) //If we were triggerd by the anatomy finder and are trying to be to the right make sure that we are.
+            {
+                int widthOffset = child.width + 1;
+                if (widthOffset < parent.left)
+                {
+                    position.x = parent.left - widthOffset;
+                }
+            }
+
+            child.left = position.x;
+
+            int windowTop = child.top;
+            int windowBottom = child.Bottom;
+            int windowLeft = child.left;
+            int windowWidth = child.width;
+            int windowRight = child.Right;
+
+            int deadzoneTop = parent.top;
+            int deadzoneBottom = parent.Bottom;
+            int deadzoneLeft = parent.left;
+            int deadzoneRight = parent.Right;
+
+            //Check to see if the window is in the dead zone.
+            if (((windowTop >= deadzoneTop && windowTop <= deadzoneBottom) ||
+                (windowBottom >= deadzoneTop && windowBottom <= deadzoneBottom)) &&
+                ((windowLeft >= deadzoneLeft && windowLeft <= deadzoneRight) ||
+                (windowRight >= deadzoneLeft && windowRight <= deadzoneRight)))
+            {
+                if (windowWidth < RenderManager.Instance.ViewWidth - deadzoneRight) //We can fit to the right, but don't want to be on top of the window
+                {
+                    position = new IntVector2(deadzoneRight, windowTop);
+                }
+                else //Cannot fit to the right go to the left instead
+                {
+                    position = new IntVector2(deadzoneLeft - windowWidth, windowTop);
+                }
+            }
+
+            return position;
         }
     }
 }
