@@ -140,7 +140,15 @@ namespace Medical.GUI
             }
         }
 
+        /// <summary>
+        /// A hint of where to put the context window.
+        /// </summary>
         public IntVector2 DisplayHintLocation { get; private set; }
+
+        /// <summary>
+        /// True if the anatomy finder triggered the selection.
+        /// </summary>
+        public bool TriggeredSelection { get; private set; }
 
         void openAnatomyFinder_FirstFrameUpEvent(EventLayer eventLayer)
         {
@@ -205,6 +213,7 @@ namespace Medical.GUI
                 {
                     SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
                     DisplayHintLocation = new IntVector2(absMouse.x + MouseClickWindowOffset, absMouse.y + MouseClickWindowOffset);
+                    TriggeredSelection = false;
                     Ray3 cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
 
                     IEnumerable<Anatomy> matches = anatomyController.findAnatomy(cameraRay);
@@ -255,7 +264,8 @@ namespace Medical.GUI
             Anatomy anatomy = buttonGridThumbs.getUserObject(item);
             if (anatomyController.ShowPremiumAnatomy || anatomy.ShowInBasicVersion)
             {
-                DisplayHintLocation = new IntVector2(window.Right, item.AbsoluteTop);
+                DisplayHintLocation = new IntVector2(anatomyWindowManager.determineContextWindowX(window.AbsoluteLeft, window.AbsoluteLeft + window.Width), item.AbsoluteTop);
+                TriggeredSelection = true;
                 anatomyController.processSelection(anatomy, null);
             }
             else

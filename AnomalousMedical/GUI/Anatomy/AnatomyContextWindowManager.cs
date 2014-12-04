@@ -65,9 +65,20 @@ namespace Medical.GUI
                 currentAnatomyWindow = new AnatomyContextWindow(this, layerController);
                 currentAnatomyWindow.SmoothShow = true;
             }
+            currentAnatomyWindow.Anatomy = anatomy;
+
+            if(anatomyFinder.TriggeredSelection && position.x < deadZone.left) //If we were triggerd by the anatomy finder and are trying to be to the right make sure that we are.
+            {
+                int widthOffset = currentAnatomyWindow.Width + 1;
+                if (widthOffset < deadZone.left)
+                {
+                    position.x = deadZone.left - widthOffset;
+                }
+            }
+
             currentAnatomyWindow.Position = new Vector2(position.x, position.y);
             currentAnatomyWindow.Visible = true;
-            currentAnatomyWindow.Anatomy = anatomy;
+
             int windowTop = currentAnatomyWindow.Top;
             int windowBottom = windowTop + currentAnatomyWindow.Height;
             int windowLeft = currentAnatomyWindow.Left;
@@ -85,11 +96,11 @@ namespace Medical.GUI
                 ((windowLeft >= deadzoneLeft && windowLeft <= deadzoneRight) ||
                 (windowRight >= deadzoneLeft && windowRight <= deadzoneRight)))
             {
-                if (windowWidth < RenderManager.Instance.ViewWidth - deadzoneRight)
+                if (windowWidth < RenderManager.Instance.ViewWidth - deadzoneRight) //We can fit to the right, but don't want to be on top of the window
                 {
                     currentAnatomyWindow.Position = new Vector2(deadzoneRight, currentAnatomyWindow.Top);
                 }
-                else
+                else //Cannot fit to the right go to the left instead
                 {
                     currentAnatomyWindow.Position = new Vector2(deadzoneLeft - windowWidth, currentAnatomyWindow.Top);
                 }
@@ -220,6 +231,15 @@ namespace Medical.GUI
             }
 
             return false;
+        }
+
+        internal int determineContextWindowX(int left, int right)
+        {
+            if(currentAnatomyWindow != null && currentAnatomyWindow.Visible && currentAnatomyWindow.AbsoluteLeft < left)
+            {
+                return left - currentAnatomyWindow.Width;
+            }
+            return right;
         }
 
         void anatomyController_SelectedAnatomyChanged(AnatomySelection anatomySelection)
