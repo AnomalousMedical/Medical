@@ -337,14 +337,23 @@ namespace Medical.GUI
         {
             if (bookmarksController.PremiumBookmarks)
             {
-                try
+                if(bookmarksController.CurrentPath != null)
                 {
-                    bookmarksController.removeFolder(bookmarksController.CurrentPath);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.show(String.Format("There was an error deleting the folder."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                    Log.Error("Exception deleteing bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                    MessageBox.show(String.Format("Are you sure you want to delete the folder {0} and all of its contents?\nThis cannot be undone.", bookmarksController.CurrentPath.DisplayName), "Delete", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
+                    {
+                        if(result == MessageBoxStyle.Yes)
+                        {
+                            try
+                            {
+                                bookmarksController.removeFolder(bookmarksController.CurrentPath);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.show(String.Format("There was an error deleting the folder."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                                Log.Error("Exception deleteing bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                            }
+                        }
+                    });
                 }
             }
             else
