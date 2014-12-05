@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    /// <summary>
+    /// This class simplifies the BackgroundWorker allowing you to work with an enumerable that is
+    /// processed in a background thread with results synced to the main thread. It can also be canceled.
+    /// </summary>
+    /// <typeparam name="T">The type of items that are processed.</typeparam>
     public class CancelableBackgroundWorker<T>
     {
         private BackgroundWorker bgWorker = new BackgroundWorker();
@@ -15,6 +20,10 @@ namespace Medical
         private bool bgThreadKnowsAboutCancel = false;
         private bool startNewScanOnBackgroundThreadStop = false;
 
+        /// <summary>
+        /// Constructor, takes a task class to process.
+        /// </summary>
+        /// <param name="task">The task class to process.</param>
         public CancelableBackgroundWorker(CancelableBackgroundWorkTask<T> task)
         {
             this.task = task;
@@ -26,6 +35,9 @@ namespace Medical
             bgWorker.RunWorkerCompleted += bgWorker_RunWorkerCompleted;
         }
 
+        /// <summary>
+        /// Start processing the given task.
+        /// </summary>
         public void startWork()
         {
             if (bgWorker.IsBusy)
@@ -57,6 +69,20 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// True if the background worker cancellation is pending.
+        /// </summary>
+        public bool CancellationPending
+        {
+            get
+            {
+                return bgWorker.CancellationPending;
+            }
+        }
+
+        /// <summary>
+        /// Alert the bg worker that it should cancel.
+        /// </summary>
         public void cancel()
         {
             bgWorker.CancelAsync();

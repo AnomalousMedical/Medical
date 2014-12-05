@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    /// <summary>
+    /// A task interface for the CancelableBackgroundWorker. These should only be assigned
+    /// to one CancelableBackgroundWorker once created.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface CancelableBackgroundWorkTask<T>
     {
         /// <summary>
