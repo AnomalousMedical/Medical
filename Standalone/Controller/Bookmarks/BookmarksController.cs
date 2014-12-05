@@ -46,6 +46,11 @@ namespace Medical.Controller
         public event Action BookmarksCleared;
 
         /// <summary>
+        /// Called when the currently loaded bookmark paths are cleared.
+        /// </summary>
+        public event Action BookmarkPathsCleared;
+
+        /// <summary>
         /// Called when premium features are activated.
         /// </summary>
         public event Action<BookmarksController> PremiumBookmarksChanged;
@@ -180,6 +185,15 @@ namespace Medical.Controller
             }
         }
 
+        public void clearBookmarkPaths()
+        {
+            currentPath = null;
+            if(BookmarkPathsCleared != null)
+            {
+                BookmarkPathsCleared.Invoke();
+            }
+        }
+
         public BookmarkPath CurrentPath
         {
             get
@@ -191,7 +205,10 @@ namespace Medical.Controller
                 if (currentPath != value)
                 {
                     currentPath = value;
-                    loadBookmarks.loadBookmarks(currentPath);
+                    if (currentPath != null)
+                    {
+                        loadBookmarks.loadBookmarks(currentPath);
+                    }
                 }
             }
         }

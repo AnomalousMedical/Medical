@@ -494,19 +494,23 @@ namespace Medical.GUI
             if(isPremium)
             {
                 bookmarksController.clearBookmarks();
+                bookmarksController.clearBookmarkPaths();
                 //Save the demo bookmarks so the user does not feel like they "lost" them.
                 //This isn't the most efficient way, but it respects the source and destination data
                 //that is setup somewhere else. Also its only really going to copy 5 or 6 things one
                 //time for most users.
                 var oldBookmarksResourceProvider = createNonPremiumBookmarksResourceProvider();
                 var newBookmarksResourceProvider = createPremiumBookmarksResourceProvider();
-                foreach (String file in oldBookmarksResourceProvider.listFiles("*.bmk"))
+                if (!newBookmarksResourceProvider.listFiles("*.bmk").Any())
                 {
-                    using (Stream stream = oldBookmarksResourceProvider.openFile(file))
+                    foreach (String file in oldBookmarksResourceProvider.listFiles("*.bmk"))
                     {
-                        using(Stream write = newBookmarksResourceProvider.openWriteStream(Path.GetFileName(file)))
+                        using (Stream stream = oldBookmarksResourceProvider.openFile(file))
                         {
-                            stream.CopyTo(write);
+                            using (Stream write = newBookmarksResourceProvider.openWriteStream(Path.GetFileName(file)))
+                            {
+                                stream.CopyTo(write);
+                            }
                         }
                     }
                 }

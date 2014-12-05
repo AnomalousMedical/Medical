@@ -44,6 +44,7 @@ namespace Medical.GUI
             bookmarksController.BookmarkPathAdded += bookmarksController_BookmarkPathAdded;
             bookmarksController.BookmarkPathRemoved += bookmarksController_BookmarkPathRemoved;
             bookmarksController.BookmarksCleared += bookmarksController_BookmarksCleared;
+            bookmarksController.BookmarkPathsCleared += bookmarksController_BookmarkPathsCleared;
 
             ScrollView bookmarksListScroll = (ScrollView)widget.findWidget("BookmarksList");
             bookmarksList = new NoSelectButtonGrid(bookmarksListScroll);
@@ -145,6 +146,12 @@ namespace Medical.GUI
         void bookmarksController_BookmarksCleared()
         {
             bookmarksList.clear();
+        }
+
+        void bookmarksController_BookmarkPathsCleared()
+        {
+            folderTree.Nodes.clear();
+            pathNodes.Clear();
         }
 
         void bookmarksController_BookmarkPathAdded(BookmarkPath path)
