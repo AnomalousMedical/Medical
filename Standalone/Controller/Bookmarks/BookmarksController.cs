@@ -5,9 +5,9 @@ using System.Text;
 using Engine;
 using Engine.Saving.XMLSaver;
 using System.Xml;
-using System.IO;
 using System.Threading;
 using MyGUIPlugin;
+using System.IO;
 
 namespace Medical.Controller
 {
@@ -90,39 +90,44 @@ namespace Medical.Controller
         /// <param name="bookmark"></param>
         public void saveBookmark(Bookmark bookmark)
         {
-            ensureBookmarksFolderExists();
-
-            String directory = MedicalConfig.BookmarksFolder;
-
-            if (currentPath != null)
+            if (bookmarksResourceProvider.CanWrite)
             {
-                if (!bookmarksResourceProvider.directoryExists(currentPath.Path))
+                String directory = "";
+                
+                if (currentPath != null)
                 {
-                    bookmarksResourceProvider.createDirectory(currentPath.Parent.Path, currentPath.DisplayName);
+                    directory = currentPath.Path;
                 }
-                directory = bookmarksResourceProvider.getFullFilePath(currentPath.Path);
-            }
 
-            String fileFormat = Path.Combine(directory, bookmark.Name + "{0}.bmk");
-            String filename = String.Format(fileFormat, "");
+                if (!bookmarksResourceProvider.directoryExists(directory))
+                {
+                    bookmarksResourceProvider.createDirectory(directory);
+                }
 
-            int index = 0;
-            int tries = 0;
-            while (File.Exists(filename) && tries < MaxFileNameTries)
-            {
-                filename = String.Format(fileFormat, (++index).ToString());
-            }
-            if(tries == MaxFileNameTries)
-            {
-                filename = Path.Combine(MedicalConfig.BookmarksFolder, Guid.NewGuid().ToString() + ".bmk");
-            }
+                String fileFormat = Path.Combine(directory, bookmark.Name + "{0}.bmk");
+                String filename = String.Format(fileFormat, "");
 
-            bookmark.BackingFile = filename;
+                int index = 0;
+                int tries = 0;
+                while (bookmarksResourceProvider.fileExists(filename) && tries < MaxFileNameTries)
+                {
+                    filename = String.Format(fileFormat, (++index).ToString());
+                }
+                if (tries == MaxFileNameTries)
+                {
+                    filename = Path.Combine(MedicalConfig.BookmarksFolder, Guid.NewGuid().ToString() + ".bmk");
+                }
 
-            using (XmlTextWriter xmlWriter = new XmlTextWriter(filename, Encoding.Unicode))
-            {
-                xmlWriter.Formatting = Formatting.Indented;
-                xmlSaver.saveObject(bookmark, xmlWriter);
+                bookmark.BackingFile = filename;
+
+                using (Stream stream = bookmarksResourceProvider.openWriteStream(filename))
+                {
+                    using (XmlTextWriter xmlWriter = new XmlTextWriter(stream, Encoding.Unicode))
+                    {
+                        xmlWriter.Formatting = Formatting.Indented;
+                        xmlSaver.saveObject(bookmark, xmlWriter);
+                    }
+                }
             }
         }
 
@@ -133,7 +138,7 @@ namespace Medical.Controller
             {
                 try
                 {
-                    File.Delete(bookmark.BackingFile);
+                    bookmarksResourceProvider.delete(bookmark.BackingFile);
                 }
                 catch (Exception)
                 {
@@ -160,11 +165,13 @@ namespace Medical.Controller
                     Thread.Sleep(1000);
                     if (premiumBookmarks)
                     {
-                        ensureBookmarksFolderExists();
+                        if(!Directory.Exists(MedicalConfig.BookmarksFolder))
+                        {
+                            Directory.CreateDirectory(MedicalConfig.BookmarksFolder);
+                        }
                         bookmarksResourceProvider = new FilesystemResourceProvider(MedicalConfig.BookmarksFolder);
                         loadBookmarksFoldersBgThread(new BookmarkPath()
                         {
-                            BackingPath = bookmarksResourceProvider.getFullFilePath(""),
                             Path = "",
                             DisplayName = "Bookmarks",
                             Parent = null
@@ -175,7 +182,6 @@ namespace Medical.Controller
                         bookmarksResourceProvider = NonPremiumBookmarksResourceProvider;
                         loadBookmarksFoldersBgThread(new BookmarkPath()
                         {
-                            BackingPath = MedicalConfig.BookmarksFolder,
                             Path = "",
                             DisplayName = "Bookmarks",
                             Parent = null
@@ -200,8 +206,11 @@ namespace Medical.Controller
             }
             set
             {
-                currentPath = value;
-                loadBookmarks.loadBookmarks(currentPath, bookmarksResourceProvider != NonPremiumBookmarksResourceProvider);
+                if (currentPath != value)
+                {
+                    currentPath = value;
+                    loadBookmarks.loadBookmarks(currentPath, bookmarksResourceProvider != NonPremiumBookmarksResourceProvider);
+                }
             }
         }
 
@@ -216,46 +225,12 @@ namespace Medical.Controller
             {
                 loadBookmarksFoldersBgThread(new BookmarkPath()
                     {
-                        BackingPath = bookmarksResourceProvider.getFullFilePath(directory),
                         Path = directory,
                         DisplayName = Path.GetFileNameWithoutExtension(directory),
                         Parent = path
                     }, saveFilePath);
             }
         }
-
-        //private void readBookmarkFilesBgThread(BookmarkPath path, bool saveFilePath)
-        //{
-        //    foreach (String file in bookmarksResourceProvider.listFiles("*.bmk", path.Path, false))
-        //    {
-        //        Bookmark bookmark;
-        //        using (XmlTextReader xmlReader = new XmlTextReader(bookmarksResourceProvider.openFile(file)))
-        //        {
-        //            try
-        //            {
-        //                bookmark = xmlSaver.restoreObject(xmlReader) as Bookmark;
-        //            }
-        //            catch(Exception ex)
-        //            {
-        //                bookmark = null;
-        //                Logging.Log.Error("{0} loading bookmark '{1}'. Skipping this bookmark. Message: {2}", ex.GetType().Name, file, ex.Message);
-        //            }
-        //        }
-        //        if (bookmark != null)
-        //        {
-        //            if (saveFilePath)
-        //            {
-        //                bookmark.BackingFile = bookmarksResourceProvider.getFullFilePath(file);
-        //            }
-        //            ThreadManager.invokeAndWait(() => fireBookmarkAdded(bookmark));
-        //            //Thread.Sleep(20);
-        //        }
-        //        if (cancelBackgroundLoading)
-        //        {
-        //            return;
-        //        }
-        //    }
-        //}
 
         public bool PremiumBookmarks
         {
@@ -307,14 +282,6 @@ namespace Medical.Controller
             if (BookmarkPathRemoved != null)
             {
                 BookmarkPathRemoved.Invoke(path);
-            }
-        }
-
-        private void ensureBookmarksFolderExists()
-        {
-            if (!Directory.Exists(MedicalConfig.BookmarksFolder))
-            {
-                Directory.CreateDirectory(MedicalConfig.BookmarksFolder);
             }
         }
     }

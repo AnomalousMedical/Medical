@@ -13,12 +13,19 @@ namespace Medical
 
         }
 
+        /// <summary>
+        /// The display name for this path.
+        /// </summary>
         public String DisplayName { get; internal set; }
 
+        /// <summary>
+        /// The parent path for this path.
+        /// </summary>
         public BookmarkPath Parent { get; internal set; }
 
+        /// <summary>
+        /// The full path of this path.
+        /// </summary>
         internal String Path { get; set; }
-
-        internal String BackingPath { get; set; }
     }
 }
