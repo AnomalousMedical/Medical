@@ -18,7 +18,6 @@ namespace Medical.GUI
     {
         public event EventHandler OpenFile;
 
-        private BackgroundWorker fileListWorker = new BackgroundWorker();
         private MultiListBox fileDataGrid;
         private EditBox locationTextBox;
         private ImageBox warningImage;
@@ -31,67 +30,9 @@ namespace Medical.GUI
         private bool allowOpen = false;
 
         private PatientDataFile currentFile = null;
-        private bool validSearchDirectory = true;
 
-        private delegate void UpdateCallback(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition);
-        private UpdateCallback updateFileListCallback;
-
-        /**
-         * The following variables work on the lifecycle that allows the
-         * background worker to be canceled. This works by doing the sequences
-         * described in the enum. The general sequence works as such.
-         *   Some event happens on the UI thread that requires the background
-         *   thread to shut down before it can continue. The UI thread looks to
-         *   see if the background thread is running. If it is it will set the
-         *   appropriate CancelPostAction and call the CancelAsync method on the
-         *   background worker. The background worker will check each time it is
-         *   scanning a new file to see if it is allowed to continue or is
-         *   canceled. If it is canceled it will set the
-         *   bgThreadKnowsAboutCancel variable to true and will not attempt to
-         *   call anymore ui thread functions or sync its data. It will then
-         *   call the cancelListFilesCallback on the UI thread. This will start
-         *   the action originally requested on the UI thread. It will also
-         *   break its loop and shutdown as fast as possible calling its
-         *   RunCompleted method.
-         */
-        /// <summary>
-        /// An enum of actions to take after the background worker is canceled.
-        /// </summary>
-        private enum CancelPostAction
-        {
-            /// <summary>
-            /// Take no action on close.
-            /// </summary>
-            None,
-            /// <summary>
-            /// The listFiles function will check to see if the background
-            /// thread is already running. If it is it will set the
-            /// CancelPostAction to ProcessNewDirectory and then cancel the
-            /// background worker. When the background worker signals that is
-            /// knows about the cancel the
-            /// startNewDirectoryScanOnBackgroundThreadStop variable will be set
-            /// to true. Now when the RunWorkerCompleted method is called the
-            /// listFiles() function will be called again from that method.
-            /// </summary>
-            ProcessNewDirectory,
-            /// <summary>
-            /// The form's onClosing event is handled. If the background thread
-            /// is busy the close is canceled and the background thread's
-            /// cancelAsync method is called. The CancelPostAction is set to
-            /// Close and the BackgroundWorker cancelAsync method is called. In
-            /// the CancelCallback the form will actually be closed and it will
-            /// not be canceled by the OnClosing event because
-            /// bgThreadKnowsAboutCancel will be true ensuring the background
-            /// thread no longer calls any UI thread functions.
-            /// </summary>
-            Close,
-        }
-
-        private delegate void CancelCallback();
-        private CancelCallback cancelListFilesCallback;
-        private CancelPostAction cancelPostAction;
-        private bool bgThreadKnowsAboutCancel = false;
-        private bool startNewDirectoryScanOnBackgroundThreadStop = false;
+        private CancelableBackgroundWorker<PatientFileBuffer> cancelableWorker;
+        private ListPatientsBgTask listPatientsTask;
 
         public OpenPatientDialog(GUIManager guiManager)
             : base("Medical.GUI.FileManagement.OpenPatientDialog.layout", guiManager)
@@ -131,7 +72,6 @@ namespace Medical.GUI
                 }
             }
             locationTextBox.Caption = saveDirectory;
-
             locationTextBox.EventEditTextChange += new MyGUIEvent(locationTextBox_EventEditTextChange);
 
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
@@ -141,14 +81,9 @@ namespace Medical.GUI
             loadingProgress.Visible = false;
             loadingProgress.Range = 100;
 
-            fileListWorker.WorkerReportsProgress = true;
-            fileListWorker.WorkerSupportsCancellation = true;
-            fileListWorker.DoWork += new DoWorkEventHandler(fileListWorker_DoWork);
-            fileListWorker.ProgressChanged += new ProgressChangedEventHandler(fileListWorker_ProgressChanged);
-            fileListWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(fileListWorker_RunWorkerCompleted);
-
-            updateFileListCallback = new UpdateCallback(this.updateFileList);
-            cancelListFilesCallback = new CancelCallback(listFilesCanceled);
+            listPatientsTask = new ListPatientsBgTask(fileDataGrid, loadingProgress, locationTextBox, this);
+            listPatientsTask.CanDoWork = Directory.Exists(saveDirectory);
+            cancelableWorker = new CancelableBackgroundWorker<PatientFileBuffer>(listPatientsTask);
 
             openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
             deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);
@@ -196,8 +131,8 @@ namespace Medical.GUI
 
         void locationTextBox_EventEditTextChange(Widget source, EventArgs e)
         {
-            validSearchDirectory = Directory.Exists(locationTextBox.Caption);
-            warningImage.Visible = warningText.Visible = !validSearchDirectory;
+            listPatientsTask.CanDoWork = Directory.Exists(locationTextBox.Caption);
+            warningImage.Visible = warningText.Visible = !listPatientsTask.CanDoWork;
             listFiles();
         }
 
@@ -209,11 +144,11 @@ namespace Medical.GUI
 
         void OpenPatientDialog_Hiding(object sender, Engine.CancelEventArgs e)
         {
-            if (fileListWorker.IsBusy && !bgThreadKnowsAboutCancel)
+            if (cancelableWorker.IsWorking)
             {
                 e.Cancel = true;
-                cancelPostAction = CancelPostAction.Close;
-                fileListWorker.CancelAsync();
+                listPatientsTask.CancelPostAction = CancelPostAction.Close;
+                cancelableWorker.cancel();
             }
         }
 
@@ -228,7 +163,7 @@ namespace Medical.GUI
             listFiles();
             currentFile = null;
             toggleButtonsEnabled();
-            cancelPostAction = CancelPostAction.None;
+            listPatientsTask.CancelPostAction = CancelPostAction.None;
             InputManager.Instance.setKeyFocusWidget(searchBox);
         }
 
@@ -303,110 +238,7 @@ namespace Medical.GUI
 
         private void listFiles()
         {
-            if (fileListWorker.IsBusy)
-            {
-                cancelPostAction = CancelPostAction.ProcessNewDirectory;
-                fileListWorker.CancelAsync();
-            }
-            else
-            {
-                fileDataGrid.removeAllItems();
-                if (validSearchDirectory)
-                {
-                    startNewDirectoryScanOnBackgroundThreadStop = false;
-                    bgThreadKnowsAboutCancel = false;
-                    loadingProgress.Visible = true;
-                    fileListWorker.RunWorkerAsync();
-                }
-            }
-        }
-
-        void fileListWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            if (validSearchDirectory)
-            {
-                //Stopwatch sw = new Stopwatch();
-                //sw.Start();
-
-                String[] files = Directory.GetFiles(locationTextBox.Caption, "*.pdt");
-                int totalFiles = files.Length;
-
-                int bufferSize = 200;// totalFiles / 3 + totalFiles % 3;
-                int bufMax = bufferSize - 1;
-                PatientDataFile[] dataFileBuffer = new PatientDataFile[bufferSize];
-                int dataFileBufferPosition = 0;
-
-                dataFileBufferPosition = 0;
-                int currentPosition = 0;
-                foreach (String file in files)
-                {
-                    if (fileListWorker.CancellationPending)
-                    {
-                        bgThreadKnowsAboutCancel = true;
-                        ThreadManager.invokeAndWait(cancelListFilesCallback);
-                        break;
-                    }
-                    PatientDataFile patient = new PatientDataFile(file);
-                    if (patient.loadHeader())
-                    {
-                        currentPosition = dataFileBufferPosition++ % bufferSize;
-                        dataFileBuffer[currentPosition] = patient;
-                        if (currentPosition == bufMax)
-                        {
-                            ThreadManager.invokeAndWait(updateFileListCallback, dataFileBuffer, currentPosition);
-                            fileListWorker.ReportProgress((int)(((float)dataFileBufferPosition / totalFiles) * 100.0f));
-                        }
-                    }
-                }
-                if (!bgThreadKnowsAboutCancel && files.Length > 0)
-                {
-                    ThreadManager.invokeAndWait(updateFileListCallback, dataFileBuffer, currentPosition);
-                    fileListWorker.ReportProgress(0);
-                }
-
-                //sw.Stop();
-                //Log.Debug("Scanned files in {0}", sw.ElapsedMilliseconds);
-            }
-        }
-
-        void updateFileList(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition)
-        {
-            for (int i = 0; i <= dataFileBufferPosition; ++i)
-            {
-                fileDataGrid.addItem(dataFileBuffer[i].FirstName, dataFileBuffer[i]);
-                uint newIndex = fileDataGrid.getItemCount() - 1;
-                fileDataGrid.setSubItemNameAt(1, newIndex, dataFileBuffer[i].LastName);
-                fileDataGrid.setSubItemNameAt(2, newIndex, dataFileBuffer[i].DateModified.ToString());
-            }
-        }
-
-        void fileListWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            loadingProgress.Position = (uint)e.ProgressPercentage;
-        }
-
-        void fileListWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            loadingProgress.Visible = false;
-            //Log.Debug("Total patients {0}.", fileDataGrid.getItemCount());
-            if (startNewDirectoryScanOnBackgroundThreadStop)
-            {
-                listFiles();
-            }
-        }
-
-        void listFilesCanceled()
-        {
-            switch (cancelPostAction)
-            {
-                case CancelPostAction.Close:
-                    this.hide();
-                    break;
-                case CancelPostAction.ProcessNewDirectory:
-                    startNewDirectoryScanOnBackgroundThreadStop = true;
-                    break;
-            }
-            cancelPostAction = CancelPostAction.None;
+            cancelableWorker.startWork();
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)

@@ -178,6 +178,7 @@
     <Compile Include="Controller\AnomalousMvc\Model\Models\Navigation\NavigationModel.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
     <Compile Include="Controller\Background\BackgroundScene.cs" />
+    <Compile Include="Controller\Bookmarks\BookmarkPath.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
     <Compile Include="Controller\MusclePosition\MovementSequence.cs" />
     <Compile Include="Controller\MusclePosition\MovementSequenceState.cs" />
@@ -829,6 +830,8 @@
     <Compile Include="Platform\NativeInputHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
+    <Compile Include="Utility\CancelableBackgroundWorker.cs" />
+    <Compile Include="Utility\CancelableBackgroundWorkTask.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <Compile Include="Utility\FreeImageBitmapExtensions.cs" />

@@ -62,7 +62,6 @@ namespace Medical.GUI
             tree.BeforeSelect += new EventHandler<TreeCancelEventArgs>(tree_BeforeSelect);
             tree.NodeMouseReleased += new EventHandler<TreeMouseEventArgs>(tree_NodeMouseReleased);
             tree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(tree_NodeMouseDoubleClick);
-            tree.NodeMouseClick += new EventHandler<TreeEventArgs>(tree_NodeMouseClick);
         }
 
         public void Dispose()
@@ -71,7 +70,6 @@ namespace Medical.GUI
             tree.BeforeSelect -= tree_BeforeSelect;
             tree.NodeMouseReleased -= tree_NodeMouseReleased;
             tree.NodeMouseDoubleClick -= tree_NodeMouseDoubleClick;
-            tree.NodeMouseClick -= tree_NodeMouseClick;
 
             if (parentNode != null)
             {
@@ -126,15 +124,6 @@ namespace Medical.GUI
                 EditInterfaceRemoved.Invoke(new EditInterfaceViewEvent(editInterfaceTreeNode.EditInterface));
             }
             tree.layout();
-        }
-
-        void tree_NodeMouseClick(object sender, TreeEventArgs e)
-        {
-            if (EditInterfaceChosen != null)
-            {
-                EditInterfaceViewEvent evt = new EditInterfaceViewEvent((e.Node as EditInterfaceTreeNode).EditInterface);
-                EditInterfaceChosen.Invoke(evt);
-            }
         }
 
         void tree_NodeMouseDoubleClick(object sender, TreeEventArgs e)

@@ -123,7 +123,9 @@
     <EmbeddedResource Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\DebugVisualizer\DebugVisualizer.layout" />
+    <EmbeddedResource Include="GUI\DebugVisualizer\DebugVisualizer.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperRenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\DeveloperRenderer\DeveloperResolutionMenu.layout" />
     <EmbeddedResource Include="GUI\DiscEditor\DiscControl.layout" />

@@ -178,7 +178,9 @@
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFilter.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
+    <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
     <EmbeddedResource Include="GUI\CameraAngleGui\CameraAngleGui.layout" />
     <EmbeddedResource Include="GUI\ChooseSceneDialog\ChooseSceneDialog.layout" />
