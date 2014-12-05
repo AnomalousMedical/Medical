@@ -158,34 +158,17 @@ namespace Medical.Controller
             window.pushUndoState(undoCameraPosition);
         }
 
-        public void loadSavedBookmarks()
+        public void loadSavedBookmarks(ResourceProvider resourceProvider)
         {
+            bookmarksResourceProvider = resourceProvider;
             ThreadPool.QueueUserWorkItem(state =>
                 {
-                    if (premiumBookmarks)
-                    {
-                        if(!Directory.Exists(MedicalConfig.BookmarksFolder))
-                        {
-                            Directory.CreateDirectory(MedicalConfig.BookmarksFolder);
-                        }
-                        bookmarksResourceProvider = new FilesystemResourceProvider(MedicalConfig.BookmarksFolder);
-                        loadBookmarksFoldersBgThread(new BookmarkPath()
+                    loadBookmarksFoldersBgThread(new BookmarkPath()
                         {
                             Path = "",
                             DisplayName = "Bookmarks",
                             Parent = null
                         });
-                    }
-                    else if(NonPremiumBookmarksResourceProvider != null)
-                    {
-                        bookmarksResourceProvider = NonPremiumBookmarksResourceProvider;
-                        loadBookmarksFoldersBgThread(new BookmarkPath()
-                        {
-                            Path = "",
-                            DisplayName = "Bookmarks",
-                            Parent = null
-                        });
-                    }
                 });
         }
 
@@ -249,8 +232,6 @@ namespace Medical.Controller
                 }
             }
         }
-
-        public ResourceProvider NonPremiumBookmarksResourceProvider { get; set; }
 
         private void fireBookmarkAdded(Bookmark bookmark)
         {

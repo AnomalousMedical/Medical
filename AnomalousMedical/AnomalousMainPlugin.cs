@@ -239,7 +239,6 @@ namespace Medical.GUI
             //Premium / Non Premium
             if (!hasPremium)
             {
-                bookmarksController.NonPremiumBookmarksResourceProvider = new EmbeddedResourceProvider(this.GetType().Assembly, "Medical.Resources.Bookmarks.");
                 buyScreens = new BuyScreenController(standaloneController);
                 taskMenuAd = new PremiumFeaturesTaskMenuAd(taskMenu);
                 selectionModeTask.SelectionModeChooser.ShowBuyMessage += SelectionModeChooser_ShowBuyMessage;
@@ -316,7 +315,16 @@ namespace Medical.GUI
                 }
             }
 
-            bookmarksController.loadSavedBookmarks();
+            ResourceProvider bookmarksResourceProvider;
+            if(bookmarksController.PremiumBookmarks)
+            {
+                bookmarksResourceProvider = createPremiumBookmarksResourceProvider();
+            }
+            else
+            {
+                bookmarksResourceProvider = createNonPremiumBookmarksResourceProvider();
+            }
+            bookmarksController.loadSavedBookmarks(bookmarksResourceProvider);
         }
 
         public long PluginId
@@ -490,22 +498,19 @@ namespace Medical.GUI
                 //This isn't the most efficient way, but it respects the source and destination data
                 //that is setup somewhere else. Also its only really going to copy 5 or 6 things one
                 //time for most users.
-                if(bookmarksController.NonPremiumBookmarksResourceProvider != null)
+                var oldBookmarksResourceProvider = createNonPremiumBookmarksResourceProvider();
+                var newBookmarksResourceProvider = createPremiumBookmarksResourceProvider();
+                foreach (String file in oldBookmarksResourceProvider.listFiles("*.bmk"))
                 {
-                    foreach (String file in bookmarksController.NonPremiumBookmarksResourceProvider.listFiles("*.bmk"))
+                    using (Stream stream = oldBookmarksResourceProvider.openFile(file))
                     {
-                        Bookmark bookmark;
-                        using (Stream stream = bookmarksController.NonPremiumBookmarksResourceProvider.openFile(file))
+                        using(Stream write = newBookmarksResourceProvider.openWriteStream(Path.GetFileName(file)))
                         {
-                            bookmark = SharedXmlSaver.Load<Bookmark>(stream);
-                        }
-                        if (bookmark != null)
-                        {
-                            bookmarksController.saveBookmark(bookmark);
+                            stream.CopyTo(write);
                         }
                     }
                 }
-                bookmarksController.loadSavedBookmarks();
+                bookmarksController.loadSavedBookmarks(newBookmarksResourceProvider);
 
                 //Turn off the ad
                 if(taskMenuAd != null)
@@ -539,6 +544,22 @@ namespace Medical.GUI
             {
                 downloadGUITask.clicked(EmptyTaskPositioner.Instance);
             }
+        }
+
+        private ResourceProvider createNonPremiumBookmarksResourceProvider()
+        {
+            return new EmbeddedResourceProvider(this.GetType().Assembly, "Medical.Resources.Bookmarks.");
+        }
+
+        private static ResourceProvider createPremiumBookmarksResourceProvider()
+        {
+            ResourceProvider bookmarksResourceProvider;
+            if (!Directory.Exists(MedicalConfig.BookmarksFolder))
+            {
+                Directory.CreateDirectory(MedicalConfig.BookmarksFolder);
+            }
+            bookmarksResourceProvider = new FilesystemResourceProvider(MedicalConfig.BookmarksFolder);
+            return bookmarksResourceProvider;
         }
     }
 }
