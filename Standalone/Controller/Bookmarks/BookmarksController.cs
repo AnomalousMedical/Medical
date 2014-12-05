@@ -55,6 +55,11 @@ namespace Medical.Controller
         /// </summary>
         public event Action<BookmarksController> PremiumBookmarksChanged;
 
+        /// <summary>
+        /// Called when the current path changes.
+        /// </summary>
+        public event Action<BookmarkPath> CurrentPathChanged;
+
         private StandaloneController standaloneController;
         private ResourceProvider bookmarksResourceProvider;
         private BookmarkPath currentPath;
@@ -205,6 +210,10 @@ namespace Medical.Controller
                 if (currentPath != value)
                 {
                     currentPath = value;
+                    if(CurrentPathChanged != null)
+                    {
+                        CurrentPathChanged.Invoke(currentPath);
+                    }
                     if (currentPath != null)
                     {
                         loadBookmarks.loadBookmarks(currentPath);
