@@ -30,6 +30,9 @@ namespace Medical.GUI
         private IntVector2 dragMouseStartPosition;
         private ImageBox lockedFeatureImage;
 
+        private Button addFolder;
+        private Button removeFolder;
+
         private TreeNode topFolder;
 
         private ButtonGridLiveThumbnailController<Bookmark> liveThumbController;
@@ -75,6 +78,11 @@ namespace Medical.GUI
             toggleAddCustomBookmarks();
 
             liveThumbController = new ButtonGridLiveThumbnailController<Bookmark>("Bookmarks_", new IntSize2(BookmarkThumbSize, BookmarkThumbSize), sceneViewController, bookmarksList, bookmarksListScroll);
+
+            addFolder = widget.findWidget("AddFolder") as Button;
+            addFolder.MouseButtonClick += addFolder_MouseButtonClick;
+            removeFolder = widget.findWidget("RemoveFolder") as Button;
+            removeFolder.MouseButtonClick += removeFolder_MouseButtonClick;
         }
 
         public override void Dispose()
@@ -178,7 +186,7 @@ namespace Medical.GUI
             pathNodes.Remove(path);
             if (path.Parent != null)
             {
-                pathNodes[path].Children.remove(bookmarkNode);
+                pathNodes[path.Parent].Children.remove(bookmarkNode);
             }
             else
             {
@@ -293,6 +301,8 @@ namespace Medical.GUI
 
         void bookmarksController_CurrentPathChanged(BookmarkPath path)
         {
+            removeFolder.Enabled = path != null && path.Parent != null;
+            addFolder.Enabled = path != null;
             if (path != null)
             {
                 TreeNode node = pathNodes[path];
@@ -300,6 +310,32 @@ namespace Medical.GUI
                 {
                     folderTree.SelectedNode = pathNodes[path];
                 }
+            }
+        }
+
+        void addFolder_MouseButtonClick(Widget source, EventArgs e)
+        {
+            try
+            {
+                bookmarksController.addFolder(bookmarkName.Caption);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error creating the folder.\nTry using a different name and do not include special characters such as \\ / : * ? \" < > and |."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Exception creating bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+            }
+        }
+
+        void removeFolder_MouseButtonClick(Widget source, EventArgs e)
+        {
+            try
+            {
+                bookmarksController.removeFolder(bookmarksController.CurrentPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("There was an error deleting the folder."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                Log.Error("Exception deleteing bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
             }
         }
     }

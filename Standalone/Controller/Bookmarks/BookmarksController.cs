@@ -103,7 +103,7 @@ namespace Medical.Controller
             if (bookmarksResourceProvider.CanWrite)
             {
                 String directory = "";
-                
+
                 if (currentPath != null)
                 {
                     directory = currentPath.Path;
@@ -157,6 +157,47 @@ namespace Medical.Controller
             }
         }
 
+        public void addFolder(String name)
+        {
+            if (bookmarksResourceProvider.CanWrite)
+            {
+                String path = name;
+                if (currentPath != null)
+                {
+                    path = Path.Combine(currentPath.Path, path);
+                }
+                if (!bookmarksResourceProvider.directoryExists(path))
+                {
+                    bookmarksResourceProvider.createDirectory(path);
+
+                    fireBookmarkPathAdded(new BookmarkPath()
+                    {
+                        DisplayName = name,
+                        Parent = currentPath,
+                        Path = path
+                    });
+                }
+            }
+        }
+
+        public void removeFolder(BookmarkPath path)
+        {
+            if (bookmarksResourceProvider.CanWrite && path.Parent != null)
+            {
+                if (bookmarksResourceProvider.directoryExists(path.Path))
+                {
+                    bookmarksResourceProvider.delete(path.Path);
+
+                    if (path == CurrentPath)
+                    {
+                        CurrentPath = path.Parent;
+                    }
+
+                    fireBookmarkPathRemoved(path);
+                }
+            }
+        }
+
         public void applyBookmark(Bookmark bookmark)
         {
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
@@ -174,17 +215,17 @@ namespace Medical.Controller
             ThreadPool.QueueUserWorkItem(state =>
                 {
                     loadBookmarksFoldersBgThread(new BookmarkPath()
-                        {
-                            Path = "",
-                            DisplayName = "Bookmarks",
-                            Parent = null
-                        });
+                    {
+                        Path = "",
+                        DisplayName = "Bookmarks",
+                        Parent = null
+                    });
                 });
         }
 
         public void clearBookmarks()
         {
-            if(BookmarksCleared != null)
+            if (BookmarksCleared != null)
             {
                 BookmarksCleared.Invoke();
             }
@@ -193,7 +234,7 @@ namespace Medical.Controller
         public void clearBookmarkPaths()
         {
             currentPath = null;
-            if(BookmarkPathsCleared != null)
+            if (BookmarkPathsCleared != null)
             {
                 BookmarkPathsCleared.Invoke();
             }
@@ -210,7 +251,7 @@ namespace Medical.Controller
                 if (currentPath != value)
                 {
                     currentPath = value;
-                    if(CurrentPathChanged != null)
+                    if (CurrentPathChanged != null)
                     {
                         CurrentPathChanged.Invoke(currentPath);
                     }
@@ -225,11 +266,11 @@ namespace Medical.Controller
         private void loadBookmarksFoldersBgThread(BookmarkPath path)
         {
             ThreadManager.invokeAndWait(() => fireBookmarkPathAdded(path));
-            if(currentPath == null)
+            if (currentPath == null)
             {
                 CurrentPath = path;
             }
-            foreach(String directory in bookmarksResourceProvider.listDirectories("*", path.Path, false))
+            foreach (String directory in bookmarksResourceProvider.listDirectories("*", path.Path, false))
             {
                 loadBookmarksFoldersBgThread(new BookmarkPath()
                     {
@@ -248,10 +289,10 @@ namespace Medical.Controller
             }
             set
             {
-                if(premiumBookmarks != value)
+                if (premiumBookmarks != value)
                 {
                     premiumBookmarks = value;
-                    if(PremiumBookmarksChanged != null)
+                    if (PremiumBookmarksChanged != null)
                     {
                         PremiumBookmarksChanged.Invoke(this);
                     }
