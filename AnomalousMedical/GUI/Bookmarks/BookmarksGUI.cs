@@ -168,6 +168,7 @@ namespace Medical.GUI
             else
             {
                 folderTree.Nodes.add(bookmarkNode);
+                bookmarkNode.Expanded = true;
             }
             folderTree.layout();
         }
