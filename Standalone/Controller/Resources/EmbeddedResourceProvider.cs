@@ -173,5 +173,13 @@ namespace Medical
         {
             throw new NotImplementedException("Cannot clone the EmbeddedResourceProvider");
         }
+
+        public bool CanWrite
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }

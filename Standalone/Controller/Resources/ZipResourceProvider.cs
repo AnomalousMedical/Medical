@@ -368,6 +368,14 @@ namespace Medical
             File.Copy(BackingLocation, destination);
         }
 
+        public bool CanWrite
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         class WriteStream : Stream
         {
             private Stream baseStream;

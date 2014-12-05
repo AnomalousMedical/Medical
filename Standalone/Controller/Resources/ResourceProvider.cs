@@ -138,6 +138,11 @@ namespace Medical
         /// </summary>
         /// <param name="destination"></param>
         void cloneProviderTo(String destination);
+
+        /// <summary>
+        /// This will be true if you can write to this resource provider.
+        /// </summary>
+        bool CanWrite { get; }
     }
 
     public static class ResourceProviderExtensions

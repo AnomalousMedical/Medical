@@ -193,6 +193,14 @@ namespace Medical
             }
         }
 
+        public bool CanWrite
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public string BackingLocation
         {
             get

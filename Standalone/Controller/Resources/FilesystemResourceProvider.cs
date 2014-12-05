@@ -165,5 +165,13 @@ namespace Medical
             }
             DirectoryExtensions.Copy(BackingLocation, destination, true);
         }
+
+        public bool CanWrite
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

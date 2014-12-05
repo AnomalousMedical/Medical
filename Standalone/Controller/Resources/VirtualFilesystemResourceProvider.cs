@@ -130,5 +130,13 @@ namespace Medical
         {
             throw new NotImplementedException("Cannot clone the VirtualFSResourceProvider");
         }
+
+        public bool CanWrite
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }
