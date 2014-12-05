@@ -31,7 +31,6 @@ namespace Medical.GUI
 
         private PatientDataFile currentFile = null;
 
-        private CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>> cancelableWorker;
         private ListPatientsBgTask listPatientsTask;
 
         public OpenPatientDialog(GUIManager guiManager)
@@ -81,9 +80,7 @@ namespace Medical.GUI
             loadingProgress.Visible = false;
             loadingProgress.Range = 100;
 
-            listPatientsTask = new ListPatientsBgTask(fileDataGrid, loadingProgress, locationTextBox, this);
-            listPatientsTask.CanDoWork = Directory.Exists(saveDirectory);
-            cancelableWorker = new CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>>(listPatientsTask);
+            listPatientsTask = new ListPatientsBgTask(this);
 
             openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
             deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);
@@ -110,12 +107,6 @@ namespace Medical.GUI
                         fireOpen();
                     }
                     break;
-                //case KeyboardButtonCode.KC_DOWN:
-                //    InputManager.Instance.resetKeyFocusWidget();
-                //    InputManager.Instance.resetMouseFocusWidget();
-                //    InputManager.Instance.resetMouseCaptureWidget();
-                //    InputManager.Instance.setKeyFocusWidget(fileDataGrid);
-                //    break;
             }
         }
 
@@ -131,8 +122,6 @@ namespace Medical.GUI
 
         void locationTextBox_EventEditTextChange(Widget source, EventArgs e)
         {
-            listPatientsTask.CanDoWork = Directory.Exists(locationTextBox.Caption);
-            warningImage.Visible = warningText.Visible = !listPatientsTask.CanDoWork;
             listFiles();
         }
 
@@ -144,11 +133,11 @@ namespace Medical.GUI
 
         void OpenPatientDialog_Hiding(object sender, Engine.CancelEventArgs e)
         {
-            if (cancelableWorker.IsWorking)
+            if (listPatientsTask.IsWorking)
             {
                 e.Cancel = true;
                 listPatientsTask.CancelPostAction = CancelPostAction.Close;
-                cancelableWorker.cancel();
+                listPatientsTask.cancel();
             }
         }
 
@@ -172,6 +161,43 @@ namespace Medical.GUI
             get
             {
                 return currentFile;
+            }
+        }
+
+        public void clearFileList()
+        {
+            fileDataGrid.removeAllItems();
+        }
+
+        public void addFile(PatientDataFile file)
+        {
+            fileDataGrid.addItem(file.FirstName, file);
+            uint newIndex = fileDataGrid.getItemCount() - 1;
+            fileDataGrid.setSubItemNameAt(1, newIndex, file.LastName);
+            fileDataGrid.setSubItemNameAt(2, newIndex, file.DateModified.ToString());
+        }
+
+        public bool LoadingProgressVisible
+        {
+            get
+            {
+                return loadingProgress.Visible;
+            }
+            set
+            {
+                loadingProgress.Visible = value;
+            }
+        }
+
+        public uint LoadingProgress
+        {
+            get
+            {
+                return loadingProgress.Position;
+            }
+            set
+            {
+                loadingProgress.Position = value;
             }
         }
 
@@ -238,7 +264,8 @@ namespace Medical.GUI
 
         private void listFiles()
         {
-            cancelableWorker.startWork();
+            listPatientsTask.listFiles(locationTextBox.Caption);
+            warningImage.Visible = warningText.Visible = !listPatientsTask.CanDoWork;
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)

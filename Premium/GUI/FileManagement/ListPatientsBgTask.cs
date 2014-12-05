@@ -61,43 +61,38 @@ namespace Medical.GUI
 
     class ListPatientsBgTask : CancelableBackgroundWorkTask<ObjectBuffer<PatientDataFile>>
     {
-        private MultiListBox fileDataGrid;
-        private ProgressBar loadingProgress;
-        private TextBox locationTextBox;
         private OpenPatientDialog dialog;
+        private CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>> bgWorker;
+        private String currentDirectory;
 
-        public ListPatientsBgTask(MultiListBox fileDataGrid, ProgressBar loadingProgress, TextBox locationTextBox, OpenPatientDialog dialog)
+        public ListPatientsBgTask(OpenPatientDialog dialog)
         {
-            this.fileDataGrid = fileDataGrid;
-            this.loadingProgress = loadingProgress;
-            this.locationTextBox = locationTextBox;
             this.dialog = dialog;
+            bgWorker = new CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>>(this);
         }
 
-        public bool CanDoWork { get; set; }
+        public bool CanDoWork { get; private set; }
 
         public IEnumerable<ObjectBuffer<PatientDataFile>> WorkUnits
         {
             get
             {
-                String[] files = Directory.GetFiles(locationTextBox.Caption, "*.pdt");
+                String[] files = Directory.GetFiles(currentDirectory, "*.pdt");
                 int totalFiles = files.Length;
                 ObjectBuffer<PatientDataFile> buffer = new ObjectBuffer<PatientDataFile>();
 
                 for (int i = 0; i < totalFiles; ++i)
                 {
-                    //Missing here is a check per file that we have not been canceled, it makes ending the bg task
-                    //more responsive the code was the cancelation pending that the worker does do but since we are buffering
-                    //multiple files we may want it here too
-                    //if (fileListWorker.CancellationPending)
-
-                    PatientDataFile patient = new PatientDataFile(files[i]);
-                    if (patient.loadHeader())
+                    if (!bgWorker.CancellationPending)
                     {
-                        if (buffer.addItem(patient))
+                        PatientDataFile patient = new PatientDataFile(files[i]);
+                        if (patient.loadHeader())
                         {
-                            Progress = (int)(((float)i / totalFiles) * 100.0f);
-                            yield return buffer;
+                            if (buffer.addItem(patient))
+                            {
+                                Progress = (int)(((float)i / totalFiles) * 100.0f);
+                                yield return buffer;
+                            }
                         }
                     }
                 }
@@ -113,34 +108,31 @@ namespace Medical.GUI
 
         public void resetDisplay()
         {
-            fileDataGrid.removeAllItems();
+            dialog.clearFileList();
         }
 
         public void processingStarted()
         {
-            loadingProgress.Visible = true;
+            dialog.LoadingProgressVisible = true;
         }
 
         public void workProcessed(ObjectBuffer<PatientDataFile> item)
         {
             foreach(PatientDataFile file in item.Items)
             {
-                fileDataGrid.addItem(file.FirstName, file);
-                uint newIndex = fileDataGrid.getItemCount() - 1;
-                fileDataGrid.setSubItemNameAt(1, newIndex, file.LastName);
-                fileDataGrid.setSubItemNameAt(2, newIndex, file.DateModified.ToString());
+                dialog.addFile(file);
             }
             item.reset();
         }
 
         public void updateProgress(int progressPercentage)
         {
-            loadingProgress.Position = (uint)progressPercentage;
+            dialog.LoadingProgress = (uint)progressPercentage;
         }
 
         public void runWorkCompleted()
         {
-            loadingProgress.Visible = false;
+            dialog.LoadingProgressVisible = false;
         }
 
         public void startedWhileBusy()
@@ -165,5 +157,25 @@ namespace Medical.GUI
         }
 
         public CancelPostAction CancelPostAction { get; set; }
+
+        public bool IsWorking
+        {
+            get
+            {
+                return bgWorker.IsWorking;
+            }
+        }
+
+        public void cancel()
+        {
+            bgWorker.cancel();
+        }
+
+        public void listFiles(String directory)
+        {
+            this.currentDirectory = directory;
+            CanDoWork = Directory.Exists(directory);
+            bgWorker.startWork();
+        }
     }
 }

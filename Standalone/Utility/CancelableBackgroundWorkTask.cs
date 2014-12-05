@@ -17,7 +17,7 @@ namespace Medical
         /// Return true if work can be done, this can be called on foreground or background
         /// threads so be sure what is done here is thread safe.
         /// </summary>
-        bool CanDoWork { get; set; }
+        bool CanDoWork { get; }
 
         /// <summary>
         /// An enumeration over work units, this function that will be called on the background
@@ -71,7 +71,8 @@ namespace Medical
         bool canceled();
 
         /// <summary>
-        /// This funciton is called if the task was started while the worker was busy.
+        /// This funciton is called if the task was started while the worker was busy. This is called on the ThreadManager.invoke
+        /// thread and is safe to update the ui.
         /// </summary>
         void startedWhileBusy();
     }
