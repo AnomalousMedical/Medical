@@ -90,15 +90,6 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void clearBookmarks()
-        {
-            while(bookmarksList.Count > 0)
-            {
-                Bookmark bookmark = liveThumbController.getUserObject(bookmarksList.getItem(0));
-                bookmarksController.removeBookmark(bookmark);
-            }
-        }
-
         protected override void layoutUpdated()
         {
             bookmarksList.resizeAndLayout();
@@ -203,7 +194,7 @@ namespace Medical.GUI
                 IntVector2 mousePos = arg.Position;
                 if (trash.contains(mousePos.x, mousePos.y))
                 {
-                    bookmarksController.removeBookmark(liveThumbController.getUserObject(source));
+                    bookmarksController.deleteBookmark(liveThumbController.getUserObject(source));
                 }
             }
         }

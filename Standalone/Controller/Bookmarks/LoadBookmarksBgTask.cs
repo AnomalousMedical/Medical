@@ -15,7 +15,6 @@ namespace Medical.Controller
             private CancelableBackgroundWorker<ObjectBuffer<Bookmark>> bgWorker;
             private bool processNewDirectoryOnCancel = false;
             private BookmarkPath currentPath;
-            private bool saveFilePath;
 
             public LoadBookmarksBgTask(BookmarksController controller)
             {
@@ -23,9 +22,8 @@ namespace Medical.Controller
                 this.bgWorker = new CancelableBackgroundWorker<ObjectBuffer<Bookmark>>(this);
             }
 
-            public void loadBookmarks(BookmarkPath path, bool saveFilePath)
+            public void loadBookmarks(BookmarkPath path)
             {
-                this.saveFilePath = saveFilePath;
                 this.currentPath = path;
                 this.CanDoWork = controller.bookmarksResourceProvider.directoryExists(currentPath.Path);
                 bgWorker.startWork();
@@ -60,10 +58,7 @@ namespace Medical.Controller
                         }
                         if (bookmark != null)
                         {
-                            if (saveFilePath)
-                            {
-                                bookmark.BackingFile = controller.bookmarksResourceProvider.getFullFilePath(file);
-                            }
+                            bookmark.BackingFile = file;
                             if(bookmarks.addItem(bookmark))
                             {
                                 yield return bookmarks;

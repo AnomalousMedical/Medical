@@ -485,7 +485,7 @@ namespace Medical.GUI
             bookmarksController.PremiumBookmarks = isPremium;
             if(isPremium)
             {
-                bookmarks.clearBookmarks();
+                bookmarksController.clearBookmarks();
                 //Save the demo bookmarks so the user does not feel like they "lost" them.
                 //This isn't the most efficient way, but it respects the source and destination data
                 //that is setup somewhere else. Also its only really going to copy 5 or 6 things one

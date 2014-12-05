@@ -131,10 +131,10 @@ namespace Medical.Controller
             }
         }
 
-        public void removeBookmark(Bookmark bookmark)
+        public void deleteBookmark(Bookmark bookmark)
         {
             fireBookmarkRemoved(bookmark);
-            if (bookmark.BackingFile != null)
+            if (bookmarksResourceProvider.CanWrite)
             {
                 try
                 {
@@ -162,7 +162,6 @@ namespace Medical.Controller
         {
             ThreadPool.QueueUserWorkItem(state =>
                 {
-                    Thread.Sleep(1000);
                     if (premiumBookmarks)
                     {
                         if(!Directory.Exists(MedicalConfig.BookmarksFolder))
@@ -175,7 +174,7 @@ namespace Medical.Controller
                             Path = "",
                             DisplayName = "Bookmarks",
                             Parent = null
-                        }, true);
+                        });
                     }
                     else if(NonPremiumBookmarksResourceProvider != null)
                     {
@@ -185,7 +184,7 @@ namespace Medical.Controller
                             Path = "",
                             DisplayName = "Bookmarks",
                             Parent = null
-                        }, false);
+                        });
                     }
                 });
         }
@@ -209,12 +208,12 @@ namespace Medical.Controller
                 if (currentPath != value)
                 {
                     currentPath = value;
-                    loadBookmarks.loadBookmarks(currentPath, bookmarksResourceProvider != NonPremiumBookmarksResourceProvider);
+                    loadBookmarks.loadBookmarks(currentPath);
                 }
             }
         }
 
-        private void loadBookmarksFoldersBgThread(BookmarkPath path, bool saveFilePath)
+        private void loadBookmarksFoldersBgThread(BookmarkPath path)
         {
             ThreadManager.invokeAndWait(() => fireBookmarkPathAdded(path));
             if(currentPath == null)
@@ -228,7 +227,7 @@ namespace Medical.Controller
                         Path = directory,
                         DisplayName = Path.GetFileNameWithoutExtension(directory),
                         Parent = path
-                    }, saveFilePath);
+                    });
             }
         }
 
