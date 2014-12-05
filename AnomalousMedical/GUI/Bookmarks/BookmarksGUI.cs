@@ -157,7 +157,7 @@ namespace Medical.GUI
 
         void bookmarksController_BookmarkPathAdded(BookmarkPath path)
         {
-            TreeNode bookmarkNode = new TreeNode(path.DisplayName);
+            TreeNode bookmarkNode = new TreeNode(path.DisplayName, new BookmarksTreeNodeWidget());
             bookmarkNode.UserData = path;
             pathNodes.Add(path, bookmarkNode);
             if (path.Parent != null)

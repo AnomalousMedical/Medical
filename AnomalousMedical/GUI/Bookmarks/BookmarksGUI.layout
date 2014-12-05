@@ -25,6 +25,7 @@
         <Widget type="Button" skin="ButtonXBig" position="318 7 24 20" align="Right Top" name="CloseButton"/>
         <Widget type="ScrollView" skin="ScrollView" position="8 58 216 475" align="Left VStretch" name="FolderTree">
             <Property key="CanvasAlign" value="Left Top"/>
+            <UserString key="NodeHeight" value="30"/>
         </Widget>
         <Widget type="ImageBox" skin="ImageBox" position="32 424 100 100" align="Left Bottom" name="TrashPanel">
             <Property key="ImageResource" value="Bookmarks/Trash"/>

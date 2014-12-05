@@ -147,6 +147,7 @@
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
+    <Compile Include="GUI\Bookmarks\BookmarksTreeWidget.cs" />
     <Compile Include="GUI\BuyScreen\BuyScreen.cs" />
     <Compile Include="GUI\CameraAngleGui\CameraAngleGui.cs" />
     <Compile Include="GUI\ChooseSceneDialog\ChooseSceneDialog.cs" />
