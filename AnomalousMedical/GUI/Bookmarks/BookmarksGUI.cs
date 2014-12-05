@@ -315,27 +315,41 @@ namespace Medical.GUI
 
         void addFolder_MouseButtonClick(Widget source, EventArgs e)
         {
-            try
+            if (bookmarksController.PremiumBookmarks)
             {
-                bookmarksController.addFolder(bookmarkName.Caption);
+                try
+                {
+                    bookmarksController.addFolder(bookmarkName.Caption);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.show(String.Format("There was an error creating the folder.\nTry using a different name and do not include special characters such as \\ / : * ? \" < > and |."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                    Log.Error("Exception creating bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.show(String.Format("There was an error creating the folder.\nTry using a different name and do not include special characters such as \\ / : * ? \" < > and |."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                Log.Error("Exception creating bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                showBuyMessage();
             }
         }
 
         void removeFolder_MouseButtonClick(Widget source, EventArgs e)
         {
-            try
+            if (bookmarksController.PremiumBookmarks)
             {
-                bookmarksController.removeFolder(bookmarksController.CurrentPath);
+                try
+                {
+                    bookmarksController.removeFolder(bookmarksController.CurrentPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.show(String.Format("There was an error deleting the folder."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                    Log.Error("Exception deleteing bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.show(String.Format("There was an error deleting the folder."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                Log.Error("Exception deleteing bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                showBuyMessage();
             }
         }
     }
