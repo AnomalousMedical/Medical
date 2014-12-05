@@ -25,7 +25,7 @@ namespace Medical.Controller
             public void loadBookmarks(BookmarkPath path)
             {
                 this.currentPath = path;
-                this.CanDoWork = controller.bookmarksResourceProvider.directoryExists(currentPath.Path);
+                this.CanDoWork = !controller.bookmarksResourceProvider.CanWrite || controller.bookmarksResourceProvider.directoryExists(currentPath.Path);
                 bgWorker.startWork();
             }
 
