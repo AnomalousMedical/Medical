@@ -80,7 +80,6 @@
     <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
     <Compile Include="GUI\FileManagement\ListPatientsBgTask.cs" />
     <Compile Include="GUI\FileManagement\OpenPatientDialog.cs" />
-    <Compile Include="GUI\FileManagement\PatientFileBuffer.cs" />
     <Compile Include="GUI\FileManagement\SavePatientDialog.cs" />
     <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\Notes\NotesDialog.cs" />

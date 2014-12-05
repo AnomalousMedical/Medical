@@ -31,7 +31,7 @@ namespace Medical.GUI
 
         private PatientDataFile currentFile = null;
 
-        private CancelableBackgroundWorker<PatientFileBuffer> cancelableWorker;
+        private CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>> cancelableWorker;
         private ListPatientsBgTask listPatientsTask;
 
         public OpenPatientDialog(GUIManager guiManager)
@@ -83,7 +83,7 @@ namespace Medical.GUI
 
             listPatientsTask = new ListPatientsBgTask(fileDataGrid, loadingProgress, locationTextBox, this);
             listPatientsTask.CanDoWork = Directory.Exists(saveDirectory);
-            cancelableWorker = new CancelableBackgroundWorker<PatientFileBuffer>(listPatientsTask);
+            cancelableWorker = new CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>>(listPatientsTask);
 
             openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
             deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);

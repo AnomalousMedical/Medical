@@ -839,6 +839,7 @@
     <Compile Include="Utility\MemoryCache.cs" />
     <Compile Include="Utility\Node.cs" />
     <Compile Include="Utility\OrderedDictionary.cs" />
+    <Compile Include="Utility\ObjectBuffer.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />
     <Compile Include="Utility\SubscribingUpdateListener.cs" />
     <Compile Include="Utility\TwoWayCommand.cs" />

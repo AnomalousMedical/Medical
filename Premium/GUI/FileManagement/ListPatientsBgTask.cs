@@ -59,7 +59,7 @@ namespace Medical.GUI
         Close,
     }
 
-    class ListPatientsBgTask : CancelableBackgroundWorkTask<PatientFileBuffer>
+    class ListPatientsBgTask : CancelableBackgroundWorkTask<ObjectBuffer<PatientDataFile>>
     {
         private MultiListBox fileDataGrid;
         private ProgressBar loadingProgress;
@@ -76,13 +76,13 @@ namespace Medical.GUI
 
         public bool CanDoWork { get; set; }
 
-        public IEnumerable<PatientFileBuffer> WorkUnits
+        public IEnumerable<ObjectBuffer<PatientDataFile>> WorkUnits
         {
             get
             {
                 String[] files = Directory.GetFiles(locationTextBox.Caption, "*.pdt");
                 int totalFiles = files.Length;
-                PatientFileBuffer buffer = new PatientFileBuffer();
+                ObjectBuffer<PatientDataFile> buffer = new ObjectBuffer<PatientDataFile>();
 
                 for (int i = 0; i < totalFiles; ++i)
                 {
@@ -94,14 +94,14 @@ namespace Medical.GUI
                     PatientDataFile patient = new PatientDataFile(files[i]);
                     if (patient.loadHeader())
                     {
-                        if (buffer.addPatient(patient))
+                        if (buffer.addItem(patient))
                         {
                             Progress = (int)(((float)i / totalFiles) * 100.0f);
                             yield return buffer;
                         }
                     }
                 }
-                if(buffer.HasResults) //Make sure any extra files are also returned.
+                if(buffer.HasItems) //Make sure any extra files are also returned.
                 {
                     Progress = 0;
                     yield return buffer;
@@ -121,9 +121,9 @@ namespace Medical.GUI
             loadingProgress.Visible = true;
         }
 
-        public void workProcessed(PatientFileBuffer item)
+        public void workProcessed(ObjectBuffer<PatientDataFile> item)
         {
-            foreach(PatientDataFile file in item.Files)
+            foreach(PatientDataFile file in item.Items)
             {
                 fileDataGrid.addItem(file.FirstName, file);
                 uint newIndex = fileDataGrid.getItemCount() - 1;
