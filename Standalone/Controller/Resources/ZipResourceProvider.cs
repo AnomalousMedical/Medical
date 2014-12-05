@@ -245,21 +245,20 @@ namespace Medical
             return Path.Combine(resourceLocation, filename);
         }
 
-        public void createDirectory(string path, string directoryName)
+        public void createDirectory(String fullPath)
         {
             zipFile.Dispose();
             try
             {
-                path = Path.Combine(path, directoryName);
-                if (!path.EndsWith("/") && !path.EndsWith("\\"))
+                if (!fullPath.EndsWith("/") && !fullPath.EndsWith("\\"))
                 {
-                    path += '/';
+                    fullPath += '/';
                 }
                 using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                 {
-                    if (!ionicZip.ContainsEntry(path))
+                    if (!ionicZip.ContainsEntry(fullPath))
                     {
-                        ionicZip.AddDirectoryByName(path);
+                        ionicZip.AddDirectoryByName(fullPath);
                     }
                     ionicZip.Save();
                 }
@@ -268,6 +267,11 @@ namespace Medical
             {
                 zipFile = new ZipFile(resourceLocation);
             }
+        }
+
+        public void createDirectory(string path, string directoryName)
+        {
+            createDirectory(Path.Combine(path, directoryName));
         }
 
         public bool isDirectory(String path)

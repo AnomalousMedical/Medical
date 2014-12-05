@@ -170,6 +170,11 @@ namespace Medical
             return backingProvider.getFullFilePath(filename);
         }
 
+        public void createDirectory(String fullPath)
+        {
+            backingProvider.createDirectory(fullPath);
+        }
+
         public void createDirectory(string path, string directoryName)
         {
             backingProvider.createDirectory(path, directoryName);

@@ -94,8 +94,14 @@ namespace Medical
         /// <summary>
         /// Create a directory if supported.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="directoryName"></param>
+        /// <param name="fullPath">The full path of the directory.</param>
+        void createDirectory(string fullPath);
+
+        /// <summary>
+        /// Create a directory if supported.
+        /// </summary>
+        /// <param name="path">The parent path.</param>
+        /// <param name="directoryName">The name of the child directory.</param>
         void createDirectory(string path, string directoryName);
 
         /// <summary>

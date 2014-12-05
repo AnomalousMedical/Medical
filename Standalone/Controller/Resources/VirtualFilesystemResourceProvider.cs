@@ -93,6 +93,11 @@ namespace Medical
             return Path.Combine(parentPath, filename);
         }
 
+        public void createDirectory(String fullPath)
+        {
+            throw new NotImplementedException("Cannot create directories in the VirtualFSResourceProvider");
+        }
+
         public void createDirectory(string path, string directoryName)
         {
             throw new NotImplementedException("Cannot create directories in the VirtualFSResourceProvider");

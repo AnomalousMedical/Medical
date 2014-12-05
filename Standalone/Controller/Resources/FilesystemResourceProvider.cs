@@ -108,9 +108,14 @@ namespace Medical
             return Path.Combine(parentPath, filename);
         }
 
+        public void createDirectory(String fullPath)
+        {
+            Directory.CreateDirectory(Path.Combine(parentPath, fullPath));
+        }
+
         public void createDirectory(string path, string directoryName)
         {
-            Directory.CreateDirectory(Path.Combine(parentPath, path, directoryName));
+            createDirectory(Path.Combine(path, directoryName));
         }
 
         public bool isDirectory(String path)

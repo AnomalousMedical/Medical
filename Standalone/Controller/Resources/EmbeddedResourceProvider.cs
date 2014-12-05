@@ -119,6 +119,11 @@ namespace Medical
             return convertToDirectoryStyleFileName(baseResourceString + filename);
         }
 
+        public void createDirectory(String fullPath)
+        {
+            throw new NotImplementedException("Cannot create directories in the EmbeddedResourceProvider");
+        }
+
         public void createDirectory(string path, string directoryName)
         {
             throw new NotImplementedException("Cannot create directories in the EmbeddedResourceProvider");
