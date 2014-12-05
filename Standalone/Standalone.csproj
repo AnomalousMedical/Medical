@@ -179,6 +179,7 @@
     <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
     <Compile Include="Controller\Background\BackgroundScene.cs" />
     <Compile Include="Controller\Bookmarks\BookmarkPath.cs" />
+    <Compile Include="Controller\Bookmarks\LoadBookmarksBgTask.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
     <Compile Include="Controller\MusclePosition\MovementSequence.cs" />
     <Compile Include="Controller\MusclePosition\MovementSequenceState.cs" />

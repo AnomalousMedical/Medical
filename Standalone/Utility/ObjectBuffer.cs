@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medical.GUI
+namespace Medical
 {
     /// <summary>
     /// A simple buffer of objects. You can add objects as you need to. When the buffer is full addItem will return true.

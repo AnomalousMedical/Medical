@@ -8,7 +8,8 @@ namespace Medical
 {
     /// <summary>
     /// A task interface for the CancelableBackgroundWorker. These should only be assigned
-    /// to one CancelableBackgroundWorker once created.
+    /// to one CancelableBackgroundWorker once created. The ideal pattern is to make your CancelableBackgroundWorker
+    /// in the implementation of this interface.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface CancelableBackgroundWorkTask<T>

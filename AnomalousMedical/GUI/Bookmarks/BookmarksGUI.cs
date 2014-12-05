@@ -14,18 +14,23 @@ namespace Medical.GUI
         private static readonly int BookmarkSize = ScaleHelper.Scaled(200);
         private static readonly int BookmarkThumbSize = BookmarkSize;
 
-        BookmarksController bookmarksController;
+        private BookmarksController bookmarksController;
 
-        NoSelectButtonGrid bookmarksList;
-        EditBox bookmarkName;
+        private NoSelectButtonGrid bookmarksList;
+        private EditBox bookmarkName;
 
-        IntSize2 widgetSmallSize;
-        ImageBox trash;
-        Button addButton;
+        private Tree folderTree;
+        private Dictionary<BookmarkPath, TreeNode> pathNodes = new Dictionary<BookmarkPath, TreeNode>();
+
+        private IntSize2 widgetSmallSize;
+        private ImageBox trash;
+        private Button addButton;
 
         private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
         private ImageBox lockedFeatureImage;
+
+        private TreeNode topFolder;
 
         private ButtonGridLiveThumbnailController<Bookmark> liveThumbController;
 
@@ -36,9 +41,16 @@ namespace Medical.GUI
             bookmarksController.BookmarkAdded += bookmarksController_BookmarkAdded;
             bookmarksController.BookmarkRemoved += bookmarksController_BookmarkRemoved;
             bookmarksController.PremiumBookmarksChanged += bookmarksController_PremiumBookmarksChanged;
+            bookmarksController.BookmarkPathAdded += bookmarksController_BookmarkPathAdded;
+            bookmarksController.BookmarkPathRemoved += bookmarksController_BookmarkPathRemoved;
+            bookmarksController.BookmarksCleared += bookmarksController_BookmarksCleared;
 
             ScrollView bookmarksListScroll = (ScrollView)widget.findWidget("BookmarksList");
             bookmarksList = new NoSelectButtonGrid(bookmarksListScroll);
+            bookmarksList.ItemRemoved += bookmarksList_ItemRemoved;
+
+            folderTree = new Tree(widget.findWidget("FolderTree") as ScrollView);
+            folderTree.AfterSelect += folderTree_AfterSelect;
 
             addButton = (Button)widget.findWidget("AddButton");
             addButton.MouseButtonClick += new MyGUIEvent(addButton_MouseButtonClick);
@@ -74,6 +86,7 @@ namespace Medical.GUI
             bookmarksController.BookmarkRemoved -= bookmarksController_BookmarkRemoved;
             bookmarksController.PremiumBookmarksChanged -= bookmarksController_PremiumBookmarksChanged;
             Gui.Instance.destroyWidget(dragIconPreview);
+            folderTree.Dispose();
             base.Dispose();
         }
 
@@ -88,8 +101,9 @@ namespace Medical.GUI
 
         protected override void layoutUpdated()
         {
-            bookmarksList.resizeAndLayout(widget.Width);
+            bookmarksList.resizeAndLayout();
             liveThumbController.determineVisibleHosts();
+            folderTree.layout();
         }
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
@@ -112,6 +126,11 @@ namespace Medical.GUI
             }
         }
 
+        void bookmarksList_ItemRemoved(ButtonGrid grid, ButtonGridItem item)
+        {
+            liveThumbController.itemRemoved(item);
+        }
+
         void bookmarksController_BookmarkAdded(Bookmark bookmark)
         {
             ButtonGridItem item = bookmarksList.addItem("User", bookmark.Name);
@@ -128,9 +147,44 @@ namespace Medical.GUI
             ButtonGridItem item = liveThumbController.findItemByUserObject(bookmark);
             if (item != null)
             {
-                liveThumbController.itemRemoved(item);
                 bookmarksList.removeItem(item);
             }
+        }
+
+        void bookmarksController_BookmarksCleared()
+        {
+            bookmarksList.clear();
+        }
+
+        void bookmarksController_BookmarkPathAdded(BookmarkPath path)
+        {
+            TreeNode bookmarkNode = new TreeNode(path.DisplayName);
+            bookmarkNode.UserData = path;
+            pathNodes.Add(path, bookmarkNode);
+            if (path.Parent != null)
+            {
+                pathNodes[path.Parent].Children.add(bookmarkNode);
+            }
+            else
+            {
+                folderTree.Nodes.add(bookmarkNode);
+            }
+            folderTree.layout();
+        }
+
+        void bookmarksController_BookmarkPathRemoved(BookmarkPath path)
+        {
+            TreeNode bookmarkNode = pathNodes[path];
+            pathNodes.Remove(path);
+            if (path.Parent != null)
+            {
+                pathNodes[path].Children.remove(bookmarkNode);
+            }
+            else
+            {
+                folderTree.Nodes.remove(bookmarkNode);
+            }
+            folderTree.layout();
         }
 
         void item_MouseButtonPressed(ButtonGridItem source, MouseEventArgs arg)
@@ -230,6 +284,11 @@ namespace Medical.GUI
         void BookmarksGUI_Showing(object sender, EventArgs e)
         {
             liveThumbController.updateAllThumbs();
+        }
+
+        void folderTree_AfterSelect(object sender, TreeEventArgs e)
+        {
+            bookmarksController.CurrentPath = e.Node.UserData as BookmarkPath;
         }
     }
 }

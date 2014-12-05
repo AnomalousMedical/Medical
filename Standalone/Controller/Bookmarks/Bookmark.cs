@@ -28,6 +28,8 @@ namespace Medical
 
         internal String BackingFile { get; set; }
 
+        public BookmarkPath BookmarkPath { get; internal set; }
+
         #region Saveable Members
 
         private static String TRANSLATION = "CameraTranslation";

@@ -92,9 +92,6 @@ namespace Medical
         {
             if (task.CanDoWork)
             {
-                //Stopwatch sw = new Stopwatch();
-                //sw.Start();
-
                 foreach (T workUnit in task.WorkUnits)
                 {
                     if (bgWorker.CancellationPending)
@@ -107,9 +104,6 @@ namespace Medical
                     ThreadManager.invokeAndWait(() => task.workProcessed(workUnit));
                     bgWorker.ReportProgress(task.Progress);
                 }
-
-                //sw.Stop();
-                //Log.Debug("Scanned files in {0}", sw.ElapsedMilliseconds);
             }
         }
 
