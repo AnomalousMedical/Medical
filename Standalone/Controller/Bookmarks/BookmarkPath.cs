@@ -24,6 +24,11 @@ namespace Medical
         public BookmarkPath Parent { get; internal set; }
 
         /// <summary>
+        /// True if this path is the trash folder.
+        /// </summary>
+        public bool IsTrash { get; set; }
+
+        /// <summary>
         /// The full path of this path.
         /// </summary>
         internal String Path { get; set; }

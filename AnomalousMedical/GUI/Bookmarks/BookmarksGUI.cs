@@ -23,8 +23,8 @@ namespace Medical.GUI
         private Dictionary<BookmarkPath, TreeNode> pathNodes = new Dictionary<BookmarkPath, TreeNode>();
 
         private IntSize2 widgetSmallSize;
-        private ImageBox trash;
         private Button addButton;
+        private Button emptyTrashButton;
 
         private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
@@ -59,14 +59,15 @@ namespace Medical.GUI
             addButton = (Button)widget.findWidget("AddButton");
             addButton.MouseButtonClick += new MyGUIEvent(addButton_MouseButtonClick);
 
+            emptyTrashButton = widget.findWidget("EmptyTrash") as Button;
+            emptyTrashButton.MouseButtonClick += emptyTrashButton_MouseButtonClick;
+            emptyTrashButton.Visible = false;
+
             bookmarkName = (EditBox)widget.findWidget("BookmarkName");
 
             widgetSmallSize = new IntSize2(widget.Width, widget.Height - bookmarksListScroll.Height);
             widget.setSize(widgetSmallSize.Width, widgetSmallSize.Height);
             this.Showing += BookmarksGUI_Showing;
-
-            trash = (ImageBox)widget.findWidget("TrashPanel");
-            trash.Visible = false;
 
             dragIconPreview = (ImageBox)Gui.Instance.createWidgetT("ImageBox", "ImageBox", 0, 0, BookmarkSize, BookmarkSize, Align.Default, "Info", "BookmarksDragIconPreview");
             dragIconPreview.Visible = false;
@@ -208,14 +209,9 @@ namespace Medical.GUI
                 if (dragIconPreview.Visible)
                 {
                     wasDragging = true;
-                    trash.Visible = false;
                     dragIconPreview.setItemResource(null);
                     dragIconPreview.Visible = false;
                     IntVector2 mousePos = arg.Position;
-                    if (trash.contains(mousePos.x, mousePos.y))
-                    {
-                        bookmarksController.deleteBookmark(liveThumbController.getUserObject(source));
-                    }
                     if(currentDragNode != null)
                     {
                         BookmarkPath path = currentDragNode.UserData as BookmarkPath;
@@ -236,7 +232,6 @@ namespace Medical.GUI
                 dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
                 if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - arg.Position.x) > 5 || Math.Abs(dragMouseStartPosition.y - arg.Position.y) > 5))
                 {
-                    trash.Visible = true;
                     dragIconPreview.Visible = true;
                     dragIconPreview.setImageTexture(liveThumbController.getTextureName(source));
                     dragIconPreview.setImageCoord(liveThumbController.getTextureCoord(source));
@@ -245,15 +240,6 @@ namespace Medical.GUI
 
                 int x = arg.Position.x;
                 int y = arg.Position.y;
-
-                if (trash.contains(x, y))
-                {
-                    trash.setItemName("Highlight");
-                }
-                else
-                {
-                    trash.setItemName("Normal");
-                }
 
                 BookmarksTreeNode node = null;
                 if(folderTree.contains(x, y))
@@ -340,8 +326,8 @@ namespace Medical.GUI
 
         void bookmarksController_CurrentPathChanged(BookmarkPath path)
         {
-            removeFolder.Enabled = path != null && path.Parent != null;
-            addFolder.Enabled = path != null;
+            removeFolder.Enabled = path != null && path.Parent != null && !path.IsTrash;
+            addFolder.Enabled = path != null && !path.IsTrash;
             if (path != null)
             {
                 TreeNode node = pathNodes[path];
@@ -349,6 +335,7 @@ namespace Medical.GUI
                 {
                     folderTree.SelectedNode = pathNodes[path];
                 }
+                emptyTrashButton.Visible = path.IsTrash;
             }
         }
 
@@ -385,6 +372,35 @@ namespace Medical.GUI
                             try
                             {
                                 bookmarksController.removeFolder(bookmarksController.CurrentPath);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.show(String.Format("There was an error deleting the folder."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                                Log.Error("Exception deleteing bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                            }
+                        }
+                    });
+                }
+            }
+            else
+            {
+                showBuyMessage();
+            }
+        }
+
+        void emptyTrashButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (bookmarksController.PremiumBookmarks)
+            {
+                if (bookmarksController.CurrentPath != null && bookmarksController.CurrentPath.IsTrash)
+                {
+                    MessageBox.show(String.Format("Are you sure you want to empty your bookmarks trash?\nThis cannot be undone.", bookmarksController.CurrentPath.DisplayName), "Delete", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
+                    {
+                        if (result == MessageBoxStyle.Yes)
+                        {
+                            try
+                            {
+                                bookmarksController.emptyTrash();
                             }
                             catch (Exception ex)
                             {

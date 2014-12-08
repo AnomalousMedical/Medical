@@ -27,14 +27,14 @@
             <Property key="CanvasAlign" value="Left Top"/>
             <UserString key="NodeHeight" value="30"/>
         </Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="90 424 100 100" align="Left Bottom" name="TrashPanel">
-            <Property key="ImageResource" value="Bookmarks/Trash"/>
-        </Widget>
         <Widget type="Button" skin="ButtonFlatDark" position="8 57 132 25" name="AddFolder">
             <Property key="Caption" value="Add Folder"/>
         </Widget>
         <Widget type="Button" skin="ButtonFlatDark" position="145 57 132 25" name="RemoveFolder">
             <Property key="Caption" value="Remove Folder"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="282 28 89 25" name="EmptyTrash">
+            <Property key="Caption" value="Empty Trash"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>

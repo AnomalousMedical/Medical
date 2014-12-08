@@ -18,6 +18,8 @@ namespace Medical.Controller
         public delegate void BookmarkPathDelegate(BookmarkPath path);
 
         private const int MaxFileNameTries = 200;
+        private const String TrashFolderName = "Trash";
+        private const string TrashFolderNameLower = "trash";
 
         private static XmlSaver xmlSaver = new XmlSaver();
 
@@ -124,7 +126,7 @@ namespace Medical.Controller
 
         public void addFolder(String name)
         {
-            if (bookmarksResourceProvider.CanWrite)
+            if (bookmarksResourceProvider.CanWrite && name.ToLowerInvariant() != TrashFolderNameLower)
             {
                 String path = name;
                 if (currentPath != null)
@@ -163,6 +165,15 @@ namespace Medical.Controller
             }
         }
 
+        public void emptyTrash()
+        {
+            if (bookmarksResourceProvider.CanWrite)
+            {
+                bookmarksResourceProvider.delete(TrashFolderName);
+                bookmarksResourceProvider.createDirectory(TrashFolderName);
+            }
+        }
+
         public void applyBookmark(Bookmark bookmark)
         {
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
@@ -185,6 +196,16 @@ namespace Medical.Controller
                         DisplayName = "Bookmarks",
                         Parent = null
                     });
+                    if(bookmarksResourceProvider.CanWrite)
+                    {
+                        loadBookmarksFoldersBgThread(new BookmarkPath()
+                        {
+                            Path = TrashFolderName,
+                            DisplayName = TrashFolderName,
+                            Parent = null,
+                            IsTrash = true
+                        });
+                    }
                 });
         }
 
@@ -230,6 +251,11 @@ namespace Medical.Controller
 
         private void loadBookmarksFoldersBgThread(BookmarkPath path)
         {
+            if (!bookmarksResourceProvider.directoryExists(path.Path))
+            {
+                bookmarksResourceProvider.createDirectory(path.Path);
+            }
+
             ThreadManager.invokeAndWait(() => fireBookmarkPathAdded(path));
             if (currentPath == null)
             {
@@ -237,12 +263,15 @@ namespace Medical.Controller
             }
             foreach (String directory in bookmarksResourceProvider.listDirectories("*", path.Path, false))
             {
-                loadBookmarksFoldersBgThread(new BookmarkPath()
-                    {
-                        Path = directory,
-                        DisplayName = Path.GetFileNameWithoutExtension(directory),
-                        Parent = path
-                    });
+                if (directory.ToLowerInvariant() != TrashFolderNameLower)
+                {
+                    loadBookmarksFoldersBgThread(new BookmarkPath()
+                        {
+                            Path = directory,
+                            DisplayName = Path.GetFileNameWithoutExtension(directory),
+                            Parent = path
+                        });
+                }
             }
         }
 
