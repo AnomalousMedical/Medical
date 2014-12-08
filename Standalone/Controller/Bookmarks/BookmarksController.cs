@@ -258,7 +258,7 @@ namespace Medical.Controller
 
         private void loadBookmarksFoldersBgThread(BookmarkPath path)
         {
-            if (!bookmarksResourceProvider.directoryExists(path.Path))
+            if (bookmarksResourceProvider.CanWrite && !bookmarksResourceProvider.directoryExists(path.Path))
             {
                 bookmarksResourceProvider.createDirectory(path.Path);
             }
