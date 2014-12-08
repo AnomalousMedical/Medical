@@ -14,7 +14,7 @@ namespace Medical.Pose.Commands
     abstract class PoseCommandActionBase : BehaviorInterface, PoseCommandAction
     {
         [DoNotSave]
-        private LinkedList<PoseHandlerMapping> poseHandlerMappings = new LinkedList<PoseHandlerMapping>();
+        private List<PoseHandlerMapping> poseHandlerMappings = new List<PoseHandlerMapping>(10);
 
         protected override void link()
         {
@@ -39,7 +39,7 @@ namespace Medical.Pose.Commands
                     blacklist("Cannot find PoseHandler '{0}' on SimObject '{1}' The scene will be unstable, since this error is not handled in any way.", mapping.PoseHandlerName, mapping.SimObjectName);
                 }
 
-                poseHandler.addPoseCommandAction(this);
+                poseHandler.addPoseCommandAction(this, mapping.Mode);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Medical.Pose.Commands
                     var poseHandler = mappedSimObject.getElement(mapping.PoseHandlerName) as PoseHandler;
                     if (poseHandler != null)
                     {
-                        poseHandler.removePoseCommandAction(this);
+                        poseHandler.removePoseCommandAction(this, mapping.Mode);
                     }
                 }
             }
@@ -67,13 +67,14 @@ namespace Medical.Pose.Commands
         protected override void customLoad(LoadInfo info)
         {
             base.customLoad(info);
-            info.RebuildLinkedList("PoseHandlerMapping", poseHandlerMappings);
+            info.RebuildList("PoseHandlerMapping", poseHandlerMappings);
+            poseHandlerMappings.Capacity = poseHandlerMappings.Count;
         }
 
         protected override void customSave(SaveInfo info)
         {
             base.customSave(info);
-            info.ExtractLinkedList("PoseHandlerMapping", poseHandlerMappings);
+            info.ExtractList("PoseHandlerMapping", poseHandlerMappings);
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)

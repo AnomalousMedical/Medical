@@ -41,9 +41,12 @@ namespace Medical.Controller
         private TravelTracker travelTracker = new TravelTracker();
         private bool allowMousePosing = true;
         private MusclePosition poseStartPosition = null;
+        private HashSet<String> activeModes = new HashSet<string>();
 
         public PoseController(StandaloneController controller)
         {
+            activeModes.Add("Main");
+
             controller.SceneLoaded += controller_SceneLoaded;
             controller.SceneUnloading += controller_SceneUnloading;
             sceneViewController = controller.SceneViewController;
@@ -224,7 +227,7 @@ namespace Medical.Controller
                     ikScene.addExternalControl(dragControl);
                     poseStartPosition = new MusclePosition(true);
                     currentHandler = match.PoseableIdentifier.PoseHandler;
-                    currentHandler.posingStarted();
+                    currentHandler.posingStarted(activeModes);
 
                     return true;
                 }
@@ -251,7 +254,7 @@ namespace Medical.Controller
 
             if (currentHandler != null)
             {
-                currentHandler.posingEnded();
+                currentHandler.posingEnded(activeModes);
                 currentHandler = null;
             }
 

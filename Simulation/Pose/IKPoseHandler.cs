@@ -22,7 +22,7 @@ namespace Medical.Pose
 
         [DoNotCopy]
         [DoNotSave]
-        private PoseCommand poseCommand = new PoseCommand();
+        private Dictionary<String, PoseCommand> modePoseCommands = new Dictionary<string, PoseCommand>(); //Dictionary of pose commands that only run when the mode is active
 
         [DoNotCopy]
         [DoNotSave]
@@ -45,24 +45,52 @@ namespace Medical.Pose
             }
         }
 
-        public void addPoseCommandAction(PoseCommandAction action)
+        public void addPoseCommandAction(PoseCommandAction action, String mode)
         {
-            poseCommand.addAction(action);
+            PoseCommand command;
+            if (!modePoseCommands.TryGetValue(mode, out command))
+            {
+                command = new PoseCommand();
+                modePoseCommands.Add(mode, command);
+            }
+            command.addAction(action);
         }
 
-        public void removePoseCommandAction(PoseCommandAction action)
+        public void removePoseCommandAction(PoseCommandAction action, String mode)
         {
-            poseCommand.removeAction(action);
+            PoseCommand command;
+            if (modePoseCommands.TryGetValue(mode, out command))
+            {
+                command.removeAction(action);
+                if(command.IsEmpty)
+                {
+                    modePoseCommands.Remove(mode);
+                }
+            }
         }
 
-        public void posingStarted()
+        public void posingStarted(IEnumerable<String> modes)
         {
-            poseCommand.posingStarted();
+            foreach (String mode in modes)
+            {
+                PoseCommand command;
+                if(modePoseCommands.TryGetValue(mode, out command))
+                {
+                    command.posingStarted();
+                }
+            }
         }
 
-        public void posingEnded()
+        public void posingEnded(IEnumerable<String> modes)
         {
-            poseCommand.posingEnded();
+            foreach (String mode in modes)
+            {
+                PoseCommand command;
+                if(modePoseCommands.TryGetValue(mode, out command))
+                {
+                    command.posingEnded();
+                }
+            }
         }
 
         public BEPUikBone Bone

@@ -22,16 +22,21 @@ namespace Medical.Pose.Commands
         [Editable]
         public String PoseHandlerName { get; set; }
 
+        [Editable]
+        public string Mode { get; set; }
+
         protected PoseHandlerMapping(LoadInfo info)
         {
             SimObjectName = info.GetString("SimObjectName");
             PoseHandlerName = info.GetString("PoseHandlerName");
+            Mode = info.GetString("Mode", "Main");
         }
 
         public void getInfo(SaveInfo info)
         {
             info.AddValue("SimObjectName", SimObjectName);
             info.AddValue("PoseHandlerName", PoseHandlerName);
+            info.AddValue("Mode", Mode);
         }
     }
 }
