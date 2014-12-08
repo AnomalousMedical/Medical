@@ -1,32 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCXP" position="132 108 224 288" layer="Overlapped">
-        <Property key="Caption" value="Movement"/>
-        <Property key="MinSize" value="178 273"/>
-        <UserString key="CurrentDockLocation" value="Floating"/>
-        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
-        <Widget type="Button" skin="VerticalIconTextButton" position="5 187 101 64" align="HRelative Bottom" name="Reset">
-            <Property key="Caption" value="Reset"/>
-            <Property key="ImageResource" value="Movement/Reset"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="0 24 69 33" name="CSpineFlexExt">
-            <Property key="Caption" value="Flex / Ext"/>
-        </Widget>
-        <Widget type="TextBox" skin="TextBox" position="0 4 106 16">
-            <Property key="Caption" value="Spine Axis Lock"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="72 26 76 27" name="CSpineLateral">
-            <Property key="Caption" value="Lateral"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="152 26 57 28" name="CSpineAxial">
-            <Property key="Caption" value="Axial Rot"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="114 184 80 32" name="Undo">
-            <Property key="Caption" value="Undo"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="115 220 79 31" name="Redo">
-            <Property key="Caption" value="Redo"/>
-        </Widget>
+  <Widget type="Window" skin="WindowCXP" position="132 108 224 208" layer="Overlapped">
+    <Property key="Caption" value="Movement"/>
+    <Property key="MinSize" value="178 273"/>
+    <UserString key="CurrentDockLocation" value="Floating"/>
+    <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+    <Widget type="Widget" skin="PanelEmpty" position="0 0 212 124" align="HStretch VStretch" name="ControlButtonPanel">
+      <Widget type="Button" skin="Button" position="0 18 212 33" name="LockSpineFlexExt">
+        <Property key="Caption" value="Lock Flexion / Extension"/>
+      </Widget>
+      <Widget type="TextBox" skin="TextBox" position="0 2 106 16">
+        <Property key="Caption" value="Spine Axis Lock"/>
+      </Widget>
+      <Widget type="Button" skin="Button" position="0 54 212 33" name="LockSpineLateralBending">
+        <Property key="Caption" value="Lock Lateral Bending"/>
+      </Widget>
+      <Widget type="Button" skin="Button" position="0 91 212 33" name="LockSpineAxialRotation">
+        <Property key="Caption" value="Lock Axial Rotation"/>
+      </Widget>
     </Widget>
-    <CodeGeneratorSettings/>
+    <Widget type="Button" skin="Button" position="144 142 68 33" name="Reset">
+      <Property key="Caption" value="Reset"/>
+    </Widget>
+    <Widget type="Button" skin="Button" position="0 142 68 33" name="Undo">
+      <Property key="Caption" value="Undo"/>
+    </Widget>
+    <Widget type="Button" skin="Button" position="72 142 68 33" name="Redo">
+      <Property key="Caption" value="Redo"/>
+    </Widget>
+    <Widget type="TextBox" skin="TextBox" position="0 126 156 16">
+      <Property key="Caption" value="Current Pose"/>
+    </Widget>
+  </Widget>
+  <CodeGeneratorSettings/>
 </MyGUI>

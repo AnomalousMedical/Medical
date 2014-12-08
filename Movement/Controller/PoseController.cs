@@ -19,6 +19,8 @@ namespace Medical.Controller
         private static ButtonEvent PickAnatomy;
         private static FingerDragGesture moveAnatomyGesture;
 
+        public delegate void ModeChangedDelegate(PoseController poseController, String mode);
+
         static PoseController()
         {
             PickAnatomy = new ButtonEvent(EventLayers.Posing);
@@ -43,6 +45,21 @@ namespace Medical.Controller
         private MusclePosition poseStartPosition = null;
         private HashSet<String> activeModes = new HashSet<string>();
 
+        /// <summary>
+        /// Fired when a given pose mode is activated.
+        /// </summary>
+        public event ModeChangedDelegate PoseModeActivated;
+
+        /// <summary>
+        /// Fired when a given pose mode is deactivated.
+        /// </summary>
+        public event ModeChangedDelegate PoseModeDeactivated;
+
+        /// <summary>
+        /// Fired when AllowPosing changes.
+        /// </summary>
+        public event EventDelegate AllowPosingChanged;
+
         public PoseController(StandaloneController controller)
         {
             activeModes.Add("Main");
@@ -59,6 +76,9 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// Set this to true to allow the model to be posed.
+        /// </summary>
         public bool AllowPosing
         {
             get
@@ -71,8 +91,45 @@ namespace Medical.Controller
                 {
                     allowPosing = value;
                     togglePicking();
+                    if(AllowPosingChanged != null)
+                    {
+                        AllowPosingChanged.Invoke();
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// Activate or deactivate a mode.
+        /// </summary>
+        /// <param name="mode">The name of the mode to activate.</param>
+        /// <param name="active">True to activate the mode and false to deactivate it.</param>
+        public void setMode(String mode, bool active)
+        {
+            if (active)
+            {
+                if (activeModes.Add(mode) && PoseModeActivated != null)
+                {
+                    PoseModeActivated.Invoke(this, mode);
+                }
+            }
+            else
+            {
+                if (activeModes.Remove(mode) && PoseModeDeactivated != null)
+                {
+                    PoseModeDeactivated.Invoke(this, mode);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the given mode is active.
+        /// </summary>
+        /// <param name="mode">The mode to check for.</param>
+        /// <returns>True if the mode is active and false if it is inactive.</returns>
+        public bool isModeActive(String mode)
+        {
+            return activeModes.Contains(mode);
         }
 
         void pickAnatomy_FirstFrameUpEvent(EventLayer eventLayer)

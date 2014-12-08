@@ -15,31 +15,34 @@ namespace Medical.Movement.GUI
     {
         private MedicalController medicalController;
         private MusclePositionController musclePositionController;
+        private PoseController poseController;
 
-        CheckButton cSpineFlexExt;
-        CheckButton cSpineLateral;
-        CheckButton cSpineAxial;
+        private Widget controlButtonPanel;
+        private Button undoButton;
+        private Button redoButton;
 
-        Button undoButton;
-        Button redoButton;
-
-        public MovementDialog(MusclePositionController musclePositionController, MedicalController medicalController)
+        public MovementDialog(MusclePositionController musclePositionController, PoseController poseController, MedicalController medicalController)
             : base("Medical.Movement.GUI.MovementDialog.layout")
         {
             this.medicalController = medicalController;
             this.musclePositionController = musclePositionController;
+            this.poseController = poseController;
+            poseController.PoseModeActivated += poseController_PoseModeActivated;
+            poseController.PoseModeDeactivated += poseController_PoseModeDeactivated;
 
             musclePositionController.OnUndoRedoChanged += musclePositionController_UndoRedoStateAltered;
             musclePositionController.OnRedo += musclePositionController_UndoRedoStateAltered;
             musclePositionController.OnUndo += musclePositionController_UndoRedoStateAltered;
 
-            cSpineFlexExt = new CheckButton((Button)window.findWidget("CSpineFlexExt"));
-            cSpineLateral = new CheckButton((Button)window.findWidget("CSpineLateral"));
-            cSpineAxial = new CheckButton((Button)window.findWidget("CSpineAxial"));
-
-            cSpineFlexExt.CheckedChanged += cSpineFlexExt_CheckedChanged;
-            cSpineLateral.CheckedChanged += cSpineLateral_CheckedChanged;
-            cSpineAxial.CheckedChanged += cSpineAxial_CheckedChanged;
+            controlButtonPanel = window.findWidget("ControlButtonPanel");
+            foreach(Widget widget in controlButtonPanel.Children)
+            {
+                Button button = widget as Button;
+                if (button != null)
+                {
+                    button.MouseButtonClick += widget_MouseButtonClick;
+                }
+            }
 
             undoButton = window.findWidget("Undo") as Button;
             undoButton.MouseButtonClick += undoButton_MouseButtonClick;
@@ -51,6 +54,12 @@ namespace Medical.Movement.GUI
             resetButton.MouseButtonClick += resetButton_MouseButtonClick;
 
             musclePositionController_UndoRedoStateAltered(musclePositionController);
+        }
+
+        void widget_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Button button = source as Button;
+            poseController.setMode(button.Name, !button.Selected);
         }
 
         public override void Dispose()
@@ -78,70 +87,21 @@ namespace Medical.Movement.GUI
             musclePositionController.timedBlend(musclePositionController.BindPosition, MedicalConfig.CameraTransitionTime);
         }
 
-        void cSpineAxial_CheckedChanged(Widget source, EventArgs e)
+        void poseController_PoseModeActivated(PoseController poseController, string mode)
         {
-            bool locked = cSpineAxial.Checked;
-            foreach(var joint in cSpineJoints())
+            Button button = controlButtonPanel.findWidget(mode) as Button;
+            if(button != null)
             {
-                ((BEPUikTwistLimit)joint.getElement("AxialRotationLimit")).Locked = locked;
+                button.Selected = true;
             }
         }
 
-        void cSpineLateral_CheckedChanged(Widget source, EventArgs e)
+        void poseController_PoseModeDeactivated(PoseController poseController, string mode)
         {
-            bool locked = cSpineLateral.Checked;
-            foreach (var joint in cSpineJoints())
+            Button button = controlButtonPanel.findWidget(mode) as Button;
+            if (button != null)
             {
-                ((BEPUikTwistLimit)joint.getElement("LateralBendingLimit")).Locked = locked;
-            }
-        }
-
-        void cSpineFlexExt_CheckedChanged(Widget source, EventArgs e)
-        {
-            bool locked = cSpineFlexExt.Checked;
-            foreach (var joint in cSpineJoints())
-            {
-                ((BEPUikTwistLimit)joint.getElement("FlexExtLimit")).Locked = locked;
-            }
-        }
-
-        private IEnumerable<SimObject> cSpineJoints()
-        {
-            var first = medicalController.getSimObject("C_T_SpineJoint");
-            if (first != null)
-            {
-                yield return first;
-                yield return medicalController.getSimObject("UpperT_LowerT_SpineJoint");
-                yield return medicalController.getSimObject("LowerT_L_SpineJoint");
-                yield return medicalController.getSimObject("L_Pelvis_Joint");
-            }
-            else
-            {
-                yield return medicalController.getSimObject("SkullSpineC1Joint");
-                yield return medicalController.getSimObject("SpineC1_C2_Joint");
-                yield return medicalController.getSimObject("SpineC2_C3_Joint");
-                yield return medicalController.getSimObject("SpineC3_C4_Joint");
-                yield return medicalController.getSimObject("SpineC4_C5_Joint");
-                yield return medicalController.getSimObject("SpineC5_C6_Joint");
-                yield return medicalController.getSimObject("SpineC6_C7_Joint");
-                yield return medicalController.getSimObject("SpineC7_T1_Joint");
-                yield return medicalController.getSimObject("SpineT1_T2_Joint");
-                yield return medicalController.getSimObject("SpineT2_T3_Joint");
-                yield return medicalController.getSimObject("SpineT3_T4_Joint");
-                yield return medicalController.getSimObject("SpineT4_T5_Joint");
-                yield return medicalController.getSimObject("SpineT5_T6_Joint");
-                yield return medicalController.getSimObject("SpineT6_T7_Joint");
-                yield return medicalController.getSimObject("SpineT7_T8_Joint");
-                yield return medicalController.getSimObject("SpineT8_T9_Joint");
-                yield return medicalController.getSimObject("SpineT9_T10_Joint");
-                yield return medicalController.getSimObject("SpineT10_T11_Joint");
-                yield return medicalController.getSimObject("SpineT11_T12_Joint");
-                yield return medicalController.getSimObject("SpineT12_L1_Joint");
-                yield return medicalController.getSimObject("SpineL1_L2_Joint");
-                yield return medicalController.getSimObject("SpineL2_L3_Joint");
-                yield return medicalController.getSimObject("SpineL3_L4_Joint");
-                yield return medicalController.getSimObject("SpineL4_L5_Joint");
-                yield return medicalController.getSimObject("SpineL5_PelvisJoint");
+                button.Selected = false;
             }
         }
 
