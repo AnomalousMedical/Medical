@@ -217,7 +217,15 @@ namespace Medical.GUI
                         BookmarkPath path = currentDragNode.UserData as BookmarkPath;
                         Bookmark bookmark = liveThumbController.getUserObject(source);
                         currentDragNode.showHover(false);
-                        bookmarksController.moveBookmark(path, bookmark);
+                        try
+                        {
+                            bookmarksController.moveBookmark(path, bookmark);
+                        }
+                        catch(Exception ex)
+                        {
+                            MessageBox.show(String.Format("There was an error moving this bookmark."), "Move Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                            Log.Error("Exception moving bookmark. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
+                        }
                     }
                 }
             }
@@ -404,7 +412,7 @@ namespace Medical.GUI
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.show(String.Format("There was an error deleting the folder."), "Save Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                                MessageBox.show(String.Format("There was an error emptying the trash."), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                                 Log.Error("Exception deleteing bookmark folder. Type {0}. Message {1}.", ex.GetType().ToString(), ex.Message);
                             }
                         }
