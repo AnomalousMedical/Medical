@@ -171,6 +171,13 @@ namespace Medical.Controller
             {
                 bookmarksResourceProvider.delete(TrashFolderName);
                 bookmarksResourceProvider.createDirectory(TrashFolderName);
+                if(CurrentPath.IsTrash)
+                {
+                    if(BookmarksCleared != null)
+                    {
+                        BookmarksCleared.Invoke();
+                    }
+                }
             }
         }
 
