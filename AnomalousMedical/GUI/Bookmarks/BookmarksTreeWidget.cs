@@ -110,6 +110,15 @@ namespace Medical.GUI
             }
         }
 
+        protected override bool contains(int x, int y)
+        {
+            if(primaryWidget != null)
+            {
+                return primaryWidget.contains(x, y);
+            }
+            return false;
+        }
+
         void plusMinusButton_MouseButtonClick(Widget source, EventArgs e)
         {
             fireExpandToggled();
@@ -133,6 +142,21 @@ namespace Medical.GUI
         void mainButton_MouseButtonDoubleClick(Widget source, EventArgs e)
         {
             fireNodeMouseDoubleClicked();
+        }
+
+        internal void showHover(bool hovered, bool selected)
+        {
+            if (mainButton != null)
+            {
+                if (hovered)
+                {
+                    mainButton._setWidgetState(selected ? "highlighted_checked" : "highlighted");
+                }
+                else
+                {
+                    mainButton._setWidgetState(selected ? "normal_checked" : "normal");
+                }
+            }
         }
     }
 }

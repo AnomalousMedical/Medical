@@ -29,11 +29,10 @@ namespace Medical.GUI
         private ImageBox dragIconPreview;
         private IntVector2 dragMouseStartPosition;
         private ImageBox lockedFeatureImage;
+        private bool wasDragging = false;
 
         private Button addFolder;
         private Button removeFolder;
-
-        private TreeNode topFolder;
 
         private ButtonGridLiveThumbnailController<Bookmark> liveThumbController;
 
@@ -165,7 +164,7 @@ namespace Medical.GUI
 
         void bookmarksController_BookmarkPathAdded(BookmarkPath path)
         {
-            TreeNode bookmarkNode = new TreeNode(path.DisplayName, new BookmarksTreeNodeWidget());
+            BookmarksTreeNode bookmarkNode = new BookmarksTreeNode(path.DisplayName, new BookmarksTreeNodeWidget());
             bookmarkNode.UserData = path;
             pathNodes.Add(path, bookmarkNode);
             if (path.Parent != null)
@@ -197,23 +196,38 @@ namespace Medical.GUI
 
         void item_MouseButtonPressed(ButtonGridItem source, MouseEventArgs arg)
         {
+            wasDragging = false;
             dragMouseStartPosition = arg.Position;
+            currentDragNode = null;
         }
 
         void item_MouseButtonReleased(ButtonGridItem source, MouseEventArgs arg)
         {
             if (bookmarksController.PremiumBookmarks)
             {
-                trash.Visible = false;
-                dragIconPreview.setItemResource(null);
-                dragIconPreview.Visible = false;
-                IntVector2 mousePos = arg.Position;
-                if (trash.contains(mousePos.x, mousePos.y))
+                if (dragIconPreview.Visible)
                 {
-                    bookmarksController.deleteBookmark(liveThumbController.getUserObject(source));
+                    wasDragging = true;
+                    trash.Visible = false;
+                    dragIconPreview.setItemResource(null);
+                    dragIconPreview.Visible = false;
+                    IntVector2 mousePos = arg.Position;
+                    if (trash.contains(mousePos.x, mousePos.y))
+                    {
+                        bookmarksController.deleteBookmark(liveThumbController.getUserObject(source));
+                    }
+                    if(currentDragNode != null)
+                    {
+                        BookmarkPath path = currentDragNode.UserData as BookmarkPath;
+                        Bookmark bookmark = liveThumbController.getUserObject(source);
+                        currentDragNode.showHover(false);
+                        bookmarksController.moveBookmark(path, bookmark);
+                    }
                 }
             }
         }
+
+        private BookmarksTreeNode currentDragNode = null;
 
         void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)
         {
@@ -228,7 +242,11 @@ namespace Medical.GUI
                     dragIconPreview.setImageCoord(liveThumbController.getTextureCoord(source));
                     LayerManager.Instance.upLayerItem(dragIconPreview);
                 }
-                if (trash.contains(arg.Position.x, arg.Position.y))
+
+                int x = arg.Position.x;
+                int y = arg.Position.y;
+
+                if (trash.contains(x, y))
                 {
                     trash.setItemName("Highlight");
                 }
@@ -236,15 +254,36 @@ namespace Medical.GUI
                 {
                     trash.setItemName("Normal");
                 }
+
+                BookmarksTreeNode node = null;
+                if(folderTree.contains(x, y))
+                {
+                    node = folderTree.itemAt(x, y) as BookmarksTreeNode;
+                }
+                if(node != currentDragNode)
+                {
+                    if(currentDragNode != null)
+                    {
+                        currentDragNode.showHover(false);
+                    }
+                    currentDragNode = node;
+                    if(currentDragNode != null)
+                    {
+                        currentDragNode.showHover(true);
+                    }
+                }
             }
         }
 
         void item_ItemClicked(object sender, EventArgs e)
         {
-            ButtonGridItem listItem = (ButtonGridItem)sender;
-            Bookmark bookmark = liveThumbController.getUserObject(listItem);
-            bookmarksController.applyBookmark(bookmark);
-            this.hide();
+            if (!wasDragging)
+            {
+                ButtonGridItem listItem = (ButtonGridItem)sender;
+                Bookmark bookmark = liveThumbController.getUserObject(listItem);
+                bookmarksController.applyBookmark(bookmark);
+                this.hide();
+            }
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)

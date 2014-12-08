@@ -8,6 +8,7 @@ using System.Xml;
 using System.Threading;
 using MyGUIPlugin;
 using System.IO;
+using Engine.Saving;
 
 namespace Medical.Controller
 {
@@ -87,58 +88,11 @@ namespace Medical.Controller
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
             Bookmark bookmark = new Bookmark(name, window.Translation, window.LookAt, layerState);
 
-            saveBookmark(bookmark);
+            saveBookmark(bookmark, currentPath, bookmarksResourceProvider);
 
             fireBookmarkAdded(bookmark);
 
             return bookmark;
-        }
-
-        /// <summary>
-        /// This function just saves a bookmark to disk, it does not fire the bookmark added event.
-        /// </summary>
-        /// <param name="bookmark"></param>
-        public void saveBookmark(Bookmark bookmark)
-        {
-            if (bookmarksResourceProvider.CanWrite)
-            {
-                String directory = "";
-
-                if (currentPath != null)
-                {
-                    directory = currentPath.Path;
-                }
-
-                if (!bookmarksResourceProvider.directoryExists(directory))
-                {
-                    bookmarksResourceProvider.createDirectory(directory);
-                }
-
-                String fileFormat = Path.Combine(directory, bookmark.Name + "{0}.bmk");
-                String filename = String.Format(fileFormat, "");
-
-                int index = 0;
-                int tries = 0;
-                while (bookmarksResourceProvider.fileExists(filename) && tries < MaxFileNameTries)
-                {
-                    filename = String.Format(fileFormat, (++index).ToString());
-                }
-                if (tries == MaxFileNameTries)
-                {
-                    filename = Path.Combine(MedicalConfig.BookmarksFolder, Guid.NewGuid().ToString() + ".bmk");
-                }
-
-                bookmark.BackingFile = filename;
-
-                using (Stream stream = bookmarksResourceProvider.openWriteStream(filename))
-                {
-                    using (XmlTextWriter xmlWriter = new XmlTextWriter(stream, Encoding.Unicode))
-                    {
-                        xmlWriter.Formatting = Formatting.Indented;
-                        xmlSaver.saveObject(bookmark, xmlWriter);
-                    }
-                }
-            }
         }
 
         public void deleteBookmark(Bookmark bookmark)
@@ -154,6 +108,17 @@ namespace Medical.Controller
                 {
                     MessageBox.show(String.Format("Could not delete bookmark '{0}'", bookmark.Name), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
                 }
+            }
+        }
+
+        public void moveBookmark(BookmarkPath path, Bookmark bookmark)
+        {
+            if(path != currentPath)
+            {
+                Bookmark copy = CopySaver.Default.copy(bookmark);
+                copy.BookmarkPath = path;
+                saveBookmark(copy, path, bookmarksResourceProvider);
+                deleteBookmark(bookmark);
             }
         }
 
@@ -329,6 +294,53 @@ namespace Medical.Controller
             if (BookmarkPathRemoved != null)
             {
                 BookmarkPathRemoved.Invoke(path);
+            }
+        }
+
+        /// <summary>
+        /// This function just saves a bookmark to disk, it does not fire the bookmark added event.
+        /// </summary>
+        /// <param name="bookmark"></param>
+        private static void saveBookmark(Bookmark bookmark, BookmarkPath path, ResourceProvider bookmarksResourceProvider)
+        {
+            if (bookmarksResourceProvider.CanWrite)
+            {
+                String directory = "";
+
+                if (path != null)
+                {
+                    directory = path.Path;
+                }
+
+                if (!bookmarksResourceProvider.directoryExists(directory))
+                {
+                    bookmarksResourceProvider.createDirectory(directory);
+                }
+
+                String fileFormat = Path.Combine(directory, bookmark.Name + "{0}.bmk");
+                String filename = String.Format(fileFormat, "");
+
+                int index = 0;
+                int tries = 0;
+                while (bookmarksResourceProvider.fileExists(filename) && tries < MaxFileNameTries)
+                {
+                    filename = String.Format(fileFormat, (++index).ToString());
+                }
+                if (tries == MaxFileNameTries)
+                {
+                    filename = Path.Combine(MedicalConfig.BookmarksFolder, Guid.NewGuid().ToString() + ".bmk");
+                }
+
+                bookmark.BackingFile = filename;
+
+                using (Stream stream = bookmarksResourceProvider.openWriteStream(filename))
+                {
+                    using (XmlTextWriter xmlWriter = new XmlTextWriter(stream, Encoding.Unicode))
+                    {
+                        xmlWriter.Formatting = Formatting.Indented;
+                        xmlSaver.saveObject(bookmark, xmlWriter);
+                    }
+                }
             }
         }
     }
