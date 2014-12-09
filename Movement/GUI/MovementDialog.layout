@@ -6,26 +6,26 @@
     <UserString key="CurrentDockLocation" value="Floating"/>
     <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
     <Widget type="Widget" skin="PanelEmpty" position="0 0 212 124" align="HStretch VStretch" name="ControlButtonPanel">
-      <Widget type="Button" skin="Button" position="0 18 212 33" name="LockSpineFlexExt">
-        <Property key="Caption" value="Lock Flexion / Extension"/>
-      </Widget>
       <Widget type="TextBox" skin="TextBox" position="0 2 106 16">
         <Property key="Caption" value="Spine Axis Lock"/>
       </Widget>
-      <Widget type="Button" skin="Button" position="0 54 212 33" name="LockSpineLateralBending">
+      <Widget type="Button" skin="CheckBox" position="0 18 212 33" name="LockSpineFlexExt">
+        <Property key="Caption" value="Lock Flexion / Extension"/>
+      </Widget>
+      <Widget type="Button" skin="CheckBox" position="0 54 212 33" name="LockSpineLateralBending">
         <Property key="Caption" value="Lock Lateral Bending"/>
       </Widget>
-      <Widget type="Button" skin="Button" position="0 91 212 33" name="LockSpineAxialRotation">
+      <Widget type="Button" skin="CheckBox" position="0 91 212 33" name="LockSpineAxialRotation">
         <Property key="Caption" value="Lock Axial Rotation"/>
       </Widget>
     </Widget>
-    <Widget type="Button" skin="Button" position="144 142 68 33" name="Reset">
+    <Widget type="Button" skin="Button" position="0 142 68 33" name="Reset">
       <Property key="Caption" value="Reset"/>
     </Widget>
-    <Widget type="Button" skin="Button" position="0 142 68 33" name="Undo">
+    <Widget type="Button" skin="Button" position="72 142 68 33" name="Undo">
       <Property key="Caption" value="Undo"/>
     </Widget>
-    <Widget type="Button" skin="Button" position="72 142 68 33" name="Redo">
+    <Widget type="Button" skin="Button" position="144 142 68 33" name="Redo">
       <Property key="Caption" value="Redo"/>
     </Widget>
     <Widget type="TextBox" skin="TextBox" position="0 126 156 16">
