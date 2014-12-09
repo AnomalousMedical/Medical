@@ -21,6 +21,7 @@ namespace Medical.GUI
     abstract class ServerDownloadInfo : DownloadGUIInfo, DownloadListener
     {
         private const float BYTES_TO_MEGABYTES = 9.53674316e-7f;
+        private const double KB_IN_MB = 1024.0;
 
         public delegate void UpdateStatusDelegate(ServerDownloadInfo downloadInfo, String status);
         public delegate void ServerDownloadInfoDelegate(ServerDownloadInfo downloadInfo);
@@ -91,7 +92,17 @@ namespace Medical.GUI
             {
                 if (download.TotalSize > 0)
                 {
-                    StatusString = String.Format("{0}\n{4} - {1}%\n{2} of {3} (MB) at {5} kb per second", Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"), download.StatusString, download.DownloadSpeed.ToString("N2"));
+                    double downloadSpeed = download.DownloadSpeed;
+                    String downloadSpeedPretty;
+                    if (downloadSpeed > KB_IN_MB)
+                    {
+                        downloadSpeedPretty = String.Format("{0} mb", (downloadSpeed / KB_IN_MB).ToString("N2"));
+                    }
+                    else
+                    {
+                        downloadSpeedPretty = String.Format("{0} kb", downloadSpeed.ToString("N2"));
+                    }
+                    StatusString = String.Format("{0}\n{4} - {1}%\n{2} of {3} (MB) at {5} per second", Name, (int)((float)download.TotalRead / download.TotalSize * 100.0f), (download.TotalRead * BYTES_TO_MEGABYTES).ToString("N2"), (download.TotalSize * BYTES_TO_MEGABYTES).ToString("N2"), download.StatusString, downloadSpeedPretty);
                 }
                 else
                 {
