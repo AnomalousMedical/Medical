@@ -416,11 +416,11 @@
  
  //Spacebar row (on laptop)
  //keyConverter[63] = KC_; //Key Fn
- keyConverter[59] = KC_LCONTROL; //Key control
+ keyConverter[55] = KC_LCONTROL; //Key left command, treat as control
  keyConverter[58] = KC_LMENU; //Key left Alt
- keyConverter[55] = KC_LWIN; //Key left Command
+ keyConverter[59] = KC_LWIN; //Key left control, treat as win
  keyConverter[49] = KC_SPACE; //Key Space
- keyConverter[54] = KC_RWIN; //Key Right Command
+ keyConverter[54] = KC_RCONTROL; //Key Right Command, treat as control
  keyConverter[61] = KC_RMENU; //Key Right alt
  
  //Cursor Position Keys
