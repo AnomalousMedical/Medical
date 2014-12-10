@@ -18,10 +18,14 @@ namespace Medical.Controller
         private OgreWindow ogreWindow;
         private OSWindow window;
         private TextBox statusText;
+        Widget widgetPanel;
         private float smoothShowPosition;
         private bool runningShowTransition; //True to be making the popup visible, false to be hiding.
         private int imageWidth = 1920;
         private int imageHeight = 1200;
+        private List<Tuple<Widget, IntCoord>> resizingWidgets;
+        private int widgetPanelWidth;
+        private int widgetPanelHeight;
 
         /// <summary>
         /// This event is called after the SplashScreen has been hidden completely.
@@ -48,6 +52,13 @@ namespace Medical.Controller
 
             statusText = mainWidget.findWidget("SplashScreen/Status") as TextBox;
             statusText.TextColor = Color.White;
+
+            widgetPanel = mainWidget.findWidget("WidgetPanel");
+            widgetPanelWidth = Math.Max(widgetPanel.Width, 1);
+            widgetPanelHeight = Math.Max(widgetPanel.Height, 1);
+
+            resizingWidgets = new List<Tuple<Widget, IntCoord>>((int)widgetPanel.ChildCount);
+            resizingWidgets.AddRange(widgetPanel.Children.Where(c => c.isUserString("ResizeKeepAspectRatio")).Select(c => Tuple.Create(c, c.Coord)));
 
             resized();
 
@@ -195,31 +206,24 @@ namespace Medical.Controller
             }
 
             //Set Sizes
-            mainWidget.setPosition(imageX, imageY);
-            mainWidget.setSize(widgetWidth, widgetHeight);
+            mainWidget.setCoord(imageX, imageY, widgetWidth, widgetHeight);
 
-            Widget widgetPanel = mainWidget.findWidget("WidgetPanel");
-            int widgetPanelWidth = widgetPanel.Width;
-            int widgetPanelHeight = widgetPanel.Height;
-
-            float panelRatio = viewWidth / (float)widgetPanelWidth;
-            float ratio2 = viewHeight / (float)widgetPanelHeight;
+            float panelRatio = viewWidth /  (float)widgetPanelWidth;
+            float ratio2 = viewHeight /  (float)widgetPanelHeight;
             if (ratio2 < panelRatio)
             {
                 panelRatio = ratio2;
             }
-            for (uint i = 0; i < widgetPanel.ChildCount; ++i)
+            foreach(var resizingInfo in resizingWidgets)
             {
-                Widget widget = widgetPanel.getChildAt(i);
-                if (widget.isUserString("ResizeKeepAspectRatio"))
-                {
-                    widget.setPosition((int)(widget.Left * panelRatio), (int)(widget.Top * panelRatio));
-                    widget.setSize((int)(widget.Width * panelRatio), (int)(widget.Height * panelRatio));
-                }
+                IntCoord coord = resizingInfo.Item2;
+                resizingInfo.Item1.setCoord((int)(coord.left * panelRatio), 
+                                            (int)(coord.top * panelRatio), 
+                                            (int)(coord.width * panelRatio), 
+                                            (int)(coord.height * panelRatio));
             }
 
-            widgetPanel.setPosition(-imageX, imageY);
-            widgetPanel.setSize(viewWidth, viewHeight);
+            widgetPanel.setCoord(-imageX, imageY, viewWidth, viewHeight);
         }
 
         void window_Resized(OSWindow window)
