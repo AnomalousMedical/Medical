@@ -602,6 +602,14 @@ namespace Medical
             }
         }
 
+        public MainWindow MainWindow
+        {
+            get
+            {
+                return mainWindow;
+            }
+        }
+
         /// <summary>
         /// This controller enables sharing of plugins. If it does not exist the program cannot share plugins.
         /// Do not create this anywhere except in StoreManagerPlugin.

@@ -6,27 +6,33 @@ using OgrePlugin;
 using MyGUIPlugin;
 using OgreWrapper;
 using Engine;
+using Engine.Platform;
 
 namespace Medical.Controller
 {
     public class SplashScreen : IDisposable
     {
-        Layout layout;
-        Widget mainWidget;
-        ProgressBar progressBar;
-        OgreWindow ogreWindow;
-        TextBox statusText;
+        private Layout layout;
+        private Widget mainWidget;
+        private ProgressBar progressBar;
+        private OgreWindow ogreWindow;
+        private OSWindow window;
+        private TextBox statusText;
         private float smoothShowPosition;
         private bool runningShowTransition; //True to be making the popup visible, false to be hiding.
+        private int imageWidth = 1920;
+        private int imageHeight = 1200;
 
         /// <summary>
         /// This event is called after the SplashScreen has been hidden completely.
         /// </summary>
         public event EventHandler Hidden;
 
-        public SplashScreen(OgreWindow ogreWindow, uint progressRange, String splashScreenLayoutFile, String splashScreenResourceFile)
+        public SplashScreen(OSWindow window, OgreWindow ogreWindow, uint progressRange, String splashScreenLayoutFile, String splashScreenResourceFile)
         {
+            this.window = window;
             this.ogreWindow = ogreWindow;
+            window.Resized += window_Resized;
             SmoothShow = true;
 
             Gui gui = Gui.Instance;
@@ -34,29 +40,8 @@ namespace Medical.Controller
             layout = LayoutManager.Instance.loadLayout(splashScreenLayoutFile);
             mainWidget = layout.getWidget(0);
 
-            int imageWidth = 1920;
             NumberParser.TryParse(mainWidget.getUserString("ImageWidth"), out imageWidth);
-            int imageHeight = 1200;
             NumberParser.TryParse(mainWidget.getUserString("ImageHeight"), out imageHeight);
-
-            int viewWidth = RenderManager.Instance.ViewWidth;
-            int viewHeight = RenderManager.Instance.ViewHeight;
-
-            float heightRatio = (float)viewHeight / (float)imageHeight;
-            int widgetWidth = (int)(imageWidth * heightRatio);
-            int widgetHeight = viewHeight;
-
-            int imageX = (viewWidth - widgetWidth) / 2;
-            int imageY = 0;
-
-            //If the newly scaled image is not wide enough for the screen
-            if (widgetWidth < viewWidth)
-            {
-                float widthRatio = (float)viewWidth / (float)imageWidth;
-                widgetWidth = viewWidth;
-                widgetHeight = (int)(imageHeight * widthRatio);
-                imageX = 0;
-            }
 
             progressBar = mainWidget.findWidget("SplashScreen/ProgressBar") as ProgressBar;
             progressBar.Range = progressRange;
@@ -64,37 +49,14 @@ namespace Medical.Controller
             statusText = mainWidget.findWidget("SplashScreen/Status") as TextBox;
             statusText.TextColor = Color.White;
 
-            //Set Sizes
-            mainWidget.setPosition(imageX, imageY);
-            mainWidget.setSize(widgetWidth, widgetHeight);
-            
-            Widget widgetPanel = mainWidget.findWidget("WidgetPanel");
-            int widgetPanelWidth = widgetPanel.Width;
-            int widgetPanelHeight = widgetPanel.Height;
-            float panelRatio = viewWidth / (float)widgetPanelWidth;
-            float ratio2 = viewHeight / (float)widgetPanelHeight;
-            if (ratio2 < panelRatio)
-            {
-                panelRatio = ratio2;
-            }
-            for (uint i = 0; i < widgetPanel.ChildCount; ++i)
-            {
-                Widget widget = widgetPanel.getChildAt(i);
-                if (widget.isUserString("ResizeKeepAspectRatio"))
-                {
-                    widget.setPosition((int)(widget.Left * panelRatio), (int)(widget.Top * panelRatio));
-                    widget.setSize((int)(widget.Width * panelRatio), (int)(widget.Height * panelRatio));
-                }
-            }
-
-            widgetPanel.setPosition(-imageX, imageY);
-            widgetPanel.setSize(viewWidth, viewHeight);
+            resized();
 
             ogreWindow.OgreRenderTarget.update();
         }
 
         public void Dispose()
         {
+            window.Resized -= window_Resized;
             LayoutManager.Instance.unloadLayout(layout);
         }
 
@@ -209,6 +171,60 @@ namespace Medical.Controller
                     mainWidget.Alpha = 1 - smoothShowPosition / MyGUIInterface.SmoothShowDuration;
                 }
             }
+        }
+
+        private void resized()
+        {
+            int viewWidth = window.WindowWidth;
+            int viewHeight = window.WindowHeight;
+
+            float heightRatio = (float)viewHeight / (float)imageHeight;
+            int widgetWidth = (int)(imageWidth * heightRatio);
+            int widgetHeight = viewHeight;
+
+            int imageX = (viewWidth - widgetWidth) / 2;
+            int imageY = 0;
+
+            //If the newly scaled image is not wide enough for the screen
+            if (widgetWidth < viewWidth)
+            {
+                float widthRatio = (float)viewWidth / (float)imageWidth;
+                widgetWidth = viewWidth;
+                widgetHeight = (int)(imageHeight * widthRatio);
+                imageX = 0;
+            }
+
+            //Set Sizes
+            mainWidget.setPosition(imageX, imageY);
+            mainWidget.setSize(widgetWidth, widgetHeight);
+
+            Widget widgetPanel = mainWidget.findWidget("WidgetPanel");
+            int widgetPanelWidth = widgetPanel.Width;
+            int widgetPanelHeight = widgetPanel.Height;
+
+            float panelRatio = viewWidth / (float)widgetPanelWidth;
+            float ratio2 = viewHeight / (float)widgetPanelHeight;
+            if (ratio2 < panelRatio)
+            {
+                panelRatio = ratio2;
+            }
+            for (uint i = 0; i < widgetPanel.ChildCount; ++i)
+            {
+                Widget widget = widgetPanel.getChildAt(i);
+                if (widget.isUserString("ResizeKeepAspectRatio"))
+                {
+                    widget.setPosition((int)(widget.Left * panelRatio), (int)(widget.Top * panelRatio));
+                    widget.setSize((int)(widget.Width * panelRatio), (int)(widget.Height * panelRatio));
+                }
+            }
+
+            widgetPanel.setPosition(-imageX, imageY);
+            widgetPanel.setSize(viewWidth, viewHeight);
+        }
+
+        void window_Resized(OSWindow window)
+        {
+            resized();
         }
     }
 }

@@ -72,7 +72,7 @@ namespace Medical
             //Core
             controller = new StandaloneController(this);
             controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
-            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, FinishedPosition, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
+            splashScreen = new SplashScreen(controller.MainWindow, OgreInterface.Instance.OgrePrimaryWindow, FinishedPosition, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
             UpdateController.CurrentVersion = Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
