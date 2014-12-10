@@ -63,6 +63,22 @@ enum EventSubtypes
     [pool release];
 }
 
+- (void)sendEvent:(NSEvent *)event
+{
+    //OSX is such a unique snowflake that releasing another key while command is pressed
+    //will not dispatch the keyup event, this makes sure that we get the event on the current key window.
+    //Thanks to http://stackoverflow.com/questions/4001565/missing-keyup-events-on-meaningful-key-combinations-e-g-select-till-beginning?rq=1
+    //When we have other awesome problems with command in OSX 10.78 Stuck in Traffic this will be why.
+    if ([event type] == NSKeyUp && ([event modifierFlags] & NSCommandKeyMask))
+    {
+        [[self keyWindow] sendEvent:event];
+    }
+    else
+    {
+        [super sendEvent:event];
+    }
+}
+
 -(void)doStopApplication
 {
     shouldKeepRunning = NO;
