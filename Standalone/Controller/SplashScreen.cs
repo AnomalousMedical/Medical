@@ -186,8 +186,8 @@ namespace Medical.Controller
 
         private void resized()
         {
-            int viewWidth = window.WindowWidth;
-            int viewHeight = window.WindowHeight;
+            int viewWidth = Math.Max(window.WindowWidth, 1);
+            int viewHeight = Math.Max(window.WindowHeight, 1);
 
             float heightRatio = (float)viewHeight / (float)imageHeight;
             int widgetWidth = (int)(imageWidth * heightRatio);
