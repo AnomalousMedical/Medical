@@ -76,6 +76,7 @@
     <ResourceFiles Include="..\..\$(Configuration)\Mono.Anomalous.Security.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\DotNetZip.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\FreeImageNET.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\Lucene.Net.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
 	<ResourceFiles Include="..\..\$(Configuration)\IntroductionTutorial.dat" />
 	
