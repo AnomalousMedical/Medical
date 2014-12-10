@@ -128,7 +128,7 @@ namespace Medical
 
         public void Dispose()
         {
-            teethMover.Dispose();
+            IDisposableUtil.DisposeIfNotNull(teethMover);
             unloadScene();
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
