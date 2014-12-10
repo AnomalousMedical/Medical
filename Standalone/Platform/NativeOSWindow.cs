@@ -174,9 +174,9 @@ namespace Medical
             get { return true; }
         }
 
-        public string WindowHandle
+        public IntPtr WindowHandle
         {
-            get { return NativeOSWindow_getHandle(nativeWindow).ToString(); }
+            get { return NativeOSWindow_getHandle(nativeWindow); }
         }
 
         public int WindowHeight
