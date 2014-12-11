@@ -60,6 +60,7 @@ namespace Medical.GUI
             scrollView.CanvasSize = size;
             var viewCoord = scrollView.ViewCoord;
             size.Width = viewCoord.width - viewCoord.left;
+            scrollView.CanvasSize = size;
             flowLayout.WorkingSize = size;
             flowLayout.layout();
         }
