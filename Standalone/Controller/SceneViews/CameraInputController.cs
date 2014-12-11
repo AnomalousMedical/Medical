@@ -101,6 +101,7 @@ namespace Medical.Controller
         private Gesture currentGesture = Gesture.None;
         private Timer mouseWheelTimer;
         private CameraPosition mouseUndoPosition;
+        private CameraPosition touchUndoPosition;
 
         public CameraInputController(SceneViewController sceneViewController, EventManager eventManager)
         {
@@ -118,6 +119,7 @@ namespace Medical.Controller
 
             if (zoomGesture != null)
             {
+                zoomGesture.GestureStarted += zoomGesture_GestureStarted;
                 zoomGesture.Dragged += zoomGesture_Dragged;
                 zoomGesture.MomentumStarted += zoomGesture_MomentumStarted;
                 zoomGesture.MomentumEnded += zoomGesture_MomentumEnded;
@@ -126,7 +128,8 @@ namespace Medical.Controller
                 rotateGesture.Dragged += rotateGesture_Dragged;
                 rotateGesture.MomentumStarted += rotateGesture_MomentumStarted;
                 rotateGesture.MomentumEnded += rotateGesture_MomentumEnded;
-                
+
+                panGesture.GestureStarted += panGesture_GestureStarted;
                 panGesture.Dragged += panGesture_Dragged;
                 panGesture.MomentumStarted += panGesture_MomentumStarted;
                 panGesture.MomentumEnded += panGesture_MomentumEnded;
@@ -142,6 +145,7 @@ namespace Medical.Controller
 
             if (zoomGesture != null)
             {
+                zoomGesture.GestureStarted -= zoomGesture_GestureStarted;
                 zoomGesture.Dragged -= zoomGesture_Dragged;
                 zoomGesture.MomentumStarted -= zoomGesture_MomentumStarted;
                 zoomGesture.MomentumEnded -= zoomGesture_MomentumEnded;
@@ -150,7 +154,8 @@ namespace Medical.Controller
                 rotateGesture.Dragged -= rotateGesture_Dragged;
                 rotateGesture.MomentumStarted -= rotateGesture_MomentumStarted;
                 rotateGesture.MomentumEnded -= rotateGesture_MomentumEnded;
-                
+
+                panGesture.GestureStarted -= panGesture_GestureStarted;
                 panGesture.Dragged -= panGesture_Dragged;
                 panGesture.MomentumStarted -= panGesture_MomentumStarted;
                 panGesture.MomentumEnded -= panGesture_MomentumEnded;
@@ -280,6 +285,7 @@ namespace Medical.Controller
         {
             if (eventLayer.EventProcessingAllowed && currentGesture <= Gesture.Rotate)
             {
+                createTouchUndo();
                 travelTracker.reset();
             }
         }
@@ -318,7 +324,16 @@ namespace Medical.Controller
         {
             if (currentGesture <= Gesture.Rotate)
             {
+                commitTouchUndo();
                 currentGesture = Gesture.None;
+            }
+        }
+
+        void panGesture_GestureStarted(EventLayer eventLayer, FingerDragGesture gesture)
+        {
+            if (eventLayer.EventProcessingAllowed)
+            {
+                createTouchUndo();
             }
         }
 
@@ -355,7 +370,16 @@ namespace Medical.Controller
         {
             if (currentGesture <= Gesture.Pan)
             {
+                commitTouchUndo();
                 currentGesture = Gesture.None;
+            }
+        }
+
+        void zoomGesture_GestureStarted(EventLayer eventLayer, FingerDragGesture gesture)
+        {
+            if (eventLayer.EventProcessingAllowed)
+            {
+                createTouchUndo();
             }
         }
 
@@ -392,6 +416,7 @@ namespace Medical.Controller
         {
             if (currentGesture <= Gesture.Zoom)
             {
+                commitTouchUndo();
                 currentGesture = Gesture.None;
             }
         }
@@ -399,6 +424,28 @@ namespace Medical.Controller
         void Touches_AllFingersReleased(Touches obj)
         {
             currentGesture = Gesture.None;
+        }
+
+        private void createTouchUndo()
+        {
+            SceneViewWindow sceneView = sceneViewController.ActiveWindow;
+            if (touchUndoPosition == null && sceneView != null)
+            {
+                touchUndoPosition = sceneView.createCameraPosition();
+            }
+        }
+
+        private void commitTouchUndo()
+        {
+            if(touchUndoPosition != null)
+            {
+                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+                if (activeWindow != null)
+                {
+                    activeWindow.pushUndoState(touchUndoPosition);
+                }
+                touchUndoPosition = null;
+            }
         }
 
         void mouseWheelTimer_Elapsed(object sender, ElapsedEventArgs e)
