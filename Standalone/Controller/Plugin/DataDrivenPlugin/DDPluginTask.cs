@@ -134,7 +134,6 @@ namespace Medical
                 }
 
                 yield return new PropertyMemberWrapper(type.GetProperty("ShowOnTaskbar"));
-                yield return new PropertyMemberWrapper(type.GetProperty("ShowOnTimelineTaskbar"));
                 yield return new PropertyMemberWrapper(type.GetProperty("ShowOnTaskMenu"));
                 yield return new PropertyMemberWrapper(type.GetProperty("Dragable"));
             }
