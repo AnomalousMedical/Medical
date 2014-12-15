@@ -27,12 +27,8 @@ namespace DentalSim.GUI
         private MandibleControlSlider bothForwardBack;
         private MandibleControlSlider forceSlider;
         private Button resetButton;
-        private Button restoreButton;
-
-        private Vector3 movingMusclePosition;
-        private float leftCPPosition;
-        private float rightCPPosition;
-        private bool restoreEnabled = false;
+        private Button undoButton;
+        private Button redoButton;
 
         private MusclePositionController musclePositionController;
         private MusclePosition slideStartMusclePosition = null;
@@ -41,6 +37,9 @@ namespace DentalSim.GUI
             : base("DentalSim.GUI.MandibleMovement.MandibleMovementDialog.layout")
         {
             this.musclePositionController = musclePositionController;
+            musclePositionController.OnUndoRedoChanged += musclePositionController_UndoRedoStateAltered;
+            musclePositionController.OnRedo += musclePositionController_UndoRedoStateAltered;
+            musclePositionController.OnUndo += musclePositionController_UndoRedoStateAltered;
 
             openTrackBar = new MandibleControlSlider(window.findWidget("Movement/HingeSlider") as ScrollBar);
             openTrackBar.Minimum = -3;
@@ -73,8 +72,12 @@ namespace DentalSim.GUI
             forceSlider.ValueChangeEnded += mandibleMotionTrackBar_ValueChangeEnded;
 
             resetButton = window.findWidget("Movement/Reset") as Button;
-            restoreButton = window.findWidget("Movement/Restore") as Button;
-            restoreButton.Enabled = false;
+            undoButton = window.findWidget("Undo") as Button;
+            undoButton.MouseButtonClick += undoButton_MouseButtonClick;
+            redoButton = window.findWidget("Redo") as Button;
+            redoButton.MouseButtonClick += redoButton_MouseButtonClick;
+            undoButton.Enabled = musclePositionController.HasUndo;
+            redoButton.Enabled = musclePositionController.HasRedo;
 
             openTrackBar.ValueChanged += openTrackBar_ValueChanged;
             rightForwardBack.ValueChanged += rightSliderValueChanged;
@@ -82,7 +85,6 @@ namespace DentalSim.GUI
             bothForwardBack.ValueChanged += bothForwardBackChanged;
             forceSlider.ValueChanged += forceSlider_ValueChanged;
             resetButton.MouseButtonClick += resetButton_Click;
-            restoreButton.MouseButtonClick += restoreButton_Click;
 
             movementSequenceController.PlaybackStarted += new MovementSequenceEvent(movementSequenceController_PlaybackStarted);
             movementSequenceController.PlaybackStopped += new MovementSequenceEvent(movementSequenceController_PlaybackStopped);
@@ -91,13 +93,15 @@ namespace DentalSim.GUI
         void movementSequenceController_PlaybackStopped(MovementSequenceController controller)
         {
             resetButton.Enabled = true;
-            restoreButton.Enabled = restoreEnabled;
+            undoButton.Enabled = musclePositionController.HasUndo;
+            redoButton.Enabled = musclePositionController.HasRedo;
         }
 
         void movementSequenceController_PlaybackStarted(MovementSequenceController controller)
         {
             resetButton.Enabled = false;
-            restoreButton.Enabled = false;
+            undoButton.Enabled = false;
+            redoButton.Enabled = false;
         }
 
         public bool AllowSceneManipulation
@@ -114,7 +118,6 @@ namespace DentalSim.GUI
 
         public void sceneLoaded(SimScene scene)
         {
-            //restoreButton.Enabled = false;
             leftCP = ControlPointController.getControlPoint("LeftCP");
             rightCP = ControlPointController.getControlPoint("RightCP");
             movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
@@ -178,25 +181,9 @@ namespace DentalSim.GUI
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            leftCPPosition = leftCP.CurrentLocation;
-            rightCPPosition = rightCP.CurrentLocation;
-            movingMusclePosition = movingMuscleTarget.Offset;
-            restoreEnabled = true;
+            musclePositionController.pushUndoState(new MusclePosition(true), musclePositionController.BindPosition);
 
-            synchronizeLeftCP(resetButton, leftCP.NeutralLocation);
-            synchronizeRightCP(resetButton, rightCP.NeutralLocation);
-            bothForwardBack.Value = rightForwardBack.Value;
-            synchronizeMovingMuscleOffset(resetButton, Vector3.Zero);
-            restoreButton.Enabled = true;
-        }
-
-        void restoreButton_Click(object sender, EventArgs e)
-        {
-            synchronizeLeftCP(resetButton, leftCPPosition);
-            synchronizeRightCP(resetButton, rightCPPosition);
-            synchronizeMovingMuscleOffset(resetButton, movingMusclePosition);
-            restoreButton.Enabled = false;
-            restoreEnabled = false;
+            musclePositionController.timedBlend(musclePositionController.BindPosition, MedicalConfig.CameraTransitionTime);
         }
 
         //Synchronize methods
@@ -323,6 +310,22 @@ namespace DentalSim.GUI
         void mandibleMotionTrackBar_ValueChangeStarted(MandibleControlSlider source)
         {
             slideStartMusclePosition = new MusclePosition(true);
+        }
+
+        void musclePositionController_UndoRedoStateAltered(MusclePositionController obj)
+        {
+            undoButton.Enabled = musclePositionController.HasUndo;
+            redoButton.Enabled = musclePositionController.HasRedo;
+        }
+
+        void redoButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            musclePositionController.redo();
+        }
+
+        void undoButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            musclePositionController.undo();
         }
     }
 }

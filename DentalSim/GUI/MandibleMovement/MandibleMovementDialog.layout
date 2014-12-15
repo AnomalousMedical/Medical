@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSXP" position="131 108 190 285" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSXP" position="194 77 190 250" layer="Overlapped">
         <Property key="Caption" value="Mandible Movement"/>
         <Property key="MinSize" value="178 273"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
@@ -26,14 +26,11 @@
         <Widget type="TextBox" skin="TextBox" position="38 76 64 15" align="HRelative VRelative" name="Movement/ProtrusionText">
             <Property key="Caption" value="Protrusion"/>
         </Widget>
-        <Widget type="Button" skin="VerticalIconTextButton" position="5 187 83 64" align="HRelative Bottom" name="Movement/Reset">
+        <Widget type="Button" skin="ButtonFlat" position="0 184 57 33" align="HRelative Bottom" name="Movement/Reset">
             <Property key="Caption" value="Reset"/>
-            <Property key="ImageResource" value="Movement/Reset"/>
         </Widget>
-        <Widget type="Button" skin="VerticalIconTextButton" position="91 187 83 64" align="HRelative Bottom" name="Movement/Restore">
-            <Property key="Caption" value="Restore"/>
-            <Property key="ImageResource" value="Movement/Restore"/>
-            <Property key="ModeImage" value="true"/>
+        <Widget type="Button" skin="ButtonFlat" position="60 184 58 33" align="HRelative Bottom" name="Undo">
+            <Property key="Caption" value="Undo"/>
         </Widget>
         <Widget type="ScrollBar" skin="SliderH" position="37 126 105 16" align="HRelative VRelative" name="Movement/HingeSlider">
             <Property key="Range" value="1000"/>
@@ -44,10 +41,10 @@
         <Widget type="ImageBox" skin="ImageBox" position="0 40 32 32" align="HRelative VRelative">
             <Property key="ImageResource" value="Movement/ManipLeftHorizontalBack"/>
         </Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="147 4 32 32" align="HRelative VRelative">
+        <Widget type="ImageBox" skin="ImageBox" position="146 4 32 32" align="HRelative VRelative">
             <Property key="ImageResource" value="Movement/ManipRightHorizontalForward"/>
         </Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="147 40 32 32" align="HRelative VRelative">
+        <Widget type="ImageBox" skin="ImageBox" position="146 40 32 32" align="HRelative VRelative">
             <Property key="ImageResource" value="Movement/ManipLeftHorizontalForward"/>
         </Widget>
         <Widget type="ImageBox" skin="ImageBox" position="0 112 32 32" align="HRelative VRelative">
@@ -56,10 +53,10 @@
         <Widget type="ImageBox" skin="ImageBox" position="0 76 32 32" align="HRelative VRelative">
             <Property key="ImageResource" value="Movement/ManipHorizontalBothBack"/>
         </Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="147 112 32 32" align="HRelative VRelative">
+        <Widget type="ImageBox" skin="ImageBox" position="146 112 32 32" align="HRelative VRelative">
             <Property key="ImageResource" value="Movement/ManipVerticalOpen"/>
         </Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="147 76 32 32" align="HRelative VRelative">
+        <Widget type="ImageBox" skin="ImageBox" position="146 76 32 32" align="HRelative VRelative">
             <Property key="ImageResource" value="Movement/ManipHorizontalBothForward"/>
         </Widget>
         <Widget type="ScrollBar" skin="SliderH" position="37 163 105 16" align="HRelative VRelative" name="Movement/ForceSlider">
@@ -71,8 +68,12 @@
         <Widget type="ImageBox" skin="ImageBox" position="0 148 32 32" align="HRelative VRelative">
             <Property key="ImageResource" value="Movement/ManipForceDown"/>
         </Widget>
-        <Widget type="ImageBox" skin="ImageBox" position="147 148 32 32" align="HRelative VRelative">
+        <Widget type="ImageBox" skin="ImageBox" position="146 148 32 32" align="HRelative VRelative">
             <Property key="ImageResource" value="Movement/ManipForceUp"/>
         </Widget>
+        <Widget type="Button" skin="ButtonFlat" position="121 184 57 33" align="HRelative Bottom" name="Redo">
+            <Property key="Caption" value="Redo"/>
+        </Widget>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>
