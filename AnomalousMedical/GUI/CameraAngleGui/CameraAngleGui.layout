@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCXP" position="98 59 200 219" layer="Overlapped">
-        <Property key="Caption" value="Camera Angles"/>
+        <Property key="Caption" value="Views"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <UserString key="PinByDefault" value="false"/>

@@ -175,7 +175,7 @@ namespace Medical.GUI
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
-            taskController.addTask(new PinableMDIDialogOpenTask(cameraAngleGui, "Medical.CameraAngleGui", "Camera Angles", CommonResources.NoIcon, TaskMenuCategories.Explore));
+            taskController.addTask(new PinableMDIDialogOpenTask(cameraAngleGui, "Medical.Views", "Views", CommonResources.NoIcon, TaskMenuCategories.Explore));
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Explore, 0));

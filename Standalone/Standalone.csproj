@@ -849,7 +849,9 @@
     <Compile Include="Utility\UndoRedoBuffer.cs" />
     <Compile Include="Utility\WorkQueue.cs" />
     <Compile Include="Utility\ZipEntryExtensions.cs" />
-    <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc" />
+    <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorStyles.rcss" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorTemplate.trml">
