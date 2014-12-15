@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Medical.GUI
 {
-    class CameraAngleGui : PinableMDIDialog
+    class ViewsGui : PinableMDIDialog
     {
         private const float HALF_PI = (float)Math.PI / 2.0f - 0.001f;
 
@@ -21,8 +21,8 @@ namespace Medical.GUI
         private Button redoItem;
 
 
-        public CameraAngleGui(SceneViewController sceneViewController, AnatomyController anatomyController)
-            :base("Medical.GUI.CameraAngleGui.CameraAngleGui.layout")
+        public ViewsGui(SceneViewController sceneViewController, AnatomyController anatomyController)
+            : base("Medical.GUI.ViewsGui.ViewsGui.layout")
         {
             this.sceneViewController = sceneViewController;
             this.anatomyController = anatomyController;

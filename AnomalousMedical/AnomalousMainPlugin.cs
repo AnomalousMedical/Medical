@@ -36,7 +36,7 @@ namespace Medical.GUI
         private DownloadManagerGUI downloadManagerGUI;
         private SequencePlayer sequencePlayer = null;
         private BookmarksGUI bookmarks;
-        private CameraAngleGui cameraAngleGui;
+        private ViewsGui viewsGui;
         
         //Controllers
         private BookmarksController bookmarksController;
@@ -70,7 +70,7 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(bookmarks);
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
-            IDisposableUtil.DisposeIfNotNull(cameraAngleGui);
+            IDisposableUtil.DisposeIfNotNull(viewsGui);
             downloadServer.Dispose();
             selectionModeTask.Dispose();
             selectionOperatorTask.Dispose();
@@ -147,8 +147,8 @@ namespace Medical.GUI
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager, standaloneController.SceneViewController);
 
-            cameraAngleGui = new CameraAngleGui(standaloneController.SceneViewController, standaloneController.AnatomyController);
-            guiManager.addManagedDialog(cameraAngleGui);
+            viewsGui = new ViewsGui(standaloneController.SceneViewController, standaloneController.AnatomyController);
+            guiManager.addManagedDialog(viewsGui);
 
             //Taskbar
             taskbar = new AppButtonTaskbar();
@@ -175,7 +175,7 @@ namespace Medical.GUI
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
-            taskController.addTask(new PinableMDIDialogOpenTask(cameraAngleGui, "Medical.Views", "Views", CommonResources.NoIcon, TaskMenuCategories.Explore));
+            taskController.addTask(new PinableMDIDialogOpenTask(viewsGui, "Medical.Views", "Views", CommonResources.NoIcon, TaskMenuCategories.Explore));
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Explore, 0));

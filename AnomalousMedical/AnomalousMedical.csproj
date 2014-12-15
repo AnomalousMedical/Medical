@@ -150,7 +150,7 @@
     <Compile Include="GUI\Bookmarks\BookmarksTreeNode.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksTreeWidget.cs" />
     <Compile Include="GUI\BuyScreen\BuyScreen.cs" />
-    <Compile Include="GUI\CameraAngleGui\CameraAngleGui.cs" />
+    <Compile Include="GUI\ViewsGui\ViewsGui.cs" />
     <Compile Include="GUI\ChooseSceneDialog\ChooseSceneDialog.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadGUIInfo.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadingPanel.cs" />
@@ -184,7 +184,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
-    <EmbeddedResource Include="GUI\CameraAngleGui\CameraAngleGui.layout" />
+    <EmbeddedResource Include="GUI\ViewsGui\ViewsGui.layout" />
     <EmbeddedResource Include="GUI\ChooseSceneDialog\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
     <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
