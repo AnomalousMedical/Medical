@@ -2,7 +2,7 @@
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCSXP" position="194 77 190 250" layer="Overlapped">
         <Property key="Caption" value="Mandible Movement"/>
-        <Property key="MinSize" value="178 273"/>
+        <Property key="MinSize" value="190 250"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="TextBox" skin="TextBox" position="38 112 91 15" align="HRelative VRelative" name="Movement/HingeOpenText">
