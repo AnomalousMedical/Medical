@@ -252,10 +252,6 @@ namespace Medical.GUI
 
                         searchBox.Caption = "Clicked";
                         clearButton.Visible = true;
-                        if (Pinned && MedicalConfig.AutoOpenAnatomyFinder && !Visible && anatomyController.SelectionOperator != SelectionOperator.Remove && anatomyController.PickingMode != AnatomyPickingMode.None)
-                        {
-                            Visible = true;
-                        }
                     }
                     else
                     {

@@ -4,7 +4,7 @@
         <Property key="Caption" value="Movement Sequences"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
-        <UserString key="PinByDefault" value="true"/>
+        <UserString key="PinByDefault" value="false"/>
         <Widget type="Button" skin="VerticalIconTextButton" position="0 7 68 75" name="Sequence">
             <Property key="Caption" value="Sequence"/>
             <Property key="ImageResource" value="SequenceToolstrip/Sequence"/>

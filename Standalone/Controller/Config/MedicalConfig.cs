@@ -440,22 +440,6 @@ namespace Medical
             }
         }
 
-        public static bool AutoOpenAnatomyFinder
-        {
-            get
-            {
-                return autoOpenAnatomyFinder;
-            }
-            set
-            {
-                if (autoOpenAnatomyFinder != value)
-                {
-                    autoOpenAnatomyFinder = value;
-                    program.setValue("AutoOpenAnatomyFinder", autoOpenAnatomyFinder);
-                }
-            }
-        }
-
         public static String RecentDocsFile
         {
             get
