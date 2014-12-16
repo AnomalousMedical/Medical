@@ -58,6 +58,15 @@ enum EventSubtypes
         
     }
     
+    //Make sure we get out of fullscreen mode by toggling all windows back to windowed.
+    for(NSWindow* window in [self windows])
+    {
+        if([window styleMask] & NSFullScreenWindowMask)
+        {
+            [window toggleFullScreen:nil];
+        }
+    }
+    
     cocoaApp->fireExit();
     
     [pool release];
