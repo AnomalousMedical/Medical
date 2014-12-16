@@ -82,7 +82,7 @@ namespace Medical.Controller.AnomalousMvc
             ShowCommandBrowser,
         }
 
-        protected override EditInterface createEditInterface()
+        protected sealed override EditInterface createEditInterface()
         {
             editInterface = new EditInterface(Name, null);
             editInterface.IconReferenceTag = "MvcContextEditor/RunCommandsIcon";

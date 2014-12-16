@@ -25,6 +25,7 @@ namespace Medical.Editor
             if (editInterface == null)
             {
                 editInterface = createEditInterface();
+                customizeEditInterface(editInterface);
             }
             return editInterface;
         }
@@ -34,13 +35,12 @@ namespace Medical.Editor
         /// </summary>
         protected virtual EditInterface createEditInterface()
         {
-            EditInterface editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, Name, null);
-            customizeEditInterface(editInterface);
-            return editInterface;
+            return ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, Name, null);
         }
 
         /// <summary>
         /// If you just want to a simple customization to the reflected edit interface override this function.
+        /// This will still be called even if you override createEditInterface.
         /// </summary>
         /// <param name="editInterface"></param>
         protected virtual void customizeEditInterface(EditInterface editInterface)

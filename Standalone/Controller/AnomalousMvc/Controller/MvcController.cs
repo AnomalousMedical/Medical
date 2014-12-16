@@ -32,7 +32,7 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
-        protected override EditInterface createEditInterface()
+        protected sealed override EditInterface createEditInterface()
         {
             EditInterface editInterface = actionCollection.getEditInterface(Name);
             editInterface.IconReferenceTag = "MvcContextEditor/ControllerIcon";
