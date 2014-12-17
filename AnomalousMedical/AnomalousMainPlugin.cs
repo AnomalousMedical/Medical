@@ -175,7 +175,8 @@ namespace Medical.GUI
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
 
-            taskController.addTask(new PinableMDIDialogOpenTask(viewsGui, "Medical.Views", "Views", "AnomalousMedical/ViewIcon", TaskMenuCategories.Explore));
+            var viewsTask = new PinableMDIDialogOpenTask(viewsGui, "Medical.Views", "Views", "AnomalousMedical/ViewIcon", TaskMenuCategories.Explore);
+            taskController.addTask(viewsTask);
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Explore, 0));
@@ -247,9 +248,10 @@ namespace Medical.GUI
 
                 if(MedicalConfig.FirstRun)
                 {
-                    guiTaskManager.addPinnedTask(selectionModeTask);
                     guiTaskManager.addPinnedTask(anatomyFinderTask);
+                    guiTaskManager.addPinnedTask(viewsTask);
                     guiTaskManager.addPinnedTask(bookmarkTask);
+                    guiTaskManager.addPinnedTask(unhideAllAnatomy);
                 }
             }
 
