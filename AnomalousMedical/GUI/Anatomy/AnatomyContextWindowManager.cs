@@ -150,26 +150,33 @@ namespace Medical.GUI
         {
             AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
             SceneViewWindow window = sceneViewController.ActiveWindow;
-            Vector3 center = boundingBox.Center;
-
-            float nearPlane = window.Camera.getNearClipDistance();
-            float theta = window.Camera.getFOVy();
-            float aspectRatio = window.Camera.getAspectRatio();
-            if (aspectRatio < 1.0f)
+            if (window != null)
             {
-                theta *= aspectRatio;
+                CameraPosition undoPosition = window.createCameraPosition();
+
+                Vector3 center = boundingBox.Center;
+
+                float nearPlane = window.Camera.getNearClipDistance();
+                float theta = window.Camera.getFOVy();
+                float aspectRatio = window.Camera.getAspectRatio();
+                if (aspectRatio < 1.0f)
+                {
+                    theta *= aspectRatio;
+                }
+
+                Vector3 translation = center;
+                Vector3 direction = (window.Translation - window.LookAt).normalized();
+                translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
+                CameraPosition cameraPosition = new CameraPosition()
+                {
+                    Translation = translation,
+                    LookAt = center
+                };
+
+                window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
+
+                window.pushUndoState(undoPosition);
             }
-
-            Vector3 translation = center;
-            Vector3 direction = (window.Translation - window.LookAt).normalized();
-            translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
-            CameraPosition cameraPosition = new CameraPosition()
-            {
-                Translation = translation,
-                LookAt = center
-            };
-
-            window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
         }
 
         internal void showOnly(Anatomy anatomy)
