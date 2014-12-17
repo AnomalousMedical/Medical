@@ -16,7 +16,7 @@ namespace Medical.Controller.AnomalousMvc
     {
         public OpenWebsite()
         {
-            InSiteUrl = NavigationModel.DefaultName;
+            
         }
 
         public override void execute(AnomalousMvcContext context)
