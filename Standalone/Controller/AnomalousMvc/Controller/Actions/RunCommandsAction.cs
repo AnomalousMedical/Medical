@@ -192,6 +192,7 @@ namespace Medical.Controller.AnomalousMvc
             navigationCommands.addChild(new BrowserNode("Navigate To Indexed", typeof(NavigateToIndexCommand), iconName: "MvcContextEditor/NavigateToIcon"));
             navigationCommands.addChild(new BrowserNode("Navigate To First", typeof(NavigateFirstCommand), iconName: "MvcContextEditor/NavigatePreviousIcon"));
             navigationCommands.addChild(new BrowserNode("Navigate To Last", typeof(NavigateLastCommand), iconName: "MvcContextEditor/NavigateNextIcon"));
+            navigationCommands.addChild(new BrowserNode("Open Website", typeof(OpenWebsite), iconName: CommonResources.NoIcon));
             rootNode.addChild(navigationCommands);
 
             //Back
