@@ -121,10 +121,11 @@ namespace Medical
 
             mainTimer = new NativeUpdateTimer(systemTimer);
 
-            if (OgreConfig.VSync)
+            if (OgreConfig.VSync && MedicalConfig.EngineConfig.FPSCap < 300)
             {
-                //With vsync on its best to have no framerate cap, vsync caps for us
-                mainTimer.FramerateCap = 0;
+                //Use a really high framerate cap if vsync is on since it will cap our 
+                //framerate for us. If the user has requested a higher rate use it anyway.
+                mainTimer.FramerateCap = 300;
             }
             else
             {
