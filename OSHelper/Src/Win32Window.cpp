@@ -9,7 +9,7 @@ Win32Window::Win32Window(HWND parent, String title, int x, int y, int width, int
 	previousWindowPlacement({ sizeof(previousWindowPlacement) })
 {
 	window = CreateWindowEx(NULL, WIN32_WINDOW_CLASS, title, WS_OVERLAPPEDWINDOW, x, y, width, height, parent, NULL, wndclass.hInstance, NULL);
-	SetWindowLong(window, GWL_USERDATA, (LONG)this);
+	SetWindowLongPtr(window, GWLP_USERDATA, (LONG_PTR)this);
 	setCursor(Arrow);
 
 	for (int i = 0; i < MouseButtonCode::NUM_BUTTONS; ++i)
@@ -56,7 +56,7 @@ void Win32Window::show()
 {
 	if (exclusiveFullscreen)
 	{
-		SetWindowLong(window, GWL_STYLE, WS_VISIBLE | WS_CLIPCHILDREN | WS_POPUP);
+		SetWindowLongPtr(window, GWL_STYLE, WS_VISIBLE | WS_CLIPCHILDREN | WS_POPUP);
 		SetWindowPos(window, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
 	}
 	else
@@ -72,19 +72,19 @@ void Win32Window::toggleFullscreen()
 {
 	if (!exclusiveFullscreen)
 	{
-		DWORD dwStyle = GetWindowLong(window, GWL_STYLE);
+		DWORD dwStyle = GetWindowLongPtr(window, GWL_STYLE);
 		if (dwStyle & WS_OVERLAPPEDWINDOW)
 		{
 			MONITORINFO mi = { sizeof(mi) };
 			if (GetWindowPlacement(window, &previousWindowPlacement) && GetMonitorInfo(MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY), &mi))
 			{
-				SetWindowLong(window, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW | WS_POPUP);
+				SetWindowLongPtr(window, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW | WS_POPUP);
 				SetWindowPos(window, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 			}
 		}
 		else
 		{
-			SetWindowLong(window, GWL_STYLE, dwStyle & ~WS_POPUP | WS_OVERLAPPEDWINDOW);
+			SetWindowLongPtr(window, GWL_STYLE, dwStyle & ~WS_POPUP | WS_OVERLAPPEDWINDOW);
 			SetWindowPlacement(window, &previousWindowPlacement);
 			SetWindowPos(window, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 		}
@@ -220,7 +220,7 @@ KeyboardButtonCode virtualKeyToKeyboardButtonCode(WPARAM wParam);
 
 LRESULT WINAPI MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	Win32Window *win = (Win32Window*)GetWindowLong(hWnd, GWL_USERDATA);
+	Win32Window *win = (Win32Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
 	if (win)
 	{
 		switch (msg)

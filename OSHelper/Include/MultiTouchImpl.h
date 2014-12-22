@@ -16,7 +16,7 @@ public:
 		touchMovedCB(touchMovedCB),
 		touchCanceledCB(touchCanceledCB)
 #ifdef WINDOWS
-		,originalWindowFunction((WndFunc)GetWindowLong((HWND)window->getHandle(), GWLP_WNDPROC))
+		, originalWindowFunction((WndFunc)GetWindowLongPtr((HWND)window->getHandle(), GWLP_WNDPROC))
 #endif
 	{
 

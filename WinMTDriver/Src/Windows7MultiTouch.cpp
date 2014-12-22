@@ -98,6 +98,6 @@ extern "C" _declspec(dllexport) void registerWithWindows(HWND hwnd, MultiTouch* 
 {
 	windowToTouchMap[hwnd] = multiTouch;
 	RegisterTouchWindow(hwnd, 0);
-	long wndProcLong = (long)WndProc;
-	SetWindowLong(hwnd, GWLP_WNDPROC, wndProcLong);
+	LONG_PTR wndProcLong = (LONG_PTR)WndProc;
+	SetWindowLongPtr(hwnd, GWLP_WNDPROC, wndProcLong);
 }

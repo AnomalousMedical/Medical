@@ -20,7 +20,7 @@ PerformanceCounter::~PerformanceCounter()
 bool PerformanceCounter::initialize()
 {
 #if defined(WINDOWS) || defined(WINRT)
-#if defined(WINDOWS)
+#if defined(WINDOWS) && !defined(_WIN64)
 	DWORD procMask;
 	DWORD sysMask;
 	DWORD timerMask;
