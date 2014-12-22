@@ -69,13 +69,13 @@ namespace Medical
         TouchEventCanceledDelegate touchCanceledCB;
 
 #region PInvoke
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr MultiTouch_new(IntPtr nativeWindow, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void MultiTouch_delete(IntPtr multiTouch);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool MultiTouch_isMultitouchAvailable();
 

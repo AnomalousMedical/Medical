@@ -261,57 +261,57 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeOSWindow_create(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String caption, int x, int y, int width, int height, bool floatOnParent, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosingDelegate closingCB, ClosedDelegate closedCB, ActivateDelegate activeCB);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_destroy(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_setTitle(IntPtr nativeWindow, [MarshalAs(UnmanagedType.LPWStr)] String title);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_setSize(IntPtr nativeWindow, int width, int height);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern int NativeOSWindow_getWidth(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern int NativeOSWindow_getHeight(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeOSWindow_getHandle(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_show(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_close(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_setMaximized(IntPtr nativeWindow, bool maximize);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool NativeOSWindow_getMaximized(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_setCursor(IntPtr nativeWindow, CursorType cursor);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr NativeOSWindow_createMenu(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
         private static extern float NativeOSWindow_getWindowScaling(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_setExclusiveFullscreen(IntPtr nativeWindow, bool exclusiveFullscreen);
 
-        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         private static extern bool NativeOSWindow_getExclusiveFullscreen(IntPtr nativeWindow);
 
-        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
         private static extern void NativeOSWindow_toggleFullscreen(IntPtr nativeWindow);
 
         #endregion

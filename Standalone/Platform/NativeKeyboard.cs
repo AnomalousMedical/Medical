@@ -47,10 +47,10 @@ namespace Medical
 
         #region PInvoke
 
-        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr NativeKeyboard_new(IntPtr osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void NativeKeyboard_delete(IntPtr keyboard);
 
         #endregion

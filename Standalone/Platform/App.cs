@@ -65,19 +65,19 @@ namespace Medical
 
         public abstract void OnIdle();
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern IntPtr App_create();
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void App_delete(IntPtr app);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void App_registerDelegates(IntPtr app, OnInitDelegate onInitCB, OnExitDelegate onExitCB, OnIdleDelegate onIdleCB);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void App_run(IntPtr app);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void App_exit(IntPtr app);
     }
 }

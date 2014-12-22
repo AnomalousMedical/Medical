@@ -76,7 +76,7 @@ namespace Medical
 
             #region PInvoke
 
-            [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
             private static extern void ColorDialog_showModal(IntPtr parent, Color color, ColorDialogResultCallback resultCallback);
 
             #endregion

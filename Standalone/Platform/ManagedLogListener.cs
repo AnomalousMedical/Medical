@@ -34,13 +34,13 @@ namespace Medical.Platform
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void LogMessageDelegate(IntPtr message, LogLevel logLevel, IntPtr subsystem);
 
-        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr ManagedLogListener_create(LogMessageDelegate logDelegate);
 
-        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
         private static extern void ManagedLogListener_destroy(IntPtr managedLogListener);
 
-        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
         private static extern void NativeLog_addLogListener(IntPtr logListener);
 
         #endregion

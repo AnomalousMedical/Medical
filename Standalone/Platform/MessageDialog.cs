@@ -39,10 +39,10 @@ namespace Medical
             return MessageDialog_showQuestionDialog(parent._NativePtr, message, caption);
         }
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern void MessageDialog_showErrorDialog(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String msg, [MarshalAs(UnmanagedType.LPWStr)] String cap);
 
-        [DllImport("OSHelper", CallingConvention=CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
         private static extern NativeDialogResult MessageDialog_showQuestionDialog(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String msg, [MarshalAs(UnmanagedType.LPWStr)] String cap);
     }
 }

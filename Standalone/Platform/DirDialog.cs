@@ -80,7 +80,7 @@ namespace Medical
 
             #region PInvoke
 
-            [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
             private static extern void DirDialog_showModal(IntPtr parent, [MarshalAs(UnmanagedType.LPWStr)] String message, [MarshalAs(UnmanagedType.LPWStr)] String startPath, DirDialogResultCallback resultCallback);
 
             #endregion

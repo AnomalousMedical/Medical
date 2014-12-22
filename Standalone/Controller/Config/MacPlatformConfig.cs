@@ -225,17 +225,17 @@ namespace Medical
 
 		#region PInvoke
 
-        [DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
 		private static unsafe extern bool CertificateValidator_ValidateSSLCertificate(byte* certBytes, uint certBytesLength, [MarshalAs(UnmanagedType.LPWStr)] String url);
 
-		[DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		private static unsafe extern void MacPlatformConfig_getLocalUserDocumentsFolder (StringRetriever.Callback retrieve);
 
-		[DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		private static unsafe extern void MacPlatformConfig_getLocalDataFolder(StringRetriever.Callback retrieve);
 
-		[DllImport("OSHelper", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
 		private static unsafe extern void MacPlatformConfig_getLocalPrivateDataFolder(StringRetriever.Callback retrieve);
 
 		#endregion
