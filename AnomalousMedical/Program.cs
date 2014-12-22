@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Engine.Platform;
+using Medical.Platform;
+using System;
 using System.Collections.Generic;
 
 namespace Medical
@@ -11,6 +13,8 @@ namespace Medical
         [STAThread]
         static void Main()
         {
+            StartupManager.SetupDllDirectories();
+
             AnomalousController anomalous = null;
             try
             {

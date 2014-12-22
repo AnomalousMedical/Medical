@@ -47,51 +47,51 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\..\Engine\Release\BulletWrapper.dll">
-      <Link>BulletWrapper.dll</Link>
+      <Link>x86\BulletWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\MyGUIWrapper.dll">
-      <Link>MyGUIWrapper.dll</Link>
+      <Link>x86\MyGUIWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\OgreCWrapper.dll">
-      <Link>OgreCWrapper.dll</Link>
+      <Link>x86\OgreCWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\OgreMain.dll">
-      <Link>OgreMain.dll</Link>
+      <Link>x86\OgreMain.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\RenderSystem_Direct3D11.dll">
-      <Link>RenderSystem_Direct3D11.dll</Link>
+      <Link>x86\RenderSystem_Direct3D11.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\RenderSystem_GL.dll">
-      <Link>RenderSystem_GL.dll</Link>
+      <Link>x86\RenderSystem_GL.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\SoundWrapper.dll">
-      <Link>SoundWrapper.dll</Link>
+      <Link>x86\SoundWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\Zip.dll">
-      <Link>Zip.dll</Link>
+      <Link>x86\Zip.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\libRocketWrapper.dll">
-      <Link>libRocketWrapper.dll</Link>
+      <Link>x86\libRocketWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Dependencies\FreeImage.NET\WindowsBuild\bin\Release\FreeImage.dll">
-      <Link>FreeImage.dll</Link>
+      <Link>x86\FreeImage.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Dependencies\OpenALSoft\WindowsBuild\Release\OpenAL32.dll">
-      <Link>OpenAL32.dll</Link>
+      <Link>x86\OpenAL32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="C:\Program Files %28x86%29\Windows Kits\8.1\Redist\D3D\x86\d3dcompiler_47.dll">
-      <Link>d3dcompiler_47.dll</Link>
+      <Link>x86\d3dcompiler_47.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
