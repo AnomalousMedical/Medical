@@ -163,7 +163,7 @@ namespace Developer
         {
             get
             {
-                return "Developer Plugin";
+                return "Developer Tools";
             }
         }
 
