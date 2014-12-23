@@ -79,20 +79,20 @@ Source: S:\Medical\Release\x86\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignor
 Source: S:\Medical\Release\x86\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
 
 ;x64 Files
-Source: S:\Medical\Release\x64\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\d3dcompiler_47.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\FreeImage.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\libRocketWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\MyGUIWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\OgreCWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\OgreMain.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\OpenAL32.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\OSHelper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\RenderSystem_Direct3D11.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\RenderSystem_GL.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\SoundWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\Release\x64\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\BulletWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\d3dcompiler_47.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\FreeImage.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\libRocketWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\MyGUIWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\OgreCWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\OgreMain.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\OpenAL32.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\OSHelper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\RenderSystem_Direct3D11.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\RenderSystem_GL.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\SoundWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\WinMTDriver.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: S:\Medical\Release\x64\Zip.dll; DestDir: {app}\x64; Flags: ignoreversion
 
 ;Microcode Caches
 Source: S:\Medical\Release\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
