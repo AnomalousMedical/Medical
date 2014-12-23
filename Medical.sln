@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movement", "Movement\Moveme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeLibraries64", "NativeLibraries64\NativeLibraries64.csproj", "{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedical64", "AnomalousMedical64\AnomalousMedical64.csproj", "{C5B4384E-1A31-439D-966A-13DD87432942}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -235,6 +237,15 @@ Global
 		{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}.Release|x64.ActiveCfg = Release|Any CPU
 		{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}.Release|x64.Build.0 = Release|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|x64.ActiveCfg = Release|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.Release|x64.ActiveCfg = Release|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
