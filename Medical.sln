@@ -240,9 +240,10 @@ Global
 		{C5B4384E-1A31-439D-966A-13DD87432942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5B4384E-1A31-439D-966A-13DD87432942}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5B4384E-1A31-439D-966A-13DD87432942}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
-		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|x64.ActiveCfg = Release|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|Any CPU.ActiveCfg = PublicRelease|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|x64.ActiveCfg = PublicRelease|Any CPU
+		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|x64.Build.0 = PublicRelease|Any CPU
 		{C5B4384E-1A31-439D-966A-13DD87432942}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5B4384E-1A31-439D-966A-13DD87432942}.Release|x64.ActiveCfg = Release|Any CPU
 		{C5B4384E-1A31-439D-966A-13DD87432942}.Release|x64.Build.0 = Release|Any CPU
