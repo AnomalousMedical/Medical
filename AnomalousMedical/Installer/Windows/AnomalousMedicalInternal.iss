@@ -46,34 +46,36 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: S:\Medical\Release\AnomalousMedical.exe; DestDir: {app}; Flags: ignoreversion 
 Source: S:\Medical\Release\BEPUikPlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\BulletPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\BulletWrapper.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\d3dcompiler_47.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Engine.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\MyGUIPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\MyGUIWrapper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\libRocketPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\libRocketWrapper.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\OgreCWrapper.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\OgreMain.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\OpenAL32.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\OSHelper.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\RenderSystem_Direct3D11.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\RenderSystem_GL.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Simulation.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\SoundPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\SoundWrapper.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Standalone.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\WinMTDriver.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\Zip.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\DotNetZip.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Mono.Anomalous.Security.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\Release\FreeImage.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\FreeImageNET.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Lucene.Net.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
+
+;x86 Files
+Source: S:\Medical\Release\x86\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\d3dcompiler_47.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\FreeImage.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\libRocketWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\MyGUIWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\OgreCWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\OgreMain.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\OpenAL32.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\OSHelper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\RenderSystem_Direct3D11.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\RenderSystem_GL.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\SoundWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x86\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
 
 ;Microcode Caches
 Source: S:\Medical\Release\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
@@ -84,6 +86,23 @@ Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDi
 
 ;.Net 4.5.1
 Source: S:\dependencies\InstallerDependencies\Windows\NDP451-KB2859818-Web.exe; DestDir: {tmp}; 
+
+;Old files to delete, this will probably have to stay pretty much forever unless we rename these dlls
+[InstallDelete]
+Type: files; Name: {app}\BulletWrapper.dll;
+Type: files; Name: {app}\d3dcompiler_47.dll;
+Type: files; Name: {app}\FreeImage.dll;
+Type: files; Name: {app}\libRocketWrapper.dll;
+Type: files; Name: {app}\MyGUIWrapper.dll;
+Type: files; Name: {app}\OgreCWrapper.dll;
+Type: files; Name: {app}\OgreMain.dll;
+Type: files; Name: {app}\OpenAL32.dll;
+Type: files; Name: {app}\OSHelper.dll;
+Type: files; Name: {app}\RenderSystem_Direct3D11.dll;
+Type: files; Name: {app}\RenderSystem_GL.dll;
+Type: files; Name: {app}\SoundWrapper.dll;
+Type: files; Name: {app}\WinMTDriver.dll;
+Type: files; Name: {app}\Zip.dll;
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
