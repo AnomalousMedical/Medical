@@ -46,39 +46,39 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\..\Engine\Release\BulletWrapper.dll">
+    <Content Include="..\..\Engine\Release\x86\BulletWrapper.dll">
       <Link>x86\BulletWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\MyGUIWrapper.dll">
+    <Content Include="..\..\Engine\Release\x86\MyGUIWrapper.dll">
       <Link>x86\MyGUIWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\OgreCWrapper.dll">
+    <Content Include="..\..\Engine\Release\x86\OgreCWrapper.dll">
       <Link>x86\OgreCWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\OgreMain.dll">
+    <Content Include="..\..\Engine\Release\x86\OgreMain.dll">
       <Link>x86\OgreMain.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\RenderSystem_Direct3D11.dll">
+    <Content Include="..\..\Engine\Release\x86\RenderSystem_Direct3D11.dll">
       <Link>x86\RenderSystem_Direct3D11.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\RenderSystem_GL.dll">
+    <Content Include="..\..\Engine\Release\x86\RenderSystem_GL.dll">
       <Link>x86\RenderSystem_GL.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\SoundWrapper.dll">
+    <Content Include="..\..\Engine\Release\x86\SoundWrapper.dll">
       <Link>x86\SoundWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\Zip.dll">
+    <Content Include="..\..\Engine\Release\x86\Zip.dll">
       <Link>x86\Zip.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Engine\Release\libRocketWrapper.dll">
+    <Content Include="..\..\Engine\Release\x86\libRocketWrapper.dll">
       <Link>x86\libRocketWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
