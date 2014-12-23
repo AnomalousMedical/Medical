@@ -44,6 +44,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: S:\Medical\Release\AnomalousMedical.exe; DestDir: {app}; Flags: ignoreversion 
+Source: S:\Medical\Release\AnomalousMedical64.exe; DestDir: {app}; Flags: ignoreversion 
 Source: S:\Medical\Release\BEPUikPlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\BulletPlugin.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Engine.dll; DestDir: {app}; Flags: ignoreversion
@@ -77,12 +78,29 @@ Source: S:\Medical\Release\x86\SoundWrapper.dll; DestDir: {app}\x86; Flags: igno
 Source: S:\Medical\Release\x86\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
 Source: S:\Medical\Release\x86\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
 
+;x64 Files
+Source: S:\Medical\Release\x64\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\d3dcompiler_47.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\FreeImage.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\libRocketWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\MyGUIWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\OgreCWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\OgreMain.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\OpenAL32.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\OSHelper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\RenderSystem_Direct3D11.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\RenderSystem_GL.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\SoundWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: S:\Medical\Release\x64\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
+
 ;Microcode Caches
 Source: S:\Medical\Release\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OpenGL Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
 
 ;VS 2013 Redistributable
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x64.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 
 ;.Net 4.5.1
 Source: S:\dependencies\InstallerDependencies\Windows\NDP451-KB2859818-Web.exe; DestDir: {tmp}; 
@@ -110,6 +128,7 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 
 [Run]
 Filename: "{tmp}\vcredist_x86.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2013 Redistributable (x86)";
+Filename: "{tmp}\vcredist_x64.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2013 Redistributable (x64)";
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, "&", "&&")}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
