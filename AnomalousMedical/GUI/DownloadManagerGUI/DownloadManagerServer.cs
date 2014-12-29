@@ -12,6 +12,7 @@ using Engine;
 using System.Threading;
 using Mono.Security;
 using FreeImageAPI;
+using Engine.Threads;
 
 namespace Medical.GUI
 {

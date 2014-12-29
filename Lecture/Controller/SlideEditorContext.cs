@@ -18,6 +18,7 @@ using Medical.SlideshowActions;
 using Medical.Controller;
 using OgreWrapper;
 using FreeImageAPI;
+using Engine.Threads;
 
 namespace Lecture
 {

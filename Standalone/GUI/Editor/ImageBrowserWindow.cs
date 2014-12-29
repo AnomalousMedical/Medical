@@ -8,6 +8,7 @@ using Engine;
 using System.IO;
 using Medical.Controller;
 using FreeImageAPI;
+using Engine.Threads;
 
 namespace Medical.GUI
 {

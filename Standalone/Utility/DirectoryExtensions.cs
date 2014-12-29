@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Medical
 {
-    static class DirectoryExtensions
+    public static class DirectoryExtensions
     {
         public static void Copy(String sourceDirName, String destDirName, bool copySubDirs)
         {

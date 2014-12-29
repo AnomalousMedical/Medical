@@ -9,6 +9,7 @@ using System.IO;
 using Logging;
 using System.Security.Cryptography;
 using Medical.Controller;
+using Engine.Threads;
 
 namespace Medical
 {

@@ -5,6 +5,7 @@ using System.Text;
 using Medical.Controller;
 using MyGUIPlugin;
 using System.IO;
+using Engine.Threads;
 
 namespace Medical
 {

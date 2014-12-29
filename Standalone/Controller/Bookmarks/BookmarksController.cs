@@ -9,6 +9,7 @@ using System.Threading;
 using MyGUIPlugin;
 using System.IO;
 using Engine.Saving;
+using Engine.Threads;
 
 namespace Medical.Controller
 {

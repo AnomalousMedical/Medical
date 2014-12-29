@@ -10,6 +10,7 @@ using Logging;
 using MyGUIPlugin;
 using System.Net;
 using libRocketPlugin;
+using Engine.Threads;
 
 namespace Medical.Controller
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Medical.Controller;
+using Engine.Threads;
 
 namespace Medical.GUI
 {

@@ -763,8 +763,6 @@
     <Compile Include="Controller\ScreenLayoutManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
-    <Compile Include="Utility\CancelableBackgroundWorker.cs" />
-    <Compile Include="Utility\CancelableBackgroundWorkTask.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <Compile Include="Utility\FreeImageBitmapExtensions.cs" />
