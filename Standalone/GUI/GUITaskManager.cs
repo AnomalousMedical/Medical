@@ -134,6 +134,7 @@ namespace Medical.GUI
             taskbarItem.PinToTaskbar -= taskbarItem_PinToTaskbar;
             taskbar.removeItem(taskbarItem);
             taskbarItems.Remove(item);
+            taskbarItem.Dispose();
             taskbar.layout();
         }
 
