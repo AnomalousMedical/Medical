@@ -800,7 +800,6 @@
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
     <Compile Include="Layout\MDI\MDILayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
-    <Compile Include="Controller\ThreadManager.cs" />
     <Compile Include="Layout\MyGUILayoutContainer.cs" />
     <Compile Include="Controller\ScreenLayoutManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
