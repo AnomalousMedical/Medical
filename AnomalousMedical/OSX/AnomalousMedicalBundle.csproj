@@ -80,8 +80,7 @@
     <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
 	<ResourceFiles Include="..\..\$(Configuration)\IntroductionTutorial.dat" />
 	
-	<ResourceFiles Include="..\..\Release\libOSHelper.dylib" />
-	
+	<ResourceFiles Include="..\..\../Engine/Release/libOSHelper.dylib" />
 	<ResourceFiles Include="..\..\../Engine/Release/libBulletWrapper.dylib" />
 	<ResourceFiles Include="..\..\../Engine/Release/libMyGUIWrapper.dylib" />
 	<ResourceFiles Include="..\..\../Engine/Release/libOgreCWrapper.dylib" />
