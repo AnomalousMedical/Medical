@@ -7,9 +7,9 @@ using Engine.Saving;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class RemoveTopTeethView : WizardView
+    class RightFossaView: WizardView
     {
-        public RemoveTopTeethView(String name)
+        public RightFossaView(String name)
             :base(name)
         {
 
@@ -17,10 +17,10 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new RemoveTeethGUI("Medical.GUI.AnomalousMvc.DistortionWizard.Teeth.RemoveTopTeethGUI.layout", this, context, viewHost);
+            return new FossaGUI("RightFossa", "Medical.GUI.DistortionWizard.Fossa.FossaGUIRight.layout", this, context, viewHost);
         }
 
-        protected RemoveTopTeethView(LoadInfo info)
+        protected RightFossaView(LoadInfo info)
             :base(info)
         {
 

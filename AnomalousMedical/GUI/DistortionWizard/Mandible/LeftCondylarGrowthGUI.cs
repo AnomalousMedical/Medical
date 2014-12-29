@@ -21,7 +21,7 @@ namespace Medical.GUI.AnomalousMvc
         private GridPropertiesControl gridPropertiesControl;
 
         public LeftCondylarGrowthGUI(LeftCondylarGrowthView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Mandible.LeftCondylarGrowthGUI.layout", view, context, viewHost)
+            : base("Medical.GUI.DistortionWizard.Mandible.LeftCondylarGrowthGUI.layout", view, context, viewHost)
         {
             leftRamusHeightSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleGrowth/RamusHeightSlider") as ScrollBar);
             leftCondyleHeightSlider = new BoneManipulatorSlider(widget.findWidget("LeftCondyleGrowth/CondyleHeightSlider") as ScrollBar);

@@ -17,7 +17,6 @@ namespace Medical.GUI.AnomalousMvc
             componentFactory = new DecoratorComponentFactory(mdiManager);
             componentFactory.addFactory(new RmlComponentFactory());
             componentFactory.addFactory(new NavigationComponentFactory());
-            componentFactory.addFactory(new WizardComponentFactory());
             componentFactory.addFactory(new NavigationBugComponentFactory());
         }
 

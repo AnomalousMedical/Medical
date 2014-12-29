@@ -24,7 +24,7 @@ namespace Medical.GUI.AnomalousMvc
         private Button makeNormalButton;
 
         public ProfileDistortionGUI(ProfileDistortionView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Profile.ProfileDistortionGUI.layout", wizardView, context, viewHost)
+            : base("Medical.GUI.DistortionWizard.Profile.ProfileDistortionGUI.layout", wizardView, context, viewHost)
         {
             rightSideCamera = widget.findWidget("ProfilePanel/RightCamera") as Button;
             rightMidCamera = widget.findWidget("ProfilePanel/RightMidCamera") as Button;

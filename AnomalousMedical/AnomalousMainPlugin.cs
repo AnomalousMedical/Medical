@@ -264,6 +264,8 @@ namespace Medical.GUI
             standaloneController.MedicalController.EventManager.addEvent(toggleFullscreenMessageEvent);
 
             standaloneController.AtlasPluginManager.RequestDependencyDownload += AtlasPluginManager_RequestDependencyDownload;
+
+            standaloneController.ViewHostFactory.addFactory(new Medical.GUI.AnomalousMvc.WizardComponentFactory());
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)

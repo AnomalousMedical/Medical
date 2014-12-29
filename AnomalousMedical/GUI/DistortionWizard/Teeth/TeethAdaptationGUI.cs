@@ -20,7 +20,7 @@ namespace Medical.GUI.AnomalousMvc
         GridPropertiesControl gridPropertiesControl;
 
         public TeethAdaptationGUI(TeethAdaptationView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Teeth.TeethAdaptationGUI.layout", wizardView, context, viewHost)
+            : base("Medical.GUI.DistortionWizard.Teeth.TeethAdaptationGUI.layout", wizardView, context, viewHost)
         {
             gridPropertiesControl = new GridPropertiesControl(context.MeasurementGrid, widget);
             gridPropertiesControl.GridSpacing = 2;

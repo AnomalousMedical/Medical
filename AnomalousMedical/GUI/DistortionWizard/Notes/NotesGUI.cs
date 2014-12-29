@@ -19,7 +19,7 @@ namespace Medical.GUI.AnomalousMvc
         private ThumbnailPickerGUI thumbnailPicker;
 
         public NotesGUI(NotesView wizardView, AnomalousMvcContext context, MyGUIViewHost viewHost)
-            : base("Medical.GUI.AnomalousMvc.DistortionWizard.Notes.NotesGUI.layout", wizardView, context, viewHost)
+            : base("Medical.GUI.DistortionWizard.Notes.NotesGUI.layout", wizardView, context, viewHost)
         {
             stateNameTextBox = widget.findWidget("Notes/DistortionName") as EditBox;
             stateNameTextBox.EventEditTextChange += new MyGUIEvent(stateNameTextBox_EventEditTextChange);

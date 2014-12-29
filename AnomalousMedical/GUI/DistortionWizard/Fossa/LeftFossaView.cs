@@ -7,20 +7,20 @@ using Medical.Controller.AnomalousMvc;
 
 namespace Medical.GUI.AnomalousMvc
 {
-    class DisclaimerView : WizardView
+    class LeftFossaView : WizardView
     {
-        public DisclaimerView(String name)
+        public LeftFossaView(String name)
             :base(name)
         {
-            
+
         }
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new WizardComponent<WizardView>("Medical.GUI.AnomalousMvc.DistortionWizard.Disclaimer.DisclaimerGUI.layout", this, context, viewHost);
+            return new FossaGUI("LeftFossa", "Medical.GUI.DistortionWizard.Fossa.FossaGUILeft.layout", this, context, viewHost);
         }
 
-        protected DisclaimerView(LoadInfo info)
+        protected LeftFossaView(LoadInfo info)
             :base(info)
         {
 

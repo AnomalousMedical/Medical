@@ -7,7 +7,7 @@ using Engine.Reflection;
 
 namespace Medical.Editor
 {
-    class EditableModelAttribute : EditableAttribute
+    public class EditableModelAttribute : EditableAttribute
     {
         private Type assignableFromType;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    static class TeethToolController
+    public static class TeethToolController
     {
         class ToothMover : MovableObject
         {

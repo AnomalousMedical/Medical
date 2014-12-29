@@ -7,7 +7,7 @@ using Engine.Reflection;
 
 namespace Medical.Editor
 {
-    class EditableActionAttribute : EditableAttribute
+    public class EditableActionAttribute : EditableAttribute
     {
         public override EditableProperty createEditableProperty(MemberWrapper memberWrapper, object target)
         {
