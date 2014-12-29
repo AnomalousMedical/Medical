@@ -134,7 +134,6 @@ namespace Medical
 
             inputHandler = new NativeInputHandler(mainForm, MedicalConfig.EnableMultitouch);
             eventManager = new EventManager(inputHandler, Enum.GetValues(typeof(EventLayers)));
-            Medical.Platform.GlobalContextEventHandler.setEventManager(eventManager);
             eventUpdate = new EventUpdateListener(eventManager);
             mainTimer.addUpdateListener(eventUpdate);
             pluginManager.setPlatformInfo(mainTimer, eventManager);
