@@ -62,6 +62,10 @@
       <Link>x86\OgreMain.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\Engine\Release\x86\OSHelper.dll">
+      <Link>x86\OSHelper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Engine\Release\x86\RenderSystem_Direct3D11.dll">
       <Link>x86\RenderSystem_Direct3D11.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -72,6 +76,10 @@
     </Content>
     <Content Include="..\..\Engine\Release\x86\SoundWrapper.dll">
       <Link>x86\SoundWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\WinMTDriver.dll">
+      <Link>x86\WinMTDriver.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\x86\Zip.dll">
