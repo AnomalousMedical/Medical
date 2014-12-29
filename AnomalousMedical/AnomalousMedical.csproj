@@ -181,6 +181,8 @@
     <Compile Include="GUI\SelectionOperatorChooser\SelectionOperatorTask.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
+    <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
+    <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -197,6 +199,9 @@
     <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
     <EmbeddedResource Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.layout" />
     <EmbeddedResource Include="GUI\SequencePlayer\SequenceMenu.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MvcContexts\Login\Index.rml">

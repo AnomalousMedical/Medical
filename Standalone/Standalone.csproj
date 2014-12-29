@@ -463,8 +463,6 @@
     <Compile Include="GUI\Taskbar\AppButtonTaskbar.cs" />
     <Compile Include="GUI\Taskbar\ClosingTaskbar.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuAdProvider.cs" />
-    <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
-    <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
     <Compile Include="Layout\AspectRatioContainer.cs" />
     <Compile Include="Layout\Chain\ActiveContainerTracker.cs" />
     <Compile Include="Layout\Chain\BorderLayoutChainLink.cs" />
@@ -889,9 +887,6 @@
     <EmbeddedResource Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\SceneErrorWindow.layout" />
-    <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\DegenerationImages.png" />
     <EmbeddedResource Include="Resources\TeethMovementIcons.xml" />
     <EmbeddedResource Include="Resources\DegenerationImages.xml" />
