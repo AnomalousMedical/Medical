@@ -11,7 +11,6 @@ namespace Medical
         public event Action<PatientDataFile> PatientDataChanged;
 
         private MedicalStateController medicalStateController;
-        private ExamController examController;
         private MedicalController medicalController;
         private StandaloneController standaloneController;
 
@@ -21,7 +20,6 @@ namespace Medical
         {
             this.standaloneController = standaloneController;
             this.medicalStateController = standaloneController.MedicalStateController;
-            this.examController = standaloneController.ExamController;
             this.medicalController = standaloneController.MedicalController;
         }
 
@@ -33,7 +31,6 @@ namespace Medical
         public void saveMedicalState(PatientDataFile dataFile)
         {
             dataFile.PatientData.MedicalStates = medicalStateController.getSavedState(medicalController.CurrentSceneFile);
-            examController.addExamsToData(dataFile.PatientData);
             dataFile.save();
             CurrentData = dataFile;
         }
@@ -53,7 +50,6 @@ namespace Medical
                 {
                     MessageBox.show(String.Format("Error loading file {0}.\nCould not read state information.", dataFile.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                 }
-                examController.setExamsFromData(dataFile.PatientData);
                 CurrentData = dataFile;
             }
             else

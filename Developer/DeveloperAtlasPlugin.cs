@@ -13,7 +13,6 @@ namespace Developer
 {
     class DeveloperAtlasPlugin : AtlasPlugin
     {
-        private ExamViewer examViewer;
         private DataFilePublisher dataFilePublisher;
         private DeveloperRenderPropertiesDialog developerRenderer;
         private DiscControl discControl;
@@ -38,7 +37,6 @@ namespace Developer
             libRocketDebugger.Dispose();
             measurementGUI.Dispose();
             advancedMandibleMovement.Dispose();
-            examViewer.Dispose();
             dataFilePublisher.Dispose();
             developerRenderer.Dispose();
             discControl.Dispose();
@@ -58,9 +56,6 @@ namespace Developer
             //UI Helpers
             gridProperties = new GridPropertiesDialog(standaloneController.MeasurementGrid);
             guiManager.addManagedDialog(gridProperties);
-
-            examViewer = new ExamViewer(standaloneController.ExamController);
-            guiManager.addManagedDialog(examViewer);
 
             dataFilePublisher = new DataFilePublisher();
             guiManager.addManagedDialog(dataFilePublisher);
@@ -89,8 +84,6 @@ namespace Developer
 
             //Task Controller
             TaskController taskController = standaloneController.TaskController;
-
-            taskController.addTask(new MDIDialogOpenTask(examViewer, "Medical.ExamViewer", "Exam Viewer", "Developer.ExamIcon", TaskMenuCategories.Developer, 4));
 
             taskController.addTask(new MDIDialogOpenTask(dataFilePublisher, "Developer.DataFilePublisher", "Data File Publisher", "Developer.PublisherIcon", TaskMenuCategories.Developer));
 

@@ -49,7 +49,6 @@ namespace Medical
         private AnomalousMvcCore mvcCore;
         private MyGUIViewHostFactory viewHostFactory;
         private PropFactory propFactory;
-        private ExamController examController;
         private TaskController taskController;
         private SaveableClipboard clipboard;
         private AnatomyController anatomyController;
@@ -256,9 +255,6 @@ namespace Medical
             viewHostFactory = new MyGUIViewHostFactory(mdiLayout);
             mvcCore = new AnomalousMvcCore(this, viewHostFactory);
 
-            //Exams
-            examController = new ExamController();
-
             //Patient data
             patientDataController = new PatientDataController(this);
 
@@ -391,7 +387,6 @@ namespace Medical
             {
                 yield return status;
             }
-            examController.clear();
             patientDataController.clearData();
         }
 
@@ -509,14 +504,6 @@ namespace Medical
             get
             {
                 return timelineController;
-            }
-        }
-
-        public ExamController ExamController
-        {
-            get
-            {
-                return examController;
             }
         }
 
