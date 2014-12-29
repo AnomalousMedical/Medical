@@ -733,7 +733,6 @@
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
     <Compile Include="GUI\ColorMenu\ColorMenu.cs" />
     <Compile Include="GUI\DialogManager.cs" />
-    <Compile Include="GUI\Options\OptionsDialog.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginManager.cs" />
     <Compile Include="GUI\Taskbar\Taskbar.cs" />
     <Compile Include="GUI\Taskbar\TaskbarItem.cs" />
@@ -958,7 +957,6 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
-    <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
     <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\Taskbar\Taskbar.layout" />
     <EmbeddedResource Include="GUI\TaskMenu\TaskMenu.layout">

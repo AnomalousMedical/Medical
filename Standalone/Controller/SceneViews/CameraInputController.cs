@@ -10,7 +10,7 @@ using System.Timers;
 
 namespace Medical.Controller
 {
-    class CameraInputController : IDisposable
+    public class CameraInputController : IDisposable
     {
         private const int UPDATE_DELAY = 500;
 
@@ -104,7 +104,7 @@ namespace Medical.Controller
         private CameraPosition mouseUndoPosition;
         private CameraPosition touchUndoPosition;
 
-        public CameraInputController(SceneViewController sceneViewController, EventManager eventManager)
+        internal CameraInputController(SceneViewController sceneViewController, EventManager eventManager)
         {
             this.sceneViewController = sceneViewController;
             this.eventManager = eventManager;
