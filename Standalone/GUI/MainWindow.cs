@@ -8,18 +8,6 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public enum CursorType
-    {
-        Arrow = 0,
-        Beam = 1,
-        SizeLeft = 2,
-        SizeRight = 3,
-        SizeHorz = 4,
-        SizeVert = 5,
-        Hand = 6,
-        Link = 7,
-    }
-
     public class MainWindow : NativeOSWindow
     {
         private static Dictionary<string, CursorType> cursors = new Dictionary<string, CursorType>();
@@ -50,7 +38,7 @@ namespace Medical.GUI
         public static MainWindow Instance { get; private set; }
 
         public MainWindow(String windowTitle)
-            :base(windowTitle, new IntVector2(-1, -1), new IntSize2(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes))
+            : base(windowTitle, new IntVector2(-1, -1), new IntSize2(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes))
         {
             Instance = this;
             this.windowTitle = windowTitle;

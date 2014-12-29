@@ -104,7 +104,7 @@ namespace Medical
             pluginManager.OnConfigureDefaultWindow = configureWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
-            pluginManager.addPluginAssembly(typeof(MedicalController).Assembly);
+            pluginManager.addPluginAssembly(typeof(NativePlatformPlugin).Assembly);
             pluginManager.addPluginAssembly(typeof(MyGUIInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(RocketInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(SoundPluginInterface).Assembly);

@@ -49,6 +49,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EngineApp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\EngineApp.dll</HintPath>
+    </Reference>
     <Reference Include="Irony">
       <HintPath>..\..\Dependencies\Irony\Irony\bin\Release\Irony.dll</HintPath>
       <Private>False</Private>

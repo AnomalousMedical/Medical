@@ -60,6 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\DotNetZip\bin\Release\DotNetZip.dll</HintPath>
     </Reference>
+    <Reference Include="EngineApp">
+      <HintPath>..\..\Engine\Release\EngineApp.dll</HintPath>
+    </Reference>
     <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\FreeImage.NET\Library\bin\Release\FreeImageNET.dll</HintPath>
@@ -446,6 +449,7 @@
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.cs" />
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="GUI\GUILocationNames.cs" />
+    <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\MDIDialogAutoDispose.cs" />
     <Compile Include="GUI\PinableMDIDialog.cs" />
     <Compile Include="GUI\RocketTextWriter\RocketTextWriter.cs" />
@@ -742,10 +746,6 @@
     <Compile Include="Layout\MDI\MDIBorderContainer.cs" />
     <Compile Include="Layout\MDI\MDIChildContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIDocumentWindow.cs" />
-    <Compile Include="Platform\GlobalEventHandler\EventContext.cs" />
-    <Compile Include="Platform\GlobalEventHandler\GlobalContextEventHandler.cs" />
-    <Compile Include="Platform\ManagedLogListener.cs" />
-    <Compile Include="Platform\MultiTouch.cs" />
     <Compile Include="Controller\Props\Arrow\Arrow.cs" />
     <Compile Include="Controller\Props\PropFadeBehavior.cs" />
     <Compile Include="Controller\Props\PropFactory.cs" />
@@ -799,22 +799,7 @@
     <Compile Include="Controller\Timeline\TimelineAction.cs" />
     <Compile Include="Controller\Timeline\TimelineController.cs" />
     <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
-    <Compile Include="Platform\FileOpenDialog.cs" />
-    <Compile Include="Platform\FileSaveDialog.cs" />
-    <Compile Include="Platform\MainWindow.cs" />
     <Compile Include="Layout\MDI\SeparatorWidgetManager.cs" />
-    <Compile Include="Platform\App.cs" />
-    <Compile Include="Platform\ColorDialog.cs" />
-    <Compile Include="Platform\DirDialog.cs" />
-    <Compile Include="Platform\MessageDialog.cs" />
-    <Compile Include="Platform\NativeOSWindow.cs" />
-    <Compile Include="Platform\SystemInfo.cs" />
-    <Compile Include="Platform\NativeKeyboard.cs" />
-    <Compile Include="Platform\NativeMouse.cs" />
-    <Compile Include="Platform\NativePlatformEntryPoint.cs" />
-    <Compile Include="Platform\NativePlatformPlugin.cs" />
-    <Compile Include="Platform\NativeSystemTimer.cs" />
-    <Compile Include="Platform\NativeUpdateTimer.cs" />
     <Compile Include="Layout\MDI\MDIContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIException.cs" />
     <Compile Include="Layout\MDI\MDILayoutManager.cs" />
@@ -830,7 +815,6 @@
     <Compile Include="Layout\LayoutContainer.cs" />
     <Compile Include="Controller\ScreenLayoutManager.cs" />
     <Compile Include="Layout\VerticalPopoutLayoutContainer.cs" />
-    <Compile Include="Platform\NativeInputHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Utility\CancelableBackgroundWorker.cs" />
