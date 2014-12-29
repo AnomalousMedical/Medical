@@ -288,7 +288,6 @@
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Doppler.ico" />
     <None Include="..\skull.ico" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
