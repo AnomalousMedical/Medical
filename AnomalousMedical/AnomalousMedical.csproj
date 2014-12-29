@@ -349,6 +349,37 @@
     <EmbeddedResource Include="Resources\MainPlugin_MyGUI_Skin.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DistortionWizard\DegenerationImages.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DegenerationImages.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DegenerationImages%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DegenerationImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DistortionPanelIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DistortionPanelIcons.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DistortionPanelIcons%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DistortionPanelIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DopplerPanelImages.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DopplerPanelImages.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DopplerPanelImages%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DopplerPanelImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\FossaImages.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\FossaImages.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\FossaImages%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\FossaImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\GrowthImages.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\GrowthImages.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\GrowthImages%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\GrowthImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethMovementIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethMovementIcons.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethMovementIcons%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethMovementIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethButtons.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethButtons.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\WizardImagesets.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons%402x.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

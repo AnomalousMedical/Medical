@@ -93,6 +93,9 @@ namespace Medical.GUI
         {
             ResourceManager.Instance.load("Medical.Resources.MainPlugin_MyGUI_Skin.xml");
             ResourceManager.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
+
+            //Wizards
+            ResourceManager.Instance.load("Medical.Resources.DistortionWizard.WizardImagesets.xml");
         }
 
         public void initialize(StandaloneController standaloneController)

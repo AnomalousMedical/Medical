@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MyGUI type="List">
+  <List file="Medical.Resources.DistortionWizard.DegenerationImages.xml"/>
+  <List file="Medical.Resources.DistortionWizard.DistortionPanelIcons.xml"/>
+  <List file="Medical.Resources.DistortionWizard.DopplerPanelImages.xml"/>
+  <List file="Medical.Resources.DistortionWizard.FossaImages.xml"/>
+  <List file="Medical.Resources.DistortionWizard.GrowthImages.xml"/>
+  <List file="Medical.Resources.DistortionWizard.ProfileIcons.xml"/>
+  <List file="Medical.Resources.DistortionWizard.TeethButtons.xml"/>
+  <List file="Medical.Resources.DistortionWizard.TeethMovementIcons.xml"/>
+</MyGUI>

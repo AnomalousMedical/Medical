@@ -2,7 +2,7 @@
 <MyGUI type="Resource" version="1.1">
 
   <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptBottomTeeth">
-    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@2x.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.DistortionWizard.TeethMovementIcons.png" size="47 47">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
@@ -10,33 +10,33 @@
   </Resource>
 
   <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptLeftLateral">
-    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@2x.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.DistortionWizard.TeethMovementIcons.png" size="47 47">
+      <Index name="Icon">
+        <Frame point="47 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptMidlineAnterior">
+    <Group name="Icons" texture="Medical.Resources.DistortionWizard.TeethMovementIcons.png" size="47 47">
       <Index name="Icon">
         <Frame point="94 0"/>
       </Index>
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptMidlineAnterior">
-    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@2x.png" size="94 94">
-      <Index name="Icon">
-        <Frame point="188 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
   <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptRightLateral">
-    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@2x.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.DistortionWizard.TeethMovementIcons.png" size="47 47">
       <Index name="Icon">
-        <Frame point="282 0"/>
+        <Frame point="141 0"/>
       </Index>
     </Group>
   </Resource>
 
   <Resource type="ResourceImageSet" name="TeethMovementIcons/AdaptTopTeeth">
-    <Group name="Icons" texture="Medical.Resources.TeethMovementIcons@2x.png" size="94 94">
+    <Group name="Icons" texture="Medical.Resources.DistortionWizard.TeethMovementIcons.png" size="47 47">
       <Index name="Icon">
-        <Frame point="376 0"/>
+        <Frame point="188 0"/>
       </Index>
     </Group>
   </Resource>

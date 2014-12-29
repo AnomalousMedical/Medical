@@ -286,9 +286,6 @@ namespace Medical
 
         public IEnumerable<PluginLoadStatus> initializePlugins()
         {
-            //Wizards
-            ResourceManager.Instance.load("Medical.Resources.WizardImagesets.xml");
-
             ResourceManager.Instance.load("Medical.Resources.StandaloneIcons.xml");
             ResourceManager.Instance.load("Medical.Resources.LockedFeature.xml");
             ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
