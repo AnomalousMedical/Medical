@@ -117,7 +117,6 @@ namespace Medical
             //Initialize engine
             medicalController = new MedicalController();
             medicalController.initialize(app, mainWindow, createWindow);
-            medicalController.OnLoopUpdate += medicalController_OnLoopUpdate;
             mainWindow.setPointerManager(PointerManager.Instance);
             idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
 
@@ -154,9 +153,6 @@ namespace Medical
 			IDisposableUtil.DisposeIfNotNull(mdiLayout);
 			IDisposableUtil.DisposeIfNotNull(medicalController);
 			IDisposableUtil.DisposeIfNotNull(mainWindow);
-
-            //Stop any waiting background threads last.
-            ThreadManager.cancelAll();
         }
 
         /// <summary>
@@ -749,11 +745,6 @@ namespace Medical
                 mainWindow.Maximized = true;
             }
             mainWindow.show();
-        }
-
-        void medicalController_OnLoopUpdate(Clock time)
-        {
-            ThreadManager.doInvoke();
         }
 
         void atlasPluginManager_PluginLoadError(string message)
