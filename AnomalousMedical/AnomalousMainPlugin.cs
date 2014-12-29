@@ -189,7 +189,7 @@ namespace Medical.GUI
             shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
             taskController.addTask(shopTaskItem);
 
-            CallbackTask blogTaskItem = new CallbackTask("Medical.Blog", "Blog", "StandaloneIcons/Blog", TaskMenuCategories.System, int.MaxValue - 7, false);
+            CallbackTask blogTaskItem = new CallbackTask("Medical.Blog", "Blog", "AnomalousMedical/Blog", TaskMenuCategories.System, int.MaxValue - 7, false);
             blogTaskItem.OnClicked += new CallbackTask.ClickedCallback(blogTaskItem_OnClicked);
             taskController.addTask(blogTaskItem);
 

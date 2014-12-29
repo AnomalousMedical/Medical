@@ -10,7 +10,7 @@ namespace Medical.GUI
     public class VolumeControlTask : Task
     {
         public VolumeControlTask()
-            : base("Medical.VolumeControl", "Volume", SoundConfig.MasterVolume > 0.0f ? "StandaloneIcons/VolumeControl" : "StandaloneIcons/VolumeControlOff", TaskMenuCategories.System)
+            : base("Medical.VolumeControl", "Volume", SoundConfig.MasterVolume > 0.0f ? "AnomalousMedical/VolumeControl" : "AnomalousMedical/VolumeControlOff", TaskMenuCategories.System)
         {
             SoundConfig.MasterVolumeChanged += new EventHandler(SoundConfig_MasterVolumeChanged);
         }
@@ -38,17 +38,17 @@ namespace Medical.GUI
         {
             if (SoundConfig.MasterVolume > 0.0f)
             {
-                if (IconName != "StandaloneIcons/VolumeControl")
+                if (IconName != "AnomalousMedical/VolumeControl")
                 {
-                    IconName = "StandaloneIcons/VolumeControl";
+                    IconName = "AnomalousMedical/VolumeControl";
                     fireIconChanged();
                 }
             }
             else
             {
-                if (IconName != "StandaloneIcons/VolumeControlOff")
+                if (IconName != "AnomalousMedical/VolumeControlOff")
                 {
-                    IconName = "StandaloneIcons/VolumeControlOff";
+                    IconName = "AnomalousMedical/VolumeControlOff";
                     fireIconChanged();
                 }
             }
