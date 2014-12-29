@@ -68,9 +68,7 @@ namespace Medical
         {
             get
             {
-				StringRetriever sr = new StringRetriever();
-				MacPlatformConfig_getLocalUserDocumentsFolder(sr.StringCallback);
-				return sr.retrieveString();
+                return MacOSXFunctions.LocalUserDocumentsFolder;
             }
         }
 
@@ -78,9 +76,7 @@ namespace Medical
         {
             get
             {
-				StringRetriever sr = new StringRetriever();
-				MacPlatformConfig_getLocalDataFolder(sr.StringCallback);
-				return sr.retrieveString();
+                return MacOSXFunctions.LocalDataFolder;
             }
         }
 
@@ -88,9 +84,7 @@ namespace Medical
         {
             get
             {
-				StringRetriever sr = new StringRetriever();
-				MacPlatformConfig_getLocalPrivateDataFolder(sr.StringCallback);
-				return sr.retrieveString();
+                return MacOSXFunctions.LocalPrivateDataFolder;
             }
         }
 
@@ -157,22 +151,9 @@ namespace Medical
             }
         }
 
-        private object sslTrustLock = new object();
-
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
-            unsafe
-            {
-                //Apple says that the functions used on the native side to check validity are potentially not thread safe, so lock here when checking.
-                lock (sslTrustLock)
-                {
-                    byte[] certBytes = certificate.Export(X509ContentType.Cert);
-                    fixed (byte* certBytesPtr = &certBytes[0])
-                    {
-                        return CertificateValidator_ValidateSSLCertificate(certBytesPtr, (uint)certBytes.Length, hostName);
-                    }
-                }
-            }
+            return MacOSXFunctions.TrustSSLCertificate(certificate, hostName);
         }
 
         private String OldUserDocRoot
@@ -222,22 +203,5 @@ namespace Medical
 				Logging.Log.Error("{0} copying legacy files from '{1}'. Message: {2}", ex.GetType().ToString(), OldUserDocRoot, ex.Message);
 			}
 		}
-
-		#region PInvoke
-
-        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
-		private static unsafe extern bool CertificateValidator_ValidateSSLCertificate(byte* certBytes, uint certBytesLength, [MarshalAs(UnmanagedType.LPWStr)] String url);
-
-		[DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		private static unsafe extern void MacPlatformConfig_getLocalUserDocumentsFolder (StringRetriever.Callback retrieve);
-
-		[DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		private static unsafe extern void MacPlatformConfig_getLocalDataFolder(StringRetriever.Callback retrieve);
-
-		[DllImport(NativePlatformPlugin.LibraryName, CallingConvention = CallingConvention.Cdecl)]
-		private static unsafe extern void MacPlatformConfig_getLocalPrivateDataFolder(StringRetriever.Callback retrieve);
-
-		#endregion
     }
 }

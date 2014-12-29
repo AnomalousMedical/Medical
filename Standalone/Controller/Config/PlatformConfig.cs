@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Medical
 {
-    public enum OperatingSystem
-    {
-        Windows,
-        Mac,
-    }
-
     public enum TouchType
     {
         None,
@@ -28,8 +21,7 @@ namespace Medical
 
         static PlatformConfig()
         {
-            OsId = PlatformConfig_getPlatform();
-            switch (OsId)
+            switch (SystemInfo.RuntimeOS)
             {
                 case OperatingSystem.Windows:
                     currentConfig = new WindowsPlatformConfig();
@@ -230,12 +222,5 @@ namespace Medical
         protected abstract ProcessStartInfo RestartAdminProcInfoImpl { get; }
 
         protected abstract void moveConfigurationIfNeededImpl();
-
-        #region PInvoke
-
-        [DllImport(NativePlatformPlugin.LibraryName, CallingConvention=CallingConvention.Cdecl)]
-        private static extern OperatingSystem PlatformConfig_getPlatform();
-
-        #endregion
     }
 }
