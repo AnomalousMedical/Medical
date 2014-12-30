@@ -7,7 +7,6 @@ using Medical.GUI.AnomalousMvc;
 using Medical.GUI;
 using System.IO;
 using MyGUIPlugin;
-using Medical.Platform;
 using Engine.Platform;
 using Medical.Editor;
 using Medical;
@@ -19,6 +18,7 @@ using Medical.Controller;
 using OgreWrapper;
 using FreeImageAPI;
 using Engine.Threads;
+using libRocketWidget;
 
 namespace Lecture
 {

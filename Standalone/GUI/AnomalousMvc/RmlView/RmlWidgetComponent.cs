@@ -7,6 +7,7 @@ using MyGUIPlugin;
 using libRocketPlugin;
 using System.Text.RegularExpressions;
 using Logging;
+using libRocketWidget;
 
 namespace Medical.GUI.AnomalousMvc
 {

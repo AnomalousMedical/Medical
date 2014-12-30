@@ -9,6 +9,7 @@ using Medical.Editor;
 using Medical.Controller.AnomalousMvc;
 using Engine.Attributes;
 using Engine;
+using libRocketWidget;
 
 namespace Medical.GUI.AnomalousMvc
 {
