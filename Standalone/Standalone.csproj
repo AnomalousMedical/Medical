@@ -628,7 +628,6 @@
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
-    <Compile Include="GUI\ColorMenu\ColorMenu.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginManager.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplayFactory.cs" />
@@ -713,8 +712,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.layout" />
-    <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
-    <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
     <EmbeddedResource Include="GUI\Editor\AddItemDialog\AddItemDialog.layout" />
     <EmbeddedResource Include="GUI\Editor\ImageBrowserWindow.layout" />
@@ -788,7 +785,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
-    <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
     <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.layout" />
