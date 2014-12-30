@@ -455,7 +455,6 @@
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\SceneStats\SceneStatsDisplay.cs" />
     <Compile Include="GUI\SceneStats\SceneStatsDisplayManager.cs" />
-    <Compile Include="GUI\TaskMenu\TaskMenuAdProvider.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />
@@ -486,9 +485,6 @@
     <Compile Include="Controller\Config\MedicalConfig.cs" />
     <Compile Include="Controller\Config\PlatformConfig.cs" />
     <Compile Include="Controller\Config\PluginConfig.cs" />
-    <Compile Include="Controller\Documents\DocumentController.cs" />
-    <Compile Include="Controller\Documents\DocumentHandler.cs" />
-    <Compile Include="Controller\Documents\RecentDocuments.cs" />
     <Compile Include="Controller\Config\WindowsPlatformConfig.cs" />
     <Compile Include="Controller\Bookmarks\Bookmark.cs" />
     <Compile Include="Controller\Bookmarks\BookmarksController.cs" />
@@ -594,10 +590,6 @@
     <Compile Include="GUI\RocketGui\RocketEventListenerInstancer.cs" />
     <Compile Include="GUI\RocketGui\RocketWidgetManager.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
-    <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
-    <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
-    <Compile Include="GUI\TaskMenu\TaskMenuRecentDocuments.cs" />
-    <Compile Include="GUI\TaskMenu\TaskMenuPositioner.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUIDynamicFontManager.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplayFactory.cs" />
@@ -798,9 +790,6 @@
     <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
     <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />
-    <EmbeddedResource Include="GUI\TaskMenu\TaskMenu.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.layout" />
   </ItemGroup>

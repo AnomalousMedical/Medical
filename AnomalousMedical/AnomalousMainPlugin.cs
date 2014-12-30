@@ -165,7 +165,7 @@ namespace Medical.GUI
             guiManager.pushRootContainer(GUILocationNames.Taskbar);
 
             //Task Menu
-            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager);
+            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager, new LayoutElementName(GUILocationNames.FullscreenPopup));
 
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
 
