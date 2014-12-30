@@ -326,8 +326,6 @@
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
     <Compile Include="GUI\ButtonGridLiveThumbnailController.cs" />
-    <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
-    <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemDialog.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplate.cs" />
     <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplateAdapter.cs" />
@@ -574,7 +572,6 @@
     <Compile Include="GUI\Editor\MedicalUICallback.cs" />
     <Compile Include="GUI\Editor\ObjectEditor.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\PropertiesTable.cs" />
-    <Compile Include="GUI\GUITaskManager.cs" />
     <Compile Include="GUI\Notification\AbstractNotification.cs" />
     <Compile Include="GUI\Notification\CallbackNotificationGUI.cs" />
     <Compile Include="GUI\Notification\Notification.cs" />
