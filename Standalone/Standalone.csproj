@@ -285,13 +285,8 @@
     <Compile Include="Controller\Slideshow\Slideshow.cs" />
     <Compile Include="Controller\Slideshow\RmlSlidePanelTemplate.cs" />
     <Compile Include="Controller\Slideshow\TemplateSlide.cs" />
-    <Compile Include="Controller\TaskController\ArgumentCallbackTask.cs" />
-    <Compile Include="Controller\TaskController\ArgumentTask.cs" />
-    <Compile Include="Controller\TaskController\CallbackTaskWithObject.cs" />
-    <Compile Include="Controller\TaskController\PinableMDIDialogOpenTask.cs" />
     <Compile Include="Controller\TaskController\RunMvcContextActionTask.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
-    <Compile Include="Controller\TaskController\EmptyTaskPositioner.cs" />
     <Compile Include="Controller\Timeline\ActionSequencer.cs" />
     <Compile Include="Controller\Tools\MovableObject.cs" />
     <Compile Include="Controller\Tools\MovableObjectTools.cs" />
@@ -542,13 +537,6 @@
     <Compile Include="Controller\Props\PoseableHand\PoseableHand.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableThumb.cs" />
     <Compile Include="Controller\StandaloneApp.cs" />
-    <Compile Include="Controller\TaskController\CallbackTask.cs" />
-    <Compile Include="Controller\TaskController\DialogOpenTask.cs" />
-    <Compile Include="Controller\TaskController\MDIDialogOpenTask.cs" />
-    <Compile Include="Controller\TaskController\ShowPopupTask.cs" />
-    <Compile Include="Controller\TaskController\Task.cs" />
-    <Compile Include="Controller\TaskController\TaskController.cs" />
-    <Compile Include="Controller\TaskController\TaskPositioner.cs" />
     <Compile Include="Controller\Resources\FilesystemResourceProvider.cs" />
     <Compile Include="Controller\MusclePosition\MusclePosition.cs" />
     <Compile Include="Controller\Timeline\MusclePositionAction.cs" />
@@ -674,7 +662,6 @@
     <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
-    <Compile Include="Controller\ScreenLayoutManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />
