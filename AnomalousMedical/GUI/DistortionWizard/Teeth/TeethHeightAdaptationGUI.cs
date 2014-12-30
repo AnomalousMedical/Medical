@@ -65,11 +65,16 @@ namespace Medical.GUI.AnomalousMvc
             gridPropertiesControl.updateGrid();
             teethMovementPanel.setDefaultTools();
             heightControl.getPositionFromScene();
+
+            teethMovementPanel.opening();
+
+            base.opening();
         }
 
         public override void closing()
         {
             base.closing();
+            teethMovementPanel.closing();
             context.AnatomyController.PickingMode = startingPickingMode;
             TeethController.showTeethTools(false, false);
             context.MeasurementGrid.Visible = false;

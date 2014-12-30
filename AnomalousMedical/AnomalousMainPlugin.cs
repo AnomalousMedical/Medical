@@ -126,7 +126,6 @@ namespace Medical.GUI
             TeethToolController.initialize(teethMover);
             standaloneController.ImageRenderer.ImageRenderStarted += TeethToolController.ScreenshotRenderStarted;
             standaloneController.ImageRenderer.ImageRenderCompleted += TeethToolController.ScreenshotRenderCompleted;
-            TeethToolController.Visible = true;
 
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;

@@ -59,6 +59,7 @@ namespace Medical
         }
 
         private static Dictionary<Tooth, ToothMover> toothMovers = new Dictionary<Tooth, ToothMover>();
+        private static bool toolsVisibleBeforeScreenshot = false;
 
         static TeethToolController()
         {
@@ -90,6 +91,7 @@ namespace Medical
         {
             if (TeethMover != null)
             {
+                toolsVisibleBeforeScreenshot = TeethMover.Visible;
                 TeethMover.Visible = false;
             }
         }
@@ -106,7 +108,7 @@ namespace Medical
         {
             if (TeethMover != null)
             {
-                TeethMover.Visible = true;
+                TeethMover.Visible = toolsVisibleBeforeScreenshot;
             }
         }
 

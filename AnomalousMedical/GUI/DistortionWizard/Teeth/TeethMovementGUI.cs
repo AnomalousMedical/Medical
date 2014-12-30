@@ -79,6 +79,16 @@ namespace Medical.GUI.AnomalousMvc
             rotateButton.Checked = false;
         }
 
+        public void opening()
+        {
+            TeethToolController.Visible = true;
+        }
+
+        public void closing()
+        {
+            TeethToolController.Visible = false;
+        }
+
         public void setDefaultTools()
         {
             TeethController.showTeethTools(MIDLINE_ANTERIOR_TEETH);
