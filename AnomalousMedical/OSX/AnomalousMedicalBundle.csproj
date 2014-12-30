@@ -77,6 +77,8 @@
     <ResourceFiles Include="..\..\$(Configuration)\DotNetZip.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\FreeImageNET.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\Lucene.Net.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\OSPlatform.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
 	<ResourceFiles Include="..\..\$(Configuration)\IntroductionTutorial.dat" />
 	
