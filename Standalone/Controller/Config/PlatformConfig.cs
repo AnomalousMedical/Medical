@@ -8,13 +8,6 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Medical
 {
-    public enum TouchType
-    {
-        None,
-        Trackpad,
-        Screen
-    }
-
     public abstract class PlatformConfig
     {
         private static PlatformConfig currentConfig;
