@@ -26,6 +26,7 @@ namespace Medical.GUI
         private AnomalousController bodyAtlasController;
         private DownloadManagerServer downloadServer;
         private ImageLicenseServer imageLicenseServer;
+        private SimObjectMover teethMover;
 
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
@@ -67,6 +68,7 @@ namespace Medical.GUI
             guiManager.MainGUIShown -= guiManager_MainGUIShown;
             guiManager.MainGUIHidden -= guiManager_MainGUIHidden;
 
+            IDisposableUtil.DisposeIfNotNull(teethMover);
             IDisposableUtil.DisposeIfNotNull(bookmarks);
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
@@ -112,6 +114,19 @@ namespace Medical.GUI
                         }
                     };
             }
+
+            //Teeth mover
+            teethMover = new SimObjectMover("Teeth", standaloneController.MedicalController.PluginManager.RendererPlugin, standaloneController.MedicalController.EventManager, standaloneController.SceneViewController);
+            standaloneController.SceneLoaded += teethMover.sceneLoaded;
+            standaloneController.SceneUnloading += teethMover.sceneUnloading;
+            if (standaloneController.MedicalController.CurrentScene != null)
+            {
+                teethMover.sceneLoaded(standaloneController.MedicalController.CurrentScene);
+            }
+            TeethToolController.initialize(teethMover);
+            standaloneController.ImageRenderer.ImageRenderStarted += TeethToolController.ScreenshotRenderStarted;
+            standaloneController.ImageRenderer.ImageRenderCompleted += TeethToolController.ScreenshotRenderCompleted;
+            TeethToolController.Visible = true;
 
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;

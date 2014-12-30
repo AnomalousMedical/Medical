@@ -65,35 +65,19 @@ namespace Medical
             
         }
 
-        public static void initialize(SimObjectMover teethMover)
+        public static void Initialize(SimObjectMover teethMover)
         {
             TeethMover = teethMover;
             TeethController.ToothAdded += TeethController_ToothAdded;
             TeethController.ToothRemoved += TeethController_ToothRemoved;
-            foreach(var tooth in TeethController.Teeth)
+            //Its possible teeth are already loaded so get those too.
+            foreach (var tooth in TeethController.Teeth)
             {
                 TeethController_ToothAdded(tooth);
             }
         }
 
         public static SimObjectMover TeethMover { get; private set; }
-
-        static void TeethController_ToothAdded(Tooth tooth)
-        {
-            var toothMover = new ToothMover(tooth);
-            toothMovers.Add(tooth, toothMover);
-            TeethMover.addMovableObject(tooth.Owner.Name, toothMover);
-        }
-
-        static void TeethController_ToothRemoved(Tooth tooth)
-        {
-            ToothMover toothMover;
-            if (toothMovers.TryGetValue(tooth, out toothMover))
-            {
-                toothMovers.Remove(tooth);
-                TeethMover.removeMovableObject(toothMover);
-            }
-        }
 
         /// <summary>
         /// Call this function before a screenshot is rendered to hide the
@@ -127,15 +111,20 @@ namespace Medical
             }
         }
 
-        public static bool Visible
+        static void TeethController_ToothAdded(Tooth tooth)
         {
-            get
+            var toothMover = new ToothMover(tooth);
+            toothMovers.Add(tooth, toothMover);
+            TeethMover.addMovableObject(tooth.Owner.Name, toothMover);
+        }
+
+        static void TeethController_ToothRemoved(Tooth tooth)
+        {
+            ToothMover toothMover;
+            if (toothMovers.TryGetValue(tooth, out toothMover))
             {
-                return TeethMover.Visible;
-            }
-            set
-            {
-                TeethMover.Visible = value;
+                toothMovers.Remove(tooth);
+                TeethMover.removeMovableObject(toothMover);
             }
         }
     }

@@ -44,7 +44,6 @@ namespace Medical
         private TemporaryStateBlender tempStateBlender;
         private MusclePositionController musclePositionController;
         private MovementSequenceController movementSequenceController;
-        private SimObjectMover teethMover;
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private AnomalousMvcCore mvcCore;
@@ -127,7 +126,6 @@ namespace Medical
 
         public void Dispose()
         {
-            IDisposableUtil.DisposeIfNotNull(teethMover);
             unloadScene();
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
@@ -228,14 +226,6 @@ namespace Medical
             movementSequenceController = new MovementSequenceController(medicalController);
             this.SceneLoaded += movementSequenceController.sceneLoaded;
             musclePositionController = new MusclePositionController(medicalController.MainTimer, this);
-
-            //Teeth mover
-            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager.RendererPlugin, medicalController.EventManager, sceneViewController);
-            this.SceneLoaded += teethMover.sceneLoaded;
-            this.SceneUnloading += teethMover.sceneUnloading;
-            TeethToolController.TeethMover = teethMover;
-            imageRenderer.ImageRenderStarted += TeethToolController.ScreenshotRenderStarted;
-            imageRenderer.ImageRenderCompleted += TeethToolController.ScreenshotRenderCompleted;
 
             SceneLoaded += SleepyActorRepository.SceneLoaded;
             SceneUnloading += SleepyActorRepository.SceneUnloading;

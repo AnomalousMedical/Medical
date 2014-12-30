@@ -49,6 +49,14 @@ namespace Medical
             return ret;
         }
 
+        public static IEnumerable<Tooth> Teeth
+        {
+            get
+            {
+                return teeth.Values;
+            }
+        }
+
         public static void adaptAllTeeth(bool adapt)
         {
             foreach (Tooth tooth in teeth.Values)
