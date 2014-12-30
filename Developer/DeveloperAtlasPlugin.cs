@@ -79,7 +79,7 @@ namespace Developer
             debugVisualizer = new DebugVisualizer(standaloneController);
             guiManager.addManagedDialog(debugVisualizer);
 
-            libRocketDebugger = new ShowLibRocketDebugger(guiManager);
+            libRocketDebugger = new ShowLibRocketDebugger(guiManager, "ShowLibRocketDebugger", "Show LibRocket Debugger", "Developer.libRocketDebugger", "Developer");
 
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
 

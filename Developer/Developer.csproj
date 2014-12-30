@@ -126,7 +126,6 @@
     <Compile Include="Tasks\DisablePhysicsTask.cs" />
     <Compile Include="Utility\MaxWriter.cs" />
     <Compile Include="Tasks\SaveMicrocodeCacheTask.cs" />
-    <Compile Include="Tasks\ShowLibRocketDebugger.cs" />
     <Compile Include="Utility\MaxWriterInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
   </ItemGroup>
