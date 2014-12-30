@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public static class TeethToolController
+    public class TeethToolController
     {
         class ToothMover : MovableObject
         {
@@ -58,15 +58,10 @@ namespace Medical
             }
         }
 
-        private static Dictionary<Tooth, ToothMover> toothMovers = new Dictionary<Tooth, ToothMover>();
-        private static bool toolsVisibleBeforeScreenshot = false;
+        private Dictionary<Tooth, ToothMover> toothMovers = new Dictionary<Tooth, ToothMover>();
+        private bool toolsVisibleBeforeScreenshot = false;
 
-        static TeethToolController()
-        {
-            
-        }
-
-        public static void initialize(SimObjectMover teethMover)
+        public TeethToolController(SimObjectMover teethMover)
         {
             TeethMover = teethMover;
             TeethController.ToothAdded += TeethController_ToothAdded;
@@ -77,8 +72,6 @@ namespace Medical
             }
         }
 
-        public static SimObjectMover TeethMover { get; private set; }
-
         /// <summary>
         /// Call this function before a screenshot is rendered to hide the
         /// movement tools if you wish them hidden in the screenshot. This
@@ -87,13 +80,10 @@ namespace Medical
         /// </summary>
         /// <param name="sender">Ignored.</param>
         /// <param name="e">Ignored.</param>
-        public static void ScreenshotRenderStarted(Object sender, EventArgs e)
+        public void ScreenshotRenderStarted(Object sender, EventArgs e)
         {
-            if (TeethMover != null)
-            {
-                toolsVisibleBeforeScreenshot = TeethMover.Visible;
-                TeethMover.Visible = false;
-            }
+            toolsVisibleBeforeScreenshot = TeethMover.Visible;
+            TeethMover.Visible = false;
         }
 
         /// <summary>
@@ -104,15 +94,12 @@ namespace Medical
         /// </summary>
         /// <param name="sender">Ignored.</param>
         /// <param name="e">Ignored.</param>
-        public static void ScreenshotRenderCompleted(Object sender, EventArgs e)
+        public void ScreenshotRenderCompleted(Object sender, EventArgs e)
         {
-            if (TeethMover != null)
-            {
-                TeethMover.Visible = toolsVisibleBeforeScreenshot;
-            }
+            TeethMover.Visible = toolsVisibleBeforeScreenshot;
         }
 
-        public static bool Visible
+        public bool Visible
         {
             get
             {
@@ -124,14 +111,16 @@ namespace Medical
             }
         }
 
-        static void TeethController_ToothAdded(Tooth tooth)
+        public SimObjectMover TeethMover { get; private set; }
+
+        void TeethController_ToothAdded(Tooth tooth)
         {
             var toothMover = new ToothMover(tooth);
             toothMovers.Add(tooth, toothMover);
             TeethMover.addMovableObject(tooth.Owner.Name, toothMover);
         }
 
-        static void TeethController_ToothRemoved(Tooth tooth)
+        void TeethController_ToothRemoved(Tooth tooth)
         {
             ToothMover toothMover;
             if (toothMovers.TryGetValue(tooth, out toothMover))

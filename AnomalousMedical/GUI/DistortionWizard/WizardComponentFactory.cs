@@ -9,11 +9,19 @@ namespace Medical.GUI.AnomalousMvc
 {
     public class WizardComponentFactory : ViewHostComponentFactory
     {
+        private TeethToolController teethToolController;
+
+        public WizardComponentFactory(TeethToolController teethToolController)
+        {
+            this.teethToolController = teethToolController;
+        }
+
         public ViewHostComponent createViewHostComponent(MyGUIView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
             WizardView wizardView = view as WizardView;
             if (wizardView != null)
             {
+                wizardView.TeethToolController = teethToolController;
                 ViewHostComponent component = wizardView.createViewHost(context, viewHost);
                 return component;
             }

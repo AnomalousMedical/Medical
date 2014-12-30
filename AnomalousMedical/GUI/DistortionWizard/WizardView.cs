@@ -19,6 +19,8 @@ namespace Medical.GUI.AnomalousMvc
 
         public abstract ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost);
 
+        public TeethToolController TeethToolController { get; internal set; }
+
         protected WizardView(LoadInfo info)
             :base (info)
         {

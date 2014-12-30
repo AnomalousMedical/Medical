@@ -15,6 +15,7 @@ using Engine.Saving.XMLSaver;
 using System.IO;
 using Engine.Platform;
 using FreeImageAPI;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical.GUI
 {
@@ -114,18 +115,6 @@ namespace Medical.GUI
                         }
                     };
             }
-
-            //Teeth mover
-            teethMover = new SimObjectMover("Teeth", standaloneController.MedicalController.PluginManager.RendererPlugin, standaloneController.MedicalController.EventManager, standaloneController.SceneViewController);
-            standaloneController.SceneLoaded += teethMover.sceneLoaded;
-            standaloneController.SceneUnloading += teethMover.sceneUnloading;
-            if (standaloneController.MedicalController.CurrentScene != null)
-            {
-                teethMover.sceneLoaded(standaloneController.MedicalController.CurrentScene);
-            }
-            TeethToolController.initialize(teethMover);
-            standaloneController.ImageRenderer.ImageRenderStarted += TeethToolController.ScreenshotRenderStarted;
-            standaloneController.ImageRenderer.ImageRenderCompleted += TeethToolController.ScreenshotRenderCompleted;
 
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
@@ -282,7 +271,19 @@ namespace Medical.GUI
 
             standaloneController.AtlasPluginManager.RequestDependencyDownload += AtlasPluginManager_RequestDependencyDownload;
 
-            standaloneController.ViewHostFactory.addFactory(new Medical.GUI.AnomalousMvc.WizardComponentFactory());
+            //Teeth mover
+            teethMover = new SimObjectMover("Teeth", standaloneController.MedicalController.PluginManager.RendererPlugin, standaloneController.MedicalController.EventManager, standaloneController.SceneViewController);
+            standaloneController.SceneLoaded += teethMover.sceneLoaded;
+            standaloneController.SceneUnloading += teethMover.sceneUnloading;
+            if (standaloneController.MedicalController.CurrentScene != null)
+            {
+                teethMover.sceneLoaded(standaloneController.MedicalController.CurrentScene);
+            }
+            TeethToolController teethToolController = new TeethToolController(teethMover);
+            standaloneController.ImageRenderer.ImageRenderStarted += teethToolController.ScreenshotRenderStarted;
+            standaloneController.ImageRenderer.ImageRenderCompleted += teethToolController.ScreenshotRenderCompleted;
+
+            standaloneController.ViewHostFactory.addFactory(new WizardComponentFactory(teethToolController));
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)
