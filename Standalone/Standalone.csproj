@@ -572,14 +572,8 @@
     <Compile Include="GUI\Editor\MedicalUICallback.cs" />
     <Compile Include="GUI\Editor\ObjectEditor.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\PropertiesTable.cs" />
-    <Compile Include="GUI\Notification\AbstractNotification.cs" />
-    <Compile Include="GUI\Notification\CallbackNotificationGUI.cs" />
-    <Compile Include="GUI\Notification\Notification.cs" />
-    <Compile Include="GUI\Notification\NotificationGUI.cs" />
-    <Compile Include="GUI\Notification\NotificationGUIManager.cs" />
     <Compile Include="GUI\Notification\OpenImageNotification.cs" />
     <Compile Include="GUI\Notification\RestartNotification.cs" />
-    <Compile Include="GUI\Notification\StartTaskNotification.cs" />
     <Compile Include="GUI\RocketGui\RocketEventController.cs" />
     <Compile Include="GUI\RocketGui\RocketGuiManager.cs" />
     <Compile Include="GUI\RocketGui\RocketWidget.cs" />
@@ -744,7 +738,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.layout" />
-    <EmbeddedResource Include="GUI\Notification\NotificationGUI.layout" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\SceneErrorWindow.layout" />
     <EmbeddedResource Include="Resources\StandaloneIcons.png" />
     <EmbeddedResource Include="Resources\StandaloneIcons.xml" />

@@ -261,7 +261,7 @@ namespace Medical
             Coroutine.SetTimer(medicalController.MainTimer);
 
             //Notifications
-            notificationManager = new NotificationGUIManager(this);
+            notificationManager = new NotificationGUIManager();
 
             layerController = new LayerController();
         }

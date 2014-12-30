@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class RestartNotification : AbstractNotification
+    public class RestartNotification : AbstractNotification
     {
         private StandaloneController standaloneController;
         private bool autoStartPlatformUpdate;

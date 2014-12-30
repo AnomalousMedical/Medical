@@ -378,7 +378,7 @@ namespace Medical.GUI
             {
                 if (displayRestartMessage)
                 {
-                    notificationManager.showRestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", autoStartUpdate, false);
+                    notificationManager.showNotification(new RestartNotification(restartMessage + "\nClick here to do this now.", "AnomalousMedical/Download", standaloneController, autoStartUpdate, false));
                     displayRestartMessage = false;
                     autoStartUpdate = false;
                 }
@@ -399,7 +399,7 @@ namespace Medical.GUI
                 pluginGrid.removeItem(downloadingItem);
                 if (downloadInfo.Download.RequestElevatedRestart)
                 {
-                    notificationManager.showRestartNotification(String.Format("There was an error downloading {0}.\nYou can restart Anomalous Medical as an Administrator and try to download again.\nClick here to restart as an Administrator.", downloadInfo.Name), MyGUIResourceNames.QuestionIcon, false, true);
+                    notificationManager.showNotification(new RestartNotification(String.Format("There was an error downloading {0}.\nYou can restart Anomalous Medical as an Administrator and try to download again.\nClick here to restart as an Administrator.", downloadInfo.Name), MyGUIResourceNames.QuestionIcon, standaloneController, false, true));
                 }
                 else
                 {
