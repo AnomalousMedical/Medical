@@ -455,8 +455,6 @@
     <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\SceneStats\SceneStatsDisplay.cs" />
     <Compile Include="GUI\SceneStats\SceneStatsDisplayManager.cs" />
-    <Compile Include="GUI\Taskbar\AppButtonTaskbar.cs" />
-    <Compile Include="GUI\Taskbar\ClosingTaskbar.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuAdProvider.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
@@ -598,10 +596,6 @@
     <Compile Include="GUI\RocketGui\RocketWidgetManager.cs" />
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
-    <Compile Include="GUI\Taskbar\PinnedTaskSerializer.cs" />
-    <Compile Include="GUI\Taskbar\PinnedTaskTaskbarItem.cs" />
-    <Compile Include="GUI\Taskbar\TaskTaskbarItem.cs" />
-    <Compile Include="GUI\Taskbar\TimelineTaskbarItem.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuRecentDocuments.cs" />
@@ -646,8 +640,6 @@
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
     <Compile Include="GUI\ColorMenu\ColorMenu.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginManager.cs" />
-    <Compile Include="GUI\Taskbar\Taskbar.cs" />
-    <Compile Include="GUI\Taskbar\TaskbarItem.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplayFactory.cs" />
     <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />
@@ -700,8 +692,6 @@
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
     <EmbeddedResource Include="GUI\RocketGui\RocketDebuggerWindow.layout" />
     <EmbeddedResource Include="GUI\SceneStats\SceneStatsDisplay.layout" />
-    <EmbeddedResource Include="GUI\Taskbar\AppButtonTaskbar.layout" />
-    <EmbeddedResource Include="GUI\Taskbar\ClosingTaskbar.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
     <EmbeddedResource Include="Controller\Grid\Grid.material" />
@@ -814,7 +804,6 @@
     <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
     <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />
-    <EmbeddedResource Include="GUI\Taskbar\Taskbar.layout" />
     <EmbeddedResource Include="GUI\TaskMenu\TaskMenu.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>

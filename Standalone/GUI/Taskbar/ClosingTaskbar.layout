@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="Medical.TaskbarSkin" position="77 136 147 56" layer="Back">
-        <Widget type="Button" skin="ButtonXBig" position="119 4 24 20" align="Right Top" name="Close"/>
-    </Widget>
-    <CodeGeneratorSettings/>
-</MyGUI>
