@@ -314,7 +314,7 @@ namespace Medical
             }
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             configFile.loadConfigFile();
-            guiManager.loadSavedUI(configFile);
+            guiManager.loadSavedUI(configFile, new Version("1.0.0.2818"));
 
             //Load recent documents here, this way the document handlers are all loaded
             DocumentController.loadRecentDocuments(MedicalConfig.RecentDocsFile);

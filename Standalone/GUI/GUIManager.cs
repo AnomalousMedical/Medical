@@ -177,7 +177,7 @@ namespace Medical.GUI
             return false;
         }
 
-        internal void loadSavedUI(ConfigFile configFile)
+        internal void loadSavedUI(ConfigFile configFile, Version skipIfLessThan)
         {
             ConfigSection infoSection = configFile.createOrRetrieveConfigSection(INFO_SECTION);
             String versionString = infoSection.getValue(INFO_VERSION, "0.0.0.0");
@@ -191,7 +191,7 @@ namespace Medical.GUI
             {
                 version = new Version("0.0.0.0");
             }
-            if (version > new Version("1.0.0.2818"))
+            if (version > skipIfLessThan)
             {
                 if (uiScale.EpsilonEquals(ScaleHelper.ScaleFactor, 1e-3f)) //Don't load dialog positions if the scales do not match
                 {
