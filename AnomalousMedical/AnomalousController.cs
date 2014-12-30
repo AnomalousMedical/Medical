@@ -48,27 +48,6 @@ namespace Medical
 
         public override bool OnInit()
         {
-            return startApplication();
-        }
-
-        public override int OnExit()
-        {
-            bool applyingUpdate = UpdateController.promptForUpdate();
-            controller.Dispose();
-            if (restartOnShutdown && !applyingUpdate)
-            {
-                OtherProcessManager.restart(restartAsAdmin);
-            }
-            return 0;
-        }
-
-        public override void OnIdle()
-        {
-            controller.onIdle();
-        }
-
-        public bool startApplication()
-        {
             CertificateStoreManager.CertificateStoreLoaded += CertificateStoreManager_CertificateStoreLoaded;
             CertificateStoreManager.CertificateStoreLoadError += CertificateStoreManager_CertificateStoreLoadError;
 
@@ -87,6 +66,22 @@ namespace Medical
             ResourceManager.Instance.load("Medical.Resources.AnomalousBootstrapImagesets.xml");
 
             return true;
+        }
+
+        public override int OnExit()
+        {
+            bool applyingUpdate = UpdateController.promptForUpdate();
+            controller.Dispose();
+            if (restartOnShutdown && !applyingUpdate)
+            {
+                OtherProcessManager.restart(restartAsAdmin);
+            }
+            return 0;
+        }
+
+        public override void OnIdle()
+        {
+            controller.onIdle();
         }
 
         void MyGUIInterface_BeforeMainResourcesLoaded(MyGUIInterface obj)
