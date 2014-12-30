@@ -273,12 +273,6 @@ namespace Medical.GUI
 
             //Teeth mover
             teethMover = new SimObjectMover("Teeth", standaloneController.MedicalController.PluginManager.RendererPlugin, standaloneController.MedicalController.EventManager, standaloneController.SceneViewController);
-            standaloneController.SceneLoaded += teethMover.sceneLoaded;
-            standaloneController.SceneUnloading += teethMover.sceneUnloading;
-            if (standaloneController.MedicalController.CurrentScene != null)
-            {
-                teethMover.sceneLoaded(standaloneController.MedicalController.CurrentScene);
-            }
             TeethToolController teethToolController = new TeethToolController(teethMover);
             standaloneController.ImageRenderer.ImageRenderStarted += teethToolController.ScreenshotRenderStarted;
             standaloneController.ImageRenderer.ImageRenderCompleted += teethToolController.ScreenshotRenderCompleted;
@@ -298,11 +292,12 @@ namespace Medical.GUI
 
         public void sceneLoaded(SimScene scene)
         {
-            
+            teethMover.sceneLoaded(scene);
         }
 
         public void sceneUnloading(SimScene scene)
         {
+            teethMover.sceneUnloading(scene);
             anatomyFinder.sceneUnloading();
         }
 
