@@ -26,7 +26,7 @@ namespace Medical.GUI
 
         protected override void doShowPrompt(String text)
         {
-            ensureVisible();
+            ensureVisible(RenderManager.Instance.ViewWidth, RenderManager.Instance.ViewHeight);
             LayerManager.Instance.upLayerItem(button);
             button.Caption = text;
             button.setSize((int)button.getTextSize().Width + 25, 25);
@@ -41,12 +41,8 @@ namespace Medical.GUI
         /// <summary>
         /// Have the window compute its position to ensure it is visible in the given screen area.
         /// </summary>
-        public void ensureVisible()
+        public void ensureVisible(int guiWidth, int guiHeight)
         {
-            //Adjust the position if needed
-            int guiWidth = RenderManager.Instance.ViewWidth;
-            int guiHeight = RenderManager.Instance.ViewHeight;
-
             int left = guiWidth - button.Width - 30;
             int top = guiHeight - button.Height - 30;
             int right = left + button.Width;
