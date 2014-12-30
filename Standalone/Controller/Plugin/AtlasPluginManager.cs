@@ -367,7 +367,7 @@ namespace Medical
 
         private void addPlugin(AtlasPlugin plugin, bool addAssemblyResources)
         {
-            if (standaloneController.App.LicenseManager.allowFeature(plugin.PluginId) && !usedPluginIds.Contains(plugin.PluginId))
+            if (standaloneController.LicenseManager.allowFeature(plugin.PluginId) && !usedPluginIds.Contains(plugin.PluginId))
             {
                 uninitializedPlugins.Add(plugin);
 #if ALLOW_OVERRIDE

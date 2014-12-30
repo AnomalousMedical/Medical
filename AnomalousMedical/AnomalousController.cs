@@ -15,7 +15,7 @@ using System.Reflection;
 
 namespace Medical
 {
-    class AnomalousController : StandaloneApp
+    class AnomalousController : App
     {
         private const int LoadingServerFilesPosition = 5;
         private const int InitializingCorePosition = 10;
@@ -39,6 +39,11 @@ namespace Medical
         private BorderLayoutChainLink contentArea;
         private LicenseDisplayManager licenseDisplay = new LicenseDisplayManager();
         private Engine.Resources.ResourceGroup commonResources;
+
+        public AnomalousController()
+        {
+            Title = "Anomalous Medical";
+        }
 
         public override bool OnInit()
         {
@@ -95,9 +100,6 @@ namespace Medical
             CertificateStoreManager.CertificateStoreLoaded -= CertificateStoreManager_CertificateStoreLoaded;
             CertificateStoreManager.CertificateStoreLoadError -= CertificateStoreManager_CertificateStoreLoadError;
 
-            LicenseManager = new LicenseManager(MedicalConfig.LicenseFile);
-            LicenseManager.getKey(processKeyResults);
-
             controller.IdleHandler.runTemporaryIdle(runSplashScreen());
         }
 
@@ -132,7 +134,8 @@ namespace Medical
             var ogreResources = resourceManager.getSubsystemResource("Ogre");
             commonResources = ogreResources.addResourceGroup("Common");
 
-            controller.initializeControllers(createBackground());
+            controller.initializeControllers(createBackground(), new LicenseManager(MedicalConfig.LicenseFile));
+            controller.LicenseManager.getKey(processKeyResults);
             licenseDisplay.setSceneViewController(controller.SceneViewController);
 
             //Setup shader resources
@@ -226,15 +229,7 @@ namespace Medical
             }
         }
 
-        public override string WindowTitle
-        {
-            get
-            {
-                return "Anomalous Medical";
-            }
-        }
-
-        public override String PrimaryArchive
+        public String PrimaryArchive
         {
             get
             {
@@ -242,7 +237,7 @@ namespace Medical
             }
         }
 
-        public override String DefaultScene
+        public String DefaultScene
         {
             get
             {
@@ -284,7 +279,7 @@ namespace Medical
             MedicalConfig.PluginConfig.addAdditionalPluginFile("IntroductionTutorial.dat");
             loadStatus.Current++;
             yield return loadStatus;
-            controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(LicenseManager, this));
+            controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(controller.LicenseManager, this));
             loadStatus.Current++;
             yield return loadStatus;
 
@@ -333,7 +328,7 @@ namespace Medical
 
         void showKeyDialog()
         {
-            MvcLoginController mvcLogin = new MvcLoginController(controller, LicenseManager);
+            MvcLoginController mvcLogin = new MvcLoginController(controller, controller.LicenseManager);
             mvcLogin.LoginSucessful += () =>
                 {
                     Root.getSingleton()._updateAllRenderTargets();
@@ -362,10 +357,10 @@ namespace Medical
 
         private IEnumerable<IdleStatus> keyValidIdleFunc(uint currentPosition, StatusUpdateFunc statusUpdateFunc, Action finishFunc)
         {
-            MedicalConfig.setUserDirectory(LicenseManager.User);
+            MedicalConfig.setUserDirectory(controller.LicenseManager.User);
 
             controller.GUIManager.setMainInterfaceEnabled(true);
-            licenseDisplay.setLicenseText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
+            licenseDisplay.setLicenseText(String.Format("Licensed to: {0}", controller.LicenseManager.LicenseeName));
 
             foreach (var status in addPlugins())
             {

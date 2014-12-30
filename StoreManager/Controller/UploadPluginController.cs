@@ -52,11 +52,11 @@ namespace Anomalous.Medical.StoreManager.Controller
                 RocketInterface.Instance.FileInterface.removeExtension(rocketProjectResources);
             };
 
-            indexController = new IndexController(context, controller.App.LicenseManager);
-            chooseStore = new ChooseStoreController(context, controller.App.LicenseManager);
-            editPluginDetails = new EditPluginDetailsController(context, controller.App.LicenseManager, tool, projectResourceProvider);
-            choosePlugin = new ChoosePluginController(context, controller.App.LicenseManager);
-            transmitFile = new TransmitFileController(context, controller.App.LicenseManager, projectResourceProvider);
+            indexController = new IndexController(context, controller.LicenseManager);
+            chooseStore = new ChooseStoreController(context, controller.LicenseManager);
+            editPluginDetails = new EditPluginDetailsController(context, controller.LicenseManager, tool, projectResourceProvider);
+            choosePlugin = new ChoosePluginController(context, controller.LicenseManager);
+            transmitFile = new TransmitFileController(context, controller.LicenseManager, projectResourceProvider);
             uploadComplete = new UploadCompleteController(context);
 
             controller.MvcCore.startRunningContext(context);

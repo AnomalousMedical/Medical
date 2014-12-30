@@ -69,12 +69,12 @@ namespace Medical
 
         //Platform
         private MainWindow mainWindow;
-        private StandaloneApp app;
+        private App app;
         private AtlasPluginManager atlasPluginManager;
 		private bool shuttingDown = false;
         private MedicalConfig medicalConfig;
 
-        public StandaloneController(StandaloneApp app)
+        public StandaloneController(App app)
         {
             PlatformConfig.MoveConfigurationIfNeeded();
             medicalConfig = new MedicalConfig();
@@ -88,7 +88,7 @@ namespace Medical
 
             MyGUIInterface.OSTheme = PlatformConfig.ThemeFile;
 
-            mainWindow = new MainWindow(app.WindowTitle);
+            mainWindow = new MainWindow(app.Title);
             mainWindow.Closed += mainWindow_Closed;
 
             //Setup DPI
@@ -173,10 +173,11 @@ namespace Medical
 #endif
         }
 
-        public void initializeControllers(BackgroundScene background)
+        public void initializeControllers(BackgroundScene background, LicenseManager licenseManager)
         {
             //Background
             this.background = background;
+            this.LicenseManager = licenseManager;
 
             var dataFileVerifier = new DataFileVerifier();
 #if ALLOW_OVERRIDE
@@ -231,7 +232,7 @@ namespace Medical
             SceneUnloading += SleepyActorRepository.SceneUnloading;
 
             //Download
-            downloadController = new DownloadController(app.LicenseManager, AtlasPluginManager);
+            downloadController = new DownloadController(licenseManager, AtlasPluginManager);
 
             //Props
             propFactory = new PropFactory(this);
@@ -475,13 +476,7 @@ namespace Medical
             }
         }
 
-        public StandaloneApp App
-        {
-            get
-            {
-                return app;
-            }
-        }
+        public LicenseManager LicenseManager { get; private set; }
 
         public TimelineController TimelineController
         {

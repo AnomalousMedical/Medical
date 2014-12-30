@@ -534,7 +534,6 @@
     <Compile Include="Controller\Props\PoseableHand\PoseableFingerSection.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableHand.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableThumb.cs" />
-    <Compile Include="Controller\StandaloneApp.cs" />
     <Compile Include="Controller\Resources\FilesystemResourceProvider.cs" />
     <Compile Include="Controller\MusclePosition\MusclePosition.cs" />
     <Compile Include="Controller\Timeline\MusclePositionAction.cs" />

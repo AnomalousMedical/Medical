@@ -313,7 +313,7 @@ namespace Medical.GUI
 
         public void sceneRevealed()
         {
-            UpdateController.checkForUpdate(updateCheckCompleted, standaloneController.AtlasPluginManager, standaloneController.App.LicenseManager);
+            UpdateController.checkForUpdate(updateCheckCompleted, standaloneController.AtlasPluginManager, standaloneController.LicenseManager);
 
             if (!String.IsNullOrEmpty(MedicalConfig.StartupTask))
             {
@@ -442,7 +442,7 @@ namespace Medical.GUI
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
-                        standaloneController.App.LicenseManager.deleteLicense();
+                        standaloneController.LicenseManager.deleteLicense();
                         standaloneController.exit();
                     }
                 });

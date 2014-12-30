@@ -30,7 +30,7 @@ namespace Medical
 
         public PremiumBodyAtlasPlugin(StandaloneController standaloneController)
         {
-            this.licenseManager = standaloneController.App.LicenseManager;
+            this.licenseManager = standaloneController.LicenseManager;
         }
 
         public void Dispose()
