@@ -39,6 +39,7 @@ namespace Medical
         private BorderLayoutChainLink contentArea;
         private LicenseDisplayManager licenseDisplay = new LicenseDisplayManager();
         private Engine.Resources.ResourceGroup commonResources;
+        private AnomalousMainPlugin mainPlugin;
 
         public AnomalousController()
         {
@@ -266,7 +267,10 @@ namespace Medical
         {
             splashScreen.Dispose();
             splashScreen = null;
-            controller.sceneRevealed();
+            if (mainPlugin != null)
+            {
+                mainPlugin.sceneRevealed();
+            }
         }
 
         private IEnumerable<PluginLoadStatus> addPlugins()
@@ -279,7 +283,8 @@ namespace Medical
             MedicalConfig.PluginConfig.addAdditionalPluginFile("IntroductionTutorial.dat");
             loadStatus.Current++;
             yield return loadStatus;
-            controller.AtlasPluginManager.addPlugin(new AnomalousMainPlugin(controller.LicenseManager, this));
+            mainPlugin = new AnomalousMainPlugin(controller.LicenseManager, this);
+            controller.AtlasPluginManager.addPlugin(mainPlugin);
             loadStatus.Current++;
             yield return loadStatus;
 
@@ -341,7 +346,7 @@ namespace Medical
                         {
                             mvcLogin.close();
                             //Let plugins know the scene has been revealed, since the license dialog had to be opened.
-                            controller.sceneRevealed();
+                            mainPlugin.sceneRevealed();
                         });
                 };
             mvcLogin.showContext();

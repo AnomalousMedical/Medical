@@ -95,11 +95,6 @@ namespace KinectPlugin
             kinectDebugger.destroyDebugObjects(scene);
         }
 
-        public void sceneRevealed()
-        {
-
-        }
-
         public long PluginId
         {
             get

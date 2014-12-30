@@ -494,14 +494,6 @@ namespace Medical
             return true;
         }
 
-        internal void sceneRevealed()
-        {
-            foreach (AtlasPlugin plugin in plugins)
-            {
-                plugin.sceneRevealed();
-            }
-        }
-
         /// <summary>
         /// Fire a request to download the dependencies for a given plugin.
         /// </summary>

@@ -47,11 +47,6 @@ namespace LeapMotionPlugin
             
         }
 
-        public void sceneRevealed()
-        {
-
-        }
-
         public void sceneUnloading(SimScene scene)
         {
             

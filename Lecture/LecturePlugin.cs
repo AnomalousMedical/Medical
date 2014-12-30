@@ -82,11 +82,6 @@ namespace Lecture
             slideshowEditController.sceneUnloading(scene);
         }
 
-        public void sceneRevealed()
-        {
-            
-        }
-
         public long PluginId
         {
             get

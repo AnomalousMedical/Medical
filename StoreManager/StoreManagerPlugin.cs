@@ -51,11 +51,6 @@ namespace Anomalous.Medical.StoreManager
             
         }
 
-        public void sceneRevealed()
-        {
-            
-        }
-
         public long PluginId
         {
             get

@@ -84,11 +84,6 @@ namespace UnitTestPlugin
             
         }
 
-        public void sceneRevealed()
-        {
-            
-        }
-
         public long PluginId
         {
             get

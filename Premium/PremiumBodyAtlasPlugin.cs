@@ -113,11 +113,6 @@ namespace Medical
             
         }
 
-        public void sceneRevealed()
-        {
-            
-        }
-
         public long PluginId
         {
             get

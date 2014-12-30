@@ -95,11 +95,6 @@ namespace DentalSim
             mandibleMovementDialog.sceneLoaded(scene);
         }
 
-        public void sceneRevealed()
-        {
-
-        }
-
         public void sceneUnloading(SimScene scene)
         {
             mandibleMovementDialog.sceneUnloading(scene);

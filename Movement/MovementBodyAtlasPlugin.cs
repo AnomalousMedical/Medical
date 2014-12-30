@@ -57,11 +57,6 @@ namespace Medical.Movement
             
         }
 
-        public void sceneRevealed()
-        {
-            
-        }
-
         public long PluginId
         {
             get

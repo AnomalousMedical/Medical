@@ -92,11 +92,6 @@ namespace Medical
             
         }
 
-        public void sceneRevealed()
-        {
-            
-        }
-
         [Editable]
         public string PluginName { get; private set; }
 

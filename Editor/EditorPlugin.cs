@@ -258,11 +258,6 @@ namespace Medical
             }
         }
 
-        public void sceneRevealed()
-        {
-
-        }
-
         void guiManager_MainGUIHidden()
         {
             propEditController.hideOpenProps();

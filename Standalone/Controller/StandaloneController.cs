@@ -403,11 +403,6 @@ namespace Medical
             patientDataController.clearData();
         }
 
-        public void sceneRevealed()
-        {
-            atlasPluginManager.sceneRevealed();
-        }
-
         public MedicalController MedicalController
         {
             get

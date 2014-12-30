@@ -129,11 +129,6 @@ namespace Developer
             disablePhysics.sceneChanged(scene);
         }
 
-        public void sceneRevealed()
-        {
-
-        }
-
         public void sceneUnloading(SimScene scene)
         {
             advancedMandibleMovement.sceneUnloading(scene);

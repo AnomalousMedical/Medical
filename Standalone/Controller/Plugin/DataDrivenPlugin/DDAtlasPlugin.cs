@@ -89,11 +89,6 @@ namespace Medical
             
         }
 
-        public void sceneRevealed()
-        {
-            
-        }
-
         public void addTask(DDPluginTask task)
         {
             tasks.Add(task);
