@@ -60,12 +60,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\DotNetZip\bin\Release\DotNetZip.dll</HintPath>
     </Reference>
-    <Reference Include="EngineApp">
-      <HintPath>..\..\Engine\Release\EngineApp.dll</HintPath>
-    </Reference>
     <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\FreeImage.NET\Library\bin\Release\FreeImageNET.dll</HintPath>
+    </Reference>
+    <Reference Include="GuiFramework">
+      <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
     </Reference>
     <Reference Include="libRocketPlugin">
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
@@ -465,7 +465,6 @@
     <Compile Include="GUI\Taskbar\AppButtonTaskbar.cs" />
     <Compile Include="GUI\Taskbar\ClosingTaskbar.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuAdProvider.cs" />
-    <Compile Include="Layout\AspectRatioContainer.cs" />
     <Compile Include="Layout\Chain\ActiveContainerTracker.cs" />
     <Compile Include="Layout\Chain\BorderLayoutChainLink.cs" />
     <Compile Include="Layout\Chain\BorderLayoutElementName.cs" />
@@ -487,7 +486,6 @@
     <Compile Include="Layout\MDI\StoredLayout\StoredFloatingWindows.cs" />
     <Compile Include="Layout\MDI\StoredLayout\StoredMDILayout.cs" />
     <Compile Include="Layout\MDI\StoredLayout\StoredMDILayoutContainer.cs" />
-    <Compile Include="Layout\VariableSizeMyGUILayoutContainer.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />
@@ -715,7 +713,6 @@
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
     <Compile Include="Layout\MDI\MDILayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
-    <Compile Include="Layout\MyGUILayoutContainer.cs" />
     <Compile Include="Controller\ScreenLayoutManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />

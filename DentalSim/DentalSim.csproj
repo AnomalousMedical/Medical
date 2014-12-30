@@ -55,9 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
     </Reference>
-    <Reference Include="EngineApp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="GuiFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\EngineApp.dll</HintPath>
+      <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
     </Reference>
     <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
