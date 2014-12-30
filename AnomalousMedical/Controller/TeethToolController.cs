@@ -65,13 +65,12 @@ namespace Medical
             
         }
 
-        public static void Initialize(SimObjectMover teethMover)
+        public static void initialize(SimObjectMover teethMover)
         {
             TeethMover = teethMover;
             TeethController.ToothAdded += TeethController_ToothAdded;
             TeethController.ToothRemoved += TeethController_ToothRemoved;
-            //Its possible teeth are already loaded so get those too.
-            foreach (var tooth in TeethController.Teeth)
+            foreach(var tooth in TeethController.Teeth)
             {
                 TeethController_ToothAdded(tooth);
             }
@@ -108,6 +107,18 @@ namespace Medical
             if (TeethMover != null)
             {
                 TeethMover.Visible = true;
+            }
+        }
+
+        public static bool Visible
+        {
+            get
+            {
+                return TeethMover.Visible;
+            }
+            set
+            {
+                TeethMover.Visible = value;
             }
         }
 
