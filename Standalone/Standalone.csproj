@@ -792,9 +792,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LockedFeature%402x.png" />
-    <EmbeddedResource Include="Resources\Core_Custom_MyGUI_Skin.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
