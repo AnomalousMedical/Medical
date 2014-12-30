@@ -477,15 +477,6 @@
     <Compile Include="Layout\Chain\MDIChainLink.cs" />
     <Compile Include="Layout\Chain\SingleChildChainLink.cs" />
     <Compile Include="Layout\Chain\LayoutChainLink.cs" />
-    <Compile Include="Layout\MDI\MDILayoutContainerScale.cs" />
-    <Compile Include="Layout\MDI\SeparatorWidgetManagerScale.cs" />
-    <Compile Include="Layout\MDI\SeparatorWidgetManagerAbsolute.cs" />
-    <Compile Include="Layout\MDI\MDILayoutContainerAbsolute.cs" />
-    <Compile Include="Layout\MDI\StoredLayout\StoredBorderContainer.cs" />
-    <Compile Include="Layout\MDI\StoredLayout\StoredBorderContainerDock.cs" />
-    <Compile Include="Layout\MDI\StoredLayout\StoredFloatingWindows.cs" />
-    <Compile Include="Layout\MDI\StoredLayout\StoredMDILayout.cs" />
-    <Compile Include="Layout\MDI\StoredLayout\StoredMDILayoutContainer.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />
@@ -648,11 +639,6 @@
     <Compile Include="GUI\Timeline\TextDisplay\MyGUIDynamicFontManager.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplayFactory.cs" />
-    <Compile Include="Layout\MDI\MDIBorderContainerDock.cs" />
-    <Compile Include="Layout\MDI\FloatingWindowContainer.cs" />
-    <Compile Include="Layout\MDI\MDIBorderContainer.cs" />
-    <Compile Include="Layout\MDI\MDIChildContainerBase.cs" />
-    <Compile Include="Layout\MDI\MDIDocumentWindow.cs" />
     <Compile Include="Controller\Props\Arrow\Arrow.cs" />
     <Compile Include="Controller\Props\PropFadeBehavior.cs" />
     <Compile Include="Controller\Props\PropFactory.cs" />
@@ -705,13 +691,7 @@
     <Compile Include="Controller\Timeline\TimelineAction.cs" />
     <Compile Include="Controller\Timeline\TimelineController.cs" />
     <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
-    <Compile Include="Layout\MDI\SeparatorWidgetManager.cs" />
-    <Compile Include="Layout\MDI\MDIContainerBase.cs" />
-    <Compile Include="Layout\MDI\MDIException.cs" />
-    <Compile Include="Layout\MDI\MDILayoutManager.cs" />
-    <Compile Include="Layout\MDI\MDIWindow.cs" />
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
-    <Compile Include="Layout\MDI\MDILayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
     <Compile Include="Controller\ScreenLayoutManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -873,7 +853,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.layout" />
-    <EmbeddedResource Include="Layout\MDI\MDIDocumentWindow.layout" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

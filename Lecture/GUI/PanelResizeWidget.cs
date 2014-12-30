@@ -133,22 +133,22 @@ namespace Lecture
                     case ViewLocations.Left:
                         left = editorWidget.AbsoluteLeft + editorWidget.Width;
                         top = editorWidget.AbsoluteTop + editorWidget.Height / 2;
-                        resizeWidget.Pointer = MainWindow.SIZE_HORZ;
+                        resizeWidget.Pointer = PointerManager.SIZE_HORZ;
                         break;
                     case ViewLocations.Right:
                         left = editorWidget.AbsoluteLeft;
                         top = editorWidget.AbsoluteTop + editorWidget.Height / 2;
-                        resizeWidget.Pointer = MainWindow.SIZE_HORZ;
+                        resizeWidget.Pointer = PointerManager.SIZE_HORZ;
                         break;
                     case ViewLocations.Top:
                         left = editorWidget.AbsoluteLeft + editorWidget.Width / 2;
                         top = editorWidget.AbsoluteTop + editorWidget.Height;
-                        resizeWidget.Pointer = MainWindow.SIZE_VERT;
+                        resizeWidget.Pointer = PointerManager.SIZE_VERT;
                         break;
                     case ViewLocations.Bottom:
                         left = editorWidget.AbsoluteLeft + editorWidget.Width / 2;
                         top = editorWidget.AbsoluteTop;
-                        resizeWidget.Pointer = MainWindow.SIZE_VERT;
+                        resizeWidget.Pointer = PointerManager.SIZE_VERT;
                         break;
                     default:
                         left = 0;

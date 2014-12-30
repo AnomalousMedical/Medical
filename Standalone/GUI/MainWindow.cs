@@ -5,31 +5,24 @@ using System.Text;
 using Engine.Platform;
 using System.Runtime.InteropServices;
 using Engine;
+using MyGUIPlugin;
 
 namespace Medical.GUI
 {
     public class MainWindow : NativeOSWindow
     {
         private static Dictionary<string, CursorType> cursors = new Dictionary<string, CursorType>();
-        public const String ARROW = "arrow";
-        public const String BEAM = "beam";
-        public const String SIZE_LEFT = "size_left";
-        public const String SIZE_RIGHT = "size_right";
-        public const String SIZE_HORZ = "size_horz";
-        public const String SIZE_VERT = "size_vert";
-        public const String HAND = "hand";
-        public const String LINK = "link";
 
         static MainWindow()
         {
-            cursors.Add(ARROW, CursorType.Arrow);
-            cursors.Add(BEAM, CursorType.Beam);
-            cursors.Add(SIZE_LEFT, CursorType.SizeLeft);
-            cursors.Add(SIZE_RIGHT, CursorType.SizeRight);
-            cursors.Add(SIZE_HORZ, CursorType.SizeHorz);
-            cursors.Add(SIZE_VERT, CursorType.SizeVert);
-            cursors.Add(HAND, CursorType.Hand);
-            cursors.Add(LINK, CursorType.Link);
+            cursors.Add(PointerManager.ARROW, CursorType.Arrow);
+            cursors.Add(PointerManager.BEAM, CursorType.Beam);
+            cursors.Add(PointerManager.SIZE_LEFT, CursorType.SizeLeft);
+            cursors.Add(PointerManager.SIZE_RIGHT, CursorType.SizeRight);
+            cursors.Add(PointerManager.SIZE_HORZ, CursorType.SizeHorz);
+            cursors.Add(PointerManager.SIZE_VERT, CursorType.SizeVert);
+            cursors.Add(PointerManager.HAND, CursorType.Hand);
+            cursors.Add(PointerManager.LINK, CursorType.Link);
         }
 
         private String windowDefaultText;
@@ -44,7 +37,7 @@ namespace Medical.GUI
             this.windowTitle = windowTitle;
         }
 
-        public void setPointerManager(MyGUIPlugin.PointerManager pointerManager)
+        public void setPointerManager(PointerManager pointerManager)
         {
             pointerManager.ChangeMousePointer += new MyGUIPlugin.MousePointerChanged(pointerManager_ChangeMousePointer);
         }

@@ -312,7 +312,7 @@ namespace Medical.GUI
 
         }
 
-        internal override void restoreToMDILayout(MDIWindow mdiWindow, WindowAlignment windowAlignment)
+        protected override void restoreToMDILayout(MDIWindow mdiWindow, WindowAlignment windowAlignment)
         {
             if (!window.Visible)
             {
@@ -612,7 +612,7 @@ namespace Medical.GUI
             return this;
         }
 
-        protected internal override bool isControlWidgetAtPosition(int x, int y)
+        protected override bool isControlWidgetAtPosition(int x, int y)
         {
             return false;
         }

@@ -61,6 +61,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\FreeImage.NET\Library\bin\Release\FreeImageNET.dll</HintPath>
     </Reference>
+    <Reference Include="GuiFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -179,7 +183,6 @@
     <Compile Include="Plugin\Presets\SceneViewWindowPreset.cs" />
     <Compile Include="Plugin\Presets\SceneViewWindowPresetController.cs" />
     <Compile Include="Plugin\Presets\SceneViewWindowPresetSet.cs" />
-    <Compile Include="Plugin\Presets\WindowAlignment.cs" />
     <Compile Include="Plugin\SimulationPlugin.cs" />
     <Compile Include="Plugin\SimulationPluginEntryPoint.cs" />
     <Compile Include="Plugin\SimulationScene.cs" />
