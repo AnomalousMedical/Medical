@@ -8,6 +8,7 @@ using Medical.GUI;
 using Developer.GUI;
 using MyGUIPlugin;
 using libRocketPlugin;
+using Engine;
 
 namespace Developer
 {

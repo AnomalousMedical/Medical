@@ -9,16 +9,6 @@ using Engine;
 
 namespace Medical.Controller.AnomalousMvc
 {
-    [SingleEnum]
-    public enum ViewLocations
-    {
-        Left,
-        Right,
-        Top,
-        Bottom,
-        Floating,
-    }
-
     class ViewHostManager : IDisposable
     {
         private GUIManager guiManager;

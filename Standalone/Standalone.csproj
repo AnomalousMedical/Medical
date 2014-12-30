@@ -465,18 +465,6 @@
     <Compile Include="GUI\Taskbar\AppButtonTaskbar.cs" />
     <Compile Include="GUI\Taskbar\ClosingTaskbar.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuAdProvider.cs" />
-    <Compile Include="Layout\Chain\ActiveContainerTracker.cs" />
-    <Compile Include="Layout\Chain\BorderLayoutChainLink.cs" />
-    <Compile Include="Layout\Chain\BorderLayoutElementName.cs" />
-    <Compile Include="Layout\Chain\BorderLayoutNoAnimationChainLink.cs" />
-    <Compile Include="Layout\Chain\FinalChainLink.cs" />
-    <Compile Include="Layout\Chain\LayoutElementName.cs" />
-    <Compile Include="Layout\Chain\MDILayoutElementName.cs" />
-    <Compile Include="Layout\Chain\PopupAreaChainLink.cs" />
-    <Compile Include="Layout\Chain\LayoutChain.cs" />
-    <Compile Include="Layout\Chain\MDIChainLink.cs" />
-    <Compile Include="Layout\Chain\SingleChildChainLink.cs" />
-    <Compile Include="Layout\Chain\LayoutChainLink.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />
@@ -725,7 +713,6 @@
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Utility\CommonResources.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
-    <Compile Include="Utility\IEnumerableUtil.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
     <EmbeddedResource Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.layout" />
