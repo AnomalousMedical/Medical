@@ -54,7 +54,7 @@ namespace Medical.GUI
         public void setFile(String file)
         {
             RocketEventListenerInstancer.setEventController(eventController);
-            RocketGuiManager.clearAllCaches();
+            RocketWidgetInterface.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
 
             using (ElementDocument document = rocketWidget.Context.LoadDocument(resourceProvider.getFullFilePath(file)))

@@ -320,7 +320,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             if (rocketWidget != null)
             {
-                RocketGuiManager.clearAllCaches();
+                RocketWidgetInterface.clearAllCaches();
 
                 rocketWidget.Context.UnloadAllDocuments();
 

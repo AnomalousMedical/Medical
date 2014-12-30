@@ -240,7 +240,7 @@ namespace Medical.Controller.AnomalousMvc
                 contextManager.removeContext(context);
             }
 
-            RocketGuiManager.clearAllCaches();
+            RocketWidgetInterface.clearAllCaches();
             RocketInterface.Instance.SystemInterface.RemoveRootPath(context.ResourceProvider.BackingLocation);
 
             if (resumePreviousContext)

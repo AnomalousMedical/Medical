@@ -70,6 +70,9 @@
     <Reference Include="libRocketPlugin">
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="libRocketWidget">
+      <HintPath>..\..\Engine\Release\libRocketWidget.dll</HintPath>
+    </Reference>
     <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\Lucene.net\build\bin\core\Release\NET40\Lucene.Net.dll</HintPath>
@@ -447,10 +450,6 @@
     <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\RocketTextWriter\RocketTextWriter.cs" />
     <Compile Include="GUI\SceneErrorWindow\SceneErrorWindow.cs" />
-    <Compile Include="GUI\RocketGui\DelegateRocketEventController.cs" />
-    <Compile Include="GUI\RocketGui\DelegateRocketEventListener.cs" />
-    <Compile Include="GUI\RocketGui\RocketDebuggerWindow.cs" />
-    <Compile Include="GUI\RocketGui\RocketRenderSystemListener.cs" />
     <Compile Include="GUI\SceneStats\SceneStatsDisplay.cs" />
     <Compile Include="GUI\SceneStats\SceneStatsDisplayManager.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
@@ -572,14 +571,8 @@
     <Compile Include="GUI\Editor\MedicalUICallback.cs" />
     <Compile Include="GUI\Editor\ObjectEditor.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\PropertiesTable.cs" />
-    <Compile Include="GUI\Notification\OpenImageNotification.cs" />
-    <Compile Include="GUI\Notification\RestartNotification.cs" />
-    <Compile Include="GUI\RocketGui\RocketEventController.cs" />
-    <Compile Include="GUI\RocketGui\RocketGuiManager.cs" />
-    <Compile Include="GUI\RocketGui\RocketWidget.cs" />
-    <Compile Include="GUI\RocketGui\DebugEventListener.cs" />
-    <Compile Include="GUI\RocketGui\RocketEventListenerInstancer.cs" />
-    <Compile Include="GUI\RocketGui\RocketWidgetManager.cs" />
+    <Compile Include="Controller\Notification\OpenImageNotification.cs" />
+    <Compile Include="Controller\Notification\RestartNotification.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUIDynamicFontManager.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.cs" />
@@ -638,7 +631,6 @@
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
-    <Compile Include="Utility\FreeImageBitmapExtensions.cs" />
     <Compile Include="Utility\MemoryCache.cs" />
     <Compile Include="Utility\Node.cs" />
     <Compile Include="Utility\OrderedDictionary.cs" />
@@ -669,7 +661,6 @@
     <EmbeddedResource Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormColorButton.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
-    <EmbeddedResource Include="GUI\RocketGui\RocketDebuggerWindow.layout" />
     <EmbeddedResource Include="GUI\SceneStats\SceneStatsDisplay.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />

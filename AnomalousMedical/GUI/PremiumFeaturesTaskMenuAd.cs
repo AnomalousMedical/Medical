@@ -67,7 +67,7 @@ namespace Medical.GUI
                 eventController.addHandler("visitAnomalousPage", visitAnomalousPage);
                 RocketEventListenerInstancer.setEventController(eventController);
 
-                RocketGuiManager.clearAllCaches();
+                RocketWidgetInterface.clearAllCaches();
                 rocketWidget.Context.UnloadAllDocuments();
 
                 using (ElementDocument document = rocketWidget.Context.LoadDocument(resourceProvider.getFullFilePath(file)))

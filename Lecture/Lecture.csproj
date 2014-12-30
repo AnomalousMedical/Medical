@@ -59,6 +59,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="libRocketWidget, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\libRocketWidget.dll</HintPath>
+    </Reference>
     <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>

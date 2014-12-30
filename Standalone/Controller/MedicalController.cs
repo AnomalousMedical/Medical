@@ -46,7 +46,6 @@ namespace Medical
 
         //Controller
         private MedicalSceneController medicalScene;
-        private RocketGuiManager rocketGuiManager;
         private FrameClearManager frameClearManager;
 
         //Serialization
@@ -118,6 +117,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(BEPUikInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(SimulationPlugin).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(RocketWidgetInterface).Assembly);
             pluginManager.initializePlugins();
 
             performanceMetricTimer = new NativeSystemTimer();
@@ -150,8 +150,6 @@ namespace Medical
 
             //Initialize controllers
             medicalScene = new MedicalSceneController(pluginManager);
-            rocketGuiManager = new RocketGuiManager();
-            rocketGuiManager.initialize(pluginManager, eventManager, mainTimer);
             frameClearManager = new FrameClearManager(OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
 
             SoundConfig.initialize(MedicalConfig.ConfigFile);
@@ -165,10 +163,6 @@ namespace Medical
             if (frameClearManager != null)
             {
                 frameClearManager.Dispose();
-            }
-            if (rocketGuiManager != null)
-            {
-                rocketGuiManager.Dispose();
             }
             if (medicalScene != null)
             {

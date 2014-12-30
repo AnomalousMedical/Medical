@@ -565,7 +565,7 @@ namespace Lecture
         /// </summary>
         public void refreshAllRml()
         {
-            RocketGuiManager.clearAllCaches();
+            RocketWidgetInterface.clearAllCaches();
             foreach (var editor in rmlEditors.Values)
             {
                 if (editor.Component != null)

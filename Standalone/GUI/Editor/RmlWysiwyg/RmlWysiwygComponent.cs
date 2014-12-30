@@ -899,7 +899,7 @@ namespace Medical.GUI
                 }
             }
 
-            RocketGuiManager.clearAllCaches();
+            RocketWidgetInterface.clearAllCaches();
             rocketWidget.Context.UnloadAllDocuments();
             cancelAndHideEditor();
             selectedElementManager.clearSelectedAndHighlightedElement();
