@@ -306,11 +306,6 @@ namespace Medical.GUI
             anatomyFinder.sceneUnloading();
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-            
-        }
-
         public void sceneRevealed()
         {
             UpdateController.checkForUpdate(updateCheckCompleted, standaloneController.AtlasPluginManager, standaloneController.LicenseManager);

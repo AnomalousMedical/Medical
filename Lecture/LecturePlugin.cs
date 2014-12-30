@@ -82,11 +82,6 @@ namespace Lecture
             slideshowEditController.sceneUnloading(scene);
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-            
-        }
-
         public void sceneRevealed()
         {
             

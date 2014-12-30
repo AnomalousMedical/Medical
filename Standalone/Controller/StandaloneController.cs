@@ -88,7 +88,7 @@ namespace Medical
 
             CertificateStoreManager.ServerCheckedForCertificate += () => MedicalConfig.LastCertificateStoreCheckTime = DateTime.Now;
             CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl, MedicalConfig.LastCertificateStoreCheckTime);
-            guiManager = new GUIManager(this);
+            guiManager = new GUIManager();
             guiManager.MainGUIShown += guiManager_MainGUIShown;
             guiManager.MainGUIHidden += guiManager_MainGUIHidden;
 
@@ -268,6 +268,8 @@ namespace Medical
 
         public void createGUI(LayoutChain layoutChain)
         {
+            MyGUIInterface.Instance.CommonResourceGroup.addResource(GetType().AssemblyQualifiedName, "EmbeddedScalableResource", true);
+
             //GUI
             guiManager.createGUI(mdiLayout, layoutChain, mainWindow);
             guiManager.ScreenSizeChanged += guiManager_ScreenSizeChanged;

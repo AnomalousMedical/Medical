@@ -57,11 +57,6 @@ namespace Medical.Movement
             
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-            
-        }
-
         public void sceneRevealed()
         {
             

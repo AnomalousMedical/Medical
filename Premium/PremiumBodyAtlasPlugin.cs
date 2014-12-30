@@ -113,11 +113,6 @@ namespace Medical
             
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-            
-        }
-
         public void sceneRevealed()
         {
             

@@ -282,7 +282,7 @@ namespace Medical.GUI
             {
                 if (result == MessageBoxStyle.Yes)
                 {
-                    if (guiManager.deleteWindowsFile())
+                    if (guiManager.deleteWindowsFile(MedicalConfig.WindowsFile))
                     {
                         if (RequestRestart != null)
                         {

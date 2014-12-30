@@ -17,8 +17,6 @@ namespace Medical
 
         void sceneUnloading(SimScene scene);
 
-        void setMainInterfaceEnabled(bool enabled);
-
         /// <summary>
         /// Called when the scene has finished loading and has been fully revealed. (i.e. any fading effects etc. have been completed).
         /// This only happens on the first scene load when the program opens.

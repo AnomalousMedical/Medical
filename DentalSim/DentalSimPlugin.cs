@@ -105,11 +105,6 @@ namespace DentalSim
             mandibleMovementDialog.sceneUnloading(scene);
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-
-        }
-
         public string BrandingImageKey
         {
             get

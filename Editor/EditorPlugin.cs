@@ -154,11 +154,6 @@ namespace Medical
             propMover.sceneUnloading(scene);
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-            
-        }
-
         public long PluginId
         {
             get

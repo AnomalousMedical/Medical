@@ -140,11 +140,6 @@ namespace Developer
             discControl.sceneUnloading();
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-
-        }
-
         public long PluginId
         {
             get

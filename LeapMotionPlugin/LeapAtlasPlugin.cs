@@ -57,11 +57,6 @@ namespace LeapMotionPlugin
             
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-
-        }
-
         public long PluginId
         {
             get

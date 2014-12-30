@@ -84,11 +84,6 @@ namespace UnitTestPlugin
             
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-            
-        }
-
         public void sceneRevealed()
         {
             

@@ -95,11 +95,6 @@ namespace KinectPlugin
             kinectDebugger.destroyDebugObjects(scene);
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-
-        }
-
         public void sceneRevealed()
         {
 

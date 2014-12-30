@@ -494,14 +494,6 @@ namespace Medical
             return true;
         }
 
-        internal void setMainInterfaceEnabled(bool enabled)
-        {
-            foreach (AtlasPlugin plugin in plugins)
-            {
-                plugin.setMainInterfaceEnabled(enabled);
-            }
-        }
-
         internal void sceneRevealed()
         {
             foreach (AtlasPlugin plugin in plugins)

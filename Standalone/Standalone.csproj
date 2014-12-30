@@ -593,7 +593,6 @@
     <Compile Include="GUI\RocketGui\DebugEventListener.cs" />
     <Compile Include="GUI\RocketGui\RocketEventListenerInstancer.cs" />
     <Compile Include="GUI\RocketGui\RocketWidgetManager.cs" />
-    <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
@@ -658,7 +657,6 @@
     <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <Compile Include="Utility\FreeImageBitmapExtensions.cs" />
-    <Compile Include="Utility\IDisposableUtil.cs" />
     <Compile Include="Utility\MemoryCache.cs" />
     <Compile Include="Utility\Node.cs" />
     <Compile Include="Utility\OrderedDictionary.cs" />

@@ -51,11 +51,6 @@ namespace Anomalous.Medical.StoreManager
             
         }
 
-        public void setMainInterfaceEnabled(bool enabled)
-        {
-            
-        }
-
         public void sceneRevealed()
         {
             
