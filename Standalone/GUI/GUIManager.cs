@@ -32,12 +32,6 @@ namespace Medical.GUI
         //Dialogs
         private DialogManager dialogManager;
 
-        //Other GUI Elements
-        private MyGUIContinuePromptProvider continuePrompt;
-        private MyGUIImageDisplayFactory imageDisplayFactory;
-        private MyGUITextDisplayFactory textDisplayFactory;
-        private MyGUIImageRendererProgress imageRendererProgress;
-
         //Events
         public event Action MainGUIShown;
         public event Action MainGUIHidden;
@@ -55,16 +49,10 @@ namespace Medical.GUI
             }
 
             IDisposableUtil.DisposeIfNotNull(dialogManager);
-
-            //Other
-			IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
-			IDisposableUtil.DisposeIfNotNull(continuePrompt);
         }
 
         public void createGUI(MDILayoutManager mdiManager, LayoutChain layoutChain, OSWindow window)
         {
-            Gui gui = Gui.Instance;
-
             MyGUIInterface.Instance.CommonResourceGroup.addResource(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedScalableResource", true);
 
             //Load Core Resources
@@ -77,15 +65,6 @@ namespace Medical.GUI
             dialogManager = new DialogManager(mdiManager);
 
             screenLayoutManager.LayoutChain = layoutChain;
-
-            imageRendererProgress = new MyGUIImageRendererProgress();
-            standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
-            standaloneController.ImageRenderer.ImageTextWriter = new RocketTextWriter();
-
-            continuePrompt = new MyGUIContinuePromptProvider();
-
-            imageDisplayFactory = new MyGUIImageDisplayFactory(standaloneController.SceneViewController);
-            textDisplayFactory = new MyGUITextDisplayFactory(standaloneController.SceneViewController);
         }
 
         public void addLinkToChain(LayoutChainLink link)
@@ -106,13 +85,6 @@ namespace Medical.GUI
         public void deactivateLink(String name)
         {
             screenLayoutManager.LayoutChain.deactivateLink(name);
-        }
-
-        public void giveGUIsToTimelineController(TimelineController timelineController)
-        {
-            timelineController.ContinuePrompt = continuePrompt;
-            timelineController.ImageDisplayFactory = imageDisplayFactory;
-            timelineController.TextDisplayFactory = textDisplayFactory;
         }
 
         public void windowChanged(OSWindow newWindow)
@@ -251,7 +223,6 @@ namespace Medical.GUI
         private void screenLayoutManager_ScreenSizeChanged(int width, int height)
         {
             dialogManager.windowResized();
-            continuePrompt.ensureVisible();
         }
 
         public event ScreenSizeChanged ScreenSizeChanged

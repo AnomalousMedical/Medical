@@ -89,7 +89,7 @@ namespace Medical
 
             this.standaloneController = standaloneController;
             editorTimelineController = new TimelineController(standaloneController);
-            guiManager.giveGUIsToTimelineController(editorTimelineController);
+            standaloneController.giveGUIsToTimelineController(editorTimelineController);
 
             scratchAreaController = new ScratchAreaController(standaloneController.Clipboard);
 

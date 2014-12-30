@@ -1,6 +1,3 @@
-﻿This file defines what the various preprocessor definitions are for Piper's JBO.
+﻿This file defines what the various preprocessor definitions are for Anomalous Medical.
 
 ALLOW_OVERRIDE - Allow the override.ini file to be processed and used.
-
-ENABLE_HASP_PROTECTION - Enable the hasp protection. When this is not defined the program can 
-simulate all the various versions. If you define this you should also define it in OSHelper.

@@ -67,6 +67,12 @@ namespace Medical
         private MeasurementGrid measurementGrid;
         private NotificationGUIManager notificationManager;
 
+        //Other GUI Elements
+        private MyGUIContinuePromptProvider continuePrompt;
+        private MyGUIImageDisplayFactory imageDisplayFactory;
+        private MyGUITextDisplayFactory textDisplayFactory;
+        private MyGUIImageRendererProgress imageRendererProgress;
+
         //Platform
         private MainWindow mainWindow;
         private App app;
@@ -143,6 +149,8 @@ namespace Medical
             IDisposableUtil.DisposeIfNotNull(anatomyController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
             IDisposableUtil.DisposeIfNotNull(notificationManager);
+            IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
+            IDisposableUtil.DisposeIfNotNull(continuePrompt);
             IDisposableUtil.DisposeIfNotNull(guiManager);
 			IDisposableUtil.DisposeIfNotNull(measurementGrid);
 			IDisposableUtil.DisposeIfNotNull(medicalStateController);
@@ -262,7 +270,25 @@ namespace Medical
         {
             //GUI
             guiManager.createGUI(mdiLayout, layoutChain, mainWindow);
-            guiManager.giveGUIsToTimelineController(timelineController);
+            guiManager.ScreenSizeChanged += guiManager_ScreenSizeChanged;
+
+            imageRendererProgress = new MyGUIImageRendererProgress();
+            imageRenderer.ImageRendererProgress = imageRendererProgress;
+            imageRenderer.ImageTextWriter = new RocketTextWriter();
+
+            continuePrompt = new MyGUIContinuePromptProvider();
+
+            imageDisplayFactory = new MyGUIImageDisplayFactory(sceneViewController);
+            textDisplayFactory = new MyGUITextDisplayFactory(sceneViewController);
+
+            giveGUIsToTimelineController(timelineController);
+        }
+
+        public void giveGUIsToTimelineController(TimelineController timelineController)
+        {
+            timelineController.ContinuePrompt = continuePrompt;
+            timelineController.ImageDisplayFactory = imageDisplayFactory;
+            timelineController.TextDisplayFactory = textDisplayFactory;
         }
 
         void guiManager_MainGUIHidden()
@@ -723,6 +749,11 @@ namespace Medical
         void mainWindow_Closed(OSWindow sender)
         {
             exit();
+        }
+
+        void guiManager_ScreenSizeChanged(int width, int height)
+        {
+            continuePrompt.ensureVisible(width, height);
         }
     }
 }

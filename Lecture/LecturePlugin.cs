@@ -45,7 +45,7 @@ namespace Lecture
             GUIManager guiManager = standaloneController.GUIManager;
 
             editorTimelineController = new TimelineController(standaloneController);
-            guiManager.giveGUIsToTimelineController(editorTimelineController);
+            standaloneController.giveGUIsToTimelineController(editorTimelineController);
 
             editorController = new EditorController(standaloneController, editorTimelineController);
             editorController.ProjectTypes.addInfo(new ZipProjectType(".sl"));
