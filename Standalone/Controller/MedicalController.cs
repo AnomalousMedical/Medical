@@ -57,18 +57,7 @@ namespace Medical
 
         public event LoopUpdate OnLoopUpdate;
 
-        public MedicalController()
-        {
-
-        }
-
-        /// <summary>
-        /// Initialize the controller.
-        /// </summary>
-        /// <param name="mainForm">The form to use for input, or null to use the primary render window.</param>
-        /// <param name="messagePump"></param>
-        /// <param name="configureWindow"></param>
-        public void initialize(StandaloneApp app, NativeOSWindow mainForm, ConfigureDefaultWindow configureWindow)
+        public MedicalController(NativeOSWindow mainWindow)
         {
             //Create the log.
             logListener = new LogFileListener();
@@ -101,7 +90,24 @@ namespace Medical
             MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.TouchType == TouchType.Screen;
 
             //Configure plugins
-            pluginManager.OnConfigureDefaultWindow = configureWindow;
+            pluginManager.OnConfigureDefaultWindow = delegate(out WindowInfo defaultWindow)
+            {
+                //Setup main window
+                defaultWindow = new WindowInfo(mainWindow, "Primary");
+                defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
+                defaultWindow.MonitorIndex = 0;
+
+                if (MedicalConfig.EngineConfig.Fullscreen)
+                {
+                    mainWindow.setSize(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
+                    mainWindow.ExclusiveFullscreen = true;
+                }
+                else
+                {
+                    mainWindow.Maximized = true;
+                }
+                mainWindow.show();
+            };
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(NativePlatformPlugin).Assembly);
@@ -132,7 +138,7 @@ namespace Medical
                 mainTimer.FramerateCap = MedicalConfig.EngineConfig.FPSCap;
             }
 
-            inputHandler = new NativeInputHandler(mainForm, MedicalConfig.EnableMultitouch);
+            inputHandler = new NativeInputHandler(mainWindow, MedicalConfig.EnableMultitouch);
             eventManager = new EventManager(inputHandler, Enum.GetValues(typeof(EventLayers)));
             eventUpdate = new EventUpdateListener(eventManager);
             mainTimer.addUpdateListener(eventUpdate);
@@ -154,8 +160,6 @@ namespace Medical
         /// </summary>
         public void Dispose()
         {
-            MedicalConfig.save();
-
             if (frameClearManager != null)
             {
                 frameClearManager.Dispose();

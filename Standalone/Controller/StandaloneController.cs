@@ -114,8 +114,7 @@ namespace Medical
             ScaleHelper._setScaleFactor(pixelScale);
 
             //Initialize engine
-            medicalController = new MedicalController();
-            medicalController.initialize(app, mainWindow, createWindow);
+            medicalController = new MedicalController(mainWindow);
             mainWindow.setPointerManager(PointerManager.Instance);
             idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
 
@@ -126,6 +125,7 @@ namespace Medical
 
         public void Dispose()
         {
+            MedicalConfig.save();
             unloadScene();
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
@@ -709,29 +709,6 @@ namespace Medical
         {
             SceneErrorWindow errorGui = new SceneErrorWindow(guiManager);
             errorGui.Visible = true;
-        }
-
-        /// <summary>
-        /// Helper function to create the default window. This is the callback
-        /// to the PluginManager.
-        /// </summary>
-        /// <param name="defaultWindow"></param>
-        private void createWindow(out WindowInfo defaultWindow)
-        {
-            defaultWindow = new WindowInfo(mainWindow, "Primary");
-            defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
-            defaultWindow.MonitorIndex = 0;
-
-            if (MedicalConfig.EngineConfig.Fullscreen)
-            {
-                mainWindow.setSize(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
-                mainWindow.ExclusiveFullscreen = true;
-            }
-            else
-            {
-                mainWindow.Maximized = true;
-            }
-            mainWindow.show();
         }
 
         void atlasPluginManager_PluginLoadError(string message)
