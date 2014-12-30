@@ -70,6 +70,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
     </Reference>
+    <Reference Include="OSPlatform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="SoundPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\SoundPlugin.dll</HintPath>
