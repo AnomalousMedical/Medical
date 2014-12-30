@@ -452,8 +452,6 @@
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="GUI\GUILocationNames.cs" />
     <Compile Include="GUI\MainWindow.cs" />
-    <Compile Include="GUI\MDIDialogAutoDispose.cs" />
-    <Compile Include="GUI\PinableMDIDialog.cs" />
     <Compile Include="GUI\RocketTextWriter\RocketTextWriter.cs" />
     <Compile Include="GUI\SceneErrorWindow\SceneErrorWindow.cs" />
     <Compile Include="GUI\RocketGui\DelegateRocketEventController.cs" />

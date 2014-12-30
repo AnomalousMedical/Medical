@@ -19,7 +19,7 @@ namespace Medical.GUI
 
         public void closeMainGUIDialog()
         {
-            dialog.hidingMainInterface();
+            dialog.Visible = false;
         }
 
         public void openMainGUIDialog()
