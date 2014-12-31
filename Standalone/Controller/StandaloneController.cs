@@ -210,6 +210,8 @@ namespace Medical
             //SceneView
             MyGUIInterface myGUI = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
+            sceneViewController.WindowCreated += sceneViewController_WindowCreated;
+            sceneViewController.WindowDestroyed += sceneViewController_WindowDestroyed;
             sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
             sceneStatsDisplayManager.StatsVisible = MedicalConfig.EngineConfig.ShowStatistics;
             MedicalConfig.EngineConfig.ShowStatsToggled += engineConfig => sceneStatsDisplayManager.StatsVisible = engineConfig.ShowStatistics;
@@ -755,6 +757,30 @@ namespace Medical
         void guiManager_ScreenSizeChanged(int width, int height)
         {
             continuePrompt.ensureVisible(width, height);
+        }
+
+        void sceneViewController_WindowDestroyed(SceneViewWindow window)
+        {
+            TransparencyController.removeTransparencyState(window.CurrentTransparencyState);
+            window.RenderingStarted -= window_RenderingStarted;
+            window.MadeActive -= window_MadeActive;
+        }
+
+        void sceneViewController_WindowCreated(SceneViewWindow window)
+        {
+            TransparencyController.createTransparencyState(window.CurrentTransparencyState);
+            window.RenderingStarted += window_RenderingStarted;
+            window.MadeActive += window_MadeActive;
+        }
+
+        void window_MadeActive(SceneViewWindow window)
+        {
+            TransparencyController.ActiveTransparencyState = window.CurrentTransparencyState;
+        }
+
+        void window_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
+        {
+            TransparencyController.applyTransparencyState(window.CurrentTransparencyState);
         }
     }
 }
