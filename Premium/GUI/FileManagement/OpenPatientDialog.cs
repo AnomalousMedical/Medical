@@ -11,6 +11,7 @@ using Medical.Controller;
 using System.Diagnostics;
 using Engine.Platform;
 using OgrePlugin;
+using Anomalous.OSPlatform;
 
 namespace Medical.GUI
 {

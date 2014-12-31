@@ -9,6 +9,7 @@ using Medical.GUI;
 using Logging;
 using System.IO;
 using Engine;
+using Anomalous.OSPlatform;
 
 namespace UnitTestPlugin
 {

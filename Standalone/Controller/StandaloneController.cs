@@ -21,6 +21,7 @@ using Medical.Controller.AnomalousMvc;
 using Medical.GUI.AnomalousMvc;
 using Medical.Editor;
 using Engine.Threads;
+using Anomalous.OSPlatform;
 
 namespace Medical
 {

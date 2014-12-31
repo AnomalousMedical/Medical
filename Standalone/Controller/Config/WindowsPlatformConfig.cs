@@ -6,6 +6,7 @@ using Engine.Platform;
 using Logging;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
+using Anomalous.OSPlatform;
 
 namespace Medical
 {

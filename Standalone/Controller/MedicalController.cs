@@ -23,6 +23,7 @@ using libRocketPlugin;
 using BEPUikPlugin;
 using GuiFramework.Plugin;
 using libRocketWidget;
+using Anomalous.OSPlatform;
 
 namespace Medical
 {

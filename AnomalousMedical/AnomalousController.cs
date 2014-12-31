@@ -12,6 +12,7 @@ using OgreWrapper;
 using MyGUIPlugin;
 using System.Diagnostics;
 using System.Reflection;
+using Anomalous.OSPlatform;
 
 namespace Medical
 {

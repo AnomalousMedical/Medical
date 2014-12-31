@@ -7,6 +7,7 @@ using OgreWrapper;
 using System.Text.RegularExpressions;
 using Engine.Renderer;
 using Engine;
+using Anomalous.OSPlatform;
 
 namespace Medical.GUI
 {

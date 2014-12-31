@@ -10,6 +10,7 @@ using Engine.Performance;
 using Engine.Platform;
 using SoundPlugin;
 using System.IO;
+using Anomalous.OSPlatform;
 
 namespace UnitTestPlugin.GUI
 {

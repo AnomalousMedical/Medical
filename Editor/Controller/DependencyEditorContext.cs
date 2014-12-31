@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.GUI;
-using Medical.Platform;
 using Medical.Controller.AnomalousMvc;
 using Engine.Platform;
 using Medical.Controller;

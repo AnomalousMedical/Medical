@@ -11,6 +11,7 @@ using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
 using Medical.GUI;
 using Medical;
+using Anomalous.OSPlatform;
 
 namespace Lecture.GUI
 {

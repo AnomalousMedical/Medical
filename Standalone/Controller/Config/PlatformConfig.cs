@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
+using Anomalous.OSPlatform;
 
 namespace Medical
 {
@@ -14,12 +15,13 @@ namespace Medical
 
         static PlatformConfig()
         {
-            switch (SystemInfo.RuntimeOS)
+            OsId = SystemInfo.RuntimeOS;
+            switch (OsId)
             {
-                case OperatingSystem.Windows:
+                case RuntimeOperatingSystem.Windows:
                     currentConfig = new WindowsPlatformConfig();
                     break;
-                case OperatingSystem.Mac:
+                case RuntimeOperatingSystem.Mac:
                     currentConfig = new MacPlatformConfig();
                     break;
                 default:
@@ -146,7 +148,7 @@ namespace Medical
             }
         }
 
-        public static OperatingSystem OsId { get; private set; }
+        public static RuntimeOperatingSystem OsId { get; private set; }
 
         public static bool DefaultEnableMultitouch
         {

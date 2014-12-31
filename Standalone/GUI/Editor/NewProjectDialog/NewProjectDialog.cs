@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using System.IO;
 using Logging;
 using Engine.Editing;
+using Anomalous.OSPlatform;
 
 namespace Medical.GUI
 {

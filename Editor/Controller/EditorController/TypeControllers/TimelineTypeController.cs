@@ -8,7 +8,6 @@ using System.Xml;
 using MyGUIPlugin;
 using Logging;
 using Medical.Controller.AnomalousMvc;
-using Medical.Platform;
 using Engine.Platform;
 
 namespace Medical

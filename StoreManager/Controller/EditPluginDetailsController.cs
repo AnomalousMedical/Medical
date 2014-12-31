@@ -1,6 +1,7 @@
 ﻿using Anomalous.Medical.StoreManager.Config;
 using Anomalous.Medical.StoreManager.Models;
 using Anomalous.Medical.StoreManager.Util;
+using Anomalous.OSPlatform;
 using Engine.Threads;
 using FreeImageAPI;
 using Medical;

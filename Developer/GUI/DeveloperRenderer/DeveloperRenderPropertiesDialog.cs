@@ -9,6 +9,7 @@ using System.IO;
 using Medical.GUI;
 using Medical;
 using FreeImageAPI;
+using Anomalous.OSPlatform;
 
 namespace Developer.GUI
 {

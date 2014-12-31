@@ -7,6 +7,7 @@ using Engine.Renderer;
 using OgrePlugin;
 using Medical.GUI;
 using Engine;
+using Anomalous.OSPlatform;
 
 namespace Medical.Controller
 {
