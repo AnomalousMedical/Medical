@@ -146,7 +146,7 @@ namespace Medical
             if (guiManager != null && MedicalConfig.WindowsFile != null)
             {
                 ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
-                guiManager.saveUI(configFile);
+                guiManager.saveUI(configFile, UpdateController.CurrentVersion);
                 configFile.writeConfigFile();
             }
             IDisposableUtil.DisposeIfNotNull(anatomyController);
