@@ -5,7 +5,6 @@ using System.Text;
 using Engine;
 using Engine.Platform;
 using Engine.Editing;
-using OgreWrapper;
 using OgrePlugin;
 using Engine.ObjectManagement;
 using BulletPlugin;

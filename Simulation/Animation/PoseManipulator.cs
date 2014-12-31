@@ -6,7 +6,6 @@ using Engine.Editing;
 using Engine;
 using OgrePlugin;
 using Engine.ObjectManagement;
-using OgreWrapper;
 using Engine.Attributes;
 
 namespace Medical
@@ -71,7 +70,7 @@ namespace Medical
                 blacklist("Could not find Entity {0}.", targetEntity);
             }
             mesh = entity.getMesh();
-            OgreWrapper.Animation anim;
+            OgrePlugin.Animation anim;
             VertexAnimationTrack track;
             if (mesh.Value.hasAnimation(manualAnimationName))
             {
@@ -85,10 +84,10 @@ namespace Medical
             }
             //Must look this up this way to get the correct pose index.
             int poseCount = mesh.Value.getPoseCount();
-            OgreWrapper.Pose pose = null;
+            OgrePlugin.Pose pose = null;
             for(ushort i = 0; i < poseCount; ++i)
             {
-                OgreWrapper.Pose innerPose = mesh.Value.getPose(i);
+                OgrePlugin.Pose innerPose = mesh.Value.getPose(i);
                 if(innerPose.getName() == poseName)
                 {
                     pose = innerPose;

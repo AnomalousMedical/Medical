@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using OgrePlugin;
 using MyGUIPlugin;
-using OgreWrapper;
 using Engine;
 using Engine.Platform;
 

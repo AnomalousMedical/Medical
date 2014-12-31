@@ -7,7 +7,6 @@ using OgrePlugin;
 using Engine;
 using Engine.Platform;
 using Engine.Editing;
-using OgreWrapper;
 using Engine.Attributes;
 using Logging;
 

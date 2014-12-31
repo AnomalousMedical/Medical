@@ -1,6 +1,6 @@
 ﻿using Anomalous.GuiFramework.Cameras;
 using Medical.Controller;
-using OgreWrapper;
+using OgrePlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;

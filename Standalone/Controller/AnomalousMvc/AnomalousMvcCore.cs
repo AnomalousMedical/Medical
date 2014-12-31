@@ -10,7 +10,7 @@ using System.Xml;
 using System.IO;
 using Medical.Model;
 using libRocketPlugin;
-using OgreWrapper;
+using OgrePlugin;
 using Anomalous.libRocketWidget;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;

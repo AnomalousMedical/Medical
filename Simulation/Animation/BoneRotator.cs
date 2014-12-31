@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Editing;
-using OgreWrapper;
 using Engine;
 using OgrePlugin;
 using Engine.ObjectManagement;

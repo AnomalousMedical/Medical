@@ -15,7 +15,7 @@ using Engine;
 using Engine.Editing;
 using Medical.SlideshowActions;
 using Medical.Controller;
-using OgreWrapper;
+using OgrePlugin;
 using FreeImageAPI;
 using Engine.Threads;
 using Anomalous.libRocketWidget;

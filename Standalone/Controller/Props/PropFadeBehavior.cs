@@ -5,7 +5,6 @@ using System.Text;
 using Engine;
 using Engine.Platform;
 using OgrePlugin;
-using OgreWrapper;
 using Engine.Attributes;
 
 namespace Medical

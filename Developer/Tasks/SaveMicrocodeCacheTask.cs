@@ -2,7 +2,7 @@
 using Anomalous.OSPlatform;
 using Medical;
 using Medical.GUI;
-using OgreWrapper;
+using OgrePlugin;
 using System;
 using System.Collections.Generic;
 using System.IO;

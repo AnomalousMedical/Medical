@@ -9,7 +9,6 @@ using Engine.Platform;
 using Logging;
 using Medical;
 using OgrePlugin;
-using OgreWrapper;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using MyGUIPlugin;

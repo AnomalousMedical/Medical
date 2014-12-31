@@ -5,7 +5,6 @@ using Engine.Editing;
 using Engine.ObjectManagement;
 using Medical.Pose;
 using OgrePlugin;
-using OgreWrapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;

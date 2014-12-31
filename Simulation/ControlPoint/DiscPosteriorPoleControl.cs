@@ -6,8 +6,8 @@ using Engine;
 using Engine.Saving;
 using Engine.Attributes;
 using Engine.Editing;
-using OgreWrapper;
 using Engine.ObjectManagement;
+using OgrePlugin;
 
 namespace Medical
 {

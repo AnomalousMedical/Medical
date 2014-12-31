@@ -5,7 +5,7 @@ using System.Text;
 using Engine.ObjectManagement;
 using MyGUIPlugin;
 using Medical.Controller;
-using OgreWrapper;
+using OgrePlugin;
 using System.Diagnostics;
 using Medical.GUI;
 using Engine;

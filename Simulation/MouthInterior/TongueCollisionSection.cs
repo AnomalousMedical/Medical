@@ -6,7 +6,6 @@ using Engine;
 using Engine.Editing;
 using Engine.Platform;
 using Engine.ObjectManagement;
-using OgreWrapper;
 using OgrePlugin;
 using Engine.Attributes;
 using BulletPlugin;

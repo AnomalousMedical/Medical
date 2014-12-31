@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Engine;
-using OgreWrapper;
+using OgrePlugin;
 
 namespace Medical
 {

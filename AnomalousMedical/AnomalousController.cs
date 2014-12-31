@@ -8,7 +8,6 @@ using Engine;
 using System.IO;
 using Engine.ObjectManagement;
 using OgrePlugin;
-using OgreWrapper;
 using MyGUIPlugin;
 using System.Diagnostics;
 using System.Reflection;

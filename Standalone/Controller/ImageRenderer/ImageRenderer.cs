@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using OgrePlugin;
-using OgreWrapper;
 using Engine;
 using Logging;
 using Medical.Controller;
@@ -264,7 +263,7 @@ namespace Medical
                 //Try to create a texture at the large size specified
                 try
                 {
-                    backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", RenderTextureResourceGroup, TextureType.TEX_TYPE_2D, (uint)largeWidth, (uint)largeHeight, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+                    backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", RenderTextureResourceGroup, TextureType.TEX_TYPE_2D, (uint)largeWidth, (uint)largeHeight, 1, 1, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
                     backBufferWidth = largeWidth;
                     backBufferHeight = largeHeight;
                     gridRender = false;
@@ -294,7 +293,7 @@ namespace Medical
             backBufferPow2Size /= 2; //We go one extra step to divide back down
             try
             {
-                backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", RenderTextureResourceGroup, TextureType.TEX_TYPE_2D, (uint)backBufferPow2Size, (uint)backBufferPow2Size, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
+                backBufferTexture = TextureManager.getInstance().createManual("__PictureTexture", RenderTextureResourceGroup, TextureType.TEX_TYPE_2D, (uint)backBufferPow2Size, (uint)backBufferPow2Size, 1, 1, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0);
                 backBufferWidth = backBufferPow2Size;
                 backBufferHeight = backBufferPow2Size;
             }
@@ -457,7 +456,7 @@ namespace Medical
         {
             renderTexture.getViewport(0).clear(FrameBufferType.FBT_COLOUR | FrameBufferType.FBT_DEPTH | FrameBufferType.FBT_STENCIL, bgColor);
             renderTexture.update();
-            OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
+            OgrePlugin.PixelFormat format = OgrePlugin.PixelFormat.PF_A8R8G8B8;
             FreeImageAPI.PixelFormat bitmapFormat = FreeImageAPI.PixelFormat.Format32bppRgb;
             if (transparentBG)
             {
@@ -510,7 +509,7 @@ namespace Medical
 
             String updateString = "Rendering piece {0} of " + totalSS;
 
-            OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
+            OgrePlugin.PixelFormat format = OgrePlugin.PixelFormat.PF_A8R8G8B8;
             FreeImageAPI.PixelFormat bitmapFormat = FreeImageAPI.PixelFormat.Format32bppRgb;
             if (transparentBG)
             {

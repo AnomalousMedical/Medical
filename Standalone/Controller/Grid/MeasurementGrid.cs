@@ -6,7 +6,6 @@ using Engine;
 using Engine.Renderer;
 using Engine.Platform;
 using Engine.ObjectManagement;
-using OgreWrapper;
 using OgrePlugin;
 using Engine.Resources;
 using Anomalous.GuiFramework.Cameras;

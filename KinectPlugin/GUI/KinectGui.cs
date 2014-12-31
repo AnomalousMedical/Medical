@@ -6,7 +6,7 @@ using Engine.Platform;
 using Medical;
 using Medical.GUI;
 using MyGUIPlugin;
-using OgreWrapper;
+using OgrePlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;

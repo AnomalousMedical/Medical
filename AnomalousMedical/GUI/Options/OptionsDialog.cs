@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
-using OgreWrapper;
 using OgrePlugin;
 using Logging;
 using System.Text.RegularExpressions;
