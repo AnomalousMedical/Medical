@@ -620,8 +620,6 @@
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
-    <Compile Include="Utility\MemoryCache.cs" />
-    <Compile Include="Utility\OrderedDictionary.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />
     <Compile Include="Utility\ZipEntryExtensions.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">
