@@ -239,7 +239,6 @@
     <Compile Include="Controller\Editor\TypeControllers\SaveableTypeControllerCachedResource.cs" />
     <Compile Include="Controller\Editor\TypeControllers\TextTypeController.cs" />
     <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
-    <Compile Include="Controller\IdleHandler.cs" />
     <Compile Include="Controller\ImageRenderer\ImageTextWriter.cs" />
     <Compile Include="Controller\MusclePosition\MusclePositionController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageException.cs" />
@@ -623,9 +622,7 @@
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <Compile Include="Utility\MemoryCache.cs" />
     <Compile Include="Utility\OrderedDictionary.cs" />
-    <Compile Include="Utility\ObjectBuffer.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />
-    <Compile Include="Utility\WorkQueue.cs" />
     <Compile Include="Utility\ZipEntryExtensions.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">
       <SubType>Designer</SubType>
