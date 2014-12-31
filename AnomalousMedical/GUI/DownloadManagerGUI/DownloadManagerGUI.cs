@@ -10,6 +10,7 @@ using Logging;
 using Engine;
 using System.Threading;
 using Medical.Controller;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

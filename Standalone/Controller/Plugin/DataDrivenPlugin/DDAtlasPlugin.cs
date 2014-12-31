@@ -11,6 +11,7 @@ using MyGUIPlugin;
 using Medical.Controller;
 using System.IO;
 using Medical.Controller.AnomalousMvc;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

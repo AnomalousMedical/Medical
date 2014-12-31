@@ -8,6 +8,7 @@ using MyGUIPlugin;
 using Medical;
 using System.IO;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace Developer.GUI
 {

@@ -8,6 +8,7 @@ using Engine;
 using Medical;
 using Engine.Performance;
 using Engine.Platform;
+using Anomalous.GuiFramework;
 
 namespace Developer.GUI
 {

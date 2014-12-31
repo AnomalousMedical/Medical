@@ -6,6 +6,7 @@ using Medical.GUI.AnomalousMvc;
 using Engine.Saving;
 using Medical.Muscles;
 using Medical.Controller;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

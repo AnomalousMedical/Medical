@@ -13,6 +13,7 @@ using MyGUIPlugin;
 using System.Diagnostics;
 using System.Reflection;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

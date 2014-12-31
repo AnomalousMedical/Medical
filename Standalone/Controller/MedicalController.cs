@@ -21,9 +21,9 @@ using Medical.Controller;
 using System.Globalization;
 using libRocketPlugin;
 using BEPUikPlugin;
-using GuiFramework.Plugin;
 using Anomalous.libRocketWidget;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

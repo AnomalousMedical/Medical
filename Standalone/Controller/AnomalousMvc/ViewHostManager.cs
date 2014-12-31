@@ -6,6 +6,7 @@ using Engine.Platform;
 using Medical.GUI;
 using Engine.Attributes;
 using Engine;
+using Anomalous.GuiFramework;
 
 namespace Medical.Controller.AnomalousMvc
 {

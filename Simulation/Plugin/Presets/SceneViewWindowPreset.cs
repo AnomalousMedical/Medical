@@ -6,6 +6,7 @@ using Engine;
 using Engine.Saving;
 using Engine.Editing;
 using Engine.Attributes;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

@@ -19,6 +19,7 @@ using OgreWrapper;
 using FreeImageAPI;
 using Engine.Threads;
 using Anomalous.libRocketWidget;
+using Anomalous.GuiFramework;
 
 namespace Lecture
 {

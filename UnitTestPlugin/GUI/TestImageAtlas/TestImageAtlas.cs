@@ -9,6 +9,7 @@ using MyGUIPlugin;
 using Engine;
 using Logging;
 using FreeImageAPI;
+using Anomalous.GuiFramework;
 
 namespace UnitTestPlugin.GUI
 {

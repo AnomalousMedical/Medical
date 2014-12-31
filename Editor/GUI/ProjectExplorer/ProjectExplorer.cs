@@ -8,6 +8,7 @@ using System.IO;
 using Engine.Platform;
 using Engine.Editing;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

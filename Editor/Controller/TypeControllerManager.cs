@@ -7,6 +7,7 @@ using System.IO;
 using Medical.GUI.AnomalousMvc;
 using Medical.GUI;
 using MyGUIPlugin;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

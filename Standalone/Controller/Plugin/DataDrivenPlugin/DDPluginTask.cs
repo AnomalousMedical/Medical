@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Saving;
 using Engine.Editing;
 using Engine.Reflection;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

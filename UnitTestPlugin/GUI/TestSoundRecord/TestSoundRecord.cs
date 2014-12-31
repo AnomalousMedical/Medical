@@ -11,6 +11,7 @@ using Engine.Platform;
 using SoundPlugin;
 using System.IO;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace UnitTestPlugin.GUI
 {

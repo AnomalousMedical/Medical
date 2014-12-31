@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Engine;
 using Medical.Controller;
 using Medical.Controller.AnomalousMvc;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI.AnomalousMvc
 {

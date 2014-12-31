@@ -6,6 +6,7 @@ using Medical.GUI.AnomalousMvc;
 using MyGUIPlugin;
 using Medical;
 using Engine;
+using Anomalous.GuiFramework;
 
 namespace Lecture.GUI
 {

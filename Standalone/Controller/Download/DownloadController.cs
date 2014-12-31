@@ -11,6 +11,7 @@ using Engine;
 using MyGUIPlugin;
 using Logging;
 using Engine.Threads;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

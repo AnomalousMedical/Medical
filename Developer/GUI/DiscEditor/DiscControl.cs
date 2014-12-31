@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Engine.ObjectManagement;
 using Engine;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

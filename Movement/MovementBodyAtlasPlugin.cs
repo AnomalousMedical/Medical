@@ -9,6 +9,7 @@ using System.Diagnostics;
 using Medical.GUI;
 using Engine;
 using Medical.Movement.GUI;
+using Anomalous.GuiFramework;
 
 namespace Medical.Movement
 {

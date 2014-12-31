@@ -10,6 +10,7 @@ using Logging;
 using Medical.Editor;
 using Engine.Saving.XMLSaver;
 using MyGUIPlugin;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

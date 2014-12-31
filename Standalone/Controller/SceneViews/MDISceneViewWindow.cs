@@ -8,6 +8,7 @@ using Engine.Renderer;
 using Engine.ObjectManagement;
 using Engine;
 using OgrePlugin;
+using Anomalous.GuiFramework;
 
 namespace Medical.Controller
 {

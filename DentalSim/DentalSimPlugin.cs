@@ -10,6 +10,7 @@ using DentalSim.GUI;
 using Medical.Controller;
 using System.Reflection;
 using Engine;
+using Anomalous.GuiFramework;
 
 namespace DentalSim
 {

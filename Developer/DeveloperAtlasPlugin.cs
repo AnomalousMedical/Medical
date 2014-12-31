@@ -10,6 +10,7 @@ using MyGUIPlugin;
 using libRocketPlugin;
 using Engine;
 using Anomalous.libRocketWidget;
+using Anomalous.GuiFramework;
 
 namespace Developer
 {

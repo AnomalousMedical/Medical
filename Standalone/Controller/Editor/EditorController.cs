@@ -13,6 +13,7 @@ using Engine.Saving;
 using System.Xml;
 using Medical.Controller.AnomalousMvc;
 using libRocketPlugin;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

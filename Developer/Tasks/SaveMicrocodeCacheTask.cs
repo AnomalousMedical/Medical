@@ -1,4 +1,5 @@
-﻿using Anomalous.OSPlatform;
+﻿using Anomalous.GuiFramework;
+using Anomalous.OSPlatform;
 using Medical;
 using Medical.GUI;
 using OgreWrapper;

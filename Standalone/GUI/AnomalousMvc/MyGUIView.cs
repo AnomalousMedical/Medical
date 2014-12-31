@@ -9,6 +9,7 @@ using Medical.Editor;
 using Engine;
 using Engine.Attributes;
 using MyGUIPlugin;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI.AnomalousMvc
 {

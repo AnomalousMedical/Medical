@@ -10,6 +10,7 @@ using Medical.GUI;
 using Medical;
 using FreeImageAPI;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace Developer.GUI
 {

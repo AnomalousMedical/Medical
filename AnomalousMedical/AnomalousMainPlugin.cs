@@ -16,6 +16,7 @@ using System.IO;
 using Engine.Platform;
 using FreeImageAPI;
 using Medical.GUI.AnomalousMvc;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

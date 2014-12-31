@@ -7,6 +7,7 @@ using Medical.GUI;
 using Engine;
 using MyGUIPlugin;
 using Engine.ObjectManagement;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

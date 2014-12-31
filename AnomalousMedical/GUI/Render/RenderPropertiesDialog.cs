@@ -8,6 +8,7 @@ using Engine;
 using System.IO;
 using FreeImageAPI;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

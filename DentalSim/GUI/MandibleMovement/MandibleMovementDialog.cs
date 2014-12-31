@@ -9,6 +9,7 @@ using Engine.Platform;
 using Engine.ObjectManagement;
 using Medical.GUI;
 using Medical;
+using Anomalous.GuiFramework;
 
 namespace DentalSim.GUI
 {

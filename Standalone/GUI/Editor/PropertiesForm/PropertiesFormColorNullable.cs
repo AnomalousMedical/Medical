@@ -7,6 +7,7 @@ using Engine.Editing;
 using Logging;
 using Engine;
 using System.Globalization;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

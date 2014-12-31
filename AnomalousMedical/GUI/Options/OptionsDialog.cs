@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using Engine.Platform;
 using Engine;
 using Medical.Controller;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

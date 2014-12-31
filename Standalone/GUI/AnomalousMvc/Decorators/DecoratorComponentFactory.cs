@@ -5,6 +5,7 @@ using System.Text;
 using Medical.Controller.AnomalousMvc;
 using Engine.Editing;
 using Medical.Controller;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI.AnomalousMvc
 {

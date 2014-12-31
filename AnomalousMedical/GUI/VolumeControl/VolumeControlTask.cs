@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using SoundPlugin;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

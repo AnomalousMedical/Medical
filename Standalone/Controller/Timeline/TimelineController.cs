@@ -14,6 +14,7 @@ using ZipAccess;
 using MyGUIPlugin;
 using Medical.GUI;
 using Medical.Controller.AnomalousMvc;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

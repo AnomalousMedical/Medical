@@ -7,6 +7,7 @@ using Engine;
 using System.IO;
 using OgrePlugin;
 using FreeImageAPI;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {

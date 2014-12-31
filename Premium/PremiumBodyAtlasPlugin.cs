@@ -9,6 +9,7 @@ using OgreWrapper;
 using System.Diagnostics;
 using Medical.GUI;
 using Engine;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

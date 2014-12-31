@@ -12,6 +12,7 @@ using Medical.Model;
 using libRocketPlugin;
 using OgreWrapper;
 using Anomalous.libRocketWidget;
+using Anomalous.GuiFramework;
 
 namespace Medical.Controller.AnomalousMvc
 {

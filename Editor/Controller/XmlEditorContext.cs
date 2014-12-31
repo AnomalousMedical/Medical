@@ -9,6 +9,7 @@ using System.IO;
 using MyGUIPlugin;
 using Engine.Platform;
 using Medical.Controller;
+using Anomalous.GuiFramework;
 
 namespace Medical
 {

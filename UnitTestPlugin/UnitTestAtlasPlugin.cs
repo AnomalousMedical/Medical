@@ -10,6 +10,7 @@ using Logging;
 using System.IO;
 using Engine;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace UnitTestPlugin
 {

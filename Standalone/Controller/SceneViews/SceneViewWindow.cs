@@ -10,6 +10,7 @@ using Logging;
 using OgreWrapper;
 using OgrePlugin;
 using MyGUIPlugin;
+using Anomalous.GuiFramework;
 
 namespace Medical.Controller
 {

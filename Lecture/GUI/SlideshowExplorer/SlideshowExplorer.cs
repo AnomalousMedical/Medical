@@ -12,6 +12,7 @@ using Engine.Editing;
 using Medical.GUI;
 using Medical;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework;
 
 namespace Lecture.GUI
 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using MyGUIPlugin;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {
