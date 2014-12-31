@@ -118,7 +118,8 @@ namespace Medical
             CamerasInterface.SelectWindowEventLayer = EventLayers.AfterGui;
             CamerasInterface.TouchType = PlatformConfig.TouchType;
             CamerasInterface.PanKey = PlatformConfig.PanKey;
-            CamerasInterface.TransparencyController = new TransparencyControllerShim();
+            CamerasInterface.WindowCreated += CamerasInterface_WindowCreated;
+            CamerasInterface.WindowDestroyed += CamerasInterface_WindowDestroyed;
 
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
@@ -346,6 +347,30 @@ namespace Medical
             {
                 return pluginManager;
             }
+        }
+
+        void CamerasInterface_WindowDestroyed(SceneViewWindow window)
+        {
+            TransparencyController.removeTransparencyState(window.CurrentTransparencyState);
+            window.RenderingStarted -= window_RenderingStarted;
+            window.MadeActive -= window_MadeActive;
+        }
+
+        void CamerasInterface_WindowCreated(SceneViewWindow window)
+        {
+            TransparencyController.createTransparencyState(window.CurrentTransparencyState);
+            window.RenderingStarted += window_RenderingStarted;
+            window.MadeActive += window_MadeActive;
+        }
+
+        void window_MadeActive(SceneViewWindow window)
+        {
+            TransparencyController.ActiveTransparencyState = window.CurrentTransparencyState;
+        }
+
+        void window_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
+        {
+            TransparencyController.applyTransparencyState(window.CurrentTransparencyState);
         }
     }
 }
