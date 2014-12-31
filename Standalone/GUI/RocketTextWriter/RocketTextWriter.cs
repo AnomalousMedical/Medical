@@ -1,6 +1,6 @@
 ﻿using FreeImageAPI;
 using libRocketPlugin;
-using libRocketWidget;
+using Anomalous.libRocketWidget;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;

@@ -12,7 +12,7 @@ using Engine.Editing;
 using Engine;
 using Medical.GUI.RmlWysiwyg.Elements;
 using FreeImageAPI;
-using libRocketWidget;
+using Anomalous.libRocketWidget;
 
 namespace Medical.GUI
 {

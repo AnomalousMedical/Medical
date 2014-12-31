@@ -18,7 +18,7 @@ using Medical.Controller;
 using OgreWrapper;
 using FreeImageAPI;
 using Engine.Threads;
-using libRocketWidget;
+using Anomalous.libRocketWidget;
 
 namespace Lecture
 {

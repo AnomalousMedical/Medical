@@ -5,7 +5,7 @@ using System.Text;
 using Medical.Controller.AnomalousMvc;
 using libRocketPlugin;
 using Medical.GUI;
-using libRocketWidget;
+using Anomalous.libRocketWidget;
 
 namespace Medical
 {

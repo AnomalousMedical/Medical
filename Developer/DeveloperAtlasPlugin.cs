@@ -9,6 +9,7 @@ using Developer.GUI;
 using MyGUIPlugin;
 using libRocketPlugin;
 using Engine;
+using Anomalous.libRocketWidget;
 
 namespace Developer
 {

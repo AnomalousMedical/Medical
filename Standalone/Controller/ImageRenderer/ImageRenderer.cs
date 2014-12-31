@@ -8,7 +8,7 @@ using Engine;
 using Logging;
 using Medical.Controller;
 using FreeImageAPI;
-using libRocketWidget;
+using Anomalous.libRocketWidget;
 
 namespace Medical
 {

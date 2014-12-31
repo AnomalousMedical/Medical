@@ -22,7 +22,7 @@ using System.Globalization;
 using libRocketPlugin;
 using BEPUikPlugin;
 using GuiFramework.Plugin;
-using libRocketWidget;
+using Anomalous.libRocketWidget;
 using Anomalous.OSPlatform;
 
 namespace Medical

@@ -11,7 +11,7 @@ using System.IO;
 using Medical.Model;
 using libRocketPlugin;
 using OgreWrapper;
-using libRocketWidget;
+using Anomalous.libRocketWidget;
 
 namespace Medical.Controller.AnomalousMvc
 {
