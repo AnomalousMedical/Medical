@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {

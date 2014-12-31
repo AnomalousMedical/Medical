@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Editing;
 using Engine.Saving;
 using Engine;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical.Controller.AnomalousMvc
 {

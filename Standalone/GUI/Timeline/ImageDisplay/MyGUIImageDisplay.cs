@@ -7,6 +7,7 @@ using MyGUIPlugin;
 using Engine;
 using Medical.Controller;
 using FreeImageAPI;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical.GUI
 {

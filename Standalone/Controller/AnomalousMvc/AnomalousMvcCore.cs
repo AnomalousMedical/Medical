@@ -13,6 +13,7 @@ using libRocketPlugin;
 using OgreWrapper;
 using Anomalous.libRocketWidget;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical.Controller.AnomalousMvc
 {

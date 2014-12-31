@@ -1,4 +1,5 @@
-﻿using Medical.Controller;
+﻿using Anomalous.GuiFramework.Cameras;
+using Medical.Controller;
 using System;
 using System.Collections.Generic;
 using System.Linq;

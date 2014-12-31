@@ -9,6 +9,7 @@ using Logging;
 using Medical.Controller;
 using FreeImageAPI;
 using Anomalous.libRocketWidget;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {

@@ -67,6 +67,9 @@
     <Reference Include="GuiFramework">
       <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
     </Reference>
+    <Reference Include="GuiFramework.Cameras">
+      <HintPath>..\..\Engine\Release\GuiFramework.Cameras.dll</HintPath>
+    </Reference>
     <Reference Include="libRocketPlugin">
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
     </Reference>
@@ -188,7 +191,6 @@
     <Compile Include="Controller\AnomalousMvc\Model\Models\Navigation\NavigationLink.cs" />
     <Compile Include="Controller\AnomalousMvc\Model\Models\Navigation\NavigationModel.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
-    <Compile Include="Controller\Background\BackgroundScene.cs" />
     <Compile Include="Controller\Bookmarks\BookmarkPath.cs" />
     <Compile Include="Controller\Bookmarks\LoadBookmarksBgTask.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
@@ -196,7 +198,8 @@
     <Compile Include="Controller\MusclePosition\MovementSequenceState.cs" />
     <Compile Include="Controller\Plugin\Dependency\AtlasDependency.cs" />
     <Compile Include="Controller\Plugin\PluginLoadStatus.cs" />
-    <Compile Include="Controller\SceneViews\CameraInputController.cs" />
+    <Compile Include="Controller\SceneViews\SceneViewControllerExtensions.cs" />
+    <Compile Include="Controller\SceneViews\TransparencyControllerShim.cs" />
     <Compile Include="Controller\Security\CertificateStoreManager.cs" />
     <Compile Include="Controller\Config\EditorConfig.cs" />
     <Compile Include="Controller\Plugin\Dependency\AtlasDependencyResource.cs" />
@@ -253,8 +256,6 @@
     <Compile Include="Controller\Props\PropDefinition.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />
     <Compile Include="Controller\Resources\ZipResourceProvider.cs" />
-    <Compile Include="Controller\SceneViews\CameraPositioner.cs" />
-    <Compile Include="Controller\SceneViews\TextureSceneView.cs" />
     <Compile Include="Controller\SceneViews\TextureSceneViewPool.cs" />
     <Compile Include="Controller\Server\Mime.cs" />
     <Compile Include="Controller\Server\UploadFileInfo.cs" />
@@ -471,9 +472,6 @@
     <Compile Include="Controller\AnomalousMvc\View\ViewCollection.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHost.cs" />
     <Compile Include="Controller\AnomalousMvc\View\ViewHostFactory.cs" />
-    <Compile Include="Controller\Background\ViewportBackground.cs" />
-    <Compile Include="Controller\Camera\CameraMover.cs" />
-    <Compile Include="Controller\Camera\OrbitCameraController.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboardContainer.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboardContainerMemberFilter.cs" />
     <Compile Include="Controller\Config\EngineConfig.cs" />
@@ -546,7 +544,6 @@
     <Compile Include="Controller\Timeline\SkipToPostActions.cs" />
     <Compile Include="Controller\Timeline\TimelineEditInterface.cs" />
     <Compile Include="Controller\Editor\BrowserAttributes\BrowseableEditableProperty.cs" />
-    <Compile Include="Controller\SceneViews\CameraPosition.cs" />
     <Compile Include="Controller\Layers\EditableLayerState.cs" />
     <Compile Include="Controller\Resources\EmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Resources\ResourceProvider.cs" />
@@ -606,9 +603,6 @@
     <Compile Include="Controller\MovementSequence\MovementSequenceGroup.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceInfo.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceSet.cs" />
-    <Compile Include="Controller\SceneViews\CloneCamera.cs" />
-    <Compile Include="Controller\SceneViews\MDISceneViewWindow.cs" />
-    <Compile Include="Controller\SceneViews\SingleViewCloneWindow.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
@@ -625,8 +619,6 @@
     <Compile Include="Controller\Timeline\TimelineAction.cs" />
     <Compile Include="Controller\Timeline\TimelineController.cs" />
     <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
-    <Compile Include="Controller\SceneViews\SceneViewController.cs" />
-    <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />

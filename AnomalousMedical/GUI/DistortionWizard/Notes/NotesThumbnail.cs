@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine.Editing;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical.GUI.AnomalousMvc
 {

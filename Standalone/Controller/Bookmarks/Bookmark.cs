@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Engine.Saving;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {

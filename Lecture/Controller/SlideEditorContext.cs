@@ -20,6 +20,7 @@ using FreeImageAPI;
 using Engine.Threads;
 using Anomalous.libRocketWidget;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Lecture
 {

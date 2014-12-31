@@ -10,6 +10,7 @@ using Engine.Attributes;
 using Logging;
 using Medical.Model;
 using Engine;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical.Controller.AnomalousMvc
 {

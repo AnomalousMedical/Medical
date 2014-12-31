@@ -11,6 +11,7 @@ using Medical;
 using FreeImageAPI;
 using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Developer.GUI
 {

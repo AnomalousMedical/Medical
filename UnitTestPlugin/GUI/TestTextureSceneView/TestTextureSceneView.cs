@@ -1,4 +1,5 @@
 ﻿using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 using Engine;
 using Medical;
 using Medical.Controller;

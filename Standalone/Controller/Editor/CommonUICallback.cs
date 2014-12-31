@@ -15,6 +15,7 @@ using Medical.Editor;
 using Engine.Saving;
 using Logging;
 using Anomalous.OSPlatform;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {

@@ -6,6 +6,7 @@ using Medical.GUI;
 using Medical.Controller;
 using Engine;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {

@@ -8,6 +8,7 @@ using Engine;
 using Medical.Controller;
 using MyGUIPlugin;
 using Engine.Editing;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {

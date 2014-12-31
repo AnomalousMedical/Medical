@@ -5,6 +5,7 @@ using System.Text;
 using Engine;
 using Medical.Controller;
 using MyGUIPlugin;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical.GUI
 {

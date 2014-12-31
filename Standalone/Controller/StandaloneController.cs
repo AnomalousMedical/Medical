@@ -23,6 +23,7 @@ using Medical.Editor;
 using Engine.Threads;
 using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {

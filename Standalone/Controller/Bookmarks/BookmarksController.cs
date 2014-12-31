@@ -10,6 +10,7 @@ using MyGUIPlugin;
 using System.IO;
 using Engine.Saving;
 using Engine.Threads;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical.Controller
 {

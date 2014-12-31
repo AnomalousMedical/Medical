@@ -15,6 +15,7 @@ using MyGUIPlugin;
 using Medical.GUI;
 using Medical.Controller.AnomalousMvc;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {

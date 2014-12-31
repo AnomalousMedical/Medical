@@ -24,6 +24,7 @@ using BEPUikPlugin;
 using Anomalous.libRocketWidget;
 using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {
@@ -110,6 +111,15 @@ namespace Medical
                 }
                 mainWindow.show();
             };
+
+            CamerasInterface.CameraTransitionTime = MedicalConfig.CameraTransitionTime;
+            CamerasInterface.DefaultCameraButton = MedicalConfig.CameraMouseButton;
+            CamerasInterface.MoveCameraEventLayer = EventLayers.Cameras;
+            CamerasInterface.SelectWindowEventLayer = EventLayers.AfterGui;
+            CamerasInterface.TouchType = PlatformConfig.TouchType;
+            CamerasInterface.PanKey = PlatformConfig.PanKey;
+            CamerasInterface.TransparencyController = new TransparencyControllerShim();
+
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(NativePlatformPlugin).Assembly);
@@ -120,6 +130,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(SimulationPlugin).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(RocketWidgetInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(CamerasInterface).Assembly);
             pluginManager.initializePlugins();
 
             performanceMetricTimer = new NativeSystemTimer();

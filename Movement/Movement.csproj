@@ -50,6 +50,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
     </Reference>
+    <Reference Include="GuiFramework.Cameras, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\GuiFramework.Cameras.dll</HintPath>
+    </Reference>
     <Reference Include="MyGUIPlugin">
       <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
     </Reference>
