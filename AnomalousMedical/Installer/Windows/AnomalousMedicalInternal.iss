@@ -60,6 +60,7 @@ Source: S:\Medical\Release\Mono.Anomalous.Security.dll; DestDir: {app}; Flags: i
 Source: S:\Medical\Release\FreeImageNET.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\Lucene.Net.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\GuiFramework.dll; DestDir: {app}; Flags: ignoreversion
+Source: S:\Medical\Release\GuiFramework.Cameras.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
 Source: S:\Medical\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
