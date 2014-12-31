@@ -256,7 +256,7 @@
     <Compile Include="Controller\Props\PropDefinition.cs" />
     <Compile Include="Controller\RecordAudioController.cs" />
     <Compile Include="Controller\Resources\ZipResourceProvider.cs" />
-    <Compile Include="Controller\SceneViews\TextureSceneViewPool.cs" />
+    <Compile Include="Controller\SceneViews\TextureSceneViewPoolExtensions.cs" />
     <Compile Include="Controller\Server\Mime.cs" />
     <Compile Include="Controller\Server\UploadFileInfo.cs" />
     <Compile Include="Controller\SharePluginController.cs" />
