@@ -448,8 +448,6 @@
     <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\RocketTextWriter\RocketTextWriter.cs" />
     <Compile Include="GUI\SceneErrorWindow\SceneErrorWindow.cs" />
-    <Compile Include="GUI\SceneStats\SceneStatsDisplay.cs" />
-    <Compile Include="GUI\SceneStats\SceneStatsDisplayManager.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />
@@ -641,7 +639,6 @@
     <EmbeddedResource Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormColorButton.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
-    <EmbeddedResource Include="GUI\SceneStats\SceneStatsDisplay.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
     <EmbeddedResource Include="Controller\Grid\Grid.material" />

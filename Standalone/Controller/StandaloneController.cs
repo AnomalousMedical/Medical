@@ -211,6 +211,8 @@ namespace Medical
             MyGUIInterface myGUI = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
             sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
+            sceneStatsDisplayManager.StatsVisible = MedicalConfig.EngineConfig.ShowStatistics;
+            MedicalConfig.EngineConfig.ShowStatsToggled += engineConfig => sceneStatsDisplayManager.StatsVisible = engineConfig.ShowStatistics;
             lightManager = PluginManager.Instance.RendererPlugin.createSceneViewLightManager();
 
             //Measurement grid
