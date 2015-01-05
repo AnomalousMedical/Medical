@@ -25,6 +25,7 @@ using Anomalous.libRocketWidget;
 using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;
+using Anomalous.GuiFramework.Editor;
 
 namespace Medical
 {
@@ -119,6 +120,8 @@ namespace Medical
             GuiFrameworkCamerasInterface.TouchType = PlatformConfig.TouchType;
             GuiFrameworkCamerasInterface.PanKey = PlatformConfig.PanKey;
 
+            GuiFrameworkEditorInterface.ToolsEventLayers = EventLayers.Tools;
+
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(NativePlatformPlugin).Assembly);
@@ -130,6 +133,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(GuiFrameworkInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(RocketWidgetInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkCamerasInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(GuiFrameworkEditorInterface).Assembly);
             pluginManager.initializePlugins();
 
             performanceMetricTimer = new NativeSystemTimer();

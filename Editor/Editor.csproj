@@ -57,6 +57,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\GuiFramework.Cameras.dll</HintPath>
     </Reference>
+    <Reference Include="GuiFramework.Editor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\GuiFramework.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Irony">
       <HintPath>..\..\Dependencies\Irony\Irony\bin\Release\Irony.dll</HintPath>
       <Private>False</Private>
