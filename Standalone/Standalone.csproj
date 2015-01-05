@@ -318,12 +318,7 @@
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
     <Compile Include="GUI\ButtonGridLiveThumbnailController.cs" />
-    <Compile Include="GUI\Editor\AddItemDialog\AddItemDialog.cs" />
-    <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplate.cs" />
-    <Compile Include="GUI\Editor\AddItemDialog\AddItemTemplateAdapter.cs" />
     <Compile Include="GUI\Editor\CommonEditorResources.cs" />
-    <Compile Include="GUI\Editor\ContextualPropertiesEditor.cs" />
-    <Compile Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropTaskManager.cs" />
     <Compile Include="GUI\Editor\ImageBrowserWindow.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropComponent.cs" />
@@ -339,7 +334,6 @@
     <Compile Include="GUI\Editor\GenericEditor\GenericEditorView.cs" />
     <Compile Include="GUI\Editor\GenericEditor\GenericPropertiesFormComponent.cs" />
     <Compile Include="GUI\Editor\GenericEditor\GenericPropertiesFormView.cs" />
-    <Compile Include="GUI\Editor\InputWindow.cs" />
     <Compile Include="GUI\Editor\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\Editor\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\Editor\MovementSequence\MovementSequenceClipboardContainer.cs" />
@@ -508,12 +502,6 @@
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlMvcEventController.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlMvcEventListener.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.cs" />
-    <Compile Include="GUI\Editor\PropertiesTable\AddRemoveButtons.cs" />
-    <Compile Include="GUI\Editor\PropertiesTable\ColorEditCell.cs" />
-    <Compile Include="GUI\Editor\PropertiesTable\EditTableBrowserCell.cs" />
-    <Compile Include="GUI\Editor\PropertiesTable\ICustomCellProvider.cs" />
-    <Compile Include="GUI\Editor\ObjectEditor.cs" />
-    <Compile Include="GUI\Editor\PropertiesTable\PropertiesTable.cs" />
     <Compile Include="Controller\Notification\OpenImageNotification.cs" />
     <Compile Include="Controller\Notification\RestartNotification.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
@@ -587,7 +575,6 @@
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
-    <EmbeddedResource Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
@@ -622,7 +609,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.layout" />
     <Content Include="Preprocessor.txt" />
-    <EmbeddedResource Include="GUI\Editor\AddItemDialog\AddItemDialog.layout" />
     <EmbeddedResource Include="GUI\Editor\ImageBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\DragAndDrop\DragAndDropComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\GenericEditor\ExpandingGenericEditor.layout" />
