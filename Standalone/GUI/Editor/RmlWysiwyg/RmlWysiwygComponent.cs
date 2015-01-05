@@ -14,6 +14,7 @@ using Medical.GUI.RmlWysiwyg.Elements;
 using FreeImageAPI;
 using Anomalous.libRocketWidget;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Editor;
 
 namespace Medical.GUI
 {

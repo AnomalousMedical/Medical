@@ -1,4 +1,5 @@
 ﻿using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Editor;
 using Engine;
 using Engine.Editing;
 using Engine.ObjectManagement;

@@ -1,4 +1,5 @@
-﻿using Engine.Editing;
+﻿using Anomalous.GuiFramework.Editor;
+using Engine.Editing;
 using Engine.Threads;
 using Logging;
 using Medical;

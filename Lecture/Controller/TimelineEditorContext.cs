@@ -12,6 +12,7 @@ using Engine;
 using Medical.Controller;
 using System.IO;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Editor;
 
 namespace Lecture
 {

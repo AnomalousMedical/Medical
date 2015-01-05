@@ -6,6 +6,7 @@ using Medical.Muscles;
 using MyGUIPlugin;
 using Engine.Editing;
 using Engine;
+using Anomalous.GuiFramework.Editor;
 
 namespace Medical.GUI
 {

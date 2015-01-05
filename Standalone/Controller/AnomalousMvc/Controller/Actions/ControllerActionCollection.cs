@@ -7,6 +7,7 @@ using Engine.Saving;
 using Engine.Attributes;
 using Engine.Editing;
 using MyGUIPlugin;
+using Anomalous.GuiFramework.Editor;
 
 namespace Medical.Controller.AnomalousMvc
 {
@@ -115,7 +116,7 @@ namespace Medical.Controller.AnomalousMvc
             createActionTemplates();
             editInterface.addCommand(new EditInterfaceCommand("Add Action", callback =>
             {
-                Medical.GUI.AddItemDialog.AddItem(actionTemplates, itemTemplate =>
+                AddItemDialog.AddItem(actionTemplates, itemTemplate =>
                 {
                     ((ActionItemTemplate)itemTemplate).addAction(this);
                 });

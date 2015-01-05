@@ -8,6 +8,7 @@ using Engine.Platform;
 using Medical.GUI.AnomalousMvc;
 using Medical.Controller;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Editor;
 
 namespace Medical
 {

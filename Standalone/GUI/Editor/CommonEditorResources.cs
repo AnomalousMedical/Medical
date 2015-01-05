@@ -1,4 +1,5 @@
-﻿using Medical.GUI;
+﻿using Anomalous.GuiFramework.Editor;
+using Medical.GUI;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
