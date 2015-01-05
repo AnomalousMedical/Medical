@@ -25,7 +25,7 @@ namespace Medical
         private TimelineTypeController timelineTypeController;
         private PropEditController propEditController;
 
-        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, PropEditController propEditController, PropFactory propFactory, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
+        public TimelineEditorContext(Timeline timeline, String path, TimelineTypeController timelineTypeController, PropEditController propEditController, PropFactory propFactory, EditorController editorController, GuiFrameworkUICallback uiCallback, TimelineController timelineController)
         {
             this.currentTimeline = timeline;
             this.currentFile = path;

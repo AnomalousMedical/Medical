@@ -23,7 +23,7 @@ namespace Medical
 
         private DDAtlasDependency plugin;
 
-        public DependencyEditorContext(DDAtlasDependency plugin, String file, DependencyTypeController dependencyTypeController, EditorController editorController, MedicalUICallback uiCallback)
+        public DependencyEditorContext(DDAtlasDependency plugin, String file, DependencyTypeController dependencyTypeController, EditorController editorController, GuiFrameworkUICallback uiCallback)
         {
             this.dependencyTypeController = dependencyTypeController;
             this.currentFile = file;

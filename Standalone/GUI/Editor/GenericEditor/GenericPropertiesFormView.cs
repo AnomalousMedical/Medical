@@ -12,7 +12,7 @@ namespace Medical.GUI
 {
     public class GenericPropertiesFormView : MyGUIView
     {
-        public GenericPropertiesFormView(String name, EditInterface editInterface, EditorController editorController, MedicalUICallback editUICallback, bool horizontalAlignment = false)
+        public GenericPropertiesFormView(String name, EditInterface editInterface, EditorController editorController, GuiFrameworkUICallback editUICallback, bool horizontalAlignment = false)
             : base(name)
         {
             this.EditInterface = editInterface;
@@ -25,7 +25,7 @@ namespace Medical.GUI
 
         public bool HorizontalAlignment { get; set; }
 
-        public MedicalUICallback EditUICallback { get; set; }
+        public GuiFrameworkUICallback EditUICallback { get; set; }
 
         public EditorController EditorController { get; set; }
 

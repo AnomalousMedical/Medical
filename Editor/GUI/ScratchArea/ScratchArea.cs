@@ -14,9 +14,9 @@ namespace Medical.GUI
         private ScratchAreaController scratchAreaController;
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
-        private MedicalUICallback uiCallback;
+        private GuiFrameworkUICallback uiCallback;
 
-        public ScratchArea(ScratchAreaController scratchAreaController, MedicalUICallback uiCallback)
+        public ScratchArea(ScratchAreaController scratchAreaController, GuiFrameworkUICallback uiCallback)
             :base("Medical.GUI.ScratchArea.ScratchArea.layout")
         {
             this.scratchAreaController = scratchAreaController;

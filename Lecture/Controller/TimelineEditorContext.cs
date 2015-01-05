@@ -30,7 +30,7 @@ namespace Lecture
         private Slide slide;
         private TimelineEditorComponent timelineEditor;
 
-        public TimelineEditorContext(Timeline timeline, Slide slide, String name, SlideshowEditController slideshowEditController, PropEditController propEditController, PropFactory propFactory, EditorController editorController, MedicalUICallback uiCallback, TimelineController timelineController)
+        public TimelineEditorContext(Timeline timeline, Slide slide, String name, SlideshowEditController slideshowEditController, PropEditController propEditController, PropFactory propFactory, EditorController editorController, GuiFrameworkUICallback uiCallback, TimelineController timelineController)
         {
             this.slide = slide;
             this.currentTimeline = timeline;

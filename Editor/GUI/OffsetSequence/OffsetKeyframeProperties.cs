@@ -16,7 +16,7 @@ namespace Medical.GUI
         private OffsetSequenceEditor sequenceEditor;
         private PropertiesForm propertiesForm;
 
-        public OffsetKeyframeProperties(Widget parentWidget, OffsetSequenceEditor sequenceEditor, MedicalUICallback uiCallback)
+        public OffsetKeyframeProperties(Widget parentWidget, OffsetSequenceEditor sequenceEditor, GuiFrameworkUICallback uiCallback)
             : base(parentWidget, "Medical.GUI.OffsetSequence.OffsetKeyframeProperties.layout")
         {
             this.sequenceEditor = sequenceEditor;

@@ -59,7 +59,7 @@ namespace Medical.GUI
             return new Rect();
         }
 
-        public virtual RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
+        public virtual RmlElementEditor openEditor(Element element, GuiFrameworkUICallback uiCallback, int left, int top)
         {
             return null;
         }

@@ -26,7 +26,7 @@ namespace Medical
 
         private DDAtlasPlugin plugin;
 
-        public PluginEditorContext(DDAtlasPlugin plugin, String file, PluginTypeController pluginTypeController, EditorController editorController, MedicalUICallback uiCallback, StandaloneController standaloneController)
+        public PluginEditorContext(DDAtlasPlugin plugin, String file, PluginTypeController pluginTypeController, EditorController editorController, GuiFrameworkUICallback uiCallback, StandaloneController standaloneController)
         {
             this.pluginTypeController = pluginTypeController;
             this.currentFile = file;

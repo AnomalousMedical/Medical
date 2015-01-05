@@ -22,7 +22,7 @@ namespace Developer.GUI
         private SimScene currentScene;
         private MedicalController medicalController;
 
-        private MedicalUICallback uiCallback;
+        private GuiFrameworkUICallback uiCallback;
         private Tree tree;
         private EditInterfaceTreeView editTreeView;
 
@@ -38,7 +38,7 @@ namespace Developer.GUI
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
 
-            uiCallback = new MedicalUICallback();
+            uiCallback = new GuiFrameworkUICallback();
 
             tree = new Tree((ScrollView)window.findWidget("TreeScroller"));
             editTreeView = new EditInterfaceTreeView(tree, uiCallback);

@@ -23,7 +23,7 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
         private ScrollablePropertiesForm propertiesForm;
         private List<RmlEditableProperty> originalProperties;
 
-        public ElementAttributeEditor(Element element, MedicalUICallback uiCallback)
+        public ElementAttributeEditor(Element element, GuiFrameworkUICallback uiCallback)
             : base("Medical.GUI.Editor.RmlWysiwyg.ElementEditorComponents.ElementAttributeEditor.layout", "Attributes")
         {
             propertiesScroll = (ScrollView)widget.findWidget("PropertiesScroll");

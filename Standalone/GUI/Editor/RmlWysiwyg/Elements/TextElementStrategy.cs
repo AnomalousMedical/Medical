@@ -53,7 +53,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             ResizeHandles = ResizeType.Top | ResizeType.Height;
         }
 
-        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
+        public override RmlElementEditor openEditor(Element element, GuiFrameworkUICallback uiCallback, int left, int top)
         {
             elementStyle = new TextElementStyle(element, true);
             elementStyle.Changed += elementStyle_Changed;

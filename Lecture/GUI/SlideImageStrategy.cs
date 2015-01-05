@@ -27,7 +27,7 @@ namespace Lecture.GUI
             ResizeHandles = ResizeType.Width | ResizeType.Left | ResizeType.Top;
         }
 
-        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
+        public override RmlElementEditor openEditor(Element element, GuiFrameworkUICallback uiCallback, int left, int top)
         {
             appearance = new ImageElementStyle(element);
             appearance.Changed += appearance_Changed;

@@ -25,7 +25,7 @@ namespace Medical
 
         private OffsetModifierSequence movementSequence;
 
-        public OffsetSequenceEditorContext(OffsetModifierSequence movementSequence, String file, OffsetSequenceTypeController typeController, MedicalUICallback uiCallback, SimObjectMover simObjectMover)
+        public OffsetSequenceEditorContext(OffsetModifierSequence movementSequence, String file, OffsetSequenceTypeController typeController, GuiFrameworkUICallback uiCallback, SimObjectMover simObjectMover)
         {
             this.typeController = typeController;
             this.currentFile = file;

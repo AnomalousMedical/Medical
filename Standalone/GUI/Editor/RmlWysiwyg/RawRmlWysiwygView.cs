@@ -26,7 +26,7 @@ namespace Medical.GUI
         [DoNotSave]
         private LinkedList<ElementStrategy> customStrategies = new LinkedList<ElementStrategy>();
 
-        public RawRmlWysiwygView(String name, MedicalUICallback uiCallback, UndoRedoBuffer undoBuffer)
+        public RawRmlWysiwygView(String name, GuiFrameworkUICallback uiCallback, UndoRedoBuffer undoBuffer)
             :base(name)
         {
             this.UICallback = uiCallback;
@@ -90,7 +90,7 @@ namespace Medical.GUI
             }
         }
 
-        public MedicalUICallback UICallback { get; private set; }
+        public GuiFrameworkUICallback UICallback { get; private set; }
 
         internal void _fireComponentCreated(RmlWysiwygComponent component)
         {

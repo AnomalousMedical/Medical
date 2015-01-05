@@ -26,7 +26,7 @@ namespace Medical.GUI
         [DoNotSave]
         private LinkedList<ElementStrategy> customStrategies = new LinkedList<ElementStrategy>();
 
-        public RmlWysiwygView(String name, MedicalUICallback uiCallback, UndoRedoBuffer undoBuffer)
+        public RmlWysiwygView(String name, GuiFrameworkUICallback uiCallback, UndoRedoBuffer undoBuffer)
             :base(name)
         {
             RmlFile = name + ".rml";
@@ -89,7 +89,7 @@ namespace Medical.GUI
             }
         }
 
-        public MedicalUICallback UICallback { get; private set; }
+        public GuiFrameworkUICallback UICallback { get; private set; }
 
         protected override void customizeEditInterface(EditInterface editInterface)
         {

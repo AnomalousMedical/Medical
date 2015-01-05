@@ -19,7 +19,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         }
 
-        public override RmlElementEditor openEditor(Element element, MedicalUICallback uiCallback, int left, int top)
+        public override RmlElementEditor openEditor(Element element, GuiFrameworkUICallback uiCallback, int left, int top)
         {
             attributeEditor = new ElementAttributeEditor(element, uiCallback);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);

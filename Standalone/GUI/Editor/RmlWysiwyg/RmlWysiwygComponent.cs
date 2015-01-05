@@ -70,7 +70,7 @@ namespace Medical.GUI
         private String documentStart = "<body>";
         private String documentEnd = "</body>";
         private bool disposed = false;
-        private MedicalUICallback uiCallback;
+        private GuiFrameworkUICallback uiCallback;
         private RmlElementEditor currentEditor = null;
         private bool allowEdit = true;
         private SelectedElementManager selectedElementManager;

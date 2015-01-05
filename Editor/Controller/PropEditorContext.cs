@@ -23,7 +23,7 @@ namespace Medical
 
         private PropDefinition propDefinition;
 
-        public PropEditorContext(PropDefinition propDefinition, String file, PropTypeController typeController, EditorController editorController, MedicalUICallback uiCallback)
+        public PropEditorContext(PropDefinition propDefinition, String file, PropTypeController typeController, EditorController editorController, GuiFrameworkUICallback uiCallback)
         {
             this.typeController = typeController;
             this.currentFile = file;

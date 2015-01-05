@@ -20,7 +20,7 @@ using Anomalous.GuiFramework.Editor;
 
 namespace Medical
 {
-    public abstract class CommonUICallback : MedicalUICallback
+    public abstract class CommonUICallback : GuiFrameworkUICallback
     {
         protected StandaloneController standaloneController;
         protected EditorController editorController;
