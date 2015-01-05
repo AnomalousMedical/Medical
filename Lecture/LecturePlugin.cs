@@ -1,4 +1,5 @@
 ﻿using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Editor;
 using Engine;
 using Lecture.GUI;
 using Medical;

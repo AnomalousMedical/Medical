@@ -12,6 +12,7 @@ using System.Reflection;
 using System.IO;
 using Engine;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Editor;
 
 namespace Medical
 {
