@@ -342,7 +342,6 @@
     <Compile Include="GUI\Editor\GenericEditor\GenericEditorView.cs" />
     <Compile Include="GUI\Editor\GenericEditor\GenericPropertiesFormComponent.cs" />
     <Compile Include="GUI\Editor\GenericEditor\GenericPropertiesFormView.cs" />
-    <Compile Include="GUI\Editor\InputBrowserWindow.cs" />
     <Compile Include="GUI\Editor\InputWindow.cs" />
     <Compile Include="GUI\Editor\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\Editor\MovementSequence\MovementKeyframeProperties.cs" />
@@ -354,37 +353,6 @@
     <Compile Include="GUI\Editor\OpenPropManager\OpenPropManager.cs" />
     <Compile Include="GUI\Editor\OpenPropManager\OpenPropManagerView.cs" />
     <Compile Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\ConstrainableFormComponent.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormInt32Nullable.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormColorNullable.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormIntSize2.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormButton.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormColor.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormComboBox.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormUInt64.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormUInt32.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormUInt16.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormSByte.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormInt64.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormInt32.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormInt16.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormDouble.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormDecimal.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormByte.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormSingle.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormSize2.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormVector2.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormIntVector2.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormEulerQuat.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormTextBoxBrowser.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesForm.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormCheckBox.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormComponent.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormLayoutComponent.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\PropertiesFormVector3.cs" />
-    <Compile Include="GUI\Editor\PropertiesForm\ScrollablePropertiesForm.cs" />
-    <Compile Include="GUI\Editor\PropertyEditor.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimelineClipboardContainer.cs" />
     <Compile Include="GUI\Editor\PropTimeline\PropTimelineData.cs" />
@@ -544,14 +512,12 @@
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlMvcEventListener.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\AddRemoveButtons.cs" />
-    <Compile Include="GUI\Editor\BrowserWindow.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\ColorEditCell.cs" />
     <Compile Include="GUI\Editor\EditInterfaceTree\EditInterfaceTreeNode.cs" />
     <Compile Include="GUI\Editor\EditInterfaceTree\EditInterfaceTreeView.cs" />
     <Compile Include="GUI\Editor\EditInterfaceTree\EditInterfaceViewEvent.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\EditTableBrowserCell.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\ICustomCellProvider.cs" />
-    <Compile Include="GUI\Editor\MedicalUICallback.cs" />
     <Compile Include="GUI\Editor\ObjectEditor.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\PropertiesTable.cs" />
     <Compile Include="Controller\Notification\OpenImageNotification.cs" />
@@ -628,7 +594,6 @@
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
     <EmbeddedResource Include="GUI\Editor\PopupGenericEditor\PopupGenericEditor.layout" />
-    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormColorButton.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
@@ -672,7 +637,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorVerticalComponent.layout" />
-    <EmbeddedResource Include="GUI\Editor\InputBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\Editor\MovementSequence\MovementSequenceEditor.layout">
       <SubType>Designer</SubType>
@@ -680,12 +644,6 @@
     <EmbeddedResource Include="GUI\Editor\NewProjectDialog\NewProjectDialog.layout" />
     <EmbeddedResource Include="GUI\Editor\OpenPropManager\OpenPropManager.layout" />
     <EmbeddedResource Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.layout" />
-    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormComboBox.layout" />
-    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormWidthHeight.layout" />
-    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormXY.layout" />
-    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBoxBrowser.layout" />
-    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormXYZ.layout" />
-    <EmbeddedResource Include="GUI\Editor\PropertiesForm\PropertiesFormTextBox.layout" />
     <EmbeddedResource Include="GUI\Editor\PropTimeline\PropTimeline.layout" />
     <EmbeddedResource Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
     <EmbeddedResource Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableRightHandProperties.layout" />
@@ -733,7 +691,6 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.layout" />

@@ -98,7 +98,7 @@ namespace Lecture
                     ImageBrowserWindow<T>.GetInput(browser, true, resultCallback, editorController.ResourceProvider, importFile);
                     break;
                 case Browser.DisplayHint.Sounds:
-                    BrowserWindow<T>.GetInput(browser, true, resultCallback, importFile, "Choose Sound", "Ogg Vorbis Files (.ogg)|*.ogg", ".ogg");
+                    BrowserWindow<T>.GetInput(MainWindow.Instance, browser, true, resultCallback, importFile, "Choose Sound", "Ogg Vorbis Files (.ogg)|*.ogg", ".ogg");
                     break;
                 default:
                     base.showBrowser<T>(browser, resultCallback);

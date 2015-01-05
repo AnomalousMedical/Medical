@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="183 108 186 34" layer="Back">
-        <Widget type="TextBox" skin="TextBox" position="0 0 186 15" align="HStretch Top" name="TextBox"/>
-        <Widget type="EditBox" skin="EditBox" position="0 14 186 20" align="HStretch Top" name="EditBox"/>
-    </Widget>
-</MyGUI>
