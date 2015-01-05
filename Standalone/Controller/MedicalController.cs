@@ -112,12 +112,12 @@ namespace Medical
                 mainWindow.show();
             };
 
-            CamerasInterface.CameraTransitionTime = MedicalConfig.CameraTransitionTime;
-            CamerasInterface.DefaultCameraButton = MedicalConfig.CameraMouseButton;
-            CamerasInterface.MoveCameraEventLayer = EventLayers.Cameras;
-            CamerasInterface.SelectWindowEventLayer = EventLayers.AfterGui;
-            CamerasInterface.TouchType = PlatformConfig.TouchType;
-            CamerasInterface.PanKey = PlatformConfig.PanKey;
+            GuiFrameworkCamerasInterface.CameraTransitionTime = MedicalConfig.CameraTransitionTime;
+            GuiFrameworkCamerasInterface.DefaultCameraButton = MedicalConfig.CameraMouseButton;
+            GuiFrameworkCamerasInterface.MoveCameraEventLayer = EventLayers.Cameras;
+            GuiFrameworkCamerasInterface.SelectWindowEventLayer = EventLayers.AfterGui;
+            GuiFrameworkCamerasInterface.TouchType = PlatformConfig.TouchType;
+            GuiFrameworkCamerasInterface.PanKey = PlatformConfig.PanKey;
 
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
@@ -129,7 +129,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(SimulationPlugin).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(RocketWidgetInterface).Assembly);
-            pluginManager.addPluginAssembly(typeof(CamerasInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(GuiFrameworkCamerasInterface).Assembly);
             pluginManager.initializePlugins();
 
             performanceMetricTimer = new NativeSystemTimer();
