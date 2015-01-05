@@ -332,9 +332,6 @@
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropView.cs" />
     <Compile Include="Controller\Editor\EditInterfaceConsumer.cs" />
     <Compile Include="Controller\Editor\EditInterfaceHandler.cs" />
-    <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ScrollingExpandingEditInterfaceViewer.cs" />
-    <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingEditInterfaceViewer.cs" />
-    <Compile Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.cs" />
     <Compile Include="GUI\Editor\GenericEditor\ExpandingGenericEditor.cs" />
     <Compile Include="GUI\Editor\GenericEditor\ExpandingGenericEditorView.cs" />
     <Compile Include="GUI\Editor\GenericEditor\GenericEditorComponent.cs" />
@@ -513,9 +510,6 @@
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\AddRemoveButtons.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\ColorEditCell.cs" />
-    <Compile Include="GUI\Editor\EditInterfaceTree\EditInterfaceTreeNode.cs" />
-    <Compile Include="GUI\Editor\EditInterfaceTree\EditInterfaceTreeView.cs" />
-    <Compile Include="GUI\Editor\EditInterfaceTree\EditInterfaceViewEvent.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\EditTableBrowserCell.cs" />
     <Compile Include="GUI\Editor\PropertiesTable\ICustomCellProvider.cs" />
     <Compile Include="GUI\Editor\ObjectEditor.cs" />
@@ -631,7 +625,6 @@
     <EmbeddedResource Include="GUI\Editor\AddItemDialog\AddItemDialog.layout" />
     <EmbeddedResource Include="GUI\Editor\ImageBrowserWindow.layout" />
     <EmbeddedResource Include="GUI\Editor\DragAndDrop\DragAndDropComponent.layout" />
-    <EmbeddedResource Include="GUI\Editor\ExpandingEditInterfaceViewer\ExpandingNode.layout" />
     <EmbeddedResource Include="GUI\Editor\GenericEditor\ExpandingGenericEditor.layout" />
     <EmbeddedResource Include="GUI\Editor\GenericEditor\GenericEditorComponent.layout">
       <SubType>Designer</SubType>
