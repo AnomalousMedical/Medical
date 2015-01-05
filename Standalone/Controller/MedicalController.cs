@@ -165,6 +165,8 @@ namespace Medical
             frameClearManager = new FrameClearManager(OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
 
             SoundConfig.initialize(MedicalConfig.ConfigFile);
+
+            GuiFrameworkInterface.Instance.handleCursors(mainWindow);
         }
 
         /// <summary>

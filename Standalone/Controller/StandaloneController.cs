@@ -123,7 +123,6 @@ namespace Medical
 
             //Initialize engine
             medicalController = new MedicalController(mainWindow);
-            mainWindow.setPointerManager(PointerManager.Instance);
             idleHandler = new IdleHandler(medicalController.MainTimer.OnIdle);
 
             PointerManager.Instance.Visible = false;
