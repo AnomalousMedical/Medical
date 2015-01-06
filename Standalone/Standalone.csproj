@@ -537,7 +537,6 @@
     <Compile Include="Controller\MovementSequence\MovementSequenceGroup.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceInfo.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceSet.cs" />
-    <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginManager.cs" />
