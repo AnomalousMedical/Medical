@@ -14,7 +14,6 @@ namespace Medical.Controller
         private Layout layout;
         private Widget mainWidget;
         private ProgressBar progressBar;
-        private OgreWindow ogreWindow;
         private OSWindow window;
         private TextBox statusText;
         Widget widgetPanel;
@@ -29,12 +28,16 @@ namespace Medical.Controller
         /// <summary>
         /// This event is called after the SplashScreen has been hidden completely.
         /// </summary>
-        public event EventHandler Hidden;
+        public event Action<SplashScreen> Hidden;
 
-        public SplashScreen(OSWindow window, OgreWindow ogreWindow, uint progressRange, String splashScreenLayoutFile, String splashScreenResourceFile)
+        /// <summary>
+        /// This event is fired when the status updates.
+        /// </summary>
+        public event Action<SplashScreen> StatusUpdated;
+
+        public SplashScreen(OSWindow window, uint progressRange, String splashScreenLayoutFile, String splashScreenResourceFile)
         {
             this.window = window;
-            this.ogreWindow = ogreWindow;
             window.Resized += window_Resized;
             SmoothShow = true;
 
@@ -60,8 +63,6 @@ namespace Medical.Controller
             resizingWidgets.AddRange(widgetPanel.Children.Where(c => c.isUserString("ResizeKeepAspectRatio")).Select(c => Tuple.Create(c, c.Coord)));
 
             resized();
-
-            ogreWindow.OgreRenderTarget.update();
         }
 
         public void Dispose()
@@ -74,7 +75,10 @@ namespace Medical.Controller
         {
             progressBar.Position = position;
             statusText.Caption = status;
-            ogreWindow.OgreRenderTarget.update();
+            if(StatusUpdated != null)
+            {
+                StatusUpdated.Invoke(this);
+            }
         }
 
         public void hide()
@@ -93,7 +97,7 @@ namespace Medical.Controller
                 {
                     if (Hidden != null)
                     {
-                        Hidden.Invoke(this, EventArgs.Empty);
+                        Hidden.Invoke(this);
                     }
                 }
             }
@@ -173,7 +177,7 @@ namespace Medical.Controller
                     mainWidget.Alpha = 0.0f;
                     if (Hidden != null)
                     {
-                        Hidden.Invoke(this, EventArgs.Empty);
+                        Hidden.Invoke(this);
                     }
                 }
                 else
