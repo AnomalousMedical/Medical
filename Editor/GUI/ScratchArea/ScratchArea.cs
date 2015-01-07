@@ -44,7 +44,7 @@ namespace Medical.GUI
             tree.layout();
         }
 
-        void editTreeView_EditInterfaceSelectionChanged(EditInterfaceViewEvent evt)
+        void editTreeView_EditInterfaceSelectionChanged(EditInterfaceViewEventArgs evt)
         {
             uiCallback.SelectedEditInterface = evt.EditInterface;
         }
