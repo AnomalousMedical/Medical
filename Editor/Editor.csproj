@@ -141,8 +141,6 @@
     <Compile Include="Controller\TypeControllerManager.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\ContextMenu\ContextMenu.cs" />
-    <Compile Include="GUI\ContextMenu\ContextMenuItem.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
     <Compile Include="GUI\EditorInfoBar\EditorInfoBarView.cs" />

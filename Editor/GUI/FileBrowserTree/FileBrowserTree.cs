@@ -7,6 +7,7 @@ using System.IO;
 using Engine.Platform;
 using Engine;
 using Logging;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {
@@ -211,19 +212,7 @@ namespace Medical.GUI
 
         public void showContextMenu(ContextMenu contextMenu)
         {
-            PopupMenu popupMenu = (PopupMenu)Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1, 1, Align.Default, "Overlapped", "");
-            popupMenu.Visible = false;
-            popupMenu.ItemAccept += new MyGUIEvent(popupMenu_ItemAccept);
-            popupMenu.Closed += new MyGUIEvent(popupMenu_Closed);
-            foreach (ContextMenuItem item in contextMenu.Items)
-            {
-                MenuItem menuItem = popupMenu.addItem(item.Text, MenuItemType.Normal, item.Text);
-                menuItem.UserObject = item;
-            }
-            LayerManager.Instance.upLayerItem(popupMenu);
-            popupMenu.setPosition(lastMouseEventPos.x, lastMouseEventPos.y);
-            popupMenu.ensureVisible();
-            popupMenu.setVisibleSmooth(true);
+            contextMenu.showMenu(lastMouseEventPos);
         }
 
         void fileTree_NodeMouseReleased(object sender, TreeMouseEventArgs e)
@@ -252,17 +241,6 @@ namespace Medical.GUI
                     }
                 }
             }
-        }
-
-        void popupMenu_ItemAccept(Widget source, EventArgs e)
-        {
-            MenuCtrlAcceptEventArgs mcae = (MenuCtrlAcceptEventArgs)e;
-            ((ContextMenuItem)mcae.Item.UserObject).execute();
-        }
-
-        void popupMenu_Closed(Widget source, EventArgs e)
-        {
-            Gui.Instance.destroyWidget(source);
         }
     }
 }
