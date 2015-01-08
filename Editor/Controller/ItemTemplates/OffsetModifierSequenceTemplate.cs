@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    [SingleEnum]
     public enum OffsetModiferSequenceType
     {
         Simple,

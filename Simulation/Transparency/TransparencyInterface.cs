@@ -11,7 +11,6 @@ using Engine.Platform;
 
 namespace Medical
 {
-    [SingleEnum]
     public enum RenderGroup
     {
         None,

@@ -8,7 +8,6 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    [SingleEnum]
     public enum ImageAlignment
     {
         LeftTop = 0,

@@ -11,7 +11,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 {
     public class ImageElementStyle : ElementStyleDefinition
     {
-        [SingleEnum]
         public enum ImageTextAlign
         {
             None,
