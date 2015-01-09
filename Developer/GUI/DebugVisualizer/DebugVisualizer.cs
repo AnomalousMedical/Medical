@@ -30,6 +30,8 @@ namespace Developer.GUI
 
         private ObjectEditor objectEditor;
 
+        private Splitter splitter;
+
         public DebugVisualizer(StandaloneController standaloneController)
             : base("Developer.GUI.DebugVisualizer.DebugVisualizer.layout")
         {
@@ -50,6 +52,10 @@ namespace Developer.GUI
             this.Resized += DebugVisualizer_Resized;
 
             currentScene = standaloneController.MedicalController.CurrentScene;
+
+            splitter = new Splitter(window.findWidget("Splitter"));
+            splitter.Widget1Resized += a => tree.layout();
+            splitter.Widget2Resized += a => propertiesForm.layout();
         }
 
         public override void Dispose()
@@ -130,8 +136,7 @@ namespace Developer.GUI
 
         void DebugVisualizer_Resized(object sender, EventArgs e)
         {
-            tree.layout();
-            propertiesForm.layout();
+            splitter.layout();
         }
 
         bool canParseBool(String str)

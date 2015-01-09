@@ -1,12 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="19 33 348 313" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="162 69 252 313" layer="Overlapped">
         <Property key="Caption" value="Debug Visualizer"/>
-        <Widget type="ScrollView" skin="ScrollView" position="0 0 111 280" align="HRelative VStretch" name="TreeScroller">
+        <UserString key="CurrentDockLocation" value="Right"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <Widget type="ScrollView" skin="ScrollView" position_real="0 0 1 0.325" align="HStretch Top" name="TreeScroller">
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="116 0 219 280" align="HRelative VStretch" name="TableScroller">
+        <Widget type="ScrollView" skin="ScrollView" position="0 95 240 184" align="Stretch" name="TableScroller">
             <Property key="CanvasAlign" value="Left Top"/>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="0 91 336 4" name="Splitter">
+            <UserString key="Widget1Name" value="TreeScroller"/>
+            <UserString key="Widget2Name" value="TableScroller"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
