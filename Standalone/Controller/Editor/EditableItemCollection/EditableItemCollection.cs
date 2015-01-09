@@ -131,9 +131,9 @@ namespace Medical.Editor
         /// want to support the items being movable in the list. It should be
         /// called from customizeEditInterface.
         /// </summary>
-        protected void addItemMovementCommands()
+        protected void addItemMovementCommands(EditInterfaceManager<ItemType> itemEdits)
         {
-            editInterface.addCommand(new EditInterfaceCommand("Move Up", callback =>
+            itemEdits.addCommand(new EditInterfaceCommand("Move Up", callback =>
             {
                 ItemType item = editInterface.resolveSourceObject<ItemType>(callback.getSelectedEditInterface());
                 int index = items.IndexOf(item) - 1;
@@ -145,7 +145,7 @@ namespace Medical.Editor
                 insert(index, item);
             }));
 
-            editInterface.addCommand(new EditInterfaceCommand("Move Down", callback =>
+            itemEdits.addCommand(new EditInterfaceCommand("Move Down", callback =>
             {
                 ItemType item = editInterface.resolveSourceObject<ItemType>(callback.getSelectedEditInterface());
                 int index = items.IndexOf(item) + 1;

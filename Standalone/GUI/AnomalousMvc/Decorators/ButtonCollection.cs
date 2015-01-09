@@ -44,7 +44,7 @@ namespace Medical.GUI.AnomalousMvc
                 }
             }));
 
-            addItemMovementCommands();
+            addItemMovementCommands(itemEdits);
         }
 
         protected ButtonCollection(LoadInfo info)
