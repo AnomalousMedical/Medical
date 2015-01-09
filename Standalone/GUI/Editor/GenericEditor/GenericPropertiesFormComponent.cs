@@ -29,6 +29,10 @@ namespace Medical.GUI
 
         private EditorController editorController;
 
+        private int gap;
+
+        private Splitter splitter;
+
         public GenericPropertiesFormComponent(MyGUIViewHost viewHost, GenericPropertiesFormView genericEditorView)
             : base(genericEditorView.HorizontalAlignment ? "Medical.GUI.Editor.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.Editor.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
         {
@@ -66,6 +70,22 @@ namespace Medical.GUI
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
 
             CurrentEditInterface = genericEditorView.EditInterface;
+
+            gap = tableScroller.Bottom - addRemoveButtons.Top;
+
+            splitter = new Splitter(widget.findWidget("Splitter"));
+            splitter.Widget1Resized += split => tree.layout();
+            splitter.Widget2Resized += split =>
+            {
+                if (contextualProperties.CurrentEditor == propertiesForm)
+                {
+                    propertiesForm.layout();
+                }
+                else
+                {
+                    table.layout();
+                }
+            };
         }
 
         public override void Dispose()
@@ -99,15 +119,7 @@ namespace Medical.GUI
         public override void topLevelResized()
         {
             base.topLevelResized();
-            tree.layout();
-            if(contextualProperties.CurrentEditor == propertiesForm)
-            {
-                propertiesForm.layout();
-            }
-            else
-            {
-                table.layout();
-            }
+            splitter.layout();
         }
 
         public void cut()
@@ -147,7 +159,7 @@ namespace Medical.GUI
         {
             if (visible)
             {
-                tableScroller.Height = widget.Height - addRemoveButtons.Height;
+                tableScroller.Height = widget.Height - (addRemoveButtons.Height - gap);
             }
             else
             {

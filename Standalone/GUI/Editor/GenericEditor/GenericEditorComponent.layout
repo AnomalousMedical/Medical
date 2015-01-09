@@ -1,19 +1,25 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="19 33 461 278" layer="Overlapped">
-        <Widget type="ScrollView" skin="ScrollView" position="0 0 230 278" align="HRelative VStretch" name="TreeScroller">
+    <Widget type="Widget" skin="PanelEmpty" position="19 33 461 364" layer="Overlapped">
+        <Widget type="ScrollView" skin="ScrollView" position="0 0 231 364" align="Left VStretch" name="TreeScroller">
             <Property key="CanvasAlign" value="Left Top"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="230 0 230 245" align="HRelative VStretch" name="TableScroller">
-            <Property key="CanvasAlign" value="Left Top"/>
+        <Widget type="Widget" skin="PanelEmpty" position="235 0 226 364" align="Stretch" name="PropertiesPanel">
+            <Widget type="ScrollView" skin="ScrollView" position="0 0 226 330" align="Stretch" name="TableScroller">
+                <Property key="CanvasAlign" value="Left Top"/>
+            </Widget>
+            <Widget type="Widget" skin="PanelEmpty" position="0 334 226 30" align="HStretch Bottom" name="AddRemovePanel">
+                <Widget type="Button" skin="Button" position="0 0 82 30" name="Add">
+                    <Property key="Caption" value="Add"/>
+                </Widget>
+                <Widget type="Button" skin="Button" position="86 0 82 30" name="Remove">
+                    <Property key="Caption" value="Remove"/>
+                </Widget>
+            </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="230 245 228 33" align="Right Bottom" name="AddRemovePanel">
-            <Widget type="Button" skin="Button" position="3 3 82 27" name="Add">
-                <Property key="Caption" value="Add"/>
-            </Widget>
-            <Widget type="Button" skin="Button" position="89 3 82 27" name="Remove">
-                <Property key="Caption" value="Remove"/>
-            </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="231 0 4 364" align="Left VStretch" name="Splitter">
+            <UserString key="Widget1Name" value="TreeScroller"/>
+            <UserString key="Widget2Name" value="PropertiesPanel"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>

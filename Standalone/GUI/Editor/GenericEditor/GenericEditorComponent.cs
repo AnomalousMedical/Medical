@@ -27,9 +27,12 @@ namespace Medical.GUI
         private ObjectEditor objectEditor;
 
         private String name;
+        private int gap;
 
         private EditorController editorController;
         private EditUICallback uiCallback;
+
+        private Splitter splitter;
 
         public GenericEditorComponent(MyGUIViewHost viewHost, GenericEditorView view, bool horizontalAlignment = true)
             : base(horizontalAlignment ? "Medical.GUI.Editor.GenericEditor.GenericEditorComponent.layout" : "Medical.GUI.Editor.GenericEditor.GenericEditorVerticalComponent.layout", viewHost)
@@ -50,6 +53,8 @@ namespace Medical.GUI
 
             objectEditor = new ObjectEditor(editTreeView, propTable, view.EditUICallback);
 
+            gap = tableScroller.Bottom - addRemoveButtons.Top;
+
             EditInterfaceHandler editInterfaceHandler = viewHost.Context.getModel<EditInterfaceHandler>(EditInterfaceHandler.DefaultName);
             if (editInterfaceHandler != null)
             {
@@ -57,6 +62,10 @@ namespace Medical.GUI
             }
 
             widget.RootKeyChangeFocus += new MyGUIEvent(widget_RootKeyChangeFocus);
+
+            splitter = new Splitter(widget.findWidget("Splitter"));
+            splitter.Widget1Resized += split => tree.layout();
+            splitter.Widget2Resized += split => table.layout();
         }
 
         public override void Dispose()
@@ -89,8 +98,7 @@ namespace Medical.GUI
         public override void topLevelResized()
         {
             base.topLevelResized();
-            tree.layout();
-            table.layout();
+            splitter.layout();
         }
 
         public void cut()
@@ -126,7 +134,7 @@ namespace Medical.GUI
         {
             if (visible)
             {
-                tableScroller.Height = widget.Height - addRemoveButtons.Height;
+                tableScroller.Height = widget.Height - (addRemoveButtons.Height - gap);
             }
             else
             {
