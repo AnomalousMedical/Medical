@@ -79,6 +79,7 @@
     <ResourceFiles Include="..\..\$(Configuration)\Lucene.Net.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.Cameras.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.Editor.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\OSPlatform.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\libRocketWidget.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
