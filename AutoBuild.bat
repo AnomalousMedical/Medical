@@ -20,9 +20,3 @@ set SolutionPath=%ThisFolder%%SolutionName%
 
 %BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="x64" /target:Clean
 %BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="x64"
-
-%BuildCommand% "%SolutionPath%" /property:Configuration=PublicRelease;Platform="Any CPU" /target:Clean
-%BuildCommand% "%SolutionPath%" /property:Configuration=PublicRelease;Platform="Any CPU"
-
-%BuildCommand% "%SolutionPath%" /property:Configuration=PublicRelease;Platform="x64" /target:Clean
-%BuildCommand% "%SolutionPath%" /property:Configuration=PublicRelease;Platform="x64"
