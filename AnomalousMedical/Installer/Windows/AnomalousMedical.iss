@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Anomalous Medical"
-#define MyAppVersion GetFileVersion("S:\Medical\PublicRelease\AnomalousMedical.exe")
+#define MyAppVersion GetFileVersion("..\..\..\PublicRelease\AnomalousMedical.exe")
 #define MyAppPublisher "Anomalous Medical"
 #define MyAppURL "http://www.anomalousmedical.com"
 #define MyAppExeName "AnomalousMedical.exe"
@@ -21,8 +21,8 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\Anomalous Medical\Platform
 DefaultGroupName=Anomalous Medical
-LicenseFile=S:\Medical\AnomalousMedical\Installer\License\en.rtf
-OutputDir=S:\Medical\PublicRelease\Setups
+LicenseFile=..\..\..\AnomalousMedical\Installer\License\en.rtf
+OutputDir=..\..\..\PublicRelease\Setups
 OutputBaseFilename=AnomalousMedicalSetup
 Compression=lzma
 SolidCompression=yes
@@ -35,48 +35,48 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: S:\Medical\PublicRelease\AnomalousMedical.exe; DestDir: {app}; Flags: ignoreversion 
-Source: S:\Medical\PublicRelease\BEPUikPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\BulletPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\Engine.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\MyGUIPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\libRocketPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\Simulation.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\SoundPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\Standalone.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\DotNetZip.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\Mono.Anomalous.Security.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\FreeImageNET.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\Lucene.Net.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\GuiFramework.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\GuiFramework.Cameras.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\GuiFramework.Editor.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\AnomalousMedical.exe; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\PublicRelease\BEPUikPlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\BulletPlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Engine.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\MyGUIPlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\libRocketPlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Simulation.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\SoundPlugin.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Standalone.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\DotNetZip.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Mono.Anomalous.Security.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\FreeImageNET.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Lucene.Net.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\GuiFramework.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\GuiFramework.Cameras.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\GuiFramework.Editor.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
 
 ;x86 Files
-Source: S:\Medical\PublicRelease\x86\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\d3dcompiler_47.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\FreeImage.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\libRocketWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\MyGUIWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\OgreCWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\OgreMain.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\OpenAL32.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\OSHelper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\RenderSystem_Direct3D11.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\RenderSystem_GL.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\SoundWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\x86\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\d3dcompiler_47.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\FreeImage.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\libRocketWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\MyGUIWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\OgreCWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\OgreMain.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\OpenAL32.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\OSHelper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\RenderSystem_Direct3D11.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\RenderSystem_GL.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\SoundWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\x86\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
 
 ;Microcode Caches
-Source: S:\Medical\PublicRelease\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
-Source: S:\Medical\PublicRelease\OpenGL Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\OpenGL Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
 
 ;VS 2013 Redistributable
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
