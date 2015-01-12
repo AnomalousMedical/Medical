@@ -7,14 +7,6 @@
 #define MyAppURL "http://www.anomalousmedical.com"
 #define MyAppExeName "AnomalousMedical.exe"
 
-#if Exec('S:\DRM\CodeKey\SignRelease.bat') != 0
-#error Could not sign
-#endif
-
-#if Exec('S:\Medical\AnomalousMedical\Installer\Windows\CopyInternalPluginDlls.bat') != 0
-#error Could not copy plugin dlls
-#endif
-
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.

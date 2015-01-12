@@ -1,5 +1,0 @@
-xcopy /Y "..\..\..\PublicRelease\Premium.dll" "..\..\..\PublicRelease\Setups\Premium.dll"
-xcopy /Y "..\..\..\PublicRelease\DentalSim.dll" "..\..\..\PublicRelease\Setups\DentalSim.dll"
-xcopy /Y "..\..\..\PublicRelease\Editor.dll" "..\..\..\PublicRelease\Setups\Editor.dll"
-xcopy /Y "..\..\..\PublicRelease\Lecture.dll" "..\..\..\PublicRelease\Setups\Lecture.dll"
-xcopy /Y "..\..\..\PublicRelease\StoreManager.dll" "..\..\..\PublicRelease\Setups\StoreManager.dll"
