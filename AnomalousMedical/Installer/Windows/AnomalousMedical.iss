@@ -27,6 +27,7 @@ OutputBaseFilename=AnomalousMedicalSetup
 Compression=lzma
 SolidCompression=yes
 SignTool=AnomalousMedicalSign $qAnomalous Medical Installer$q $f
+UninstallDisplayIcon={app}\AnomalousMedical.exe,0
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
