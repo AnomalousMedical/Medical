@@ -17,12 +17,6 @@ set SolutionPath=%ThisFolder%%SolutionName%
 %BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="Any CPU" /target:Clean
 %BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="Any CPU"
 
-%BuildCommand% "%SolutionPath%" /property:Configuration=Debug;Platform="x64" /target:Clean
-%BuildCommand% "%SolutionPath%" /property:Configuration=Debug;Platform="x64"
-
-%BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="x64" /target:Clean
-%BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="x64"
-
 %SignCommand% "Premium Features" "%OutputFolder%Premium.dll"
 %SignCommand% "Dental Simulation" "%OutputFolder%DentalSim.dll"
 %SignCommand% "Developer" "%OutputFolder%Developer.dll"
