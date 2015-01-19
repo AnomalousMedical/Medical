@@ -39,8 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectPlugin", "KinectPlugi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movement", "Movement\Movement.csproj", "{207F9849-EF23-4677-B825-F43D05F78C00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeLibraries64", "NativeLibraries64\NativeLibraries64.csproj", "{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedical64", "AnomalousMedical64\AnomalousMedical64.csproj", "{C5B4384E-1A31-439D-966A-13DD87432942}"
 EndProject
 Global
@@ -128,11 +126,6 @@ Global
 		{207F9849-EF23-4677-B825-F43D05F78C00}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
 		{207F9849-EF23-4677-B825-F43D05F78C00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{207F9849-EF23-4677-B825-F43D05F78C00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}.PublicRelease|Any CPU.ActiveCfg = PublicRelease|Any CPU
-		{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
-		{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{588C2E30-F42D-4AB5-B99F-3A0B388AAA29}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C5B4384E-1A31-439D-966A-13DD87432942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5B4384E-1A31-439D-966A-13DD87432942}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5B4384E-1A31-439D-966A-13DD87432942}.PublicRelease|Any CPU.ActiveCfg = PublicRelease|Any CPU
