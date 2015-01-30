@@ -1,26 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Engine.Platform;
 using Logging;
-using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 using Anomalous.OSPlatform;
+using Engine.Platform;
+using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Medical
 {
-    class WindowsPlatformConfig : PlatformConfig
+    public class iOSPlatformConfig : PlatformConfig
     {
-        public WindowsPlatformConfig()
+        public iOSPlatformConfig()
         {
-            Log.ImportantInfo("Platform is Windows");
+            Log.ImportantInfo("Platform is iOS");
         }
 
         protected override String formatTitleImpl(String windowText, String subText)
         {
-            return String.Format("{0} - {1}", windowText, subText);
+            return subText;
         }
 
         protected override TouchType TouchTypeImpl
@@ -35,7 +32,7 @@ namespace Medical
         {
             get
             {
-                return MyGUIPlugin.MyGUIInterface.DefaultWindowsTheme;
+                return MyGUIPlugin.MyGUIInterface.DefaultOSXTheme;
             }
         }
 
@@ -43,7 +40,7 @@ namespace Medical
         {
             get
             {
-                return true;
+                return false;
             }
         }
 
@@ -51,7 +48,7 @@ namespace Medical
         {
             get
             {
-                return MouseButtonCode.MB_BUTTON1;
+                return MouseButtonCode.MB_BUTTON0;
             }
         }
 
@@ -59,7 +56,7 @@ namespace Medical
         {
             get
             {
-                return true;
+                return false;
             }
         }
 
@@ -67,7 +64,7 @@ namespace Medical
         {
             get
             {
-                return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                return MacOSXFunctions.LocalUserDocumentsFolder;
             }
         }
 
@@ -75,7 +72,7 @@ namespace Medical
         {
             get
             {
-                return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+                return MacOSXFunctions.LocalDataFolder;
             }
         }
 
@@ -83,7 +80,7 @@ namespace Medical
         {
             get
             {
-                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                return MacOSXFunctions.LocalPrivateDataFolder;
             }
         }
 
@@ -91,7 +88,7 @@ namespace Medical
         {
             get
             {
-                return true;
+                return false;
             }
         }
 
@@ -99,7 +96,7 @@ namespace Medical
         {
             get
             {
-                return KeyboardButtonCode.KC_LCONTROL;
+                return KeyboardButtonCode.KC_LWIN;
             }
         }
 
@@ -107,7 +104,7 @@ namespace Medical
         {
             get
             {
-                return "override.ini";
+                return "../../../override.ini";
             }
         }
 
@@ -115,8 +112,14 @@ namespace Medical
         {
             get
             {
-                String[] args = Environment.GetCommandLineArgs();
-                return new ProcessStartInfo(args[0]);
+                String appBundle = Path.GetFullPath("../../");
+                if (appBundle.Length > 1)
+                {
+                    appBundle = appBundle.Substring(0, appBundle.Length - 1);
+                }
+                ProcessStartInfo startInfo = new ProcessStartInfo("open", String.Format("-a '{0}' -n", appBundle));
+                startInfo.UseShellExecute = false;
+                return startInfo;
             }
         }
 
@@ -124,11 +127,7 @@ namespace Medical
         {
             get
             {
-                var startInfo = RestartProcInfoImpl;
-                startInfo.Verb = "runas";
-                startInfo.UseShellExecute = true;
-
-                return startInfo;
+                return RestartProcInfoImpl;
             }
         }
 
@@ -144,7 +143,7 @@ namespace Medical
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
@@ -152,26 +151,18 @@ namespace Medical
         {
             get
             {
-                String[] args = Environment.GetCommandLineArgs();
-                if (args.Length > 0)
-                {
-                    return Path.GetDirectoryName(args[0]);
-                }
-                else
-                {
-                    return Path.GetFullPath(".");
-                }
+                return Path.GetFullPath("./..");
             }
         }
 
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
-            throw new NotImplementedException();
-		}
+            return MacOSXFunctions.TrustSSLCertificate(certificate, hostName);
+        }
 
         protected override void moveConfigurationIfNeededImpl()
         {
-            
+
         }
     }
 }

@@ -63,15 +63,7 @@ namespace Medical
             {
                 if (programFolder == null)
                 {
-                    String[] args = Environment.GetCommandLineArgs();
-                    if (args.Length > 0)
-                    {
-                        programFolder = Path.GetDirectoryName(args[0]);
-                    }
-                    else
-                    {
-                        programFolder = Path.GetFullPath(".");
-                    }
+                    programFolder = PlatformConfig.ExecutablePath;
                 }
                 return programFolder;
             }

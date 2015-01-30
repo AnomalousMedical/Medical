@@ -152,6 +152,22 @@ namespace Medical
             }
         }
 
+        protected override string ExecutablePathImpl
+        {
+            get
+            {
+                String[] args = Environment.GetCommandLineArgs();
+                if (args.Length > 0)
+                {
+                    return Path.GetDirectoryName(args[0]);
+                }
+                else
+                {
+                    return Path.GetFullPath(".");
+                }
+            }
+        }
+
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
             return MacOSXFunctions.TrustSSLCertificate(certificate, hostName);

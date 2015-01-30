@@ -24,6 +24,9 @@ namespace Medical
                 case RuntimeOperatingSystem.Mac:
                     currentConfig = new MacPlatformConfig();
                     break;
+                case RuntimeOperatingSystem.iOS:
+                    currentConfig = new iOSPlatformConfig();
+                    break;
                 default:
                     throw new Exception("Could not find platform configuration.");
             }
@@ -166,6 +169,14 @@ namespace Medical
             }
         }
 
+        public static String ExecutablePath
+        {
+            get
+            {
+                return currentConfig.ExecutablePathImpl;
+            }
+        }
+
         public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
         {
             return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
@@ -211,6 +222,8 @@ namespace Medical
         protected abstract bool DefaultEnableMultitouchImpl { get; }
 
         protected abstract bool HasCustomSSLValidationImpl { get; }
+
+        protected abstract string ExecutablePathImpl { get; }
 
         protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
 
