@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicaliOS", "AnomalousMedicaliOS\AnomalousMedicaliOS.csproj", "{7E58D211-9717-4055-A194-02EA5C142774}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E58D211-9717-4055-A194-02EA5C142774}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{7E58D211-9717-4055-A194-02EA5C142774}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{7E58D211-9717-4055-A194-02EA5C142774}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{7E58D211-9717-4055-A194-02EA5C142774}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{7E58D211-9717-4055-A194-02EA5C142774}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{7E58D211-9717-4055-A194-02EA5C142774}.Debug|iPhone.Build.0 = Debug|iPhone
+		{7E58D211-9717-4055-A194-02EA5C142774}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{7E58D211-9717-4055-A194-02EA5C142774}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{7E58D211-9717-4055-A194-02EA5C142774}.Release|iPhone.ActiveCfg = Release|iPhone
+		{7E58D211-9717-4055-A194-02EA5C142774}.Release|iPhone.Build.0 = Release|iPhone
+		{7E58D211-9717-4055-A194-02EA5C142774}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{7E58D211-9717-4055-A194-02EA5C142774}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+EndGlobal
