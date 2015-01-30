@@ -52,6 +52,9 @@
     <MtouchProfiling>true</MtouchProfiling>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchExtraArgs>-compiler:clang++ -gcc_flags "-framework OpenAL"</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -99,6 +102,9 @@
     <Reference Include="AnomalousMedical">
       <HintPath>..\Release\AnomalousMedical.exe</HintPath>
     </Reference>
+    <Reference Include="Engine">
+      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
@@ -114,4 +120,114 @@
     <Compile Include="Main.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\lib\Release\libBulletCollision.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\lib\Release\libBulletDynamics.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\lib\Release\libBulletMultiThreaded.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\lib\Release\libBulletSoftBody.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\lib\Release\libConvexDecomposition.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\lib\Release\libLinearMath.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\libRocket\iOSBuild\Release\libRocketControls.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\libRocket\iOSBuild\Release\libRocketCore.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\libRocket\iOSBuild\Release\libRocketDebugger.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\MyGUI\iOSBuild\lib\Release\libMyGUI.OgrePlatform.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\MyGUI\iOSBuild\lib\Release\libMyGUIEngineStatic.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\oggvorbis\libogg\ios\build\Release\libOgg.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\oggvorbis\libvorbis\ios\build\Release\libVorbis.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\Ogre\iOSBuild\lib\Release\libOgreMainStatic.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\Ogre\iOSBuild\lib\Release\libRenderSystem_GLES2Static.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\OgreDeps\iOSInstall\lib\Release\libFreeImage.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\OgreDeps\iOSInstall\lib\Release\libfreetype.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Dependencies\OgreDeps\iOSInstall\lib\Release\libzziplib.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Engine\BulletWrapper\iOS\build\Release\libBulletWrapper.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Engine\libRocketWrapper\iOS\build\Release\liblibRocketWrapper.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Engine\MyGUIWrapper\iOS\build\Release\libMyGUIWrapper.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Engine\OgreCWrapper\iOS\build\Release\libOgreCWrapper.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Engine\OSHelper\iOS\build\Release\libOSHelper.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Engine\SoundWrapper\iOS\build\Release\libSoundWrapper.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+    <NativeReference Include="..\..\Engine\Zip\iOS\build\Release\libZip.a">
+      <IsCxx>False</IsCxx>
+      <Kind>Static</Kind>
+    </NativeReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Release\AnomalousMedical.dat">
+      <Link>AnomalousMedical.dat</Link>
+    </Content>
+    <Content Include="..\Release\IntroductionTutorial.dat">
+      <Link>IntroductionTutorial.dat</Link>
+    </Content>
+  </ItemGroup>
 </Project>
