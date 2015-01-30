@@ -151,7 +151,7 @@ namespace Medical
         {
             get
             {
-                return Path.GetFullPath("./..");
+                return Path.GetFullPath(".");
             }
         }
 
