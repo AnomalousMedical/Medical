@@ -293,6 +293,7 @@
     <Compile Include="Controller\TaskController\RunMvcContextActionTask.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
     <Compile Include="Controller\Timeline\ActionSequencer.cs" />
+    <Compile Include="Controller\TouchMouseGuiForwarder.cs" />
     <Compile Include="Controller\Update\PluginUpdateInfo.cs" />
     <Compile Include="Controller\Update\ServerUpdateInfo.cs" />
     <Compile Include="Controller\Update\UpdateException.cs" />

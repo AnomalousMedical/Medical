@@ -45,6 +45,14 @@ namespace Medical
             }
         }
 
+        public static bool ForwardTouchAsMouse
+        {
+            get
+            {
+                return currentConfig.ForwardTouchAsMouseImpl;
+            }
+        }
+
         public static String ThemeFile
         {
             get
@@ -196,6 +204,8 @@ namespace Medical
         protected abstract String formatTitleImpl(String windowText, String subText);
 
         protected abstract TouchType TouchTypeImpl { get; }
+
+        protected abstract bool ForwardTouchAsMouseImpl { get; }
 
         protected abstract String ThemeFileImpl { get; }
 

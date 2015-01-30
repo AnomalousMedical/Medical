@@ -171,6 +171,11 @@ namespace Medical
             SoundConfig.initialize(MedicalConfig.ConfigFile);
 
             GuiFrameworkInterface.Instance.handleCursors(mainWindow);
+
+            if(PlatformConfig.ForwardTouchAsMouse)
+            {
+                new TouchMouseGuiForwarder(eventManager, mainWindow); //Will be kept alive by the things it subscribes to
+            }
         }
 
         /// <summary>

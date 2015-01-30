@@ -31,6 +31,14 @@ namespace Medical
             }
         }
 
+        protected override bool ForwardTouchAsMouseImpl
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         protected override String ThemeFileImpl
         {
             get
