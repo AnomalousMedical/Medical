@@ -6,7 +6,6 @@ using Engine.ObjectManagement;
 using MyGUIPlugin;
 using Medical.Controller;
 using OgrePlugin;
-using System.Diagnostics;
 using Medical.GUI;
 using Engine;
 using Anomalous.GuiFramework;

@@ -5,7 +5,6 @@ using System.Text;
 using Engine.ObjectManagement;
 using MyGUIPlugin;
 using Medical.Controller;
-using System.Diagnostics;
 using Medical.GUI;
 using Engine;
 using Medical.Movement.GUI;

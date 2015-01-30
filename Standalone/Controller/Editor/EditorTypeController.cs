@@ -25,11 +25,6 @@ namespace Medical
 
         public abstract void closeFile(String file);
 
-        public virtual void fileChanged(FileSystemEventArgs e, String extension)
-        {
-
-        }
-
         public virtual ProjectItemTemplate createItemTemplate()
         {
             return null;
