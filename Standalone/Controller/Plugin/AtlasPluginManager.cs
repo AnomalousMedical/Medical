@@ -452,6 +452,7 @@ namespace Medical
                 {
                     firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", plugin.PluginName));
                     Log.Error("Cannot load plugin '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", plugin.PluginName, plugin.Location, e.Message);
+					Log.Default.printException(e);
                     try
                     {
                         File.Delete(plugin.Location);

@@ -36,7 +36,18 @@ namespace Medical.Controller
             {
                 currentRocketWidget = rocketWidget;
                 String tag = element.TagName;
-                window.setOnscreenKeyboardVisible(tag == "input" || tag == "textarea");
+				bool makeKeyboardVisible = false;
+				switch (tag) 
+				{
+					case "input":
+						String type = element.GetAttributeString ("type");
+						makeKeyboardVisible = type == "text" || type == "password";
+						break;
+					case "textarea":
+						makeKeyboardVisible = true;
+						break;
+				}
+				window.setOnscreenKeyboardVisible(makeKeyboardVisible);
             }
         }
 
