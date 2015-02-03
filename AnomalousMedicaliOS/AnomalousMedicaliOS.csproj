@@ -54,7 +54,7 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchI18n>
     </MtouchI18n>
-    <MtouchExtraArgs>-compiler:clang++ -gcc_flags "-framework OpenAL"</MtouchExtraArgs>
+    <MtouchExtraArgs>-compiler:clang++ -gcc_flags "-framework OpenAL -framework Security"</MtouchExtraArgs>
     <IpaPackageName>
     </IpaPackageName>
   </PropertyGroup>
