@@ -79,6 +79,7 @@ namespace Medical
         [Editable] private int renderGroupOffset = 0;
         [Editable] private uint subEntityIndex = 0;
         [Editable] private bool useDepthCheck = false;
+        [Editable] private bool useHiddenMaterialIfSoftwareSkinned = false; //If this is true and the model is software skinned the hidden material will be used instead of disabling the entity, this overrides disableOnHidden
 
         [Editable] public String ObjectName { get; private set; }
         [Editable] public RenderGroup RenderGroup { get; private set; }
@@ -218,6 +219,11 @@ namespace Medical
                 {
                     blacklist("Cannot find entity named '{0}' in node '{1}'.", entityName, nodeName);
                 }
+            }
+
+            if(useHiddenMaterialIfSoftwareSkinned && !entity.isHardwareAnimationEnabled())
+            {
+                disableOnHidden = false;
             }
 
             if (subEntityIndex >= entity.getNumSubEntities())
