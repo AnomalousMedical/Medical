@@ -26,6 +26,7 @@ namespace Medical.Controller
         {
             this.touches = eventManager.Touches;
             this.touches.FingerStarted += HandleFingerStarted;
+            this.inputHandler = inputHandler;
             this.window = window;
             InputManager.Instance.ChangeKeyFocus += HandleChangeKeyFocus;
             RocketWidget.ElementFocused += HandleElementFocused;
