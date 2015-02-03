@@ -174,7 +174,7 @@ namespace Medical
 
             if(PlatformConfig.ForwardTouchAsMouse)
             {
-                new TouchMouseGuiForwarder(eventManager, mainWindow); //Will be kept alive by the things it subscribes to
+                new TouchMouseGuiForwarder(eventManager, inputHandler, mainWindow); //Will be kept alive by the things it subscribes to
             }
         }
 

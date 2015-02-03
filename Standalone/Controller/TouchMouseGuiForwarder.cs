@@ -20,8 +20,9 @@ namespace Medical.Controller
         private Touches touches; //Ghetto
         private NativeOSWindow window;
         private RocketWidget currentRocketWidget;
+        private NativeInputHandler inputHandler;
 
-        public TouchMouseGuiForwarder(EventManager eventManager, NativeOSWindow window)
+        public TouchMouseGuiForwarder(EventManager eventManager, NativeInputHandler inputHandler, NativeOSWindow window)
         {
             this.touches = eventManager.Touches;
             this.touches.FingerStarted += HandleFingerStarted;
@@ -68,7 +69,7 @@ namespace Medical.Controller
                 touches.FingerEnded += fingerEnded;
                 touches.FingerMoved += HandleFingerMoved;
                 gestureStartPos = new IntVector2(finger.PixelX, finger.PixelY);
-                InputManager.Instance.injectMousePress(obj.PixelX, obj.PixelY, MouseButtonCode.MB_BUTTON0);
+                inputHandler.injectButtonDown(MouseButtonCode.MB_BUTTON0);
             }
         }
 
@@ -76,7 +77,7 @@ namespace Medical.Controller
         {
             if (obj.Id == currentFingerId)
             {
-                InputManager.Instance.injectMouseMove(obj.PixelX, obj.PixelY, 0);
+                inputHandler.injectMoved(obj.PixelX, obj.PixelY);
             }
         }
 
@@ -87,7 +88,7 @@ namespace Medical.Controller
                 touches.FingerEnded -= fingerEnded;
                 touches.FingerMoved -= HandleFingerMoved;
                 currentFingerId = int.MinValue;
-                InputManager.Instance.injectMouseRelease(obj.PixelX, obj.PixelY, MouseButtonCode.MB_BUTTON0);
+                inputHandler.injectButtonUp(MouseButtonCode.MB_BUTTON0);
             }
         }
     }
