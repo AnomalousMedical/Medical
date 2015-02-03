@@ -70,6 +70,7 @@ namespace Medical.Controller
                 touches.FingerEnded += fingerEnded;
                 touches.FingerMoved += HandleFingerMoved;
                 gestureStartPos = new IntVector2(finger.PixelX, finger.PixelY);
+                inputHandler.injectMoved(finger.PixelX, finger.PixelY);
                 inputHandler.injectButtonDown(MouseButtonCode.MB_BUTTON0);
             }
         }
@@ -89,6 +90,7 @@ namespace Medical.Controller
                 touches.FingerEnded -= fingerEnded;
                 touches.FingerMoved -= HandleFingerMoved;
                 currentFingerId = int.MinValue;
+                inputHandler.injectMoved(obj.PixelX, obj.PixelY);
                 inputHandler.injectButtonUp(MouseButtonCode.MB_BUTTON0);
             }
         }
