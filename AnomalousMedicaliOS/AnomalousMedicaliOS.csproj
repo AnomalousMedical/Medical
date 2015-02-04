@@ -68,7 +68,7 @@
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchExtraArgs>-compiler:clang++ -gcc_flags "-framework OpenAL"</MtouchExtraArgs>
+    <MtouchExtraArgs>-compiler:clang++ -gcc_flags "-framework OpenAL -framework Security"</MtouchExtraArgs>
     <MtouchI18n>
     </MtouchI18n>
   </PropertyGroup>
@@ -109,6 +109,9 @@
     </Reference>
     <Reference Include="Engine">
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Premium">
+      <HintPath>..\Release\Premium.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
