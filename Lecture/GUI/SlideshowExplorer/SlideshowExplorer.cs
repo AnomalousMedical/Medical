@@ -674,13 +674,13 @@ namespace Lecture.GUI
                 selectedItemLocation.Top += clientCoord.top;
                 if (selectedItemLocation.Top < 0)
                 {
-                    Vector2 canvasPos = scroll.CanvasPosition;
+                    IntVector2 canvasPos = scroll.CanvasPosition;
                     canvasPos.y += selectedItemLocation.Top;
                     scroll.CanvasPosition = canvasPos;
                 }
                 else if (selectedItemLocation.Bottom > viewCoord.height)
                 {
-                    Vector2 canvasPos = scroll.CanvasPosition;
+                    IntVector2 canvasPos = scroll.CanvasPosition;
                     canvasPos.y += (selectedItemLocation.Bottom - viewCoord.height);
                     scroll.CanvasPosition = canvasPos;
                 }
