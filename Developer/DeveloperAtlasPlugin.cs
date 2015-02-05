@@ -14,7 +14,7 @@ using Anomalous.GuiFramework;
 
 namespace Developer
 {
-    class DeveloperAtlasPlugin : AtlasPlugin
+    public class DeveloperAtlasPlugin : AtlasPlugin
     {
         private DataFilePublisher dataFilePublisher;
         private DeveloperRenderPropertiesDialog developerRenderer;

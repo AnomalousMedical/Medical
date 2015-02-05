@@ -14,7 +14,7 @@ using Anomalous.GuiFramework;
 
 namespace DentalSim
 {
-    class DentalSimPlugin : AtlasPlugin
+    public class DentalSimPlugin : AtlasPlugin
     {
         //Dialogs
         private MandibleMovementDialog mandibleMovementDialog;

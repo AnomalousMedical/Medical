@@ -113,6 +113,21 @@
     <Reference Include="Premium">
       <HintPath>..\Release\Premium.dll</HintPath>
     </Reference>
+    <Reference Include="OSPlatform">
+      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Standalone">
+      <HintPath>..\Release\Standalone.dll</HintPath>
+    </Reference>
+    <Reference Include="DentalSim">
+      <HintPath>..\Release\DentalSim.dll</HintPath>
+    </Reference>
+    <Reference Include="Movement">
+      <HintPath>..\Release\Movement.dll</HintPath>
+    </Reference>
+    <Reference Include="Developer">
+      <HintPath>..\Release\Developer.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />

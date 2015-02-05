@@ -16,7 +16,7 @@ using Anomalous.GuiFramework.Cameras;
 
 namespace Medical
 {
-    class AnomalousController : App
+    public class AnomalousController : App
     {
         private const int LoadingServerFilesPosition = 5;
         private const int InitializingCorePosition = 10;
@@ -41,6 +41,8 @@ namespace Medical
         private LicenseDisplayManager licenseDisplay = new LicenseDisplayManager();
         private Engine.Resources.ResourceGroup commonResources;
         private AnomalousMainPlugin mainPlugin;
+
+		public event Action<AnomalousController, StandaloneController> AddAdditionalPlugins;
 
         public AnomalousController()
         {
@@ -289,6 +291,11 @@ namespace Medical
             controller.AtlasPluginManager.addPlugin(mainPlugin);
             loadStatus.Current++;
             yield return loadStatus;
+
+			if(AddAdditionalPlugins != null)
+			{
+				AddAdditionalPlugins.Invoke(this, controller);
+			}
 
             foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
             {
