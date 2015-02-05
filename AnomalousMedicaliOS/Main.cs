@@ -17,9 +17,9 @@ namespace AnomalousMedicaliOS
 		// This is the main entry point of the application.
 		static void Main (string[] args)
 		{
+			#if DEBUG
 			Logging.Log.Default.addLogListener(new Logging.LogConsoleListener());
-
-			StartupManager.SetupDllDirectories();
+			#endif
 
 			AnomalousController anomalous = null;
 			try
