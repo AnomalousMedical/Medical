@@ -17,6 +17,7 @@ namespace Medical.GUI
         private EventLayer currentEventLayer = null;
         private TravelTracker travelTracker = new TravelTracker();
         private IEnumerator<Anatomy> currentClickAnatomy = null;
+        private IntVector3 lastMousePos;
 
         /// <summary>
         /// Constructor.
@@ -39,6 +40,7 @@ namespace Medical.GUI
             PreviousMatch = null;
             if(currentClickAnatomy.MoveNext())
             {
+                lastMousePos = currentEventLayer.Mouse.AbsolutePosition;
                 currentEventLayer.Mouse.Moved += Mouse_Moved;
                 travelTracker.reset();
             }
@@ -105,7 +107,8 @@ namespace Medical.GUI
 
         void Mouse_Moved(Mouse mouse)
         {
-            travelTracker.traveled(mouse.RelativePosition);
+            travelTracker.traveled(mouse.AbsolutePosition - lastMousePos); //Have to use absolute position since RelativePosition has not been calculated
+            lastMousePos = mouse.AbsolutePosition;
             if(travelTracker.TraveledOverLimit)
             {
                 stopListeningToEvents();
