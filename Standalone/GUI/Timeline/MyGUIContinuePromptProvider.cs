@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -14,7 +15,7 @@ namespace Medical.GUI
         {
             button = (Button)Gui.Instance.createWidgetT("Button", "Button", 0, 0, 100, 25, Align.Default, "Overlapped", "");
             button.Caption = "Continue";
-            button.setSize((int)button.getTextSize().Width + 25, 25);
+            button.setSize((int)button.getTextSize().Width + ScaleHelper.Scaled(25), ScaleHelper.Scaled(25));
             button.Visible = false;
             button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
         }
@@ -29,7 +30,7 @@ namespace Medical.GUI
             ensureVisible(RenderManager.Instance.ViewWidth, RenderManager.Instance.ViewHeight);
             LayerManager.Instance.upLayerItem(button);
             button.Caption = text;
-            button.setSize((int)button.getTextSize().Width + 25, 25);
+            button.setSize((int)button.getTextSize().Width + ScaleHelper.Scaled(25), ScaleHelper.Scaled(25));
             button.Visible = true;
         }
 
