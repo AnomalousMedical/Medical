@@ -51,6 +51,62 @@
       <Link>Release\x64\FreeImage.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\Engine\Debug\x64\BulletWrapper.dll">
+      <Link>Debug\x64\BulletWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\d3dcompiler_47.dll">
+      <Link>Debug\x64\d3dcompiler_47.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\FreeImage_d.dll">
+      <Link>Debug\x64\FreeImage_d.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\libRocketWrapper.dll">
+      <Link>Debug\x64\libRocketWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\MyGUIWrapper.dll">
+      <Link>Debug\x64\MyGUIWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\OgreCWrapper.dll">
+      <Link>Debug\x64\OgreCWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\OgreMain_d.dll">
+      <Link>Debug\x64\OgreMain_d.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\OpenAL32.dll">
+      <Link>Debug\x64\OpenAL32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\OSHelper.dll">
+      <Link>Debug\x64\OSHelper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\RenderSystem_Direct3D11_d.dll">
+      <Link>Debug\x64\RenderSystem_Direct3D11_d.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\RenderSystem_GL_d.dll">
+      <Link>Debug\x64\RenderSystem_GL_d.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\SoundWrapper.dll">
+      <Link>Debug\x64\SoundWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\WinMTDriver.dll">
+      <Link>Debug\x64\WinMTDriver.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Debug\x64\Zip.dll">
+      <Link>Debug\x64\Zip.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Engine\Debug\x86\BulletWrapper.dll">
       <Link>Debug\x86\BulletWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
