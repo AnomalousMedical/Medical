@@ -172,6 +172,14 @@ namespace Medical
             }
         }
 
+        protected override int DefaultFPSCapImpl
+        {
+            get
+            {
+                return 60;
+            }
+        }
+
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
             throw new NotImplementedException();

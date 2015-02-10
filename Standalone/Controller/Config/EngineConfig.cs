@@ -24,7 +24,7 @@ namespace Medical
         {
             get
             {
-                int fpsCap = section.getValue("FPSCap", 60);
+                int fpsCap = section.getValue("FPSCap", PlatformConfig.DefaultFPSCap);
                 if (fpsCap < MinimumAllowedFramerate && fpsCap != 0)
                 {
                     fpsCap = MinimumAllowedFramerate;

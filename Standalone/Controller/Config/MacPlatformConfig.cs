@@ -176,6 +176,14 @@ namespace Medical
             }
         }
 
+        protected override int DefaultFPSCapImpl
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
             return MacOSXFunctions.TrustSSLCertificate(certificate, hostName);

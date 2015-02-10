@@ -185,6 +185,14 @@ namespace Medical
             }
         }
 
+        public static int DefaultFPSCap
+        {
+            get
+            {
+                return currentConfig.DefaultFPSCapImpl;
+            }
+        }
+
         public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
         {
             return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
@@ -234,6 +242,8 @@ namespace Medical
         protected abstract bool HasCustomSSLValidationImpl { get; }
 
         protected abstract string ExecutablePathImpl { get; }
+
+        protected abstract int DefaultFPSCapImpl { get; }
 
         protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
 
