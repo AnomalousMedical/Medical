@@ -131,6 +131,12 @@ namespace Medical.GUI
             PickAnatomy.FirstFrameUpEvent += pickAnatomy_FirstFrameUpEvent;
             OpenAnatomyFinder.FirstFrameUpEvent += openAnatomyFinder_FirstFrameUpEvent;
 
+            if(!PlatformConfig.UnrestrictedEnvironment && !anatomyController.ShowPremiumAnatomy)
+            {
+                filter.Visible = false;
+                searchBox.Width = filter.Right - searchBox.Left;
+            }
+
             this.Resized += new EventHandler(AnatomyFinder_Resized);
             fixListItemWidth();
 
