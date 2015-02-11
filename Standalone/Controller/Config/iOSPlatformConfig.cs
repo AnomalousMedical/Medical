@@ -40,7 +40,7 @@ namespace Medical
         {
             get
             {
-                return MyGUIPlugin.MyGUIInterface.DefaultOSXTheme;
+                return MyGUIPlugin.MyGUIInterface.DefaultPureTabletTheme;
             }
         }
 

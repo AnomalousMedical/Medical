@@ -87,6 +87,7 @@ namespace Medical
                 CertificateStoreTrustedRoot = systemOverride.getValue("CertificateStoreTrustedRoot", (String)null);
                 CertificateStoreTrustedSignature = systemOverride.getValue("CertificateStoreTrustedSignature", (String)null);
                 UnrestrictedEnvironmentOverride = systemOverride.getValue("UnrestrictedEnvironmentOverride", true);
+                ThemeFileOverride = systemOverride.getValue("ThemeFileOverride", (String)null);
             }
 #endif
             //Fix up paths based on the build name
@@ -371,6 +372,16 @@ namespace Medical
         /// is unrestricted since it is anded with the platform's actual value.
         /// </summary>
         public static bool UnrestrictedEnvironmentOverride { get; private set; }
+
+        public static bool HasThemeFileOverride
+        {
+            get
+            {
+                return !String.IsNullOrEmpty(ThemeFileOverride);
+            }
+        }
+
+        public static String ThemeFileOverride { get; private set; }
 #endif
 
         public static String DefaultScene

@@ -57,7 +57,18 @@ namespace Medical
         {
             get
             {
+#if ALLOW_OVERRIDE
+                if (MedicalConfig.HasThemeFileOverride)
+                {
+                    return MedicalConfig.ThemeFileOverride;
+                }
+                else
+                {
+                    return currentConfig.ThemeFileImpl;
+                }
+#else
                 return currentConfig.ThemeFileImpl;
+#endif
             }
         }
 
