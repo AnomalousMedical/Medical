@@ -76,8 +76,14 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
             IDisposableUtil.DisposeIfNotNull(viewsGui);
             downloadServer.Dispose();
-            selectionModeTask.Dispose();
-            selectionOperatorTask.Dispose();
+            if (selectionModeTask != null)
+            {
+                selectionModeTask.Dispose();
+            }
+            if (selectionOperatorTask != null)
+            {
+                selectionOperatorTask.Dispose();
+            }
             renderDialog.Dispose();
             options.Dispose();
             anatomyFinder.Dispose();
@@ -174,10 +180,6 @@ namespace Medical.GUI
             TaskController taskController = standaloneController.TaskController;
 
             //Tasks
-            selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
-            taskController.addTask(selectionModeTask);
-            Slideshow.AdditionalTasks.addTask(selectionModeTask);
-
             selectionOperatorTask = new SelectionOperatorTask(standaloneController.AnatomyController);
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
@@ -188,40 +190,12 @@ namespace Medical.GUI
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Explore, 0));
 
-            //System Section
-            CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Store", "AnomalousMedical/Store", TaskMenuCategories.System, int.MaxValue - 6, false);
-            shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
-            taskController.addTask(shopTaskItem);
-
-            CallbackTask blogTaskItem = new CallbackTask("Medical.Blog", "Blog", "AnomalousMedical/Blog", TaskMenuCategories.System, int.MaxValue - 7, false);
-            blogTaskItem.OnClicked += new CallbackTask.ClickedCallback(blogTaskItem_OnClicked);
-            taskController.addTask(blogTaskItem);
-
             downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5);
             standaloneController.DownloadController.OpenDownloadGUITask = downloadsTask;
             taskController.addTask(downloadsTask);
 
-            CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "AnomalousMedical/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
-            helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
-            taskController.addTask(helpTaskItem);
-
-            taskController.addTask(new ShowPopupTask(options, "Medical.Options", "Options", "AnomalousMedical/Options", TaskMenuCategories.System, int.MaxValue - 3));
             taskController.addTask(new DialogOpenTask(aboutDialog, "Medical.About", "About", "AnomalousMedical/About", TaskMenuCategories.System, int.MaxValue - 2));
             taskController.addTask(new VolumeControlTask());
-
-            CallbackTask logoutTaskItem = new CallbackTask("Medical.LogOut", "Log Out", "AnomalousMedical/LogOut", TaskMenuCategories.System, int.MaxValue - 1, false);
-            logoutTaskItem.OnClicked += new CallbackTask.ClickedCallback(logoutTaskItem_OnClicked);
-            taskController.addTask(logoutTaskItem);
-
-            CallbackTask exitTaskItem = new CallbackTask("Medical.Exit", "Exit", "AnomalousMedical/Exit", TaskMenuCategories.System, int.MaxValue, false);
-            exitTaskItem.OnClicked += new CallbackTask.ClickedCallback(exitTaskItem_OnClicked);
-            taskController.addTask(exitTaskItem);
-
-            CallbackTask toggleFullscreen = new CallbackTask("Medical.ToggleFullscreen", "Toggle Fullscreen", "AnomalousMedical/ToggleFullscreen", TaskMenuCategories.System, int.MaxValue - 2, false, (item) =>
-            {
-                MainWindow.Instance.toggleFullscreen();
-            });
-            taskController.addTask(toggleFullscreen);
 
             CallbackTask unhideAllAnatomy = new CallbackTask("Medical.UnhideAllAnatomy", "Unhide All", "AnatomyFinder.ShowAll", TaskMenuCategories.Explore, int.MaxValue - 2, false, (item) =>
             {
@@ -231,44 +205,93 @@ namespace Medical.GUI
             });
             taskController.addTask(unhideAllAnatomy);
 
-            //Tools Section
-            MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Create);
-            taskController.addTask(renderTask);
-
             //Navigation Section
             PinableMDIDialogOpenTask anatomyFinderTask = new PinableMDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "AnomalousMedical/SearchIcon", TaskMenuCategories.Explore);
             taskController.addTask(anatomyFinderTask);
             Slideshow.AdditionalTasks.addTask(anatomyFinderTask);
 
-            ShowPopupTask bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "AnomalousMedical/FavoritesIcon", TaskMenuCategories.Explore);
-            taskController.addTask(bookmarkTask);
-            Slideshow.AdditionalTasks.addTask(bookmarkTask);
+            ShowPopupTask bookmarkTask = null;
+
+            if(PlatformConfig.UnrestrictedEnvironment || hasPremium)
+            {
+                //Explore
+                selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
+                taskController.addTask(selectionModeTask);
+                Slideshow.AdditionalTasks.addTask(selectionModeTask);
+
+                bookmarkTask = new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "AnomalousMedical/FavoritesIcon", TaskMenuCategories.Explore);
+                taskController.addTask(bookmarkTask);
+                Slideshow.AdditionalTasks.addTask(bookmarkTask);
+            }
+
+            if (PlatformConfig.UnrestrictedEnvironment)
+            {
+                //System
+                CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Store", "AnomalousMedical/Store", TaskMenuCategories.System, int.MaxValue - 6, false);
+                shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
+                taskController.addTask(shopTaskItem);
+
+                CallbackTask blogTaskItem = new CallbackTask("Medical.Blog", "Blog", "AnomalousMedical/Blog", TaskMenuCategories.System, int.MaxValue - 7, false);
+                blogTaskItem.OnClicked += new CallbackTask.ClickedCallback(blogTaskItem_OnClicked);
+                taskController.addTask(blogTaskItem);
+
+                CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "AnomalousMedical/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
+                helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
+                taskController.addTask(helpTaskItem);
+
+                taskController.addTask(new ShowPopupTask(options, "Medical.Options", "Options", "AnomalousMedical/Options", TaskMenuCategories.System, int.MaxValue - 3));
+
+                CallbackTask logoutTaskItem = new CallbackTask("Medical.LogOut", "Log Out", "AnomalousMedical/LogOut", TaskMenuCategories.System, int.MaxValue - 1, false);
+                logoutTaskItem.OnClicked += new CallbackTask.ClickedCallback(logoutTaskItem_OnClicked);
+                taskController.addTask(logoutTaskItem);
+
+                CallbackTask exitTaskItem = new CallbackTask("Medical.Exit", "Exit", "AnomalousMedical/Exit", TaskMenuCategories.System, int.MaxValue, false);
+                exitTaskItem.OnClicked += new CallbackTask.ClickedCallback(exitTaskItem_OnClicked);
+                taskController.addTask(exitTaskItem);
+
+                CallbackTask toggleFullscreen = new CallbackTask("Medical.ToggleFullscreen", "Toggle Fullscreen", "AnomalousMedical/ToggleFullscreen", TaskMenuCategories.System, int.MaxValue - 2, false, (item) =>
+                {
+                    MainWindow.Instance.toggleFullscreen();
+                });
+                taskController.addTask(toggleFullscreen);
+
+                //Tools Section
+                MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Create);
+                taskController.addTask(renderTask);
+
+                //Fullscreen Toggle Shortcut
+                var toggleFullscreenMessageEvent = new ButtonEvent(EventLayers.Gui, frameUp: (evtMgr) =>
+                {
+                    MainWindow.Instance.toggleFullscreen();
+                });
+                toggleFullscreenMessageEvent.addButton(KeyboardButtonCode.KC_RETURN);
+                toggleFullscreenMessageEvent.addButton(KeyboardButtonCode.KC_LMENU);
+                standaloneController.MedicalController.EventManager.addEvent(toggleFullscreenMessageEvent);
+            }
 
             //Premium / Non Premium
             if (!hasPremium)
             {
-                buyScreens = new BuyScreenController(standaloneController);
-                taskMenuAd = new PremiumFeaturesTaskMenuAd(taskMenu);
-                selectionModeTask.SelectionModeChooser.ShowBuyMessage += SelectionModeChooser_ShowBuyMessage;
-                anatomyFinder.ShowBuyMessage += anatomyFinder_ShowBuyMessage;
-                bookmarks.ShowBuyMessage += bookmarks_ShowBuyMessage;
+                if (PlatformConfig.UnrestrictedEnvironment)
+                {
+                    buyScreens = new BuyScreenController(standaloneController);
+                    taskMenuAd = new PremiumFeaturesTaskMenuAd(taskMenu);
+                    selectionModeTask.SelectionModeChooser.ShowBuyMessage += SelectionModeChooser_ShowBuyMessage;
+                    anatomyFinder.ShowBuyMessage += anatomyFinder_ShowBuyMessage;
+                    bookmarks.ShowBuyMessage += bookmarks_ShowBuyMessage;
+                }
 
                 if(MedicalConfig.FirstRun)
                 {
                     guiTaskManager.addPinnedTask(anatomyFinderTask);
                     guiTaskManager.addPinnedTask(viewsTask);
-                    guiTaskManager.addPinnedTask(bookmarkTask);
+                    if (bookmarkTask != null)
+                    {
+                        guiTaskManager.addPinnedTask(bookmarkTask);
+                    }
                     guiTaskManager.addPinnedTask(unhideAllAnatomy);
                 }
             }
-
-            var toggleFullscreenMessageEvent = new ButtonEvent(EventLayers.Gui, frameUp: (evtMgr) =>
-                {
-                    MainWindow.Instance.toggleFullscreen();
-                });
-            toggleFullscreenMessageEvent.addButton(KeyboardButtonCode.KC_RETURN);
-            toggleFullscreenMessageEvent.addButton(KeyboardButtonCode.KC_LMENU);
-            standaloneController.MedicalController.EventManager.addEvent(toggleFullscreenMessageEvent);
 
             standaloneController.AtlasPluginManager.RequestDependencyDownload += AtlasPluginManager_RequestDependencyDownload;
 

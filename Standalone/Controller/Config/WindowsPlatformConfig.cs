@@ -180,6 +180,14 @@ namespace Medical
             }
         }
 
+        protected override bool UnrestrictedEnvironmentImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
             throw new NotImplementedException();

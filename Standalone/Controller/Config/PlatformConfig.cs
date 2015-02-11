@@ -193,6 +193,19 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// This will be true if we can use all features of anomalous medical, false if not. This pretty
+        /// much means disable features we can't use on ios (like in app ads, exit and other features).
+        /// Sometime in the future we will probably have to break this apart, but for now one property is ok.
+        /// </summary>
+        public static bool UnrestrictedEnvironment
+        {
+            get
+            {
+                return currentConfig.UnrestrictedEnvironmentImpl;
+            }
+        }
+
         public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
         {
             return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
@@ -244,6 +257,8 @@ namespace Medical
         protected abstract string ExecutablePathImpl { get; }
 
         protected abstract int DefaultFPSCapImpl { get; }
+
+        protected abstract bool UnrestrictedEnvironmentImpl { get; }
 
         protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
 
