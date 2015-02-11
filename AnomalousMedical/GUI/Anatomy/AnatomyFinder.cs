@@ -259,7 +259,7 @@ namespace Medical.GUI
                         anatomyController.processSelection(clickedAnatomy.CurrentMatch, clickedAnatomy.PreviousMatch);
                         clickedAnatomy.moveNext();
 
-                        searchBox.Caption = "Clicked";
+                        searchBox.Caption = "Picked";
                         clearButton.Visible = true;
                     }
                     else
