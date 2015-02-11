@@ -86,6 +86,7 @@ namespace Medical
                 AllowUnsignedDataFilePlugins = systemOverride.getValue("AllowUnsignedDataFilePlugins", false);
                 CertificateStoreTrustedRoot = systemOverride.getValue("CertificateStoreTrustedRoot", (String)null);
                 CertificateStoreTrustedSignature = systemOverride.getValue("CertificateStoreTrustedSignature", (String)null);
+                UnrestrictedEnvironmentOverride = systemOverride.getValue("UnrestrictedEnvironmentOverride", true);
             }
 #endif
             //Fix up paths based on the build name
@@ -364,6 +365,12 @@ namespace Medical
                 return !String.IsNullOrEmpty(CertificateStoreTrustedRoot) && !String.IsNullOrEmpty(CertificateStoreTrustedSignature);
             }
         }
+
+        /// <summary>
+        /// This will allow an override to simulate a restricted environment. This will only work if the platform
+        /// is unrestricted since it is anded with the platform's actual value.
+        /// </summary>
+        public static bool UnrestrictedEnvironmentOverride { get; private set; }
 #endif
 
         public static String DefaultScene
