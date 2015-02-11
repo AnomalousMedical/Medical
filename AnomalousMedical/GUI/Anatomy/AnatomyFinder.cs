@@ -64,7 +64,14 @@ namespace Medical.GUI
             anatomyController.AnatomyChanged += anatomyController_AnatomyChanged;
             anatomyController.ShowPremiumAnatomyChanged += anatomyController_ShowPremiumAnatomyChanged;
             anatomyController.ClearDisplayedAnatomy += anatomyController_ClearDisplayedAnatomy;
-            anatomyController.DisplayAnatomy += anatomyController_DisplayAnatomy;
+            if (PlatformConfig.UnrestrictedEnvironment)
+            {
+                anatomyController.DisplayAnatomy += anatomyController_DisplayAnatomy;
+            }
+            else
+            {
+                anatomyController.DisplayAnatomy += anatomyController_DisplayAnatomy_Restricted;
+            }
             anatomyController.SelectedAnatomy.SelectedAnatomyChanged += anatomyController_SelectedAnatomyChanged;
             anatomyController.SearchStarted += anatomyController_SearchStarted;
             anatomyController.SearchEnded += anatomyController_SearchEnded;
@@ -325,24 +332,6 @@ namespace Medical.GUI
             }
         }
 
-        private ButtonGridItem addAnatomyToList(Anatomy anatomy)
-        {
-            //Add item
-            ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "", anatomy);
-            if(!anatomyController.ShowPremiumAnatomy && !anatomy.ShowInBasicVersion)
-            {
-                IntCoord itemCoord = anatomyItem.Coord;
-                ImageBox lockedFeatureImage = (ImageBox)anatomyItem.createWidgetT("ImageBox", "ImageBox", 0, itemCoord.Bottom - lockSize, lockSize, lockSize, Align.Left | Align.Top, "LockedFeatureImage");
-                lockedFeatureImage.NeedMouseFocus = false;
-                lockedFeatureImage.setItemResource("LockedFeature");
-            }
-            if(anatomyController.SelectedAnatomy.isSelected(anatomy))
-            {
-                anatomyList.addSelected(anatomyItem);
-            }
-            return anatomyItem;
-        }
-
         private void showBuyMessage()
         {
             if(ShowBuyMessage != null)
@@ -374,9 +363,42 @@ namespace Medical.GUI
             }
         }
 
-        void anatomyController_DisplayAnatomy(Anatomy obj)
+        /// <summary>
+        /// Shows all anatomy including locked anatomy
+        /// </summary>
+        /// <param name="anatomy"></param>
+        void anatomyController_DisplayAnatomy(Anatomy anatomy)
         {
-            addAnatomyToList(obj);
+            //Add item
+            ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "", anatomy);
+            if (!anatomyController.ShowPremiumAnatomy && !anatomy.ShowInBasicVersion)
+            {
+                IntCoord itemCoord = anatomyItem.Coord;
+                ImageBox lockedFeatureImage = (ImageBox)anatomyItem.createWidgetT("ImageBox", "ImageBox", 0, itemCoord.Bottom - lockSize, lockSize, lockSize, Align.Left | Align.Top, "LockedFeatureImage");
+                lockedFeatureImage.NeedMouseFocus = false;
+                lockedFeatureImage.setItemResource("LockedFeature");
+            }
+            if (anatomyController.SelectedAnatomy.isSelected(anatomy))
+            {
+                anatomyList.addSelected(anatomyItem);
+            }
+        }
+
+        /// <summary>
+        /// Don't show locked anatomy in the restricted version.
+        /// </summary>
+        /// <param name="anatomy"></param>
+        void anatomyController_DisplayAnatomy_Restricted(Anatomy anatomy)
+        {
+            if(anatomyController.ShowPremiumAnatomy || anatomy.ShowInBasicVersion)
+            {
+                //Add item
+                ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "", anatomy);
+                if (anatomyController.SelectedAnatomy.isSelected(anatomy))
+                {
+                    anatomyList.addSelected(anatomyItem);
+                }
+            }
         }
 
         void anatomyController_ClearDisplayedAnatomy()
