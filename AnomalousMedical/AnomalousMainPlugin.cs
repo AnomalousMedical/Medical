@@ -212,6 +212,9 @@ namespace Medical.GUI
 
             ShowPopupTask bookmarkTask = null;
 
+            standaloneController.AnatomyController.setCommandPermission(AnatomyCommandPermissions.Unrestricted, PlatformConfig.UnrestrictedEnvironment);
+            standaloneController.AnatomyController.setCommandPermission(AnatomyCommandPermissions.PremiumActive, hasPremium);
+
             if(PlatformConfig.UnrestrictedEnvironment || hasPremium)
             {
                 //Explore
@@ -526,6 +529,7 @@ namespace Medical.GUI
 
         void AnatomyController_ShowPremiumAnatomyChanged(AnatomyController source, bool isPremium)
         {
+            standaloneController.AnatomyController.setCommandPermission(AnatomyCommandPermissions.PremiumActive, isPremium);
             bookmarksController.PremiumBookmarks = isPremium;
             if(isPremium)
             {

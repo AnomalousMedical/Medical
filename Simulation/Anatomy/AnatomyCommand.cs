@@ -16,6 +16,7 @@ namespace Medical
         Transparency, //Similar to Numeric, but controls the transparency of the object the command is attached to.
     }
 
+    [Flags]
     public enum AnatomyCommandPermissions
     {
         /// <summary>
@@ -23,9 +24,17 @@ namespace Medical
         /// </summary>
         None = 0,
         /// <summary>
-        /// Speical permission for commands related to posing.
+        /// Active when posing is enabled.
         /// </summary>
         Posing = 1 << 0,
+        /// <summary>
+        /// Active when premium features are enabled.
+        /// </summary>
+        PremiumActive = 1 << 1,
+        /// <summary>
+        /// Active when running in an unrestricted environment.
+        /// </summary>
+        Unrestricted = 1 << 2,
     }
 
     /// <summary>

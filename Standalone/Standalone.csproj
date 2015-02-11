@@ -118,6 +118,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Anatomy\BreakdownSearchCallbackCommand.cs" />
     <Compile Include="Controller\Anatomy\AnatomyAnalyzer.cs" />
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
     <Compile Include="Controller\Anatomy\AnatomyFilterEntry.cs" />

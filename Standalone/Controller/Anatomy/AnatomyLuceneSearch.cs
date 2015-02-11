@@ -37,10 +37,10 @@ namespace Medical
 
             systems = new AnatomyGroupFacetManager("Systems", "System", group =>
             {
-                group.addCommand(new CallbackAnatomyCommand("Show System Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, systems.FacetName)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", true, () => breakdownGroup("{0} of the {1}", group, regions)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by Structure", true, () => breakdownGroup("{0} of the {1}", group, structures)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", true, () => breakdownGroup("{1} of the {0}", group, classifications)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Show System Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, systems.FacetName)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by Region", true, () => breakdownGroup("{0} of the {1}", group, regions)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by Structure", true, () => breakdownGroup("{0} of the {1}", group, structures)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by Classification", true, () => breakdownGroup("{1} of the {0}", group, classifications)));
             },
             anatomy =>
             {
@@ -50,9 +50,9 @@ namespace Medical
 
             regions = new AnatomyGroupFacetManager("Regions", "Region", group =>
             {
-                group.addCommand(new CallbackAnatomyCommand("Show Region Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, regions.FacetName)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by System", true, () => breakdownGroup("{1} of the {0}", group, systems)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", true, () => breakdownGroup("{1} of the {0}", group, classifications)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Show Region Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, regions.FacetName)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by System", true, () => breakdownGroup("{1} of the {0}", group, systems)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by Classification", true, () => breakdownGroup("{1} of the {0}", group, classifications)));
             },
             anatomy =>
             {
@@ -62,9 +62,9 @@ namespace Medical
 
             classifications = new AnatomyGroupFacetManager("Classifications", "Classification", group =>
             {
-                group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, classifications.FacetName)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by Region", true, () => breakdownGroup("{0} of the {1}", group, regions)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by Structure", true, () => breakdownGroup("{0} of the {1}", group, structures)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Show Individual Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, classifications.FacetName)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by Region", true, () => breakdownGroup("{0} of the {1}", group, regions)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by Structure", true, () => breakdownGroup("{0} of the {1}", group, structures)));
             },
             anatomy =>
             {
@@ -73,15 +73,15 @@ namespace Medical
 
             tags = new AnatomyGroupFacetManager("Tags", "Tag", group =>
             {
-                group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, tags.FacetName)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Show Individual Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, tags.FacetName)));
             },
             anatomy => { throw new NotImplementedException(); });
 
             structures = new AnatomyGroupFacetManager("Structures", "Structure", group =>
             {
-                group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, structures.FacetName)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by System", true, () => breakdownGroup("{1} of the {0}", group, systems)));
-                group.addCommand(new CallbackAnatomyCommand("Breakdown by Classification", true, () => breakdownGroup("{1} of the {0}", group, classifications)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Show Individual Anatomy", true, () => displayAnatomyForFacet(group.AnatomicalName, structures.FacetName)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by System", true, () => breakdownGroup("{1} of the {0}", group, systems)));
+                group.addCommand(new BreakdownSearchCallbackCommand("Breakdown by Classification", true, () => breakdownGroup("{1} of the {0}", group, classifications)));
             },
             anatomy =>
             {
@@ -133,7 +133,7 @@ namespace Medical
                     int index = BitConverter.ToInt32(doc.GetBinaryValue("DataIndex"), 0);
                     group.addAnatomy(anatomyList[index]);
                 }
-                group.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", true, () =>
+                group.addCommand(new BreakdownSearchCallbackCommand("Show Individual Anatomy", true, () =>
                 {
                     anatomyController.displayAnatomy(String.Format("{0} Anatomy", group.AnatomicalName), group.SelectableAnatomy, SuggestedDisplaySortMode.Alphabetical);
                 }));
@@ -160,7 +160,7 @@ namespace Medical
                 foreach (var anatomy in anatomyIdentifiers)
                 {
                     anatomy.addExternalCommand(
-                        new CallbackAnatomyCommand("Show Groups", true, () => showGroupsForAnatomy(anatomy))
+                        new BreakdownSearchCallbackCommand("Show Groups", true, () => showGroupsForAnatomy(anatomy))
                         {
                             DisplayInGroup = false
                         });
@@ -404,7 +404,7 @@ namespace Medical
                 resultGroup.addAnatomy(search(null, resultGroup.Facets, int.MaxValue));
                 if (resultGroup.Count > 0)
                 {
-                    resultGroup.addCommand(new CallbackAnatomyCommand("Show Individual Anatomy", true, () => displayAnatomyForGroup(resultGroup)));
+                    resultGroup.addCommand(new BreakdownSearchCallbackCommand("Show Individual Anatomy", true, () => displayAnatomyForGroup(resultGroup)));
                     yield return resultGroup;
                 }
             }

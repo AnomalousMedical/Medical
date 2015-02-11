@@ -84,6 +84,11 @@ namespace Medical
             get { return AnatomyCommandUIType.Boolean; }
         }
 
+        public override bool allowDisplay(AnatomyCommandPermissions permissions)
+        {
+            return (permissions &= AnatomyCommandPermissions.PremiumActive) == AnatomyCommandPermissions.PremiumActive;
+        }
+
         [DoNotCopy]
         public override bool BooleanValue
         {
