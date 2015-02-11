@@ -11,6 +11,7 @@ using MyGUIPlugin;
 using System.Net;
 using libRocketPlugin;
 using Engine.Threads;
+using Medical.GUI.AnomalousMvc;
 
 namespace Medical.Controller
 {
@@ -40,6 +41,11 @@ namespace Medical.Controller
 
             //Load and run the mvc context
             context = controller.MvcCore.loadContext(embeddedResourceProvider.openFile("MvcContext.mvc"));
+
+            if(!PlatformConfig.UnrestrictedEnvironment)
+            {
+                ((RmlView)context.Views["Index"]).RmlFile = "IndexRestricted.rml";
+            }
 
             context.Started += (ctx) =>
             {

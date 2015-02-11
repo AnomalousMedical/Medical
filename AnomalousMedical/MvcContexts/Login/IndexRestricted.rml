@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+	</head>
+	<body template="MasterTemplate">
+		<div class="LogInForm" style="top:30%;">
+			<h1>Log In</h1>
+			<p style="white-space: pre-wrap;" id="Message">
+				<print name="Message" />
+			</p>
+			<form onsubmit="Index/LogIn" autosubmitid="LogInButton">
+				<h2>User Name or E-Mail</h2>
+				<input type="text" name="User" id="User" />
+				<h2>Password</h2>
+				<input type="password" name="Pass" id="Pass" />
+				<span style="float:left;width:185px;margin-top:11px;margin-left:5px;">
+					<input type="checkbox" name="Remember" value="True" />Remember Password</span>
+				<input type="submit" style="float:right;width:50px;margin-top:7px;margin-right:5px;width:100px;" id="LogInButton">Log In</input>
+			</form>
+			<p style="white-space: pre-wrap;clear:both;margin-bottom:15px;color:#F11DB1;" id="Error" />
+			<p>Forgot your <a onclick="Index/ForgotPassword">password</a>?</p>
+			<p>Need to <a onclick="Index/Register">register</a>?</p>
+		</div>
+	</body>
+</rml>
