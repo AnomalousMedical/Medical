@@ -2,14 +2,18 @@
 using UIKit;
 using CoreGraphics;
 using Foundation;
+using ObjCRuntime;
 
 namespace AnomalousMedicaliOS
 {
 	public class InAppBrowser : IDisposable
 	{
+		private const double AnimationDuration = 0.5;
+
 		UIView view;
 		UIButton closeButton;
 		UIWebView webView;
+		AnimationCompletedDelegate animationComplete;
 
 		public InAppBrowser(UIView parentView, String url)
 		{
@@ -34,7 +38,7 @@ namespace AnomalousMedicaliOS
 			parentView.AddSubview(view);
 
 			UIView.BeginAnimations("slideAnimation");
-			UIView.SetAnimationDuration(0.8);
+			UIView.SetAnimationDuration(AnimationDuration);
 			UIView.SetAnimationCurve(UIViewAnimationCurve.EaseOut);
 			UIView.SetAnimationRepeatCount(0);
 			UIView.SetAnimationRepeatAutoreverses(false);
@@ -49,6 +53,12 @@ namespace AnomalousMedicaliOS
 		{
 			closeButton.TouchUpInside -= HandleTouchUpInside;
 
+			if(animationComplete != null)
+			{
+				animationComplete.Dispose();
+				animationComplete = null;
+			}
+
 			webView.RemoveFromSuperview();
 			webView.Dispose();
 			webView = null;
@@ -62,7 +72,45 @@ namespace AnomalousMedicaliOS
 
 		void HandleTouchUpInside (object sender, EventArgs e)
 		{
-			this.Dispose();
+			closeButton.TouchUpInside -= HandleTouchUpInside;
+
+			CGRect frame = view.Frame;
+			frame.Y = frame.Height;
+
+			UIView.BeginAnimations("slideAnimation");
+			UIView.SetAnimationDuration(AnimationDuration);
+			UIView.SetAnimationCurve(UIViewAnimationCurve.EaseIn);
+			UIView.SetAnimationRepeatCount(0);
+			UIView.SetAnimationRepeatAutoreverses(false);
+			animationComplete = new AnimationCompletedDelegate(this);
+			UIView.SetAnimationDelegate(animationComplete);
+			UIView.SetAnimationDidStopSelector(new Selector("slideAnimationFinished"));
+
+			view.Frame = frame;
+
+			UIView.CommitAnimations();
+		}
+
+		class AnimationCompletedDelegate : NSObject
+		{
+			private InAppBrowser browser;
+
+			public AnimationCompletedDelegate(InAppBrowser browser)
+			{
+				this.browser = browser;
+			}
+
+			protected override void Dispose(bool disposing)
+			{
+				browser = null;
+				base.Dispose(disposing);
+			}
+
+			[Export("slideAnimationFinished")]
+			void SlideStopped()
+			{
+				browser.Dispose();
+			}
 		}
 	}
 }
