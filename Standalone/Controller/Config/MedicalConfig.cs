@@ -162,6 +162,7 @@ namespace Medical
             MedicalConfig.LicenseImageURL = String.Format("{0}/DRM4/LicenseImage", WebsiteHostUrl);
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", WebsiteHostUrl);
             MedicalConfig.CertificateStoreUrl = String.Format("{0}/DRM4/CertificateStore", WebsiteHostUrl);
+            MedicalConfig.SubscriberAgreementUrl = String.Format("{0}/Licenses/subscriberagreement.html", WebsiteHostUrl);
 
             MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM4/Update{1}", WebsiteHostUrl, buildUrlExtraPath);
             MedicalConfig.PluginInfoURL = String.Format("{0}/DRM4/DownloadInfo{1}", WebsiteHostUrl, buildUrlExtraPath);
@@ -512,6 +513,10 @@ namespace Medical
 
         public static String CertificateStoreUrl { get; private set; }
 
+        public static String SubscriberAgreementUrl { get; set; }
+
+        public static String WebsiteHostUrl { get; private set; }
+
         public static DateTime LastCertificateStoreCheckTime
         {
             get
@@ -523,7 +528,5 @@ namespace Medical
                 program.setValue("LastCertificateStoreCheckTime", value);
             }
         }
-
-        public static String WebsiteHostUrl { get; private set; }
     }
 }
