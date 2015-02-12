@@ -119,6 +119,7 @@ namespace Medical.Controller
                 {
                     loggingIn = true;
                     DataModel model = context.getModel<DataModel>("Register");
+                    MedicalConfig.StoreCredentials = model.getValue("Remember") == "True";
                     messageControl.Value = "Creating Account";
                     ThreadPool.QueueUserWorkItem((arg) =>
                     {
