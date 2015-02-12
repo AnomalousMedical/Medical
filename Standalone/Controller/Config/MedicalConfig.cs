@@ -162,7 +162,7 @@ namespace Medical
             MedicalConfig.LicenseImageURL = String.Format("{0}/DRM4/LicenseImage", WebsiteHostUrl);
             MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", WebsiteHostUrl);
             MedicalConfig.CertificateStoreUrl = String.Format("{0}/DRM4/CertificateStore", WebsiteHostUrl);
-            MedicalConfig.SubscriberAgreementUrl = String.Format("{0}/Licenses/subscriberagreement.html", WebsiteHostUrl);
+            MedicalConfig.SubscriberAgreementUrl = String.Format("{0}/SubscriberAgreementNoFrame", WebsiteHostUrl);
 
             MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM4/Update{1}", WebsiteHostUrl, buildUrlExtraPath);
             MedicalConfig.PluginInfoURL = String.Format("{0}/DRM4/DownloadInfo{1}", WebsiteHostUrl, buildUrlExtraPath);
