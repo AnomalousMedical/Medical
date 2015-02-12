@@ -9,6 +9,7 @@ using System.Reflection;
 using DentalSim;
 using Medical.Movement;
 using Developer;
+using CoreGraphics;
 
 namespace AnomalousMedicaliOS
 {
@@ -20,6 +21,8 @@ namespace AnomalousMedicaliOS
 			#if DEBUG
 			Logging.Log.Default.addLogListener(new Logging.LogConsoleListener());
 			#endif
+
+			OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
 
 			AnomalousController anomalous = null;
 			try
@@ -58,6 +61,21 @@ namespace AnomalousMedicaliOS
 			controller.AtlasPluginManager.addPlugin(new DentalSimPlugin());
 			controller.AtlasPluginManager.addPlugin(new MovementBodyAtlasPlugin());
 			controller.AtlasPluginManager.addPlugin(new DeveloperAtlasPlugin(controller));
+		}
+
+		static bool openUrl(String url)
+		{
+			UIViewController currentController = UIApplication.SharedApplication.KeyWindow.RootViewController;
+			while(currentController.PresentedViewController != null)
+			{
+				currentController = currentController.PresentedViewController;
+			}
+
+			UIView currentView = currentController.View;
+
+			InAppBrowser browser = new InAppBrowser(currentView, url);
+
+			return true;
 		}
 
 		void GlNoOp ()
