@@ -152,7 +152,7 @@ namespace Medical
 
             //Configure website urls
             MedicalConfig.HelpURL = String.Format("{0}/Help", WebsiteHostUrl);
-            MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword", WebsiteHostUrl);
+            MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword/FromSoftware", WebsiteHostUrl);
             MedicalConfig.RegisterURL = String.Format("{0}/Login/RegisterFromSoftware", WebsiteHostUrl);
             MedicalConfig.LicenseServerURL = String.Format("{0}/DRM4/License", WebsiteHostUrl);
             MedicalConfig.AnomalousMedicalStoreURL = String.Format("{0}/Store", WebsiteHostUrl);

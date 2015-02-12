@@ -121,6 +121,7 @@ namespace Medical.Controller
                     DataModel model = context.getModel<DataModel>("Register");
                     MedicalConfig.StoreCredentials = model.getValue("Remember") == "True";
                     messageControl.Value = "Creating Account";
+                    errorControl.Value = "";
                     ThreadPool.QueueUserWorkItem((arg) =>
                     {
                         try
@@ -173,6 +174,62 @@ namespace Medical.Controller
             ((RunCommandsAction)context.Controllers["Register"].Actions["ShowSubscriberAgreement"]).addCommand(new CallbackCommand((executingContext) =>
             {
                 OtherProcessManager.openUrlInBrowser(MedicalConfig.SubscriberAgreementUrl);
+            }));
+
+            ((RunCommandsAction)context.Controllers["ForgotPassword"].Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                passwordControl = null;
+                messageControl = executingContext.RunningActionViewHost.findControl("Message");
+                errorControl = executingContext.RunningActionViewHost.findControl("Error");
+            }));
+
+            ((RunCommandsAction)context.Controllers["ForgotPassword"].Actions["Recover"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                if (!loggingIn)
+                {
+                    loggingIn = true;
+                    DataModel model = context.getModel<DataModel>("ForgotPassword");
+                    messageControl.Value = "Requesting Password E-Mail";
+                    errorControl.Value = "";
+                    ThreadPool.QueueUserWorkItem((arg) =>
+                    {
+                        try
+                        {
+                            ServerConnection serverConnection = new ServerConnection(MedicalConfig.ForgotPasswordURL);
+                            foreach (var item in model.Iterator)
+                            {
+                                serverConnection.addArgument(item.Item1, item.Item2);
+                            }
+                            ServerOperationResult result = serverConnection.makeRequestSaveableResponse(ServerOperationResult.TypeFinder) as ServerOperationResult;
+                            if (result.Success)
+                            {
+                                ThreadManager.invoke(() =>
+                                {
+                                    messageControl.Value = "Recovery E-Mail Sent";
+                                    errorControl.Value = "";
+                                });
+                            }
+                            else
+                            {
+                                ThreadManager.invoke(() =>
+                                {
+                                    messageControl.Value = "";
+                                    errorControl.Value = result.Message;
+                                    loggingIn = false;
+                                });
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ThreadManager.invoke(() =>
+                            {
+                                messageControl.Value = "";
+                                errorControl.Value = ex.Message;
+                                loggingIn = false;
+                            });
+                        }
+                    });
+                }
             }));
 
             controller.MvcCore.startRunningContext(context);
