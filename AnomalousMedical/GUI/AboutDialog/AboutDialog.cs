@@ -81,77 +81,85 @@ namespace Medical.GUI
 
         void monoText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://www.mono-project.com");
+            openUrl("http://www.mono-project.com");
         }
 
         void oggVorbisText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://www.vorbis.com/");
+            openUrl("http://www.vorbis.com/");
         }
 
         void openALText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://en.wikipedia.org/wiki/OpenAL");
+            openUrl("http://en.wikipedia.org/wiki/OpenAL");
         }
 
         void freeimageText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://freeimage.sourceforge.net/");
+            openUrl("http://freeimage.sourceforge.net/");
         }
 
         void freetypeText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://www.freetype.org/");
+            openUrl("http://www.freetype.org/");
         }
 
         void zlibText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://www.zlib.net/");
+            openUrl("http://www.zlib.net/");
         }
 
         void ZZiplibText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://zziplib.sourceforge.net/");
+            openUrl("http://zziplib.sourceforge.net/");
         }
 
         void bulletText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://www.bulletphysics.org/");
+            openUrl("http://www.bulletphysics.org/");
         }
 
         void myGUIText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://mygui.info/");
+            openUrl("http://mygui.info/");
         }
 
         void ogreText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://www.ogre3d.org/");
+            openUrl("http://www.ogre3d.org/");
         }
 
         void anomalousMedicalText_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://www.anomalousmedical.com");
+            openUrl("http://www.anomalousmedical.com");
         }
 
         void libRocketLink_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://librocket.com/");
+            openUrl("http://librocket.com/");
         }
 
         void openAlSoftLink_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://kcat.strangesoft.net/openal.html");
+            openUrl("http://kcat.strangesoft.net/openal.html");
         }
 
         void luceneNetLink_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://lucenenet.apache.org/");
+            openUrl("http://lucenenet.apache.org/");
         }
 
         void bepuPhysicsLink_MouseButtonClick(Widget source, EventArgs e)
         {
-            OtherProcessManager.openUrlInBrowser("http://bepuphysics.codeplex.com/");
+            openUrl("http://bepuphysics.codeplex.com/");
+        }
+
+        private void openUrl(String url)
+        {
+            if (PlatformConfig.UnrestrictedEnvironment)
+            {
+                OtherProcessManager.openUrlInBrowser(url);
+            }
         }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)

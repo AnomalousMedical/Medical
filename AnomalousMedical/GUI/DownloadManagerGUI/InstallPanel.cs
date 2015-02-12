@@ -45,7 +45,7 @@ namespace Medical.GUI
             nameText.OnlyText = info.Name;
             nameText.TextCursor = 0;
             descriptionText.OnlyText = "Loading information from server...";
-            moreInfoButton.Visible = info.MoreInfoURL != null;
+            moreInfoButton.Visible = info.MoreInfoURL != null && PlatformConfig.UnrestrictedEnvironment;
             switch (info.Status)
             {
                 case ServerDownloadStatus.NotInstalled:
