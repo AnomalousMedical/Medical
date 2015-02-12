@@ -19,6 +19,9 @@ namespace AnomalousMedicaliOS
 			closeButton = new UIButton(new CGRect(parentBounds.Left, parentBounds.Top, 100, 44));
 			closeButton.SetTitle("Close", UIControlState.Normal);
 			view.AddSubview(closeButton);
+			CGRect frame = view.Frame;
+			frame.Y = frame.Height;
+			view.Frame = frame;
 
 			var buttonBounds = closeButton.Bounds;
 
@@ -26,9 +29,20 @@ namespace AnomalousMedicaliOS
 			view.AddSubview(webView);
 			webView.LoadRequest(new NSUrlRequest(new NSUrl(url)));
 
+			closeButton.TouchUpInside += HandleTouchUpInside;
+
 			parentView.AddSubview(view);
 
-			closeButton.TouchUpInside += HandleTouchUpInside;
+			UIView.BeginAnimations("slideAnimation");
+			UIView.SetAnimationDuration(0.8);
+			UIView.SetAnimationCurve(UIViewAnimationCurve.EaseOut);
+			UIView.SetAnimationRepeatCount(0);
+			UIView.SetAnimationRepeatAutoreverses(false);
+
+			frame.Y = 0;
+			view.Frame = frame;
+
+			UIView.CommitAnimations();
 		}
 
 		public void Dispose()
