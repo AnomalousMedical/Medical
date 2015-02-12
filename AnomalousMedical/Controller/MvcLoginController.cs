@@ -98,16 +98,6 @@ namespace Medical.Controller
                 controller.exit();
             }));
 
-            ((RunCommandsAction)context.Controllers["Index"].Actions["ForgotPassword"]).addCommand(new CallbackCommand((executingContext) =>
-            {
-                OtherProcessManager.openUrlInBrowser(MedicalConfig.ForgotPasswordURL);
-            }));
-
-            ((RunCommandsAction)context.Controllers["Index"].Actions["Register"]).addCommand(new CallbackCommand((executingContext) =>
-            {
-                OtherProcessManager.openUrlInBrowser(MedicalConfig.RegisterURL);
-            }));
-
             ((RunCommandsAction)context.Controllers["Index"].Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
             {
                 passwordControl = executingContext.RunningActionViewHost.findControl("Pass");
@@ -123,6 +113,62 @@ namespace Medical.Controller
                 }
             }));
 
+            ((RunCommandsAction)context.Controllers["Register"].Actions["Register"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                if (!loggingIn)
+                {
+                    loggingIn = true;
+                    DataModel model = context.getModel<DataModel>("Register");
+                    messageControl.Value = "Creating Account";
+                    ThreadPool.QueueUserWorkItem((arg) =>
+                    {
+                        try
+                        {
+                            ServerConnection serverConnection = new ServerConnection(MedicalConfig.RegisterURL);
+                            foreach (var item in model.Iterator)
+                            {
+                                serverConnection.addArgument(item.Item1, item.Item2);
+                            }
+                            ServerOperationResult result = serverConnection.makeRequestSaveableResponse(ServerOperationResult.TypeFinder) as ServerOperationResult;
+                            if (result.Success)
+                            {
+                                ThreadManager.invoke(() =>
+                                {
+                                    messageControl.Value = "Account Created, Logging In";
+                                    errorControl.Value = "";
+                                });
+                                getLicense(model.getValue("User"), model.getValue("Pass"));
+                            }
+                            else
+                            {
+                                ThreadManager.invoke(() =>
+                                {
+                                    messageControl.Value = "";
+                                    errorControl.Value = result.Message;
+                                    loggingIn = false;
+                                });
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            ThreadManager.invoke(() =>
+                            {
+                                messageControl.Value = "";
+                                errorControl.Value = ex.Message;
+                                loggingIn = false;
+                            });
+                        }
+                    });
+                }
+            }));
+
+            ((RunCommandsAction)context.Controllers["Register"].Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                passwordControl = null;
+                messageControl = executingContext.RunningActionViewHost.findControl("Message");
+                errorControl = executingContext.RunningActionViewHost.findControl("Error");
+            }));
+
             controller.MvcCore.startRunningContext(context);
         }
 
@@ -133,10 +179,15 @@ namespace Medical.Controller
 
         void getLicense(Object credentials)
         {
+            Pair<String, String> cred = (Pair<String, String>)credentials;
+            getLicense(cred.First, cred.Second);
+        }
+
+        void getLicense(String user, String pass)
+        {
             try
             {
-                Pair<String, String> cred = (Pair<String, String>)credentials;
-                if (licenseManager.login(cred.First, cred.Second))
+                if (licenseManager.login(user, pass))
                 {
                     ThreadManager.invoke(new Callback(licenseCaptured), null);
                 }
@@ -167,8 +218,11 @@ namespace Medical.Controller
         {
             messageControl.Value = "Please try again.";
             errorControl.Value = "Username or password is invalid.";
-            passwordControl.Value = "";
-            passwordControl.focus();
+            if (passwordControl != null)
+            {
+                passwordControl.Value = "";
+                passwordControl.focus();
+            }
             loggingIn = false;
         }
 
@@ -177,7 +231,10 @@ namespace Medical.Controller
             loggingIn = false;
             messageControl.Value = "Please try again.";
             errorControl.Value = message;
-            passwordControl.focus();
+            if (passwordControl != null)
+            {
+                passwordControl.focus();
+            }
         }
     }
 }

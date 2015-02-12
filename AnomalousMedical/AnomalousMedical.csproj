@@ -289,6 +289,8 @@
     <EmbeddedResource Include="MvcContexts\Login\IndexRestricted.rml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="MvcContexts\Login\ForgotPassword.rml" />
+    <EmbeddedResource Include="MvcContexts\Login\Register.rml" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
     <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />

@@ -1,0 +1,39 @@
+<rml>
+	<head>
+		<link type="text/template" href="/MasterTemplate.trml" />
+	</head>
+	<body template="MasterTemplate">
+		<div class="RegisterForm">
+			<h1>Register</h1>
+			<p style="white-space: pre-wrap;" id="Message">
+				<print name="Message" />
+			</p>
+			<form onsubmit="Register/Register" autosubmitid="RegisterButton">
+				<h2>First Name</h2>
+				<input type="text" name="First" id="First" />
+				<h2>Last Name</h2>
+				<input type="text" name="Last" id="Last" />
+				<h2>User Name</h2>
+				<input type="text" name="User" id="User" />
+				<h2>Password</h2>
+				<input type="password" name="Pass" id="Pass" />
+				<h2>Confirm Password</h2>
+				<input type="password" name="ConfirmPass" id="ConfirmPass" />
+				<h2>E-Mail</h2>
+				<input type="text" name="Email" id="Email" />
+				<div style="margin-top:11px;margin-left:5px;">
+					<input type="checkbox" value="True" name="AcceptLicense" />I agree to the Anomalous Medical Subscriber Agreement</div>
+				<div style="margin-top:11px;margin-left:5px;">
+					<input type="checkbox" value="True" name="SubscribeNewsletter" />Subscribe to Monthly Newsletter</div>
+				<span style="float:left;width:185px;margin-top:11px;margin-left:5px;">
+					<input type="checkbox" value="True" name="Remember" />Remember Password</span>
+				<input type="submit" style="float:right;width:50px;margin-top:7px;margin-right:5px;width:100px;" id="RegisterButton">Register</input>
+			</form>
+			<p style="white-space: pre-wrap;clear:both;margin-bottom:15px;color:#F11DB1;" id="Error" />
+			<p>Forgot your <a onclick="Index/ForgotPassword">password</a>?</p>
+			<p>
+				<a onclick="Register/Cancel">Cancel Registration</a>
+			</p>
+		</div>
+	</body>
+</rml>

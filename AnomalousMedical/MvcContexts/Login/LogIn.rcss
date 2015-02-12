@@ -37,6 +37,17 @@ p
 	z-index:5;
 }
 
+.RegisterForm
+{	
+	margin-left: auto;
+	margin-right: 2px;
+	width: 450px;
+	background-color:#000000cc;
+	border-width:2px;
+	border-color: #6699cc;
+	z-index:5;
+}
+
 .ConnectionInfo
 {
 	background-color:#000000cc;

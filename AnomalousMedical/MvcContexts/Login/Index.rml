@@ -1,4 +1,3 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <rml>
 	<head>
 		<link type="text/template" href="/MasterTemplate.trml" />
@@ -15,7 +14,7 @@
 				<h2>Password</h2>
 				<input type="password" name="Pass" id="Pass" />
 				<span style="float:left;width:185px;margin-top:11px;margin-left:5px;">
-					<input type="checkbox" name="Remember" value="True" />Remember Password</span>
+					<input type="checkbox" value="True" name="Remember" />Remember Password</span>
 				<input type="submit" style="float:right;width:50px;margin-top:7px;margin-right:5px;width:100px;" id="LogInButton">Log In</input>
 			</form>
 			<p style="white-space: pre-wrap;clear:both;margin-bottom:15px;color:#F11DB1;" id="Error" />
