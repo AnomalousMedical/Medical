@@ -334,11 +334,6 @@ namespace Medical
             idleHandler.onIdle();
         }
 
-        public void openHelpPage()
-        {
-            OtherProcessManager.openUrlInBrowser(MedicalConfig.HelpURL);
-        }
-
         public void exit()
         {
 			if(!shuttingDown)

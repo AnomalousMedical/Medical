@@ -307,16 +307,6 @@ namespace Medical.GUI
             standaloneController.ViewHostFactory.addFactory(new WizardComponentFactory(teethToolController));
         }
 
-        void blogTaskItem_OnClicked(CallbackTask item)
-        {
-            OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalBlogURL);
-        }
-
-        void shopTaskItem_OnClicked(CallbackTask item)
-        {
-            OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalStoreURL);
-        }
-
         public void sceneLoaded(SimScene scene)
         {
             teethMover.sceneLoaded(scene);
@@ -470,11 +460,6 @@ namespace Medical.GUI
             standaloneController.exit();
         }
 
-        void helpTaskItem_OnClicked(Task item)
-        {
-            standaloneController.openHelpPage();
-        }
-
         void updateCheckCompleted(UpdateController.UpdateCheckResult result)
         {
             if(result > 0)
@@ -588,6 +573,21 @@ namespace Medical.GUI
             {
                 downloadGUITask.clicked(EmptyTaskPositioner.Instance);
             }
+        }
+
+        void blogTaskItem_OnClicked(CallbackTask item)
+        {
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalBlogURL);
+        }
+
+        void shopTaskItem_OnClicked(CallbackTask item)
+        {
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalStoreURL);
+        }
+
+        void helpTaskItem_OnClicked(Task item)
+        {
+            OtherProcessManager.openUrlInBrowser(MedicalConfig.HelpURL);
         }
 
         private ResourceProvider createNonPremiumBookmarksResourceProvider()
