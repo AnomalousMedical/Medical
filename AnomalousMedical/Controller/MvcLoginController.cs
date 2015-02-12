@@ -169,6 +169,11 @@ namespace Medical.Controller
                 errorControl = executingContext.RunningActionViewHost.findControl("Error");
             }));
 
+            ((RunCommandsAction)context.Controllers["Register"].Actions["ShowSubscriberAgreement"]).addCommand(new CallbackCommand((executingContext) =>
+            {
+                OtherProcessManager.openUrlInBrowser(MedicalConfig.SubscriberAgreementUrl);
+            }));
+
             controller.MvcCore.startRunningContext(context);
         }
 
