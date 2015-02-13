@@ -70,7 +70,7 @@ namespace Medical.GUI
             switch (selectionOperators[(Button)source])
             {
                 case CameraMovementMode.Rotate:
-                    text = "Select";
+                    text = "Rotate";
                     break;
                 case CameraMovementMode.Pan:
                     text = String.Format("Pan ({0})", CameraInputController.PanKeyDescription);
