@@ -22,11 +22,11 @@
 				<h2>E-Mail</h2>
 				<input type="text" name="Email" id="Email" />
 				<div style="margin-top:11px;margin-left:5px;">
-					<input type="checkbox" value="True" name="AcceptLicense" />I agree to the Anomalous Medical <a onclick="Register/ShowSubscriberAgreement">Subscriber Agreement</a></div>
+          <label><input type="checkbox" value="True" name="AcceptLicense" />I agree to the Anomalous Medical</label>&nbsp;<a onclick="Register/ShowSubscriberAgreement">Subscriber Agreement</a></div>
 				<div style="margin-top:11px;margin-left:5px;">
-					<input type="checkbox" value="True" name="SubscribeNewsletter" />Subscribe to Monthly Newsletter</div>
-				<span style="float:left;width:185px;margin-top:11px;margin-left:5px;">
-					<input type="checkbox" value="True" name="Remember" />Remember Password</span>
+					<label><input type="checkbox" value="True" name="SubscribeNewsletter" />Subscribe to Monthly Newsletter</label></div>
+				<label style="float:left;width:185px;margin-top:11px;margin-left:5px;">
+					<input type="checkbox" value="True" name="Remember" />Remember Password</label>
 				<input type="submit" style="float:right;width:50px;margin-top:7px;margin-right:5px;width:100px;" id="RegisterButton">Register</input>
 			</form>
 			<p style="white-space: pre-wrap;clear:both;margin-bottom:15px;color:#F11DB1;" id="Error" />
