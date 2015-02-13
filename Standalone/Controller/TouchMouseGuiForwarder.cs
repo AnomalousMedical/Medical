@@ -69,6 +69,7 @@ namespace Medical.Controller
                 currentFingerId = finger.Id;
                 touches.FingerEnded += fingerEnded;
                 touches.FingerMoved += HandleFingerMoved;
+				touches.FingersCanceled += HandleFingersCanceled;
                 gestureStartPos = new IntVector2(finger.PixelX, finger.PixelY);
                 inputHandler.injectMoved(finger.PixelX, finger.PixelY);
                 inputHandler.injectButtonDown(MouseButtonCode.MB_BUTTON0);
@@ -87,12 +88,26 @@ namespace Medical.Controller
         {
             if (obj.Id == currentFingerId)
             {
-                touches.FingerEnded -= fingerEnded;
-                touches.FingerMoved -= HandleFingerMoved;
-                currentFingerId = int.MinValue;
+				stopTrackingFinger();
                 inputHandler.injectMoved(obj.PixelX, obj.PixelY);
                 inputHandler.injectButtonUp(MouseButtonCode.MB_BUTTON0);
             }
-        }
+		}
+
+		void HandleFingersCanceled()
+		{
+			if(currentFingerId != int.MinValue)
+			{
+				stopTrackingFinger();
+				inputHandler.injectButtonUp(MouseButtonCode.MB_BUTTON0);
+			}
+		}
+
+		void stopTrackingFinger()
+		{
+			touches.FingerEnded -= fingerEnded;
+			touches.FingerMoved -= HandleFingerMoved;
+			currentFingerId = int.MinValue;
+		}
     }
 }
