@@ -25,6 +25,7 @@ namespace AnomalousMedicaliOS
 			var parentBounds = parentView.Bounds;
 
 			view = new UIView(parentView.Bounds);
+			view.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
 			closeButton = new UIButton(new CGRect(parentBounds.Left, parentBounds.Top, 100, 44));
 			closeButton.SetTitle("Close", UIControlState.Normal);
 			view.AddSubview(closeButton);
@@ -35,6 +36,7 @@ namespace AnomalousMedicaliOS
 			var buttonBounds = closeButton.Bounds;
 
 			webView = new UIWebView(new CGRect(parentBounds.Left, buttonBounds.Bottom, parentBounds.Width, parentView.Bounds.Height - buttonBounds.Height));
+			webView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
 			view.AddSubview(webView);
 			webView.LoadRequest(new NSUrlRequest(new NSUrl(url)));
 
