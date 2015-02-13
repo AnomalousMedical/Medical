@@ -117,6 +117,7 @@ namespace Medical
             GuiFrameworkCamerasInterface.DefaultCameraButton = MedicalConfig.CameraMouseButton;
             GuiFrameworkCamerasInterface.MoveCameraEventLayer = EventLayers.Cameras;
             GuiFrameworkCamerasInterface.SelectWindowEventLayer = EventLayers.AfterGui;
+            GuiFrameworkCamerasInterface.ShortcutEventLayer = EventLayers.Gui;
             GuiFrameworkCamerasInterface.TouchType = PlatformConfig.TouchType;
             GuiFrameworkCamerasInterface.PanKey = PlatformConfig.PanKey;
 

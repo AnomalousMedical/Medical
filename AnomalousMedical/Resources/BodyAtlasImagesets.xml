@@ -9,4 +9,5 @@
   <List file="Medical.Resources.SequenceIcons.xml"/>
   <List file="Medical.Resources.BookmarksIcons.xml"/>
   <List file="Medical.Resources.AnatomyFinderIcons.xml"/>
+  <List file="Medical.Resources.CameraMovementIcons.xml"/>
 </MyGUI>

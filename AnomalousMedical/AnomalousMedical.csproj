@@ -214,6 +214,8 @@
     <Compile Include="GUI\DistortionWizard\WizardComponentFactory.cs" />
     <Compile Include="GUI\DistortionWizard\WizardView.cs" />
     <Compile Include="GUI\Options\OptionsDialog.cs" />
+    <Compile Include="GUI\CameraMovementModeChooser\CameraMovementModeChooser.cs" />
+    <Compile Include="GUI\CameraMovementModeChooser\CameraMovementModeTask.cs" />
     <Compile Include="GUI\ViewsGui\ViewsGui.cs" />
     <Compile Include="GUI\ChooseSceneDialog\ChooseSceneDialog.cs" />
     <Compile Include="GUI\DownloadManagerGUI\DownloadGUIInfo.cs" />
@@ -268,6 +270,7 @@
     <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
+    <EmbeddedResource Include="GUI\CameraMovementModeChooser\CameraMovementModeChooser.layout" />
     <EmbeddedResource Include="GUI\ViewsGui\ViewsGui.layout" />
     <EmbeddedResource Include="GUI\ChooseSceneDialog\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
@@ -399,6 +402,10 @@
     <EmbeddedResource Include="Resources\DistortionWizard\WizardImagesets.xml" />
     <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons%402x.png" />
     <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\CameraMovementIcons%402x.png" />
+    <EmbeddedResource Include="Resources\CameraMovementIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\CameraMovementIcons.png" />
+    <EmbeddedResource Include="Resources\CameraMovementIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

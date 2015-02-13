@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PopupPanel" position="187 65 81 205" layer="Overlapped">
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 3 64 64" name="RotateButton">
+            <Property key="Caption" value="Rotate"/>
+            <Property key="ImageResource" value="CameraMovementIcons.Rotate"/>
+        </Widget>
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 70 64 64" name="PanButton">
+            <Property key="Caption" value="Pan"/>
+            <Property key="ImageResource" value="CameraMovementIcons.Pan"/>
+        </Widget>
+        <Widget type="Button" skin="VerticalIconTextButton" position="8 137 64 64" name="ZoomButton">
+            <Property key="Caption" value="Zoom"/>
+            <Property key="ImageResource" value="CameraMovementIcons.Zoom"/>
+        </Widget>
+    </Widget>
+</MyGUI>

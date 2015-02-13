@@ -55,6 +55,7 @@ namespace Medical.GUI
         //Tasks
         private SelectionModeTask selectionModeTask;
         private SelectionOperatorTask selectionOperatorTask;
+        private CameraMovementModeTask cameraMovementModeTask;
         private Task downloadsTask;
 
         public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
@@ -83,6 +84,10 @@ namespace Medical.GUI
             if (selectionOperatorTask != null)
             {
                 selectionOperatorTask.Dispose();
+            }
+            if(cameraMovementModeTask != null)
+            {
+                cameraMovementModeTask.Dispose();
             }
             renderDialog.Dispose();
             options.Dispose();
@@ -180,6 +185,10 @@ namespace Medical.GUI
             TaskController taskController = standaloneController.TaskController;
 
             //Tasks
+            cameraMovementModeTask = new CameraMovementModeTask(standaloneController.SceneViewController);
+            taskController.addTask(cameraMovementModeTask);
+            Slideshow.AdditionalTasks.addTask(cameraMovementModeTask);
+
             selectionOperatorTask = new SelectionOperatorTask(standaloneController.AnatomyController);
             taskController.addTask(selectionOperatorTask);
             Slideshow.AdditionalTasks.addTask(selectionOperatorTask);
