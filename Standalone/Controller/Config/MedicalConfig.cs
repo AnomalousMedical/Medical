@@ -60,6 +60,8 @@ namespace Medical
             }
 
 #if ALLOW_OVERRIDE
+            UnrestrictedEnvironmentOverride = true;
+
             //Override settings
 			String overrideFile = Path.Combine(FolderFinder.ExecutableFolder, PlatformConfig.OverrideFileLocation);
             if (!File.Exists(overrideFile))
@@ -86,8 +88,8 @@ namespace Medical
                 AllowUnsignedDataFilePlugins = systemOverride.getValue("AllowUnsignedDataFilePlugins", false);
                 CertificateStoreTrustedRoot = systemOverride.getValue("CertificateStoreTrustedRoot", (String)null);
                 CertificateStoreTrustedSignature = systemOverride.getValue("CertificateStoreTrustedSignature", (String)null);
-                UnrestrictedEnvironmentOverride = systemOverride.getValue("UnrestrictedEnvironmentOverride", true);
-                ThemeFileOverride = systemOverride.getValue("ThemeFileOverride", (String)null);
+                UnrestrictedEnvironmentOverride = systemOverride.getValue("UnrestrictedEnvironmentOverride", UnrestrictedEnvironmentOverride);
+                ThemeFileOverride = systemOverride.getValue("ThemeFileOverride", ThemeFileOverride);
             }
 #endif
             //Fix up paths based on the build name
