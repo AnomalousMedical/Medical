@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Medical.Controller
 {
-    class TouchMouseGuiForwarder
+    public class TouchMouseGuiForwarder
     {
         private int currentFingerId = int.MinValue;
         private IntVector2 gestureStartPos;
@@ -21,6 +21,7 @@ namespace Medical.Controller
         private NativeOSWindow window;
         private RocketWidget currentRocketWidget;
         private NativeInputHandler inputHandler;
+		private bool enabled = true;
 
         public TouchMouseGuiForwarder(EventManager eventManager, NativeInputHandler inputHandler, NativeOSWindow window)
         {
@@ -31,6 +32,22 @@ namespace Medical.Controller
             InputManager.Instance.ChangeKeyFocus += HandleChangeKeyFocus;
             RocketWidget.ElementFocused += HandleElementFocused;
         }
+
+		public bool Enabled
+		{
+			get
+			{
+				return enabled;
+			}
+			set
+			{
+				enabled = value;
+				if(!enabled && currentFingerId == int.MinValue)
+				{
+					stopTrackingFinger();
+				}
+			}
+		}
 
         void HandleElementFocused(RocketWidget rocketWidget, Element element)
         {
@@ -63,7 +80,7 @@ namespace Medical.Controller
 
         void HandleFingerStarted(Finger obj)
         {
-            if (currentFingerId == int.MinValue)
+            if (currentFingerId == int.MinValue && enabled)
             {
                 var finger = touches.Fingers[0];
                 currentFingerId = finger.Id;

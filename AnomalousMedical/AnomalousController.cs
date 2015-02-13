@@ -43,6 +43,7 @@ namespace Medical
         private AnomalousMainPlugin mainPlugin;
 
 		public event Action<AnomalousController, StandaloneController> AddAdditionalPlugins;
+		public event Action<AnomalousController, StandaloneController> OnInitCompleted;
 
         public AnomalousController()
         {
@@ -68,6 +69,11 @@ namespace Medical
 
             splashScreen.updateStatus(LoadingServerFilesPosition, "Loading Files from Server");
             ResourceManager.Instance.load("Medical.Resources.AnomalousBootstrapImagesets.xml");
+
+			if(OnInitCompleted != null)
+			{
+				OnInitCompleted.Invoke(this, controller);
+			}
 
             return true;
         }

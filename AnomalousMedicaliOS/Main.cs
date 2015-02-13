@@ -10,11 +10,14 @@ using DentalSim;
 using Medical.Movement;
 using Developer;
 using CoreGraphics;
+using Medical.Controller;
 
 namespace AnomalousMedicaliOS
 {
 	public class Application
 	{
+		private static TouchMouseGuiForwarder touchForwarder;
+
 		// This is the main entry point of the application.
 		static void Main (string[] args)
 		{
@@ -28,6 +31,7 @@ namespace AnomalousMedicaliOS
 			try
 			{
 				anomalous = new AnomalousController();
+				anomalous.OnInitCompleted += HandleOnInitCompleted;
 				anomalous.AddAdditionalPlugins += HandleAddAdditionalPlugins;
 				anomalous.run();
 			}
@@ -55,6 +59,11 @@ namespace AnomalousMedicaliOS
 			}
 		}
 
+		static void HandleOnInitCompleted (AnomalousController anomalousController, StandaloneController controller)
+		{
+			touchForwarder = controller.MedicalController.TouchMouseGuiForwarder;
+		}
+
 		static void HandleAddAdditionalPlugins(AnomalousController anomalousController, StandaloneController controller)
 		{
 			controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(controller));
@@ -73,7 +82,7 @@ namespace AnomalousMedicaliOS
 
 			UIView currentView = currentController.View;
 
-			InAppBrowser browser = new InAppBrowser(currentView, url);
+			InAppBrowser browser = new InAppBrowser(currentView, url, touchForwarder);
 
 			return true;
 		}

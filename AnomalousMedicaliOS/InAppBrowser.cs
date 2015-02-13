@@ -3,6 +3,7 @@ using UIKit;
 using CoreGraphics;
 using Foundation;
 using ObjCRuntime;
+using Medical.Controller;
 
 namespace AnomalousMedicaliOS
 {
@@ -14,9 +15,13 @@ namespace AnomalousMedicaliOS
 		UIButton closeButton;
 		UIWebView webView;
 		AnimationCompletedDelegate animationComplete;
+		TouchMouseGuiForwarder touchForwarder;
 
-		public InAppBrowser(UIView parentView, String url)
+		public InAppBrowser(UIView parentView, String url, TouchMouseGuiForwarder touchForwarder)
 		{
+			this.touchForwarder = touchForwarder;
+			touchForwarder.Enabled = false;
+
 			var parentBounds = parentView.Bounds;
 
 			view = new UIView(parentView.Bounds);
@@ -51,6 +56,8 @@ namespace AnomalousMedicaliOS
 
 		public void Dispose()
 		{
+			touchForwarder.Enabled = true;
+
 			closeButton.TouchUpInside -= HandleTouchUpInside;
 
 			if(animationComplete != null)

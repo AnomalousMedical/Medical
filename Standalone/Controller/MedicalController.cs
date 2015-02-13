@@ -174,7 +174,7 @@ namespace Medical
 
             if(PlatformConfig.ForwardTouchAsMouse)
             {
-                new TouchMouseGuiForwarder(eventManager, inputHandler, mainWindow); //Will be kept alive by the things it subscribes to
+				TouchMouseGuiForwarder = new TouchMouseGuiForwarder(eventManager, inputHandler, mainWindow);
             }
         }
 
@@ -357,5 +357,7 @@ namespace Medical
                 return pluginManager;
             }
         }
+
+		public TouchMouseGuiForwarder TouchMouseGuiForwarder { get;	private set; }
     }
 }
