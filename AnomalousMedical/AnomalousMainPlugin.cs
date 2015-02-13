@@ -297,6 +297,7 @@ namespace Medical.GUI
                 {
                     guiTaskManager.addPinnedTask(anatomyFinderTask);
                     guiTaskManager.addPinnedTask(viewsTask);
+                    guiTaskManager.addPinnedTask(cameraMovementModeTask);
                     if (bookmarkTask != null)
                     {
                         guiTaskManager.addPinnedTask(bookmarkTask);
