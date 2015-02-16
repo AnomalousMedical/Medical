@@ -223,6 +223,14 @@ namespace Medical
             }
         }
 
+        public static bool AllowDllPluginsToLoad
+        {
+            get
+            {
+                return currentConfig.AllowDllPluginsToLoadImpl;
+            }
+        }
+
         public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
         {
             return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
@@ -280,6 +288,8 @@ namespace Medical
         protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
 
         protected abstract ProcessStartInfo RestartAdminProcInfoImpl { get; }
+
+        protected abstract bool AllowDllPluginsToLoadImpl { get; }
 
         protected abstract void moveConfigurationIfNeededImpl();
     }

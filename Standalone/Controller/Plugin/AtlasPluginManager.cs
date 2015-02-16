@@ -115,78 +115,85 @@ namespace Medical
         private bool addDllPlugin(String dllName)
         {
             bool loadedPlugin = false;
-            String fullPath = Path.GetFullPath(dllName);
-            if (!File.Exists(fullPath))
+            if (PlatformConfig.AllowDllPluginsToLoad)
             {
-                fullPath = Path.Combine(additionalSearchPath, dllName);
-            }
-
-            if (File.Exists(fullPath))
-            {
-                String dllFileName = Path.GetFileNameWithoutExtension(fullPath);
-                if (!loadedPluginNames.Contains(dllFileName))
+                String fullPath = Path.GetFullPath(dllName);
+                if (!File.Exists(fullPath))
                 {
-                    if (dataFileVerifier.isSafeDll(fullPath))
+                    fullPath = Path.Combine(additionalSearchPath, dllName);
+                }
+
+                if (File.Exists(fullPath))
+                {
+                    String dllFileName = Path.GetFileNameWithoutExtension(fullPath);
+                    if (!loadedPluginNames.Contains(dllFileName))
                     {
-                        try
+                        if (dataFileVerifier.isSafeDll(fullPath))
                         {
-                            Assembly assembly = Assembly.LoadFile(fullPath);
-
-                            //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
-                            loadedPluginNames.Add(dllFileName);
-
-                            Version version = assembly.GetName().Version;
-                            if (version.Major == requiredAssemblyVersion.Major && version.Minor == requiredAssemblyVersion.Minor)
+                            try
                             {
-                                AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
-                                if (attributes.Length > 0)
+                                Assembly assembly = Assembly.LoadFile(fullPath);
+
+                                //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
+                                loadedPluginNames.Add(dllFileName);
+
+                                Version version = assembly.GetName().Version;
+                                if (version.Major == requiredAssemblyVersion.Major && version.Minor == requiredAssemblyVersion.Minor)
                                 {
-                                    foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                                    AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                                    if (attributes.Length > 0)
                                     {
-                                        entryPointAttribute.createPlugin(standaloneController);
+                                        foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                                        {
+                                            entryPointAttribute.createPlugin(standaloneController);
+                                        }
+                                        loadedPlugin = true;
                                     }
-                                    loadedPlugin = true;
+                                    else
+                                    {
+                                        String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                                        firePluginLoadError(errorMessage);
+                                        Log.Error(errorMessage);
+                                    }
                                 }
                                 else
                                 {
-                                    String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
-                                    firePluginLoadError(errorMessage);
-                                    Log.Error(errorMessage);
+                                    String error = String.Format("The plugin '{0}' is for a different version of Anomalous Medical {1}.", dllFileName, version);
+                                    firePluginLoadError(error);
+                                    Log.Error(error);
+                                    loadedPlugin = true; //This loaded, but we didnt inititalize it, however, return true anyway since we did load sucessfully
                                 }
                             }
-                            else
+                            catch (Exception e)
                             {
-                                String error = String.Format("The plugin '{0}' is for a different version of Anomalous Medical {1}.", dllFileName, version);
-                                firePluginLoadError(error);
-                                Log.Error(error);
-                                loadedPlugin = true; //This loaded, but we didnt inititalize it, however, return true anyway since we did load sucessfully
+                                firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dllFileName));
+                                Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
+                                try
+                                {
+                                    File.Delete(fullPath);
+                                }
+                                catch (Exception deleteEx)
+                                {
+                                    Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
+                                    managePluginInstructions.addFileToDelete(fullPath);
+                                    managePluginInstructions.savePersistantFile();
+                                }
                             }
                         }
-                        catch (Exception e)
-                        {
-                            firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dllFileName));
-                            Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
-                            try
-                            {
-                                File.Delete(fullPath);
-                            }
-                            catch (Exception deleteEx)
-                            {
-                                Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
-                                managePluginInstructions.addFileToDelete(fullPath);
-                                managePluginInstructions.savePersistantFile();
-                            }
-                        }
+                    }
+                    else
+                    {
+                        Log.Error("Cannot load Assembly '{0}' from '{1}' because a plugin named '{2}' is already loaded.", dllName, fullPath, dllFileName);
                     }
                 }
                 else
                 {
-                    Log.Error("Cannot load Assembly '{0}' from '{1}' because a plugin named '{2}' is already loaded.", dllName, fullPath, dllFileName);
+                    Log.Error("Cannot load Assembly '{0}' from '{0}' or '{1}' because it was not found.", dllName, fullPath, Path.GetFullPath(dllName));
                 }
             }
             else
             {
-                Log.Error("Cannot load Assembly '{0}' from '{0}' or '{1}' because it was not found.", dllName, fullPath, Path.GetFullPath(dllName));
+                Log.ImportantInfo("Attempted to load plugin {0}, but Dll Plugins are not allow to load for this platform.", dllName);
             }
             return loadedPlugin;
         }

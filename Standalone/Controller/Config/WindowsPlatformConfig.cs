@@ -188,6 +188,14 @@ namespace Medical
             }
         }
 
+        protected override bool AllowDllPluginsToLoadImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
             throw new NotImplementedException();

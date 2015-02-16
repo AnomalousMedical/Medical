@@ -179,6 +179,14 @@ namespace Medical
             }
         }
 
+        protected override bool AllowDllPluginsToLoadImpl
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
 			if(hostName.Equals("anomalousmedicalweb.blob.core.windows.net", StringComparison.InvariantCultureIgnoreCase))
