@@ -82,6 +82,13 @@ namespace Medical.GUI
             this.Shown += new EventHandler(OpenPatientDialog_Shown);
             this.Hiding += OpenPatientDialog_Hiding;
             this.Hidden += new EventHandler(OpenPatientDialog_Hidden);
+
+            if (!PlatformConfig.UnrestrictedEnvironment)
+            {
+                locationTextBox.Visible = false;
+                browseButton.Visible = false;
+                widget.findWidget("Open/LoadLocationText").Visible = false;
+            }
         }
 
         void searchBox_KeyButtonReleased(Widget source, EventArgs e)

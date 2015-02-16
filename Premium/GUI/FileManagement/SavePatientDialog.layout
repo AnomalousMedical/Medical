@@ -12,7 +12,7 @@
             </Widget>
             <Widget type="EditBox" skin="EditBox" position="8 34 197 23" align="HStretch Top" name="Save/FirstName"/>
             <Widget type="EditBox" skin="EditBox" position="8 73 197 23" align="HStretch Top" name="Save/LastName"/>
-            <Widget type="TextBox" skin="TextBox" position="6 101 92 15">
+            <Widget type="TextBox" skin="TextBox" position="6 101 92 15" name="Save/LocationText">
                 <Property key="Caption" value="Save Location"/>
                 <Property key="TextColour" value="#FFFFFF"/>
             </Widget>

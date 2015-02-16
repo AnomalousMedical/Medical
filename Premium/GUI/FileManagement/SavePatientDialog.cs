@@ -53,6 +53,13 @@ namespace Medical.GUI
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
 
             this.Shown += new EventHandler(SavePatientDialog_Shown);
+
+            if(!PlatformConfig.UnrestrictedEnvironment)
+            {
+                locationTextBox.Visible = false;
+                browseButton.Visible = false;
+                widget.findWidget("Save/LocationText").Visible = false;
+            }
         }
 
         protected override void layoutUpdated()
