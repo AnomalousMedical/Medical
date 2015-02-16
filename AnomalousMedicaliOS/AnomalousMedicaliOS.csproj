@@ -133,9 +133,15 @@
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-152.png" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-76.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashTall.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashTall%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide.png" />
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
