@@ -129,7 +129,12 @@ namespace Medical.GUI
                 lastText.Caption = "";
                 firstText.Caption = "";
                 fileNameTextBox.Caption = "";
-                locationTextBox.Caption = MedicalConfig.PatientSaveDirectory;
+				String lastSaveDirectory = MedicalConfig.PatientSaveDirectory;
+				if(lastSaveDirectory == null || !Directory.Exists(lastSaveDirectory))
+				{
+					MedicalConfig.PatientSaveDirectory = lastSaveDirectory = MedicalConfig.DefaultPatientSaveDirectory;
+				}
+				locationTextBox.Caption = lastSaveDirectory;
             }
             else
             {

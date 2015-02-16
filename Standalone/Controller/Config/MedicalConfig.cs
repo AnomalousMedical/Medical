@@ -270,13 +270,21 @@ namespace Medical
         {
             get
             {
-                return program.getValue("PatientSaveDirectory", userAnomalousFolder + "/SavedFiles");
+				return program.getValue("PatientSaveDirectory", DefaultPatientSaveDirectory);
             }
             set
             {
                 program.setValue("PatientSaveDirectory", value);
             }
         }
+
+		public static String DefaultPatientSaveDirectory
+		{
+			get 
+			{
+				return userAnomalousFolder + "/SavedFiles";
+			}
+		}
 
         public static bool EnableMultitouch
         {
