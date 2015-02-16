@@ -26,6 +26,7 @@ namespace Medical
             IconResourceFile = "Resources/Imagesets.xml";
             PluginId = -1;
             VersionString = "1.0.0.0";
+            AllowUninstall = true;
         }
 
         public void Dispose()
@@ -198,13 +199,8 @@ namespace Medical
             }
         }
 
-        public bool AllowUninstall
-        {
-            get
-            {
-                return true;
-            }
-        }
+        [Editable]
+        public bool AllowUninstall { get; set; }
 
         public IEnumerable<long> DependencyPluginIds
         {
@@ -226,6 +222,7 @@ namespace Medical
             BrandingImageKey = info.GetString("BrandingImageKey");
             VersionString = info.GetString("Version", "1.0.0.0");
             SequencesDirectory = info.GetString("SequencesDirectory", null);
+            AllowUninstall = info.GetBoolean("AllowUninstall", true);
             info.RebuildList("DependencyId", dependencyIds);
         }
 
@@ -239,6 +236,7 @@ namespace Medical
             info.AddValue("BrandingImageKey", BrandingImageKey);
             info.AddValue("Version", VersionString);
             info.AddValue("SequencesDirectory", SequencesDirectory);
+            info.AddValue("AllowUninstall", AllowUninstall);
             info.ExtractList("DependencyId", dependencyIds);
         }
 
