@@ -132,21 +132,11 @@ namespace Medical
 
         public void Dispose()
         {
-            MedicalConfig.save();
+            saveConfiguration();
             unloadScene();
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
 			IDisposableUtil.DisposeIfNotNull(downloadController);
-            if (DocumentController != null)
-            {
-                DocumentController.saveRecentDocuments();
-            }
-            if (guiManager != null && MedicalConfig.WindowsFile != null)
-            {
-                ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
-                guiManager.saveUI(configFile, UpdateController.CurrentVersion);
-                configFile.writeConfigFile();
-            }
             IDisposableUtil.DisposeIfNotNull(anatomyController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
             IDisposableUtil.DisposeIfNotNull(notificationManager);
@@ -160,6 +150,24 @@ namespace Medical
 			IDisposableUtil.DisposeIfNotNull(mdiLayout);
 			IDisposableUtil.DisposeIfNotNull(medicalController);
 			IDisposableUtil.DisposeIfNotNull(mainWindow);
+        }
+
+        /// <summary>
+        /// Save the current app state as config files.
+        /// </summary>
+        public void saveConfiguration()
+        {
+            MedicalConfig.save();
+            if (DocumentController != null)
+            {
+                DocumentController.saveRecentDocuments();
+            }
+            if (guiManager != null && MedicalConfig.WindowsFile != null)
+            {
+                ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
+                guiManager.saveUI(configFile, UpdateController.CurrentVersion);
+                configFile.writeConfigFile();
+            }
         }
 
         /// <summary>

@@ -94,6 +94,12 @@ namespace Medical
             controller.onIdle();
         }
 
+        public override void OnMovedToBackground()
+        {
+            controller.saveConfiguration();
+            base.OnMovedToBackground();
+        }
+
         void MyGUIInterface_BeforeMainResourcesLoaded(MyGUIInterface obj)
         {
             MyGUIInterface.Instance.CommonResourceGroup.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedResource", true);
