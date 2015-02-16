@@ -59,27 +59,6 @@ namespace Medical.GUI
             fileDataGrid.ListSelectAccept += new MyGUIEvent(fileDataGrid_ListSelectAccept);
             fileDataGrid.SortOnChanges = false;
 
-			String saveDirectory = MedicalConfig.PatientSaveDirectory;
-			//Change back to default directory if the save directory does not exist.
-			if(saveDirectory == null || !Directory.Exists(saveDirectory))
-			{
-				MedicalConfig.PatientSaveDirectory = saveDirectory = MedicalConfig.DefaultPatientSaveDirectory;
-
-				//Ensure default directory exists
-				if (!Directory.Exists(saveDirectory))
-				{
-					try
-					{
-						Directory.CreateDirectory(saveDirectory);
-					}
-					catch (Exception ex)
-					{
-						Log.Error("Could not create save file directory at location {0}. Reason {1}", saveDirectory, ex.Message);
-					}
-				}
-			}
-
-            locationTextBox.Caption = saveDirectory;
             locationTextBox.EventEditTextChange += new MyGUIEvent(locationTextBox_EventEditTextChange);
 
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
@@ -152,6 +131,28 @@ namespace Medical.GUI
 
         void OpenPatientDialog_Showing(object sender, EventArgs e)
         {
+            String saveDirectory = MedicalConfig.PatientSaveDirectory;
+            //Change back to default directory if the save directory does not exist.
+            if (saveDirectory == null || !Directory.Exists(saveDirectory))
+            {
+                MedicalConfig.PatientSaveDirectory = saveDirectory = MedicalConfig.DefaultPatientSaveDirectory;
+
+                //Ensure default directory exists
+                if (!Directory.Exists(saveDirectory))
+                {
+                    try
+                    {
+                        Directory.CreateDirectory(saveDirectory);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Could not create save file directory at location {0}. Reason {1}", saveDirectory, ex.Message);
+                    }
+                }
+            }
+
+            locationTextBox.Caption = saveDirectory;
+
             loadingWidget.Visible = false;
             allowOpen = true;
         }
