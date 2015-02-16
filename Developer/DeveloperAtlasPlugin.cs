@@ -30,7 +30,7 @@ namespace Developer
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
-
+            this.AllowUninstall = true;
         }
 
         public void Dispose()
@@ -177,13 +177,7 @@ namespace Developer
             }
         }
 
-        public bool AllowUninstall
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool AllowUninstall { get; set; }
 
         public IEnumerable<long> DependencyPluginIds
         {

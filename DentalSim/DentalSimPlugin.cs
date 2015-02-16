@@ -22,7 +22,7 @@ namespace DentalSim
 
         public DentalSimPlugin()
         {
-
+            this.AllowUninstall = true;
         }
 
         public void Dispose()
@@ -141,13 +141,7 @@ namespace DentalSim
             }
         }
 
-        public bool AllowUninstall
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool AllowUninstall { get; set; }
 
         public IEnumerable<long> DependencyPluginIds
         {

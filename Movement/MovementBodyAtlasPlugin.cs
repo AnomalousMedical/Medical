@@ -20,7 +20,7 @@ namespace Medical.Movement
 
         public MovementBodyAtlasPlugin()
         {
-            
+            this.AllowUninstall = true;
         }
 
         public void Dispose()
@@ -97,13 +97,7 @@ namespace Medical.Movement
             }
         }
 
-        public bool AllowUninstall
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool AllowUninstall { get; set; }
 
         public IEnumerable<long> DependencyPluginIds
         {

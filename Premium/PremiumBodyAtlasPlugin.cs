@@ -30,6 +30,7 @@ namespace Medical
 
         public PremiumBodyAtlasPlugin(StandaloneController standaloneController)
         {
+            this.AllowUninstall = true;
             this.licenseManager = standaloneController.LicenseManager;
         }
 
@@ -153,13 +154,7 @@ namespace Medical
             }
         }
 
-        public bool AllowUninstall
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool AllowUninstall { get; set; }
 
         public IEnumerable<long> DependencyPluginIds
         {
