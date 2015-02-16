@@ -66,10 +66,23 @@ namespace AnomalousMedicaliOS
 
 		static void HandleAddAdditionalPlugins(AnomalousController anomalousController, StandaloneController controller)
 		{
-			controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(controller));
-			controller.AtlasPluginManager.addPlugin(new DentalSimPlugin());
-			controller.AtlasPluginManager.addPlugin(new MovementBodyAtlasPlugin());
-			controller.AtlasPluginManager.addPlugin(new DeveloperAtlasPlugin(controller));
+			controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(controller)
+			{
+				AllowUninstall = false
+			});
+
+			controller.AtlasPluginManager.addPlugin(new DentalSimPlugin()
+			{
+				AllowUninstall = false
+			});
+			controller.AtlasPluginManager.addPlugin(new MovementBodyAtlasPlugin()
+			{
+				AllowUninstall = false
+			});
+			controller.AtlasPluginManager.addPlugin(new DeveloperAtlasPlugin(controller)
+			{
+				AllowUninstall = false
+			});
 		}
 
 		static bool openUrl(String url)
