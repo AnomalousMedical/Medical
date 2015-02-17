@@ -157,16 +157,19 @@ namespace Medical
         /// </summary>
         public void saveConfiguration()
         {
-            MedicalConfig.save();
-            if (DocumentController != null)
+            if (LicenseManager != null && LicenseManager.Valid)
             {
-                DocumentController.saveRecentDocuments();
-            }
-            if (guiManager != null && MedicalConfig.WindowsFile != null)
-            {
-                ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
-                guiManager.saveUI(configFile, UpdateController.CurrentVersion);
-                configFile.writeConfigFile();
+                MedicalConfig.save();
+                if (DocumentController != null)
+                {
+                    DocumentController.saveRecentDocuments();
+                }
+                if (guiManager != null && MedicalConfig.WindowsFile != null)
+                {
+                    ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
+                    guiManager.saveUI(configFile, UpdateController.CurrentVersion);
+                    configFile.writeConfigFile();
+                }
             }
         }
 
