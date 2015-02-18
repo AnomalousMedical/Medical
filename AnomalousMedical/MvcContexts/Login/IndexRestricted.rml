@@ -4,7 +4,7 @@
 		<link type="text/template" href="/MasterTemplate.trml" />
 	</head>
 	<body template="MasterTemplate">
-		<div class="LogInForm" style="top:30%;">
+		<div class="LogInForm" style="top:0px;margin-top:0px;">
 			<h1>Log In</h1>
 			<p style="white-space: pre-wrap;" id="Message">
 				<print name="Message" />
