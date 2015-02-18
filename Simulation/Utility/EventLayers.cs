@@ -14,5 +14,6 @@ namespace Medical
         Posing = 3,
         Cameras = 4,
         Selection = 5,
+		Last = 6,
     }
 }

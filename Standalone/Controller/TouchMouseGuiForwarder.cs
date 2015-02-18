@@ -22,6 +22,7 @@ namespace Medical.Controller
         private RocketWidget currentRocketWidget;
         private NativeInputHandler inputHandler;
 		private bool enabled = true;
+		private bool keyboardVisible = false;
 
         public TouchMouseGuiForwarder(EventManager eventManager, NativeInputHandler inputHandler, NativeOSWindow window)
         {
@@ -31,6 +32,11 @@ namespace Medical.Controller
             this.window = window;
             InputManager.Instance.ChangeKeyFocus += HandleChangeKeyFocus;
             RocketWidget.ElementFocused += HandleElementFocused;
+			RocketWidget.ElementBlurred += HandleElementBlurred;
+			RocketWidget.RocketWidgetDisposing += HandleRocketWidgetDisposing;
+
+			eventManager[EventLayers.Last].Keyboard.KeyPressed += HandleKeyPressed;
+			eventManager[EventLayers.Last].Keyboard.KeyReleased += HandleKeyReleased;
         }
 
 		public bool Enabled
@@ -55,26 +61,46 @@ namespace Medical.Controller
             {
                 currentRocketWidget = rocketWidget;
                 String tag = element.TagName;
-				bool makeKeyboardVisible = false;
 				switch (tag) 
 				{
 					case "input":
 						String type = element.GetAttributeString ("type");
-						makeKeyboardVisible = type == "text" || type == "password";
+						keyboardVisible = type == "text" || type == "password";
 						break;
 					case "textarea":
-						makeKeyboardVisible = true;
+						keyboardVisible = true;
+						break;
+					default:
+						keyboardVisible = false;
 						break;
 				}
-				window.setOnscreenKeyboardVisible(makeKeyboardVisible);
-            }
-        }
+			}
+		}
+
+		void HandleElementBlurred (RocketWidget widget, Element element)
+		{
+			if(widget == currentRocketWidget)
+			{
+				keyboardVisible = false;
+			}
+		}
+
+		void HandleRocketWidgetDisposing(RocketWidget widget)
+		{
+			if(widget == currentRocketWidget)
+			{
+				currentRocketWidget = null;
+				keyboardVisible = false;
+				//Handle these for keyboard toggle right away or it won't work
+				toggleKeyboard();
+			}
+		}
 
         void HandleChangeKeyFocus(Widget widget)
         {
             if (currentRocketWidget == null || !currentRocketWidget.isHostWidget(widget))
             {
-                window.setOnscreenKeyboardVisible(widget != null && widget is EditBox);
+                keyboardVisible = widget != null && widget is EditBox;
             }
         }
 
@@ -108,6 +134,7 @@ namespace Medical.Controller
 				stopTrackingFinger();
                 inputHandler.injectMoved(obj.PixelX, obj.PixelY);
                 inputHandler.injectButtonUp(MouseButtonCode.MB_BUTTON0);
+				toggleKeyboard();
             }
 		}
 
@@ -117,6 +144,7 @@ namespace Medical.Controller
 			{
 				stopTrackingFinger();
 				inputHandler.injectButtonUp(MouseButtonCode.MB_BUTTON0);
+				toggleKeyboard();
 			}
 		}
 
@@ -125,6 +153,24 @@ namespace Medical.Controller
 			touches.FingerEnded -= fingerEnded;
 			touches.FingerMoved -= HandleFingerMoved;
 			currentFingerId = int.MinValue;
+		}
+
+		void toggleKeyboard()
+		{
+			if(keyboardVisible != window.OnscreenKeyboardVisible)
+			{
+				window.OnscreenKeyboardVisible = keyboardVisible;
+			}
+		}
+
+		void HandleKeyReleased(KeyboardButtonCode keyCode)
+		{
+			toggleKeyboard();
+		}
+
+		void HandleKeyPressed(KeyboardButtonCode keyCode, uint keyChar)
+		{
+			toggleKeyboard();
 		}
     }
 }
