@@ -22,15 +22,12 @@ namespace Medical
         private const int InitializingCorePosition = 10;
         private const int CreatingGuiPosition = 15;
         private const int LoadingScenePosition = 20;
-        private const int LoadingScenePropertiesPosition = 75;
-        private const int WaitingForLicensePosition = 80;
-        private const int LoadingPluginsPosition = 80;
-        private const int InitializingPluginsPosition = 90;
+        private const int LoadingScenePropertiesPosition = 85;
+        private const int WaitingForLicensePosition = 90;
+        private const int FinishingUpPosition = 95;
         private const int FinishedPosition = 100;
 
         private const int LoadingSceneDelta = LoadingScenePropertiesPosition - LoadingScenePosition;
-        private const int LoadingPluginsDelta = InitializingPluginsPosition - LoadingPluginsPosition;
-        private const int InitializingPluginsDelta = FinishedPosition - InitializingPluginsPosition;
 
         private StandaloneController controller;
         private SplashScreen splashScreen;
@@ -294,7 +291,7 @@ namespace Medical
             if (valid)
             {
                 //Key was valid and the splash screen is still showing.
-                splashScreen.updateStatus(LoadingPluginsPosition, "Loading Plugins");
+                splashScreen.updateStatus(FinishingUpPosition, "Finishing up");
 
                 keyValid();
                 splashScreen.updateStatus(FinishedPosition, "");

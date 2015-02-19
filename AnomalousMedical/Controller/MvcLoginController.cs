@@ -270,7 +270,7 @@ namespace Medical.Controller
 
         void licenseCaptured()
         {
-            messageControl.Value = "Login Successful, Loading Plugins.";
+            messageControl.Value = "Login Successful";
             if(LoginSucessful != null)
             {
                 LoginSucessful.Invoke();
