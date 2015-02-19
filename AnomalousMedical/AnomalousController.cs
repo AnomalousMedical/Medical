@@ -356,6 +356,8 @@ namespace Medical
                 controller.AtlasPluginManager.initializePlugins();
                 yield return Coroutine.WaitSeconds(0.0);
             }
+
+            mainPlugin.allPluginsLoaded();
         }
 
         void GUIManager_Disposing()

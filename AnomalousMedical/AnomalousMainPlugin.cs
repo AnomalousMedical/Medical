@@ -330,6 +330,20 @@ namespace Medical.GUI
 
         public void sceneRevealed()
         {
+            ResourceProvider bookmarksResourceProvider;
+            if(bookmarksController.PremiumBookmarks)
+            {
+                bookmarksResourceProvider = createPremiumBookmarksResourceProvider();
+            }
+            else
+            {
+                bookmarksResourceProvider = createNonPremiumBookmarksResourceProvider();
+            }
+            bookmarksController.loadSavedBookmarks(bookmarksResourceProvider);
+        }
+
+        public void allPluginsLoaded()
+        {
             UpdateController.checkForUpdate(updateCheckCompleted, standaloneController.AtlasPluginManager, standaloneController.LicenseManager);
 
             if (!String.IsNullOrEmpty(MedicalConfig.StartupTask))
@@ -353,17 +367,6 @@ namespace Medical.GUI
                     introTask.clicked(EmptyTaskPositioner.Instance);
                 }
             }
-
-            ResourceProvider bookmarksResourceProvider;
-            if(bookmarksController.PremiumBookmarks)
-            {
-                bookmarksResourceProvider = createPremiumBookmarksResourceProvider();
-            }
-            else
-            {
-                bookmarksResourceProvider = createNonPremiumBookmarksResourceProvider();
-            }
-            bookmarksController.loadSavedBookmarks(bookmarksResourceProvider);
         }
 
         public long PluginId
