@@ -319,17 +319,14 @@ namespace Medical
             notificationManager.reshowAllNotifications();
         }
 
-        public IEnumerable<PluginLoadStatus> initializePlugins()
+        public void initializePlugins()
         {
             ResourceManager.Instance.load("Medical.Resources.StandaloneIcons.xml");
             ResourceManager.Instance.load("Medical.Resources.LockedFeature.xml");
             ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
             ResourceManager.Instance.load("Medical.Resources.SlideshowIcons.xml");
 
-            foreach(var status in atlasPluginManager.initializePluginsStatus())
-            {
-                yield return status;
-            }
+            atlasPluginManager.initializePlugins();
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             configFile.loadConfigFile();
             guiManager.loadSavedUI(configFile, new Version("1.0.0.2818"));

@@ -32,8 +32,6 @@ namespace Medical
         private const int LoadingPluginsDelta = InitializingPluginsPosition - LoadingPluginsPosition;
         private const int InitializingPluginsDelta = FinishedPosition - InitializingPluginsPosition;
 
-        private delegate uint StatusUpdateFunc(uint currentPosition, uint startPos, uint totalPositionGain, PluginLoadStatus status);
-
         private StandaloneController controller;
         private SplashScreen splashScreen;
         private BorderLayoutChainLink editorBorder;
@@ -289,34 +287,6 @@ namespace Medical
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget.update();
         }
 
-        private IEnumerable<PluginLoadStatus> addPlugins()
-        {
-            PluginLoadStatus loadStatus = new PluginLoadStatus();
-            loadStatus.Total = MedicalConfig.PluginConfig.findPlugins();
-
-            loadStatus.Total += 2;
-
-            MedicalConfig.PluginConfig.addAdditionalPluginFile("IntroductionTutorial.dat");
-            loadStatus.Current++;
-            yield return loadStatus;
-            mainPlugin = new AnomalousMainPlugin(controller.LicenseManager, this);
-            controller.AtlasPluginManager.addPlugin(mainPlugin);
-            loadStatus.Current++;
-            yield return loadStatus;
-
-			if(AddAdditionalPlugins != null)
-			{
-				AddAdditionalPlugins.Invoke(this, controller);
-			}
-
-            foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
-            {
-                controller.AtlasPluginManager.addPlugin(plugin);
-                loadStatus.Current++;
-                yield return loadStatus;
-            }
-        }
-
         void processKeyResults(bool valid)
         {
             //This is fired when the idle function returns to the normal thread processor and the ThreadUtilities invokes
@@ -326,24 +296,9 @@ namespace Medical
                 //Key was valid and the splash screen is still showing.
                 splashScreen.updateStatus(LoadingPluginsPosition, "Loading Plugins");
 
-                keyValid(splashScreen.Position, 
-                (currentPosition, startPos, totalPositionGain, status) =>
-                    {
-                        if (status.Total != 0)
-                        {
-                            currentPosition = startPos + (uint)(status.PercentComplete * totalPositionGain);
-                            if (currentPosition > splashScreen.Position)
-                            {
-                                splashScreen.updateStatus(currentPosition, "Loading Plugins");
-                            }
-                        }
-                        return currentPosition;
-                    }, 
-                () =>
-                    {
-                        splashScreen.updateStatus(FinishedPosition, "");
-                        splashScreen.hide();
-                    });
+                keyValid();
+                splashScreen.updateStatus(FinishedPosition, "");
+                splashScreen.hide();
             }
             else
             {
@@ -358,17 +313,10 @@ namespace Medical
             mvcLogin.LoginSucessful += () =>
                 {
                     Root.getSingleton()._updateAllRenderTargets();
-                    keyValid(0,
-                        (currentPosition, startPos, totalPositionGain, status) =>
-                        {
-                            return currentPosition;
-                        },
-                        () =>
-                        {
-                            mvcLogin.close();
-                            //Let plugins know the scene has been revealed, since the license dialog had to be opened.
-                            mainPlugin.sceneRevealed();
-                        });
+                    keyValid();
+                    mvcLogin.close();
+                    //Let plugins know the scene has been revealed, since the license dialog had to be opened.
+                    mainPlugin.sceneRevealed();
                 };
             mvcLogin.showContext();
 
@@ -376,34 +324,41 @@ namespace Medical
             splashScreen.hide();
         }
 
-        void keyValid(uint currentPosition, StatusUpdateFunc statusUpdateFunc, Action finishFunc)
-        {
-            controller.IdleHandler.runTemporaryIdle(keyValidIdleFunc(currentPosition, statusUpdateFunc, finishFunc));
-        }
-
-        private IEnumerable<IdleStatus> keyValidIdleFunc(uint currentPosition, StatusUpdateFunc statusUpdateFunc, Action finishFunc)
+        void keyValid()
         {
             MedicalConfig.setUserDirectory(controller.LicenseManager.User);
 
             controller.GUIManager.setMainInterfaceEnabled(true);
             licenseDisplay.setLicenseText(String.Format("Licensed to: {0}", controller.LicenseManager.LicenseeName));
 
-            foreach (var status in addPlugins())
-            {
-                currentPosition = statusUpdateFunc(currentPosition, LoadingPluginsPosition, LoadingPluginsDelta, status);
-                yield return IdleStatus.Ok;
-            }
+            mainPlugin = new AnomalousMainPlugin(controller.LicenseManager, this);
+            controller.AtlasPluginManager.addPlugin(mainPlugin);
+            controller.AtlasPluginManager.addPlugin("IntroductionTutorial.dat");
+            controller.initializePlugins();
 
-            foreach (var status in controller.initializePlugins())
-            {
-                currentPosition = statusUpdateFunc(currentPosition, InitializingPluginsPosition, InitializingPluginsDelta, status);
-                yield return IdleStatus.Ok;
-            }
-
-            finishFunc();
+            Coroutine.Start(loadAdditionalPluginsCoroutine());
 
             controller.MedicalController.MainTimer.resetLastTime();
-            yield return IdleStatus.Ok;
+        }
+
+        IEnumerator<YieldAction> loadAdditionalPluginsCoroutine()
+        {
+            yield return Coroutine.WaitSeconds(0.5);
+
+            MedicalConfig.PluginConfig.findPlugins();
+
+            //Load remaining plugins after core ones are loaded.
+            if (AddAdditionalPlugins != null)
+            {
+                AddAdditionalPlugins.Invoke(this, controller);
+            }
+
+            foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
+            {
+                controller.AtlasPluginManager.addPlugin(plugin);
+                controller.AtlasPluginManager.initializePlugins();
+                yield return Coroutine.WaitSeconds(0.0);
+            }
         }
 
         void GUIManager_Disposing()

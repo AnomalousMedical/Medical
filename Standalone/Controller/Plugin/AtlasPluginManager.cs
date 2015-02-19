@@ -420,16 +420,6 @@ namespace Medical
 
         public void initializePlugins()
         {
-            foreach (var status in initializePluginsStatus()) { }
-        }
-
-        public IEnumerable<PluginLoadStatus> initializePluginsStatus()
-        {
-            PluginLoadStatus loadStatus = new PluginLoadStatus()
-            {
-                Total = uninitializedPlugins.Count
-            };
-
             //If we already added the plugins folder to MyGUI, remove it.
             if (addedPluginsToMyGUIResourceGroup)
             {
@@ -459,7 +449,7 @@ namespace Medical
                 {
                     firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", plugin.PluginName));
                     Log.Error("Cannot load plugin '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", plugin.PluginName, plugin.Location, e.Message);
-					Log.Default.printException(e);
+                    Log.Default.printException(e);
                     try
                     {
                         File.Delete(plugin.Location);
@@ -471,9 +461,6 @@ namespace Medical
                         managePluginInstructions.savePersistantFile();
                     }
                 }
-
-                loadStatus.Current++;
-                yield return loadStatus;
             }
             uninitializedPlugins.Clear();
         }
