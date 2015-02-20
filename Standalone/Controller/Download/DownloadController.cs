@@ -145,6 +145,7 @@ namespace Medical
 
         private void genericBackgroundDownload(Download download)
         {
+            download.starting();
             download.StatusString = "Starting";
             download.updateStatus();
             bool success = false;

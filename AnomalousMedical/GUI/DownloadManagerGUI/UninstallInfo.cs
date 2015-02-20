@@ -25,7 +25,7 @@ namespace Medical.GUI
 
         public void uninstall(AtlasPluginManager pluginManager)
         {
-            if (pluginManager.uninstallPlugin(plugin))
+            if (pluginManager.uninstallPlugin(plugin, false))
             {
                 Status = ServerDownloadStatus.PendingUninstall;
             }

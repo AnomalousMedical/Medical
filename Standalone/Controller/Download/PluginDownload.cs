@@ -18,6 +18,22 @@ namespace Medical
             this.DestinationFolder = MedicalConfig.PluginConfig.PluginsFolder;
         }
 
+        public override void starting()
+        {
+            AtlasPluginManager atlasPluginManager = controller.PluginManager;
+            AtlasPlugin plugin = atlasPluginManager.getPlugin(PluginId);
+            if(plugin != null) //Plugin is loaded, unload
+            {
+                if(plugin.AllowRuntimeUninstall)
+                {
+                    ThreadManager.invokeAndWait(() =>
+                        {
+                            atlasPluginManager.uninstallPlugin(plugin, true);
+                        });
+                }
+            }
+        }
+
         protected override void onCompleted(bool success)
         {
             if (success)

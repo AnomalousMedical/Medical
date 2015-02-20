@@ -96,7 +96,7 @@ namespace Medical
         /// </summary>
         /// <param name="plugin"></param>
         /// <returns></returns>
-        public bool uninstallPlugin(AtlasPlugin plugin)
+        public bool uninstallPlugin(AtlasPlugin plugin, bool willReload)
         {
             bool needsRestart = false;
             String location = plugin.Location;
@@ -104,7 +104,7 @@ namespace Medical
             {
                 if (plugin.AllowRuntimeUninstall)
                 {
-                    unloadPlugin(plugin, false);
+                    unloadPlugin(plugin, willReload);
                     try
                     {
                         File.Delete(location);

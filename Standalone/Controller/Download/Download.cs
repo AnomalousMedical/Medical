@@ -31,6 +31,16 @@ namespace Medical
             this.DownloadedToSafeLocation = false;
         }
 
+        /// <summary>
+        /// This method will be called by the download therad when the download
+        /// is starting. It will be executed on the download background thread
+        /// and should use ThreadManager.Invoke to call back to the main UI.
+        /// </summary>
+        public virtual void starting()
+        {
+
+        }
+
         public void completed(bool success)
         {
             controller._alertDownloadCompleted(this);
