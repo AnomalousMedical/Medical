@@ -25,7 +25,7 @@ namespace Medical.GUI
         private DownloadController downloadController;
         private bool activeNotDisposed = true;
         private bool addedInstalledPlugins = false;
-        private bool readingServerPluginInfo = false;
+        private bool readingServerPluginInfo = true; //Starts true to disable checks until activateServerDownloadChecks is called once.
         private bool displayRestartMessage = false;
         private bool autoStartUpdate = false;
         private String restartMessage = "";
@@ -86,12 +86,29 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        /// <summary>
+        /// Turn on the ability to check the server for plugin updates. Only call once per program execution
+        /// </summary>
+        public void activateServerDownloadChecks()
+        {
+            readingServerPluginInfo = false;
+            if(Visible)
+            {
+                checkForDownloads();
+            }
+        }
+
         public void addAutoDownloadItems(IEnumerable<long> pluginIds)
         {
             autoDownloadIds.AddRange(pluginIds);
         }
 
         void PluginManagerGUI_Showing(object sender, EventArgs e)
+        {
+            checkForDownloads();
+        }
+
+        private void checkForDownloads()
         {
             if (!readingServerPluginInfo)
             {

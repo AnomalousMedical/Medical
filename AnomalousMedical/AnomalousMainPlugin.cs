@@ -372,6 +372,8 @@ namespace Medical.GUI
                     introTask.clicked(EmptyTaskPositioner.Instance);
                 }
             }
+
+            downloadManagerGUI.activateServerDownloadChecks();
         }
 
         public long PluginId

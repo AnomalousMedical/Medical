@@ -83,6 +83,8 @@ namespace Medical
 
         public void unload(StandaloneController standaloneController, bool willReload)
         {
+            //Need to unload sequences
+
             //Also need to unload icon resources
 
             TaskController taskController = standaloneController.TaskController;
