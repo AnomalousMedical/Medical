@@ -97,12 +97,16 @@ namespace Medical
                 }
             }
 
-            //Also need to unload icon resources
+            //Also need to unload icon resources, this isn't the best way, but unload by removing the branding image key and all task icons manually (done in task unload).
+            ResourceManager.Instance.destroyAllTexturesForResource(BrandingImageKey);
+            ResourceManager.Instance.removeByName(BrandingImageKey);
 
             TaskController taskController = standaloneController.TaskController;
             foreach (DDPluginTask task in tasks)
             {
                 taskController.removeTask(task, willReload);
+                ResourceManager.Instance.destroyAllTexturesForResource(task.IconName);
+                ResourceManager.Instance.removeByName(task.IconName);
             }
         }
 
