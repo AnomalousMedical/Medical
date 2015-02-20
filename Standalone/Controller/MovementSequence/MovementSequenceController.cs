@@ -27,7 +27,9 @@ namespace Medical.Controller
     public class MovementSequenceController
     {
         public event MovementSequenceGroupEvent GroupAdded;
+        public event MovementSequenceGroupEvent GroupRemoved;
         public event MovementSequenceInfoEvent SequenceAdded;
+        public event MovementSequenceInfoEvent SequenceRemoved;
         public event MovementSequenceEvent CurrentSequenceChanged;
         public event MovementSequenceEvent PlaybackStarted;
         public event MovementSequenceEvent PlaybackStopped;
@@ -78,6 +80,30 @@ namespace Medical.Controller
             if (SequenceAdded != null)
             {
                 SequenceAdded.Invoke(this, group, info);
+            }
+        }
+
+        public void removeMovementSequence(String groupName, MovementSequenceInfo info)
+        {
+            MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
+            if (group != null)
+            {
+                if (info != null)
+                {
+                    if (SequenceRemoved != null)
+                    {
+                        SequenceRemoved.Invoke(this, group, info);
+                    }
+                    group.removeSequence(info);
+                    if (group.Count == 0)
+                    {
+                        currentSequenceSet.removeGroup(group);
+                        if (GroupRemoved != null)
+                        {
+                            GroupRemoved.Invoke(this, group);
+                        }
+                    }
+                }
             }
         }
 

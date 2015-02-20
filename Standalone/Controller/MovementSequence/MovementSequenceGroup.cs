@@ -33,5 +33,13 @@ namespace Medical.Controller
                 return sequences;
             }
         }
+
+        public int Count
+        {
+            get
+            {
+                return sequences.Count;
+            }
+        }
     }
 }

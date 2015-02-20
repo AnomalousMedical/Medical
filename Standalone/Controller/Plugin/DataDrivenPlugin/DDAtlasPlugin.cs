@@ -20,6 +20,7 @@ namespace Medical
         private List<DDPluginTask> tasks = new List<DDPluginTask>();
         private String pluginNamespace;
         private List<long> dependencyIds = new List<long>();
+        private List<VirtualFSMovementSequenceInfo> loadedSequences;
 
         public DDAtlasPlugin()
         {
@@ -60,6 +61,7 @@ namespace Medical
                 VirtualFileSystem archive = VirtualFileSystem.Instance;
                 if (archive.exists(fullSequencesDirectory))
                 {
+                    loadedSequences = new List<VirtualFSMovementSequenceInfo>();
                     MovementSequenceController movementSequenceController = standaloneController.MovementSequenceController;
                     foreach (String directory in archive.listDirectories(fullSequencesDirectory, false, false))
                     {
@@ -71,9 +73,11 @@ namespace Medical
                             if (fileName.EndsWith(".seq"))
                             {
                                 VirtualFSMovementSequenceInfo info = new VirtualFSMovementSequenceInfo();
+                                info.GroupName = groupName;
                                 info.Name = fileName.Substring(0, fileName.Length - 4);
                                 info.FileName = fileInfo.FullName;
-                                movementSequenceController.addMovementSequence(groupName, info);
+                                movementSequenceController.addMovementSequence(info.GroupName, info);
+                                loadedSequences.Add(info);
                             }
                         }
                     }
@@ -83,7 +87,15 @@ namespace Medical
 
         public void unload(StandaloneController standaloneController, bool willReload)
         {
-            //Need to unload sequences
+            //Unload sequences
+            if(loadedSequences != null)
+            {
+                MovementSequenceController movementSequenceController = standaloneController.MovementSequenceController;
+                foreach(var info in loadedSequences)
+                {
+                    movementSequenceController.removeMovementSequence(info.GroupName, info);
+                }
+            }
 
             //Also need to unload icon resources
 

@@ -15,6 +15,8 @@ namespace Medical.Controller
     {
         public String FileName { get; set; }
 
+        public String GroupName { get; set; }
+
         public override MovementSequence loadSequence(XmlSaver xmlSaver)
         {
             MovementSequence loadingSequence = null;
