@@ -58,5 +58,13 @@ namespace Medical.GUI
                 return String.Format(MedicalConfig.ProductPageBaseURL, plugin.PluginId);
             }
         }
+
+        public long PluginId
+        {
+            get
+            {
+                return plugin.PluginId;
+            }
+        }
     }
 }

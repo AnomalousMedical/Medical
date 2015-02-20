@@ -132,10 +132,7 @@ namespace Medical.GUI
                         }
                         else if(pluginUpdateInfo.Version > plugin.Version)
                         {
-                            newDownloadInfos.Add(pluginUpdateInfo.PluginId, new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, plugin.PluginName, ServerDownloadStatus.Update)
-                            {
-                                ImageKey = plugin.BrandingImageKey
-                            });
+                            newDownloadInfos.Add(pluginUpdateInfo.PluginId, new ServerPluginDownloadInfo(this, pluginUpdateInfo.PluginId, plugin.PluginName, ServerDownloadStatus.Update));
                         }
                     }
                 }
@@ -160,7 +157,6 @@ namespace Medical.GUI
                                 ASN1 pluginInfo = results[i];
                                 long pluginId = BitConverter.ToInt64(pluginInfo[0].Value, 0);
                                 ServerPluginDownloadInfo downloadInfo = newDownloadInfos[pluginId];
-                                bool updateImage = true;
                                 if (downloadInfo.Status == ServerDownloadStatus.Update)
                                 {
                                     String newName = Encoding.BigEndianUnicode.GetString(pluginInfo[1].Value);
@@ -168,23 +164,16 @@ namespace Medical.GUI
                                     {
                                         downloadInfo.Name = String.Format("{0}\nUpdate for {1}", newName, downloadInfo.Name);
                                     }
-                                    else
-                                    {
-                                        updateImage = false; //Only update images on name changes.
-                                    }
                                 }
                                 else
                                 {
                                     downloadInfo.Name = Encoding.BigEndianUnicode.GetString(pluginInfo[1].Value);
                                 }
-                                if (updateImage)
+                                ASN1 brandingImageLocationAsn1 = pluginInfo[2];
+                                if (brandingImageLocationAsn1.Tag != 0x05)
                                 {
-                                    ASN1 brandingImageLocationAsn1 = pluginInfo[2];
-                                    if (brandingImageLocationAsn1.Tag != 0x05)
-                                    {
-                                        String imageURL = Encoding.BigEndianUnicode.GetString(brandingImageLocationAsn1.Value);
-                                        getBrandingImageForDownload(downloadInfo, imageURL);
-                                    }
+                                    String imageURL = Encoding.BigEndianUnicode.GetString(brandingImageLocationAsn1.Value);
+                                    getBrandingImageForDownload(downloadInfo, imageURL);
                                 }
 
                                 ASN1 dependencies = pluginInfo[3];

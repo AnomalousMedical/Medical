@@ -39,6 +39,7 @@ namespace Medical.GUI
         {
             this.standaloneController = standaloneController;
             this.pluginManager = standaloneController.AtlasPluginManager;
+            pluginManager.PluginUnloading += pluginManager_PluginUnloading;
             this.downloadController = standaloneController.DownloadController;
             downloadController.AllDownloadsComplete += new Action<DownloadController>(downloadController_AllDownloadsComplete);
             this.downloadServer = downloadServer;
@@ -81,6 +82,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            pluginManager.PluginUnloading -= pluginManager_PluginUnloading;
             downloadServer.Dispose();
             activeNotDisposed = false;
             base.Dispose();
@@ -146,6 +148,17 @@ namespace Medical.GUI
                 readingInfo.Visible = true;
                 downloadServer.readPluginInfoFromServer(pluginManager);
             }
+        }
+
+        void pluginManager_PluginUnloading(AtlasPlugin plugin)
+        {
+            //Remove installed item
+            var item = pluginGrid.itemsInGroup("Installed").FirstOrDefault(i => 
+                {
+                    UninstallInfo uninstall = i.UserObject as UninstallInfo;
+                    return uninstall != null && uninstall.PluginId == plugin.PluginId;
+                });
+            pluginGrid.removeItem(item);
         }
 
         void downloadServer_DownloadFound(ServerDownloadInfo download)
@@ -273,9 +286,10 @@ namespace Medical.GUI
             UninstallInfo pluginInfo = selectedItem.UserObject as UninstallInfo;
             if (pluginInfo != null)
             {
-                pluginInfo.uninstall(pluginManager);
                 pluginGrid.SuppressLayout = true;
-                pluginGrid.removeItem(selectedItem);
+                pluginInfo.uninstall(pluginManager);
+                //Item is removed from grid during the uninstall function through pluginManager_PluginUnloading callback.
+                //Add back if we were not able to fully remove
                 if (pluginInfo.Status != ServerDownloadStatus.Removed)
                 {
                     addInfoToButtonGrid(pluginInfo, true);

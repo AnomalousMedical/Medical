@@ -37,6 +37,7 @@ namespace Medical
 
         public delegate void PluginMessageDelegate(String message);
         public event PluginMessageDelegate PluginLoadError;
+        public event Action<AtlasPlugin> PluginUnloading;
 
         /// <summary>
         /// This event is fired if the dependencies for a given plugin are requested to be downloaded.
@@ -104,6 +105,10 @@ namespace Medical
             {
                 if (plugin.AllowRuntimeUninstall)
                 {
+                    if (PluginUnloading != null)
+                    {
+                        PluginUnloading.Invoke(plugin);
+                    }
                     unloadPlugin(plugin, willReload);
                     try
                     {
