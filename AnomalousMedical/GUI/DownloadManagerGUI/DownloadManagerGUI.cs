@@ -259,8 +259,12 @@ namespace Medical.GUI
                 pluginInfo.uninstall(pluginManager);
                 pluginGrid.SuppressLayout = true;
                 pluginGrid.removeItem(selectedItem);
+                if (pluginInfo.Status != ServerDownloadStatus.Removed)
+                {
+                    addInfoToButtonGrid(pluginInfo, true);
+                }
                 pluginGrid.SuppressLayout = false;
-                addInfoToButtonGrid(pluginInfo, true);
+                pluginGrid.layout();
             }
         }
 

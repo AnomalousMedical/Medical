@@ -317,6 +317,11 @@ namespace Medical.GUI
             standaloneController.ViewHostFactory.addFactory(new WizardComponentFactory(teethToolController));
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+
+        }
+
         public void sceneLoaded(SimScene scene)
         {
             teethMover.sceneLoaded(scene);
@@ -410,6 +415,14 @@ namespace Medical.GUI
         }
 
         public bool AllowUninstall
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public bool AllowRuntimeUninstall
         {
             get
             {

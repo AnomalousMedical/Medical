@@ -41,6 +41,11 @@ namespace Anomalous.Medical.StoreManager
                 };
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+
+        }
+
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)
         {
             
@@ -96,6 +101,14 @@ namespace Anomalous.Medical.StoreManager
             get
             {
                 return true;
+            }
+        }
+
+        public bool AllowRuntimeUninstall
+        {
+            get
+            {
+                return false;
             }
         }
 

@@ -16,6 +16,7 @@ namespace Medical.GUI
         PendingInstall,
         Installed,
         Unlicensed,
+        Removed, //Means that the plugin has been removed and should be removed from the list of plugins
     }
 
     abstract class ServerDownloadInfo : DownloadGUIInfo, DownloadListener

@@ -47,6 +47,11 @@ namespace Medical.Movement
             taskController.addTask(movementDialogTask);
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+
+        }
+
         public void sceneLoaded(SimScene scene)
         {
             
@@ -98,6 +103,14 @@ namespace Medical.Movement
         }
 
         public bool AllowUninstall { get; set; }
+
+        public bool AllowRuntimeUninstall
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         public IEnumerable<long> DependencyPluginIds
         {

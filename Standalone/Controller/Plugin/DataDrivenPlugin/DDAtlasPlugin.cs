@@ -81,6 +81,17 @@ namespace Medical
             }
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+            //Also need to unload icon resources
+
+            TaskController taskController = standaloneController.TaskController;
+            foreach (DDPluginTask task in tasks)
+            {
+                taskController.removeTask(task, willReload);
+            }
+        }
+
         public void sceneLoaded(SimScene scene)
         {
             
@@ -201,6 +212,14 @@ namespace Medical
 
         [Editable]
         public bool AllowUninstall { get; set; }
+
+        public bool AllowRuntimeUninstall
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public IEnumerable<long> DependencyPluginIds
         {

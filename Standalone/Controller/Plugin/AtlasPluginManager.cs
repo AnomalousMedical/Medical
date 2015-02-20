@@ -91,13 +91,40 @@ namespace Medical
             managePluginInstructions.savePersistantFile();
         }
 
-        public void addPluginToUninstall(AtlasPlugin plugin)
+        /// <summary>
+        /// Uninstall a plugin, will return true if the program needs to restart to finish uninstalling.
+        /// </summary>
+        /// <param name="plugin"></param>
+        /// <returns></returns>
+        public bool uninstallPlugin(AtlasPlugin plugin)
         {
+            bool needsRestart = false;
+            String location = plugin.Location;
             if (plugin.AllowUninstall)
             {
-                managePluginInstructions.addFileToDelete(plugin.Location);
-                managePluginInstructions.savePersistantFile();
+                if (plugin.AllowRuntimeUninstall)
+                {
+                    unloadPlugin(plugin, false);
+                    try
+                    {
+                        File.Delete(location);
+                    }
+                    catch (Exception deleteEx)
+                    {
+                        Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", location, location, deleteEx.Message);
+                        managePluginInstructions.addFileToDelete(location);
+                        managePluginInstructions.savePersistantFile();
+                        needsRestart = true;
+                    }
+                }
+                else
+                {
+                    managePluginInstructions.addFileToDelete(location);
+                    managePluginInstructions.savePersistantFile();
+                    needsRestart = true;
+                }
             }
+            return needsRestart;
         }
 
         public bool addPlugin(String pluginPath)
@@ -394,6 +421,42 @@ namespace Medical
                 Assembly assembly = pluginType.Assembly;
                 artworkPluginAssemblies.Add(assembly.FullName, assembly);
                 MyGUIInterface.Instance.CommonResourceGroup.addResource(pluginType.AssemblyQualifiedName, "EmbeddedScalableResource", true);
+            }
+        }
+
+        private void unloadPlugin(AtlasPlugin plugin, bool willReload)
+        {
+            String dataFileName = Path.GetFileNameWithoutExtension(plugin.Location);
+            
+            plugin.unload(standaloneController, willReload);
+
+            loadedPluginNames.Remove(dataFileName);
+            usedPluginIds.Remove(plugin.PluginId);
+            unlicensedPlugins.Remove(plugin);
+            plugins.Remove(plugin);
+
+            //Remove the plugins folder from mygui in case we have totally removed this location
+            if (addedPluginsToMyGUIResourceGroup)
+            {
+                MyGUIInterface.Instance.CommonResourceGroup.removeResource("Plugins");
+            }
+
+            //Remove the archive, only supports non-dll right now
+            if (!plugin.Location.EndsWith(".dll"))
+            {
+                VirtualFileSystem.Instance.removeArchive(plugin.Location);
+            }
+            //Else, we don't unload dll plugins, but if we did remove the assembly resources here
+
+            //If a plugins folder exists in the virtual file system add it to the MyGUI group.
+            if (VirtualFileSystem.Instance.exists("Plugins"))
+            {
+                MyGUIInterface.Instance.CommonResourceGroup.addResource("Plugins", "ScalableEngineArchive", true);
+                addedPluginsToMyGUIResourceGroup = true;
+            }
+            else
+            {
+                addedPluginsToMyGUIResourceGroup = false;
             }
         }
 

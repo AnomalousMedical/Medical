@@ -124,6 +124,11 @@ namespace Developer
             standaloneController.ViewHostFactory.addFactory(new WizardComponentViews());
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+
+        }
+
         public void sceneLoaded(SimScene scene)
         {
             advancedMandibleMovement.sceneLoaded(scene);
@@ -178,6 +183,14 @@ namespace Developer
         }
 
         public bool AllowUninstall { get; set; }
+
+        public bool AllowRuntimeUninstall
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         public IEnumerable<long> DependencyPluginIds
         {

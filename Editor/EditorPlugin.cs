@@ -135,6 +135,11 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new OffsetSequenceEditorFactory(standaloneController.MedicalController, standaloneController.Clipboard));
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+
+        }
+
         void editorController_ProjectChanged(EditorController editorController)
         {
             if (editorController.ResourceProvider != null)
@@ -185,6 +190,14 @@ namespace Medical
             get
             {
                 return true;
+            }
+        }
+
+        public bool AllowRuntimeUninstall
+        {
+            get
+            {
+                return false;
             }
         }
 

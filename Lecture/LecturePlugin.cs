@@ -72,6 +72,11 @@ namespace Lecture
             standaloneController.ViewHostFactory.addFactory(new SlideTaskbarFactory());
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+
+        }
+
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)
         {
             propMover.sceneLoaded(scene);
@@ -129,6 +134,14 @@ namespace Lecture
             get
             {
                 return true;
+            }
+        }
+
+        public bool AllowRuntimeUninstall
+        {
+            get
+            {
+                return false;
             }
         }
 

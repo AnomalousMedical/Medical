@@ -66,6 +66,11 @@ namespace Medical
             }
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+
+        }
+
         /// <summary>
         /// Add a resource directly to this group.
         /// </summary>
@@ -100,6 +105,14 @@ namespace Medical
             get
             {
                 return true;
+            }
+        }
+
+        public bool AllowRuntimeUninstall
+        {
+            get
+            {
+                return false; //will be false for now, probably make true later
             }
         }
 

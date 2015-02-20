@@ -13,6 +13,12 @@ namespace Medical
 
         void initialize(StandaloneController standaloneController);
 
+        /// <summary>
+        /// Unload the plugin, only needed if AllowRuntimeUninstall is true. Is not called on program termination
+        /// only when plugins are uninstalled or reloading (which uninstalls and then reloads).
+        /// </summary>
+        void unload(StandaloneController standaloneController, bool willReload);
+
         void sceneLoaded(SimScene scene);
 
         void sceneUnloading(SimScene scene);
@@ -37,6 +43,11 @@ namespace Medical
         /// Return true to allow the plugin to be uninstalled.
         /// </summary>
         bool AllowUninstall { get; }
+
+        /// <summary>
+        /// Will be true if the plugin can be uninstalled at runtime without restarting the program.
+        /// </summary>
+        bool AllowRuntimeUninstall { get; }
 
         /// <summary>
         /// An enumerator over the plugin ids that this plugin is dependent on.

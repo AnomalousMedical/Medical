@@ -104,6 +104,11 @@ namespace Medical
             taskController.addTask(windowLayout);
         }
 
+        public void unload(StandaloneController standaloneController, bool willReload)
+        {
+
+        }
+
         public void sceneLoaded(SimScene scene)
         {
             windowLayout.sceneLoaded(scene);
@@ -155,6 +160,14 @@ namespace Medical
         }
 
         public bool AllowUninstall { get; set; }
+
+        public bool AllowRuntimeUninstall
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         public IEnumerable<long> DependencyPluginIds
         {
