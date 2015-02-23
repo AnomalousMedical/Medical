@@ -440,12 +440,6 @@ namespace Medical
             unlicensedPlugins.Remove(plugin);
             plugins.Remove(plugin);
 
-            //Remove the plugins folder from mygui in case we have totally removed this location
-            if (addedPluginsToMyGUIResourceGroup)
-            {
-                MyGUIInterface.Instance.CommonResourceGroup.removeResource("Plugins");
-            }
-
             //Remove the archive, only supports non-dll right now
             if (!plugin.Location.EndsWith(".dll"))
             {
@@ -453,14 +447,10 @@ namespace Medical
             }
             //Else, we don't unload dll plugins, but if we did remove the assembly resources here
 
-            //If a plugins folder exists in the virtual file system add it to the MyGUI group.
-            if (VirtualFileSystem.Instance.exists("Plugins"))
+            //Remove plugins folder if it no longer exists
+            if (!VirtualFileSystem.Instance.exists("Plugins"))
             {
-                MyGUIInterface.Instance.CommonResourceGroup.addResource("Plugins", "ScalableEngineArchive", true);
-                addedPluginsToMyGUIResourceGroup = true;
-            }
-            else
-            {
+                MyGUIInterface.Instance.CommonResourceGroup.removeResource("Plugins");
                 addedPluginsToMyGUIResourceGroup = false;
             }
         }
@@ -488,16 +478,10 @@ namespace Medical
 
         public void initializePlugins()
         {
-            //If we already added the plugins folder to MyGUI, remove it.
-            if (addedPluginsToMyGUIResourceGroup)
+            //If a plugins folder exists in the virtual file system and it has not been found already add it to the MyGUI group.
+            if (!addedPluginsToMyGUIResourceGroup && VirtualFileSystem.Instance.exists("Plugins"))
             {
-                MyGUIInterface.Instance.CommonResourceGroup.removeResource("Plugins");
-            }
-
-            //If a plugins folder exists in the virtual file system add it to the MyGUI group.
-            if (VirtualFileSystem.Instance.exists("Plugins"))
-            {
-                MyGUIInterface.Instance.CommonResourceGroup.addResource("Plugins", "ScalableEngineArchive", true);
+                MyGUIInterface.Instance.CommonResourceGroup.addResource("Plugins", "ScalableEngineArchive", false); //Does not have to be recursive because we don't have to index
                 addedPluginsToMyGUIResourceGroup = true;
             }
 
