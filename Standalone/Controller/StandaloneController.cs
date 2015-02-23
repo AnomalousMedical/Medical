@@ -96,7 +96,16 @@ namespace Medical
 
             MyGUIInterface.OSTheme = PlatformConfig.ThemeFile;
 
-            mainWindow = new MainWindow(app.Title);
+            String title;
+            if(MedicalConfig.BuildName != null)
+            {
+                title = String.Format("{0} {1}", app.Title, MedicalConfig.BuildName);
+            }
+            else
+            {
+                title = app.Title;
+            }
+            mainWindow = new MainWindow(title);
             mainWindow.Closed += mainWindow_Closed;
 
             //Setup DPI
