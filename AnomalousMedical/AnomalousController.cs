@@ -13,6 +13,8 @@ using System.Reflection;
 using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;
+using Engine.Threads;
+using System.Threading;
 
 namespace Medical
 {
@@ -37,8 +39,8 @@ namespace Medical
         private Engine.Resources.ResourceGroup commonResources;
         private AnomalousMainPlugin mainPlugin;
 
-		public event Action<AnomalousController, StandaloneController> AddAdditionalPlugins;
-		public event Action<AnomalousController, StandaloneController> OnInitCompleted;
+        public event Action<AnomalousController, StandaloneController> AddAdditionalPlugins;
+        public event Action<AnomalousController, StandaloneController> OnInitCompleted;
 
         public AnomalousController()
         {
@@ -65,10 +67,10 @@ namespace Medical
             splashScreen.updateStatus(LoadingServerFilesPosition, "Loading Files from Server");
             ResourceManager.Instance.load("Medical.Resources.AnomalousBootstrapImagesets.xml");
 
-			if(OnInitCompleted != null)
-			{
-				OnInitCompleted.Invoke(this, controller);
-			}
+            if (OnInitCompleted != null)
+            {
+                OnInitCompleted.Invoke(this, controller);
+            }
 
             return true;
         }
@@ -333,30 +335,31 @@ namespace Medical
             controller.AtlasPluginManager.addPlugin("IntroductionTutorial.dat");
             controller.loadConfigAndCommonResources();
 
-            Coroutine.Start(loadAdditionalPluginsCoroutine());
-
-            controller.MedicalController.MainTimer.resetLastTime();
-        }
-
-        IEnumerator<YieldAction> loadAdditionalPluginsCoroutine()
-        {
-            yield return Coroutine.WaitSeconds(0.5);
-
-            MedicalConfig.PluginConfig.findPlugins();
-
             //Load remaining plugins after core ones are loaded.
             if (AddAdditionalPlugins != null)
             {
                 AddAdditionalPlugins.Invoke(this, controller);
             }
 
-            foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
+            System.Threading.Tasks.Task.Run(() =>
             {
-                controller.AtlasPluginManager.addPlugin(plugin);
-                yield return Coroutine.WaitSeconds(0.0);
-            }
+                Thread.Sleep(500);
 
-            mainPlugin.allPluginsLoaded();
+                MedicalConfig.PluginConfig.findPlugins();
+
+                foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
+                {
+                    bool isSafe = controller.AtlasPluginManager.isPluginPathSafeToLoad(plugin);
+                    ThreadManager.invokeAndWait(() =>
+                        {
+                            controller.AtlasPluginManager.addPlugin(plugin, isSafe);
+                        });
+                }
+
+                ThreadManager.invoke(mainPlugin.allPluginsLoaded);
+            });
+
+            controller.MedicalController.MainTimer.resetLastTime();
         }
 
         void GUIManager_Disposing()

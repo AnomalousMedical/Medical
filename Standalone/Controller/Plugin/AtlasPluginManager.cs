@@ -75,6 +75,23 @@ namespace Medical
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
         }
 
+        public bool isPluginPathSafeToLoad(String path)
+        {
+            String fullPath = Path.GetFullPath(path);
+            if (File.Exists(fullPath))
+            {
+                return dataFileVerifier.isSafe(fullPath);
+            }
+            else //Is a directory
+            {
+#if ALLOW_OVERRIDE
+                return true; //Allow directories only in internal builds
+#else
+                return false;
+#endif
+            }
+        }
+
         public void manageInstalledPlugins()
         {
             var loadedInstructions = ManagePluginInstructions.restore(MedicalConfig.PluginConfig.PluginsFolder);
@@ -131,16 +148,40 @@ namespace Medical
             return needsRestart;
         }
 
+        /// <summary>
+        /// Add a plugin from a path. Will check the signature of the file.
+        /// </summary>
+        /// <param name="pluginPath">The path to load.</param>
+        /// <returns>True if the plugin is loaded, otherwise false.</returns>
         public bool addPlugin(String pluginPath)
         {
-            if (pluginPath.EndsWith(".dll", true, CultureInfo.InvariantCulture))
+            return addPlugin(pluginPath, dataFileVerifier.isSafe(pluginPath));
+        }
+
+        /// <summary>
+        /// Add a plugin from a path, you must pass if the plugin is safe to load or not, which
+        /// can be determined by calling isPluginSafeToLoad, which will check signatures on the file.
+        /// For performance you might want to call isPluginSafeToLoad on a background thread and then
+        /// call this function with the result on the main thread (must load plugins on the main thread). 
+        /// It is not reccomended to force this setting to true or false.
+        /// </summary>
+        /// <param name="pluginPath">The path to load.</param>
+        /// <param name="isSafeToLoad">True if the plugin is safe to load and false otherwise.</param>
+        /// <returns>True if the plugin is loaded sucessfully.</returns>
+        public bool addPlugin(String pluginPath, bool isSafeToLoad)
+        {
+            if (isSafeToLoad)
             {
-                return addDllPlugin(pluginPath);
+                if (pluginPath.EndsWith(".dll", true, CultureInfo.InvariantCulture))
+                {
+                    return addDllPlugin(pluginPath);
+                }
+                else
+                {
+                    return addDataDrivenPlugin(pluginPath);
+                }
             }
-            else
-            {
-                return addDataDrivenPlugin(pluginPath);
-            }
+            return false;
         }
 
         private bool addDllPlugin(String dllName)
@@ -159,56 +200,53 @@ namespace Medical
                     String dllFileName = Path.GetFileNameWithoutExtension(fullPath);
                     if (!loadedPluginNames.Contains(dllFileName))
                     {
-                        if (dataFileVerifier.isSafeDll(fullPath))
+                        try
                         {
-                            try
+                            Assembly assembly = Assembly.LoadFile(fullPath);
+
+                            //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
+                            loadedPluginNames.Add(dllFileName);
+
+                            Version version = assembly.GetName().Version;
+                            if (version.Major == requiredAssemblyVersion.Major && version.Minor == requiredAssemblyVersion.Minor)
                             {
-                                Assembly assembly = Assembly.LoadFile(fullPath);
-
-                                //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
-                                loadedPluginNames.Add(dllFileName);
-
-                                Version version = assembly.GetName().Version;
-                                if (version.Major == requiredAssemblyVersion.Major && version.Minor == requiredAssemblyVersion.Minor)
+                                AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                                if (attributes.Length > 0)
                                 {
-                                    AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
-                                    if (attributes.Length > 0)
+                                    foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
                                     {
-                                        foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
-                                        {
-                                            entryPointAttribute.createPlugin(standaloneController);
-                                        }
-                                        loadedPlugin = true;
+                                        entryPointAttribute.createPlugin(standaloneController);
                                     }
-                                    else
-                                    {
-                                        String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
-                                        firePluginLoadError(errorMessage);
-                                        Log.Error(errorMessage);
-                                    }
+                                    loadedPlugin = true;
                                 }
                                 else
                                 {
-                                    String error = String.Format("The plugin '{0}' is for a different version of Anomalous Medical {1}.", dllFileName, version);
-                                    firePluginLoadError(error);
-                                    Log.Error(error);
-                                    loadedPlugin = true; //This loaded, but we didnt inititalize it, however, return true anyway since we did load sucessfully
+                                    String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                                    firePluginLoadError(errorMessage);
+                                    Log.Error(errorMessage);
                                 }
                             }
-                            catch (Exception e)
+                            else
                             {
-                                firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dllFileName));
-                                Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
-                                try
-                                {
-                                    File.Delete(fullPath);
-                                }
-                                catch (Exception deleteEx)
-                                {
-                                    Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
-                                    managePluginInstructions.addFileToDelete(fullPath);
-                                    managePluginInstructions.savePersistantFile();
-                                }
+                                String error = String.Format("The plugin '{0}' is for a different version of Anomalous Medical {1}.", dllFileName, version);
+                                firePluginLoadError(error);
+                                Log.Error(error);
+                                loadedPlugin = true; //This loaded, but we didnt inititalize it, however, return true anyway since we did load sucessfully
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dllFileName));
+                            Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
+                            try
+                            {
+                                File.Delete(fullPath);
+                            }
+                            catch (Exception deleteEx)
+                            {
+                                Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
+                                managePluginInstructions.addFileToDelete(fullPath);
+                                managePluginInstructions.savePersistantFile();
                             }
                         }
                     }
@@ -241,43 +279,40 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
-                if (dataFileVerifier.isSafeDataFile(fullPath))
+                String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
+                try
                 {
-                    String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
+                    if (!loadedPluginNames.Contains(dataFileName))
+                    {
+                        //Add the archive to the VirtualFileSystem if needed
+                        if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
+                        {
+                            VirtualFileSystem.Instance.addArchive(fullPath);
+                        }
+                        pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
+
+                        loadedPluginNames.Add(dataFileName);
+                    }
+                    else
+                    {
+                        Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
+                    }
+                }
+                catch (ZipAccess.ZipIOException e)
+                {
+                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dataFileName));
+                    Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
                     try
                     {
-                        if (!loadedPluginNames.Contains(dataFileName))
-                        {
-                            //Add the archive to the VirtualFileSystem if needed
-                            if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
-                            {
-                                VirtualFileSystem.Instance.addArchive(fullPath);
-                            }
-                            pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
-
-                            loadedPluginNames.Add(dataFileName);
-                        }
-                        else
-                        {
-                            Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
-                        }
+                        File.Delete(fullPath);
                     }
-                    catch (ZipAccess.ZipIOException e)
+                    catch (Exception deleteEx)
                     {
-                        firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dataFileName));
-                        Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
-                        try
-                        {
-                            File.Delete(fullPath);
-                        }
-                        catch (Exception deleteEx)
-                        {
-                            Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
-                        }
+                        Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
                     }
                 }
             }
-            else if(Directory.Exists(fullPath))
+            else if (Directory.Exists(fullPath))
             {
                 String directoryName = Path.GetFileName(Path.GetDirectoryName(fullPath));
                 if (!loadedPluginNames.Contains(directoryName))
@@ -431,7 +466,7 @@ namespace Medical
         private void unloadPlugin(AtlasPlugin plugin, bool willReload)
         {
             String dataFileName = Path.GetFileNameWithoutExtension(plugin.Location);
-            
+
             plugin.unload(standaloneController, willReload);
 
             loadedPluginNames.Remove(dataFileName);
@@ -456,7 +491,7 @@ namespace Medical
 
         private void addDependency(AtlasDependency dependency)
         {
-            if(!loadedDependencyPluginIds.Contains(dependency.PluginId))
+            if (!loadedDependencyPluginIds.Contains(dependency.PluginId))
             {
                 loadedDependencyPluginIds.Add(dependency.PluginId);
                 initializePlugin(dependency);
@@ -514,7 +549,7 @@ namespace Medical
 
         public bool allDependenciesLoaded()
         {
-            foreach(AtlasPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 if (!allDependenciesLoadedFor(plugin))
                 {
@@ -542,7 +577,7 @@ namespace Medical
         /// <param name="plugin">The plugin to download dependencies for.</param>
         public void requestDependencyDownloadFor(AtlasPlugin plugin)
         {
-            if(RequestDependencyDownload != null)
+            if (RequestDependencyDownload != null)
             {
                 RequestDependencyDownload(plugin);
             }

@@ -47,11 +47,12 @@ namespace Medical
                 }
                 else
                 {
+                    String pluginFile = Path.Combine(DestinationFolder, FileName);
+                    bool isSafe = atlasPluginManager.isPluginPathSafeToLoad(pluginFile);
                     //Load plugin back on main thread
                     ThreadManager.invoke(new Action(delegate()
                     {
-                        String pluginFile = Path.Combine(DestinationFolder, FileName);
-                        LoadedSucessfully = atlasPluginManager.addPlugin(pluginFile);
+                        LoadedSucessfully = atlasPluginManager.addPlugin(pluginFile, isSafe);
                         if (DownloadedToSafeLocation)
                         {
                             atlasPluginManager.addPluginToMove(pluginFile);

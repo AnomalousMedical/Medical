@@ -27,6 +27,23 @@ namespace Medical
 
         public bool AllowUnsignedDlls { get; set; }
 
+        /// <summary>
+        /// Determine if a file is safe to load, file must point to an actual file not a directory.
+        /// </summary>
+        /// <param name="file">The file to test the signature of. Must point to a file, not a directory.</param>
+        /// <returns>True if the file passes the signature checks, otherwise false.</returns>
+        public bool isSafe(String file)
+        {
+            if(file.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return isSafeDll(file);
+            }
+            else
+            {
+                return isSafeDataFile(file);
+            }
+        }
+
         public bool isSafeDataFile(String file)
         {
             return isSafeDataFile(file, true);
