@@ -331,7 +331,7 @@ namespace Medical
             mainPlugin = new AnomalousMainPlugin(controller.LicenseManager, this);
             controller.AtlasPluginManager.addPlugin(mainPlugin);
             controller.AtlasPluginManager.addPlugin("IntroductionTutorial.dat");
-            controller.initializePlugins();
+            controller.loadConfigAndCommonResources();
 
             Coroutine.Start(loadAdditionalPluginsCoroutine());
 
@@ -353,7 +353,6 @@ namespace Medical
             foreach (String plugin in MedicalConfig.PluginConfig.Plugins)
             {
                 controller.AtlasPluginManager.addPlugin(plugin);
-                controller.AtlasPluginManager.initializePlugins();
                 yield return Coroutine.WaitSeconds(0.0);
             }
 

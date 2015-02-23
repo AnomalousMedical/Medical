@@ -328,14 +328,13 @@ namespace Medical
             notificationManager.reshowAllNotifications();
         }
 
-        public void initializePlugins()
+        public void loadConfigAndCommonResources()
         {
             ResourceManager.Instance.load("Medical.Resources.StandaloneIcons.xml");
             ResourceManager.Instance.load("Medical.Resources.LockedFeature.xml");
             ResourceManager.Instance.load("Medical.Resources.CommonToolstrip.xml");
             ResourceManager.Instance.load("Medical.Resources.SlideshowIcons.xml");
 
-            atlasPluginManager.initializePlugins();
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             configFile.loadConfigFile();
             guiManager.loadSavedUI(configFile, new Version("1.0.0.2818"));

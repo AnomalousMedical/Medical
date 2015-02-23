@@ -52,7 +52,6 @@ namespace Medical
                     {
                         String pluginFile = Path.Combine(DestinationFolder, FileName);
                         LoadedSucessfully = atlasPluginManager.addPlugin(pluginFile);
-                        atlasPluginManager.initializePlugins();
                         if (DownloadedToSafeLocation)
                         {
                             atlasPluginManager.addPluginToMove(pluginFile);

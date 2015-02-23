@@ -23,7 +23,6 @@ namespace Medical
     {
         private StandaloneController standaloneController;
         private List<AtlasPlugin> plugins = new List<AtlasPlugin>();
-        private List<AtlasPlugin> uninitializedPlugins = new List<AtlasPlugin>();
         private List<AtlasPlugin> unlicensedPlugins = new List<AtlasPlugin>();
         private Dictionary<String, Assembly> artworkPluginAssemblies = new Dictionary<string, Assembly>();
         private SimScene currentScene;
@@ -408,7 +407,6 @@ namespace Medical
         {
             if (standaloneController.LicenseManager.allowFeature(plugin.PluginId) && !usedPluginIds.Contains(plugin.PluginId))
             {
-                uninitializedPlugins.Add(plugin);
 #if ALLOW_OVERRIDE
                 if (plugin.PluginId != -1)
 #endif
@@ -427,6 +425,7 @@ namespace Medical
                 artworkPluginAssemblies.Add(assembly.FullName, assembly);
                 MyGUIInterface.Instance.CommonResourceGroup.addResource(pluginType.AssemblyQualifiedName, "EmbeddedScalableResource", true);
             }
+            initializePlugin(plugin);
         }
 
         private void unloadPlugin(AtlasPlugin plugin, bool willReload)
@@ -457,10 +456,10 @@ namespace Medical
 
         private void addDependency(AtlasDependency dependency)
         {
-            uninitializedPlugins.Insert(0, dependency);
             if(!loadedDependencyPluginIds.Contains(dependency.PluginId))
             {
                 loadedDependencyPluginIds.Add(dependency.PluginId);
+                initializePlugin(dependency);
             }
         }
 
@@ -476,7 +475,7 @@ namespace Medical
             return null;
         }
 
-        public void initializePlugins()
+        public void initializePlugin(AtlasPlugin plugin)
         {
             //If a plugins folder exists in the virtual file system and it has not been found already add it to the MyGUI group.
             if (!addedPluginsToMyGUIResourceGroup && VirtualFileSystem.Instance.exists("Plugins"))
@@ -485,36 +484,32 @@ namespace Medical
                 addedPluginsToMyGUIResourceGroup = true;
             }
 
-            foreach (AtlasPlugin plugin in uninitializedPlugins)
+            try
             {
+                plugin.loadGUIResources();
+                plugin.initialize(standaloneController);
+                if (currentScene != null)
+                {
+                    plugin.sceneLoaded(currentScene);
+                }
+                plugins.Add(plugin);
+            }
+            catch (Exception e)
+            {
+                firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", plugin.PluginName));
+                Log.Error("Cannot load plugin '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", plugin.PluginName, plugin.Location, e.Message);
+                Log.Default.printException(e);
                 try
                 {
-                    plugin.loadGUIResources();
-                    plugin.initialize(standaloneController);
-                    if (currentScene != null)
-                    {
-                        plugin.sceneLoaded(currentScene);
-                    }
-                    plugins.Add(plugin);
+                    File.Delete(plugin.Location);
                 }
-                catch (Exception e)
+                catch (Exception deleteEx)
                 {
-                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", plugin.PluginName));
-                    Log.Error("Cannot load plugin '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", plugin.PluginName, plugin.Location, e.Message);
-                    Log.Default.printException(e);
-                    try
-                    {
-                        File.Delete(plugin.Location);
-                    }
-                    catch (Exception deleteEx)
-                    {
-                        Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", plugin.PluginName, plugin.Location, deleteEx.Message);
-                        managePluginInstructions.addFileToDelete(plugin.Location);
-                        managePluginInstructions.savePersistantFile();
-                    }
+                    Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", plugin.PluginName, plugin.Location, deleteEx.Message);
+                    managePluginInstructions.addFileToDelete(plugin.Location);
+                    managePluginInstructions.savePersistantFile();
                 }
             }
-            uninitializedPlugins.Clear();
         }
 
         public bool allDependenciesLoaded()
@@ -550,14 +545,6 @@ namespace Medical
             if(RequestDependencyDownload != null)
             {
                 RequestDependencyDownload(plugin);
-            }
-        }
-
-        public int UninitalizedCount
-        {
-            get
-            {
-                return uninitializedPlugins.Count;
             }
         }
 
