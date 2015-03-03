@@ -36,6 +36,15 @@ namespace Medical
             prototypes.Add(definition.Name, definition);
         }
 
+        public void removePropsForPlugin(long pluginId)
+        {
+            List<PropDefinition> props = new List<PropDefinition>(prototypes.Values.Where(i => i.DependencyPluginId == pluginId));
+            foreach(var prop in props)
+            {
+                prototypes.Remove(prop.Name);
+            }
+        }
+
         public bool tryGetTrackInfo(String propTypeName, out ShowPropTrackInfo propTrackInfo)
         {
             PropDefinition propDef;

@@ -473,6 +473,7 @@ namespace Medical
             usedPluginIds.Remove(plugin.PluginId);
             unlicensedPlugins.Remove(plugin);
             plugins.Remove(plugin);
+            loadedDependencyPluginIds.Remove(plugin.PluginId); //Remove from loaded dependencies list, will only make a change if the plugin was a dependency plugin
 
             //Remove the archive, only supports non-dll right now
             if (!plugin.Location.EndsWith(".dll"))

@@ -68,7 +68,26 @@ namespace Medical
 
         public void unload(StandaloneController standaloneController, bool willReload)
         {
+            if (resources.Count > 0)
+            {
+                var resourceManager = standaloneController.AtlasPluginManager.ResourceManager;
+                foreach (var subsystemResources in resourceManager.getSubsystemEnumerator())
+                {
+                    subsystemResources.removeResourceGroup(PluginNamespace);
+                }
 
+                resourceManager.initializeResources();
+            }
+
+            //Unload props
+            if (PropDefinitionDirectory != null)
+            {
+                standaloneController.PropFactory.removePropsForPlugin(PluginId);
+            }
+
+            //Remove resources
+            MyGUIPlugin.ResourceManager.Instance.destroyAllTexturesForResource(BrandingImageKey);
+            MyGUIPlugin.ResourceManager.Instance.removeByName(BrandingImageKey);
         }
 
         /// <summary>
@@ -112,7 +131,7 @@ namespace Medical
         {
             get
             {
-                return false; //will be false for now, probably make true later
+                return true; //will be false for now, probably make true later
             }
         }
 
