@@ -99,7 +99,7 @@ namespace Medical
 
         void MyGUIInterface_BeforeMainResourcesLoaded(MyGUIInterface obj)
         {
-            MyGUIInterface.Instance.CommonResourceGroup.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedResource", true);
+            MyGUIInterface.Instance.CommonResourceGroup.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedScalableResource", true);
             MyGUIInterface.LayerFile = "Medical.Resources.AnomalousMedical_MyGUI_Layer.xml";
             MyGUIInterface.BeforeMainResourcesLoaded -= MyGUIInterface_BeforeMainResourcesLoaded;
         }
