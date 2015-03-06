@@ -179,27 +179,9 @@ namespace Medical.GUI
             guiManager.pushRootContainer(GUILocationNames.Taskbar);
 
             //Task Menu
-            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager, new LayoutElementName(GUILocationNames.FullscreenPopup),
-                (Object x, Object y) =>
-                {
-                    int xWeight = UNKNOWN_GROUP_WEIGHT;
-                    int yWeight = UNKNOWN_GROUP_WEIGHT;
-                    if (x != null)
-                    {
-                        xWeight = (int)x;
-                    }
-                    if (y != null)
-                    {
-                        yWeight = (int)y;
-                    }
-                    return xWeight - yWeight;
-                });
-            taskMenu.defineGroup(TaskMenuCategories.Explore, 0);
-            taskMenu.defineGroup(TaskMenuCategories.Create, 1);
-            taskMenu.defineGroup(TaskMenuCategories.Patient, 2);
-            taskMenu.defineGroup(TaskMenuCategories.Developer, int.MaxValue - 1);
-            taskMenu.defineGroup(TaskMenuCategories.System, int.MaxValue);
-
+            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager, new LayoutElementName(GUILocationNames.FullscreenPopup));
+            taskMenu.GroupComparison = TaskMenuCategories.Sorter;
+            
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
 
             //Tasks Menu
