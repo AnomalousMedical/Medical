@@ -1,0 +1,13 @@
+<Save>
+  <Saveable type="Medical.DiscPresetState, Simulation" id="0">
+    <String name="Category">Normal</String>
+    <String name="Name">1 O'Clock</String>
+    <String name="ImageName">1O'Clock.png</String>
+    <Vector3 name="discOffset">0, -0.302, 0</Vector3>
+    <Vector3 name="rdaOffset">0, -0.151, 0</Vector3>
+    <Float name="popLocation">0.5132</Float>
+    <Vector3 name="horizontalOffset">0, 0, 0</Vector3>
+    <String name="discName">LeftTMJDisc</String>
+    <Bool name="locked">False</Bool>
+  </Saveable>
+</Save>

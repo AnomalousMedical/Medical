@@ -1,0 +1,40 @@
+<Save>
+  <Saveable type="Medical.PoseManipulatorStateEntry, Simulation" id="2">
+    <String name="Name">rightCondyleRoughnessMandible</String>
+    <Float name="Position">0</Float>
+  </Saveable>
+  <Saveable type="Medical.AnimationManipulatorPresetState, Simulation" id="1">
+    <String name="Category" />
+    <String name="Name">rightDegeneration</String>
+    <String name="ImageName" />
+    <Saveable name="Position0" id="2" />
+  </Saveable>
+  <Saveable type="Medical.DiscPresetState, Simulation" id="3">
+    <String name="Category" />
+    <String name="Name">RightTMJDisc</String>
+    <String name="ImageName" />
+    <Vector3 name="discOffset">0, -0.302, 0</Vector3>
+    <Vector3 name="rdaOffset">0, -0.151, 0</Vector3>
+    <Float name="popLocation">0.5132</Float>
+    <Vector3 name="horizontalOffset">0, 0, 0</Vector3>
+    <String name="discName">RightTMJDisc</String>
+    <Bool name="locked">False</Bool>
+    <Bool name="displaceLateralPole">False</Bool>
+    <Vector3 name="clockFaceOffset">0, 0, 0</Vector3>
+  </Saveable>
+  <Saveable type="Medical.FossaPresetState, Simulation" id="4">
+    <String name="Category" />
+    <String name="Name">RightFossa</String>
+    <String name="ImageName" />
+    <String name="FossaName">RightFossa</String>
+    <Float name="Position">0</Float>
+  </Saveable>
+  <Saveable type="Medical.CompoundPresetState, Simulation" id="0">
+    <String name="Category" />
+    <String name="Name">I</String>
+    <String name="ImageName">I.png</String>
+    <Saveable name="SubState0" id="1" />
+    <Saveable name="SubState1" id="3" />
+    <Saveable name="SubState2" id="4" />
+  </Saveable>
+</Save>
