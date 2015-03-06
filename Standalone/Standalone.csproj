@@ -401,6 +401,7 @@
     <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\RocketTextWriter\RocketTextWriter.cs" />
     <Compile Include="GUI\SceneErrorWindow\SceneErrorWindow.cs" />
+    <Compile Include="GUI\TaskMenuCategories.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />

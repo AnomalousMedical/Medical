@@ -22,6 +22,8 @@ namespace Medical.GUI
 {
     class AnomalousMainPlugin : AtlasPlugin
     {
+        private const int UNKNOWN_GROUP_WEIGHT = int.MaxValue / 2;
+
         private StandaloneController standaloneController;
         private GUIManager guiManager;
         private LicenseManager licenseManager;
@@ -40,7 +42,7 @@ namespace Medical.GUI
         private SequencePlayer sequencePlayer = null;
         private BookmarksGUI bookmarks;
         private ViewsGui viewsGui;
-        
+
         //Controllers
         private BookmarksController bookmarksController;
         private BuyScreenController buyScreens;
@@ -85,7 +87,7 @@ namespace Medical.GUI
             {
                 selectionOperatorTask.Dispose();
             }
-            if(cameraMovementModeTask != null)
+            if (cameraMovementModeTask != null)
             {
                 cameraMovementModeTask.Dispose();
             }
@@ -177,7 +179,26 @@ namespace Medical.GUI
             guiManager.pushRootContainer(GUILocationNames.Taskbar);
 
             //Task Menu
-            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager, new LayoutElementName(GUILocationNames.FullscreenPopup));
+            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager, new LayoutElementName(GUILocationNames.FullscreenPopup),
+                (Object x, Object y) =>
+                {
+                    int xWeight = UNKNOWN_GROUP_WEIGHT;
+                    int yWeight = UNKNOWN_GROUP_WEIGHT;
+                    if (x != null)
+                    {
+                        xWeight = (int)x;
+                    }
+                    if (y != null)
+                    {
+                        yWeight = (int)y;
+                    }
+                    return xWeight - yWeight;
+                });
+            taskMenu.defineGroup(TaskMenuCategories.Explore, 0);
+            taskMenu.defineGroup(TaskMenuCategories.Create, 1);
+            taskMenu.defineGroup(TaskMenuCategories.Patient, 2);
+            taskMenu.defineGroup(TaskMenuCategories.Developer, int.MaxValue - 1);
+            taskMenu.defineGroup(TaskMenuCategories.System, int.MaxValue);
 
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
 
@@ -224,7 +245,7 @@ namespace Medical.GUI
             standaloneController.AnatomyController.setCommandPermission(AnatomyCommandPermissions.Unrestricted, PlatformConfig.UnrestrictedEnvironment);
             standaloneController.AnatomyController.setCommandPermission(AnatomyCommandPermissions.PremiumActive, hasPremium);
 
-            if(PlatformConfig.UnrestrictedEnvironment || hasPremium)
+            if (PlatformConfig.UnrestrictedEnvironment || hasPremium)
             {
                 //Explore
                 selectionModeTask = new SelectionModeTask(standaloneController.AnatomyController);
@@ -293,7 +314,7 @@ namespace Medical.GUI
                     bookmarks.ShowBuyMessage += bookmarks_ShowBuyMessage;
                 }
 
-                if(MedicalConfig.FirstRun)
+                if (MedicalConfig.FirstRun)
                 {
                     guiTaskManager.addPinnedTask(anatomyFinderTask);
                     guiTaskManager.addPinnedTask(viewsTask);
@@ -336,7 +357,7 @@ namespace Medical.GUI
         public void sceneRevealed()
         {
             ResourceProvider bookmarksResourceProvider;
-            if(bookmarksController.PremiumBookmarks)
+            if (bookmarksController.PremiumBookmarks)
             {
                 bookmarksResourceProvider = createPremiumBookmarksResourceProvider();
             }
@@ -490,11 +511,11 @@ namespace Medical.GUI
 
         void updateCheckCompleted(UpdateController.UpdateCheckResult result)
         {
-            if(result > 0)
+            if (result > 0)
             {
                 standaloneController.NotificationManager.showTaskNotification("Update(s) Found\nClick Here to Download", downloadsTask.IconName, downloadsTask);
             }
-            if(!standaloneController.AtlasPluginManager.allDependenciesLoaded())
+            if (!standaloneController.AtlasPluginManager.allDependenciesLoaded())
             {
                 standaloneController.NotificationManager.showTaskNotification("Additional Files Needed\nClick Here to Download", downloadsTask.IconName, downloadsTask);
             }
@@ -544,7 +565,7 @@ namespace Medical.GUI
         {
             standaloneController.AnatomyController.setCommandPermission(AnatomyCommandPermissions.PremiumActive, isPremium);
             bookmarksController.PremiumBookmarks = isPremium;
-            if(isPremium)
+            if (isPremium)
             {
                 bookmarksController.clearBookmarks();
                 bookmarksController.clearBookmarkPaths();
@@ -570,7 +591,7 @@ namespace Medical.GUI
                 bookmarksController.loadSavedBookmarks(newBookmarksResourceProvider);
 
                 //Turn off the ad
-                if(taskMenuAd != null)
+                if (taskMenuAd != null)
                 {
                     taskMenuAd.Dispose();
                     taskMenuAd = null;
