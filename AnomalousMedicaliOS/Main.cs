@@ -7,10 +7,13 @@ using UIKit;
 using Engine.Platform;
 using System.Reflection;
 using DentalSim;
-using Medical.Movement;
-using Developer;
 using CoreGraphics;
 using Medical.Controller;
+
+#if DEBUG
+using Medical.Movement;
+using Developer;
+#endif
 
 namespace AnomalousMedicaliOS
 {
@@ -75,6 +78,8 @@ namespace AnomalousMedicaliOS
 			{
 				AllowUninstall = false
 			});
+
+			#if DEBUG
 			controller.AtlasPluginManager.addPlugin(new MovementBodyAtlasPlugin()
 			{
 				AllowUninstall = false
@@ -83,6 +88,7 @@ namespace AnomalousMedicaliOS
 			{
 				AllowUninstall = false
 			});
+			#endif
 		}
 
 		static bool openUrl(String url)

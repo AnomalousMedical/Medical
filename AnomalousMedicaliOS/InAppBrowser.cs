@@ -14,6 +14,7 @@ namespace AnomalousMedicaliOS
 		UIView view;
 		UIButton closeButton;
 		UIWebView webView;
+		UIActivityIndicatorView indicatorView;
 		AnimationCompletedDelegate animationComplete;
 		TouchMouseGuiForwarder touchForwarder;
 
@@ -35,9 +36,15 @@ namespace AnomalousMedicaliOS
 
 			var buttonBounds = closeButton.Bounds;
 
+			indicatorView = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.White);
+			indicatorView.Frame = new CGRect(buttonBounds.Right, buttonBounds.Top, 44, 44);
+			view.AddSubview(indicatorView);
+			indicatorView.StartAnimating();
+
 			webView = new UIWebView(new CGRect(parentBounds.Left, buttonBounds.Bottom, parentBounds.Width, parentView.Bounds.Height - buttonBounds.Height));
 			webView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
 			view.AddSubview(webView);
+			webView.LoadFinished += HandleLoadFinished;
 			webView.LoadRequest(new NSUrlRequest(new NSUrl(url)));
 
 			closeButton.TouchUpInside += HandleTouchUpInside;
@@ -68,6 +75,9 @@ namespace AnomalousMedicaliOS
 				animationComplete = null;
 			}
 
+			indicatorView.RemoveFromSuperview();
+			indicatorView.Dispose();
+			webView.LoadFinished -= HandleLoadFinished;
 			webView.RemoveFromSuperview();
 			webView.Dispose();
 			webView = null;
@@ -98,6 +108,11 @@ namespace AnomalousMedicaliOS
 			view.Frame = frame;
 
 			UIView.CommitAnimations();
+		}
+
+		void HandleLoadFinished (object sender, EventArgs e)
+		{
+			indicatorView.StopAnimating();
 		}
 
 		class AnimationCompletedDelegate : NSObject
