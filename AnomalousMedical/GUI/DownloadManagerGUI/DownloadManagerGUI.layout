@@ -63,7 +63,7 @@
             </Widget>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="7 25 250 19" name="ReadingInfo">
-            <Property key="Caption" value="Reading plugin information from server..."/>
+            <Property key="Caption" value="Reading download information from server..."/>
             <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Button" skin="Button" position="332 16 121 29" name="DownloadAll">
