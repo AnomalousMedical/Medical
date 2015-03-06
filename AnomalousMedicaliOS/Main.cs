@@ -10,7 +10,7 @@ using DentalSim;
 using CoreGraphics;
 using Medical.Controller;
 
-#if DEBUG
+#if ALLOW_OVERRIDE
 using Medical.Movement;
 using Developer;
 #endif
@@ -79,7 +79,7 @@ namespace AnomalousMedicaliOS
 				AllowUninstall = false
 			});
 
-			#if DEBUG
+			#if ALLOW_OVERRIDE
 			controller.AtlasPluginManager.addPlugin(new MovementBodyAtlasPlugin()
 			{
 				AllowUninstall = false
