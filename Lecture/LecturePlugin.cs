@@ -66,7 +66,7 @@ namespace Lecture
             guiManager.addManagedDialog(slideshowExplorer);
 
             TaskController taskController = standaloneController.TaskController;
-            taskController.addTask(new MDIDialogOpenTask(slideshowExplorer, "Medical.SlideshowExplorer", "Smart Lecture Tools", "Lecture.Icon.SmartLectureIcon", TaskMenuCategories.Create));
+            taskController.addTask(new MDIDialogOpenTask(slideshowExplorer, "Medical.SlideshowExplorer", "Authoring Tools", "Lecture.Icon.SmartLectureIcon", TaskMenuCategories.Create));
 
             CommonEditorResources.initialize(standaloneController);
             standaloneController.ViewHostFactory.addFactory(new SlideTaskbarFactory());
@@ -101,7 +101,7 @@ namespace Lecture
         {
             get
             {
-                return "Smart Lecture Tools";
+                return "Authoring Tools";
             }
         }
 

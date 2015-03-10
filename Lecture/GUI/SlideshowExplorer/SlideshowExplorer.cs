@@ -20,8 +20,8 @@ namespace Lecture.GUI
     {
         private String windowTitle;
         private const String windowTitleFormat = "{1} - {0} - {2}";
-        private const String wildcard = "Smart Lecture (*.sl)|*.sl|Smart Lecture Folder (*.show)|*.show";
-        private const String openWildcard = "Smart Lecture (*.sl;*.show)|*.sl;*.show";
+        private const String wildcard = "Authoring Project (*.sl)|*.sl|Authoring Project Folder (*.show)|*.show";
+        private const String openWildcard = "Authoring Project (*.sl;*.show)|*.sl;*.show";
 
         private Dictionary<MenuItem, Action> menuActions = new Dictionary<MenuItem, Action>();
 
@@ -142,7 +142,7 @@ namespace Lecture.GUI
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.show(String.Format("There was an error saving your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                        MessageBox.show(String.Format("There was an error saving your project.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                     }
                 });
             }
@@ -152,7 +152,7 @@ namespace Lecture.GUI
         {
             slideEditController.stopPlayingTimelines();
 
-            Browser browse = new Browser("Smart Lectures", "Create Smart Lecture");
+            Browser browse = new Browser("Project Types", "Create Authoring Project");
             BrowserNode defaultNode = new BrowserNode("Slideshow", new SlideshowProjectTemplate());
             browse.addNode(null, null, defaultNode);
             browse.DefaultSelection = defaultNode;
@@ -168,7 +168,7 @@ namespace Lecture.GUI
                 }
                 if (slideEditController.projectExists(fullProjectName))
                 {
-                    MessageBox.show(String.Format("A Smart Lecture already exists at the location.\n{0}\n\nWould you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
+                    MessageBox.show(String.Format("A project already exists at the location.\n{0}\n\nWould you like to delete it and create a new one?", fullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, result =>
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
@@ -203,7 +203,7 @@ namespace Lecture.GUI
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.show(String.Format("There was an error saving your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                        MessageBox.show(String.Format("There was an error saving your project.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                     }
                 });
             }
@@ -243,14 +243,14 @@ namespace Lecture.GUI
                         if (result == NativeDialogResult.OK)
                         {
                             bool doSaveAs = true;
-                            if (path.EndsWith(".show", StringComparison.InvariantCultureIgnoreCase)) //Special case for .show (folders) create a folder with the name of the smart lecture for the result to go into
+                            if (path.EndsWith(".show", StringComparison.InvariantCultureIgnoreCase)) //Special case for .show (folders) create a folder with the name of the project for the result to go into
                             {
                                 String projectDir = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
                                 path = Path.Combine(projectDir, Path.GetFileName(path));
                                 if (Directory.Exists(projectDir))
                                 {
                                     doSaveAs = false;
-                                    MessageBox.show(String.Format("The folder for this smart lecture already exists at\n{0}\n\nWould you like to delete it and replace it with your Smart Lecture?", projectDir), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, overwriteResult =>
+                                    MessageBox.show(String.Format("The folder for this project already exists at\n{0}\n\nWould you like to delete it and replace it with your new project?", projectDir), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, overwriteResult =>
                                     {
                                         if (overwriteResult == MessageBoxStyle.Yes)
                                         {
@@ -295,7 +295,7 @@ namespace Lecture.GUI
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.show(String.Format("There was an error cleaning your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Cleaning Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                            MessageBox.show(String.Format("There was an error cleaning your project.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Cleaning Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                         }
                     }
                 });
@@ -306,7 +306,7 @@ namespace Lecture.GUI
         {
             if (slideshow != null)
             {
-                MessageBox.show("Are you sure you want to close the current Smart Lecture?\nAny unsaved changes will be lost.", "Close", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+                MessageBox.show("Are you sure you want to close the current project?\nAny unsaved changes will be lost.", "Close", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
                 {
                     if (result == MessageBoxStyle.Yes)
                     {

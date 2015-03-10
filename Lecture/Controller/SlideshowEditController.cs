@@ -742,7 +742,7 @@ namespace Lecture
             }
             catch (Exception ex)
             {
-                MessageBox.show(String.Format("There was an error saving your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                MessageBox.show(String.Format("There was an error saving your project.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Save Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
 
@@ -1001,7 +1001,7 @@ namespace Lecture
         {
             if (slideshow.Version < Slideshow.CurrentVersion)
             {
-                MessageBox.show("This Smart Lecture is out of date, would you like to update it now?\nUpdating this Smart Lecture will allow you to edit it, however, it will be incompatible with older versions of Anomalous Medical.\nIt is reccomended that you do this update.", "Update Required", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, (result) =>
+                MessageBox.show("This project is out of date, would you like to update it now?\nUpdating this project will allow you to edit it, however, it will be incompatible with older versions of Anomalous Medical.\nIt is reccomended that you do this update.", "Update Required", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, (result) =>
                     {
                         if (result == MessageBoxStyle.Yes)
                         {
@@ -1024,7 +1024,7 @@ namespace Lecture
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.show(String.Format("There was an error updating your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Update Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                                MessageBox.show(String.Format("There was an error updating your project.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Update Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                             }
                         }
                         else
@@ -1037,7 +1037,7 @@ namespace Lecture
             }
             else if (slideshow.Version > Slideshow.CurrentVersion)
             {
-                MessageBox.show("This Smart Lecture was created in a newer version of Anomalous Medical.\nPlease update Anomalous Medical to be able to edit this file.", "Update Required", MessageBoxStyle.Ok | MessageBoxStyle.IconWarning);
+                MessageBox.show("This project was created in a newer version of Anomalous Medical.\nPlease update Anomalous Medical to be able to edit this file.", "Update Required", MessageBoxStyle.Ok | MessageBoxStyle.IconWarning);
                 closeProject();
                 return false;
             }
@@ -1151,7 +1151,7 @@ namespace Lecture
 
         private void shareSlideshow()
         {
-            MessageBox.show("Before sharing your Smart Lecture it will be cleaned and saved. Do you wish to continue?", "Share Smart Lecture", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
+            MessageBox.show("Before sharing your project it will be cleaned and saved. Do you wish to continue?", "Share Project", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, (result) =>
             {
                 if (result == MessageBoxStyle.Yes)
                 {
@@ -1164,7 +1164,7 @@ namespace Lecture
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.show(String.Format("There was an error cleaning your smart lecture.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Cleaning Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                        MessageBox.show(String.Format("There was an error cleaning your project.\nException type: {0}\n{1}", ex.GetType().Name, ex.Message), "Cleaning Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                     }
                 }
             });

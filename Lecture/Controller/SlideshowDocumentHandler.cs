@@ -54,7 +54,7 @@ namespace Lecture
 
         public string getPrettyName(string filename)
         {
-            return "Smart Lectures";
+            return "Authoring Projects";
         }
 
         public string getIcon(string filename)
