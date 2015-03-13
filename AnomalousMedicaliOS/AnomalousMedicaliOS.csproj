@@ -142,12 +142,6 @@
     <Reference Include="DentalSim">
       <HintPath>..\PublicRelease\DentalSim.dll</HintPath>
     </Reference>
-    <Reference Include="Movement">
-      <HintPath>..\PublicRelease\Movement.dll</HintPath>
-    </Reference>
-    <Reference Include="Developer">
-      <HintPath>..\PublicRelease\Developer.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
