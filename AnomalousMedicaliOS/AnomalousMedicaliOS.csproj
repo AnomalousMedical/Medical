@@ -49,7 +49,6 @@
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchProfiling>true</MtouchProfiling>
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchI18n>
@@ -102,6 +101,21 @@
     <MtouchI18n>
     </MtouchI18n>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PublicRelease|iPhone' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\PublicRelease</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <MtouchI18n>
+    </MtouchI18n>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <IpaPackageName>
+    </IpaPackageName>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchExtraArgs>-compiler:clang++ -gcc_flags "-framework OpenAL -framework Security"</MtouchExtraArgs>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -135,7 +149,7 @@
       <HintPath>..\Release\Developer.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)'=='AppStore' Or '$(Configuration)'=='Ad-Hoc'">
+  <ItemGroup Condition="'$(Configuration)'=='AppStore' Or '$(Configuration)'=='Ad-Hoc' Or '$(Configuration)'=='PublicRelease'">
     <Reference Include="AnomalousMedical">
       <HintPath>..\PublicRelease\AnomalousMedical.exe</HintPath>
     </Reference>
@@ -284,7 +298,7 @@
       <Link>Resources\AnomalousMedical.dat</Link>
     </BundleResource>
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)'=='AppStore' Or '$(Configuration)'=='Ad-Hoc'">
+  <ItemGroup Condition="'$(Configuration)'=='AppStore' Or '$(Configuration)'=='Ad-Hoc' Or '$(Configuration)'=='PublicRelease'">
     <BundleResource Include="..\PublicRelease\IntroductionTutorial.dat">
       <Link>Resources\IntroductionTutorial.dat</Link>
     </BundleResource>
