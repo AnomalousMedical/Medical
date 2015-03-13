@@ -162,6 +162,8 @@
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashTall%402x.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide.png" />
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide%402x.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-40.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-80.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
