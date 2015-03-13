@@ -102,17 +102,19 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
     <Reference Include="OpenTK-1.0" />
-    <Reference Include="AnomalousMedical">
-      <HintPath>..\Release\AnomalousMedical.exe</HintPath>
-    </Reference>
     <Reference Include="Engine">
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
     </Reference>
-    <Reference Include="Premium">
-      <HintPath>..\Release\Premium.dll</HintPath>
-    </Reference>
     <Reference Include="OSPlatform">
       <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
+    <Reference Include="AnomalousMedical">
+      <HintPath>..\Release\AnomalousMedical.exe</HintPath>
+    </Reference>
+    <Reference Include="Premium">
+      <HintPath>..\Release\Premium.dll</HintPath>
     </Reference>
     <Reference Include="Standalone">
       <HintPath>..\Release\Standalone.dll</HintPath>
@@ -260,7 +262,7 @@
       <Link>Resources\AnomalousMedical.dat</Link>
     </BundleResource>
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)'=='AppStore'">
+  <ItemGroup Condition="'$(Configuration)'=='AppStore' Or '$(Configuration)'=='Ad-Hoc'">
     <BundleResource Include="..\PublicRelease\IntroductionTutorial.dat">
       <Link>Resources\IntroductionTutorial.dat</Link>
     </BundleResource>
