@@ -252,11 +252,19 @@
       <Kind>Static</Kind>
     </NativeReference>
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
     <BundleResource Include="..\Release\IntroductionTutorial.dat">
       <Link>Resources\IntroductionTutorial.dat</Link>
     </BundleResource>
     <BundleResource Include="..\Release\AnomalousMedical.dat">
+      <Link>Resources\AnomalousMedical.dat</Link>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='AppStore'">
+    <BundleResource Include="..\PublicRelease\IntroductionTutorial.dat">
+      <Link>Resources\IntroductionTutorial.dat</Link>
+    </BundleResource>
+    <BundleResource Include="..\PublicRelease\AnomalousMedical.dat">
       <Link>Resources\AnomalousMedical.dat</Link>
     </BundleResource>
   </ItemGroup>
