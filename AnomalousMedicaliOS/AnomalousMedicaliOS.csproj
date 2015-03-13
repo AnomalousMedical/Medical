@@ -253,11 +253,11 @@
     </NativeReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Release\AnomalousMedical.dat">
-      <Link>AnomalousMedical.dat</Link>
-    </Content>
-    <Content Include="..\Release\IntroductionTutorial.dat">
-      <Link>IntroductionTutorial.dat</Link>
-    </Content>
+    <BundleResource Include="..\Release\IntroductionTutorial.dat">
+      <Link>Resources\IntroductionTutorial.dat</Link>
+    </BundleResource>
+    <BundleResource Include="..\Release\AnomalousMedical.dat">
+      <Link>Resources\AnomalousMedical.dat</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>
