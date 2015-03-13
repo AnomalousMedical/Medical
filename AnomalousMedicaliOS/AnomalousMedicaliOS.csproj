@@ -129,6 +129,26 @@
       <HintPath>..\Release\Developer.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='AppStore' Or '$(Configuration)'=='Ad-Hoc'">
+    <Reference Include="AnomalousMedical">
+      <HintPath>..\PublicRelease\AnomalousMedical.exe</HintPath>
+    </Reference>
+    <Reference Include="Premium">
+      <HintPath>..\PublicRelease\Premium.dll</HintPath>
+    </Reference>
+    <Reference Include="Standalone">
+      <HintPath>..\PublicRelease\Standalone.dll</HintPath>
+    </Reference>
+    <Reference Include="DentalSim">
+      <HintPath>..\PublicRelease\DentalSim.dll</HintPath>
+    </Reference>
+    <Reference Include="Movement">
+      <HintPath>..\PublicRelease\Movement.dll</HintPath>
+    </Reference>
+    <Reference Include="Developer">
+      <HintPath>..\PublicRelease\Developer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-152.png" />
