@@ -4,10 +4,6 @@
 <dict>
 	<key>CFBundleIdentifier</key>
 	<string>com.anomalousmedical.AnomalousMedicaliOS</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
@@ -35,5 +31,9 @@
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
 	<key>XSLaunchImageAssets</key>
 	<string>Resources/Images.xcassets/LaunchImage.launchimage</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.5</string>
+	<key>CFBundleVersion</key>
+	<string>2.5.0.5505</string>
 </dict>
 </plist>

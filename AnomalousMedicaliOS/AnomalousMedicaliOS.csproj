@@ -95,8 +95,8 @@
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>Automatic:AppStore</CodesignProvision>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>e8fb391a-fee3-4c0c-8242-ad700487dd0a</CodesignProvision>
+    <CodesignKey>iPhone Distribution: ANOMALOUS MEDICAL, LLC (DVCRZEJ9QF)</CodesignKey>
     <MtouchExtraArgs>-compiler:clang++ -gcc_flags "-framework OpenAL -framework Security"</MtouchExtraArgs>
     <MtouchI18n>
     </MtouchI18n>
@@ -178,6 +178,18 @@
     <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide%402x.png" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-40.png" />
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-80.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\29.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\58.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\87.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\80.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\120.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\57.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\114.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\180.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\50.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\100.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\72.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\144.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
