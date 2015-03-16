@@ -93,7 +93,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchArch>ARM64</MtouchArch>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignProvision>e8fb391a-fee3-4c0c-8242-ad700487dd0a</CodesignProvision>
     <CodesignKey>iPhone Distribution: ANOMALOUS MEDICAL, LLC (DVCRZEJ9QF)</CodesignKey>
