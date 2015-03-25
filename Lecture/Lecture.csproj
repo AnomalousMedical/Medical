@@ -144,7 +144,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\SlideshowExplorer\SlideshowExplorer.layout" />
+    <EmbeddedResource Include="GUI\SlideshowExplorer\SlideshowExplorer.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\BrandingIcon.png" />
     <EmbeddedResource Include="Resources\BrandingIcon.xml" />
     <EmbeddedResource Include="Resources\Icons.png" />

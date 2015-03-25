@@ -33,7 +33,7 @@ namespace DentalSim.GUI
         public MandibleControlSlider(ScrollBar scrollBar)
         {
             this.scrollBar = scrollBar;
-            scrollBar.ScrollIncrement = 0;
+            scrollBar.ScrollWheelPage = 0;
             scrollBar.MouseButtonPressed += scrollBar_MouseButtonPressed;
             scrollBar.MouseButtonReleased += scrollBar_MouseButtonReleased;
             scrollBar.ScrollChangePosition += scrollBar_ScrollChangePosition;

@@ -23,7 +23,7 @@ namespace Medical.GUI
             slider = (ScrollBar)parentWidget.createWidgetT("HScroll", "HSlider", 0, 0, parentWidget.Width, ScaleHelper.Scaled(20), Align.Default, "");
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
             slider.ScrollRange = (int)SCROLL_MAX;
-            slider.ScrollIncrement = 1000;
+            slider.ScrollWheelPage = 1000;
         }
 
         public override void Dispose()

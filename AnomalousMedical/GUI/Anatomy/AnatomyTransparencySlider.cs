@@ -22,7 +22,7 @@ namespace Medical.GUI
             this.slider = slider;
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
             slider.ScrollRange = (int)SCROLL_MAX;
-            slider.ScrollIncrement = 1000;
+            slider.ScrollWheelPage = 1000;
             slider.MouseButtonPressed += slider_MouseButtonPressed;
             slider.MouseButtonReleased += slider_MouseButtonReleased;
         }
