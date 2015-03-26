@@ -170,7 +170,7 @@ namespace KinectPlugin
                 //If putting the texture in mygui it is important to tell its render manager to destroy the texture also (like the RocketWidget does).
                 PixelFormat pixelFormat = PixelFormat.PF_BYTE_RGBA;
                 IntSize2 colorFrameSize = sensorManager.ColorFrameSize;
-                colorTexture = TextureManager.getInstance().createManual("KinectColorSensor", MyGUIInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, (uint)colorFrameSize.Width, (uint)colorFrameSize.Height, 1, 0, pixelFormat, TextureUsage.TU_RENDERTARGET, false, 0);
+                colorTexture = TextureManager.getInstance().createManual("KinectColorSensor", MyGUIInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, (uint)colorFrameSize.Width, (uint)colorFrameSize.Height, 1, 0, pixelFormat, TextureUsage.TU_RENDERTARGET, null, false, 0);
                 hwBuffer = colorTexture.Value.getBuffer();
                 pixelBox = new PixelBox(0, 0, colorFrameSize.Width, colorFrameSize.Height, pixelFormat);
                 colorSensorImage.setItemResource(null); //Clear the "ItemResource" first since we are setting texture directly
