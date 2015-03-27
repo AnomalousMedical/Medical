@@ -118,6 +118,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnomalousController.cs" />
+    <Compile Include="AnomalousMainPlugin.cs" />
     <Compile Include="Controller\Anatomy\BreakdownSearchCallbackCommand.cs" />
     <Compile Include="Controller\Anatomy\AnatomyAnalyzer.cs" />
     <Compile Include="Controller\Anatomy\AnatomyController.cs" />
@@ -197,10 +199,13 @@
     <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
     <Compile Include="Controller\Bookmarks\BookmarkPath.cs" />
     <Compile Include="Controller\Bookmarks\LoadBookmarksBgTask.cs" />
+    <Compile Include="Controller\BuyScreenController.cs" />
     <Compile Include="Controller\Config\iOSPlatformConfig.cs" />
+    <Compile Include="Controller\ImageLicenseServer.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
     <Compile Include="Controller\MusclePosition\MovementSequence.cs" />
     <Compile Include="Controller\MusclePosition\MovementSequenceState.cs" />
+    <Compile Include="Controller\MvcLoginController.cs" />
     <Compile Include="Controller\Plugin\Dependency\AtlasDependency.cs" />
     <Compile Include="Controller\SceneViews\SceneViewControllerExtensions.cs" />
     <Compile Include="Controller\Security\CertificateStoreManager.cs" />
@@ -293,11 +298,24 @@
     <Compile Include="Controller\Slideshow\TemplateSlide.cs" />
     <Compile Include="Controller\TaskController\RunMvcContextActionTask.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
+    <Compile Include="Controller\TeethToolController.cs" />
     <Compile Include="Controller\Timeline\ActionSequencer.cs" />
     <Compile Include="Controller\TouchMouseGuiForwarder.cs" />
     <Compile Include="Controller\Update\PluginUpdateInfo.cs" />
     <Compile Include="Controller\Update\ServerUpdateInfo.cs" />
     <Compile Include="Controller\Update\UpdateException.cs" />
+    <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyContextWindowLiveThumbHost.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyFilter.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
+    <Compile Include="GUI\Anatomy\ClickedAnatomyManager.cs" />
+    <Compile Include="GUI\Anatomy\CommandButton.cs" />
+    <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
+    <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
+    <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonCollection.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.cs" />
@@ -320,7 +338,67 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
+    <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
+    <Compile Include="GUI\Bookmarks\BookmarksTreeNode.cs" />
+    <Compile Include="GUI\Bookmarks\BookmarksTreeWidget.cs" />
     <Compile Include="GUI\ButtonGridLiveThumbnailController.cs" />
+    <Compile Include="GUI\BuyScreen\BuyScreen.cs" />
+    <Compile Include="GUI\CameraMovementModeChooser\CameraMovementModeChooser.cs" />
+    <Compile Include="GUI\CameraMovementModeChooser\CameraMovementModeTask.cs" />
+    <Compile Include="GUI\ChooseSceneDialog\ChooseSceneDialog.cs" />
+    <Compile Include="GUI\DistortionWizard\Disclaimer\DisclaimerView.cs" />
+    <Compile Include="GUI\DistortionWizard\DiscSpace\DiscSpaceControl.cs" />
+    <Compile Include="GUI\DistortionWizard\DiscSpace\DiscSpaceGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\DiscSpace\DiscSpaceView.cs" />
+    <Compile Include="GUI\DistortionWizard\Doppler\DopplerControl.cs" />
+    <Compile Include="GUI\DistortionWizard\Doppler\DopplerGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Doppler\DopplerView.cs" />
+    <Compile Include="GUI\DistortionWizard\Fossa\FossaGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Fossa\LeftFossaView.cs" />
+    <Compile Include="GUI\DistortionWizard\Fossa\RightFossaView.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\BoneManipulatorGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\BoneManipulatorSlider.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\LeftCondylarDegenerationGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\LeftCondylarDegenerationView.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\LeftCondylarGrowthGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\LeftCondylarGrowthView.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\RightCondylarDegenerationGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\RightCondylarDegenerationView.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\RightCondylarGrowthGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Mandible\RightCondylarGrowthView.cs" />
+    <Compile Include="GUI\DistortionWizard\Notes\NotesGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Notes\NotesThumbnail.cs" />
+    <Compile Include="GUI\DistortionWizard\Notes\NotesView.cs" />
+    <Compile Include="GUI\DistortionWizard\Notes\ThumbnailPickerGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Notes\ThumbnailPickerInfo.cs" />
+    <Compile Include="GUI\DistortionWizard\Preset\PresetStateGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Preset\PresetStateView.cs" />
+    <Compile Include="GUI\DistortionWizard\Profile\HeightComboSlider.cs" />
+    <Compile Include="GUI\DistortionWizard\Profile\HeightControl.cs" />
+    <Compile Include="GUI\DistortionWizard\Profile\ProfileDistortionGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Profile\ProfileDistortionView.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\RemoveBottomTeethView.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\RemoveTeethGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\RemoveTopTeethView.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\TeethAdaptationGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\TeethAdaptationView.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationView.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\TeethMovementGUI.cs" />
+    <Compile Include="GUI\DistortionWizard\Teeth\ToothButton.cs" />
+    <Compile Include="GUI\DistortionWizard\WizardComponent.cs" />
+    <Compile Include="GUI\DistortionWizard\WizardComponentFactory.cs" />
+    <Compile Include="GUI\DistortionWizard\WizardView.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\DownloadGUIInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\DownloadingPanel.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\DownloadManagerGUI.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\DownloadManagerServer.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\InstallPanel.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\PlatformUpdateDownloadInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\UninstallInfo.cs" />
+    <Compile Include="GUI\DownloadManagerGUI\UpdateInfo.cs" />
     <Compile Include="GUI\Editor\CommonEditorResources.cs" />
     <Compile Include="GUI\Editor\DragAndDrop\DragAndDropTaskManager.cs" />
     <Compile Include="GUI\Editor\ImageBrowserWindow.cs" />
@@ -398,10 +476,27 @@
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.cs" />
     <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
     <Compile Include="GUI\GUILocationNames.cs" />
+    <Compile Include="GUI\LicenseDisplay\LicenseDisplay.cs" />
+    <Compile Include="GUI\LicenseDisplay\LicenseDisplayManager.cs" />
     <Compile Include="GUI\MainWindow.cs" />
+    <Compile Include="GUI\Options\OptionsDialog.cs" />
+    <Compile Include="GUI\PremiumFeaturesTaskMenuAd.cs" />
+    <Compile Include="GUI\Render\LicensePopup.cs" />
+    <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
+    <Compile Include="GUI\Render\ResolutionMenu.cs" />
     <Compile Include="GUI\RocketTextWriter\RocketTextWriter.cs" />
     <Compile Include="GUI\SceneErrorWindow\SceneErrorWindow.cs" />
+    <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
+    <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
+    <Compile Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.cs" />
+    <Compile Include="GUI\SelectionOperatorChooser\SelectionOperatorTask.cs" />
+    <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
+    <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="GUI\TaskMenuCategories.cs" />
+    <Compile Include="GUI\ViewsGui\ViewsGui.cs" />
+    <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
+    <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />
@@ -565,7 +660,45 @@
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyFilter.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
+    <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
+    <EmbeddedResource Include="GUI\CameraMovementModeChooser\CameraMovementModeChooser.layout" />
+    <EmbeddedResource Include="GUI\ChooseSceneDialog\ChooseSceneDialog.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Disclaimer\DisclaimerGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\DiscSpace\DiscSpaceGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Doppler\DopplerGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Fossa\FossaGUILeft.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Fossa\FossaGUIRight.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\LeftCondylarDegenerationGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\LeftCondylarGrowthGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\RightCondylarDegenerationGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\RightCondylarGrowthGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Notes\NotesGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Preset\PresetStateGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Profile\ProfileDistortionGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveBottomTeethGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
+    <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
+    <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
+    <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
+    <EmbeddedResource Include="GUI\Render\LicensePopup.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
+    <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorStyles.rcss" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorTemplate.trml">
       <SubType>Designer</SubType>
@@ -573,15 +706,50 @@
     <EmbeddedResource Include="GUI\RocketTextWriter\RocketTextWriterTemplate.trml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="MvcContexts\Login\ForgotPassword.rml" />
+    <EmbeddedResource Include="MvcContexts\Login\Index.rml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MvcContexts\Login\IndexRestricted.rml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MvcContexts\Login\LogIn.rcss" />
+    <EmbeddedResource Include="MvcContexts\Login\MasterTemplate.trml" />
+    <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
+    <EmbeddedResource Include="MvcContexts\Login\Reel.tl" />
+    <EmbeddedResource Include="MvcContexts\Login\Register.rml" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Utility\CommonResources.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
     <Compile Include="Utility\OtherProcessManager.cs" />
     <Compile Include="Utility\PathExtensions.cs" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
+    <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
+    <EmbeddedResource Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.layout" />
+    <EmbeddedResource Include="GUI\SequencePlayer\SequenceMenu.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />
+    <EmbeddedResource Include="GUI\ViewsGui\ViewsGui.layout" />
+    <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
     <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
     <EmbeddedResource Include="Controller\Grid\Grid.material" />
+    <EmbeddedResource Include="Resources\Background\Background.material" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark1.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark2.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark3.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark4.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark5.bmk" />
+    <EmbeddedResource Include="Resources\Rml\RmlPanelTemplate.trml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Rml\Wysiwyg.rcss" />
+    <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
+    <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
@@ -638,6 +806,7 @@
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.layout" />
     <EmbeddedResource Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.layout" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\SceneErrorWindow.layout" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.layout" />
     <EmbeddedResource Include="Resources\StandaloneIcons.png" />
     <EmbeddedResource Include="Resources\StandaloneIcons.xml" />
     <EmbeddedResource Include="Resources\ImagePlaceholder.png" />
@@ -670,6 +839,83 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LockedFeature%402x.png" />
+    <EmbeddedResource Include="Resources\AboutImage.png" />
+    <EmbeddedResource Include="Resources\AboutImage.xml" />
+    <EmbeddedResource Include="Resources\AnatomyFinderIcons.png" />
+    <EmbeddedResource Include="Resources\AnatomyFinderIcons.xml" />
+    <EmbeddedResource Include="Resources\AnatomyFinderIcons%402x.png" />
+    <EmbeddedResource Include="Resources\AnatomyFinderIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\AnomalousBootstrapImagesets.xml" />
+    <EmbeddedResource Include="Resources\AnomalousMedical_MyGUI_Layer.xml" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalIcons.png" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalIcons.xml" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalIcons%402x.png" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\AppButton.png" />
+    <EmbeddedResource Include="Resources\AppButton.xml" />
+    <EmbeddedResource Include="Resources\AppButton%402x.png" />
+    <EmbeddedResource Include="Resources\AppButton%402x.xml" />
+    <EmbeddedResource Include="Resources\Background\AnomalousMedicalWatermark.png" />
+    <EmbeddedResource Include="Resources\BodyAtlasImagesets.xml" />
+    <EmbeddedResource Include="Resources\BookmarksIcons.png" />
+    <EmbeddedResource Include="Resources\BookmarksIcons.xml" />
+    <EmbeddedResource Include="Resources\CameraMovementIcons.png" />
+    <EmbeddedResource Include="Resources\CameraMovementIcons.xml" />
+    <EmbeddedResource Include="Resources\CameraMovementIcons%402x.png" />
+    <EmbeddedResource Include="Resources\CameraMovementIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\CorePluginIcon.png" />
+    <EmbeddedResource Include="Resources\CorePluginIcon.xml" />
+    <EmbeddedResource Include="Resources\CorePluginIcon%402x.png" />
+    <EmbeddedResource Include="Resources\CorePluginIcon%402x.xml" />
+    <EmbeddedResource Include="Resources\CornerAnomalousLogo.png" />
+    <EmbeddedResource Include="Resources\CornerAnomalousLogo.xml" />
+    <EmbeddedResource Include="Resources\CornerAnomalousLogo%402x.png" />
+    <EmbeddedResource Include="Resources\CornerAnomalousLogo%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DegenerationImages.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DegenerationImages.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DegenerationImages%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DegenerationImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DistortionPanelIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DistortionPanelIcons.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DistortionPanelIcons%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DistortionPanelIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DopplerPanelImages.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DopplerPanelImages.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DopplerPanelImages%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\DopplerPanelImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\FossaImages.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\FossaImages.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\FossaImages%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\FossaImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\GrowthImages.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\GrowthImages.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\GrowthImages%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\GrowthImages%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\ProfileIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethButtons.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethButtons.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethMovementIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethMovementIcons.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethMovementIcons%402x.png" />
+    <EmbeddedResource Include="Resources\DistortionWizard\TeethMovementIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\DistortionWizard\WizardImagesets.xml" />
+    <EmbeddedResource Include="Resources\MainPlugin_MyGUI_Skin.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SelectionIcons.png" />
+    <EmbeddedResource Include="Resources\SelectionIcons.xml" />
+    <EmbeddedResource Include="Resources\SelectionIcons%402x.png" />
+    <EmbeddedResource Include="Resources\SelectionIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\SequenceIcons.png" />
+    <EmbeddedResource Include="Resources\SequenceIcons.xml" />
+    <EmbeddedResource Include="Resources\SequenceIcons%402x.png" />
+    <EmbeddedResource Include="Resources\SequenceIcons%402x.xml" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashIMG.png" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.xml" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashText.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
