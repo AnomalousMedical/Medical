@@ -16,7 +16,7 @@ using Medical;
 
 namespace AndroidBaseApp
 {
-	[Activity (Label = "AndroidBaseApp", MainLauncher = true, Icon = "@drawable/icon", Theme="@android:style/Theme.NoTitleBar.Fullscreen", 
+	[Activity (Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme="@android:style/Theme.NoTitleBar.Fullscreen", 
 		ConfigurationChanges= ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout,
 		WindowSoftInputMode = SoftInput.StateAlwaysHidden)]
 	[MetaData("android.app.lib_name", Value="OSHelper")]
@@ -34,17 +34,6 @@ namespace AndroidBaseApp
 
 			AndroidFunctions.EasyAttributeSetup (Resources.DisplayMetrics.Density, toggleKeyboard);
 
-			String archivePath = "/sdcard/AnomalousMedical.dat";
-			if (System.IO.File.Exists (archivePath)) 
-			{
-				VirtualFileSystem.Instance.addArchive (archivePath);
-			} 
-			else 
-			{
-				Logging.Log.Warning ("Cannot find primarydata file");
-			}
-
-
 			var anomalous = new AnomalousController();
 			anomalous.OnInitCompleted += HandleOnInitCompleted;
 			anomalous.run();
@@ -61,6 +50,16 @@ namespace AndroidBaseApp
 		void HandleOnInitCompleted (AnomalousController anomalousController, StandaloneController controller)
 		{
 			inputHandler = controller.MedicalController.InputHandler;
+
+			String archivePath = "/sdcard/AnomalousMedical.dat";
+			if (System.IO.File.Exists (archivePath)) 
+			{
+				VirtualFileSystem.Instance.addArchive (archivePath);
+			} 
+			else 
+			{
+				Logging.Log.Warning ("Cannot find primarydata file");
+			}
 		}
 
 		/// <summary>

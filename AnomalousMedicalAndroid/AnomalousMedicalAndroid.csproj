@@ -42,9 +42,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="AnomalousMedical">
-      <HintPath>..\Release\AnomalousMedical.exe</HintPath>
-    </Reference>
     <Reference Include="Engine">
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
     </Reference>
@@ -75,4 +72,34 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="lib\" />
+    <Folder Include="lib\armeabi-v7a\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidNativeLibrary Include="..\..\Engine\BulletWrapper\Android\libs\armeabi-v7a\libBulletWrapper.so">
+      <Link>lib\armeabi-v7a\libBulletWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\MyGUIWrapper\Android\libs\armeabi-v7a\libMyGUIWrapper.so">
+      <Link>lib\armeabi-v7a\libMyGUIWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\OgreCWrapper\Android\libs\armeabi-v7a\libOgreCWrapper.so">
+      <Link>lib\armeabi-v7a\libOgreCWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\armeabi-v7a\libopenal.so">
+      <Link>lib\armeabi-v7a\libopenal.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\OSHelper\Android\libs\armeabi-v7a\libOSHelper.so">
+      <Link>lib\armeabi-v7a\libOSHelper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\libRocketWrapper\Android\libs\armeabi-v7a\libRocketWrapper.so">
+      <Link>lib\armeabi-v7a\libRocketWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\SoundWrapper\Android\libs\armeabi-v7a\libSoundWrapper.so">
+      <Link>lib\armeabi-v7a\libSoundWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Zip\Android\libs\armeabi-v7a\libZip.so">
+      <Link>lib\armeabi-v7a\libZip.so</Link>
+    </AndroidNativeLibrary>
+  </ItemGroup>
 </Project>
