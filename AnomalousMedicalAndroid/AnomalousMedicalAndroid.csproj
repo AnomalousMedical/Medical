@@ -42,6 +42,18 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
+    <Reference Include="AnomalousMedical">
+      <HintPath>..\Release\AnomalousMedical.exe</HintPath>
+    </Reference>
+    <Reference Include="Engine">
+      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="OSPlatform">
+      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Standalone">
+      <HintPath>..\Release\Standalone.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

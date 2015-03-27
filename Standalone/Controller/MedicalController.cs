@@ -306,6 +306,14 @@ namespace Medical
             }
         }
 
+        public NativeInputHandler InputHandler
+        {
+            get
+            {
+                return inputHandler;
+            }
+        }
+
         public NativeUpdateTimer MainTimer
         {
             get
