@@ -51,8 +51,9 @@ namespace AndroidBaseApp
 		{
 			inputHandler = controller.MedicalController.InputHandler;
 
-			String archivePath = "/sdcard/AnomalousMedical.dat";
-			if (System.IO.File.Exists (archivePath)) 
+			//String archivePath = "/sdcard/AnomalousMedical.dat";
+			String archivePath = "/sdcard/raw";
+			if (System.IO.File.Exists (archivePath) || System.IO.Directory.Exists(archivePath)) 
 			{
 				VirtualFileSystem.Instance.addArchive (archivePath);
 			} 

@@ -101,5 +101,8 @@
     <AndroidNativeLibrary Include="..\..\Engine\Zip\Android\libs\armeabi-v7a\libZip.so">
       <Link>lib\armeabi-v7a\libZip.so</Link>
     </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Dependencies\FreeImage.NET\AndroidBuild\libs\armeabi-v7a\libFreeImage.so">
+      <Link>lib\armeabi-v7a\libFreeImage.so</Link>
+    </AndroidNativeLibrary>
   </ItemGroup>
 </Project>
