@@ -27,6 +27,9 @@ namespace Medical
                 case RuntimeOperatingSystem.iOS:
                     currentConfig = new iOSPlatformConfig();
                     break;
+                case RuntimeOperatingSystem.Android:
+                    currentConfig = new AndroidPlatformConfig();
+                    break;
                 default:
                     throw new Exception("Could not find platform configuration.");
             }

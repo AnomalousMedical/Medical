@@ -49,7 +49,7 @@ namespace Medical
 
         public AtlasPluginManager(StandaloneController standaloneController, DataFileVerifier dataFileVerifier)
         {
-            requiredAssemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
+            requiredAssemblyVersion = standaloneController.GetType().Assembly.GetName().Version;
             this.dataFileVerifier = dataFileVerifier;
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;

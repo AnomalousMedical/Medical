@@ -200,6 +200,7 @@
     <Compile Include="Controller\Bookmarks\BookmarkPath.cs" />
     <Compile Include="Controller\Bookmarks\LoadBookmarksBgTask.cs" />
     <Compile Include="Controller\BuyScreenController.cs" />
+    <Compile Include="Controller\Config\AndroidPlatformConfig.cs" />
     <Compile Include="Controller\Config\iOSPlatformConfig.cs" />
     <Compile Include="Controller\ImageLicenseServer.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
