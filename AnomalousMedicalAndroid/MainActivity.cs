@@ -28,7 +28,9 @@ namespace AndroidBaseApp
 
 		protected override void OnCreate (Bundle bundle)
 		{
+			#if DEBUG
 			Logging.Log.Default.addLogListener (new Logging.LogConsoleListener ());
+			#endif
 
 			Java.Lang.JavaSystem.LoadLibrary ("openal");
 
