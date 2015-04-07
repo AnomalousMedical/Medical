@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Android.Text;
 using Engine;
 using Medical;
+using System.IO;
 
 namespace AndroidBaseApp
 {
@@ -53,7 +54,9 @@ namespace AndroidBaseApp
 		{
 			inputHandler = controller.MedicalController.InputHandler;
 
-			String archivePath = "/sdcard/AnomalousMedical.dat";
+			//String archivePath =  "/sdcard/AnomalousMedical.dat";
+			//Application.Context.FilesDir;
+			String archivePath = Path.Combine(Application.Context.ObbDir.AbsolutePath, "AnomalousMedical.dat");
 			if (System.IO.File.Exists (archivePath) || System.IO.Directory.Exists(archivePath)) 
 			{
 				VirtualFileSystem.Instance.addArchive (archivePath);

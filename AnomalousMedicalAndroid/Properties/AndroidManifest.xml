@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="AnomalousMedicalAndroid.AnomalousMedicalAndroid">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="2.5" package="com.anomalousmedical.android">
 	<uses-sdk android:minSdkVersion="14" />
-	<application android:label="Anomalous Medical"></application>
+	<application android:label="Anomalous Medical" android:icon="@drawable/icon"></application>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
