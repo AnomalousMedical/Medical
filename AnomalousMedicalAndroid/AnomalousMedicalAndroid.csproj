@@ -51,6 +51,9 @@
     <Reference Include="Standalone">
       <HintPath>..\Release\Standalone.dll</HintPath>
     </Reference>
+    <Reference Include="OSPlatform.Android">
+      <HintPath>..\..\Engine\Release\OSPlatform.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Anomalous.OSPlatform;
+using Anomalous.OSPlatform.Android;
 using Android.Views.InputMethods;
 using Android.Content.PM;
 using System.Collections.Generic;
