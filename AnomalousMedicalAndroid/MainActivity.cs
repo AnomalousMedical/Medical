@@ -29,20 +29,18 @@ namespace AndroidBaseApp
 			Java.Lang.JavaSystem.LoadLibrary ("openal");
 		}
 
-		protected override void OnCreate (Bundle bundle)
+		public MainActivity()
+			:base(AnomalousMedicalAndroid.Resource.Layout.Main, AnomalousMedicalAndroid.Resource.Id.editText1)
+		{
+
+		}
+
+		protected override void createApp ()
 		{
 			#if DEBUG
 			Logging.Log.Default.addLogListener (new Logging.LogConsoleListener ());
 			#endif
 
-			base.OnCreate (bundle);
-
-			SetContentView (AnomalousMedicalAndroid.Resource.Layout.Main);
-			setViews(FindViewById<EditText>(AnomalousMedicalAndroid.Resource.Id.editText1));
-		}
-
-		protected override void createApp ()
-		{
 			var anomalous = new AnomalousController();
 			anomalous.OnInitCompleted += HandleOnInitCompleted;
 			anomalous.run();
