@@ -9,6 +9,7 @@ using System.Reflection;
 using DentalSim;
 using CoreGraphics;
 using Medical.Controller;
+using Anomalous.OSPlatform;
 
 #if ALLOW_OVERRIDE
 using Medical.Movement;

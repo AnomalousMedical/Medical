@@ -4,6 +4,7 @@ using CoreGraphics;
 using Foundation;
 using ObjCRuntime;
 using Medical.Controller;
+using Anomalous.OSPlatform;
 
 namespace AnomalousMedicaliOS
 {
