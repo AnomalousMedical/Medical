@@ -6,6 +6,7 @@ using Medical.GUI.AnomalousMvc;
 using MyGUIPlugin;
 using Engine;
 using Anomalous.GuiFramework;
+using Engine.Threads;
 
 namespace Medical.GUI
 {
@@ -191,7 +192,7 @@ namespace Medical.GUI
             };
             popupMenu.Closed += (menu, evt) =>
             {
-                Gui.Instance.destroyWidget(menu);
+                ThreadManager.invoke(() => Gui.Instance.destroyWidget(menu));
             };
 
             foreach (String file in editorController.OpenFiles)

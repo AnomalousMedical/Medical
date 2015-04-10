@@ -8,6 +8,7 @@ using Engine;
 using Medical.Controller;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;
+using Engine.Threads;
 
 namespace Medical
 {
@@ -50,7 +51,7 @@ namespace Medical
 
         void menu_Closed(Widget source, EventArgs e)
         {
-            Gui.Instance.destroyWidget(source);
+            ThreadManager.invoke(() => Gui.Instance.destroyWidget(source));
         }
 
         public override bool Active
