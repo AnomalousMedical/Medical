@@ -43,7 +43,10 @@ namespace AndroidBaseApp
 
 			OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
 
-			var anomalous = new AnomalousController();
+			var anomalous = new AnomalousController()
+			{
+				PrimaryArchive = Path.Combine(Application.Context.ObbDir.AbsolutePath, "AnomalousMedical.dat")
+			};
 			anomalous.OnInitCompleted += HandleOnInitCompleted;
 			anomalous.run();
 		}
@@ -51,17 +54,6 @@ namespace AndroidBaseApp
 		void HandleOnInitCompleted (AnomalousController anomalousController, StandaloneController controller)
 		{
 			setInputHandler(controller.MedicalController.InputHandler);
-
-			//Application.Context.FilesDir;
-			String archivePath = Path.Combine(Application.Context.ObbDir.AbsolutePath, "AnomalousMedical.dat");
-			if (System.IO.File.Exists (archivePath) || System.IO.Directory.Exists(archivePath)) 
-			{
-				VirtualFileSystem.Instance.addArchive (archivePath);
-			} 
-			else 
-			{
-				Logging.Log.Warning ("Cannot find primarydata file");
-			}
 		}
 
 		void openUrl(String url)

@@ -45,6 +45,7 @@ namespace Medical
         public AnomalousController()
         {
             Title = "Anomalous Medical";
+			PrimaryArchive = Path.Combine(FolderFinder.ExecutableFolder, "AnomalousMedical.dat");
         }
 
         public override bool OnInit()
@@ -238,13 +239,12 @@ namespace Medical
             }
         }
 
-        public String PrimaryArchive
-        {
-            get
-            {
-                return Path.Combine(FolderFinder.ExecutableFolder, "AnomalousMedical.dat");
-            }
-        }
+        /// <summary>
+        /// The primary archive to load, by default it is AnomalousMedical.dat in the same folder
+        /// as the executable. However, some platforms can override this setting if they do so immediatly
+        /// after constructing the object.
+        /// </summary>
+		public String PrimaryArchive { get; set; }
 
         public String DefaultScene
         {
