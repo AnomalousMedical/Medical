@@ -440,6 +440,7 @@ namespace Medical
 
         private void addPlugin(AtlasPlugin plugin, bool addAssemblyResources)
         {
+            bool initialize = false;
             if (standaloneController.LicenseManager.allowFeature(plugin.PluginId) && !usedPluginIds.Contains(plugin.PluginId))
             {
 #if ALLOW_OVERRIDE
@@ -448,6 +449,7 @@ namespace Medical
                 {
                     usedPluginIds.Add(plugin.PluginId);
                 }
+                initialize = true;
             }
             else
             {
@@ -460,7 +462,10 @@ namespace Medical
                 artworkPluginAssemblies.Add(assembly.FullName, assembly);
                 MyGUIInterface.Instance.CommonResourceGroup.addResource(pluginType.AssemblyQualifiedName, "EmbeddedScalableResource", true);
             }
-            initializePlugin(plugin);
+            if (initialize)
+            {
+                initializePlugin(plugin);
+            }
         }
 
         private void unloadPlugin(AtlasPlugin plugin, bool willReload)
