@@ -103,13 +103,16 @@ namespace Medical.Controller
                 passwordControl = executingContext.RunningActionViewHost.findControl("Pass");
                 messageControl = executingContext.RunningActionViewHost.findControl("Message");
                 errorControl = executingContext.RunningActionViewHost.findControl("Error");
-                if (focusPassword)
+                if (PlatformConfig.UnrestrictedEnvironment)
                 {
-                    passwordControl.focus();
-                }
-                else
-                {
-                    executingContext.RunningActionViewHost.findControl("User").focus();
+                    if (focusPassword)
+                    {
+                        passwordControl.focus();
+                    }
+                    else
+                    {
+                        executingContext.RunningActionViewHost.findControl("User").focus();
+                    }
                 }
             }));
 
