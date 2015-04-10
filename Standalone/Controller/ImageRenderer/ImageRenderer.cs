@@ -146,7 +146,7 @@ namespace Medical
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
                 //Render
-                IEnumerable<IdleStatus> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt, sceneWindow.NearPlaneWorldPos, sceneWindow.FarPlaneWorldPos, properties,
+				IEnumerable<IdleStatus> process = createRender(properties.Width, properties.Height, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt, sceneWindow.MinNearDistance, sceneWindow.NearPlaneWorld, sceneWindow.NearFarLength, properties,
                     (product) =>
                     {
                         bitmap = product;
@@ -305,7 +305,7 @@ namespace Medical
             }
         }
 
-        private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, float nearWorldPos, float farWorldPos, ImageRendererProperties properties, Action<FreeImageBitmap> renderingCompletedCallback)
+		private IEnumerable<IdleStatus> createRender(int finalWidth, int finalHeight, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt, float minNearDistance, float nearPlaneWorld, float nearFarLength, ImageRendererProperties properties, Action<FreeImageBitmap> renderingCompletedCallback)
         {
             FreeImageBitmap bitmap = null;
 	        OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
@@ -376,11 +376,10 @@ namespace Medical
                             {
                                 properties.CustomizeCameraPosition(camera, viewport);
                             }
-
-                            float near, far;
-                            CameraPositioner.computeClipDistances(camera.getDerivedPosition().length(), nearWorldPos, farWorldPos, out near, out far);
+								
+							float near = CameraPositioner.computeNearClipDistance(camera.getDerivedPosition().length(), minNearDistance, nearPlaneWorld);
                             camera.setNearClipDistance(near);
-                            camera.setFarClipDistance(far);
+							camera.setFarClipDistance(near + nearFarLength);
 
                             if (doGridRender)
                             {
