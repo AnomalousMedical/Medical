@@ -92,7 +92,7 @@ namespace AnomalousMedicaliOS
 			#endif
 		}
 
-		static bool openUrl(String url)
+		static void openUrl(String url)
 		{
 			UIViewController currentController = UIApplication.SharedApplication.KeyWindow.RootViewController;
 			while(currentController.PresentedViewController != null)
@@ -103,8 +103,6 @@ namespace AnomalousMedicaliOS
 			UIView currentView = currentController.View;
 
 			InAppBrowser browser = new InAppBrowser(currentView, url, touchForwarder);
-
-			return true;
 		}
 
 		void GlNoOp ()
