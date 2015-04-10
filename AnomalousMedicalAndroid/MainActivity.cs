@@ -41,6 +41,8 @@ namespace AndroidBaseApp
 			Logging.Log.Default.addLogListener (new Logging.LogConsoleListener ());
 			#endif
 
+			OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
+
 			var anomalous = new AnomalousController();
 			anomalous.OnInitCompleted += HandleOnInitCompleted;
 			anomalous.run();
@@ -60,6 +62,12 @@ namespace AndroidBaseApp
 			{
 				Logging.Log.Warning ("Cannot find primarydata file");
 			}
+		}
+
+		void openUrl(String url)
+		{
+			Intent intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
+			this.StartActivity(intent);
 		}
 	}
 }

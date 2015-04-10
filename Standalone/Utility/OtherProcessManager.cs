@@ -13,7 +13,7 @@ namespace Medical
 		/// <summary>
 		/// Subscribe to this event to override the default openUrlInBrowser function with your own.
 		/// </summary>
-		public static Func<String, bool> OpenUrlInBrowserOverride;
+		public static Action<String> OpenUrlInBrowserOverride;
 
         private OtherProcessManager()
         {
@@ -22,23 +22,24 @@ namespace Medical
 
         public static bool openUrlInBrowser(String url)
         {
-			if(OpenUrlInBrowserOverride != null)
-			{
-				return OpenUrlInBrowserOverride.Invoke(url);
-			} 
-			else
-			{
-				try
-				{
-					Process.Start(url);
-					return true;
-				} catch (Exception e)
-				{
-					MessageBox.show(String.Format("There was a problem opening '{0}' in your browser. You can open you browser and directly put in the url\n{0}\nto view the content you requested.", url), "Browser Error", MessageBoxStyle.Ok | MessageBoxStyle.IconWarning);
-					Log.Error("Could not open url {0} because: {1}", url, e.Message);
-					return false;
-				}
-			}
+            try
+            {
+                if (OpenUrlInBrowserOverride != null)
+                {
+                    OpenUrlInBrowserOverride.Invoke(url);
+                }
+                else
+                {
+                    Process.Start(url);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.show(String.Format("There was a problem opening '{0}' in your browser. You can open you browser and directly put in the url\n{0}\nto view the content you requested.", url), "Browser Error", MessageBoxStyle.Ok | MessageBoxStyle.IconWarning);
+                Log.Error("Could not open url {0} because: {1}", url, e.Message);
+                return false;
+            }
         }
 
         public static bool openLocalURL(String url)
