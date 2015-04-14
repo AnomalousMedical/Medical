@@ -3,4 +3,5 @@
 	<uses-sdk android:minSdkVersion="14" />
 	<application android:label="Anomalous Medical" android:icon="@drawable/icon"></application>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.INTERNET" />
 </manifest>
