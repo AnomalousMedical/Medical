@@ -34,6 +34,7 @@ namespace Medical
             {
                 blacklist("Cannot find 'ManualObject' in node {0}.", PropFactory.NodeName);
             }
+            manualObject.RedrawRequired += manualObject_RedrawRequired;
             createObject();
         }
 
@@ -98,6 +99,11 @@ namespace Medical
             {
                 size = value;
             }
+        }
+
+        void manualObject_RedrawRequired(ManualObject manualObject)
+        {
+            createObject();
         }
     }
 }

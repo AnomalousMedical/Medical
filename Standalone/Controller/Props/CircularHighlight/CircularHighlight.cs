@@ -40,6 +40,7 @@ namespace Medical
             {
                 blacklist("Cannot find 'ManualObject' in node {0}.", PropFactory.NodeName);
             }
+            manualObject.RedrawRequired += manualObject_RedrawRequired;
             createEllipse();
         }
 
@@ -134,6 +135,11 @@ namespace Medical
                 outerEllipse.MajorAxis = innerEllipse.MajorAxis + thickness;
                 outerEllipse.MinorAxis = innerEllipse.MinorAxis + thickness;
             }
+        }
+
+        void manualObject_RedrawRequired(ManualObject manualObject)
+        {
+            createEllipse();
         }
     }
 }

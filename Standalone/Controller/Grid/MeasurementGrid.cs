@@ -22,6 +22,8 @@ namespace Medical.Controller
         private Color color = new Color(0f, 0.5019608f, 0f, 1f);
         private Vector3 origin = Vector3.Zero;
         private ResourceManager gridResources;
+        private float gridSpacingMM = 5.0f;
+        private float gridMax = 25.0f;
 
         public MeasurementGrid(String name, SceneViewController sceneViewController)
         {
@@ -50,12 +52,13 @@ namespace Medical.Controller
                 OgreSceneManager sceneManager = subScene.getSimElementManager<OgreSceneManager>();
                 manualObject = sceneManager.SceneManager.createManualObject(name + "__MeasurementManualObject");
                 manualObject.setRenderQueueGroup(95);
+                manualObject.RedrawRequired += manualObject_RedrawRequired;
                 sceneNode = sceneManager.SceneManager.createSceneNode(name + "__MeasurementManualObjectSceneNode");
                 sceneNode.attachObject(manualObject);
                 sceneNode.setVisible(visible);
                 sceneNode.setPosition(origin);
                 sceneManager.SceneManager.getRootSceneNode().addChild(sceneNode);
-                drawGrid(5.0f, 25.0f);
+                redraw();
             }
         }
 
@@ -90,12 +93,19 @@ namespace Medical.Controller
             }
         }
 
+        public void changeGrid(float gridSpacingMM, float gridMax)
+        {
+            this.gridSpacingMM = gridSpacingMM;
+            this.gridMax = gridMax;
+            redraw();
+        }
+
         /// <summary>
         /// Draw a grid with the given spacing in milimeters taking up the space specified by gridmax.
         /// </summary>
         /// <param name="gridSpacingMM">The number of milimeters to space the grid lines.</param>
         /// <param name="gridMax">The area of the grid in 3d units.</param>
-        public void drawGrid(float gridSpacingMM, float gridMax)
+        private void redraw()
         {
             float gridSpacing = gridSpacingMM * (1.0f / SimulationConfig.UnitsToMM);
             Vector3 startPoint = new Vector3(0.0f, -gridMax, 0.0f);
@@ -236,6 +246,11 @@ namespace Medical.Controller
                     sceneNode.setVisible(true);
                 }
             }
+        }
+
+        void manualObject_RedrawRequired(ManualObject manualObject)
+        {
+            redraw();
         }
     }
 }

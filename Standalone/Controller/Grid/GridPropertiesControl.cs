@@ -30,7 +30,7 @@ namespace Medical.GUI
 
         public void updateGrid()
         {
-            grid.drawGrid(gridSpaceControl.FloatValue, 100);
+            grid.changeGrid(gridSpaceControl.FloatValue, 100);
             grid.Visible = showGridCheckBox.Checked;
             grid.Origin = origin;
         }
@@ -75,7 +75,7 @@ namespace Medical.GUI
         {
             if (grid != null)
             {
-                grid.drawGrid(gridSpaceControl.FloatValue, 100);
+                grid.changeGrid(gridSpaceControl.FloatValue, 100);
             }
         }
 
