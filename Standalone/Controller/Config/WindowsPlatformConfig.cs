@@ -71,30 +71,6 @@ namespace Medical
             }
         }
 
-        protected override String LocalUserDocumentsFolderImpl
-        {
-            get
-            {
-                return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            }
-        }
-
-        protected override String LocalDataFolderImpl
-        {
-            get
-            {
-                return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-            }
-        }
-
-        protected override String LocalPrivateDataFolderImpl
-        {
-            get
-            {
-                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            }
-        }
-
         protected override bool CloseMainWindowOnShutdownImpl
         {
             get
@@ -153,22 +129,6 @@ namespace Medical
             get
             {
                 return false;
-            }
-        }
-
-        protected override string ExecutablePathImpl
-        {
-            get
-            {
-                String[] args = Environment.GetCommandLineArgs();
-                if (args.Length > 0)
-                {
-                    return Path.GetDirectoryName(args[0]);
-                }
-                else
-                {
-                    return Path.GetFullPath(".");
-                }
             }
         }
 

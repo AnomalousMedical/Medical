@@ -12,7 +12,7 @@ namespace Medical
     {
         public static void Run()
         {
-            StartupManager.SetupDllDirectories();
+            NativePlatformPlugin.StaticInitialize();
 
             AnomalousController anomalous = null;
             try

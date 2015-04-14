@@ -68,30 +68,6 @@ namespace Medical
             }
         }
 
-        protected override String LocalUserDocumentsFolderImpl
-        {
-            get
-            {
-                return MacOSXFunctions.LocalUserDocumentsFolder;
-            }
-        }
-
-        protected override String LocalDataFolderImpl
-        {
-            get
-            {
-                return MacOSXFunctions.LocalDataFolder;
-            }
-        }
-
-        protected override String LocalPrivateDataFolderImpl
-        {
-            get
-            {
-                return MacOSXFunctions.LocalPrivateDataFolder;
-            }
-        }
-
         protected override bool CloseMainWindowOnShutdownImpl
         {
             get
@@ -152,14 +128,6 @@ namespace Medical
             get
             {
                 return true;
-            }
-        }
-
-        protected override string ExecutablePathImpl
-        {
-            get
-            {
-                return Path.GetFullPath(".");
             }
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Anomalous.OSPlatform;
 
 namespace Medical
 {
@@ -11,9 +12,9 @@ namespace Medical
     /// </summary>
     public class FolderFinder
     {
-        private static String userRoot = String.Format("{0}/Anomalous Medical", PlatformConfig.LocalUserDocumentsFolder);
-        private static String localDataFolder = String.Format("{0}/Anomalous Medical", PlatformConfig.LocalDataFolder);
-        private static String localPrivateDataFolder = String.Format("{0}/Anomalous Medical", PlatformConfig.LocalPrivateDataFolder);
+        private static String userRoot = String.Format("{0}/Anomalous Medical", RuntimePlatformInfo.LocalUserDocumentsFolder);
+        private static String localDataFolder = String.Format("{0}/Anomalous Medical", RuntimePlatformInfo.LocalDataFolder);
+        private static String localPrivateDataFolder = String.Format("{0}/Anomalous Medical", RuntimePlatformInfo.LocalPrivateDataFolder);
         private static String programFolder = null;
 
         private FolderFinder()
@@ -63,7 +64,7 @@ namespace Medical
             {
                 if (programFolder == null)
                 {
-                    programFolder = PlatformConfig.ExecutablePath;
+                    programFolder = RuntimePlatformInfo.ExecutablePath;
                 }
                 return programFolder;
             }

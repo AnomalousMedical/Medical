@@ -37,15 +37,19 @@ namespace AndroidBaseApp
 
 		protected override void createApp ()
 		{
+			NativePlatformPlugin.StaticInitialize();
+
 			#if DEBUG
 			Logging.Log.Default.addLogListener (new Logging.LogConsoleListener ());
 			#endif
 
 			OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
 
+			String obbWildcard = String.Format ("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString ());
+
 			var anomalous = new AnomalousController()
 			{
-				PrimaryArchive = Path.Combine(Application.Context.ObbDir.AbsolutePath, "AnomalousMedical.obb")
+				PrimaryArchive = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault()
 			};
 			anomalous.OnInitCompleted += HandleOnInitCompleted;
 			anomalous.run();
