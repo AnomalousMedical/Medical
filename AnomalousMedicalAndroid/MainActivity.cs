@@ -45,7 +45,7 @@ namespace AndroidBaseApp
 
 			var anomalous = new AnomalousController()
 			{
-				PrimaryArchive = Path.Combine(Application.Context.ObbDir.AbsolutePath, "AnomalousMedical.dat")
+				PrimaryArchive = Path.Combine(Application.Context.ObbDir.AbsolutePath, "AnomalousMedical.obb")
 			};
 			anomalous.OnInitCompleted += HandleOnInitCompleted;
 			anomalous.run();
