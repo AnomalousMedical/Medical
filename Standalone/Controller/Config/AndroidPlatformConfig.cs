@@ -185,8 +185,8 @@ namespace Medical
 
         protected override bool TrustSSLCertificateImpl(System.Security.Cryptography.X509Certificates.X509Certificate certificate, string hostName)
         {
-            //ANDROID_FIXLATER: HUGE HOLE HERE NEED TO FIX
-            return true;
+            //The built in mono ssl validation appears to work on android, so like windows throw an not implemented exception if this is called.
+            throw new NotImplementedException();
         }
 
         protected override bool AllowDllPluginsToLoadImpl
