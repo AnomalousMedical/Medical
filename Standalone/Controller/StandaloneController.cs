@@ -778,7 +778,10 @@ namespace Medical
 
         void sceneViewController_WindowCreated(SceneViewWindow window)
         {
-            TransparencyController.createTransparencyState(window.CurrentTransparencyState);
+            if (!TransparencyController.hasTransparencyState(window.CurrentTransparencyState))
+            {
+                TransparencyController.createTransparencyState(window.CurrentTransparencyState);
+            }
             window.RenderingStarted += window_RenderingStarted;
             window.MadeActive += window_MadeActive;
         }
