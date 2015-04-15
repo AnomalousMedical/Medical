@@ -26,6 +26,7 @@ namespace AndroidBaseApp
 	{
 		static MainActivity()
 		{
+			Java.Lang.JavaSystem.LoadLibrary ("gnustl_shared");
 			Java.Lang.JavaSystem.LoadLibrary ("openal");
 		}
 

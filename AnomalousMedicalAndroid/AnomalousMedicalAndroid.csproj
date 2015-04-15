@@ -107,5 +107,8 @@
     <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libZip.so">
       <Link>lib\armeabi-v7a\libZip.so</Link>
     </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libgnustl_shared.so">
+      <Link>lib\armeabi-v7a\libgnustl_shared.so</Link>
+    </AndroidNativeLibrary>
   </ItemGroup>
 </Project>
