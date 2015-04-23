@@ -39,6 +39,7 @@ namespace AndroidBaseApp
 		protected override void createApp ()
 		{
 			NativePlatformPlugin.StaticInitialize();
+			OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.ETC2;
 
 			#if DEBUG
 			Logging.Log.Default.addLogListener (new Logging.LogConsoleListener ());

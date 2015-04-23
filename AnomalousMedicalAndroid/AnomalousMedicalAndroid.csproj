@@ -54,6 +54,9 @@
     <Reference Include="OSPlatform.Android">
       <HintPath>..\..\Engine\Release\OSPlatform.Android.dll</HintPath>
     </Reference>
+    <Reference Include="OgrePlugin">
+      <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
