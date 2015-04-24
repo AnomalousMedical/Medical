@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -81,6 +82,7 @@
   <ItemGroup>
     <Folder Include="lib\" />
     <Folder Include="lib\armeabi-v7a\" />
+    <Folder Include="lib\x86\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\armeabi-v7a\libopenal.so">
@@ -112,6 +114,36 @@
     </AndroidNativeLibrary>
     <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libgnustl_shared.so">
       <Link>lib\armeabi-v7a\libgnustl_shared.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libBulletWrapper.so">
+      <Link>lib\x86\libBulletWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libMyGUIWrapper.so">
+      <Link>lib\x86\libMyGUIWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libOgreCWrapper.so">
+      <Link>lib\x86\libOgreCWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libOSHelper.so">
+      <Link>lib\x86\libOSHelper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libRocketWrapper.so">
+      <Link>lib\x86\libRocketWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libSoundWrapper.so">
+      <Link>lib\x86\libSoundWrapper.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libZip.so">
+      <Link>lib\x86\libZip.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libgnustl_shared.so">
+      <Link>lib\x86\libgnustl_shared.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Dependencies\FreeImage.NET\AndroidBuildx86\libs\x86\libFreeImage.so">
+      <Link>lib\x86\libFreeImage.so</Link>
+    </AndroidNativeLibrary>
+    <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\x86\libopenal.so">
+      <Link>lib\x86\libopenal.so</Link>
     </AndroidNativeLibrary>
   </ItemGroup>
 </Project>
