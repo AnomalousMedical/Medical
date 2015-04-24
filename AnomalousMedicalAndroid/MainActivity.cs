@@ -60,6 +60,7 @@ namespace AndroidBaseApp
 		void HandleOnInitCompleted (AnomalousController anomalousController, StandaloneController controller)
 		{
 			setInputHandler(controller.MedicalController.InputHandler);
+			printRuntimeInfo();
 		}
 
 		void openUrl(String url)
