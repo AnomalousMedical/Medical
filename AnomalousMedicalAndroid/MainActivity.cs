@@ -18,57 +18,57 @@ using System.IO;
 
 namespace AndroidBaseApp
 {
-	[Activity (Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme="@android:style/Theme.NoTitleBar.Fullscreen", 
-		ConfigurationChanges= ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout,
-		WindowSoftInputMode = SoftInput.StateAlwaysHidden)]
-	[MetaData("android.app.lib_name", Value = AndroidPlatformPlugin.LibraryName)]
-	public class MainActivity : AndroidActivity
-	{
-		static MainActivity()
-		{
-			Java.Lang.JavaSystem.LoadLibrary ("gnustl_shared");
-			Java.Lang.JavaSystem.LoadLibrary ("openal");
-		}
+    [Activity(Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme = "@android:style/Theme.NoTitleBar.Fullscreen", 
+        ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout,
+        WindowSoftInputMode = SoftInput.StateAlwaysHidden)]
+    [MetaData("android.app.lib_name", Value = AndroidPlatformPlugin.LibraryName)]
+    public class MainActivity : AndroidActivity
+    {
+        static MainActivity()
+        {
+            Java.Lang.JavaSystem.LoadLibrary("gnustl_shared");
+            Java.Lang.JavaSystem.LoadLibrary("openal");
+        }
 
-		public MainActivity()
-			:base(AnomalousMedicalAndroid.Resource.Layout.Main, AnomalousMedicalAndroid.Resource.Id.editText1)
-		{
+        public MainActivity()
+            : base(AnomalousMedicalAndroid.Resource.Layout.Main, AnomalousMedicalAndroid.Resource.Id.editText1)
+        {
 
-		}
+        }
 
-		protected override void createApp ()
-		{
-			NativePlatformPlugin.StaticInitialize();
-			OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.ETC2;
+        protected override void createApp()
+        {
+            NativePlatformPlugin.StaticInitialize();
+            OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.ETC2;
 
-			#if DEBUG
+            #if DEBUG
 			Logging.Log.Default.addLogListener (new Logging.LogConsoleListener ());
-			#endif
+            #endif
 
-			OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
+            OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
 
-			String obbWildcard = String.Format ("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString ());
+            String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
 
-			var anomalous = new AnomalousController()
-			{
-				PrimaryArchive = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault()
-			};
-			anomalous.OnInitCompleted += HandleOnInitCompleted;
-			anomalous.run();
-		}
+            var anomalous = new AnomalousController()
+            {
+                PrimaryArchive = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault()
+            };
+            anomalous.OnInitCompleted += HandleOnInitCompleted;
+            anomalous.run();
+        }
 
-		void HandleOnInitCompleted (AnomalousController anomalousController, StandaloneController controller)
-		{
-			setInputHandler(controller.MedicalController.InputHandler);
-			printRuntimeInfo();
-		}
+        void HandleOnInitCompleted(AnomalousController anomalousController, StandaloneController controller)
+        {
+            setInputHandler(controller.MedicalController.InputHandler);
+            printRuntimeInfo();
+        }
 
-		void openUrl(String url)
-		{
-			Intent intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
-			this.StartActivity(intent);
-		}
-	}
+        void openUrl(String url)
+        {
+            Intent intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
+            this.StartActivity(intent);
+        }
+    }
 }
 
 
