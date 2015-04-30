@@ -130,9 +130,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
-    <Reference Include="AnomalousMedical">
-      <HintPath>..\Release\AnomalousMedical.exe</HintPath>
-    </Reference>
     <Reference Include="Premium">
       <HintPath>..\Release\Premium.dll</HintPath>
     </Reference>
@@ -150,9 +147,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)'=='AppStore' Or '$(Configuration)'=='Ad-Hoc' Or '$(Configuration)'=='PublicRelease'">
-    <Reference Include="AnomalousMedical">
-      <HintPath>..\PublicRelease\AnomalousMedical.exe</HintPath>
-    </Reference>
     <Reference Include="Premium">
       <HintPath>..\PublicRelease\Premium.dll</HintPath>
     </Reference>
