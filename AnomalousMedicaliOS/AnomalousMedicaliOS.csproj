@@ -203,14 +203,6 @@
       <IsCxx>False</IsCxx>
       <Kind>Static</Kind>
     </NativeReference>
-    <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\src\BulletMultiThreaded\Release-iphoneos\libBulletMultiThreaded.a">
-      <IsCxx>False</IsCxx>
-      <Kind>Static</Kind>
-    </NativeReference>
-    <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\src\BulletSoftBody\Release-iphoneos\libBulletSoftBody.a">
-      <IsCxx>False</IsCxx>
-      <Kind>Static</Kind>
-    </NativeReference>
     <NativeReference Include="..\..\Dependencies\Bullet\iOSBuild\Extras\ConvexDecomposition\Release-iphoneos\libConvexDecomposition.a">
       <IsCxx>False</IsCxx>
       <Kind>Static</Kind>
