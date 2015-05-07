@@ -160,10 +160,6 @@
     <EmbeddedResource Include="GUI\DataFilePublisher\DataFilePublisher.layout" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AnomalousMedical\AnomalousMedical.csproj">
-      <Project>{d8a56807-3dac-44ea-947c-3b232d049ac9}</Project>
-      <Name>AnomalousMedical</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>
