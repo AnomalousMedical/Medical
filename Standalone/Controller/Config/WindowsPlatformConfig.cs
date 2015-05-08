@@ -165,5 +165,13 @@ namespace Medical
         {
             
         }
+
+        protected override bool AutoSelectTextImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

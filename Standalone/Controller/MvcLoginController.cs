@@ -103,7 +103,7 @@ namespace Medical.Controller
                 passwordControl = executingContext.RunningActionViewHost.findControl("Pass");
                 messageControl = executingContext.RunningActionViewHost.findControl("Message");
                 errorControl = executingContext.RunningActionViewHost.findControl("Error");
-                if (PlatformConfig.UnrestrictedEnvironment)
+                if (PlatformConfig.AutoSelectText)
                 {
                     if (focusPassword)
                     {

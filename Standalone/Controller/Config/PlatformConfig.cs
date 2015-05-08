@@ -192,6 +192,14 @@ namespace Medical
             }
         }
 
+        public static bool AutoSelectText
+        {
+            get
+            {
+                return currentConfig.AutoSelectTextImpl;
+            }
+        }
+
         public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
         {
             return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
@@ -245,5 +253,7 @@ namespace Medical
         protected abstract bool AllowDllPluginsToLoadImpl { get; }
 
         protected abstract void moveConfigurationIfNeededImpl();
+
+        protected abstract bool AutoSelectTextImpl { get; }
     }
 }

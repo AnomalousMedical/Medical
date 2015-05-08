@@ -211,6 +211,14 @@ namespace Medical
 			{
 				Logging.Log.Error("{0} copying legacy files from '{1}'. Message: {2}", ex.GetType().ToString(), OldUserDocRoot, ex.Message);
 			}
-		}
+        }
+
+        protected override bool AutoSelectTextImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }
