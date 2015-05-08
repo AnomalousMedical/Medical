@@ -48,10 +48,16 @@ namespace AndroidBaseApp
             OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
 
             String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
+            String archiveName = null;
+            try
+            {
+                archiveName = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault();
+            }
+            catch(Exception) { }
 
             var anomalous = new AnomalousController()
             {
-                PrimaryArchive = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault()
+                    PrimaryArchive = archiveName
             };
             anomalous.OnInitCompleted += HandleOnInitCompleted;
             anomalous.run();
