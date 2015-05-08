@@ -130,6 +130,15 @@ namespace Medical
 
         private IEnumerable<IdleStatus> runSplashScreen()
         {
+            if (String.IsNullOrEmpty(this.PrimaryArchive))
+            {
+                MessageBox.show("Could not find resource archive. Please reinstall Anomalous Medical.", "Resource Archive Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, result =>
+                    {
+                        controller.exit();
+                    });
+                yield break;
+            }
+
             splashScreen.updateStatus(InitializingCorePosition, "Initializing Core");
             yield return IdleStatus.Ok;
 
