@@ -54,7 +54,7 @@ namespace Medical.GUI
 
             this.Shown += new EventHandler(SavePatientDialog_Shown);
 
-            if(!PlatformConfig.UnrestrictedEnvironment)
+            if (!PlatformConfig.AllowCustomSaveLoadPath)
             {
                 locationTextBox.Visible = false;
                 browseButton.Visible = false;

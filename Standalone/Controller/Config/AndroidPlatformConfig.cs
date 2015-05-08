@@ -177,5 +177,13 @@ namespace Medical
                 return false;
             }
         }
+
+        protected override bool AllowCustomSaveLoadPathImpl
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }

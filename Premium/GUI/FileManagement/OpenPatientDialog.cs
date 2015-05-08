@@ -83,7 +83,7 @@ namespace Medical.GUI
             this.Hiding += OpenPatientDialog_Hiding;
             this.Hidden += new EventHandler(OpenPatientDialog_Hidden);
 
-            if (!PlatformConfig.UnrestrictedEnvironment)
+            if (!PlatformConfig.AllowCustomSaveLoadPath)
             {
                 locationTextBox.Visible = false;
                 browseButton.Visible = false;

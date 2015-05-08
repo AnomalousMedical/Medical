@@ -200,6 +200,18 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Determines if custom save/load paths should be used. In sandboxed environments this should
+        /// be disabled so we always write files to the correct place.
+        /// </summary>
+        public static bool AllowCustomSaveLoadPath
+        {
+            get
+            {
+                return currentConfig.AllowCustomSaveLoadPathImpl;
+            }
+        }
+
         public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
         {
             return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
@@ -255,5 +267,7 @@ namespace Medical
         protected abstract void moveConfigurationIfNeededImpl();
 
         protected abstract bool AutoSelectTextImpl { get; }
+
+        protected abstract bool AllowCustomSaveLoadPathImpl { get; }
     }
 }

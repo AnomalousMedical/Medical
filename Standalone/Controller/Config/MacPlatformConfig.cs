@@ -220,5 +220,13 @@ namespace Medical
                 return true;
             }
         }
+
+        protected override bool AllowCustomSaveLoadPathImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }
