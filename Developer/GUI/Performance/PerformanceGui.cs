@@ -52,6 +52,7 @@ namespace Developer.GUI
             {
                 sb.AppendFormat("{0}: {1}ms   |   Min {2}ms   |   Max {3}ms   |   Avg {4}ms\n", timelapse.Name, timelapse.Duration, timelapse.Min, timelapse.Max, timelapse.Average);
             }
+            sb.AppendFormat("MyGUI batch count {0}", MyGUIPlugin.MyGUIInterface.Instance.OgrePlatform.RenderManager.BatchCount);
             text.Caption = sb.ToString();
         }
 

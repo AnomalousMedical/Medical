@@ -228,7 +228,7 @@ namespace Medical
 
             //SceneView
             MyGUIInterface myGUI = MyGUIInterface.Instance;
-            sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.getRenderManager(), background);
+            sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.RenderManager, background);
             sceneViewController.WindowCreated += sceneViewController_WindowCreated;
             sceneViewController.WindowDestroyed += sceneViewController_WindowDestroyed;
             sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
