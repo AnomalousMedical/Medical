@@ -20,6 +20,7 @@ namespace Medical.GUI
         private SingleSelectButtonGrid pluginGrid;
         private DownloadingPanel downloadPanel;
         private Widget readingInfo;
+        private Button downloadAll;
 
         private AtlasPluginManager pluginManager;
         private DownloadController downloadController;
@@ -71,8 +72,9 @@ namespace Medical.GUI
             Button closeButton = (Button)widget.findWidget("CloseButton");
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
-            Button downloadAll = (Button)widget.findWidget("DownloadAll");
+            downloadAll = (Button)widget.findWidget("DownloadAll");
             downloadAll.MouseButtonClick += new MyGUIEvent(downloadAll_MouseButtonClick);
+            downloadAll.Visible = false;
 
             readingInfo = widget.findWidget("ReadingInfo");
             readingInfo.Visible = false;
@@ -146,6 +148,7 @@ namespace Medical.GUI
 
                 readingServerPluginInfo = true;
                 readingInfo.Visible = true;
+                downloadAll.Visible = false;
                 downloadServer.readPluginInfoFromServer(pluginManager);
             }
         }
@@ -175,6 +178,7 @@ namespace Medical.GUI
             {
                 readingServerPluginInfo = false;
                 readingInfo.Visible = false;
+                downloadAll.Visible = true;
                 queueAutoDownloads();
             }
         }
