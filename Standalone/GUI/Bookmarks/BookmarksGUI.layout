@@ -4,17 +4,6 @@
         <Widget type="Button" skin="Button" position="220 28 57 25" align="Left Top" name="AddButton">
             <Property key="Caption" value="Add"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="282 58 214 475" align="Stretch" name="BookmarksList">
-            <Property key="CanvasAlign" value="Left Top"/>
-            <Property key="CanvasSize" value="209 10"/>
-            <Property key="VisibleHScroll" value="false"/>
-            <UserString key="ButtonSkin" value="Medical.BookmarkListIconButtonButton"/>
-            <UserString key="ItemHeight" value="127"/>
-            <UserString key="ItemWidth" value="122"/>
-            <UserString key="ShowGroupCaptions" value="false"/>
-            <UserString key="ItemPaddingX" value="10"/>
-            <UserString key="ItemPaddingY" value="10"/>
-        </Widget>
         <Widget type="EditBox" skin="EditBox" position="8 28 207 25" align="Left Top" name="BookmarkName">
             <Property key="Caption" value="Bookmark"/>
         </Widget>
@@ -23,9 +12,8 @@
             <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="471 7 24 20" align="Right Top" name="CloseButton"/>
-        <Widget type="ScrollView" skin="ScrollView" position="8 86 269 447" align="Left VStretch" name="FolderTree">
-            <Property key="CanvasAlign" value="Left Top"/>
-            <UserString key="NodeHeight" value="30"/>
+        <Widget type="Button" skin="Button" position="282 28 89 25" name="EmptyTrash">
+            <Property key="Caption" value="Empty Trash"/>
         </Widget>
         <Widget type="Button" skin="ButtonFlatDark" position="8 57 132 25" name="AddFolder">
             <Property key="Caption" value="Add Folder"/>
@@ -33,8 +21,24 @@
         <Widget type="Button" skin="ButtonFlatDark" position="145 57 132 25" name="RemoveFolder">
             <Property key="Caption" value="Remove Folder"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="282 28 89 25" name="EmptyTrash">
-            <Property key="Caption" value="Empty Trash"/>
+        <Widget type="PanelResponsive" skin="PanelResponsiveEmpty" position="0 83 500 454" align="Stretch">
+            <Widget type="ScrollView" skin="ScrollView" position="2 0 164 454" align="Stretch" name="FolderTree">
+                <Property key="CanvasAlign" value="Left Top"/>
+                <Property key="NumResponsiveColumns" value="2"/>
+                <UserString key="NodeHeight" value="30"/>
+            </Widget>
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="168 0 329 454" align="Stretch" name="BookmarksList">
+                <Property key="CanvasAlign" value="Left Top"/>
+                <Property key="CanvasSize" value="209 10"/>
+                <Property key="VisibleHScroll" value="false"/>
+                <Property key="NumResponsiveColumns" value="10"/>
+                <UserString key="ButtonSkin" value="Medical.BookmarkListIconButtonButton"/>
+                <UserString key="ItemHeight" value="127"/>
+                <UserString key="ItemWidth" value="122"/>
+                <UserString key="ShowGroupCaptions" value="false"/>
+                <UserString key="ItemPaddingX" value="10"/>
+                <UserString key="ItemPaddingY" value="10"/>
+            </Widget>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
