@@ -40,6 +40,7 @@ namespace AndroidBaseApp
         {
             NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.ETC2;
+            OgrePlugin.OgreInterface.InitialClearColor = new Color(0.156f, 0.156f, 0.156f);
 
             #if DEBUG
 			Logging.Log.Default.addLogListener (new Logging.LogConsoleListener ());
