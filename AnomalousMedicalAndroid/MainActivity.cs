@@ -18,7 +18,7 @@ using System.IO;
 
 namespace AndroidBaseApp
 {
-    [Activity(Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme = "@android:style/Theme.NoTitleBar.Fullscreen", 
+    [Activity(Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/AnomalousMedicalTheme", 
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout,
         WindowSoftInputMode = SoftInput.StateAlwaysHidden)]
     [MetaData("android.app.lib_name", Value = AndroidPlatformPlugin.LibraryName)]
