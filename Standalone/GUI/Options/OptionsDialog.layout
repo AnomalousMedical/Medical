@@ -11,13 +11,16 @@
             <Property key="HorizontalMaxSize" value="500"/>
             <Property key="Padding" value="10 4"/>
             <Widget type="Widget" skin="PanelEmpty" position="10 0 385 122">
+                <Property key="ForwardMouseWheelToParent" value="true"/>
                 <Widget type="TextBox" skin="TextBox" position="0 0 105 15">
                     <Property key="Caption" value="Program Options"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position="0 23 155 15">
                     <Property key="Caption" value="Camera Transition Speed"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="ComboBox" skin="ComboBox" position="0 37 385 23" align="HStretch Top" name="CameraSpeedCombo">
                     <Property key="AddItem" value="Instant"/>
@@ -29,6 +32,7 @@
                 <Widget type="TextBox" skin="TextBox" position="0 62 155 15">
                     <Property key="Caption" value="Camera Mouse Button"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="ComboBox" skin="ComboBox" position="0 76 385 23" align="HStretch Top" name="CameraButtonCombo">
                     <Property key="AddItem" value="Left"/>
@@ -38,12 +42,15 @@
                 <Widget type="Button" skin="CheckBox" position="0 104 382 15" align="HStretch Top" name="EnableMultitouch">
                     <Property key="Caption" value="Enable Multitouch"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="405 0 385 100">
+                <Property key="ForwardMouseWheelToParent" value="true"/>
                 <Widget type="TextBox" skin="TextBox" position="0 22 109 15">
                     <Property key="Caption" value="Default Scene"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="ComboBox" skin="ComboBox" position="0 37 385 23" align="HStretch Top" name="DefaultScene">
                     <Property key="Static" value="true"/>
@@ -51,6 +58,7 @@
                 <Widget type="TextBox" skin="TextBox" position="0 61 155 15">
                     <Property key="Caption" value="UI Size"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="ComboBox" skin="ComboBox" position="0 76 385 23" align="HStretch Top" name="UISize">
                     <Property key="Static" value="true"/>
@@ -60,20 +68,25 @@
                 <Property key="NumResponsiveColumns" value="12"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="10 131 385 155">
+                <Property key="ForwardMouseWheelToParent" value="true"/>
                 <Widget type="TextBox" skin="TextBox" position="0 0 105 15">
                     <Property key="Caption" value="Graphics Options"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position="0 17 76 15">
                     <Property key="Caption" value="Anti Aliasing"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="ComboBox" skin="ComboBox" position="0 33 385 23" align="HStretch Top" name="AACombo">
                     <Property key="Static" value="true"/>
+                    <Property key="ForwardMouseWheelToParent" value="false"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position="0 59 70 15">
                     <Property key="Caption" value="Resolution"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="ComboBox" skin="ComboBox" position="0 75 385 23" align="HStretch Top" name="ResolutionCombo">
                     <Property key="Static" value="true"/>
@@ -81,20 +94,25 @@
                 <Widget type="Button" skin="CheckBox" position="0 121 385 15" align="HStretch Top" name="VSyncCheck">
                     <Property key="Caption" value="Vertical Sync"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="Button" skin="CheckBox" position="0 105 385 15" align="HStretch Top" name="FullscreenCheck">
                     <Property key="Caption" value="Fullscreen"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="Button" skin="CheckBox" position="0 137 385 15" align="HStretch Top" name="ShowStatsCheck">
                     <Property key="Caption" value="Show Statistics"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="405 131 385 56">
+                <Property key="ForwardMouseWheelToParent" value="true"/>
                 <Widget type="TextBox" skin="TextBox" position="0 18 116 15">
                     <Property key="Caption" value="Maximum Framerate"/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="EditBox" skin="EditBox" position="0 33 385 23" align="HStretch Top" name="MaxFPS"/>
             </Widget>
@@ -102,24 +120,30 @@
                 <Property key="NumResponsiveColumns" value="12"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="10 295 390 25">
+                <Property key="ForwardMouseWheelToParent" value="true"/>
                 <Widget type="Button" skin="Button" position="0 0 108 25" align="Left Top" name="ApplyButton">
                     <Property key="Caption" value="Apply"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="SeparatorInverseSkin" position="10 324 -6030 1" align="HStretch Top">
                 <Property key="NumResponsiveColumns" value="12"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="10 329 390 99">
+                <Property key="ForwardMouseWheelToParent" value="true"/>
                 <Widget type="TextBox" skin="TextBox" position="0 0 141 16">
                     <Property key="TextColour" value="#FFFFFF"/>
                     <Property key="Caption" value="Windows"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position="0 20 287 46">
                     <Property key="Caption" value="Click the Reset Windows button below to set your\nwindow positions back to their original positions.\nThis will require you to restart."/>
                     <Property key="TextColour" value="#FFFFFF"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
                 <Widget type="Button" skin="Button" position="0 72 108 26" name="ResetWindows">
                     <Property key="Caption" value="Reset Windows"/>
+                    <Property key="ForwardMouseWheelToParent" value="true"/>
                 </Widget>
             </Widget>
         </Widget>
