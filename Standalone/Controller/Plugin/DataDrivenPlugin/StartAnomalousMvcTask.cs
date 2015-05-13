@@ -25,7 +25,7 @@ namespace Medical
         {
             if (Plugin.AtlasPluginManager.allDependenciesLoadedFor(this.Plugin))
             {
-                String fullContextPath = Path.Combine(Plugin.PluginRootFolder, ContextFile);
+                String fullContextPath = Path.Combine(Plugin.PluginRootFolder, ContextFile).Replace('\\', '/');
                 VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider(Path.GetDirectoryName(fullContextPath));
                 try
                 {
