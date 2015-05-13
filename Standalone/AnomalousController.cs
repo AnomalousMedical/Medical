@@ -15,6 +15,7 @@ using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;
 using Engine.Threads;
 using System.Threading;
+using Medical.Tasks;
 
 namespace Medical
 {
@@ -365,7 +366,16 @@ namespace Medical
                         });
                 }
 
-                ThreadManager.invoke(mainPlugin.allPluginsLoaded);
+                ThreadManager.invoke(() =>
+                    {
+                        if (controller.TaskController.getTask("DDPlugin.IntroductionTutorial.MobileTask") != null)
+                        {
+                            //Setup intro tutorial startup task
+                            controller.TaskController.addTask(new RunIntroTutorial(controller));
+                        }
+
+                        mainPlugin.allPluginsLoaded();
+                    });
             });
 
             controller.MedicalController.MainTimer.resetLastTime();

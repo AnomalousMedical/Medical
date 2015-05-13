@@ -653,6 +653,7 @@
     <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
+    <Compile Include="Tasks\RunIntroTutorial.cs" />
     <Compile Include="Utility\DirectoryExtensions.cs" />
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />

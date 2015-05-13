@@ -25,11 +25,12 @@ namespace Medical
         {
             if (Plugin.AtlasPluginManager.allDependenciesLoadedFor(this.Plugin))
             {
-                VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider(Plugin.PluginRootFolder);
+                String fullContextPath = Path.Combine(Plugin.PluginRootFolder, ContextFile);
+                VirtualFilesystemResourceProvider resourceProvider = new VirtualFilesystemResourceProvider(Path.GetDirectoryName(fullContextPath));
                 try
                 {
                     AnomalousMvcContext context;
-                    using (Stream stream = resourceProvider.openFile(ContextFile))
+                    using (Stream stream = resourceProvider.openFile(Path.GetFileName(fullContextPath)))
                     {
                         context = Plugin.MvcCore.loadContext(stream);
                     }
