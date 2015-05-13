@@ -14,6 +14,7 @@
             <Property key="Caption" value="Download All"/>
         </Widget>
         <Widget type="PanelResponsive" skin="PanelResponsiveEmpty" position="0 67 800 532" align="Stretch">
+            <Property key="HorizontalMaxSize" value="712"/>
             <Widget type="ScrollView" skin="ScrollView" position="2 0 330 532" align="Left VStretch" name="PluginScrollList">
                 <Property key="CanvasAlign" value="Left Top"/>
                 <Property key="NumResponsiveColumns" value="5"/>
