@@ -212,6 +212,18 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Determines if the program should prefer mobile views where they are available.
+        /// </summary>
+        /// <value><c>true</c> if use mobile views; otherwise, <c>false</c>.</value>
+        public static bool UseMobileViews
+        {
+            get
+            {
+                return currentConfig.UseMobileViewsImpl;
+            }
+        }
+
         public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
         {
             return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
@@ -269,5 +281,7 @@ namespace Medical
         protected abstract bool AutoSelectTextImpl { get; }
 
         protected abstract bool AllowCustomSaveLoadPathImpl { get; }
+
+        protected abstract bool UseMobileViewsImpl{ get; }
     }
 }

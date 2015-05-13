@@ -42,7 +42,7 @@ namespace Medical.Controller
             //Load and run the mvc context
             context = controller.MvcCore.loadContext(embeddedResourceProvider.openFile("MvcContext.mvc"));
 
-            if(!PlatformConfig.UnrestrictedEnvironment)
+            if(PlatformConfig.UseMobileViews)
             {
                 ((RmlView)context.Views["Index"]).RmlFile = "IndexRestricted.rml";
             }

@@ -185,5 +185,13 @@ namespace Medical
                 return false;
             }
         }
+
+        protected override bool UseMobileViewsImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }
