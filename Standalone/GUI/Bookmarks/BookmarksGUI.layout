@@ -22,7 +22,7 @@
             <Property key="Caption" value="Remove Folder"/>
         </Widget>
         <Widget type="PanelResponsive" skin="PanelResponsiveEmpty" position="0 83 500 454" align="Stretch">
-            <Property key="HorizontalMaxSize" value="712"/>
+            <Property key="HorizontalMaxSize" value="400"/>
             <Widget type="ScrollView" skin="ScrollView" position="2 0 123 454" align="Stretch" name="FolderTree">
                 <Property key="CanvasAlign" value="Left Top"/>
                 <Property key="NumResponsiveColumns" value="3"/>
