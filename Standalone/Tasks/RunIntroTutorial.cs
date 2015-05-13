@@ -11,7 +11,7 @@ namespace Medical.Tasks
         private StandaloneController standaloneController;
 
         public RunIntroTutorial(StandaloneController standaloneController)
-            : base("IntroductionTutorial.Bootstrap", "Introduction Tutorial", "IntroductionTutorial/Icon", "Anomalous Medical")
+            : base("Medical.IntroductionTutorial.Bootstrap", "Introduction Tutorial", "IntroductionTutorial/Icon", "Anomalous Medical")
         {
             this.standaloneController = standaloneController;
         }
