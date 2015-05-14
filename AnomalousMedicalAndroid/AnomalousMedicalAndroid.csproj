@@ -56,10 +56,10 @@
       <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
     </Reference>
     <Reference Include="ExpansionDownloader">
-      <HintPath>..\..\Dependencies\Android\Android.Play.ExpansionLibrary\ExpansionDownloader\bin\Release\ExpansionDownloader.dll</HintPath>
+      <HintPath>..\..\Dependencies\Android.Play.ExpansionLibrary\ExpansionDownloader\bin\Release\ExpansionDownloader.dll</HintPath>
     </Reference>
     <Reference Include="LicenseVerificationLibrary">
-      <HintPath>..\..\Dependencies\Android\Android.Play.ExpansionLibrary\ExpansionDownloader\bin\Release\LicenseVerificationLibrary.dll</HintPath>
+      <HintPath>..\..\Dependencies\Android.Play.ExpansionLibrary\ExpansionDownloader\bin\Release\LicenseVerificationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="MyGUIPlugin">
       <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
