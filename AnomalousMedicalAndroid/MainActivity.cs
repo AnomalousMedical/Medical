@@ -56,6 +56,10 @@ namespace AnomalousMedicalAndroid
             String archiveName = null;
 
             dl = new ObbDownloader(this);
+            dl.DownloadSucceeded += Dl_DownloadSucceeded;
+            dl.DownloadFailed += Dl_DownloadFailed;
+            dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
+
             if (dl.AreExpansionFilesDelivered())
             {
                 try
@@ -94,9 +98,6 @@ namespace AnomalousMedicalAndroid
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
-                        dl.DownloadSucceeded += Dl_DownloadSucceeded;
-                        dl.DownloadFailed += Dl_DownloadFailed;
-                        dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
                         dl.GetExpansionFiles();
                     }
                     else
