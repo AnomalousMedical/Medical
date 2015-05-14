@@ -58,11 +58,22 @@
     <Reference Include="OgrePlugin">
       <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
     </Reference>
+    <Reference Include="ExpansionDownloader">
+      <HintPath>..\..\Dependencies\Android\Android.Play.ExpansionLibrary\ExpansionDownloader\bin\Release\ExpansionDownloader.dll</HintPath>
+    </Reference>
+    <Reference Include="LicenseVerificationLibrary">
+      <HintPath>..\..\Dependencies\Android\Android.Play.ExpansionLibrary\ExpansionDownloader\bin\Release\LicenseVerificationLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MyGUIPlugin">
+      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ObbDownloader\AnomalousMedicalAlarmReceiver.cs" />
+    <Compile Include="ObbDownloader\AnomalousMedicalDownloaderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -84,6 +95,7 @@
     <Folder Include="lib\" />
     <Folder Include="lib\armeabi-v7a\" />
     <Folder Include="lib\x86\" />
+    <Folder Include="ObbDownloader\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\armeabi-v7a\libopenal.so">

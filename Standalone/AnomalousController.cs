@@ -42,6 +42,7 @@ namespace Medical
 
         public event Action<AnomalousController, StandaloneController> AddAdditionalPlugins;
         public event Action<AnomalousController, StandaloneController> OnInitCompleted;
+        public event Action<AnomalousController, StandaloneController> DataFileMissing;
 
         public AnomalousController()
         {
@@ -133,10 +134,17 @@ namespace Medical
         {
             if (String.IsNullOrEmpty(this.PrimaryArchive))
             {
-                MessageBox.show("Could not find resource archive. Please reinstall Anomalous Medical.", "Resource Archive Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, result =>
-                    {
-                        controller.exit();
-                    });
+                if (DataFileMissing != null)
+                {
+                    DataFileMissing.Invoke(this, controller);
+                }
+                else
+                {
+                    MessageBox.show("Could not find resource archive. Please reinstall Anomalous Medical.", "Resource Archive Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, result =>
+                        {
+                            controller.exit();
+                        });
+                }
                 yield break;
             }
 

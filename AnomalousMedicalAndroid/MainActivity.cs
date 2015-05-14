@@ -15,8 +15,12 @@ using Android.Text;
 using Engine;
 using Medical;
 using System.IO;
+using MyGUIPlugin;
+using ExpansionDownloader;
+using ExpansionDownloader.Service;
+using ExpansionDownloader.Database;
 
-namespace AndroidBaseApp
+namespace AnomalousMedicalAndroid
 {
     [Activity(Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/AnomalousMedicalTheme", 
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout,
@@ -61,7 +65,68 @@ namespace AndroidBaseApp
                     PrimaryArchive = archiveName
             };
             anomalous.OnInitCompleted += HandleOnInitCompleted;
+            anomalous.DataFileMissing += HandleDataFileMissing;
             anomalous.run();
+        }
+
+        void HandleDataFileMissing(AnomalousController anomalousController, StandaloneController controller)
+        {
+            MessageBox.show("Could not find resource archive. Would you like to try to download it now?", "Resource Archive Error", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, result =>
+                {
+                    if(result == MessageBoxStyle.Yes)
+                    {
+                        GetExpansionFiles();
+                    }
+                    else
+                    {
+                        controller.exit();
+                    }
+                });
+        }
+
+        bool GetExpansionFiles()
+        {
+            bool result = false;
+
+            try
+            {
+                // Build the intent that launches this activity.
+                Intent launchIntent = this.Intent;
+                var intent = new Intent(this, typeof(MainActivity));
+                //intent.SetFlags(ActivityFlags. | ActivityFlags.ClearTop);
+                intent.SetAction(launchIntent.Action);
+
+                if (launchIntent.Categories != null)
+                {
+                    foreach (string category in launchIntent.Categories)
+                    {
+                        intent.AddCategory(category);
+                    }
+                }
+
+                // Build PendingIntent used to open this activity when user 
+                // taps the notification.
+                PendingIntent pendingIntent = PendingIntent.GetActivity(this, 0, intent, PendingIntentFlags.UpdateCurrent);
+
+                // Request to start the download
+                DownloadServiceRequirement startResult = DownloaderService.StartDownloadServiceIfRequired(this, pendingIntent, typeof(AnomalousMedicalDownloaderService));
+
+                // The DownloaderService has started downloading the files, 
+                // show progress otherwise, the download is not needed so  we 
+                // fall through to starting the actual app.
+                if (startResult != DownloadServiceRequirement.NoDownloadRequired)
+                {
+                    //this.InitializeDownloadUi();
+                    result = true;
+                }
+            }
+            catch (PackageManager.NameNotFoundException e)
+            {
+                //Debug.WriteLine("Cannot find own package! MAYDAY!");
+                e.PrintStackTrace();
+            }
+
+            return result;
         }
 
         void HandleOnInitCompleted(AnomalousController anomalousController, StandaloneController controller)
