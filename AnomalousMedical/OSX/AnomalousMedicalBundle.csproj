@@ -83,7 +83,6 @@
     <ResourceFiles Include="..\..\$(Configuration)\OSPlatform.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\libRocketWidget.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
-	<ResourceFiles Include="..\..\$(Configuration)\IntroductionTutorial.dat" />
 	
 	<ResourceFiles Include="..\..\../Engine/Release/libOSHelper.dylib" />
 	<ResourceFiles Include="..\..\../Engine/Release/libBulletWrapper.dylib" />
