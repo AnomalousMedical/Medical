@@ -21,7 +21,7 @@ namespace AnomalousMedicalAndroid
 {
     [Activity(Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/AnomalousMedicalTheme", 
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout,
-        WindowSoftInputMode = SoftInput.StateAlwaysHidden)]
+        WindowSoftInputMode = SoftInput.StateAlwaysHidden, LaunchMode=LaunchMode.SingleTop)]
     [MetaData("android.app.lib_name", Value = AndroidPlatformPlugin.LibraryName)]
     public class MainActivity : AndroidActivity
     {
@@ -66,6 +66,18 @@ namespace AnomalousMedicalAndroid
             anomalous.run();
         }
 
+        void HandleOnInitCompleted(AnomalousController anomalousController, StandaloneController controller)
+        {
+            setInputHandler(controller.MedicalController.InputHandler);
+            printRuntimeInfo();
+        }
+
+        void openUrl(String url)
+        {
+            Intent intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
+            this.StartActivity(intent);
+        }
+
         void HandleDataFileMissing(AnomalousController anomalousController, StandaloneController controller)
         {
             MessageBox.show("Could not find resource archive. Would you like to try to download it now?", "Resource Archive Error", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, result =>
@@ -88,25 +100,13 @@ namespace AnomalousMedicalAndroid
         {
             MessageBox.show("Error downloading resource archive. Please try again later.", "Resource Archive Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok, r =>
                 {
-                    
+
                 });
         }
 
         void Dl_DownloadSucceeded ()
         {
-            
-        }
 
-        void HandleOnInitCompleted(AnomalousController anomalousController, StandaloneController controller)
-        {
-            setInputHandler(controller.MedicalController.InputHandler);
-            printRuntimeInfo();
-        }
-
-        void openUrl(String url)
-        {
-            Intent intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
-            this.StartActivity(intent);
         }
     }
 }
