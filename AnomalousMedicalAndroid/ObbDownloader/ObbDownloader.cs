@@ -6,6 +6,7 @@ using Android.Content;
 using Android.App;
 using Android.OS;
 using Android.Content.PM;
+using Engine.Threads;
 
 namespace AnomalousMedicalAndroid
 {
@@ -13,6 +14,9 @@ namespace AnomalousMedicalAndroid
     {
         private IDownloaderService downloaderService;
         private IDownloaderServiceConnection downloaderServiceConnection;
+
+        public event Action DownloadFailed;
+        public event Action DownloadSucceeded;
 
         public ObbDownloader()
         {
@@ -78,6 +82,31 @@ namespace AnomalousMedicalAndroid
         public void OnDownloadStateChanged(DownloaderState newState)
         {
             Console.WriteLine(newState.ToString());
+            switch (newState)
+            {
+                case DownloaderState.Failed:
+                case DownloaderState.FailedCanceled:
+                case DownloaderState.FailedFetchingUrl:
+                case DownloaderState.FailedSdCardFull:
+                case DownloaderState.FailedUnlicensed:
+                    ThreadManager.invoke(() =>
+                    {
+                        if (DownloadFailed != null)
+                        {
+                            DownloadFailed.Invoke();
+                        }
+                    });
+                    break;
+                case DownloaderState.Completed:
+                    ThreadManager.invoke(() =>
+                    {
+                        if (DownloadSucceeded != null)
+                        {
+                            DownloadSucceeded.Invoke();
+                        }
+                    });
+                    break;
+            }
         }
 
         public void OnServiceConnected(Messenger m)

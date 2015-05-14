@@ -73,6 +73,8 @@ namespace AnomalousMedicalAndroid
                     if (result == MessageBoxStyle.Yes)
                     {
                         ObbDownloader dl = new ObbDownloader();
+                        dl.DownloadSucceeded += Dl_DownloadSucceeded;
+                        dl.DownloadFailed += Dl_DownloadFailed;
                         dl.GetExpansionFiles(this);
                     }
                     else
@@ -80,6 +82,19 @@ namespace AnomalousMedicalAndroid
                         controller.exit();
                     }
                 });
+        }
+
+        void Dl_DownloadFailed ()
+        {
+            MessageBox.show("Error downloading resource archive. Please try again later.", "Resource Archive Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok, r =>
+                {
+                    
+                });
+        }
+
+        void Dl_DownloadSucceeded ()
+        {
+            
         }
 
         void HandleOnInitCompleted(AnomalousController anomalousController, StandaloneController controller)
