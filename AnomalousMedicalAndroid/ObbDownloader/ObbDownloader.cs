@@ -28,11 +28,17 @@ namespace AnomalousMedicalAndroid
             this.activity = activity;
         }
 
-        public bool AreExpansionFilesDelivered()
+        /// <summary>
+        /// Are the expansion files delivered.
+        /// </summary>
+        /// <returns><c>true</c>, if expansion files delivered delivered, <c>false</c> otherwise.</returns>
+        /// <param name="succeedIfEmpty">If set to <c>true</c> succeed if the metadata says this apk has no files.</param>
+        public bool AreExpansionFilesDelivered(bool succeedIfEmpty)
         {
             var downloads = DownloadsDatabase.GetDownloads();
             //True if we have no associated downloads or all downloads match the expected values.
-            return downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false));
+            return (succeedIfEmpty && downloads.Count == 0) 
+                || (downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false)));
         }
 
         public void GetExpansionFiles()

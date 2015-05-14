@@ -45,9 +45,11 @@ namespace AnomalousMedicalAndroid
             NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.ETC2;
             OgrePlugin.OgreInterface.InitialClearColor = new Color(0.156f, 0.156f, 0.156f);
+            bool succeedIfEmpty = false;
 
             #if DEBUG
             Logging.Log.Default.addLogListener(new Logging.LogConsoleListener());
+            succeedIfEmpty = true;
             #endif
 
             OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
@@ -60,7 +62,7 @@ namespace AnomalousMedicalAndroid
             dl.DownloadFailed += Dl_DownloadFailed;
             dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
 
-            if (dl.AreExpansionFilesDelivered())
+            if (dl.AreExpansionFilesDelivered(succeedIfEmpty))
             {
                 try
                 {
