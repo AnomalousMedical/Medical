@@ -42,7 +42,7 @@ namespace AnomalousMedicalAndroid
         {
             get
             {
-                return "expansiondownloader.sample.SampleAlarmReceiver";
+                return "AnomalousMedicalAndroid.AnomalousMedicalAlarmReceiver";
             }
         }
     }
