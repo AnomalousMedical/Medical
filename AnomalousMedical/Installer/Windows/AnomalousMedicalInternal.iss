@@ -58,7 +58,6 @@ Source: ..\..\..\Release\GuiFramework.Editor.dll; DestDir: {app}; Flags: ignorev
 Source: ..\..\..\Release\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\Release\IntroductionTutorial.dat; DestDir: {app}; Flags: ignoreversion
 
 ;x86 Files
 Source: ..\..\..\Release\x86\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
@@ -119,6 +118,7 @@ Type: files; Name: {app}\RenderSystem_GL.dll;
 Type: files; Name: {app}\SoundWrapper.dll;
 Type: files; Name: {app}\WinMTDriver.dll;
 Type: files; Name: {app}\Zip.dll;
+Type: files; Name: {app}\IntroductionTutorial.dat;
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
