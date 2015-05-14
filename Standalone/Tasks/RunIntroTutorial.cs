@@ -14,6 +14,7 @@ namespace Medical.Tasks
             : base("Medical.IntroductionTutorial.Bootstrap", "Introduction Tutorial", "IntroductionTutorial/Icon", "Anomalous Medical")
         {
             this.standaloneController = standaloneController;
+            this.ShowOnTaskbar = false;
         }
 
         public override bool Active
