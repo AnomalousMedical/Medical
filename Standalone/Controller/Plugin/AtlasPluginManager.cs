@@ -271,76 +271,97 @@ namespace Medical
         {
             bool loadedPlugin = false;
             String pluginDirectory = null;
-            String fullPath = Path.GetFullPath(path);
-            if (!Directory.Exists(fullPath) && !File.Exists(fullPath))
+            String fullPath;
+            //Try to load from virtual file system first
+            if (VirtualFileSystem.Instance.directoryExists(path))
             {
-                fullPath = Path.Combine(additionalSearchPath, path);
-            }
-
-            if (File.Exists(fullPath))
-            {
-                String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
-                try
-                {
-                    if (!loadedPluginNames.Contains(dataFileName))
-                    {
-                        //Add the archive to the VirtualFileSystem if needed
-                        if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
-                        {
-                            VirtualFileSystem.Instance.addArchive(fullPath);
-                        }
-                        pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
-
-                        loadedPluginNames.Add(dataFileName);
-                    }
-                    else
-                    {
-                        Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
-                    }
-                }
-                catch (ZipAccess.ZipIOException e)
-                {
-                    firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dataFileName));
-                    Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
-                    try
-                    {
-                        File.Delete(fullPath);
-                    }
-                    catch (Exception deleteEx)
-                    {
-                        Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
-                    }
-                }
-            }
-            else if (Directory.Exists(fullPath))
-            {
-                String directoryName = Path.GetFileName(Path.GetDirectoryName(fullPath));
+                fullPath = path;
+                String directoryName = Path.GetFileName(Path.GetDirectoryName(path));
                 if (!loadedPluginNames.Contains(directoryName))
                 {
                     loadedPluginNames.Add(directoryName);
 
                     pluginDirectory = String.Format("Plugins/{0}/", directoryName);
-                    String rootPluginPath = fullPath.Replace("\\", "/");
-                    if (!rootPluginPath.EndsWith("/"))
-                    {
-                        rootPluginPath += "/";
-                    }
-                    rootPluginPath = rootPluginPath.Replace(pluginDirectory, "");
-
-                    //Add the archive to the VirtualFileSystem if needed
-                    if (!VirtualFileSystem.Instance.containsRealAbsolutePath(rootPluginPath))
-                    {
-                        VirtualFileSystem.Instance.addArchive(rootPluginPath);
-                    }
                 }
                 else
                 {
-                    Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, directoryName);
+                    Log.Error("Cannot plugin file '{0}' from virtual file system because a plugin named '{1}' is already loaded.", path, directoryName);
                 }
             }
             else
             {
-                Log.Error("Cannot load data file '{0}' from '{0}' or '{1}' because it was not found.", path, fullPath, Path.GetFullPath(path));
+
+                fullPath = Path.GetFullPath(path);
+                if (!Directory.Exists(fullPath) && !File.Exists(fullPath))
+                {
+                    fullPath = Path.Combine(additionalSearchPath, path);
+                }
+
+                if (File.Exists(fullPath))
+                {
+                    String dataFileName = Path.GetFileNameWithoutExtension(fullPath);
+                    try
+                    {
+                        if (!loadedPluginNames.Contains(dataFileName))
+                        {
+                            //Add the archive to the VirtualFileSystem if needed
+                            if (!VirtualFileSystem.Instance.containsRealAbsolutePath(fullPath))
+                            {
+                                VirtualFileSystem.Instance.addArchive(fullPath);
+                            }
+                            pluginDirectory = String.Format("Plugins/{0}/", Path.GetFileNameWithoutExtension(path));
+
+                            loadedPluginNames.Add(dataFileName);
+                        }
+                        else
+                        {
+                            Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, dataFileName);
+                        }
+                    }
+                    catch (ZipAccess.ZipIOException e)
+                    {
+                        firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dataFileName));
+                        Log.Error("Cannot load data file '{0}' from '{1}' because of a zip read error: {2}. Deleting corrupted plugin.", path, fullPath, e.Message);
+                        try
+                        {
+                            File.Delete(fullPath);
+                        }
+                        catch (Exception deleteEx)
+                        {
+                            Log.Error("Error deleting data file '{0}' from '{1}' because: {2}.", path, fullPath, deleteEx.Message);
+                        }
+                    }
+                }
+                else if (Directory.Exists(fullPath))
+                {
+                    String directoryName = Path.GetFileName(Path.GetDirectoryName(fullPath));
+                    if (!loadedPluginNames.Contains(directoryName))
+                    {
+                        loadedPluginNames.Add(directoryName);
+
+                        pluginDirectory = String.Format("Plugins/{0}/", directoryName);
+                        String rootPluginPath = fullPath.Replace("\\", "/");
+                        if (!rootPluginPath.EndsWith("/"))
+                        {
+                            rootPluginPath += "/";
+                        }
+                        rootPluginPath = rootPluginPath.Replace(pluginDirectory, "");
+
+                        //Add the archive to the VirtualFileSystem if needed
+                        if (!VirtualFileSystem.Instance.containsRealAbsolutePath(rootPluginPath))
+                        {
+                            VirtualFileSystem.Instance.addArchive(rootPluginPath);
+                        }
+                    }
+                    else
+                    {
+                        Log.Error("Cannot load data file '{0}' from '{1}' because a plugin named '{2}' is already loaded.", path, fullPath, directoryName);
+                    }
+                }
+                else
+                {
+                    Log.Error("Cannot load data file '{0}' from '{0}' or '{1}' because it was not found.", path, fullPath, Path.GetFullPath(path));
+                }
             }
 
             if (pluginDirectory != null)

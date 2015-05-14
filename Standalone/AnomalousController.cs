@@ -366,16 +366,7 @@ namespace Medical
                         });
                 }
 
-                ThreadManager.invoke(() =>
-                    {
-                        if (controller.TaskController.getTask("DDPlugin.IntroductionTutorial.MobileTask") != null)
-                        {
-                            //Setup intro tutorial startup task
-                            controller.TaskController.addTask(new RunIntroTutorial(controller));
-                        }
-
-                        mainPlugin.allPluginsLoaded();
-                    });
+                ThreadManager.invoke(mainPlugin.allPluginsLoaded);
             });
 
             controller.MedicalController.MainTimer.resetLastTime();

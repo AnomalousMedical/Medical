@@ -17,6 +17,7 @@ using FreeImageAPI;
 using Medical.GUI.AnomalousMvc;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Editor;
+using Medical.Tasks;
 
 namespace Medical.GUI
 {
@@ -352,6 +353,12 @@ namespace Medical.GUI
 
         public void allPluginsLoaded()
         {
+            if (standaloneController.AtlasPluginManager.addPlugin("Plugins/IntroductionTutorial/", true))//Ok to force to true since it comes from our main data file.
+            {
+                //Setup intro tutorial startup task
+                standaloneController.TaskController.addTask(new RunIntroTutorial(standaloneController));
+            }
+
             UpdateController.checkForUpdate(updateCheckCompleted, standaloneController.AtlasPluginManager, standaloneController.LicenseManager);
 
             if (!String.IsNullOrEmpty(MedicalConfig.StartupTask))
