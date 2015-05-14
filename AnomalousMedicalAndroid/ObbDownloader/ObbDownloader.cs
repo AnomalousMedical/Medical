@@ -43,7 +43,7 @@ namespace AnomalousMedicalAndroid
                     {
 //                        for(int i = 0; i <= 10; ++i)
 //                        {
-//                            OnDownloadProgress(new DownloadProgressInfo(10 << 8, i << 8, 500, 500));
+//                            OnDownloadProgress(new DownloadProgressInfo(1048576 * 10, i * 1048576, 1000 * (10 - i), 500));
 //                            System.Threading.Thread.Sleep(1000);
 //                        }
 //                        OnDownloadStateChanged(DownloaderState.Completed);
@@ -101,9 +101,9 @@ namespace AnomalousMedicalAndroid
 
         public void OnDownloadProgress(DownloadProgressInfo progress)
         {
-            String progressMessage = String.Format("Downloading expansion files. {0} ({1}) completed, {2} remaining", 
+            String progressMessage = String.Format("Downloading expansion files, {0} of {1:0.00} MB completed, {2} remaining.", 
                 Helpers.GetDownloadProgressPercent(progress.OverallProgress, progress.OverallTotal), 
-                Helpers.GetDownloadProgressString(progress.OverallProgress, progress.OverallTotal), 
+                progress.OverallTotal / 1048576.0f, 
                 Helpers.GetTimeRemaining(progress.TimeRemaining));
 
             ThreadManager.invoke(() =>
