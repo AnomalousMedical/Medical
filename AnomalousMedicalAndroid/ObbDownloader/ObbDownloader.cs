@@ -7,6 +7,8 @@ using Android.App;
 using Android.OS;
 using Android.Content.PM;
 using Engine.Threads;
+using ExpansionDownloader.Database;
+using System.Linq;
 
 namespace AnomalousMedicalAndroid
 {
@@ -18,11 +20,21 @@ namespace AnomalousMedicalAndroid
         public event Action DownloadFailed;
         public event Action DownloadSucceeded;
 
-        public ObbDownloader()
+        private Activity activity;
+
+        public ObbDownloader(Activity activity)
         {
+            this.activity = activity;
         }
 
-        public bool GetExpansionFiles(Activity activity)
+        public bool AreExpansionFilesDelivered()
+        {
+            var downloads = DownloadsDatabase.GetDownloads();
+            //True if we have no associated downloads or all downloads match the expected values.
+            return downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false));
+        }
+
+        public bool GetExpansionFiles()
         {
             bool result = false;
 
@@ -82,6 +94,7 @@ namespace AnomalousMedicalAndroid
         public void OnDownloadStateChanged(DownloaderState newState)
         {
             Console.WriteLine(newState.ToString());
+            LastStateMessage = Helpers.GetDownloaderStringFromState(activity, newState);
             switch (newState)
             {
                 case DownloaderState.Failed:
@@ -115,6 +128,8 @@ namespace AnomalousMedicalAndroid
             this.downloaderService.OnClientUpdated(this.downloaderServiceConnection.GetMessenger());
             Console.WriteLine("Service connected");
         }
+
+        public String LastStateMessage { get; private set; }
 
         #endregion
     }

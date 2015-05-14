@@ -100,6 +100,15 @@ namespace Medical
             base.OnMovedToBackground();
         }
 
+        /// <summary>
+        /// Re-run the splash screen. This should only be done from events triggered by the DataFileMissing attribute.
+        /// Do not call this once the splash screen has run, and it will run once automatically.
+        /// </summary>
+        public void rerunSplashScreen()
+        {
+            controller.IdleHandler.runTemporaryIdle(runSplashScreen());
+        }
+
         void MyGUIInterface_BeforeMainResourcesLoaded(MyGUIInterface obj)
         {
             MyGUIInterface.Instance.CommonResourceGroup.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedScalableResource", true);
@@ -274,6 +283,14 @@ namespace Medical
                     scene = Path.Combine(MedicalConfig.SceneDirectory, MedicalConfig.FallbackScene);
                 }
                 return scene;
+            }
+        }
+
+        public StandaloneController StandaloneController
+        {
+            get
+            {
+                return controller;
             }
         }
 

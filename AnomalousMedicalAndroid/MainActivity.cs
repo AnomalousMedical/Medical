@@ -31,6 +31,9 @@ namespace AnomalousMedicalAndroid
             Java.Lang.JavaSystem.LoadLibrary("openal");
         }
 
+        private ObbDownloader dl;
+        private AnomalousController anomalousController;
+
         public MainActivity()
             : base(AnomalousMedicalAndroid.Resource.Layout.Main, AnomalousMedicalAndroid.Resource.Id.editText1)
         {
@@ -51,19 +54,26 @@ namespace AnomalousMedicalAndroid
 
             String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
             String archiveName = null;
-            try
-            {
-                archiveName = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault();
-            }
-            catch(Exception) { }
 
-            var anomalous = new AnomalousController()
+            dl = new ObbDownloader(this);
+            if (dl.AreExpansionFilesDelivered())
+            {
+                try
+                {
+                    archiveName = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault();
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            anomalousController = new AnomalousController()
             {
                 PrimaryArchive = archiveName
             };
-            anomalous.OnInitCompleted += HandleOnInitCompleted;
-            anomalous.DataFileMissing += HandleDataFileMissing;
-            anomalous.run();
+            anomalousController.OnInitCompleted += HandleOnInitCompleted;
+            anomalousController.DataFileMissing += HandleDataFileMissing;
+            anomalousController.run();
         }
 
         void HandleOnInitCompleted(AnomalousController anomalousController, StandaloneController controller)
@@ -84,10 +94,9 @@ namespace AnomalousMedicalAndroid
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
-                        ObbDownloader dl = new ObbDownloader();
                         dl.DownloadSucceeded += Dl_DownloadSucceeded;
                         dl.DownloadFailed += Dl_DownloadFailed;
-                        dl.GetExpansionFiles(this);
+                        dl.GetExpansionFiles();
                     }
                     else
                     {
@@ -98,15 +107,19 @@ namespace AnomalousMedicalAndroid
 
         void Dl_DownloadFailed ()
         {
-            MessageBox.show("Error downloading resource archive. Please try again later.", "Resource Archive Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok, r =>
+            MessageBox.show(String.Format("Error downloading resource archive.\nReason:\n{0}", dl.LastStateMessage), "Resource Archive Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok, r =>
                 {
-
+                    anomalousController.StandaloneController.exit();
                 });
         }
 
         void Dl_DownloadSucceeded ()
         {
-
+            //Reassign primary archive
+            String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
+            anomalousController.PrimaryArchive = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault();
+            //Run splash screen again.
+            anomalousController.rerunSplashScreen();
         }
     }
 }

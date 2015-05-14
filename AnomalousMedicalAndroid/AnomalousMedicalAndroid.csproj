@@ -67,6 +67,7 @@
     <Reference Include="MyGUIPlugin">
       <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
