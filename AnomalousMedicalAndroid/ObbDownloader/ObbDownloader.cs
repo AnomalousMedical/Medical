@@ -19,6 +19,7 @@ namespace AnomalousMedicalAndroid
 
         public event Action DownloadFailed;
         public event Action DownloadSucceeded;
+        public event Action<String, int, int> DownloadProgressUpdated;
 
         private Activity activity;
 
@@ -34,14 +35,20 @@ namespace AnomalousMedicalAndroid
             return downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false));
         }
 
-        public bool GetExpansionFiles()
+        public void GetExpansionFiles()
         {
-            bool result = false;
-
             try
             {
                 activity.RunOnUiThread(() =>
                     {
+//                        for(int i = 0; i <= 10; ++i)
+//                        {
+//                            OnDownloadProgress(new DownloadProgressInfo(10 << 8, i << 8, 500, 500));
+//                            System.Threading.Thread.Sleep(1000);
+//                        }
+//                        OnDownloadStateChanged(DownloaderState.Completed);
+//
+//                        return;
                         // Build the intent that launches this activity.
                         Intent launchIntent = activity.Intent;
                         var intent = new Intent(activity, typeof(MainActivity));
@@ -70,8 +77,16 @@ namespace AnomalousMedicalAndroid
                         {
                             downloaderServiceConnection = ClientMarshaller.CreateStub(this, typeof(AnomalousMedicalDownloaderService));
                             downloaderServiceConnection.Connect(activity);
-                            //this.InitializeDownloadUi();
-                            result = true;
+                        }
+                        else
+                        {
+                            ThreadManager.invoke(() =>
+                            {
+                                if(DownloadSucceeded != null)
+                                {
+                                    DownloadSucceeded.Invoke();
+                                }
+                            });
                         }
                     });
             }
@@ -80,15 +95,24 @@ namespace AnomalousMedicalAndroid
                 //Debug.WriteLine("Cannot find own package! MAYDAY!");
                 e.PrintStackTrace();
             }
-
-            return result;
         }
 
         #region IDownloaderClient implementation
 
         public void OnDownloadProgress(DownloadProgressInfo progress)
         {
-            Console.WriteLine(progress.OverallProgress.ToString());
+            String progressMessage = String.Format("Downloading expansion files. {0} ({1}) completed, {2} remaining", 
+                Helpers.GetDownloadProgressPercent(progress.OverallProgress, progress.OverallTotal), 
+                Helpers.GetDownloadProgressString(progress.OverallProgress, progress.OverallTotal), 
+                Helpers.GetTimeRemaining(progress.TimeRemaining));
+
+            ThreadManager.invoke(() =>
+            {
+                if(DownloadProgressUpdated != null)
+                {
+                    DownloadProgressUpdated.Invoke(progressMessage, (int)(progress.OverallProgress >> 8), (int)(progress.OverallTotal >> 8));
+                }
+            });
         }
 
         public void OnDownloadStateChanged(DownloaderState newState)

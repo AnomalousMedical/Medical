@@ -39,6 +39,7 @@ namespace Medical
         private LicenseDisplayManager licenseDisplay = new LicenseDisplayManager();
         private Engine.Resources.ResourceGroup commonResources;
         private AnomalousMainPlugin mainPlugin;
+        private bool rerenderSplashOnUpdate = true;
 
         public event Action<AnomalousController, StandaloneController> AddAdditionalPlugins;
         public event Action<AnomalousController, StandaloneController> OnInitCompleted;
@@ -107,6 +108,13 @@ namespace Medical
         public void rerunSplashScreen()
         {
             controller.IdleHandler.runTemporaryIdle(runSplashScreen());
+        }
+
+        public void splashShowDownloadProgress(String message, int current, int total)
+        {
+            rerenderSplashOnUpdate = false;
+            splashScreen.updateStatus((uint)(current / (float)total * 100), message);
+            rerenderSplashOnUpdate = true;
         }
 
         void MyGUIInterface_BeforeMainResourcesLoaded(MyGUIInterface obj)
@@ -318,7 +326,10 @@ namespace Medical
 
         void splashScreen_StatusUpdated(SplashScreen sender)
         {
-            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget.update();
+            if (rerenderSplashOnUpdate)
+            {
+                OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget.update();
+            }
         }
 
         void processKeyResults(bool valid)

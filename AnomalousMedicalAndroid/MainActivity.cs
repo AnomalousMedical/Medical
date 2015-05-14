@@ -96,6 +96,7 @@ namespace AnomalousMedicalAndroid
                     {
                         dl.DownloadSucceeded += Dl_DownloadSucceeded;
                         dl.DownloadFailed += Dl_DownloadFailed;
+                        dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
                         dl.GetExpansionFiles();
                     }
                     else
@@ -120,6 +121,11 @@ namespace AnomalousMedicalAndroid
             anomalousController.PrimaryArchive = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault();
             //Run splash screen again.
             anomalousController.rerunSplashScreen();
+        }
+
+        void Dl_DownloadProgressUpdated (string message, int current, int total)
+        {
+            anomalousController.splashShowDownloadProgress(message, current, total);
         }
     }
 }
