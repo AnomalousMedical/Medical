@@ -10,6 +10,7 @@ using DentalSim;
 using CoreGraphics;
 using Medical.Controller;
 using Anomalous.OSPlatform;
+using System.IO;
 
 #if ALLOW_OVERRIDE
 using Medical.Movement;
@@ -36,7 +37,10 @@ namespace AnomalousMedicaliOS
 			AnomalousController anomalous = null;
 			try
 			{
-				anomalous = new AnomalousController();
+				anomalous = new AnomalousController()
+                    {
+                        PrimaryArchive = Path.Combine(FolderFinder.ExecutableFolder, "AnomalousMedicaliOS.dat")
+                    };
 				anomalous.OnInitCompleted += HandleOnInitCompleted;
 				anomalous.AddAdditionalPlugins += HandleAddAdditionalPlugins;
 				anomalous.run();
