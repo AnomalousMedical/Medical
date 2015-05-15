@@ -47,29 +47,29 @@ namespace AnomalousMedicalAndroid
             try
             {
                 activity.RunOnUiThread(() =>
+                {
+                    DownloadServiceRequirement startResult = DownloaderService.DetermineDownloadStatus(activity);
+                    if(startResult == DownloadServiceRequirement.NoDownloadRequired)
                     {
-                        DownloadServiceRequirement startResult = DownloaderService.DetermineDownloadStatus(activity);
-                        if(startResult == DownloadServiceRequirement.NoDownloadRequired)
+                        ThreadManager.invoke(() =>
                         {
-                            ThreadManager.invoke(() =>
+                            if(DownloadSucceeded != null)
                             {
-                                if(DownloadSucceeded != null)
-                                {
-                                    DownloadSucceeded.Invoke();
-                                }
-                            });
-                        }
-                        else
+                                DownloadSucceeded.Invoke();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        ThreadManager.invoke(() =>
                         {
-                            ThreadManager.invoke(() =>
+                            if(PromptDownload != null)
                             {
-                                if(PromptDownload != null)
-                                {
-                                    PromptDownload.Invoke();
-                                }
-                            });
-                        }
-                    });
+                                PromptDownload.Invoke();
+                            }
+                        });
+                    }
+                });
             }
             catch (PackageManager.NameNotFoundException e)
             {
@@ -83,28 +83,31 @@ namespace AnomalousMedicalAndroid
         /// </summary>
         public void startDownload()
         {
-            // Build the intent that launches this activity.
-            Intent launchIntent = activity.Intent;
-            var intent = new Intent(activity, typeof(MainActivity));
-            //intent.SetFlags(ActivityFlags. | ActivityFlags.ClearTop);
-            intent.SetAction(launchIntent.Action);
-
-            if (launchIntent.Categories != null)
+            activity.RunOnUiThread(() =>
             {
-                foreach (string category in launchIntent.Categories)
+                // Build the intent that launches this activity.
+                Intent launchIntent = activity.Intent;
+                var intent = new Intent(activity, typeof(MainActivity));
+                //intent.SetFlags(ActivityFlags. | ActivityFlags.ClearTop);
+                intent.SetAction(launchIntent.Action);
+
+                if (launchIntent.Categories != null)
                 {
-                    intent.AddCategory(category);
+                    foreach (string category in launchIntent.Categories)
+                    {
+                        intent.AddCategory(category);
+                    }
                 }
-            }
 
-            // Build PendingIntent used to open this activity when user 
-            // taps the notification.
-            PendingIntent pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.UpdateCurrent);
+                // Build PendingIntent used to open this activity when user 
+                // taps the notification.
+                PendingIntent pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.UpdateCurrent);
 
-            //Start the download
-            DownloaderService.StartDownloadServiceIfRequired(DownloadServiceRequirement.DownloadRequired, activity, pendingIntent, typeof(AnomalousMedicalDownloaderService));
-            downloaderServiceConnection = ClientMarshaller.CreateStub(this, typeof(AnomalousMedicalDownloaderService));
-            downloaderServiceConnection.Connect(activity);
+                //Start the download
+                DownloaderService.StartDownloadServiceIfRequired(DownloadServiceRequirement.DownloadRequired, activity, pendingIntent, typeof(AnomalousMedicalDownloaderService));
+                downloaderServiceConnection = ClientMarshaller.CreateStub(this, typeof(AnomalousMedicalDownloaderService));
+                downloaderServiceConnection.Connect(activity);
+            });
         }
 
         #region IDownloaderClient implementation

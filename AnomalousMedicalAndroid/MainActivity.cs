@@ -106,6 +106,21 @@ namespace AnomalousMedicalAndroid
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
+                        //Delete all old files
+                        String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
+                        foreach(var file in Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories))
+                        {
+                            try
+                            {
+                                File.Delete(file);
+                            }
+                            catch(Exception ex)
+                            {
+                                Logging.Log.Error("{0} deleting obb file {1}\nMessage:", ex.GetType(), file, ex.Message);
+                            }
+                        }
+
+                        //Start Download
                         dl.startDownload();
                     }
                     else
