@@ -123,7 +123,6 @@ namespace AnomalousMedicalAndroid
 
         public void OnDownloadStateChanged(DownloaderState newState)
         {
-            Console.WriteLine(newState.ToString());
             LastStateMessage = Helpers.GetDownloaderStringFromState(activity, newState);
             switch (newState)
             {
@@ -156,7 +155,6 @@ namespace AnomalousMedicalAndroid
         {
             this.downloaderService = ServiceMarshaller.CreateProxy(m);
             this.downloaderService.OnClientUpdated(this.downloaderServiceConnection.GetMessenger());
-            Console.WriteLine("Service connected");
         }
 
         public String LastStateMessage { get; private set; }
