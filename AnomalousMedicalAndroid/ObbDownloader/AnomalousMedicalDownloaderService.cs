@@ -42,7 +42,7 @@ namespace AnomalousMedicalAndroid
         {
             get
             {
-                return "AnomalousMedicalAndroid.AnomalousMedicalAlarmReceiver";
+                return "com.AnomalousMedical.Android.AnomalousMedicalAlarmReceiver";
             }
         }
     }

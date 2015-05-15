@@ -2,8 +2,9 @@
 using Android.Content;
 using ExpansionDownloader.Service;
 using Android.Content.PM;
+using AnomalousMedicalAndroid;
 
-namespace AnomalousMedicalAndroid
+namespace com.AnomalousMedical.Android
 {
     [BroadcastReceiver(Exported = false)]
     public class AnomalousMedicalAlarmReceiver : BroadcastReceiver
