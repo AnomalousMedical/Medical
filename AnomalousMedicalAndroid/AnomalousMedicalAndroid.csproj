@@ -29,7 +29,6 @@
     <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -37,9 +36,9 @@
     <ConsolePause>false</ConsolePause>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <AndroidSupportedAbis>armeabi-v7a</AndroidSupportedAbis>
+    <AndroidLinkSkip>System;System.Core;System.Xml;System.Xml.Linq;mscorlib</AndroidLinkSkip>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PublicRelease|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\PublicRelease</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -47,6 +46,7 @@
     <ConsolePause>false</ConsolePause>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <AndroidSupportedAbis>armeabi-v7a</AndroidSupportedAbis>
+    <AndroidLinkSkip>System;System.Core;System.Xml;System.Xml.Linq;mscorlib</AndroidLinkSkip>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
