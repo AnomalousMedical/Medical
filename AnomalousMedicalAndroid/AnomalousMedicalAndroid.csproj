@@ -38,6 +38,26 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <AndroidSupportedAbis>armeabi-v7a</AndroidSupportedAbis>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PublicRelease|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\PublicRelease</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidSupportedAbis>armeabi-v7a</AndroidSupportedAbis>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simulation\Simulation.csproj">
+      <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
+      <Name>Simulation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Standalone\Standalone.csproj">
+      <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
+      <Name>Standalone</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -66,16 +86,6 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-    <ItemGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
-    <Reference Include="Standalone">
-      <HintPath>..\Release\Standalone.dll</HintPath>
-    </Reference>
-    </ItemGroup>
-        <ItemGroup Condition="'$(Configuration)'=='PublicRelease'">
-    <Reference Include="Standalone">
-      <HintPath>..\PublicRelease\Standalone.dll</HintPath>
-    </Reference>
-    </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
