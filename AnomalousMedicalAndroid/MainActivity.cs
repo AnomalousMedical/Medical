@@ -61,6 +61,7 @@ namespace AnomalousMedicalAndroid
             dl.DownloadSucceeded += Dl_DownloadSucceeded;
             dl.DownloadFailed += Dl_DownloadFailed;
             dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
+            dl.PromptDownload += Dl_PromptDownload;
 
             if (dl.AreExpansionFilesDelivered(succeedIfEmpty))
             {
@@ -96,15 +97,20 @@ namespace AnomalousMedicalAndroid
 
         void HandleDataFileMissing(AnomalousController anomalousController, StandaloneController controller)
         {
-            MessageBox.show("Could not find resource archive. Would you like to try to download it now?", "Resource Archive Error", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, result =>
+            dl.GetExpansionFiles();
+        }
+
+        void Dl_PromptDownload ()
+        {
+            MessageBox.show("Could not find resource archive. Would you like to try to download it now?\nAnswering no will close Anomalous Medical.", "Resource Archive Error", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, result =>
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
-                        dl.GetExpansionFiles();
+                        dl.startDownload();
                     }
                     else
                     {
-                        controller.exit();
+                        anomalousController.StandaloneController.exit();
                     }
                 });
         }

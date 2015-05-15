@@ -20,6 +20,7 @@ namespace AnomalousMedicalAndroid
         public event Action DownloadFailed;
         public event Action DownloadSucceeded;
         public event Action<String, int, int> DownloadProgressUpdated;
+        public event Action PromptDownload;
 
         private Activity activity;
 
@@ -47,50 +48,24 @@ namespace AnomalousMedicalAndroid
             {
                 activity.RunOnUiThread(() =>
                     {
-//                        for(int i = 0; i <= 10; ++i)
-//                        {
-//                            OnDownloadProgress(new DownloadProgressInfo(1048576 * 10, i * 1048576, 1000 * (10 - i), 500));
-//                            System.Threading.Thread.Sleep(1000);
-//                        }
-//                        OnDownloadStateChanged(DownloaderState.Completed);
-//
-//                        return;
-                        // Build the intent that launches this activity.
-                        Intent launchIntent = activity.Intent;
-                        var intent = new Intent(activity, typeof(MainActivity));
-                        //intent.SetFlags(ActivityFlags. | ActivityFlags.ClearTop);
-                        intent.SetAction(launchIntent.Action);
-
-                        if (launchIntent.Categories != null)
-                        {
-                            foreach (string category in launchIntent.Categories)
-                            {
-                                intent.AddCategory(category);
-                            }
-                        }
-
-                        // Build PendingIntent used to open this activity when user 
-                        // taps the notification.
-                        PendingIntent pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.UpdateCurrent);
-
-                        // Request to start the download
-                        DownloadServiceRequirement startResult = DownloaderService.StartDownloadServiceIfRequired(activity, pendingIntent, typeof(AnomalousMedicalDownloaderService));
-
-                        // The DownloaderService has started downloading the files, 
-                        // show progress otherwise, the download is not needed so  we 
-                        // fall through to starting the actual app.
-                        if (startResult != DownloadServiceRequirement.NoDownloadRequired)
-                        {
-                            downloaderServiceConnection = ClientMarshaller.CreateStub(this, typeof(AnomalousMedicalDownloaderService));
-                            downloaderServiceConnection.Connect(activity);
-                        }
-                        else
+                        DownloadServiceRequirement startResult = DownloaderService.DetermineDownloadStatus(activity);
+                        if(startResult == DownloadServiceRequirement.NoDownloadRequired)
                         {
                             ThreadManager.invoke(() =>
                             {
                                 if(DownloadSucceeded != null)
                                 {
                                     DownloadSucceeded.Invoke();
+                                }
+                            });
+                        }
+                        else
+                        {
+                            ThreadManager.invoke(() =>
+                            {
+                                if(PromptDownload != null)
+                                {
+                                    PromptDownload.Invoke();
                                 }
                             });
                         }
@@ -101,6 +76,35 @@ namespace AnomalousMedicalAndroid
                 //Debug.WriteLine("Cannot find own package! MAYDAY!");
                 e.PrintStackTrace();
             }
+        }
+
+        /// <summary>
+        /// Call this during the promptDownload callback to actually start the download.
+        /// </summary>
+        public void startDownload()
+        {
+            // Build the intent that launches this activity.
+            Intent launchIntent = activity.Intent;
+            var intent = new Intent(activity, typeof(MainActivity));
+            //intent.SetFlags(ActivityFlags. | ActivityFlags.ClearTop);
+            intent.SetAction(launchIntent.Action);
+
+            if (launchIntent.Categories != null)
+            {
+                foreach (string category in launchIntent.Categories)
+                {
+                    intent.AddCategory(category);
+                }
+            }
+
+            // Build PendingIntent used to open this activity when user 
+            // taps the notification.
+            PendingIntent pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.UpdateCurrent);
+
+            //Start the download
+            DownloaderService.StartDownloadServiceIfRequired(DownloadServiceRequirement.DownloadRequired, activity, pendingIntent, typeof(AnomalousMedicalDownloaderService));
+            downloaderServiceConnection = ClientMarshaller.CreateStub(this, typeof(AnomalousMedicalDownloaderService));
+            downloaderServiceConnection.Connect(activity);
         }
 
         #region IDownloaderClient implementation
