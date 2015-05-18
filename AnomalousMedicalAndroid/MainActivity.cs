@@ -49,7 +49,7 @@ namespace AnomalousMedicalAndroid
 
             #if DEBUG
             Logging.Log.Default.addLogListener(new Logging.LogConsoleListener());
-            succeedIfEmpty = true;
+            succeedIfEmpty = false;
             #endif
 
             OtherProcessManager.OpenUrlInBrowserOverride = openUrl;

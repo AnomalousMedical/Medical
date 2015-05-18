@@ -36,6 +36,10 @@ namespace AnomalousMedicalAndroid
         /// <param name="succeedIfEmpty">If set to <c>true</c> succeed if the metadata says this apk has no files.</param>
         public bool AreExpansionFilesDelivered(bool succeedIfEmpty)
         {
+            if (DownloaderService.NeedsUpdateDownloads(activity))
+            {
+                DownloadsDatabase.Reset();
+            }
             var downloads = DownloadsDatabase.GetDownloads();
             //True if we have no associated downloads or all downloads match the expected values.
             return (succeedIfEmpty && downloads.Count == 0) 
