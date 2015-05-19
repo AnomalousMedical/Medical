@@ -61,7 +61,6 @@ namespace AnomalousMedicalAndroid
             dl.DownloadSucceeded += Dl_DownloadSucceeded;
             dl.DownloadFailed += Dl_DownloadFailed;
             dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
-            dl.PromptDownload += Dl_PromptDownload;
 
             if (dl.AreExpansionFilesDelivered(succeedIfEmpty))
             {
@@ -91,43 +90,16 @@ namespace AnomalousMedicalAndroid
 
         void openUrl(String url)
         {
-            Intent intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
-            this.StartActivity(intent);
+            RunOnUiThread(() =>
+            {
+                Intent intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(url));
+                this.StartActivity(intent);
+            });
         }
 
         void HandleDataFileMissing(AnomalousController anomalousController, StandaloneController controller)
         {
             dl.GetExpansionFiles();
-        }
-
-        void Dl_PromptDownload ()
-        {
-            MessageBox.show("Could not find resource archive. Would you like to try to download it now?\nAnswering no will close Anomalous Medical.", "Resource Archive Error", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, result =>
-                {
-                    if (result == MessageBoxStyle.Yes)
-                    {
-                        //Delete all old files
-                        String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
-                        foreach(var file in Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories))
-                        {
-                            try
-                            {
-                                File.Delete(file);
-                            }
-                            catch(Exception ex)
-                            {
-                                Logging.Log.Error("{0} deleting obb file {1}\nMessage:", ex.GetType(), file, ex.Message);
-                            }
-                        }
-
-                        //Start Download
-                        dl.startDownload();
-                    }
-                    else
-                    {
-                        anomalousController.StandaloneController.exit();
-                    }
-                });
         }
 
         void Dl_DownloadFailed ()

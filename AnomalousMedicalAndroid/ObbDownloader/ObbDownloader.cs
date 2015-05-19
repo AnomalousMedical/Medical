@@ -9,6 +9,7 @@ using Android.Content.PM;
 using Engine.Threads;
 using ExpansionDownloader.Database;
 using System.Linq;
+using System.IO;
 
 namespace AnomalousMedicalAndroid
 {
@@ -20,7 +21,6 @@ namespace AnomalousMedicalAndroid
         public event Action DownloadFailed;
         public event Action DownloadSucceeded;
         public event Action<String, int, int> DownloadProgressUpdated;
-        public event Action PromptDownload;
 
         private Activity activity;
 
@@ -46,71 +46,58 @@ namespace AnomalousMedicalAndroid
                 || (downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false)));
         }
 
-        public void GetExpansionFiles()
+        public void deleteFiles()
         {
-            try
+            var downloads = DownloadsDatabase.GetDownloads();
+            //Delete all old files
+            String obbWildcard = String.Format("main.*.{0}.obb", activity.BaseContext.ApplicationInfo.PackageName.ToString());
+            foreach(var file in Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories))
             {
-                activity.RunOnUiThread(() =>
+                try
                 {
-                    DownloadServiceRequirement startResult = DownloaderService.DetermineDownloadStatus(activity);
-                    if(startResult == DownloadServiceRequirement.NoDownloadRequired)
-                    {
-                        ThreadManager.invoke(() =>
-                        {
-                            if(DownloadSucceeded != null)
-                            {
-                                DownloadSucceeded.Invoke();
-                            }
-                        });
-                    }
-                    else
-                    {
-                        ThreadManager.invoke(() =>
-                        {
-                            if(PromptDownload != null)
-                            {
-                                PromptDownload.Invoke();
-                            }
-                        });
-                    }
-                });
-            }
-            catch (PackageManager.NameNotFoundException e)
-            {
-                //Debug.WriteLine("Cannot find own package! MAYDAY!");
-                e.PrintStackTrace();
+                    File.Delete(file);
+                }
+                catch(Exception ex)
+                {
+                    Logging.Log.Error("{0} deleting obb file {1}\nMessage:", ex.GetType(), file, ex.Message);
+                }
             }
         }
 
-        /// <summary>
-        /// Call this during the promptDownload callback to actually start the download.
-        /// </summary>
-        public void startDownload()
+        public void GetExpansionFiles()
         {
             activity.RunOnUiThread(() =>
             {
-                // Build the intent that launches this activity.
-                Intent launchIntent = activity.Intent;
-                var intent = new Intent(activity, typeof(MainActivity));
-                //intent.SetFlags(ActivityFlags. | ActivityFlags.ClearTop);
-                intent.SetAction(launchIntent.Action);
-
-                if (launchIntent.Categories != null)
+                try
                 {
-                    foreach (string category in launchIntent.Categories)
+                    // Build the intent that launches this activity.
+                    Intent launchIntent = activity.Intent;
+                    var intent = new Intent(activity, typeof(MainActivity));
+                    //intent.SetFlags(ActivityFlags. | ActivityFlags.ClearTop);
+                    intent.SetAction(launchIntent.Action);
+
+                    if (launchIntent.Categories != null)
                     {
-                        intent.AddCategory(category);
+                        foreach (string category in launchIntent.Categories)
+                        {
+                            intent.AddCategory(category);
+                        }
                     }
+
+                    // Build PendingIntent used to open this activity when user 
+                    // taps the notification.
+                    PendingIntent pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.UpdateCurrent);
+
+                    //Start the download
+                    DownloaderService.StartDownloadServiceIfRequired(activity, pendingIntent, typeof(AnomalousMedicalDownloaderService));
+                    downloaderServiceConnection = ClientMarshaller.CreateStub(this, typeof(AnomalousMedicalDownloaderService));
+                    downloaderServiceConnection.Connect(activity);
                 }
-
-                // Build PendingIntent used to open this activity when user 
-                // taps the notification.
-                PendingIntent pendingIntent = PendingIntent.GetActivity(activity, 0, intent, PendingIntentFlags.UpdateCurrent);
-
-                //Start the download
-                DownloaderService.StartDownloadServiceIfRequired(DownloadServiceRequirement.DownloadRequired, activity, pendingIntent, typeof(AnomalousMedicalDownloaderService));
-                downloaderServiceConnection = ClientMarshaller.CreateStub(this, typeof(AnomalousMedicalDownloaderService));
-                downloaderServiceConnection.Connect(activity);
+                catch (PackageManager.NameNotFoundException e)
+                {
+                    //Debug.WriteLine("Cannot find own package! MAYDAY!");
+                    e.PrintStackTrace();
+                }
             });
         }
 
