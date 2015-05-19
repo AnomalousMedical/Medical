@@ -58,6 +58,7 @@ namespace AnomalousMedicalAndroid
             dl.DownloadSucceeded += Dl_DownloadSucceeded;
             dl.DownloadFailed += Dl_DownloadFailed;
             dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
+            dl.NeedCellularPermission += Dl_NeedCellularPermission;
 
             String archiveName = null;
 
@@ -120,6 +121,21 @@ namespace AnomalousMedicalAndroid
         void Dl_DownloadProgressUpdated (string message, int current, int total)
         {
             anomalousController.splashShowDownloadProgress(message, current, total);
+        }
+
+        void Dl_NeedCellularPermission ()
+        {
+            MessageBox.show(String.Format("Anomalous Medical needs to download additional files.\nThese files total {0}.\nDo you wish to download these files over your cellular connection?\nAdditional carrier charges may apply.\nClick No to cancel the download and try again later over wifi.", dl.TotalDownloadSize), "Resource Archive Error", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, r =>
+                {
+                    if(r == MessageBoxStyle.Yes)
+                    {
+                        dl.resumeOnCellData();
+                    }
+                    else
+                    {
+                        anomalousController.StandaloneController.exit();
+                    }
+                });
         }
 
         private String findExpansionFile()

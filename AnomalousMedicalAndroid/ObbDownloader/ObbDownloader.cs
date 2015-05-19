@@ -18,12 +18,27 @@ namespace AnomalousMedicalAndroid
     {
         private IDownloaderService downloaderService;
         private IDownloaderServiceConnection downloaderServiceConnection;
-
-        public event Action DownloadFailed;
-        public event Action DownloadSucceeded;
-        public event Action<String, int, int> DownloadProgressUpdated;
-
         private Activity activity;
+
+        /// <summary>
+        /// This event is fired if we need permission from the user to use their cell data.
+        /// </summary>
+        public event Action NeedCellularPermission;
+
+        /// <summary>
+        /// Called when the download fails.
+        /// </summary>
+        public event Action DownloadFailed;
+
+        /// <summary>
+        /// Called when the download is successful.
+        /// </summary>
+        public event Action DownloadSucceeded;
+
+        /// <summary>
+        /// Called when the download progress updates.
+        /// </summary>
+        public event Action<String, int, int> DownloadProgressUpdated;
 
         public ObbDownloader(Activity activity)
         {
@@ -47,6 +62,9 @@ namespace AnomalousMedicalAndroid
                 || (downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false)));
         }
 
+        /// <summary>
+        /// Gets the expansion files.
+        /// </summary>
         public void GetExpansionFiles()
         {
             activity.RunOnUiThread(() =>
@@ -91,6 +109,19 @@ namespace AnomalousMedicalAndroid
             });
         }
 
+        /// <summary>
+        /// If you are in a NeedCellularPermission, call this function to start the download back
+        /// up over cellular data.
+        /// </summary>
+        public void resumeOnCellData()
+        {
+            activity.RunOnUiThread(() =>
+            {
+                this.downloaderService.SetDownloadFlags(ServiceFlags.FlagsDownloadOverCellular);
+                this.downloaderService.RequestContinueDownload();
+            });
+        }
+
         #region IDownloaderClient implementation
 
         public void OnDownloadProgress(DownloadProgressInfo progress)
@@ -125,6 +156,9 @@ namespace AnomalousMedicalAndroid
                     deleteFiles();
                     fireDownloadSucceeded();
                     break;
+                case DownloaderState.PausedWifiDisabledNeedCellularPermission:
+                    fireNeedCellularPermission();
+                    break;
             }
         }
 
@@ -136,26 +170,50 @@ namespace AnomalousMedicalAndroid
 
         public String LastStateMessage { get; private set; }
 
+        public long TotalDownloadSize
+        {
+            get
+            {
+                long total = 0;
+                foreach (var file in DownloadsDatabase.GetDownloads())
+                {
+                    total += file.TotalBytes;
+                }
+                return total;
+            }
+        }
+
         private void fireDownloadFailed()
         {
             ThreadManager.invoke(() =>
+            {
+                if (DownloadFailed != null)
                 {
-                    if (DownloadFailed != null)
-                    {
-                        DownloadFailed.Invoke();
-                    }
-                });
+                    DownloadFailed.Invoke();
+                }
+            });
         }
 
         private void fireDownloadSucceeded()
         {
             ThreadManager.invoke(() =>
+            {
+                if (DownloadSucceeded != null)
                 {
-                    if (DownloadSucceeded != null)
-                    {
-                        DownloadSucceeded.Invoke();
-                    }
-                });
+                    DownloadSucceeded.Invoke();
+                }
+            });
+        }
+
+        private void fireNeedCellularPermission()
+        {
+            ThreadManager.invoke(() =>
+            {
+                if (NeedCellularPermission != null)
+                {
+                    NeedCellularPermission.Invoke();
+                }
+            });
         }
 
         private void deleteFiles()
