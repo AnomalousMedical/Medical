@@ -54,19 +54,18 @@ namespace AnomalousMedicalAndroid
 
             OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
 
-            String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
-            String archiveName = null;
-
             dl = new ObbDownloader(this);
             dl.DownloadSucceeded += Dl_DownloadSucceeded;
             dl.DownloadFailed += Dl_DownloadFailed;
             dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
 
+            String archiveName = null;
+
             if (dl.AreExpansionFilesDelivered(succeedIfEmpty))
             {
                 try
                 {
-                    archiveName = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault();
+                    archiveName = findExpansionFile();
                 }
                 catch (Exception)
                 {
@@ -113,8 +112,7 @@ namespace AnomalousMedicalAndroid
         void Dl_DownloadSucceeded ()
         {
             //Reassign primary archive
-            String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
-            anomalousController.PrimaryArchive = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).FirstOrDefault();
+            anomalousController.PrimaryArchive = findExpansionFile();
             //Run splash screen again.
             anomalousController.rerunSplashScreen();
         }
@@ -122,6 +120,41 @@ namespace AnomalousMedicalAndroid
         void Dl_DownloadProgressUpdated (string message, int current, int total)
         {
             anomalousController.splashShowDownloadProgress(message, current, total);
+        }
+
+        private String findExpansionFile()
+        {
+            String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
+            var files = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories);
+            if (files.Count() > 1)
+            {
+                //Find the file with the highest version number, only does main files for now.
+                String largestVersion = null;
+                long version = 0;
+                foreach (var file in files)
+                {
+                    String fileName = Path.GetFileName(file);
+                    if (fileName.StartsWith("main.", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        int trailingDot = fileName.IndexOf(".", 5);
+                        if (trailingDot > 0)
+                        {
+                            long testVersion;
+                            if (long.TryParse(fileName.Substring(5, trailingDot - 5), out testVersion) && testVersion > version)
+                            {
+                                version = testVersion;
+                                largestVersion = file;
+                            }
+                        }
+                    }
+                }
+                return largestVersion;
+            }
+            else
+            {
+                //Only one matching file, just return it
+                return files.FirstOrDefault();
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using Engine.Threads;
 using ExpansionDownloader.Database;
 using System.Linq;
 using System.IO;
+using System.Threading;
 
 namespace AnomalousMedicalAndroid
 {
@@ -159,20 +160,23 @@ namespace AnomalousMedicalAndroid
 
         private void deleteFiles()
         {
-            var downloads = DownloadsDatabase.GetDownloads();
-            //Delete all old files
-            String obbWildcard = String.Format("main.*.{0}.obb", activity.BaseContext.ApplicationInfo.PackageName.ToString());
-            foreach(var file in Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).Where(f => !downloads.Any(x => x.FileName.Equals(Path.GetFileName(f)))))
+            //Do this on a background thread, just deleting extra files.
+            ThreadPool.QueueUserWorkItem(arg =>
             {
-                try
+                var downloads = DownloadsDatabase.GetDownloads();
+                //Delete all old files
+                foreach (var file in Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, "*", SearchOption.AllDirectories).Where(f => !downloads.Any(x => x.FileName.Equals(Path.GetFileName(f)))))
                 {
-                    File.Delete(file);
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logging.Log.Error("{0} deleting obb file {1}\nMessage:", ex.GetType(), file, ex.Message);
+                    }
                 }
-                catch(Exception ex)
-                {
-                    Logging.Log.Error("{0} deleting obb file {1}\nMessage:", ex.GetType(), file, ex.Message);
-                }
-            }
+            });
         }
 
         #endregion
