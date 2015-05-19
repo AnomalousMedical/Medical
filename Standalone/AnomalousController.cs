@@ -378,7 +378,6 @@ namespace Medical
 
             mainPlugin = new AnomalousMainPlugin(controller.LicenseManager, this);
             controller.AtlasPluginManager.addPlugin(mainPlugin);
-            controller.AtlasPluginManager.addPlugin("IntroductionTutorial.dat");
             controller.loadConfigAndCommonResources();
 
             //Load remaining plugins after core ones are loaded.
