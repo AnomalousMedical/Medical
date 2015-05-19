@@ -213,6 +213,10 @@ namespace AnomalousMedicalAndroid
                 {
                     NeedCellularPermission.Invoke();
                 }
+                else if(DownloadFailed != null)
+                {
+                    DownloadFailed.Invoke();
+                }
             });
         }
 

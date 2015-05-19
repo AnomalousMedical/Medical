@@ -125,7 +125,7 @@ namespace AnomalousMedicalAndroid
 
         void Dl_NeedCellularPermission ()
         {
-            MessageBox.show(String.Format("Anomalous Medical needs to download additional files.\nThese files total {0}.\nDo you wish to download these files over your cellular connection?\nAdditional carrier charges may apply.\nClick No to cancel the download and try again later over wifi.", dl.TotalDownloadSize), "Resource Archive Error", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, r =>
+            MessageBox.show(String.Format("Anomalous Medical needs to download additional files.\nThese files total {0}.\nDo you wish to download these files over your cellular connection?\nAdditional carrier charges may apply.\nClick No to cancel the download and try again later over wifi.", Prettify.GetSizeReadable(dl.TotalDownloadSize)), "Resource Archive Error", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, r =>
                 {
                     if(r == MessageBoxStyle.Yes)
                     {
