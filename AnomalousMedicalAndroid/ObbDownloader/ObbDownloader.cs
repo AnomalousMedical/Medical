@@ -46,24 +46,6 @@ namespace AnomalousMedicalAndroid
                 || (downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false)));
         }
 
-        public void deleteFiles()
-        {
-            var downloads = DownloadsDatabase.GetDownloads();
-            //Delete all old files
-            String obbWildcard = String.Format("main.*.{0}.obb", activity.BaseContext.ApplicationInfo.PackageName.ToString());
-            foreach(var file in Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories))
-            {
-                try
-                {
-                    File.Delete(file);
-                }
-                catch(Exception ex)
-                {
-                    Logging.Log.Error("{0} deleting obb file {1}\nMessage:", ex.GetType(), file, ex.Message);
-                }
-            }
-        }
-
         public void GetExpansionFiles()
         {
             activity.RunOnUiThread(() =>
@@ -97,13 +79,7 @@ namespace AnomalousMedicalAndroid
                     }
                     else
                     {
-                        ThreadManager.invoke(() =>
-                        {
-                            if (DownloadSucceeded != null)
-                            {
-                                DownloadSucceeded.Invoke();
-                            }
-                        });
+                        fireDownloadSucceeded();
                     }
                 }
                 catch (PackageManager.NameNotFoundException e)
@@ -142,22 +118,11 @@ namespace AnomalousMedicalAndroid
                 case DownloaderState.FailedFetchingUrl:
                 case DownloaderState.FailedSdCardFull:
                 case DownloaderState.FailedUnlicensed:
-                    ThreadManager.invoke(() =>
-                    {
-                        if (DownloadFailed != null)
-                        {
-                            DownloadFailed.Invoke();
-                        }
-                    });
+                    fireDownloadFailed();
                     break;
                 case DownloaderState.Completed:
-                    ThreadManager.invoke(() =>
-                    {
-                        if (DownloadSucceeded != null)
-                        {
-                            DownloadSucceeded.Invoke();
-                        }
-                    });
+                    deleteFiles();
+                    fireDownloadSucceeded();
                     break;
             }
         }
@@ -169,6 +134,46 @@ namespace AnomalousMedicalAndroid
         }
 
         public String LastStateMessage { get; private set; }
+
+        private void fireDownloadFailed()
+        {
+            ThreadManager.invoke(() =>
+                {
+                    if (DownloadFailed != null)
+                    {
+                        DownloadFailed.Invoke();
+                    }
+                });
+        }
+
+        private void fireDownloadSucceeded()
+        {
+            ThreadManager.invoke(() =>
+                {
+                    if (DownloadSucceeded != null)
+                    {
+                        DownloadSucceeded.Invoke();
+                    }
+                });
+        }
+
+        private void deleteFiles()
+        {
+            var downloads = DownloadsDatabase.GetDownloads();
+            //Delete all old files
+            String obbWildcard = String.Format("main.*.{0}.obb", activity.BaseContext.ApplicationInfo.PackageName.ToString());
+            foreach(var file in Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories).Where(f => !downloads.Any(x => x.FileName.Equals(Path.GetFileName(f)))))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch(Exception ex)
+                {
+                    Logging.Log.Error("{0} deleting obb file {1}\nMessage:", ex.GetType(), file, ex.Message);
+                }
+            }
+        }
 
         #endregion
     }
