@@ -82,6 +82,12 @@ namespace AnomalousMedicalAndroid
             anomalousController.run();
         }
 
+        protected override void OnDestroy()
+        {
+            dl.cancelDownloads();
+            base.OnDestroy();
+        }
+
         void HandleOnInitCompleted(AnomalousController anomalousController, StandaloneController controller)
         {
             setInputHandler(controller.MedicalController.InputHandler);

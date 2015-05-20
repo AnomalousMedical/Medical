@@ -31,6 +31,11 @@ namespace AnomalousMedicalAndroid
         public event Action DownloadFailed;
 
         /// <summary>
+        /// Called when the download is canceled.
+        /// </summary>
+        public event Action DownloadCanceled;
+
+        /// <summary>
         /// Called when the download is successful.
         /// </summary>
         public event Action DownloadSucceeded;
@@ -122,6 +127,14 @@ namespace AnomalousMedicalAndroid
             });
         }
 
+        public void cancelDownloads()
+        {
+            if (downloaderService != null)
+            {
+                downloaderService.RequestAbortDownload();
+            }
+        }
+
         #region IDownloaderClient implementation
 
         public void OnDownloadProgress(DownloadProgressInfo progress)
@@ -145,8 +158,10 @@ namespace AnomalousMedicalAndroid
             LastStateMessage = Helpers.GetDownloaderStringFromState(activity, newState);
             switch (newState)
             {
-                case DownloaderState.Failed:
                 case DownloaderState.FailedCanceled:
+                    fireDownloadCanceled();
+                    break;
+                case DownloaderState.Failed:
                 case DownloaderState.FailedFetchingUrl:
                 case DownloaderState.FailedSdCardFull:
                 case DownloaderState.FailedUnlicensed:
@@ -156,6 +171,7 @@ namespace AnomalousMedicalAndroid
                     deleteFiles();
                     fireDownloadSucceeded();
                     break;
+                case DownloaderState.PausedNeedCellularPermission:
                 case DownloaderState.PausedWifiDisabledNeedCellularPermission:
                     fireNeedCellularPermission();
                     break;
@@ -201,6 +217,17 @@ namespace AnomalousMedicalAndroid
                 if (DownloadSucceeded != null)
                 {
                     DownloadSucceeded.Invoke();
+                }
+            });
+        }
+
+        private void fireDownloadCanceled()
+        {
+            ThreadManager.invoke(() =>
+            {
+                if (DownloadCanceled != null)
+                {
+                    DownloadCanceled.Invoke();
                 }
             });
         }
