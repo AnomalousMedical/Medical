@@ -61,10 +61,18 @@ namespace AnomalousMedicalAndroid
             {
                 DownloadsDatabase.Reset();
             }
-            var downloads = DownloadsDatabase.GetDownloads();
-            //True if we have no associated downloads or all downloads match the expected values.
-            return (succeedIfEmpty && downloads.Count == 0) 
-                || (downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false)));
+            try
+            {
+                var downloads = DownloadsDatabase.GetDownloads();
+                //True if we have no associated downloads or all downloads match the expected values.
+                return (succeedIfEmpty && downloads.Count == 0) 
+                    || (downloads.Any() && downloads.All(x => Helpers.DoesFileExist(activity, x.FileName, x.TotalBytes, false)));
+            }
+            catch(Exception)
+            {
+                DownloadsDatabase.Reset();
+                return false;
+            }
         }
 
         /// <summary>
