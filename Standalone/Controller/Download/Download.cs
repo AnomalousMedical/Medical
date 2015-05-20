@@ -99,7 +99,7 @@ namespace Medical
         /// <summary>
         /// The download speed in kb per second.
         /// </summary>
-        public double DownloadSpeed { get; set; }
+        public long DownloadSpeed { get; set; }
 
         public String StatusString { get; set; }
 

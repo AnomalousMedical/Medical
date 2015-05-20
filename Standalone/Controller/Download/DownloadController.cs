@@ -219,7 +219,7 @@ namespace Medical
                     download.TotalRead += len;
                     localDataStream.Write(buffer, 0, len);
                     totalTime = DateTime.Now - startTime;
-                    download.DownloadSpeed = (download.TotalRead * 1000.0f) / (totalTime.TotalMilliseconds * 1024.0f);
+                    download.DownloadSpeed = (long)((download.TotalRead * 1000) / (totalTime.TotalMilliseconds));
                     download.updateStatus();
                 }
             }
