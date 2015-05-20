@@ -160,6 +160,9 @@ namespace AnomalousMedicalAndroid
             });
         }
 
+        /// <summary>
+        /// Call this function to cancel any active downloads.
+        /// </summary>
         public void cancelDownloads()
         {
             if (downloaderService != null)
@@ -220,8 +223,16 @@ namespace AnomalousMedicalAndroid
             this.downloaderService.OnClientUpdated(this.downloaderServiceConnection.GetMessenger());
         }
 
+        /// <summary>
+        /// The message for the last error state.
+        /// </summary>
+        /// <value>The last state message.</value>
         public String LastStateMessage { get; private set; }
 
+        /// <summary>
+        /// The total size of all the downloads. This is calculated when this property is accessed.
+        /// </summary>
+        /// <value>The total size of the download.</value>
         public long TotalDownloadSize
         {
             get
