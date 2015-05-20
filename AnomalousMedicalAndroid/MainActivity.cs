@@ -88,6 +88,18 @@ namespace AnomalousMedicalAndroid
             base.OnDestroy();
         }
 
+        protected override void OnResume()
+        {
+            dl.connectDownloadService();
+            base.OnResume();
+        }
+
+        protected override void OnStop()
+        {
+            dl.disconnectDownloadService();
+            base.OnStop();
+        }
+
         void HandleOnInitCompleted(AnomalousController anomalousController, StandaloneController controller)
         {
             setInputHandler(controller.MedicalController.InputHandler);

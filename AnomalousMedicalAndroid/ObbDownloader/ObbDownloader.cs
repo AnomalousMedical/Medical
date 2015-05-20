@@ -107,7 +107,7 @@ namespace AnomalousMedicalAndroid
                     if(startResult != DownloadServiceRequirement.NoDownloadRequired)
                     {
                         downloaderServiceConnection = ClientMarshaller.CreateStub(this, typeof(AnomalousMedicalDownloaderService));
-                        downloaderServiceConnection.Connect(activity);
+                        connectDownloadService();
                     }
                     else
                     {
@@ -120,6 +120,31 @@ namespace AnomalousMedicalAndroid
                     e.PrintStackTrace();
                 }
             });
+        }
+
+        /// <summary>
+        /// Connect to the download service to get updates about the download. Should be called
+        /// in OnResume for the activity that downloads stuff. This is automatically connected
+        /// initially in GetExpansionFiles().
+        /// </summary>
+        public void connectDownloadService()
+        {
+            if (downloaderServiceConnection != null)
+            {
+                downloaderServiceConnection.Connect(activity);
+            }
+        }
+
+        /// <summary>
+        /// Disconnect from the download service to stop getting updates about the download. Should be called
+        /// in OnStop for the activity that downloads stuff.
+        /// </summary>
+        public void disconnectDownloadService()
+        {
+            if (downloaderServiceConnection != null)
+            {
+                downloaderServiceConnection.Connect(activity);
+            }
         }
 
         /// <summary>
@@ -168,16 +193,19 @@ namespace AnomalousMedicalAndroid
             {
                 case DownloaderState.FailedCanceled:
                     fireDownloadCanceled();
+                    clearDownload();
                     break;
                 case DownloaderState.Failed:
                 case DownloaderState.FailedFetchingUrl:
                 case DownloaderState.FailedSdCardFull:
                 case DownloaderState.FailedUnlicensed:
                     fireDownloadFailed();
+                    clearDownload();
                     break;
                 case DownloaderState.Completed:
                     deleteFiles();
                     fireDownloadSucceeded();
+                    clearDownload();
                     break;
                 case DownloaderState.PausedNeedCellularPermission:
                 case DownloaderState.PausedWifiDisabledNeedCellularPermission:
@@ -274,6 +302,12 @@ namespace AnomalousMedicalAndroid
                     }
                 }
             });
+        }
+
+        private void clearDownload()
+        {
+            downloaderService = null;
+            downloaderServiceConnection = null;
         }
 
         #endregion
