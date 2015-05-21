@@ -21,7 +21,7 @@ namespace AnomalousMedicalAndroid
 {
     [Activity(Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/AnomalousMedicalTheme", 
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout,
-        WindowSoftInputMode = SoftInput.StateAlwaysHidden, LaunchMode=LaunchMode.SingleTop)]
+        WindowSoftInputMode = SoftInput.StateAlwaysHidden, LaunchMode = LaunchMode.SingleTop)]
     [MetaData("android.app.lib_name", Value = AndroidPlatformPlugin.LibraryName)]
     public class MainActivity : AndroidActivity
     {
@@ -34,6 +34,12 @@ namespace AnomalousMedicalAndroid
         private ObbDownloader dl;
         private AnomalousController anomalousController;
 
+        #if DEBUG
+        private const bool SucceedIfEmpty = true;
+        #else
+        private const bool SucceedIfEmpty = false;
+        #endif
+
         public MainActivity()
             : base(AnomalousMedicalAndroid.Resource.Layout.Main, AnomalousMedicalAndroid.Resource.Id.editText1)
         {
@@ -45,11 +51,9 @@ namespace AnomalousMedicalAndroid
             NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.ETC2;
             OgrePlugin.OgreInterface.InitialClearColor = new Color(0.156f, 0.156f, 0.156f);
-            bool succeedIfEmpty = false;
 
             #if DEBUG
             Logging.Log.Default.addLogListener(new Logging.LogConsoleListener());
-            succeedIfEmpty = false;
             #endif
 
             OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
@@ -62,15 +66,9 @@ namespace AnomalousMedicalAndroid
 
             String archiveName = null;
 
-            if (dl.AreExpansionFilesDelivered(succeedIfEmpty))
+            if (dl.AreExpansionFilesDelivered(SucceedIfEmpty))
             {
-                try
-                {
-                    archiveName = findExpansionFile();
-                }
-                catch (Exception)
-                {
-                }
+                archiveName = findExpansionFile();
             }
 
             anomalousController = new AnomalousController()
@@ -120,15 +118,15 @@ namespace AnomalousMedicalAndroid
             dl.GetExpansionFiles();
         }
 
-        void Dl_DownloadFailed ()
+        void Dl_DownloadFailed()
         {
             MessageBox.show(String.Format("Error downloading resource archive.\nReason:\n{0}", dl.LastStateMessage), "Resource Archive Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok, r =>
-                {
-                    anomalousController.StandaloneController.exit();
-                });
+            {
+                anomalousController.StandaloneController.exit();
+            });
         }
 
-        void Dl_DownloadSucceeded ()
+        void Dl_DownloadSucceeded()
         {
             //Reassign primary archive
             anomalousController.PrimaryArchive = findExpansionFile();
@@ -136,58 +134,66 @@ namespace AnomalousMedicalAndroid
             anomalousController.rerunSplashScreen();
         }
 
-        void Dl_DownloadProgressUpdated (string message, int current, int total)
+        void Dl_DownloadProgressUpdated(string message, int current, int total)
         {
             anomalousController.splashShowDownloadProgress(message, current, total);
         }
 
-        void Dl_NeedCellularPermission ()
+        void Dl_NeedCellularPermission()
         {
             MessageBox.show(String.Format("Anomalous Medical needs to download additional files.\nThese files total {0}.\nDo you wish to download these files over your cellular connection?\nAdditional carrier charges may apply.\nClick No to cancel the download and try again later over wifi.", Prettify.GetSizeReadable(dl.TotalDownloadSize)), "Resource Archive Error", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, r =>
+            {
+                if (r == MessageBoxStyle.Yes)
                 {
-                    if(r == MessageBoxStyle.Yes)
-                    {
-                        dl.resumeOnCellData();
-                    }
-                    else
-                    {
-                        anomalousController.StandaloneController.exit();
-                    }
-                });
+                    dl.resumeOnCellData();
+                }
+                else
+                {
+                    anomalousController.StandaloneController.exit();
+                }
+            });
         }
 
         private String findExpansionFile()
         {
-            String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
-            var files = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories);
-            if (files.Count() > 1)
+            try
             {
-                //Find the file with the highest version number, only does main files for now.
-                String largestVersion = null;
-                long version = 0;
-                foreach (var file in files)
+                String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
+                var files = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories);
+                if (files.Count() > 1)
                 {
-                    String fileName = Path.GetFileName(file);
-                    if (fileName.StartsWith("main.", StringComparison.InvariantCultureIgnoreCase))
+                    //Find the file with the highest version number, only does main files for now.
+                    String largestVersion = null;
+                    long version = 0;
+                    foreach (var file in files)
                     {
-                        int trailingDot = fileName.IndexOf(".", 5);
-                        if (trailingDot > 0)
+                        String fileName = Path.GetFileName(file);
+                        if (fileName.StartsWith("main.", StringComparison.InvariantCultureIgnoreCase))
                         {
-                            long testVersion;
-                            if (long.TryParse(fileName.Substring(5, trailingDot - 5), out testVersion) && testVersion > version)
+                            int trailingDot = fileName.IndexOf(".", 5);
+                            if (trailingDot > 0)
                             {
-                                version = testVersion;
-                                largestVersion = file;
+                                long testVersion;
+                                if (long.TryParse(fileName.Substring(5, trailingDot - 5), out testVersion) && testVersion > version)
+                                {
+                                    version = testVersion;
+                                    largestVersion = file;
+                                }
                             }
                         }
                     }
+                    return largestVersion;
                 }
-                return largestVersion;
+                else
+                {
+                    //Only one matching file, just return it
+                    return files.FirstOrDefault();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //Only one matching file, just return it
-                return files.FirstOrDefault();
+                Logging.Log.Error("{0} looking for resource archive. Message: {1}", ex.GetType().ToString(), ex.Message);
+                return null;
             }
         }
     }
