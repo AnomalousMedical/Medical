@@ -383,6 +383,7 @@ namespace Medical.GUI
                 }
             }
 
+            guiTaskManager.setLoadingTasksToMissing(CommonResources.NoIcon);
             downloadManagerGUI.activateServerDownloadChecks();
         }
 
