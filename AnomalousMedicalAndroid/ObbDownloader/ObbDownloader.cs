@@ -202,6 +202,7 @@ namespace AnomalousMedicalAndroid
                 case DownloaderState.FailedFetchingUrl:
                 case DownloaderState.FailedSdCardFull:
                 case DownloaderState.FailedUnlicensed:
+                    DownloadsDatabase.Reset();
                     fireDownloadFailed();
                     clearDownload();
                     break;
