@@ -175,7 +175,7 @@ namespace Medical
 
             if(PlatformConfig.ForwardTouchAsMouse)
             {
-				TouchMouseGuiForwarder = new TouchMouseGuiForwarder(eventManager, inputHandler, mainWindow, EventLayers.Last);
+                TouchMouseGuiForwarder = new TouchMouseGuiForwarder(eventManager, inputHandler, systemTimer, mainWindow, EventLayers.Last);
                 var myGuiKeyboard = new MyGUIOnscreenKeyboardManager(TouchMouseGuiForwarder);
                 var rocketKeyboard = new RocketWidgetOnscreenKeyboardManager(TouchMouseGuiForwarder);
             }
