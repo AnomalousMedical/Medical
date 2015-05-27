@@ -52,7 +52,15 @@ namespace Medical
         {
             get
             {
-                return true;
+                return false;
+            }
+        }
+
+        protected override bool AllowFullscreenToggleImpl
+        {
+            get
+            {
+                return false;
             }
         }
 

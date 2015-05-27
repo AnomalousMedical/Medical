@@ -55,6 +55,14 @@ namespace Medical
             }
         }
 
+        protected override bool AllowFullscreenToggleImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         protected override MouseButtonCode DefaultCameraMouseButtonImpl
         {
             get

@@ -75,11 +75,25 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Allow the software to go into a fullscreen exclusive mode on this platform.
+        /// </summary>
         public static bool AllowFullscreen
         {
             get
             {
                 return currentConfig.AllowFullscreenImpl;
+            }
+        }
+
+        /// <summary>
+        /// Allow the toggle of fullscreen mode.
+        /// </summary>
+        public static bool AllowFullscreenToggle
+        {
+            get
+            {
+                return currentConfig.AllowFullscreenToggleImpl;
             }
         }
 
@@ -249,6 +263,8 @@ namespace Medical
         protected abstract String ThemeFileImpl { get; }
 
         protected abstract bool AllowFullscreenImpl { get; }
+
+        protected abstract bool AllowFullscreenToggleImpl { get; }
 
         protected abstract MouseButtonCode DefaultCameraMouseButtonImpl { get; }
 
