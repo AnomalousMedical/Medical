@@ -40,6 +40,7 @@ namespace Medical
         private Engine.Resources.ResourceGroup commonResources;
         private AnomalousMainPlugin mainPlugin;
         private bool rerenderSplashOnUpdate = true;
+        private bool allowSplashRestarts = false;
 
         public event Action<AnomalousController, StandaloneController> AddAdditionalPlugins;
         public event Action<AnomalousController, StandaloneController> OnInitCompleted;
@@ -102,12 +103,16 @@ namespace Medical
         }
 
         /// <summary>
-        /// Re-run the splash screen. This should only be done from events triggered by the DataFileMissing attribute.
-        /// Do not call this once the splash screen has run, and it will run once automatically.
+        /// Re-run the splash screen. This will only have an effect if the DataFileMissing event has fired.
+        /// Otherwise calling this will do nothing.
         /// </summary>
         public void rerunSplashScreen()
         {
-            controller.IdleHandler.runTemporaryIdle(runSplashScreen());
+            if (allowSplashRestarts)
+            {
+                allowSplashRestarts = false;
+                controller.IdleHandler.runTemporaryIdle(runSplashScreen());
+            }
         }
 
         public void splashShowDownloadProgress(String message, int current, int total)
@@ -151,6 +156,7 @@ namespace Medical
         {
             if (String.IsNullOrEmpty(this.PrimaryArchive))
             {
+                allowSplashRestarts = true;
                 if (DataFileMissing != null)
                 {
                     DataFileMissing.Invoke(this, controller);
