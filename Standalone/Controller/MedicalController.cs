@@ -172,6 +172,7 @@ namespace Medical
             SoundConfig.initialize(MedicalConfig.ConfigFile);
 
             GuiFrameworkInterface.Instance.handleCursors(mainWindow);
+            SoundPluginInterface.Instance.setResourceWindow(mainWindow);
 
             if(PlatformConfig.ForwardTouchAsMouse)
             {
