@@ -98,8 +98,8 @@ Source: ..\..\..\PublicRelease\OpenGL Rendering Subsystem.mcc; DestDir: {app}; F
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x64.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 
-;.Net 4.5.1
-Source: S:\dependencies\InstallerDependencies\Windows\NDP451-KB2859818-Web.exe; DestDir: {tmp}; 
+;.Net 4.5.2
+Source: S:\dependencies\InstallerDependencies\Windows\NDP452-KB2901954-Web.exe; DestDir: {tmp}; 
 
 ;Old files to delete, this will probably have to stay pretty much forever unless we rename these dlls
 [InstallDelete]
@@ -135,15 +135,15 @@ var
 	release: cardinal;
 begin
 	RegQueryDWordValue(HKLM, 'Software\Microsoft\NET Framework Setup\NDP\v4\Full', 'Release', release);
-	if (release < 378759) and (release <> 378675) and (release <> 378758) then 
+	if (release < 379893) then
 	begin
-    if MsgBox('You need to install the Microsoft .Net Framework 4.5.1.'#13#10'If you are connected to the internet you can do this now.'#13#10'Would you like to continue?', mbConfirmation, MB_YESNO) = IDYES then
+    if MsgBox('You need to install the Microsoft .Net Framework 4.5.2.'#13#10'If you are connected to the internet you can do this now.'#13#10'Would you like to continue?', mbConfirmation, MB_YESNO) = IDYES then
       begin
-        Exec(ExpandConstant('{tmp}\NDP451-KB2859818-Web.exe'), '/norestart', '', SW_SHOW, ewWaitUntilTerminated, resultCode);
+        Exec(ExpandConstant('{tmp}\NDP452-KB2901954-Web.exe'), '/norestart', '', SW_SHOW, ewWaitUntilTerminated, resultCode);
       end
     else
       begin
-        MsgBox('You must install the Microsoft .Net Framework 4.5.1 for this program to work.'#13#10'Please visit www.anomalousmedical.com for more info.', mbInformation, MB_OK)
+        MsgBox('You must install the Microsoft .Net Framework 4.5.2 for this program to work.'#13#10'Please visit www.anomalousmedical.com for more info.', mbInformation, MB_OK)
       end;
    end;
 //	   if resultCode=3010 then
