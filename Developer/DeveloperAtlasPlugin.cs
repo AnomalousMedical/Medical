@@ -122,6 +122,15 @@ namespace Developer
             taskController.addTask(disablePhysics);
 
             standaloneController.ViewHostFactory.addFactory(new WizardComponentViews());
+
+            if (PlatformConfig.AllowFullscreenToggle)
+            {
+                CallbackTask toggleBorderless = new CallbackTask("Developer.ToggleBorderless", "Toggle Borderless", "AnomalousMedical/ToggleFullscreen", TaskMenuCategories.Developer, int.MaxValue, false, (item) =>
+                {
+                    MainWindow.Instance.toggleBorderless();
+                });
+                taskController.addTask(toggleBorderless);
+            }
         }
 
         public void unload(StandaloneController standaloneController, bool willReload)
