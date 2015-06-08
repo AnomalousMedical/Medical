@@ -70,6 +70,12 @@ namespace AnomalousMedicalAndroid
             {
                 archiveName = findExpansionFile();
             }
+            #if DEBUG
+            else if (File.Exists("/storage/emulated/0/InternalRelease_Android.dat"))
+            {
+                archiveName = "/storage/emulated/0/InternalRelease_Android.dat";
+            }
+            #endif
 
             anomalousController = new AnomalousController()
             {

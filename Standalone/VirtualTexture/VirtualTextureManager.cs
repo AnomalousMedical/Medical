@@ -35,31 +35,6 @@ namespace Medical
             }
 
             currentRenderTexture = feedbackBuffers.Length - 1; //Separate rendering from readback
-
-            //fullBitmap = new FreeImageBitmap[3];
-            //fullBitmapBox = new PixelBox[fullBitmap.Length];
-
-            //width = 80;// mainWindow.WindowWidth / 10;
-            //height = 60;// mainWindow.WindowHeight / 10;
-            //OgreResourceGroupManager.getInstance().createResourceGroup("FeedbackBufferGroup");
-            //texture = TextureManager.getInstance().createManual("FeedbackBuffer", "FeedbackBufferGroup", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
-
-            //for (int i = 0; i < fullBitmap.Length; ++i)
-            //{
-            //    fullBitmap[i] = new FreeImageBitmap((int)texture.Value.Width, (int)texture.Value.Height, FreeImageAPI.PixelFormat.Format32bppRgb);
-            //    fullBitmapBox[i] = fullBitmap[i].createPixelBox(OgrePlugin.PixelFormat.PF_A8R8G8B8);
-            //}
-
-            //pixelBuffer = texture.Value.getBuffer();
-            //renderTexture = pixelBuffer.Value.getRenderTarget();
-            //renderTexture.setAutoUpdated(false);
-            //Viewport vp = renderTexture.addViewport(window.Camera);
-            //vp.setMaterialScheme("FeedbackBuffer");
-            //renderTexture.PostRenderTargetUpdate += () => Logging.Log.Debug("Finished rendering feedback buffer");
-            //window.SchemeName = "FeedbackBuffer";
-
-
-            //MaterialManager.getInstance().HandleSchemeNotFound += StandaloneController_HandleSchemeNotFound;
         }
 
         void window_CameraDestroyed(SceneViewWindow window)
@@ -102,37 +77,6 @@ namespace Medical
                         PerformanceMonitor.stop("FeedbackBuffer Render");
                         readbackThisFrame = true;
                     }
-
-
-                    //PerformanceMonitor.start("FeedbackBuffer Copy");
-                    //feedbackBuffers[currentReadbackTexture].copyFromGpu();
-                    //currentReadbackTexture = (currentReadbackTexture + 1) % feedbackBuffers.Length;
-                    //PerformanceMonitor.stop("FeedbackBuffer Copy");
-
-                    //PerformanceMonitor.start("FeedbackBuffer Render");
-                    //feedbackBuffers[currentRenderTexture].update();
-                    //currentReadbackTexture = (currentRenderTexture + 1) % feedbackBuffers.Length;
-                    //PerformanceMonitor.stop("FeedbackBuffer Render");
-
-                    //if (liveThumbs == null)
-                    //{
-                    //    liveThumbs = new LiveThumbnailController("TestRender", new IntSize2(mainWindow.WindowWidth / 10, mainWindow.WindowHeight / 10), sceneViewController);
-                    //    thumbHost = new SillyThumbHost();
-                    //    liveThumbs.addThumbnailHost(thumbHost);
-                    //    thumbHost.Layers = LayerState.CreateAndCapture();
-                    //    thumbHost.LookAt = window.LookAt;
-                    //    thumbHost.Translation = window.Translation;
-                    //    liveThumbs.setVisibility(thumbHost, true);
-
-                    //    //window.SchemeName = "FeedbackBuffer";
-
-                    //    MaterialManager.getInstance().HandleSchemeNotFound += StandaloneController_HandleSchemeNotFound;
-                    //}
-                    //thumbHost.Layers = LayerState.CreateAndCapture();
-                    //thumbHost.LookAt = window.LookAt;
-                    //thumbHost.Translation = window.Translation;
-                    //liveThumbs.updateCameraAndLayers(thumbHost);
-                    //liveThumbs.updateAllThumbs();
 
                     allowImageRender = true;
 
