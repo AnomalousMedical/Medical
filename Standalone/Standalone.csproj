@@ -658,6 +658,8 @@
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />
     <Compile Include="Utility\ZipEntryExtensions.cs" />
+    <Compile Include="VirtualTexture\FeedbackBuffer.cs" />
+    <Compile Include="VirtualTexture\VirtualTextureManager.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">
       <SubType>Designer</SubType>
     </EmbeddedResource>

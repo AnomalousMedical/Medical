@@ -769,8 +769,15 @@ namespace Medical
             continuePrompt.ensureVisible(width, height);
         }
 
+#if ENABLE_VIRTUAL_TEXTURES
+        private Dictionary<SceneViewWindow, VirtualTextureManager> virtualTextures = new Dictionary<SceneViewWindow, VirtualTextureManager>();
+#endif
+
         void sceneViewController_WindowDestroyed(SceneViewWindow window)
         {
+#if ENABLE_VIRTUAL_TEXTURES
+            virtualTextures.Remove(window);
+#endif
             TransparencyController.removeTransparencyState(window.CurrentTransparencyState);
             window.RenderingStarted -= window_RenderingStarted;
             window.MadeActive -= window_MadeActive;
@@ -784,6 +791,9 @@ namespace Medical
             }
             window.RenderingStarted += window_RenderingStarted;
             window.MadeActive += window_MadeActive;
+#if ENABLE_VIRTUAL_TEXTURES
+            virtualTextures.Add(window, new VirtualTextureManager(window));
+#endif
         }
 
         void window_MadeActive(SceneViewWindow window)
@@ -794,6 +804,9 @@ namespace Medical
         void window_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
         {
             TransparencyController.applyTransparencyState(window.CurrentTransparencyState);
+#if ENABLE_VIRTUAL_TEXTURES
+            virtualTextures[window].update(window, currentCameraRender);
+#endif
         }
     }
 }
