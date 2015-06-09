@@ -659,6 +659,8 @@
     <Compile Include="Utility\SharedXmlSaver.cs" />
     <Compile Include="Utility\ZipEntryExtensions.cs" />
     <Compile Include="VirtualTexture\FeedbackBuffer.cs" />
+    <Compile Include="VirtualTexture\IndirectionTexture.cs" />
+    <Compile Include="VirtualTexture\PhysicalTexture.cs" />
     <Compile Include="VirtualTexture\VirtualTextureManager.cs" />
     <Compile Include="VirtualTexture\VirtualTextureSceneViewLink.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">

@@ -11,6 +11,8 @@ namespace Medical
 {
     class FeedbackBuffer
     {
+        public const String Scheme = "FeedbackBuffer";
+
         FreeImageBitmap fullBitmap;
         PixelBox fullBitmapBox;
         TexturePtr texture;
@@ -67,7 +69,7 @@ namespace Medical
                 height = 10;
             }
 
-            texture = TextureManager.getInstance().createManual("FeedbackBuffer", "FeedbackBufferGroup", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
+            texture = TextureManager.getInstance().createManual("FeedbackBuffer", VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
 
             fullBitmap = new FreeImageBitmap((int)texture.Value.Width, (int)texture.Value.Height, FreeImageAPI.PixelFormat.Format32bppRgb);
             fullBitmapBox = fullBitmap.createPixelBox(OgrePlugin.PixelFormat.PF_A8R8G8B8);
@@ -77,7 +79,7 @@ namespace Medical
             renderTexture.setAutoUpdated(false);
 
             vp = renderTexture.addViewport(window.Camera);
-            vp.setMaterialScheme("FeedbackBuffer");
+            vp.setMaterialScheme(Scheme);
         }
     }
 }
