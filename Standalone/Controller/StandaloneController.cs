@@ -291,7 +291,7 @@ namespace Medical
             layerController = new LayerController();
 
             //Temp, create virtual texture manager
-            //VirtualTextureSceneViewLink link = new VirtualTextureSceneViewLink(this); //Kept alive by delegates inside
+            VirtualTextureSceneViewLink link = new VirtualTextureSceneViewLink(this); //Kept alive by delegates inside
         }
 
         public void createGUI(LayoutChain layoutChain)

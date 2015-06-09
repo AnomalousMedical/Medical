@@ -46,6 +46,11 @@ namespace Medical
             physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", new IntSize2(4096, 4096)));
             physicalTextures.Add("Specular", new PhysicalTexture("Specular", new IntSize2(4096, 4096)));
             physicalTextures.Add("Opacity", new PhysicalTexture("Opacity", new IntSize2(4096, 4096)));
+
+            physicalTextures["NormalMap"].color(Color.Blue);
+            physicalTextures["Diffuse"].color(Color.Red);
+            physicalTextures["Specular"].color(Color.Green);
+            physicalTextures["Opacity"].color(Color.HotPink);
         }
 
         public void Dispose()
@@ -121,7 +126,7 @@ namespace Medical
 
         public void processMaterialRemoved(Object materialSetKey)
         {
-
+            //Need to do something here
         }
 
         internal PhysicalTexture getPhysicalTexture(string name)

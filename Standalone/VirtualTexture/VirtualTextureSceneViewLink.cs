@@ -11,32 +11,26 @@ namespace Medical
 {
     class VirtualTextureSceneViewLink
     {
-        private Dictionary<SceneViewWindow, VirtualTextureManager> virtualTextures = new Dictionary<SceneViewWindow, VirtualTextureManager>(); //Need to dispose this
+        VirtualTextureManager virtualTexture;
         private SceneViewController sceneViewController;
 
         public VirtualTextureSceneViewLink(StandaloneController standaloneController)
         {
             this.sceneViewController = standaloneController.SceneViewController;
             this.sceneViewController.WindowCreated += sceneViewController_WindowCreated;
-            this.sceneViewController.WindowDestroyed += sceneViewController_WindowDestroyed;
 
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
         }
 
-        void sceneViewController_WindowDestroyed(SceneViewWindow window)
-        {
-            virtualTextures.Remove(window);
-        }
-
         void sceneViewController_WindowCreated(SceneViewWindow window)
         {
-            window.RenderingStarted += window_RenderingStarted;
-            virtualTextures.Add(window, new VirtualTextureManager(window));
+            virtualTexture = new VirtualTextureManager(window);
+            this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
         }
 
         void window_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
         {
-            virtualTextures[window].update(window, currentCameraRender);
+            virtualTexture.update(window, currentCameraRender);
         }
 
         void standaloneController_SceneLoaded(SimScene scene)
@@ -57,7 +51,7 @@ namespace Medical
                     {
                         name = name.Substring(0, name.LastIndexOf('_'));
                     }
-                    virtualTextures.Values.First().processMaterialAdded(name, material.getTechnique(0));
+                    virtualTexture.processMaterialAdded(name, material.getTechnique(0));
                 }
             }
         }
