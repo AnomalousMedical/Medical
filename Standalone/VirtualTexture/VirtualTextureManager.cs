@@ -110,16 +110,16 @@ namespace Medical
             frameCount = (frameCount + 1) % updateBufferFrame;
         }
 
-        public void processMaterialAdded(String materialSetKey, Technique technique)
+        public void processMaterialAdded(String materialSetKey, Technique mainTechnique, Technique feedbackTechnique)
         {
             IndirectionTexture indirectionTex;
             if (!indirectionTextures.TryGetValue(materialSetKey, out indirectionTex))
             {
-                indirectionTex = new IndirectionTexture(new IntSize2(2048, 2048), 128, this); //Don't hardcode size
+                indirectionTex = new IndirectionTexture(new IntSize2(2048, 2048), 64, this); //Don't hardcode size
                 indirectionTextures.Add(materialSetKey, indirectionTex);
                 indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
             }
-            indirectionTex.reconfigureTechnique(technique);
+            indirectionTex.reconfigureTechnique(mainTechnique, feedbackTechnique);
         }
 
         public void processMaterialRemoved(Object materialSetKey)

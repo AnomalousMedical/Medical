@@ -54,12 +54,12 @@ namespace Medical
             indirectionTexture.Dispose();
         }
 
-        public void reconfigureTechnique(Technique technique)
+        public void reconfigureTechnique(Technique mainTechnique, Technique feedbackTechnique)
         {
-            int numPasses = technique.getNumPasses();
+            int numPasses = mainTechnique.getNumPasses();
             for(ushort i = 0; i < numPasses; ++i)
             {
-                var pass = technique.getPass(i);
+                var pass = mainTechnique.getPass(i);
                 ushort numTextureUnits = pass.getNumTextureUnitStates();
                 for(ushort t = 0; t < numTextureUnits; ++t)
                 {
@@ -67,6 +67,22 @@ namespace Medical
                     texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
                 }
                 pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
+            }
+
+            numPasses = feedbackTechnique.getNumPasses();
+            for (ushort i = 0; i < numPasses; ++i)
+            {
+                var pass = feedbackTechnique.getPass(i);
+                using (var gpuParams = pass.getFragmentProgramParameters())
+                {
+                    gpuParams.Value.setNamedConstant("virtTexSize", new Vector2(realTextureSize.Width, realTextureSize.Height));
+                    gpuParams.Value.setNamedConstant("mipSampleBias", 0.0f);
+                    gpuParams.Value.setNamedConstant("spaceId", (float)id);
+
+                    //gpuParams.Value.setConstant(new UIntPtr(0), new Vector2(realTextureSize.Width, realTextureSize.Height));
+                    //gpuParams.Value.setConstant(new UIntPtr(1), 0.0f);
+                    //gpuParams.Value.setConstant(new UIntPtr(2), id);
+                }
             }
         }
 
@@ -88,12 +104,12 @@ namespace Medical
                 pageMultipler /= (2 * mip);
             }
             int xPage = (int)(u * pageMultipler.Width);
-            int yPage = (int)(u * pageMultipler.Height);
+            int yPage = (int)(v * pageMultipler.Height);
             int page = yPage * numPages.Width + xPage;
             if(!activePages.Contains(page))
             {
                 activePages.Add(page);
-                Console.WriteLine("Setup page {0} for {1}", page, indirectionTexture.Value.Name);
+                Logging.Log.Debug("Setup page {0} for {1}", page, indirectionTexture.Value.Name);
             }
         }
     }

@@ -52,7 +52,19 @@ namespace Medical
                     {
                         name = name.Substring(0, name.LastIndexOf('_'));
                     }
-                    virtualTexture.processMaterialAdded(name, material.getTechnique(0));
+                    int techniqueCount = material.getNumTechniques();
+                    if(techniqueCount > 0)
+                    {
+                        Technique feedbackTechnique;
+                        for (int i = techniqueCount; i > 0; --i )
+                        {
+                            feedbackTechnique = material.getTechnique((ushort)(i - 1)); //The last one is the most likely feedbackTechnique
+                            if(feedbackTechnique.SchemeName == FeedbackBuffer.Scheme)
+                            {
+                                virtualTexture.processMaterialAdded(name, material.getTechnique(0), feedbackTechnique);
+                            }
+                        }
+                    }
                 }
             }
         }
