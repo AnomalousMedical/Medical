@@ -24,6 +24,7 @@ namespace Medical
 
         Dictionary<String, PhysicalTexture> physicalTextures = new Dictionary<string, PhysicalTexture>();
         Dictionary<String, IndirectionTexture> indirectionTextures = new Dictionary<string, IndirectionTexture>();
+        Dictionary<int, IndirectionTexture> indirectionTexturesById = new Dictionary<int, IndirectionTexture>();
 
         public VirtualTextureManager(SceneViewWindow window)
         {
@@ -36,7 +37,7 @@ namespace Medical
 
             for (int i = 0; i < feedbackBuffers.Length; ++i)
             {
-                feedbackBuffers[i] = new FeedbackBuffer(window);
+                feedbackBuffers[i] = new FeedbackBuffer(window, this);
             }
 
             currentRenderTexture = feedbackBuffers.Length - 1; //Separate rendering from readback
@@ -116,6 +117,7 @@ namespace Medical
             {
                 indirectionTex = new IndirectionTexture(new IntSize2(2048, 2048), 128, this); //Don't hardcode size
                 indirectionTextures.Add(materialSetKey, indirectionTex);
+                indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
             }
             indirectionTex.reconfigureTechnique(technique);
         }
@@ -128,6 +130,11 @@ namespace Medical
         internal PhysicalTexture getPhysicalTexture(string name)
         {
             return physicalTextures[name];
+        }
+
+        internal bool getIndirectionTexture(int id, out IndirectionTexture tex)
+        {
+            return indirectionTexturesById.TryGetValue(id, out tex);
         }
     }
 }

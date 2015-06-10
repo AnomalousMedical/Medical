@@ -19,13 +19,15 @@ namespace Medical
         TexturePtr texture;
         RenderTexture renderTexture;
         HardwarePixelBufferSharedPtr pixelBuffer;
+        VirtualTextureManager virtualTextureManager;
 
         SceneViewWindow window;
         Viewport vp;
 
-        public FeedbackBuffer(SceneViewWindow window)
+        public FeedbackBuffer(SceneViewWindow window, VirtualTextureManager virtualTextureManager)
         {
             this.window = window;
+            this.virtualTextureManager = virtualTextureManager;
         }
 
         public void update()
@@ -44,10 +46,16 @@ namespace Medical
             analyzeBuffer(); //Doing this on main thread for now
         }
 
+        public float Frac(float value)
+        {
+            return value - (float)Math.Truncate(value);
+        }
+
         private unsafe void analyzeBuffer()
         {
             PerformanceMonitor.start("FeedbackBuffer Analyze");
-            int x, y, m, t;
+            float u, v;
+            int m, t;
             for (int slId = 0; slId < fullBitmap.Height; ++slId)
             {
                 var scanline = fullBitmap.GetScanline<RGBQUAD>(slId);
@@ -55,33 +63,19 @@ namespace Medical
                 for (int pxId = 0; pxId < scanline.Count; ++pxId)
                 {
                     var px = slData[pxId];
-                    byte* p = (byte*)&px;
-                    if (px.rgbBlue != 0 || px.rgbGreen != 0 || px.rgbRed != 0 || (px.rgbReserved != 255 && px.rgbReserved != 0))
+                    t = px.rgbReserved; //There is a change of this changing to the wrong texture id, but who knows if would happen (precision issues)
+
+                    IndirectionTexture indirectionTexture;
+                    if(px.uintValue != 0 && virtualTextureManager.getIndirectionTexture(t, out indirectionTexture))
                     {
-//#if READ_RGBA
-                          x = p[0] + ((p[2] & 0x0f) << 8);   
-                          y = p[1] + ((p[2] & 0xf0) << 4);
-                          m = p[3] & 15;
-                          t = p[3] & ~15;
-                          Logging.Log.Debug("{0}, {1} m:{2} t:{3}", x, y, m, t);
-//#else
-//                        x = p[3] + ((p[1] & 0x0f) << 8);
-//                        y = p[2] + ((p[1] & 0xf0) << 4);
-//                        m = p[0] & 15;
-//                        t = p[0] & ~15;
-//#endif
+                        u = px.rgbRed / 255.0f; //This is probably not very good since we are compacting the uvs into 8 bit numbers, but we will try it like this for now
+                        v = px.rgbGreen / 255.0f;
+                        m = px.rgbBlue;
+                        indirectionTexture.processPage(u, v, m);
                     }
                 }
             }
             PerformanceMonitor.stop("FeedbackBuffer Analyze");
-        }
-
-        public FreeImageBitmap MainMemoryBuffer
-        {
-            get
-            {
-                return fullBitmap;
-            }
         }
 
         internal void cameraDestroyed()
@@ -119,6 +113,7 @@ namespace Medical
 
             vp = renderTexture.addViewport(window.Camera);
             vp.setMaterialScheme(Scheme);
+            vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f));
         }
     }
 }

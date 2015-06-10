@@ -12,7 +12,7 @@ namespace Medical
     class IndirectionTexture : IDisposable
     {
         static int currentId = 0;
-        static int maxId = 15;
+        static int maxId = 254;
         static HashSet<int> usedIds = new HashSet<int>();
         static int generateId()
         {
@@ -20,12 +20,17 @@ namespace Medical
             {
                 while (usedIds.Contains(currentId))
                 {
-                    currentId = (currentId + 1) % maxId;
+                    incrementCurrentId();
                 }
                 int retVal = currentId;
-                currentId = (currentId + 1) % maxId;
-                return currentId << 4; //Need to shift by the amount of mips we support
+                incrementCurrentId();
+                return retVal;
             }
+        }
+
+        static void incrementCurrentId()
+        {
+            currentId = (currentId + 1) % maxId;
         }
 
         private int id = generateId();
@@ -33,12 +38,14 @@ namespace Medical
         private IntSize2 indirectionTextureSize;
         private TexturePtr indirectionTexture;
         private VirtualTextureManager virtualTextureManager;
+        private IntSize2 numPages;
 
         public IndirectionTexture(IntSize2 realTextureSize, int textelsPerPage, VirtualTextureManager virtualTextureManager)
         {
             this.virtualTextureManager = virtualTextureManager;
             this.realTextureSize = realTextureSize;
             this.indirectionTextureSize = realTextureSize / textelsPerPage;
+            numPages = realTextureSize / textelsPerPage;
             indirectionTexture = TextureManager.getInstance().createManual("IndirectionTexture" + id, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)indirectionTextureSize.Width, (uint)indirectionTextureSize.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
         }
 
@@ -60,6 +67,33 @@ namespace Medical
                     texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
                 }
                 pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
+            }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        private HashSet<int> activePages = new HashSet<int>();
+
+        internal void processPage(float u, float v, int mip)
+        {
+            IntSize2 pageMultipler = numPages;
+            if(mip != 0)
+            {
+                pageMultipler /= (2 * mip);
+            }
+            int xPage = (int)(u * pageMultipler.Width);
+            int yPage = (int)(u * pageMultipler.Height);
+            int page = yPage * numPages.Width + xPage;
+            if(!activePages.Contains(page))
+            {
+                activePages.Add(page);
+                Console.WriteLine("Setup page {0} for {1}", page, indirectionTexture.Value.Name);
             }
         }
     }
