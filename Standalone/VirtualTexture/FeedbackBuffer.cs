@@ -66,7 +66,7 @@ namespace Medical
                     t = px.rgbReserved; //There is a change of this changing to the wrong texture id, but who knows if would happen (precision issues)
 
                     IndirectionTexture indirectionTexture;
-                    if(px.uintValue != 0 && virtualTextureManager.getIndirectionTexture(t, out indirectionTexture))
+                    if(t != 255 && virtualTextureManager.getIndirectionTexture(t, out indirectionTexture))
                     {
                         u = px.rgbRed / 255.0f; //This is probably not very good since we are compacting the uvs into 8 bit numbers, but we will try it like this for now
                         v = px.rgbGreen / 255.0f;
@@ -113,7 +113,7 @@ namespace Medical
 
             vp = renderTexture.addViewport(window.Camera);
             vp.setMaterialScheme(Scheme);
-            vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f));
+            vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 1.0f));
         }
     }
 }
