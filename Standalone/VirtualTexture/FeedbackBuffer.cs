@@ -1,4 +1,5 @@
 ﻿using Anomalous.GuiFramework.Cameras;
+using Engine;
 using FreeImageAPI;
 using OgrePlugin;
 using System;
@@ -29,12 +30,50 @@ namespace Medical
 
         public void update()
         {
+            PerformanceMonitor.start("FeedbackBuffer Render");
             renderTexture.update();
+            PerformanceMonitor.stop("FeedbackBuffer Render");
         }
 
         public void copyFromGpu()
         {
+            PerformanceMonitor.start("FeedbackBuffer Copy");
             pixelBuffer.Value.blitToMemory(fullBitmapBox);
+            PerformanceMonitor.stop("FeedbackBuffer Copy");
+
+            analyzeBuffer(); //Doing this on main thread for now
+        }
+
+        private unsafe void analyzeBuffer()
+        {
+            PerformanceMonitor.start("FeedbackBuffer Analyze");
+            int x, y, m, t;
+            for (int slId = 0; slId < fullBitmap.Height; ++slId)
+            {
+                var scanline = fullBitmap.GetScanline<RGBQUAD>(slId);
+                RGBQUAD[] slData = scanline.Data;
+                for (int pxId = 0; pxId < scanline.Count; ++pxId)
+                {
+                    var px = slData[pxId];
+                    byte* p = (byte*)&px;
+                    if (px.rgbBlue != 0 || px.rgbGreen != 0 || px.rgbRed != 0 || (px.rgbReserved != 255 && px.rgbReserved != 0))
+                    {
+//#if READ_RGBA
+                          x = p[0] + ((p[2] & 0x0f) << 8);   
+                          y = p[1] + ((p[2] & 0xf0) << 4);
+                          m = p[3] & 15;
+                          t = p[3] & ~15;
+                          Logging.Log.Debug("{0}, {1} m:{2} t:{3}", x, y, m, t);
+//#else
+//                        x = p[3] + ((p[1] & 0x0f) << 8);
+//                        y = p[2] + ((p[1] & 0xf0) << 4);
+//                        m = p[0] & 15;
+//                        t = p[0] & ~15;
+//#endif
+                    }
+                }
+            }
+            PerformanceMonitor.stop("FeedbackBuffer Analyze");
         }
 
         public FreeImageBitmap MainMemoryBuffer

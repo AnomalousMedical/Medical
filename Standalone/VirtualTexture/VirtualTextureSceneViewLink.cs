@@ -25,6 +25,7 @@ namespace Medical
         void sceneViewController_WindowCreated(SceneViewWindow window)
         {
             virtualTexture = new VirtualTextureManager(window);
+            window.RenderingStarted += window_RenderingStarted;
             this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
         }
 

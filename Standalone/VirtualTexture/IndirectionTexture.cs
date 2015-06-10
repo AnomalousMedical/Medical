@@ -12,16 +12,20 @@ namespace Medical
     class IndirectionTexture : IDisposable
     {
         static int currentId = 0;
+        static int maxId = 15;
         static HashSet<int> usedIds = new HashSet<int>();
         static int generateId()
         {
-            while(usedIds.Contains(currentId))
+            lock (usedIds)
             {
-                Interlocked.Increment(ref currentId);
+                while (usedIds.Contains(currentId))
+                {
+                    currentId = (currentId + 1) % maxId;
+                }
+                int retVal = currentId;
+                currentId = (currentId + 1) % maxId;
+                return currentId << 4; //Need to shift by the amount of mips we support
             }
-            int retVal = currentId;
-            Interlocked.Increment(ref currentId);
-            return currentId;
         }
 
         private int id = generateId();

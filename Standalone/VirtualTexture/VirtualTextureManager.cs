@@ -91,18 +91,14 @@ namespace Medical
 
                     //if (readbackThisFrame)
                     {
-                        PerformanceMonitor.start("FeedbackBuffer Copy");
                         feedbackBuffers[currentReadbackTexture].copyFromGpu();
                         currentReadbackTexture = (currentReadbackTexture + 1) % feedbackBuffers.Length;
-                        PerformanceMonitor.stop("FeedbackBuffer Copy");
                         readbackThisFrame = false;
                     }
                     //else
                     {
-                        PerformanceMonitor.start("FeedbackBuffer Render");
                         feedbackBuffers[currentRenderTexture].update();
                         currentRenderTexture = (currentRenderTexture + 1) % feedbackBuffers.Length;
-                        PerformanceMonitor.stop("FeedbackBuffer Render");
                         readbackThisFrame = true;
                     }
 
