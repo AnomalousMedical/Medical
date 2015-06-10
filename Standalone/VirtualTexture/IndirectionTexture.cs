@@ -50,12 +50,12 @@ namespace Medical
             {
                 var pass = technique.getPass(i);
                 ushort numTextureUnits = pass.getNumTextureUnitStates();
-                for(ushort t = 0; i < numTextureUnits; ++i)
+                for(ushort t = 0; t < numTextureUnits; ++t)
                 {
                     var texUnit = pass.getTextureUnitState(t);
                     texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
                 }
-                pass.createTextureUnitState(indirectionTexture.Value.getName());
+                pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
             }
         }
     }

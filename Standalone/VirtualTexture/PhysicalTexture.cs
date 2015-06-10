@@ -43,40 +43,6 @@ namespace Medical
                     }
                 }
             }
-
-            //int intColor = color.toARGB();
-            //using(var buffer = physicalTexture.Value.getBuffer())
-            //{
-            //    buffer.Value.lockBuf(new IntRect(), HardwareBuffer.LockOptions.HBL_NORMAL); //Probably want discard here
-            //    var pixelBox = buffer.Value.CurrentLock;
-            //    byte* data = (byte*)pixelBox.Data;
-
-            //    // now we loop through the whole texture pixels
-            //    for (int i = 0; i < pixelBox.getWidth() / 2; i++)
-            //    {
-            //        for (int j = 0; j < pixelBox.getHeight() / 2; j++)
-            //        {
-            //            if ((i / 64 + j / 64) % 2 == 1)
-            //            {
-            //                *data++ = 255;
-            //                *data++ = 255;
-            //                *data++ = 255;
-            //                *data++ = 255;
-
-            //            }
-            //            else
-            //            {
-            //                *data++ = 255;
-            //                *data++ = 74;
-            //                *data++ = 75;
-            //                *data++ = 165;
-
-            //            }
-            //        }
-            //    }
-
-            //    buffer.Value.unlock();
-            //}
         }
 
         public String TextureName
