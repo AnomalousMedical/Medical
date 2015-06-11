@@ -40,13 +40,13 @@ namespace Medical
         private VirtualTextureManager virtualTextureManager;
         private IntSize2 numPages;
 
-        public IndirectionTexture(IntSize2 realTextureSize, int textelsPerPage, VirtualTextureManager virtualTextureManager)
+        public IndirectionTexture(String materialSetKey, IntSize2 realTextureSize, int textelsPerPage, VirtualTextureManager virtualTextureManager)
         {
             this.virtualTextureManager = virtualTextureManager;
             this.realTextureSize = realTextureSize;
             this.indirectionTextureSize = realTextureSize / textelsPerPage;
             numPages = realTextureSize / textelsPerPage;
-            indirectionTexture = TextureManager.getInstance().createManual("IndirectionTexture" + id, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)indirectionTextureSize.Width, (uint)indirectionTextureSize.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
+            indirectionTexture = TextureManager.getInstance().createManual(String.Format("IndirectionTexture|{0}|{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)indirectionTextureSize.Width, (uint)indirectionTextureSize.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
         }
 
         public void Dispose()
