@@ -173,5 +173,21 @@ namespace Medical
         {
             return indirectionTexturesById.TryGetValue(id, out tex);
         }
+
+        internal void beginPageUpdate()
+        {
+            foreach(var indirectionTex in indirectionTextures.Values)
+            {
+                indirectionTex.beginPageUpdate();
+            }
+        }
+
+        internal void finishPageUpdate()
+        {
+            foreach (var indirectionTex in indirectionTextures.Values)
+            {
+                indirectionTex.finishPageUpdate();
+            }
+        }
     }
 }

@@ -56,6 +56,7 @@ namespace Medical
             PerformanceMonitor.start("FeedbackBuffer Analyze");
             float u, v;
             int m, t;
+            virtualTextureManager.beginPageUpdate();
             for (int slId = 0; slId < fullBitmap.Height; ++slId)
             {
                 var scanline = fullBitmap.GetScanline<RGBQUAD>(slId);
@@ -68,13 +69,16 @@ namespace Medical
                     IndirectionTexture indirectionTexture;
                     if(t != 255 && virtualTextureManager.getIndirectionTexture(t, out indirectionTexture))
                     {
-                        u = px.rgbRed / 255.0f; //This is probably not very good since we are compacting the uvs into 8 bit numbers, but we will try it like this for now
+                        //Here the uvs are crushed to 8 bit, but should be ok since we are just detecting pages 
+                        //with this number this allows 255 pages to be decenly processsed above that data might be lost.
+                        u = px.rgbRed / 255.0f;
                         v = px.rgbGreen / 255.0f;
                         m = px.rgbBlue;
                         indirectionTexture.processPage(u, v, m);
                     }
                 }
             }
+            virtualTextureManager.finishPageUpdate();
             PerformanceMonitor.stop("FeedbackBuffer Analyze");
         }
 

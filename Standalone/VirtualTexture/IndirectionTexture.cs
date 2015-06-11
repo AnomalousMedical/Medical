@@ -95,6 +95,12 @@ namespace Medical
         }
 
         private HashSet<int> activePages = new HashSet<int>();
+        private HashSet<int> visibleThisUpdate = new HashSet<int>();
+
+        internal void beginPageUpdate()
+        {
+            visibleThisUpdate.Clear();
+        }
 
         internal void processPage(float u, float v, int mip)
         {
@@ -103,10 +109,28 @@ namespace Medical
             int xPage = (int)(u * mipLevelNumPages.Width);
             int yPage = (int)(v * mipLevelNumPages.Height);
             int page = yPage * numPages.Width + xPage;
+            visibleThisUpdate.Add(page);
             if(!activePages.Contains(page))
             {
                 activePages.Add(page);
                 Logging.Log.Debug("Setup page {0} (mip {1}) for {2} pages for mip level {3} total {4}", page, mip, indirectionTexture.Value.Name, mipLevelNumPages.Width, numPages.Width);
+            }
+        }
+
+        internal void finishPageUpdate()
+        {
+            List<int> removedPages = new List<int>();
+            foreach(int page in activePages)
+            {
+                if(!visibleThisUpdate.Contains(page))
+                {
+                    removedPages.Add(page);
+                }
+            }
+            foreach(int page in removedPages)
+            {
+                activePages.Remove(page);
+                Logging.Log.Debug("Removed page {0} for {1}", page, indirectionTexture.Value.Name);
             }
         }
     }
