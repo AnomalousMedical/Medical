@@ -40,6 +40,8 @@ namespace Medical
         private IntSize2 numPages;
         private int highestMip = 0; //The highest mip level that does not fall below one page in size
         private FreeImageAPI.FreeImageBitmap fiBitmap; //Can we do this without this bitmap (might be ok to keep, but will be using 2x as much memory)
+        private HardwarePixelBufferSharedPtr buffer;
+        private PixelBox pixelBox;
 
         public IndirectionTexture(String materialSetKey, IntSize2 realTextureSize, int textelsPerPage, VirtualTextureManager virtualTextureManager)
         {
@@ -49,6 +51,11 @@ namespace Medical
             for (highestMip = 0; realTextureSize.Width >> highestMip > textelsPerPage && realTextureSize.Height >> highestMip > textelsPerPage; ++highestMip) { }
             indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)numPages.Width, (uint)numPages.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
             fiBitmap = new FreeImageAPI.FreeImageBitmap((int)indirectionTexture.Value.Width, (int)indirectionTexture.Value.Height, FreeImageAPI.PixelFormat.Format32bppArgb);
+            buffer = indirectionTexture.Value.getBuffer();
+            unsafe
+            {
+                pixelBox = new PixelBox(0, 0, fiBitmap.Width, fiBitmap.Height, OgreDrawingUtility.getOgreFormat(fiBitmap.PixelFormat), fiBitmap.GetScanlinePointer(0).ToPointer());
+            }
 
             //temp, always want to force lowest mip level for now
             highestMip = 0;
@@ -56,7 +63,10 @@ namespace Medical
 
         public void Dispose()
         {
+            pixelBox.Dispose();
+            buffer.Dispose();
             indirectionTexture.Dispose();
+            fiBitmap.Dispose();
         }
 
         public void reconfigureTechnique(Technique mainTechnique, Technique feedbackTechnique)
@@ -99,6 +109,7 @@ namespace Medical
         private List<VTexPage> visibleThisUpdate = new List<VTexPage>();
         private List<VTexPage> removedPages = new List<VTexPage>();
         private List<VTexPage> addedPages = new List<VTexPage>();
+        private bool updateTextureOnApply = false;
 
         internal void beginPageUpdate()
         {
@@ -139,15 +150,11 @@ namespace Medical
                     removedPages.Add(page);
                 }
             }
-        }
 
-        /// <summary>
-        /// Apply page changes to the texture, this writes to the gpu so it must be called from the render thread.
-        /// </summary>
-        internal unsafe void applyPageChanges()
-        {
             if (addedPages.Count > 0 || removedPages.Count > 0)
             {
+                updateTextureOnApply = true;
+
                 var activeColor = new FreeImageAPI.Color();
                 activeColor.R = 0;
                 activeColor.G = 255;
@@ -172,14 +179,18 @@ namespace Medical
                     //Logging.Log.Debug("Added page {0} for {1}", page, indirectionTexture.Value.Name);
                     fiBitmap.SetPixel(page.x, page.y, activeColor);
                 }
+            }
+        }
 
-                using (var buffer = indirectionTexture.Value.getBuffer())
-                {
-                    using (PixelBox pixelBox = new PixelBox(0, 0, fiBitmap.Width, fiBitmap.Height, OgreDrawingUtility.getOgreFormat(fiBitmap.PixelFormat), fiBitmap.GetScanlinePointer(0).ToPointer()))
-                    {
-                        buffer.Value.blitFromMemory(pixelBox, 0, 0, (int)indirectionTexture.Value.Width, (int)indirectionTexture.Value.Height);
-                    }
-                }
+        /// <summary>
+        /// Apply page changes to the texture, this writes to the gpu so it must be called from the render thread.
+        /// </summary>
+        internal unsafe void applyPageChanges()
+        {
+            if (updateTextureOnApply)
+            {
+                buffer.Value.blitFromMemory(pixelBox, 0, 0, (int)indirectionTexture.Value.Width, (int)indirectionTexture.Value.Height);
+                updateTextureOnApply = false;
             }
         }
 

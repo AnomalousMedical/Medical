@@ -190,11 +190,19 @@ namespace Medical
 
         internal void finishPageUpdate()
         {
+            PerformanceMonitor.start("Finish Page Update");
             foreach (var indirectionTex in indirectionTextures.Values)
             {
                 indirectionTex.finishPageUpdate();
+            }
+            PerformanceMonitor.stop("Finish Page Update");
+
+            PerformanceMonitor.start("Apply Page Update");
+            foreach (var indirectionTex in indirectionTextures.Values)
+            {
                 indirectionTex.applyPageChanges();
             }
+            PerformanceMonitor.stop("Apply Page Update");
         }
 
         public IEnumerable<string> TextureNames
