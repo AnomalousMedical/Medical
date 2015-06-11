@@ -27,6 +27,7 @@ namespace Developer
         private ShowLibRocketDebugger libRocketDebugger;
         private ChangeRenderingMode changeRenderingMode;
         private DebugVisualizer debugVisualizer;
+        private VirtualTextureDebugger virtualTextureDebugger;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -45,6 +46,7 @@ namespace Developer
             discControl.Dispose();
             gridProperties.Dispose();
             performanceGui.Dispose();
+            IDisposableUtil.DisposeIfNotNull(virtualTextureDebugger);
         }
 
         public void loadGUIResources()
@@ -130,6 +132,13 @@ namespace Developer
                     MainWindow.Instance.toggleBorderless();
                 });
                 taskController.addTask(toggleBorderless);
+            }
+
+            if (standaloneController.VirtualTextureManager != null)
+            {
+                virtualTextureDebugger = new VirtualTextureDebugger(standaloneController.VirtualTextureManager);
+                guiManager.addManagedDialog(virtualTextureDebugger);
+                taskController.addTask(new MDIDialogOpenTask(virtualTextureDebugger, "Developer.VirtualTextureDebugger", "Virtual Texture Debugger", CommonResources.NoIcon, TaskMenuCategories.Developer));
             }
         }
 

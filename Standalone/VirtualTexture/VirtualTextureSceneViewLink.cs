@@ -9,23 +9,32 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class VirtualTextureSceneViewLink
+    public class VirtualTextureSceneViewLink : IDisposable
     {
-        VirtualTextureManager virtualTexture;
+        private VirtualTextureManager virtualTexture;
         private SceneViewController sceneViewController;
+        private StandaloneController standaloneController;
 
         public VirtualTextureSceneViewLink(StandaloneController standaloneController)
         {
             this.sceneViewController = standaloneController.SceneViewController;
             this.sceneViewController.WindowCreated += sceneViewController_WindowCreated;
+            this.standaloneController = standaloneController;
 
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
+        }
+
+        public void Dispose()
+        {
+            this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
+            standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
+            virtualTexture.Dispose();
         }
 
         void sceneViewController_WindowCreated(SceneViewWindow window)
         {
             virtualTexture = new VirtualTextureManager(window);
-            window.RenderingStarted += window_RenderingStarted;
+            window.RenderingStarted += window_RenderingStarted; //This leaks when disposed, need to track windows and remove these events
             this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
         }
 
@@ -66,6 +75,14 @@ namespace Medical
                         }
                     }
                 }
+            }
+        }
+
+        public VirtualTextureManager VirtualTextureManager
+        {
+            get
+            {
+                return virtualTexture;
             }
         }
     }

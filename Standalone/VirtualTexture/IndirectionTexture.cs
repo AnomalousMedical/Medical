@@ -39,6 +39,7 @@ namespace Medical
         private TexturePtr indirectionTexture;
         private VirtualTextureManager virtualTextureManager;
         private IntSize2 numPages;
+        private int highestMip = 0; //The highest mip level that does not fall below one page in size
 
         public IndirectionTexture(String materialSetKey, IntSize2 realTextureSize, int textelsPerPage, VirtualTextureManager virtualTextureManager)
         {
@@ -46,6 +47,7 @@ namespace Medical
             this.realTextureSize = realTextureSize;
             this.indirectionTextureSize = realTextureSize / textelsPerPage;
             numPages = realTextureSize / textelsPerPage;
+            for (highestMip = 0; realTextureSize.Width >> highestMip > textelsPerPage && realTextureSize.Height >> highestMip > textelsPerPage; ++highestMip) { }
             indirectionTexture = TextureManager.getInstance().createManual(String.Format("IndirectionTexture|{0}|{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)indirectionTextureSize.Width, (uint)indirectionTextureSize.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
         }
 
@@ -104,6 +106,10 @@ namespace Medical
 
         internal void processPage(float u, float v, int mip)
         {
+            if(mip > highestMip)
+            {
+                mip = highestMip;
+            }
             IntSize2 mipLevelNumPages = numPages;
             mipLevelNumPages /= 1 << mip;
             int xPage = (int)(u * mipLevelNumPages.Width);
@@ -113,7 +119,7 @@ namespace Medical
             if(!activePages.Contains(page))
             {
                 activePages.Add(page);
-                Logging.Log.Debug("Setup page {0} (mip {1}) for {2} pages for mip level {3} total {4}", page, mip, indirectionTexture.Value.Name, mipLevelNumPages.Width, numPages.Width);
+                Logging.Log.Debug("Added page {0} (mip {1}) for {2} pages for mip level {3} total {4}", page, mip, indirectionTexture.Value.Name, mipLevelNumPages.Width, numPages.Width);
             }
         }
 
@@ -131,6 +137,14 @@ namespace Medical
             {
                 activePages.Remove(page);
                 Logging.Log.Debug("Removed page {0} for {1}", page, indirectionTexture.Value.Name);
+            }
+        }
+
+        public String TextureName
+        {
+            get
+            {
+                return indirectionTexture.Value.Name;
             }
         }
     }

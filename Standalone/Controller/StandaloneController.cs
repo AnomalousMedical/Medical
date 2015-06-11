@@ -60,6 +60,7 @@ namespace Medical
         private SceneStatsDisplayManager sceneStatsDisplayManager;
         private SceneViewLightManager lightManager;
         private LayerController layerController;
+        private VirtualTextureSceneViewLink virtualTextureSceneViewLink;
 
         //GUI
         private GUIManager guiManager;
@@ -143,6 +144,7 @@ namespace Medical
         {
             saveConfiguration();
             unloadScene();
+            IDisposableUtil.DisposeIfNotNull(virtualTextureSceneViewLink);
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
 			IDisposableUtil.DisposeIfNotNull(downloadController);
@@ -291,7 +293,7 @@ namespace Medical
             layerController = new LayerController();
 
             //Temp, create virtual texture manager
-            VirtualTextureSceneViewLink link = new VirtualTextureSceneViewLink(this); //Kept alive by delegates inside
+            virtualTextureSceneViewLink = new VirtualTextureSceneViewLink(this);
         }
 
         public void createGUI(LayoutChain layoutChain)
@@ -615,6 +617,14 @@ namespace Medical
             get
             {
                 return mainWindow;
+            }
+        }
+
+        public VirtualTextureManager VirtualTextureManager
+        {
+            get
+            {
+                return virtualTextureSceneViewLink != null ? virtualTextureSceneViewLink.VirtualTextureManager : null;
             }
         }
 

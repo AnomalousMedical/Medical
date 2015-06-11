@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class VirtualTextureManager : IDisposable
+    public class VirtualTextureManager : IDisposable
     {
         public const String ResourceGroup = "VirtualTextureGroup";
 
@@ -37,7 +37,7 @@ namespace Medical
 
             for (int i = 0; i < feedbackBuffers.Length; ++i)
             {
-                feedbackBuffers[i] = new FeedbackBuffer(window, this);
+                feedbackBuffers[i] = new FeedbackBuffer(window, this, i);
             }
 
             currentRenderTexture = feedbackBuffers.Length - 1; //Separate rendering from readback
@@ -60,6 +60,11 @@ namespace Medical
             {
                 physicalTexture.Dispose();
             }
+            //This do not need to be disposed for now since the window cleans them up, but we want to remove that code if possible.
+            //foreach (var item in feedbackBuffers)
+            //{
+            //    item.Dispose();
+            //}
             foreach (var indirectionTexture in indirectionTextures.Values)
             {
                 indirectionTexture.Dispose();
@@ -187,6 +192,28 @@ namespace Medical
             foreach (var indirectionTex in indirectionTextures.Values)
             {
                 indirectionTex.finishPageUpdate();
+            }
+        }
+
+        public IEnumerable<string> TextureNames
+        {
+            get
+            {
+                foreach (var item in physicalTextures.Values)
+                {
+                    yield return item.TextureName;
+                }
+                foreach(var item in feedbackBuffers)
+                {
+                    if(item.TextureName != null)
+                    {
+                        yield return item.TextureName;
+                    }
+                }
+                foreach (var item in indirectionTextures.Values)
+                {
+                    yield return item.TextureName;
+                }
             }
         }
     }

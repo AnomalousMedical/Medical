@@ -20,12 +20,14 @@ namespace Medical
         RenderTexture renderTexture;
         HardwarePixelBufferSharedPtr pixelBuffer;
         VirtualTextureManager virtualTextureManager;
+        int id;
 
         SceneViewWindow window;
         Viewport vp;
 
-        public FeedbackBuffer(SceneViewWindow window, VirtualTextureManager virtualTextureManager)
+        public FeedbackBuffer(SceneViewWindow window, VirtualTextureManager virtualTextureManager, int id)
         {
+            this.id = id;
             this.window = window;
             this.virtualTextureManager = virtualTextureManager;
         }
@@ -49,6 +51,14 @@ namespace Medical
         public float Frac(float value)
         {
             return value - (float)Math.Truncate(value);
+        }
+
+        public String TextureName
+        {
+            get
+            {
+                return "FeedbackBuffer" + id;
+            }
         }
 
         private unsafe void analyzeBuffer()
@@ -87,6 +97,7 @@ namespace Medical
             renderTexture.destroyViewport(vp);
             vp = null;
             renderTexture.Dispose();
+            renderTexture = null;
             pixelBuffer.Dispose();
             texture.Dispose();
             fullBitmapBox.Dispose();
@@ -106,7 +117,7 @@ namespace Medical
                 height = 10;
             }
 
-            texture = TextureManager.getInstance().createManual("FeedbackBuffer", VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
+            texture = TextureManager.getInstance().createManual(TextureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
 
             fullBitmap = new FreeImageBitmap((int)texture.Value.Width, (int)texture.Value.Height, FreeImageAPI.PixelFormat.Format32bppRgb);
             fullBitmapBox = fullBitmap.createPixelBox(OgrePlugin.PixelFormat.PF_A8R8G8B8);
