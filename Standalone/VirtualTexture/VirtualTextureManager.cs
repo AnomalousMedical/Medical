@@ -16,7 +16,7 @@ namespace Medical
 
         FeedbackBuffer[] feedbackBuffers = new FeedbackBuffer[2];
         int frameCount = 0;
-        int updateBufferFrame = 1;
+        int updateBufferFrame = 5;
         bool readbackThisFrame = false;
         int currentRenderTexture = 0;
         int currentReadbackTexture = 0;
@@ -95,13 +95,13 @@ namespace Medical
                 {
                     allowImageRender = false;
 
-                    //if (readbackThisFrame)
+                    if (readbackThisFrame)
                     {
                         feedbackBuffers[currentReadbackTexture].copyFromGpu();
                         currentReadbackTexture = (currentReadbackTexture + 1) % feedbackBuffers.Length;
                         readbackThisFrame = false;
                     }
-                    //else
+                    else
                     {
                         feedbackBuffers[currentRenderTexture].update();
                         currentRenderTexture = (currentRenderTexture + 1) % feedbackBuffers.Length;
