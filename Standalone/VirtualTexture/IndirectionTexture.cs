@@ -48,14 +48,15 @@ namespace Medical
         private List<VTexPage> removedPages = new List<VTexPage>();
         private List<VTexPage> addedPages = new List<VTexPage>();
         private bool updateTextureOnApply = false;
+        private Dictionary<String, String> originalTextureUnits;
 
-        public IndirectionTexture(String materialSetKey, IntSize2 realTextureSize, int textelsPerPage, VirtualTextureManager virtualTextureManager)
+        public IndirectionTexture(String materialSetKey, IntSize2 realTextureSize, int texelsPerPage, VirtualTextureManager virtualTextureManager)
         {
             this.virtualTextureManager = virtualTextureManager;
             this.realTextureSize = realTextureSize;
-            numPages = realTextureSize / textelsPerPage;
-            for (highestMip = 0; realTextureSize.Width >> highestMip > textelsPerPage && realTextureSize.Height >> highestMip > textelsPerPage; ++highestMip) { }
-            indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)numPages.Width, (uint)numPages.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
+            numPages = realTextureSize / texelsPerPage;
+            for (highestMip = 0; realTextureSize.Width >> highestMip > texelsPerPage && realTextureSize.Height >> highestMip > texelsPerPage; ++highestMip) { }
+            indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)numPages.Width, (uint)numPages.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY_DISCARDABLE, null, false, 0);
             fiBitmap = new FreeImageAPI.FreeImageBitmap((int)indirectionTexture.Value.Width, (int)indirectionTexture.Value.Height, FreeImageAPI.PixelFormat.Format32bppArgb);
             buffer = indirectionTexture.Value.getBuffer();
             unsafe
@@ -77,6 +78,11 @@ namespace Medical
 
         public void reconfigureTechnique(Technique mainTechnique, Technique feedbackTechnique)
         {
+            bool setupOriginalTextureUnits = originalTextureUnits == null;
+            if(setupOriginalTextureUnits)
+            {
+                originalTextureUnits = new Dictionary<string, string>();
+            }
             int numPasses = mainTechnique.getNumPasses();
             for(ushort i = 0; i < numPasses; ++i)
             {
@@ -85,6 +91,10 @@ namespace Medical
                 for(ushort t = 0; t < numTextureUnits; ++t)
                 {
                     var texUnit = pass.getTextureUnitState(t);
+                    if (setupOriginalTextureUnits)
+                    {
+                        originalTextureUnits[texUnit.Name] = texUnit.TextureName;
+                    }
                     texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
                 }
                 pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
@@ -125,7 +135,7 @@ namespace Medical
                 mip = highestMip;
             }
             IntSize2 mipLevelNumPages = numPages / (1 << mip);
-            VTexPage page = new VTexPage((int)(u * mipLevelNumPages.Width), (int)(v * mipLevelNumPages.Height), mip);
+            VTexPage page = new VTexPage((int)(u * mipLevelNumPages.Width), (int)(v * mipLevelNumPages.Height), mip, id);
             if(page.x == mipLevelNumPages.Width)
             {
                 --page.x;
@@ -185,7 +195,7 @@ namespace Medical
         /// <summary>
         /// Apply page changes to the texture, this writes to the gpu so it must be called from the render thread.
         /// </summary>
-        internal unsafe void applyPageChanges()
+        internal void applyPageChanges()
         {
             if (updateTextureOnApply)
             {
@@ -202,11 +212,19 @@ namespace Medical
             }
         }
 
-        public IEnumerable<VTexPage> ActivePages
+        internal IReadOnlyList<VTexPage> ActivePages
         {
             get
             {
                 return activePages;
+            }
+        }
+
+        internal IReadOnlyDictionary<String, String> OriginalTextures
+        {
+            get
+            {
+                return originalTextureUnits;
             }
         }
     }

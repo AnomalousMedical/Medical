@@ -129,6 +129,7 @@ namespace Medical
             vp = renderTexture.addViewport(window.Camera);
             vp.setMaterialScheme(Scheme);
             vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 1.0f));
+            vp.clear();
         }
     }
 }

@@ -44,10 +44,10 @@ namespace Medical
             currentRenderTexture = feedbackBuffers.Length - 1; //Separate rendering from readback
 
             //Create physical textures
-            physicalTextures.Add("NormalMap", new PhysicalTexture("NormalMap", new IntSize2(4096, 4096)));
-            physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", new IntSize2(4096, 4096)));
-            physicalTextures.Add("Specular", new PhysicalTexture("Specular", new IntSize2(4096, 4096)));
-            physicalTextures.Add("Opacity", new PhysicalTexture("Opacity", new IntSize2(4096, 4096)));
+            physicalTextures.Add("NormalMap", new PhysicalTexture("NormalMap", new IntSize2(4096, 4096), this, texelsPerPage));
+            physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", new IntSize2(4096, 4096), this, texelsPerPage));
+            physicalTextures.Add("Specular", new PhysicalTexture("Specular", new IntSize2(4096, 4096), this, texelsPerPage));
+            physicalTextures.Add("Opacity", new PhysicalTexture("Opacity", new IntSize2(4096, 4096), this, texelsPerPage));
 
             physicalTextures["NormalMap"].color(Color.Blue);
             physicalTextures["Diffuse"].color(Color.Red);
@@ -155,10 +155,6 @@ namespace Medical
                             size.Height = (int)texture.Value.Height;
                             return true;
                         }
-                        else
-                        {
-                            
-                        }
                     }
                 }
             }
@@ -203,6 +199,13 @@ namespace Medical
                 indirectionTex.applyPageChanges();
             }
             PerformanceMonitor.stop("Apply Page Update");
+
+            PerformanceMonitor.start("Update Physical Texture");
+            foreach(var physTex in physicalTextures.Values)
+            {
+                physTex.loadPages();
+            }
+            PerformanceMonitor.stop("Update Physical Texture");
         }
 
         public IEnumerable<string> TextureNames
@@ -224,6 +227,14 @@ namespace Medical
                 {
                     yield return item.TextureName;
                 }
+            }
+        }
+
+        internal IEnumerable<IndirectionTexture> IndirectionTextures
+        {
+            get
+            {
+                return indirectionTextures.Values;
             }
         }
     }
