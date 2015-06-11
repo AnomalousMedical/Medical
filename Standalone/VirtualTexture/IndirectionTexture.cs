@@ -83,10 +83,6 @@ namespace Medical
                     gpuParams.Value.setNamedConstant("virtTexSize", new Vector2(realTextureSize.Width, realTextureSize.Height));
                     gpuParams.Value.setNamedConstant("mipSampleBias", 0.0f);
                     gpuParams.Value.setNamedConstant("spaceId", (float)id);
-
-                    //gpuParams.Value.setConstant(new UIntPtr(0), new Vector2(realTextureSize.Width, realTextureSize.Height));
-                    //gpuParams.Value.setConstant(new UIntPtr(1), 0.0f);
-                    //gpuParams.Value.setConstant(new UIntPtr(2), id);
                 }
             }
         }
@@ -99,39 +95,10 @@ namespace Medical
             }
         }
 
-        private List<Page> activePages = new List<Page>();
-        private List<Page> visibleThisUpdate = new List<Page>();
-        private List<Page> removedPages = new List<Page>();
-        private List<Page> addedPages = new List<Page>();
-
-        struct Page
-        {
-            public Page(int x, int y, int mip)
-            {
-                this.x = x;
-                this.y = y;
-                this.mip = mip;
-            }
-
-            public int x;
-            public int y;
-            public int mip;
-
-            public static bool operator ==(Page p1, Page p2)
-            {
-                return p1.x == p2.x && p1.y == p2.y && p1.mip == p2.mip;
-            }
-
-            public static bool operator !=(Page p1, Page p2)
-            {
-                return !(p1.x == p2.x && p1.y == p2.y && p1.mip == p2.mip);
-            }
-
-            public override bool Equals(object obj)
-            {
-                return obj is Page && this == (Page)obj;
-            }
-        }
+        private List<VTexPage> activePages = new List<VTexPage>();
+        private List<VTexPage> visibleThisUpdate = new List<VTexPage>();
+        private List<VTexPage> removedPages = new List<VTexPage>();
+        private List<VTexPage> addedPages = new List<VTexPage>();
 
         internal void beginPageUpdate()
         {
@@ -147,7 +114,7 @@ namespace Medical
                 mip = highestMip;
             }
             IntSize2 mipLevelNumPages = numPages / (1 << mip);
-            Page page = new Page((int)(u * mipLevelNumPages.Width), (int)(v * mipLevelNumPages.Height), mip);
+            VTexPage page = new VTexPage((int)(u * mipLevelNumPages.Width), (int)(v * mipLevelNumPages.Height), mip);
             if(page.x == mipLevelNumPages.Width)
             {
                 --page.x;
@@ -221,6 +188,14 @@ namespace Medical
             get
             {
                 return indirectionTexture.Value.Name;
+            }
+        }
+
+        public IEnumerable<VTexPage> ActivePages
+        {
+            get
+            {
+                return activePages;
             }
         }
     }
