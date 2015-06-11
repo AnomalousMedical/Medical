@@ -146,8 +146,16 @@ namespace Medical
             {
                 mip = highestMip;
             }
-            IntSize2 mipLevelNumPages = numPages / (1 << mip) - 1;
+            IntSize2 mipLevelNumPages = numPages / (1 << mip);
             Page page = new Page((int)(u * mipLevelNumPages.Width), (int)(v * mipLevelNumPages.Height), mip);
+            if(page.x == mipLevelNumPages.Width)
+            {
+                --page.x;
+            }
+            if (page.y == mipLevelNumPages.Height)
+            {
+                --page.y;
+            }
             visibleThisUpdate.Add(page);
             if(!activePages.Contains(page))
             {
