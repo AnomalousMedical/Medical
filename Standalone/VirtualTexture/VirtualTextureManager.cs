@@ -192,6 +192,7 @@ namespace Medical
             foreach (var indirectionTex in indirectionTextures.Values)
             {
                 indirectionTex.finishPageUpdate();
+                indirectionTex.applyPageChanges();
             }
         }
 

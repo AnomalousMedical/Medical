@@ -35,7 +35,6 @@ namespace Medical
 
         private int id = generateId();
         private IntSize2 realTextureSize;
-        private IntSize2 indirectionTextureSize;
         private TexturePtr indirectionTexture;
         private VirtualTextureManager virtualTextureManager;
         private IntSize2 numPages;
@@ -45,10 +44,12 @@ namespace Medical
         {
             this.virtualTextureManager = virtualTextureManager;
             this.realTextureSize = realTextureSize;
-            this.indirectionTextureSize = realTextureSize / textelsPerPage;
             numPages = realTextureSize / textelsPerPage;
             for (highestMip = 0; realTextureSize.Width >> highestMip > textelsPerPage && realTextureSize.Height >> highestMip > textelsPerPage; ++highestMip) { }
-            indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)indirectionTextureSize.Width, (uint)indirectionTextureSize.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
+            indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)numPages.Width, (uint)numPages.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
+
+            //temp, always want to force lowest mip level for now
+            highestMip = 0;
         }
 
         public void Dispose()
@@ -98,10 +99,14 @@ namespace Medical
 
         private HashSet<int> activePages = new HashSet<int>();
         private HashSet<int> visibleThisUpdate = new HashSet<int>();
+        private List<int> removedPages = new List<int>();
+        private List<int> addedPages = new List<int>();
 
         internal void beginPageUpdate()
         {
             visibleThisUpdate.Clear();
+            removedPages.Clear();
+            addedPages.Clear();
         }
 
         internal void processPage(float u, float v, int mip)
@@ -110,22 +115,19 @@ namespace Medical
             {
                 mip = highestMip;
             }
-            IntSize2 mipLevelNumPages = numPages;
-            mipLevelNumPages /= 1 << mip;
+            IntSize2 mipLevelNumPages = numPages / (1 << mip) - 1;
             int xPage = (int)(u * mipLevelNumPages.Width);
             int yPage = (int)(v * mipLevelNumPages.Height);
-            int page = yPage * numPages.Width + xPage;
+            int page = yPage * mipLevelNumPages.Width + xPage;
             visibleThisUpdate.Add(page);
             if(!activePages.Contains(page))
             {
-                activePages.Add(page);
-                Logging.Log.Debug("Added page {0} (mip {1}) for {2} pages for mip level {3} total {4}", page, mip, indirectionTexture.Value.Name, mipLevelNumPages.Width, numPages.Width);
+                addedPages.Add(page);
             }
         }
 
         internal void finishPageUpdate()
         {
-            List<int> removedPages = new List<int>();
             foreach(int page in activePages)
             {
                 if(!visibleThisUpdate.Contains(page))
@@ -133,10 +135,50 @@ namespace Medical
                     removedPages.Add(page);
                 }
             }
-            foreach(int page in removedPages)
+        }
+
+        /// <summary>
+        /// Apply page changes to the texture, this writes to the gpu so it must be called from the render thread.
+        /// </summary>
+        internal unsafe void applyPageChanges()
+        {
+            if (addedPages.Count > 0 || removedPages.Count > 0)
             {
-                activePages.Remove(page);
-                Logging.Log.Debug("Removed page {0} for {1}", page, indirectionTexture.Value.Name);
+                using (var fiBitmap = new FreeImageAPI.FreeImageBitmap((int)indirectionTexture.Value.Width, (int)indirectionTexture.Value.Height, FreeImageAPI.PixelFormat.Format32bppArgb))
+                {
+                    var activeColor = new FreeImageAPI.Color();
+                    activeColor.R = 0;
+                    activeColor.G = 255;
+                    activeColor.B = 0;
+                    activeColor.A = 255;
+
+                    var inactiveColor = new FreeImageAPI.Color();
+                    activeColor.R = 255;
+                    activeColor.G = 0;
+                    activeColor.B = 0;
+                    activeColor.A = 255;
+
+                    foreach (int page in removedPages)
+                    {
+                        activePages.Remove(page);
+                        Logging.Log.Debug("Removed page {0} for {1}", page, indirectionTexture.Value.Name);
+                        fiBitmap.SetPixel((int)(page % indirectionTexture.Value.Width), (int)(page / indirectionTexture.Value.Height), inactiveColor);
+                    }
+                    foreach (int page in addedPages)
+                    {
+                        activePages.Add(page);
+                        Logging.Log.Debug("Added page {0} for {1}", page, indirectionTexture.Value.Name);
+                        fiBitmap.SetPixel((int)(page % indirectionTexture.Value.Width), (int)(page / indirectionTexture.Value.Height), activeColor);
+                    }
+
+                    using (var buffer = indirectionTexture.Value.getBuffer())
+                    {
+                        using (PixelBox pixelBox = new PixelBox(0, 0, fiBitmap.Width, fiBitmap.Height, OgreDrawingUtility.getOgreFormat(fiBitmap.PixelFormat), fiBitmap.GetScanlinePointer(0).ToPointer()))
+                        {
+                            buffer.Value.blitFromMemory(pixelBox, 0, 0, (int)indirectionTexture.Value.Width, (int)indirectionTexture.Value.Height);
+                        }
+                    }
+                }
             }
         }
 
