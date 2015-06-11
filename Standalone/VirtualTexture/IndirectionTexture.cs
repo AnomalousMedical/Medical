@@ -39,9 +39,15 @@ namespace Medical
         private VirtualTextureManager virtualTextureManager;
         private IntSize2 numPages;
         private int highestMip = 0; //The highest mip level that does not fall below one page in size
-        private FreeImageAPI.FreeImageBitmap fiBitmap; //Can we do this without this bitmap (might be ok to keep, but will be using 2x as much memory)
+        private FreeImageAPI.FreeImageBitmap fiBitmap; //Can we do this without this bitmap? (might be ok to keep, but will be using 2x as much memory, however, allows for background modification, could even double buffer)
         private HardwarePixelBufferSharedPtr buffer;
         private PixelBox pixelBox;
+
+        private List<VTexPage> activePages = new List<VTexPage>();
+        private List<VTexPage> visibleThisUpdate = new List<VTexPage>();
+        private List<VTexPage> removedPages = new List<VTexPage>();
+        private List<VTexPage> addedPages = new List<VTexPage>();
+        private bool updateTextureOnApply = false;
 
         public IndirectionTexture(String materialSetKey, IntSize2 realTextureSize, int textelsPerPage, VirtualTextureManager virtualTextureManager)
         {
@@ -104,12 +110,6 @@ namespace Medical
                 return id;
             }
         }
-
-        private List<VTexPage> activePages = new List<VTexPage>();
-        private List<VTexPage> visibleThisUpdate = new List<VTexPage>();
-        private List<VTexPage> removedPages = new List<VTexPage>();
-        private List<VTexPage> addedPages = new List<VTexPage>();
-        private bool updateTextureOnApply = false;
 
         internal void beginPageUpdate()
         {
