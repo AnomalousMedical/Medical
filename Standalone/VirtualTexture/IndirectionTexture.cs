@@ -98,18 +98,15 @@ namespace Medical
 
         internal void processPage(float u, float v, int mip)
         {
-            IntSize2 pageMultipler = numPages;
-            if(mip != 0)
-            {
-                pageMultipler /= (2 * mip);
-            }
-            int xPage = (int)(u * pageMultipler.Width);
-            int yPage = (int)(v * pageMultipler.Height);
+            IntSize2 mipLevelNumPages = numPages;
+            mipLevelNumPages /= 1 << mip;
+            int xPage = (int)(u * mipLevelNumPages.Width);
+            int yPage = (int)(v * mipLevelNumPages.Height);
             int page = yPage * numPages.Width + xPage;
             if(!activePages.Contains(page))
             {
                 activePages.Add(page);
-                Logging.Log.Debug("Setup page {0} for {1}", page, indirectionTexture.Value.Name);
+                Logging.Log.Debug("Setup page {0} (mip {1}) for {2} pages for mip level {3} total {4}", page, mip, indirectionTexture.Value.Name, mipLevelNumPages.Width, numPages.Width);
             }
         }
     }
