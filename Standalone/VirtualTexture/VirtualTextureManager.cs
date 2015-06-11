@@ -21,6 +21,7 @@ namespace Medical
         int currentRenderTexture = 0;
         int currentReadbackTexture = 0;
         bool allowImageRender = true;
+        int texelsPerPage = 64;
 
         Dictionary<String, PhysicalTexture> physicalTextures = new Dictionary<string, PhysicalTexture>();
         Dictionary<String, IndirectionTexture> indirectionTextures = new Dictionary<string, IndirectionTexture>();
@@ -121,9 +122,9 @@ namespace Medical
             if (!indirectionTextures.TryGetValue(materialSetKey, out indirectionTex))
             {
                 IntSize2 textureSize = new IntSize2();
-                if (getTextureSize(mainTechnique, ref textureSize))
+                if (getTextureSize(mainTechnique, ref textureSize) && textureSize.Width > texelsPerPage && textureSize.Height > texelsPerPage)
                 {
-                    indirectionTex = new IndirectionTexture(materialSetKey, textureSize, 64, this); //This is a terrible way to get size since ogre must load the resource first, trying to avoid that
+                    indirectionTex = new IndirectionTexture(materialSetKey, textureSize, texelsPerPage, this); //This is a terrible way to get size since ogre must load the resource first, trying to avoid that
                     indirectionTextures.Add(materialSetKey, indirectionTex);
                     indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
                 }
