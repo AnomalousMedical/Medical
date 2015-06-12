@@ -53,7 +53,8 @@ namespace Medical
             this.size = size;
             this.virtualTextureManager = virtualTextureManager;
             this.textureName = "PhysicalTexture" + name;
-            physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
+            physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, 
+                (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0); //Got as a render target for now so we can save the output.
             blitBitmap = new FreeImageAPI.FreeImageBitmap(texelsPerPage, texelsPerPage, FreeImageAPI.PixelFormat.Format32bppArgb);
             unsafe
             {
@@ -126,32 +127,36 @@ namespace Medical
                                 {
                                     if (page.mip < mipCount)
                                     {
-                                        if (page.mip != currentMip)
-                                        {
-#if DRAW_MIP_MARKERS
-                                            //Temp mip marker drawing
-                                            blitBitmap.FillBackground(new FreeImageAPI.RGBQUAD(mipColors[page.mip]));
-                                            buffer.Value.blitFromMemory(blitBitmapBox, new IntRect(x, y, texelsPerPage, texelsPerPage));
-
-                                            x += texelsPerPage;
-                                            if (x >= size.Width)
-                                            {
-                                                y += texelsPerPage;
-                                                x = 0;
-                                                if (y >= size.Height)
-                                                {
-                                                    return; //ran out of space, stop copying
-                                                }
-                                            }
-#endif
-                                            IDisposableUtil.DisposeIfNotNull(sourceBuffer);
-                                            currentMip = page.mip;
-                                            sourceBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip);
-                                        }
                                         IntRect src = new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage);
                                         IntRect dest = new IntRect(x, y, texelsPerPage, texelsPerPage);
                                         if (src.Right < originalTexture.Value.Width >> page.mip && src.Bottom < originalTexture.Value.Height >> page.mip) //If statement hacks around too small textures
                                         {
+                                            if (page.mip != currentMip)
+                                            {
+                                                IDisposableUtil.DisposeIfNotNull(sourceBuffer);
+                                                currentMip = page.mip;
+                                                sourceBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip);
+#if DRAW_MIP_MARKERS
+                                                //Temp mip marker drawing
+                                                blitBitmap.FillBackground(new FreeImageAPI.RGBQUAD(mipColors[currentMip]));
+                                                buffer.Value.blitFromMemory(blitBitmapBox, dest);
+
+                                                x += texelsPerPage;
+                                                if (x >= size.Width)
+                                                {
+                                                    y += texelsPerPage;
+                                                    x = 0;
+                                                    if (y >= size.Height)
+                                                    {
+                                                        return; //ran out of space, stop copying
+                                                    }
+                                                }
+
+                                                //Have to update dest too, since we drew something
+                                                dest = new IntRect(x, y, texelsPerPage, texelsPerPage);
+#endif
+                                            }
+
                                             //Logging.Log.Debug("Drawing {0}", page);
                                             //This is shit and relies on the textures already being loaded in ogre.
                                             buffer.Value.blit(sourceBuffer, src, dest);
@@ -186,6 +191,11 @@ namespace Medical
                             }
                         }
                     }
+
+#if DRAW_MIP_MARKERS
+                    blitBitmap.FillBackground(new FreeImageAPI.RGBQUAD(mipColors[16]));
+                    buffer.Value.blitFromMemory(blitBitmapBox, new IntRect(x, y, texelsPerPage, texelsPerPage));
+#endif
                 }
             }
         }
