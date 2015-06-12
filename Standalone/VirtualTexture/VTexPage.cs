@@ -35,5 +35,10 @@ namespace Medical
         {
             return obj is VTexPage && this == (VTexPage)obj;
         }
+
+        public override string ToString()
+        {
+            return String.Format("{0}, {1} m: {2} id: {3}", x, y, mip, indirectionTexId);
+        }
     }
 }

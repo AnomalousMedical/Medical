@@ -74,6 +74,9 @@ namespace Medical
             //    return;
             //}
 
+            //temporary
+            color(Color.Black);
+
             using (var buffer = physicalTexture.Value.getBuffer())
             {
                 int pageCount = 0;
@@ -90,23 +93,25 @@ namespace Medical
                             pageCount += indirectionTex.ActivePages.Count;
                             using (var originalTexture = TextureManager.getInstance().getByName(originalTextureName))
                             {
-                                using (var originalBuffer = originalTexture.Value.getBuffer())
+                                foreach (var page in indirectionTex.ActivePages)
                                 {
-                                    foreach (var page in indirectionTex.ActivePages)
+                                    IntRect src = new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage);
+                                    IntRect dest = new IntRect(x, y, texelsPerPage, texelsPerPage);
+                                    if (src.Right < originalTexture.Value.Width >> page.mip && src.Bottom < originalTexture.Value.Height >> page.mip)
                                     {
-                                        //This is shit and relies on the textures already being loaded in ogre.
-                                        //If statement hacks around too small textures
-                                        if (page.x * texelsPerPage + texelsPerPage < originalTexture.Value.Width && page.y * texelsPerPage + texelsPerPage < originalTexture.Value.Height)
+                                        using (var originalBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip))
                                         {
-                                            buffer.Value.blit(originalBuffer, new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), new IntRect(x, y, texelsPerPage, texelsPerPage));
+                                            //This is shit and relies on the textures already being loaded in ogre.
+                                            //If statement hacks around too small textures
+                                            buffer.Value.blit(originalBuffer, src, dest);
+
+                                            //Even crappier way copying from the textures in memory to main memory and then back
+                                            //originalBuffer.Value.blitToMemory(new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), blitBitmapBox);
+                                            //buffer.Value.blitFromMemory(blitBitmapBox, x, y, x + texelsPerPage, x + texelsPerPage);
+                                            //buffer.Value.blitFromMemory(blitBitmapBox);
                                         }
 
-                                        //Even crappier way copying from the textures in memory to main memory and then back
-                                        //originalBuffer.Value.blitToMemory(new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), blitBitmapBox);
-                                        //buffer.Value.blitFromMemory(blitBitmapBox, x, y, x + texelsPerPage, x + texelsPerPage);
-                                        //buffer.Value.blitFromMemory(blitBitmapBox);
-
-                                        //Increment
+                                        //Increment, only happens if we write the page
                                         x += texelsPerPage;
                                         if (x >= size.Width)
                                         {
@@ -141,7 +146,7 @@ namespace Medical
 
         private void saveBlitBitmap()
         {
-            using(var stream = System.IO.File.Open(name + "blit.bmp", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
+            using (var stream = System.IO.File.Open(name + "blit.bmp", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
             {
                 blitBitmap.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
             }

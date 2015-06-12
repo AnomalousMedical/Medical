@@ -130,19 +130,27 @@ namespace Medical
 
         internal void processPage(float u, float v, int mip)
         {
-            if(mip > highestMip)
-            {
-                mip = highestMip;
-            }
+            //if(mip > highestMip)
+            //{
+            //    return;
+            //}
             IntSize2 mipLevelNumPages = numPages / (1 << mip);
-            VTexPage page = new VTexPage((int)(u * mipLevelNumPages.Width), (int)(v * mipLevelNumPages.Height), mip, id);
-            if(page.x == mipLevelNumPages.Width)
+            VTexPage page;
+            if(mipLevelNumPages == new IntSize2())
             {
-                --page.x;
+                page = new VTexPage(0, 0, mip, id);
             }
-            if (page.y == mipLevelNumPages.Height)
+            else
             {
-                --page.y;
+                page = new VTexPage((int)(u * mipLevelNumPages.Width), (int)(v * mipLevelNumPages.Height), mip, id);
+                if (page.x == mipLevelNumPages.Width)
+                {
+                    --page.x;
+                }
+                if (page.y == mipLevelNumPages.Height)
+                {
+                    --page.y;
+                }
             }
             visibleThisUpdate.Add(page);
             if(!activePages.Contains(page))
