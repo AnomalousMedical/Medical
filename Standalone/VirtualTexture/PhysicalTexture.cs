@@ -1,4 +1,5 @@
-﻿#define DRAW_MIP_MARKERS
+﻿//#define DRAW_MIP_MARKERS
+//#define DRAW_SKIPS
 
 using Engine;
 using OgrePlugin;
@@ -129,7 +130,7 @@ namespace Medical
                                     {
                                         IntRect src = new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage);
                                         IntRect dest = new IntRect(x, y, texelsPerPage, texelsPerPage);
-                                        if (src.Right < originalTexture.Value.Width >> page.mip && src.Bottom < originalTexture.Value.Height >> page.mip) //If statement hacks around too small textures
+                                        if (src.Right <= originalTexture.Value.Width >> page.mip && src.Bottom <= originalTexture.Value.Height >> page.mip) //If statement hacks around too small textures
                                         {
                                             if (page.mip != currentMip)
                                             {
@@ -164,23 +165,35 @@ namespace Medical
                                             //Even crappier way copying from the textures in memory to main memory and then back
                                             //originalBuffer.Value.blitToMemory(src, blitBitmapBox);
                                             //buffer.Value.blitFromMemory(blitBitmapBox, dest);
-
-                                            //Increment, only happens if we write the page
-                                            x += texelsPerPage;
-                                            if (x >= size.Width)
-                                            {
-                                                y += texelsPerPage;
-                                                x = 0;
-                                                if (y >= size.Height)
-                                                {
-                                                    Logging.Log.Debug("Ran out of space");
-                                                    return; //ran out of space, stop copying
-                                                }
-                                            }
                                         }
+#if DRAW_SKIPS
                                         else
                                         {
+                                            blitBitmap.FillBackground(new FreeImageAPI.RGBQUAD(mipColors[12])); //White
+                                            buffer.Value.blitFromMemory(blitBitmapBox, new IntRect(x, y, texelsPerPage, texelsPerPage));
                                             //Logging.Log.Debug("Can't fit {0}", page);
+                                        }
+#endif
+                                    }
+#if DRAW_SKIPS
+                                    else
+                                    {
+                                        blitBitmap.FillBackground(new FreeImageAPI.RGBQUAD(mipColors[9])); //Black
+                                        buffer.Value.blitFromMemory(blitBitmapBox, new IntRect(x, y, texelsPerPage, texelsPerPage));
+                                        //Logging.Log.Debug("Can't handle mip map level for {0}", page);
+                                    }
+#endif
+                                    
+                                    //Always increment even if we couldn't draw, likely some other texure did draw.
+                                    x += texelsPerPage;
+                                    if (x >= size.Width)
+                                    {
+                                        y += texelsPerPage;
+                                        x = 0;
+                                        if (y >= size.Height)
+                                        {
+                                            Logging.Log.Debug("Ran out of space");
+                                            return; //ran out of space, stop copying
                                         }
                                     }
                                 }
