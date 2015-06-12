@@ -142,21 +142,27 @@ namespace Medical
             }
             else
             {
-                page = new VTexPage((int)(u * mipLevelNumPages.Width), (int)(v * mipLevelNumPages.Height), mip, id);
-                if (page.x == mipLevelNumPages.Width)
+                int x = (int)(u * mipLevelNumPages.Width);
+                int y = (int)(v * mipLevelNumPages.Height);
+                if (x == mipLevelNumPages.Width)
                 {
-                    --page.x;
+                    --x;
                 }
-                if (page.y == mipLevelNumPages.Height)
+                if (y == mipLevelNumPages.Height)
                 {
-                    --page.y;
+                    --y;
                 }
+                page = new VTexPage(x, y, mip, id);
             }
             if(!activePages.Contains(page))
             {
                 if (!addedPages.Contains(page))
                 {
                     addedPages.Add(page);
+                }
+                else
+                {
+                    //Logging.Log.Debug("Skipped duplicate {0}", page);
                 }
             }
             else
@@ -208,7 +214,7 @@ namespace Medical
 
             //Sort active pages by mip level
             //activePages.Sort(.OrderBy(p => p.mip);
-            activePages.Sort((x, y) => y.mip - x.mip);
+            activePages.Sort((x, y) => y.mip - x.mip); //Probably don't need the sort if we are going to load through another class, keeping for now
         }
 
         /// <summary>

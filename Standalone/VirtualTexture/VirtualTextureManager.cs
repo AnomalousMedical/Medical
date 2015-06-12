@@ -26,6 +26,7 @@ namespace Medical
         Dictionary<String, PhysicalTexture> physicalTextures = new Dictionary<string, PhysicalTexture>();
         Dictionary<String, IndirectionTexture> indirectionTextures = new Dictionary<string, IndirectionTexture>();
         Dictionary<int, IndirectionTexture> indirectionTexturesById = new Dictionary<int, IndirectionTexture>();
+        TextureLoader textureLoader;
 
         public VirtualTextureManager(SceneViewWindow window)
         {
@@ -53,6 +54,8 @@ namespace Medical
             physicalTextures["Diffuse"].color(Color.Red);
             physicalTextures["Specular"].color(Color.Green);
             physicalTextures["Opacity"].color(Color.HotPink);
+
+            textureLoader = new TextureLoader(this, new IntSize2(4096, 4096), texelsPerPage);
         }
 
         public void Dispose()
@@ -200,12 +203,13 @@ namespace Medical
             }
             PerformanceMonitor.stop("Apply Page Update");
 
-            PerformanceMonitor.start("Update Physical Texture");
-            foreach(var physTex in physicalTextures.Values)
-            {
-                physTex.loadPages();
-            }
-            PerformanceMonitor.stop("Update Physical Texture");
+            PerformanceMonitor.start("Update Texture Loader");
+            textureLoader.findNewPages();
+            //foreach(var physTex in physicalTextures.Values)
+            //{
+            //    physTex.loadPages();
+            //}
+            PerformanceMonitor.stop("Update Texture Loader");
         }
 
         public IEnumerable<string> TextureNames

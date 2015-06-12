@@ -16,10 +16,10 @@ namespace Medical
             this.indirectionTexId = indirectionTexId;
         }
 
-        public int x;
-        public int y;
-        public int mip;
-        public int indirectionTexId;
+        public readonly int x;
+        public readonly int y;
+        public readonly int mip;
+        public readonly int indirectionTexId;
 
         public static bool operator ==(VTexPage p1, VTexPage p2)
         {

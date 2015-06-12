@@ -661,6 +661,7 @@
     <Compile Include="VirtualTexture\FeedbackBuffer.cs" />
     <Compile Include="VirtualTexture\IndirectionTexture.cs" />
     <Compile Include="VirtualTexture\PhysicalTexture.cs" />
+    <Compile Include="VirtualTexture\TextureLoader.cs" />
     <Compile Include="VirtualTexture\VirtualTextureManager.cs" />
     <Compile Include="VirtualTexture\VirtualTextureSceneViewLink.cs" />
     <Compile Include="VirtualTexture\VTexPage.cs" />
