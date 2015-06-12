@@ -202,6 +202,10 @@ namespace Medical
                     fiBitmap.SetPixel(page.x, page.y, activeColor);
                 }
             }
+
+            //Sort active pages by mip level
+            //activePages.Sort(.OrderBy(p => p.mip);
+            activePages.Sort((x, y) => y.mip - x.mip);
         }
 
         /// <summary>
@@ -211,7 +215,7 @@ namespace Medical
         {
             if (updateTextureOnApply)
             {
-                buffer.Value.blitFromMemory(pixelBox, 0, 0, (int)indirectionTexture.Value.Width, (int)indirectionTexture.Value.Height);
+                buffer.Value.blitFromMemory(pixelBox);
                 updateTextureOnApply = false;
             }
         }

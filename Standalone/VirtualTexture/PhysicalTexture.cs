@@ -1,4 +1,6 @@
-﻿using Engine;
+﻿#define DRAW_MIP_MARKERS
+
+using Engine;
 using OgrePlugin;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,30 @@ namespace Medical
 {
     class PhysicalTexture : IDisposable
     {
+        static FreeImageAPI.Color[] mipColors = new FreeImageAPI.Color[17];
+        static PhysicalTexture()
+        {
+            //Colors from https://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors#24_pack_Mini_Twistables
+
+            mipColors[0] =  new FreeImageAPI.Color() { R = 28, G = 172, B = 120, A = 255 }; //Green
+            mipColors[1] =  new FreeImageAPI.Color() { R = 238, G = 32, B = 77, A = 255 }; //Red
+            mipColors[2] =  new FreeImageAPI.Color() { R = 31, G = 117, B = 254, A = 255 }; //Blue
+            mipColors[3] =  new FreeImageAPI.Color() { R = 115, G = 102, B = 189, A = 255 }; //Blue Violet
+            mipColors[4] =  new FreeImageAPI.Color() { R = 180, G = 103, B = 77, A = 255 }; //Brown
+            mipColors[5] =  new FreeImageAPI.Color() { R = 255, G = 170, B = 204, A = 255 }; //Carnation Pink
+            mipColors[6] =  new FreeImageAPI.Color() { R = 253, G = 219, B = 109, A = 255 }; //Dandelion
+            mipColors[7] =  new FreeImageAPI.Color() { R = 149, G = 145, B = 140, A = 255 }; //Gray
+            mipColors[8] =  new FreeImageAPI.Color() { R = 255, G = 117, B = 56, A = 255 }; //Orange
+            mipColors[9] =  new FreeImageAPI.Color() { R = 0, G = 0, B = 0, A = 255 }; //Black
+            mipColors[10] = new FreeImageAPI.Color() { R = 253, G = 217, B = 181, A = 255 }; //Apricot
+            mipColors[11] = new FreeImageAPI.Color() { R = 192, G = 68, B = 143, A = 255 }; //Red Violet
+            mipColors[12] = new FreeImageAPI.Color() { R = 255, G = 255, B = 255, A = 255 }; //White
+            mipColors[13] = new FreeImageAPI.Color() { R = 252, G = 232, B = 131, A = 255 }; //Yellow
+            mipColors[14] = new FreeImageAPI.Color() { R = 197, G = 227, B = 132, A = 255 }; //Yellow Green
+            mipColors[15] = new FreeImageAPI.Color() { R = 255, G = 174, B = 66, A = 255 }; //Yellow Orange
+            mipColors[16] = new FreeImageAPI.Color() { R = 246, G = 83, B = 166, A = 255 }; //Permanent Magenta
+        }
+
         private TexturePtr physicalTexture;
         private String textureName;
         private VirtualTextureManager virtualTextureManager;
@@ -57,7 +83,7 @@ namespace Medical
                 {
                     using (PixelBox pixelBox = new PixelBox(0, 0, fiBitmap.Width, fiBitmap.Height, OgreDrawingUtility.getOgreFormat(fiBitmap.PixelFormat), fiBitmap.GetScanlinePointer(0).ToPointer()))
                     {
-                        buffer.Value.blitFromMemory(pixelBox, 0, 0, (int)physicalTexture.Value.Width, (int)physicalTexture.Value.Height);
+                        buffer.Value.blitFromMemory(pixelBox);
                     }
                 }
             }
@@ -75,63 +101,91 @@ namespace Medical
             //}
 
             //temporary
-            color(Color.Black);
+            //color(Color.Black);
 
             using (var buffer = physicalTexture.Value.getBuffer())
             {
                 int pageCount = 0;
-                try
+                int x = 0;
+                int y = 0;
+                foreach (var indirectionTex in virtualTextureManager.IndirectionTextures)
                 {
-                    int x = 0;
-                    int y = 0;
-                    foreach (var indirectionTex in virtualTextureManager.IndirectionTextures)
+                    //Just load the first pages we come across until we run out of space, will implement caching later
+                    String originalTextureName;
+                    if (indirectionTex.OriginalTextures.TryGetValue(name, out originalTextureName))
                     {
-                        //Just load the first pages we come across until we run out of space, will implement caching later
-                        String originalTextureName;
-                        if (indirectionTex.OriginalTextures.TryGetValue(name, out originalTextureName))
+                        pageCount += indirectionTex.ActivePages.Count;
+                        using (var originalTexture = TextureManager.getInstance().getByName(originalTextureName))
                         {
-                            pageCount += indirectionTex.ActivePages.Count;
-                            using (var originalTexture = TextureManager.getInstance().getByName(originalTextureName))
+                            int mipCount = originalTexture.Value.NumMipmaps;
+                            int currentMip = -1;
+                            HardwarePixelBufferSharedPtr sourceBuffer = null;
+                            try
                             {
                                 foreach (var page in indirectionTex.ActivePages)
                                 {
-                                    IntRect src = new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage);
-                                    IntRect dest = new IntRect(x, y, texelsPerPage, texelsPerPage);
-                                    if (src.Right < originalTexture.Value.Width >> page.mip && src.Bottom < originalTexture.Value.Height >> page.mip)
+                                    if (page.mip < mipCount)
                                     {
-                                        using (var originalBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip))
+                                        if (page.mip != currentMip)
                                         {
+#if DRAW_MIP_MARKERS
+                                            //Temp mip marker drawing
+                                            blitBitmap.FillBackground(new FreeImageAPI.RGBQUAD(mipColors[page.mip]));
+                                            buffer.Value.blitFromMemory(blitBitmapBox, new IntRect(x, y, texelsPerPage, texelsPerPage));
+
+                                            x += texelsPerPage;
+                                            if (x >= size.Width)
+                                            {
+                                                y += texelsPerPage;
+                                                x = 0;
+                                                if (y >= size.Height)
+                                                {
+                                                    return; //ran out of space, stop copying
+                                                }
+                                            }
+#endif
+                                            IDisposableUtil.DisposeIfNotNull(sourceBuffer);
+                                            currentMip = page.mip;
+                                            sourceBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip);
+                                        }
+                                        IntRect src = new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage);
+                                        IntRect dest = new IntRect(x, y, texelsPerPage, texelsPerPage);
+                                        if (src.Right < originalTexture.Value.Width >> page.mip && src.Bottom < originalTexture.Value.Height >> page.mip) //If statement hacks around too small textures
+                                        {
+                                            //Logging.Log.Debug("Drawing {0}", page);
                                             //This is shit and relies on the textures already being loaded in ogre.
-                                            //If statement hacks around too small textures
-                                            buffer.Value.blit(originalBuffer, src, dest);
+                                            buffer.Value.blit(sourceBuffer, src, dest);
 
                                             //Even crappier way copying from the textures in memory to main memory and then back
-                                            //originalBuffer.Value.blitToMemory(new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), blitBitmapBox);
-                                            //buffer.Value.blitFromMemory(blitBitmapBox, x, y, x + texelsPerPage, x + texelsPerPage);
-                                            //buffer.Value.blitFromMemory(blitBitmapBox);
-                                        }
+                                            //originalBuffer.Value.blitToMemory(src, blitBitmapBox);
+                                            //buffer.Value.blitFromMemory(blitBitmapBox, dest);
 
-                                        //Increment, only happens if we write the page
-                                        x += texelsPerPage;
-                                        if (x >= size.Width)
-                                        {
-                                            y += texelsPerPage;
-                                            x = 0;
-                                            if (y >= size.Height)
+                                            //Increment, only happens if we write the page
+                                            x += texelsPerPage;
+                                            if (x >= size.Width)
                                             {
-                                                Logging.Log.Debug("Ran out of space");
-                                                return; //ran out of space, stop copying
+                                                y += texelsPerPage;
+                                                x = 0;
+                                                if (y >= size.Height)
+                                                {
+                                                    Logging.Log.Debug("Ran out of space");
+                                                    return; //ran out of space, stop copying
+                                                }
                                             }
+                                        }
+                                        else
+                                        {
+                                            //Logging.Log.Debug("Can't fit {0}", page);
                                         }
                                     }
                                 }
                             }
+                            finally
+                            {
+                                IDisposableUtil.DisposeIfNotNull(sourceBuffer);
+                            }
                         }
                     }
-                }
-                finally
-                {
-                    //Logging.Log.Debug("{0} processed pages count {1}", textureName, pageCount);
                 }
             }
         }
