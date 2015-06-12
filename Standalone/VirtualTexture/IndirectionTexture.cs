@@ -152,13 +152,16 @@ namespace Medical
                     --page.y;
                 }
             }
-            visibleThisUpdate.Add(page);
             if(!activePages.Contains(page))
             {
-                addedPages.Add(page);
+                if (!addedPages.Contains(page))
+                {
+                    addedPages.Add(page);
+                }
             }
             else
             {
+                visibleThisUpdate.Add(page);
                 //Logging.Log.Debug("Rejected page {0} {1}", page.x, page.y);
             }
         }
