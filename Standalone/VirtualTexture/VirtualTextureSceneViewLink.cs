@@ -1,4 +1,5 @@
 ﻿using Anomalous.GuiFramework.Cameras;
+using Engine;
 using Engine.ObjectManagement;
 using OgrePlugin;
 using System;
@@ -28,7 +29,7 @@ namespace Medical
         {
             this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
-            virtualTexture.Dispose();
+            IDisposableUtil.DisposeIfNotNull(virtualTexture);
         }
 
         void sceneViewController_WindowCreated(SceneViewWindow window)

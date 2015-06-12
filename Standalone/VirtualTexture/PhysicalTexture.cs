@@ -69,51 +69,64 @@ namespace Medical
         /// </summary>
         public unsafe void loadPages()
         {
+            if(name != "NormalMap")
+            {
+                return;
+            }
+
             using (var buffer = physicalTexture.Value.getBuffer())
             {
-                int x = 0;
-                int y = 0;
                 int pageCount = 0;
-                foreach (var indirectionTex in virtualTextureManager.IndirectionTextures)
+                try
                 {
-                    //Just load the first pages we come across until we run out of space, will implement caching later
-                    String originalTextureName;
-                    if (indirectionTex.OriginalTextures.TryGetValue(name, out originalTextureName))
+                    int x = 0;
+                    int y = 0;
+                    foreach (var indirectionTex in virtualTextureManager.IndirectionTextures)
                     {
-                        using (var originalTexture = TextureManager.getInstance().getByName(originalTextureName))
+                        //Just load the first pages we come across until we run out of space, will implement caching later
+                        String originalTextureName;
+                        if (indirectionTex.OriginalTextures.TryGetValue(name, out originalTextureName))
                         {
-                            using(var originalBuffer = originalTexture.Value.getBuffer())
+                            pageCount += indirectionTex.ActivePages.Count;
+                            using (var originalTexture = TextureManager.getInstance().getByName(originalTextureName))
                             {
-                                foreach (var page in indirectionTex.ActivePages)
+                                using (var originalBuffer = originalTexture.Value.getBuffer())
                                 {
-                                    //This is shit and relies on the textures already being loaded in ogre.
-                                    //This crashes the program
-                                    //buffer.Value.blit(originalBuffer, new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), new IntRect(x, y, texelsPerPage, texelsPerPage));
-
-                                    //Even crappier way copying from the textures in memory to main memory and then back
-                                    //originalBuffer.Value.blitToMemory(new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), blitBitmapBox);
-                                    //buffer.Value.blitFromMemory(blitBitmapBox, x, y, x + texelsPerPage, x + texelsPerPage);
-                                    //buffer.Value.blitFromMemory(blitBitmapBox);
-
-                                    //Increment
-                                    x += texelsPerPage;
-                                    if (x == size.Width)
+                                    foreach (var page in indirectionTex.ActivePages)
                                     {
-                                        y += texelsPerPage;
-                                        x = 0;
-                                        if (y == size.Height)
+                                        //This is shit and relies on the textures already being loaded in ogre.
+                                        if (page.x * texelsPerPage < originalTexture.Value.Width || page.y * texelsPerPage < originalTexture.Value.Height)
                                         {
-                                            break; //ran out of space
+                                            buffer.Value.blit(originalBuffer, new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), new IntRect(x, y, texelsPerPage, texelsPerPage));
+                                        }
+
+                                        //Even crappier way copying from the textures in memory to main memory and then back
+                                        //originalBuffer.Value.blitToMemory(new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), blitBitmapBox);
+                                        //buffer.Value.blitFromMemory(blitBitmapBox, x, y, x + texelsPerPage, x + texelsPerPage);
+                                        //buffer.Value.blitFromMemory(blitBitmapBox);
+
+                                        //Increment
+                                        x += texelsPerPage;
+                                        if (x >= size.Width)
+                                        {
+                                            y += texelsPerPage;
+                                            x = 0;
+                                            if (y >= size.Height)
+                                            {
+                                                Logging.Log.Debug("Ran out of space");
+                                                return; //ran out of space, stop copying
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    pageCount += indirectionTex.ActivePages.Count;
-                    //Logging.Log.Debug("{0}, {1}", x, y);
                 }
-                Logging.Log.Debug("{0} Page count {1}", textureName, pageCount);
+                finally
+                {
+                    //Logging.Log.Debug("{0} processed pages count {1}", textureName, pageCount);
+                }
             }
         }
 
