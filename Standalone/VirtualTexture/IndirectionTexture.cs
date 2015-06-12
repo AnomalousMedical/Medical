@@ -149,6 +149,10 @@ namespace Medical
             {
                 addedPages.Add(page);
             }
+            else
+            {
+                //Logging.Log.Debug("Rejected page {0} {1}", page.x, page.y);
+            }
         }
 
         internal void finishPageUpdate()

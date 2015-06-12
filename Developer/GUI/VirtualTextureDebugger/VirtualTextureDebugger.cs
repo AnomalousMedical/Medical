@@ -2,6 +2,7 @@
 using Engine;
 using Medical;
 using MyGUIPlugin;
+using OgrePlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,15 @@ namespace Developer.GUI
         {
             textureCombo = window.findWidget("TextureCombo") as ComboBox;
             textureCombo.EventComboAccept += textureCombo_EventComboAccept;
-            foreach(String textureName in virtualTextureManager.TextureNames)
+            foreach (String textureName in virtualTextureManager.TextureNames)
             {
                 textureCombo.addItem(textureName);
             }
 
             textureImage = window.findWidget("TextureImage") as ImageBox;
+
+            Button save = window.findWidget("SaveButton") as Button;
+            save.MouseButtonClick += save_MouseButtonClick;
         }
 
         void textureCombo_EventComboAccept(Widget source, EventArgs e)
@@ -33,6 +37,34 @@ namespace Developer.GUI
             if (textureCombo.SelectedIndex != ComboBox.Invalid)
             {
                 textureImage.setImageTexture(textureCombo.SelectedItemName);
+            }
+        }
+
+        unsafe void save_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (textureCombo.SelectedIndex != ComboBox.Invalid)
+            {
+                String selectedTexture = textureCombo.SelectedItemName;
+                using (var tex = TextureManager.getInstance().getByName(selectedTexture))
+                {
+                    int width = (int)tex.Value.Width;
+                    int height = (int)tex.Value.Height;
+                    using (var blitBitmap = new FreeImageAPI.FreeImageBitmap(width, height, FreeImageAPI.PixelFormat.Format32bppArgb))
+                    {
+                        using (var blitBitmapBox = new PixelBox(0, 0, width, height, OgreDrawingUtility.getOgreFormat(blitBitmap.PixelFormat), blitBitmap.GetScanlinePointer(0).ToPointer()))
+                        {
+                            using(var buffer = tex.Value.getBuffer())
+                            {
+                                buffer.Value.blitToMemory(blitBitmapBox);
+                            }
+                        }
+                        blitBitmap.RotateFlip(FreeImageAPI.RotateFlipType.RotateNoneFlipY);
+                        using (var stream = System.IO.File.Open(selectedTexture + ".bmp", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
+                        {
+                            blitBitmap.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
+                        }
+                    }
+                }
             }
         }
     }

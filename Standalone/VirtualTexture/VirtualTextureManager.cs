@@ -44,8 +44,8 @@ namespace Medical
             currentRenderTexture = feedbackBuffers.Length - 1; //Separate rendering from readback
 
             //Create physical textures
-            physicalTextures.Add("NormalMap", new PhysicalTexture("NormalMap", new IntSize2(4096, 4096), this, texelsPerPage));
             physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", new IntSize2(4096, 4096), this, texelsPerPage));
+            physicalTextures.Add("NormalMap", new PhysicalTexture("NormalMap", new IntSize2(4096, 4096), this, texelsPerPage));
             physicalTextures.Add("Specular", new PhysicalTexture("Specular", new IntSize2(4096, 4096), this, texelsPerPage));
             physicalTextures.Add("Opacity", new PhysicalTexture("Opacity", new IntSize2(4096, 4096), this, texelsPerPage));
 

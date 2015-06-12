@@ -27,7 +27,7 @@ namespace Medical
             this.size = size;
             this.virtualTextureManager = virtualTextureManager;
             this.textureName = "PhysicalTexture" + name;
-            physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
+            physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY, null, false, 0);
             blitBitmap = new FreeImageAPI.FreeImageBitmap(texelsPerPage, texelsPerPage, FreeImageAPI.PixelFormat.Format32bppArgb);
             unsafe
             {
@@ -69,10 +69,10 @@ namespace Medical
         /// </summary>
         public unsafe void loadPages()
         {
-            if(name != "NormalMap")
-            {
-                return;
-            }
+            //if(name != "NormalMap")
+            //{
+            //    return;
+            //}
 
             using (var buffer = physicalTexture.Value.getBuffer())
             {
@@ -95,7 +95,8 @@ namespace Medical
                                     foreach (var page in indirectionTex.ActivePages)
                                     {
                                         //This is shit and relies on the textures already being loaded in ogre.
-                                        if (page.x * texelsPerPage < originalTexture.Value.Width || page.y * texelsPerPage < originalTexture.Value.Height)
+                                        //If statement hacks around too small textures
+                                        if (page.x * texelsPerPage + texelsPerPage < originalTexture.Value.Width && page.y * texelsPerPage + texelsPerPage < originalTexture.Value.Height)
                                         {
                                             buffer.Value.blit(originalBuffer, new IntRect(page.x * texelsPerPage, page.y * texelsPerPage, texelsPerPage, texelsPerPage), new IntRect(x, y, texelsPerPage, texelsPerPage));
                                         }
