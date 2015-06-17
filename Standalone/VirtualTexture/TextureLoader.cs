@@ -10,20 +10,6 @@ namespace Medical
 {
     class TextureLoader
     {
-        class PTexPage
-        {
-            public PTexPage(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-
-            public readonly int x;
-            public readonly int y;
-
-            public VTexPage VirtualTexturePage { get; set; }
-        }
-
         private List<VTexPage> requestedPages;
         private List<VTexPage> addedPages;
         private List<VTexPage> removedPages;
@@ -189,6 +175,11 @@ namespace Medical
                                 pTexPage.VirtualTexturePage = page;
                                 pooledPhysicalPages.RemoveAt(0);
                                 usedPhysicalPages.Add(pTexPage);
+                                IndirectionTexture indirectionTex;
+                                if(virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
+                                {
+                                    indirectionTex.addPhysicalPage(pTexPage);
+                                }
                             }
                         }
                     }

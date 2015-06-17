@@ -97,7 +97,8 @@ namespace Medical
                     }
                     texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
                 }
-                pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
+                var indirectionTexturePass = pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
+                indirectionTexturePass.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
             }
 
             numPasses = feedbackTechnique.getNumPasses();
@@ -184,31 +185,15 @@ namespace Medical
 
             if (addedPages.Count > 0 || removedPages.Count > 0)
             {
-                updateTextureOnApply = true;
-
-                var activeColor = new FreeImageAPI.Color();
-                activeColor.R = 0;
-                activeColor.G = 255;
-                activeColor.B = 0;
-                activeColor.A = 255;
-
-                var inactiveColor = new FreeImageAPI.Color();
-                inactiveColor.R = 255;
-                inactiveColor.G = 0;
-                inactiveColor.B = 0;
-                inactiveColor.A = 255;
-
                 foreach (var page in removedPages)
                 {
                     activePages.Remove(page);
                     //Logging.Log.Debug("Removed page {0} for {1}", page, indirectionTexture.Value.Name);
-                    fiBitmap.SetPixel(page.x, page.y, inactiveColor);
                 }
                 foreach (var page in addedPages)
                 {
                     activePages.Add(page);
                     //Logging.Log.Debug("Added page {0} for {1}", page, indirectionTexture.Value.Name);
-                    fiBitmap.SetPixel(page.x, page.y, activeColor);
                 }
             }
 
@@ -227,6 +212,15 @@ namespace Medical
                 buffer.Value.blitFromMemory(pixelBox);
                 updateTextureOnApply = false;
             }
+        }
+
+        internal void addPhysicalPage(PTexPage pTexPage)
+        {
+            updateTextureOnApply = true;
+            //Store 1x1 as mip 0, 2x2 as 1 4x4 as 2 etc, this way we can directly shift the decimal place
+            //Then we will take fract from that
+            var vTextPage = pTexPage.VirtualTexturePage;
+            //fiBitmap.SetPixel(vTextPage.x, vTextPage.y, )
         }
 
         public String TextureName
