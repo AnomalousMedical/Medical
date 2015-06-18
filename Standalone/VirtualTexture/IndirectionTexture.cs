@@ -63,9 +63,6 @@ namespace Medical
             {
                 pixelBox = new PixelBox(0, 0, fiBitmap.Width, fiBitmap.Height, OgreDrawingUtility.getOgreFormat(fiBitmap.PixelFormat), fiBitmap.GetScanlinePointer(0).ToPointer());
             }
-
-            //temp, always want to force lowest mip level for now
-            highestMip = 0;
         }
 
         public void Dispose()
@@ -99,6 +96,19 @@ namespace Medical
                 }
                 var indirectionTexturePass = pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
                 indirectionTexturePass.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
+
+                if (numTextureUnits > 0) //If this pass uses textures adjust its fragment program
+                {
+                    using (var gpuParams = pass.getFragmentProgramParameters())
+                    {
+                        if (gpuParams.Value.hasNamedConstant("pageTableSize"))
+                        {
+                            gpuParams.Value.setNamedConstant("pageTableSize", new Vector2(numPages.Width, numPages.Height));
+                            gpuParams.Value.setNamedConstant("physicalSizeRecip", virtualTextureManager.PhysicalSizeRecrip);
+                            gpuParams.Value.setNamedConstant("pageSizeLog2", new Vector2(virtualTextureManager.TexelsPerPageLog2, virtualTextureManager.TexelsPerPageLog2));
+                        }
+                    }
+                }
             }
 
             numPasses = feedbackTechnique.getNumPasses();
@@ -219,8 +229,15 @@ namespace Medical
             updateTextureOnApply = true;
             //Store 1x1 as mip 0, 2x2 as 1 4x4 as 2 etc, this way we can directly shift the decimal place
             //Then we will take fract from that
+            //Store the page address as bytes
             var vTextPage = pTexPage.VirtualTexturePage;
-            //fiBitmap.SetPixel(vTextPage.x, vTextPage.y, )
+            var color = new FreeImageAPI.Color();
+            color.A = 255;
+            //Reverse the mip level (0 becomes highest level (least texels) and highesetMip becomes the lowest level (most texels, full size)
+            color.B = (byte)(highestMip - vTextPage.mip); //Typecast bad, try changing the type in the struct to byte
+            color.R = (byte)vTextPage.x;
+            color.G = (byte)vTextPage.y;
+            fiBitmap.SetPixel(vTextPage.x, vTextPage.y, color);
         }
 
         public String TextureName

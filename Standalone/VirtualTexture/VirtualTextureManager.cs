@@ -22,6 +22,7 @@ namespace Medical
         int currentReadbackTexture = 0;
         bool allowImageRender = true;
         int texelsPerPage = 64;
+        IntSize2 physicalTextureSize = new IntSize2(4096, 4096);
 
         Dictionary<String, PhysicalTexture> physicalTextures = new Dictionary<string, PhysicalTexture>();
         Dictionary<String, IndirectionTexture> indirectionTextures = new Dictionary<string, IndirectionTexture>();
@@ -45,10 +46,10 @@ namespace Medical
             currentRenderTexture = feedbackBuffers.Length - 1; //Separate rendering from readback
 
             //Create physical textures
-            physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", new IntSize2(4096, 4096), this, texelsPerPage));
-            physicalTextures.Add("NormalMap", new PhysicalTexture("NormalMap", new IntSize2(4096, 4096), this, texelsPerPage));
-            physicalTextures.Add("Specular", new PhysicalTexture("Specular", new IntSize2(4096, 4096), this, texelsPerPage));
-            physicalTextures.Add("Opacity", new PhysicalTexture("Opacity", new IntSize2(4096, 4096), this, texelsPerPage));
+            physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", physicalTextureSize, this, texelsPerPage));
+            physicalTextures.Add("NormalMap", new PhysicalTexture("NormalMap", physicalTextureSize, this, texelsPerPage));
+            physicalTextures.Add("Specular", new PhysicalTexture("Specular", physicalTextureSize, this, texelsPerPage));
+            physicalTextures.Add("Opacity", new PhysicalTexture("Opacity", physicalTextureSize, this, texelsPerPage));
 
             physicalTextures["NormalMap"].color(Color.Blue);
             physicalTextures["Diffuse"].color(Color.Red);
@@ -239,6 +240,38 @@ namespace Medical
             get
             {
                 return indirectionTextures.Values;
+            }
+        }
+
+        public int TexelsPerPage
+        {
+            get
+            {
+                return texelsPerPage;
+            }
+        }
+
+        public int TexelsPerPageLog2
+        {
+            get
+            {
+                return (int)Math.Log(texelsPerPage, 2.0);
+            }
+        }
+
+        public IntSize2 PhysicalSize
+        {
+            get
+            {
+                return physicalTextureSize;
+            }
+        }
+
+        internal Vector2 PhysicalSizeRecrip
+        {
+            get
+            {
+                return new Vector2(1.0f / physicalTextureSize.Width, 1.0f / physicalTextureSize.Height);
             }
         }
     }
