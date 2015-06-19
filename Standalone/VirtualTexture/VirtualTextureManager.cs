@@ -271,7 +271,15 @@ namespace Medical
         {
             get
             {
-                return new Vector2(1.0f / physicalTextureSize.Width, 1.0f / physicalTextureSize.Height);
+                return new Vector2(1.0f / (physicalTextureSize.Width / texelsPerPage), (1.0f / physicalTextureSize.Height / texelsPerPage));
+            }
+        }
+
+        internal Vector2 AtlasScale
+        {
+            get
+            {
+                return new Vector2(texelsPerPage / physicalTextureSize.Width, texelsPerPage / physicalTextureSize.Height);
             }
         }
     }

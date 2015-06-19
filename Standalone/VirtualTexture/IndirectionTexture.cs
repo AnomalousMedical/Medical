@@ -39,9 +39,9 @@ namespace Medical
         private VirtualTextureManager virtualTextureManager;
         private IntSize2 numPages;
         private int highestMip = 0; //The highest mip level that does not fall below one page in size
-        private FreeImageAPI.FreeImageBitmap fiBitmap; //Can we do this without this bitmap? (might be ok to keep, but will be using 2x as much memory, however, allows for background modification, could even double buffer)
-        private HardwarePixelBufferSharedPtr buffer;
-        private PixelBox pixelBox;
+        private FreeImageAPI.FreeImageBitmap[] fiBitmap; //Can we do this without this bitmap? (might be ok to keep, but will be using 2x as much memory, however, allows for background modification, could even double buffer)
+        private HardwarePixelBufferSharedPtr[] buffer;
+        private PixelBox[] pixelBox;
 
         private List<VTexPage> activePages = new List<VTexPage>();
         private List<VTexPage> visibleThisUpdate = new List<VTexPage>();
@@ -56,21 +56,33 @@ namespace Medical
             this.realTextureSize = realTextureSize;
             numPages = realTextureSize / texelsPerPage;
             for (highestMip = 0; realTextureSize.Width >> highestMip > texelsPerPage && realTextureSize.Height >> highestMip > texelsPerPage; ++highestMip) { }
-            indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)numPages.Width, (uint)numPages.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_DYNAMIC_WRITE_ONLY_DISCARDABLE, null, false, 0);
-            fiBitmap = new FreeImageAPI.FreeImageBitmap((int)indirectionTexture.Value.Width, (int)indirectionTexture.Value.Height, FreeImageAPI.PixelFormat.Format32bppArgb);
-            buffer = indirectionTexture.Value.getBuffer();
-            unsafe
+            indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
+                (uint)numPages.Width, (uint)numPages.Height, 1, -1, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
+
+            fiBitmap = new FreeImageAPI.FreeImageBitmap[highestMip];
+            buffer = new HardwarePixelBufferSharedPtr[highestMip];
+            pixelBox = new PixelBox[highestMip];
+
+            for (int i = 0; i < highestMip; ++i)
             {
-                pixelBox = new PixelBox(0, 0, fiBitmap.Width, fiBitmap.Height, OgreDrawingUtility.getOgreFormat(fiBitmap.PixelFormat), fiBitmap.GetScanlinePointer(0).ToPointer());
+                fiBitmap[i] = new FreeImageAPI.FreeImageBitmap((int)indirectionTexture.Value.Width >> i, (int)indirectionTexture.Value.Height >> i, FreeImageAPI.PixelFormat.Format32bppArgb);
+                buffer[i] = indirectionTexture.Value.getBuffer(0, (uint)i);
+                unsafe
+                {
+                    pixelBox[i] = new PixelBox(0, 0, fiBitmap[i].Width, fiBitmap[i].Height, OgreDrawingUtility.getOgreFormat(fiBitmap[i].PixelFormat), fiBitmap[i].GetScanlinePointer(0).ToPointer());
+                }
             }
         }
 
         public void Dispose()
         {
-            pixelBox.Dispose();
-            buffer.Dispose();
             indirectionTexture.Dispose();
-            fiBitmap.Dispose();
+            for (int i = 0; i < highestMip; ++i )
+            {
+                pixelBox[i].Dispose();
+                buffer[i].Dispose();
+                fiBitmap[i].Dispose();
+            }
         }
 
         public void reconfigureTechnique(Technique mainTechnique, Technique feedbackTechnique)
@@ -106,8 +118,17 @@ namespace Medical
                             gpuParams.Value.setNamedConstant("pageTableSize", new Vector2(numPages.Width, numPages.Height));
                             gpuParams.Value.setNamedConstant("physicalSizeRecip", virtualTextureManager.PhysicalSizeRecrip);
                             gpuParams.Value.setNamedConstant("pageSizeLog2", new Vector2(virtualTextureManager.TexelsPerPageLog2, virtualTextureManager.TexelsPerPageLog2));
+                            gpuParams.Value.setNamedConstant("atlasScale", virtualTextureManager.AtlasScale);
+                        }
+                        else
+                        {
+                            Logging.Log.Debug("page table size varaible missing");
                         }
                     }
+                }
+                else
+                {
+                    Logging.Log.Debug("No Textures");
                 }
             }
 
@@ -141,18 +162,14 @@ namespace Medical
 
         internal void processPage(float u, float v, int mip)
         {
-            //if(mip > highestMip)
-            //{
-            //    return;
-            //}
-            IntSize2 mipLevelNumPages = numPages / (1 << mip);
             VTexPage page;
-            if(mipLevelNumPages == new IntSize2())
+            if(mip >= highestMip)
             {
-                page = new VTexPage(0, 0, mip, id);
+                page = new VTexPage(0, 0, highestMip - 1, id);
             }
             else
             {
+                IntSize2 mipLevelNumPages = numPages / (1 << mip);
                 int x = (int)(u * mipLevelNumPages.Width);
                 int y = (int)(v * mipLevelNumPages.Height);
                 if (x == mipLevelNumPages.Width)
@@ -219,7 +236,10 @@ namespace Medical
         {
             if (updateTextureOnApply)
             {
-                buffer.Value.blitFromMemory(pixelBox);
+                for (int i = 0; i < highestMip; ++i)
+                {
+                    buffer[i].Value.blitFromMemory(pixelBox[i]);
+                }
                 updateTextureOnApply = false;
             }
         }
@@ -237,7 +257,7 @@ namespace Medical
             color.B = (byte)(highestMip - vTextPage.mip); //Typecast bad, try changing the type in the struct to byte
             color.R = (byte)vTextPage.x;
             color.G = (byte)vTextPage.y;
-            fiBitmap.SetPixel(vTextPage.x, vTextPage.y, color);
+            fiBitmap[vTextPage.mip].SetPixel(vTextPage.x, vTextPage.y, color);
         }
 
         public String TextureName
