@@ -57,7 +57,7 @@ namespace Medical
             numPages = realTextureSize / texelsPerPage;
             for (highestMip = 0; realTextureSize.Width >> highestMip > texelsPerPage && realTextureSize.Height >> highestMip > texelsPerPage; ++highestMip) { }
             indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
-                (uint)numPages.Width, (uint)numPages.Height, 1, -1, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
+                (uint)numPages.Width, (uint)numPages.Height, 1, highestMip, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
 
             fiBitmap = new FreeImageAPI.FreeImageBitmap[highestMip];
             buffer = new HardwarePixelBufferSharedPtr[highestMip];
@@ -105,6 +105,7 @@ namespace Medical
                         originalTextureUnits[texUnit.Name] = texUnit.TextureName;
                     }
                     texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
+                    texUnit.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
                 }
                 var indirectionTexturePass = pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
                 indirectionTexturePass.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
@@ -238,7 +239,26 @@ namespace Medical
             {
                 for (int i = 0; i < highestMip; ++i)
                 {
-                    buffer[i].Value.blitFromMemory(pixelBox[i]);
+                    //Debug corner
+                    //var color = new FreeImageAPI.Color();
+                    //color.A = 255; //Using this for now for page enabled (255) / disabled (0)
+                    ////Reverse the mip level (0 becomes highest level (least texels) and highesetMip becomes the lowest level (most texels, full size)
+                    //color.B = 0; //Typecast bad, try changing the type in the struct to byte
+                    //color.R = 0;
+                    //color.G = 255;
+
+                    //fiBitmap[i].SetPixel(fiBitmap[i].Width - 1, fiBitmap[i].Height - 1, color);
+
+                    //Save freeimage bitmaps
+                    using (var stream = System.IO.File.Open(indirectionTexture.Value.Name + "_FreeImage_" + i + ".bmp", System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.ReadWrite))
+                    {
+                        fiBitmap[i].Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
+                    }
+
+                    buffer[i].Value.blitFromMemory(pixelBox[i]); //Need this line
+                    
+                    //Save render target
+                    buffer[i].Value.getRenderTarget().writeContentsToFile(indirectionTexture.Value.Name + "_" + i + ".bmp");
                 }
                 updateTextureOnApply = false;
             }
@@ -252,12 +272,55 @@ namespace Medical
             //Store the page address as bytes
             var vTextPage = pTexPage.VirtualTexturePage;
             var color = new FreeImageAPI.Color();
-            color.A = 255;
+            color.A = 255; //Using this for now for page enabled (255) / disabled (0)
             //Reverse the mip level (0 becomes highest level (least texels) and highesetMip becomes the lowest level (most texels, full size)
             color.B = (byte)(highestMip - vTextPage.mip); //Typecast bad, try changing the type in the struct to byte
             color.R = (byte)vTextPage.x;
             color.G = (byte)vTextPage.y;
+
+            //if (vTextPage.mip == 0)
+            //{
+            //    color.B = 255;
+            //}
+
+            //if (vTextPage.mip == 1)
+            //{
+            //    color.B = 50;
+            //}
+
+            //if (vTextPage.mip == 2)
+            //{
+            //    color.B = 150;
+            //}
+
             fiBitmap[vTextPage.mip].SetPixel(vTextPage.x, vTextPage.y, color);
+
+            //Fill in lower (more textels) mip levels
+            int x = vTextPage.x;
+            int y = vTextPage.y;
+            int w = 1;
+            int h = 1;
+            for (int i = vTextPage.mip - 1; i >= 0; --i)
+            {
+                //color.B = (byte)(255 - (byte)((i / 5.0f) * 255));
+                //This is probably really slow
+                x = x << 1;
+                y = y << 1;
+                w = w << 1;
+                h = h << 1;
+                var mipLevelBitmap = fiBitmap[i];
+                for (int xi = 0; xi < w; ++xi)
+                {
+                    for (int yi = 0; yi < h; ++yi)
+                    {
+                        var readPixel = mipLevelBitmap.GetPixel(x + xi, y + yi);
+                        if (readPixel.A == 0)
+                        {
+                            mipLevelBitmap.SetPixel(x + xi, y + yi, color);
+                        }
+                    }
+                }
+            }
         }
 
         public String TextureName
