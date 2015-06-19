@@ -314,13 +314,30 @@ namespace Medical
                     for (int yi = 0; yi < h; ++yi)
                     {
                         var readPixel = mipLevelBitmap.GetPixel(x + xi, y + yi);
-                        if (readPixel.A == 0)
+                        if (color.B > readPixel.B) //If the replacement mip level is greater than the current one (remember this is a shift mip inverted from normal mip)
                         {
                             mipLevelBitmap.SetPixel(x + xi, y + yi, color);
                         }
                     }
                 }
             }
+        }
+
+        internal void removePhysicalPage(PTexPage pTexPage)
+        {
+            updateTextureOnApply = true;
+            var vTextPage = pTexPage.VirtualTexturePage;
+            //Replace color with the one on the higher mip level
+            FreeImageAPI.Color color;
+            if (vTextPage.mip + 1 < highestMip)
+            {
+                color = fiBitmap[vTextPage.mip + 1].GetPixel(vTextPage.x >> 1, vTextPage.y >> 1);
+            }
+            else
+            {
+                color = new FreeImageAPI.Color();
+            }
+            fiBitmap[vTextPage.mip].SetPixel(vTextPage.x, vTextPage.y, color);
         }
 
         public String TextureName

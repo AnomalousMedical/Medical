@@ -117,6 +117,11 @@ namespace Medical
                 {
                     if(usedPhysicalPages[i].VirtualTexturePage == page)
                     {
+                        IndirectionTexture indirectionTex;
+                        if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
+                        {
+                            indirectionTex.removePhysicalPage(usedPhysicalPages[i]);
+                        }
                         pooledPhysicalPages.Add(usedPhysicalPages[i]);
                         usedPhysicalPages.RemoveAt(i);
                         break; //Get out of loop
@@ -138,6 +143,11 @@ namespace Medical
                         if(pooledPhysicalPages[i].VirtualTexturePage == page)
                         {
                             needsLoad = false;
+                            IndirectionTexture indirectionTex;
+                            if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
+                            {
+                                indirectionTex.addPhysicalPage(pooledPhysicalPages[i]);
+                            }
                             usedPhysicalPages.Add(pooledPhysicalPages[i]);
                             pooledPhysicalPages.RemoveAt(i);
                             break;
