@@ -271,7 +271,7 @@ namespace Medical
         {
             get
             {
-                return new Vector2(1.0f / (physicalTextureSize.Width / texelsPerPage), (1.0f / physicalTextureSize.Height / texelsPerPage));
+                return new Vector2(1.0f / (physicalTextureSize.Width / texelsPerPage), 1.0f / (physicalTextureSize.Height / texelsPerPage));
             }
         }
 
