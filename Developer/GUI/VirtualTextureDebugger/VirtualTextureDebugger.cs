@@ -47,21 +47,28 @@ namespace Developer.GUI
                 String selectedTexture = textureCombo.SelectedItemName;
                 using (var tex = TextureManager.getInstance().getByName(selectedTexture))
                 {
+                    int numMips = tex.Value.NumMipmaps + 1;
                     int width = (int)tex.Value.Width;
                     int height = (int)tex.Value.Height;
-                    using (var blitBitmap = new FreeImageAPI.FreeImageBitmap(width, height, FreeImageAPI.PixelFormat.Format32bppArgb))
+                    for (int mip = 0; mip < numMips; ++mip)
                     {
-                        using (var blitBitmapBox = new PixelBox(0, 0, width, height, OgreDrawingUtility.getOgreFormat(blitBitmap.PixelFormat), blitBitmap.GetScanlinePointer(0).ToPointer()))
+                        using (var buffer = tex.Value.getBuffer(0, (uint)mip))
                         {
-                            using(var buffer = tex.Value.getBuffer())
+                            using (var blitBitmap = new FreeImageAPI.FreeImageBitmap(width, height, FreeImageAPI.PixelFormat.Format32bppArgb))
                             {
-                                buffer.Value.blitToMemory(blitBitmapBox);
+                                using (var blitBitmapBox = new PixelBox(0, 0, width, height, OgreDrawingUtility.getOgreFormat(blitBitmap.PixelFormat), blitBitmap.GetScanlinePointer(0).ToPointer()))
+                                {
+                                    buffer.Value.blitToMemory(blitBitmapBox);
+                                }
+
+                                blitBitmap.RotateFlip(FreeImageAPI.RotateFlipType.RotateNoneFlipY);
+                                using (var stream = System.IO.File.Open(selectedTexture + "_mip_" + mip + ".bmp", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
+                                {
+                                    blitBitmap.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
+                                }
                             }
-                        }
-                        blitBitmap.RotateFlip(FreeImageAPI.RotateFlipType.RotateNoneFlipY);
-                        using (var stream = System.IO.File.Open(selectedTexture + ".bmp", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
-                        {
-                            blitBitmap.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
+                            width >>= 1;
+                            height >>= 1;
                         }
                     }
                 }

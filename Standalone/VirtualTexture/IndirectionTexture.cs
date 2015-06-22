@@ -55,7 +55,7 @@ namespace Medical
             this.virtualTextureManager = virtualTextureManager;
             this.realTextureSize = realTextureSize;
             numPages = realTextureSize / texelsPerPage;
-            for (highestMip = 0; realTextureSize.Width >> highestMip > texelsPerPage && realTextureSize.Height >> highestMip > texelsPerPage; ++highestMip) { }
+            for (highestMip = 0; realTextureSize.Width >> highestMip >= texelsPerPage && realTextureSize.Height >> highestMip >= texelsPerPage; ++highestMip) { }
             indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
                 (uint)numPages.Width, (uint)numPages.Height, 1, highestMip, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
 
@@ -250,15 +250,15 @@ namespace Medical
                     //fiBitmap[i].SetPixel(fiBitmap[i].Width - 1, fiBitmap[i].Height - 1, color);
 
                     //Save freeimage bitmaps
-                    using (var stream = System.IO.File.Open(indirectionTexture.Value.Name + "_FreeImage_" + i + ".bmp", System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.ReadWrite))
-                    {
-                        fiBitmap[i].Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
-                    }
+                    //using (var stream = System.IO.File.Open(indirectionTexture.Value.Name + "_FreeImage_" + i + ".bmp", System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.ReadWrite))
+                    //{
+                    //    fiBitmap[i].Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
+                    //}
 
                     buffer[i].Value.blitFromMemory(pixelBox[i]); //Need this line
                     
                     //Save render target
-                    buffer[i].Value.getRenderTarget().writeContentsToFile(indirectionTexture.Value.Name + "_" + i + ".bmp");
+                    //buffer[i].Value.getRenderTarget().writeContentsToFile(indirectionTexture.Value.Name + "_" + i + ".bmp");
                 }
                 updateTextureOnApply = false;
             }
@@ -274,24 +274,9 @@ namespace Medical
             var color = new FreeImageAPI.Color();
             color.A = 255; //Using this for now for page enabled (255) / disabled (0)
             //Reverse the mip level (0 becomes highest level (least texels) and highesetMip becomes the lowest level (most texels, full size)
-            color.B = (byte)(highestMip - vTextPage.mip); //Typecast bad, try changing the type in the struct to byte
-            color.R = (byte)vTextPage.x;
-            color.G = (byte)vTextPage.y;
-
-            //if (vTextPage.mip == 0)
-            //{
-            //    color.B = 255;
-            //}
-
-            //if (vTextPage.mip == 1)
-            //{
-            //    color.B = 50;
-            //}
-
-            //if (vTextPage.mip == 2)
-            //{
-            //    color.B = 150;
-            //}
+            color.B = (byte)(highestMip - vTextPage.mip - 1); //Typecast bad, try changing the type in the struct to byte
+            color.R = (byte)pTexPage.pageX;
+            color.G = (byte)pTexPage.pageY;
 
             fiBitmap[vTextPage.mip].SetPixel(vTextPage.x, vTextPage.y, color);
             fillOutLowerMips(vTextPage, color, (c1, c2) => c1.B - c2.B);
@@ -336,7 +321,7 @@ namespace Medical
                     for (int yi = 0; yi < h; ++yi)
                     {
                         var readPixel = mipLevelBitmap.GetPixel(x + xi, y + yi);
-                        if (comparison.Invoke(color, readPixel) > 0) //If the replacement mip level is greater than the current one (remember this is a shift mip inverted from normal mip)
+                        if (comparison.Invoke(color, readPixel) >= 0) //If the replacement mip level is greater than the current one (remember this is a shift mip inverted from normal mip)
                         {
                             mipLevelBitmap.SetPixel(x + xi, y + yi, color);
                         }

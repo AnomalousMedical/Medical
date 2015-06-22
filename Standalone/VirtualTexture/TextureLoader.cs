@@ -41,16 +41,21 @@ namespace Medical
             //Build pool
             int x = 0;
             int y = 0;
+            int pageX = 0;
+            int pageY = 0;
             pooledPhysicalPages = new List<PTexPage>(maxPages);
             usedPhysicalPages = new List<PTexPage>(maxPages);
             for(int i = 0 ; i < maxPages; ++i)
             {
-                pooledPhysicalPages.Add(new PTexPage(x, y));
+                pooledPhysicalPages.Add(new PTexPage(x, y, pageX, pageY));
                 x += textelsPerPage;
+                ++pageX;
                 if(x >= physicalTextureSize.Width)
                 {
                     x = 0;
                     y += textelsPerPage;
+                    pageX = 0;
+                    ++pageY;
                 }
             }
         }
