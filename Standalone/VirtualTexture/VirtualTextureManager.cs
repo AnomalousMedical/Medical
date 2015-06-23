@@ -22,6 +22,7 @@ namespace Medical
         int currentReadbackTexture = 0;
         bool allowImageRender = true;
         int texelsPerPage = 64;
+        int padding = 1;
         IntSize2 physicalTextureSize = new IntSize2(4096, 4096);
 
         Dictionary<String, PhysicalTexture> physicalTextures = new Dictionary<string, PhysicalTexture>();
@@ -56,7 +57,7 @@ namespace Medical
             physicalTextures["Specular"].color(Color.Green);
             physicalTextures["Opacity"].color(Color.HotPink);
 
-            textureLoader = new TextureLoader(this, new IntSize2(4096, 4096), texelsPerPage);
+            textureLoader = new TextureLoader(this, new IntSize2(4096, 4096), texelsPerPage, padding);
         }
 
         public void Dispose()
@@ -271,7 +272,8 @@ namespace Medical
         {
             get
             {
-                return new Vector2(1.0f / (physicalTextureSize.Width / texelsPerPage), 1.0f / (physicalTextureSize.Height / texelsPerPage));
+                float textelRatio = texelsPerPage + padding * 2;
+                return new Vector2(1.0f / (physicalTextureSize.Width / textelRatio), 1.0f / (physicalTextureSize.Height / textelRatio));
             }
         }
 

@@ -23,13 +23,19 @@ namespace Medical
         private VirtualTextureManager virtualTextureManager;
         private int maxPages;
         private int textelsPerPage;
+        private int padding;
+        private int padding2;
+        private int textelsPerPhysicalPage;
 
-        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage)
+        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding)
         {
             this.virtualTextureManager = virtualTextureManager;
             IntSize2 pageTableSize = physicalTextureSize / textelsPerPage;
             maxPages = pageTableSize.Width * pageTableSize.Height;
             this.textelsPerPage = textelsPerPage;
+            this.padding = padding;
+            this.padding2 = padding * 2;
+            this.textelsPerPhysicalPage = textelsPerPage + padding2;
 
             loadedPages = new List<VTexPage>(maxPages);
             requestedPages = new List<VTexPage>(maxPages);
@@ -48,14 +54,18 @@ namespace Medical
             for(int i = 0 ; i < maxPages; ++i)
             {
                 pooledPhysicalPages.Add(new PTexPage(x, y, pageX, pageY));
-                x += textelsPerPage;
+                x += textelsPerPhysicalPage;
                 ++pageX;
-                if(x >= physicalTextureSize.Width)
+                if (x + textelsPerPhysicalPage >= physicalTextureSize.Width)
                 {
                     x = 0;
-                    y += textelsPerPage;
+                    y += textelsPerPhysicalPage;
                     pageX = 0;
                     ++pageY;
+                    if (y + textelsPerPhysicalPage > physicalTextureSize.Height)
+                    {
+                        break;
+                    }
                 }
             }
         }
@@ -173,13 +183,67 @@ namespace Medical
                                     {
                                         int mipCount = originalTexture.Value.NumMipmaps;
                                         var srcRect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
-                                        if (page.mip < mipCount && srcRect.Right <= originalTexture.Value.Width >> page.mip && srcRect.Bottom <= originalTexture.Value.Height >> page.mip)
+                                        uint mipWidth = originalTexture.Value.Width >> page.mip;
+                                        uint mipHeight = originalTexture.Value.Height >> page.mip;
+                                        if (page.mip < mipCount && srcRect.Right <= mipWidth && srcRect.Bottom <= mipHeight)
                                         {
                                             using (var sourceBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip))
                                             {
-                                                var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
-                                                physicalTexture.addPage(sourceBuffer, srcRect, new IntRect(pTexPage.x, pTexPage.y, textelsPerPage, textelsPerPage));
-                                                usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
+                                                if (srcRect.Right + padding2 < mipWidth && srcRect.Bottom + padding2 < mipHeight)
+                                                {
+                                                    //Can expand to fit, most common case
+                                                    if (srcRect.Left > 0)
+                                                    {
+                                                        srcRect.Left -= 1;
+                                                    }
+                                                    if (srcRect.Top > 0)
+                                                    {
+                                                        srcRect.Top -= 1;
+                                                    }
+                                                    srcRect.Width = textelsPerPhysicalPage;
+                                                    srcRect.Height = textelsPerPhysicalPage;
+
+                                                    var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
+                                                    physicalTexture.addPage(sourceBuffer, srcRect, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage));
+                                                    usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
+                                                }
+                                                else if (srcRect.Width == mipWidth && srcRect.Height == mipHeight)
+                                                {
+                                                    //Mip level is the same as the page size, pad the left and right side with duplicate data
+                                                    var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
+
+                                                    //Write center
+                                                    IntRect centerDest = new IntRect(pTexPage.x + padding, pTexPage.y + padding, textelsPerPage, textelsPerPage);
+                                                    physicalTexture.addPage(sourceBuffer, srcRect, centerDest);
+
+                                                    //Write left padding
+                                                    IntRect paddingStripSrc = new IntRect(srcRect.Left, srcRect.Top, padding, textelsPerPage);
+                                                    IntRect paddingStripDest = new IntRect(pTexPage.x, pTexPage.y + 1, padding, textelsPerPage);
+                                                    physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
+
+                                                    //Write right padding
+                                                    paddingStripSrc.Left = srcRect.Right - padding;
+                                                    paddingStripDest.Left = pTexPage.x + textelsPerPhysicalPage - padding;
+                                                    physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
+
+                                                    //Write Top padding
+                                                    paddingStripSrc.Left = srcRect.Left;
+                                                    paddingStripSrc.Width = textelsPerPage;
+                                                    paddingStripSrc.Height = padding;
+
+                                                    paddingStripDest.Left = pTexPage.x + 1;
+                                                    paddingStripDest.Top = 0;
+                                                    paddingStripDest.Width = textelsPerPage;
+                                                    paddingStripDest.Height = padding;
+                                                    physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
+
+                                                    //Write bottom padding
+                                                    paddingStripSrc.Top = srcRect.Bottom - padding;
+                                                    paddingStripDest.Top = pTexPage.y + textelsPerPhysicalPage - padding;
+                                                    physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
+
+                                                    usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
+                                                }
                                             }
                                         }
                                     }
