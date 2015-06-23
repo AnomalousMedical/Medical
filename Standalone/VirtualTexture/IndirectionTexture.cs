@@ -140,7 +140,7 @@ namespace Medical
                 using (var gpuParams = pass.getFragmentProgramParameters())
                 {
                     gpuParams.Value.setNamedConstant("virtTexSize", new Vector2(realTextureSize.Width, realTextureSize.Height));
-                    gpuParams.Value.setNamedConstant("mipSampleBias", -1.0f);
+                    gpuParams.Value.setNamedConstant("mipSampleBias", -3.0f);
                     gpuParams.Value.setNamedConstant("spaceId", (float)id);
                 }
             }
@@ -279,7 +279,7 @@ namespace Medical
             color.G = (byte)pTexPage.pageY;
 
             fiBitmap[vTextPage.mip].SetPixel(vTextPage.x, vTextPage.y, color);
-            fillOutLowerMips(vTextPage, color, (c1, c2) => c1.B - c2.B);
+            fillOutLowerMips(vTextPage, color, (c1, c2) => c1.B - c2.B >= 0);
         }
 
         internal void removePhysicalPage(PTexPage pTexPage)
@@ -295,12 +295,13 @@ namespace Medical
             else
             {
                 color = new FreeImageAPI.Color();
+                color.B = (byte)(highestMip - vTextPage.mip - 1);
             }
             fiBitmap[vTextPage.mip].SetPixel(vTextPage.x, vTextPage.y, color);
-            fillOutLowerMips(vTextPage, color, (c1, c2) => c1.B == c2.B ? 1 : -1);
+            fillOutLowerMips(vTextPage, color, (c1, c2) => c1.B == c2.B);
         }
 
-        private void fillOutLowerMips(VTexPage vTextPage, FreeImageAPI.Color color, Comparison<FreeImageAPI.Color> comparison)
+        private void fillOutLowerMips(VTexPage vTextPage, FreeImageAPI.Color color, Func<FreeImageAPI.Color, FreeImageAPI.Color, bool> writePixel)
         {
             //Fill in lower (more textels) mip levels
             int x = vTextPage.x;
@@ -321,7 +322,7 @@ namespace Medical
                     for (int yi = 0; yi < h; ++yi)
                     {
                         var readPixel = mipLevelBitmap.GetPixel(x + xi, y + yi);
-                        if (comparison.Invoke(color, readPixel) >= 0) //If the replacement mip level is greater than the current one (remember this is a shift mip inverted from normal mip)
+                        if (writePixel.Invoke(color, readPixel)) //If the replacement mip level is greater than the current one (remember this is a shift mip inverted from normal mip)
                         {
                             mipLevelBitmap.SetPixel(x + xi, y + yi, color);
                         }
