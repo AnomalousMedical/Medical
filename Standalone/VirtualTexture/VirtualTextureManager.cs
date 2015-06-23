@@ -256,7 +256,9 @@ namespace Medical
         {
             get
             {
-                return (int)Math.Log(texelsPerPage, 2.0);
+                //return (int)Math.Log(texelsPerPage, 2.0); //Should be this
+                //hlsl needs between 0 and 1
+                return (int)(Math.Log(texelsPerPage, 2.0) / 6.0f);
             }
         }
 

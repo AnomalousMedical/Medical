@@ -105,7 +105,7 @@ namespace Medical
                         originalTextureUnits[texUnit.Name] = texUnit.TextureName;
                     }
                     texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
-                    texUnit.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
+                    //texUnit.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
                 }
                 var indirectionTexturePass = pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
                 indirectionTexturePass.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
@@ -140,7 +140,7 @@ namespace Medical
                 using (var gpuParams = pass.getFragmentProgramParameters())
                 {
                     gpuParams.Value.setNamedConstant("virtTexSize", new Vector2(realTextureSize.Width, realTextureSize.Height));
-                    gpuParams.Value.setNamedConstant("mipSampleBias", 0.0f);
+                    gpuParams.Value.setNamedConstant("mipSampleBias", -1.0f);
                     gpuParams.Value.setNamedConstant("spaceId", (float)id);
                 }
             }
@@ -297,7 +297,7 @@ namespace Medical
                 color = new FreeImageAPI.Color();
             }
             fiBitmap[vTextPage.mip].SetPixel(vTextPage.x, vTextPage.y, color);
-            fillOutLowerMips(vTextPage, color, (c1, c2) => 1);
+            fillOutLowerMips(vTextPage, color, (c1, c2) => c1.B == c2.B ? 1 : -1);
         }
 
         private void fillOutLowerMips(VTexPage vTextPage, FreeImageAPI.Color color, Comparison<FreeImageAPI.Color> comparison)
