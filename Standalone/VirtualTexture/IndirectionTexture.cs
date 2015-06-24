@@ -194,7 +194,7 @@ namespace Medical
                     //Logging.Log.Debug("Skipped duplicate {0}", page);
                 }
             }
-            else
+            else if(!visibleThisUpdate.Contains(page))
             {
                 visibleThisUpdate.Add(page);
                 //Logging.Log.Debug("Rejected page {0} {1}", page.x, page.y);
@@ -216,18 +216,15 @@ namespace Medical
                 foreach (var page in removedPages)
                 {
                     activePages.Remove(page);
-                    //Logging.Log.Debug("Removed page {0} for {1}", page, indirectionTexture.Value.Name);
                 }
                 foreach (var page in addedPages)
                 {
                     activePages.Add(page);
-                    //Logging.Log.Debug("Added page {0} for {1}", page, indirectionTexture.Value.Name);
                 }
-            }
 
-            //Sort active pages by mip level
-            //activePages.Sort(.OrderBy(p => p.mip);
-            activePages.Sort((x, y) => y.mip - x.mip); //Probably don't need the sort if we are going to load through another class, keeping for now
+                //Sort active pages by mip level
+                activePages.Sort((x, y) => y.mip - x.mip); //Probably don't need the sort if we are going to load through another class, keeping for now
+            }
         }
 
         /// <summary>
@@ -239,26 +236,7 @@ namespace Medical
             {
                 for (int i = 0; i < highestMip; ++i)
                 {
-                    //Debug corner
-                    //var color = new FreeImageAPI.Color();
-                    //color.A = 255; //Using this for now for page enabled (255) / disabled (0)
-                    ////Reverse the mip level (0 becomes highest level (least texels) and highesetMip becomes the lowest level (most texels, full size)
-                    //color.B = 0; //Typecast bad, try changing the type in the struct to byte
-                    //color.R = 0;
-                    //color.G = 255;
-
-                    //fiBitmap[i].SetPixel(fiBitmap[i].Width - 1, fiBitmap[i].Height - 1, color);
-
-                    //Save freeimage bitmaps
-                    //using (var stream = System.IO.File.Open(indirectionTexture.Value.Name + "_FreeImage_" + i + ".bmp", System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.ReadWrite))
-                    //{
-                    //    fiBitmap[i].Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
-                    //}
-
                     buffer[i].Value.blitFromMemory(pixelBox[i]); //Need this line
-                    
-                    //Save render target
-                    //buffer[i].Value.getRenderTarget().writeContentsToFile(indirectionTexture.Value.Name + "_" + i + ".bmp");
                 }
                 updateTextureOnApply = false;
             }
@@ -310,7 +288,6 @@ namespace Medical
             int h = 1;
             for (int i = vTextPage.mip - 1; i >= 0; --i)
             {
-                //color.B = (byte)(255 - (byte)((i / 5.0f) * 255));
                 //This is probably really slow
                 x = x << 1;
                 y = y << 1;
