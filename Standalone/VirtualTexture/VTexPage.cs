@@ -49,7 +49,7 @@ namespace Medical
 
         public override int GetHashCode()
         {
-            return ToString().GetHashCode(); //Don't use this to index stuff
+            throw new NotImplementedException(); //Don't use this to index stuff
         }
     }
 }
