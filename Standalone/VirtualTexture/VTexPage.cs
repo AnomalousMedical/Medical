@@ -15,12 +15,7 @@ namespace Medical
             this.y = y;
             this.mip = mip;
             this.indirectionTexId = indirectionTexId;
-            this.hashCode = 
-                  (int)((x / (float)(numPages.Width >> mip)) * 16.0f + 0.5f) << 12
-                + (int)((y / (float)(numPages.Width >> mip)) * 16.0f + 0.5f) << 8
-                + mip << 4
-                + (int)((indirectionTexId / 255.0f) * 16.0f + 0.5f);
-            this.hashCode = x << 8 + y ^ mip << 8 + indirectionTexId;
+            this.hashCode = (int)((uint)(x << 24) + (uint)(y << 16) + (uint)(mip << 8) + (uint)indirectionTexId);
         }
 
         public readonly byte x;
@@ -37,7 +32,8 @@ namespace Medical
             {
                 return o1 == o2;
             }
-            return p1.x == p2.x && p1.y == p2.y && p1.mip == p2.mip && p1.indirectionTexId == p2.indirectionTexId;
+            return p1.hashCode == p2.hashCode;
+            //return p1.x == p2.x && p1.y == p2.y && p1.mip == p2.mip && p1.indirectionTexId == p2.indirectionTexId;
         }
 
         public static bool operator !=(VTexPage p1, VTexPage p2)
@@ -47,7 +43,12 @@ namespace Medical
 
         public override bool Equals(object obj)
         {
-            return obj is VTexPage && this == (VTexPage)obj;
+            VTexPage other = obj as VTexPage;
+            if(other != null)
+            {
+                return this.hashCode == other.hashCode;
+            }
+            return false;
         }
 
         public override string ToString()
