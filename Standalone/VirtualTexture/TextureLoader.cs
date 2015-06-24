@@ -132,11 +132,6 @@ namespace Medical
                 {
                     if(usedPhysicalPages[i].VirtualTexturePage == page)
                     {
-                        IndirectionTexture indirectionTex;
-                        if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
-                        {
-                            indirectionTex.removePhysicalPage(usedPhysicalPages[i]);
-                        }
                         pooledPhysicalPages.Add(usedPhysicalPages[i]);
                         usedPhysicalPages.RemoveAt(i);
                         break; //Get out of loop
@@ -158,11 +153,6 @@ namespace Medical
                         if(pooledPhysicalPages[i].VirtualTexturePage == page)
                         {
                             needsLoad = false;
-                            IndirectionTexture indirectionTex;
-                            if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
-                            {
-                                indirectionTex.addPhysicalPage(pooledPhysicalPages[i]);
-                            }
                             usedPhysicalPages.Add(pooledPhysicalPages[i]);
                             pooledPhysicalPages.RemoveAt(i);
                             break;
@@ -173,7 +163,7 @@ namespace Medical
                         if (pooledPhysicalPages.Count > 0) //Do we have pages available
                         {
                             bool usedPhysicalPage = false;
-                            var pTexPage = pooledPhysicalPages[0];
+                            var pTexPage = pooledPhysicalPages[0]; //The physical page candidate, do not modify before usedPhysicalPages if statement below
                             IndirectionTexture indirectionTexture;
                             if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTexture))
                             {
@@ -251,10 +241,18 @@ namespace Medical
                             }
                             if(usedPhysicalPage)
                             {
+                                IndirectionTexture indirectionTex;
+                                //Alert old texture of removal if there was one, Do not modify pTexPage above this if block, we need the old data
+                                if (pTexPage.VirtualTexturePage != null && virtualTextureManager.getIndirectionTexture(pTexPage.VirtualTexturePage.indirectionTexId, out indirectionTex))
+                                {
+                                    indirectionTex.removePhysicalPage(pTexPage);
+                                }
+
                                 pTexPage.VirtualTexturePage = page;
                                 pooledPhysicalPages.RemoveAt(0);
                                 usedPhysicalPages.Add(pTexPage);
-                                IndirectionTexture indirectionTex;
+
+                                //Add to new indirection texture
                                 if(virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
                                 {
                                     indirectionTex.addPhysicalPage(pTexPage);
