@@ -9,7 +9,7 @@ namespace Medical
 {
     class VTexPage
     {
-        public VTexPage(byte x, byte y, byte mip, byte indirectionTexId, IntSize2 numPages)
+        public VTexPage(byte x, byte y, byte mip, byte indirectionTexId)
         {
             this.x = x;
             this.y = y;

@@ -207,10 +207,6 @@ namespace Medical
 
             PerformanceMonitor.start("Update Texture Loader");
             textureLoader.findNewPages();
-            //foreach(var physTex in physicalTextures.Values)
-            //{
-            //    physTex.loadPages();
-            //}
             PerformanceMonitor.stop("Update Texture Loader");
         }
 

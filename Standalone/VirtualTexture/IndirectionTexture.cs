@@ -166,7 +166,7 @@ namespace Medical
             VTexPage page;
             if (mip >= highestMip)
             {
-                page = new VTexPage(0, 0, (byte)(highestMip - 1), id, numPages);
+                page = new VTexPage(0, 0, (byte)(highestMip - 1), id);
             }
             else
             {
@@ -181,7 +181,7 @@ namespace Medical
                 {
                     --y;
                 }
-                page = new VTexPage(x, y, mip, id, numPages);
+                page = new VTexPage(x, y, mip, id);
             }
             if (activePages.Contains(page))
             {
