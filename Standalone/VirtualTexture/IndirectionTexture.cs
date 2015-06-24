@@ -207,10 +207,12 @@ namespace Medical
             {
                 foreach (var page in removedPages)
                 {
+                    virtualTextureManager.TextureLoader.removeRequestedPage(page);
                     activePages.Remove(page);
                 }
                 foreach (var page in addedPages)
                 {
+                    virtualTextureManager.TextureLoader.addRequestedPage(page);
                     activePages.Add(page);
                 }
 

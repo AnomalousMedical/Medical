@@ -187,6 +187,7 @@ namespace Medical
             {
                 indirectionTex.beginPageUpdate();
             }
+            textureLoader.beginPageUpdate();
         }
 
         internal void finishPageUpdate()
@@ -206,7 +207,8 @@ namespace Medical
             PerformanceMonitor.stop("Upload Indirection Texture Update");
 
             PerformanceMonitor.start("Update Texture Loader");
-            textureLoader.findNewPages();
+            //textureLoader.findNewPages();
+            textureLoader.updatePagesFromRequests();
             PerformanceMonitor.stop("Update Texture Loader");
         }
 
@@ -237,6 +239,14 @@ namespace Medical
             get
             {
                 return indirectionTextures.Values;
+            }
+        }
+
+        internal TextureLoader TextureLoader
+        {
+            get
+            {
+                return textureLoader;
             }
         }
 
