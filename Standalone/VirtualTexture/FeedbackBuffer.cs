@@ -65,7 +65,7 @@ namespace Medical
         {
             PerformanceMonitor.start("FeedbackBuffer Analyze");
             float u, v;
-            int m, t;
+            byte m, t;
             virtualTextureManager.beginPageUpdate();
             for (int slId = 0; slId < fullBitmap.Height; ++slId)
             {

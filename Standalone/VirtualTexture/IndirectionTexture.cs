@@ -11,10 +11,10 @@ namespace Medical
 {
     class IndirectionTexture : IDisposable
     {
-        static int currentId = 0;
-        static int maxId = 254;
-        static HashSet<int> usedIds = new HashSet<int>();
-        static int generateId()
+        static byte currentId = 0;
+        static byte maxId = 254;
+        static HashSet<byte> usedIds = new HashSet<byte>();
+        static byte generateId()
         {
             lock (usedIds)
             {
@@ -22,7 +22,7 @@ namespace Medical
                 {
                     incrementCurrentId();
                 }
-                int retVal = currentId;
+                byte retVal = currentId;
                 incrementCurrentId();
                 return retVal;
             }
@@ -30,23 +30,23 @@ namespace Medical
 
         static void incrementCurrentId()
         {
-            currentId = (currentId + 1) % maxId;
+            currentId = (byte)((currentId + 1) % maxId);
         }
 
-        private int id = generateId();
+        private byte id = generateId();
         private IntSize2 realTextureSize;
         private TexturePtr indirectionTexture;
         private VirtualTextureManager virtualTextureManager;
         private IntSize2 numPages;
-        private int highestMip = 0; //The highest mip level that does not fall below one page in size
+        private byte highestMip = 0; //The highest mip level that does not fall below one page in size
         private FreeImageAPI.FreeImageBitmap[] fiBitmap; //Can we do this without this bitmap? (might be ok to keep, but will be using 2x as much memory, however, allows for background modification, could even double buffer)
         private HardwarePixelBufferSharedPtr[] buffer;
         private PixelBox[] pixelBox;
 
-        private List<VTexPage> activePages = new List<VTexPage>();
-        private List<VTexPage> visibleThisUpdate = new List<VTexPage>();
+        private HashSet<VTexPage> activePages = new HashSet<VTexPage>();
+        private HashSet<VTexPage> visibleThisUpdate = new HashSet<VTexPage>();
         private List<VTexPage> removedPages = new List<VTexPage>();
-        private List<VTexPage> addedPages = new List<VTexPage>();
+        private HashSet<VTexPage> addedPages = new HashSet<VTexPage>();
         private bool updateTextureOnApply = false;
         private Dictionary<String, String> originalTextureUnits;
 
@@ -146,7 +146,7 @@ namespace Medical
             }
         }
 
-        public int Id
+        public byte Id
         {
             get
             {
@@ -161,18 +161,18 @@ namespace Medical
             addedPages.Clear();
         }
 
-        internal void processPage(float u, float v, int mip)
+        internal void processPage(float u, float v, byte mip)
         {
             VTexPage page;
-            if(mip >= highestMip)
+            if (mip >= highestMip)
             {
-                page = new VTexPage(0, 0, highestMip - 1, id);
+                page = new VTexPage(0, 0, (byte)(highestMip - 1), id, numPages);
             }
             else
             {
                 IntSize2 mipLevelNumPages = numPages / (1 << mip);
-                int x = (int)(u * mipLevelNumPages.Width);
-                int y = (int)(v * mipLevelNumPages.Height);
+                byte x = (byte)(u * mipLevelNumPages.Width);
+                byte y = (byte)(v * mipLevelNumPages.Height);
                 if (x == mipLevelNumPages.Width)
                 {
                     --x;
@@ -181,23 +181,15 @@ namespace Medical
                 {
                     --y;
                 }
-                page = new VTexPage(x, y, mip, id);
+                page = new VTexPage(x, y, mip, id, numPages);
             }
-            if(!activePages.Contains(page))
-            {
-                if (!addedPages.Contains(page))
-                {
-                    addedPages.Add(page);
-                }
-                else
-                {
-                    //Logging.Log.Debug("Skipped duplicate {0}", page);
-                }
-            }
-            else if(!visibleThisUpdate.Contains(page))
+            if (activePages.Contains(page))
             {
                 visibleThisUpdate.Add(page);
-                //Logging.Log.Debug("Rejected page {0} {1}", page.x, page.y);
+            }
+            else
+            {
+                addedPages.Add(page);
             }
         }
 
@@ -223,14 +215,14 @@ namespace Medical
                 }
 
                 //Sort active pages by mip level
-                activePages.Sort((x, y) => y.mip - x.mip); //Probably don't need the sort if we are going to load through another class, keeping for now
+                //activePages.Sort((x, y) => y.mip - x.mip); //Probably don't need the sort if we are going to load through another class, keeping for now
             }
         }
 
         /// <summary>
         /// Apply page changes to the texture, this writes to the gpu so it must be called from the render thread.
         /// </summary>
-        internal void applyPageChanges()
+        internal void uploadPageChanges()
         {
             if (updateTextureOnApply)
             {
@@ -316,7 +308,7 @@ namespace Medical
             }
         }
 
-        internal IReadOnlyList<VTexPage> ActivePages
+        internal IEnumerable<VTexPage> ActivePages
         {
             get
             {

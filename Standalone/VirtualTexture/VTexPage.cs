@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,18 +9,25 @@ namespace Medical
 {
     class VTexPage
     {
-        public VTexPage(int x, int y, int mip, int indirectionTexId)
+        public VTexPage(byte x, byte y, byte mip, byte indirectionTexId, IntSize2 numPages)
         {
             this.x = x;
             this.y = y;
             this.mip = mip;
             this.indirectionTexId = indirectionTexId;
+            this.hashCode = 
+                  (int)((x / (float)(numPages.Width >> mip)) * 16.0f + 0.5f) << 12
+                + (int)((y / (float)(numPages.Width >> mip)) * 16.0f + 0.5f) << 8
+                + mip << 4
+                + (int)((indirectionTexId / 255.0f) * 16.0f + 0.5f);
+            this.hashCode = x << 8 + y ^ mip << 8 + indirectionTexId;
         }
 
-        public readonly int x;
-        public readonly int y;
-        public readonly int mip;
-        public readonly int indirectionTexId;
+        public readonly byte x;
+        public readonly byte y;
+        public readonly byte mip;
+        public readonly byte indirectionTexId;
+        private readonly int hashCode;
 
         public static bool operator ==(VTexPage p1, VTexPage p2)
         {
@@ -49,7 +57,7 @@ namespace Medical
 
         public override int GetHashCode()
         {
-            throw new NotImplementedException(); //Don't use this to index stuff
+            return hashCode;
         }
     }
 }

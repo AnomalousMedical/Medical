@@ -198,12 +198,12 @@ namespace Medical
             }
             PerformanceMonitor.stop("Finish Page Update");
 
-            PerformanceMonitor.start("Apply Page Update");
+            PerformanceMonitor.start("Upload Indirection Texture Update");
             foreach (var indirectionTex in indirectionTextures.Values)
             {
-                indirectionTex.applyPageChanges();
+                indirectionTex.uploadPageChanges();
             }
-            PerformanceMonitor.stop("Apply Page Update");
+            PerformanceMonitor.stop("Upload Indirection Texture Update");
 
             PerformanceMonitor.start("Update Texture Loader");
             textureLoader.findNewPages();
