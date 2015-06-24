@@ -10,15 +10,15 @@ namespace Medical
 {
     class TextureLoader
     {
-        private List<VTexPage> requestedPages;
-        private List<VTexPage> addedPages;
+        private HashSet<VTexPage> requestedPages;
+        private HashSet<VTexPage> addedPages;
         private List<VTexPage> removedPages;
-        private List<VTexPage> visitedPages;
-        private List<VTexPage> loadedPages;
-        private List<VTexPage> unloadedPages;
+        private HashSet<VTexPage> visitedPages;
+        private HashSet<VTexPage> loadedPages;
+        private HashSet<VTexPage> unloadedPages;
 
         private List<PTexPage> pooledPhysicalPages; //FIFO queue for used pages, allows us to reuse pages if they are requested again quickly and keep track of what parts of the physical texture we can use
-        private List<PTexPage> usedPhysicalPages;
+        private Dictionary<VTexPage, PTexPage> usedPhysicalPages;
 
         private VirtualTextureManager virtualTextureManager;
         private int maxPages;
@@ -37,12 +37,12 @@ namespace Medical
             this.padding2 = padding * 2;
             this.textelsPerPhysicalPage = textelsPerPage + padding2;
 
-            loadedPages = new List<VTexPage>(maxPages);
-            requestedPages = new List<VTexPage>(maxPages);
-            addedPages = new List<VTexPage>();
+            loadedPages = new HashSet<VTexPage>();
+            requestedPages = new HashSet<VTexPage>();
+            addedPages = new HashSet<VTexPage>();
             removedPages = new List<VTexPage>();
-            visitedPages = new List<VTexPage>();
-            unloadedPages = new List<VTexPage>();
+            visitedPages = new HashSet<VTexPage>();
+            unloadedPages = new HashSet<VTexPage>();
 
             //Build pool
             int x = 0;
@@ -50,7 +50,7 @@ namespace Medical
             int pageX = 0;
             int pageY = 0;
             pooledPhysicalPages = new List<PTexPage>(maxPages);
-            usedPhysicalPages = new List<PTexPage>(maxPages);
+            usedPhysicalPages = new Dictionary<VTexPage, PTexPage>();
             for(int i = 0 ; i < maxPages; ++i)
             {
                 pooledPhysicalPages.Add(new PTexPage(x, y, pageX, pageY));
@@ -84,10 +84,7 @@ namespace Medical
                 {
                     if(!requestedPages.Contains(page))
                     {
-                        if (!addedPages.Contains(page))
-                        {
-                            addedPages.Add(page);
-                        }
+                        addedPages.Add(page);
                     }
                     else
                     {
@@ -128,15 +125,21 @@ namespace Medical
             {
                 //Unload the page, all we do is mark it unused, we might need it again soon
                 loadedPages.Remove(page);
-                for(int i = 0; i < usedPhysicalPages.Count; ++i)
+                PTexPage pTexPage;
+                if(usedPhysicalPages.TryGetValue(page, out pTexPage))
                 {
-                    if(usedPhysicalPages[i].VirtualTexturePage == page)
-                    {
-                        pooledPhysicalPages.Add(usedPhysicalPages[i]);
-                        usedPhysicalPages.RemoveAt(i);
-                        break; //Get out of loop
-                    }
+                    pooledPhysicalPages.Add(pTexPage);
+                    usedPhysicalPages.Remove(page);
                 }
+                //for(int i = 0; i < usedPhysicalPages.Count; ++i)
+                //{
+                //    if(usedPhysicalPages[i].VirtualTexturePage == page)
+                //    {
+                //        pooledPhysicalPages.Add(usedPhysicalPages[i]);
+                //        usedPhysicalPages.RemoveAt(i);
+                //        break; //Get out of loop
+                //    }
+                //}
             }
 
             //Load in new requested pages
@@ -153,7 +156,7 @@ namespace Medical
                         if(pooledPhysicalPages[i].VirtualTexturePage == page)
                         {
                             needsLoad = false;
-                            usedPhysicalPages.Add(pooledPhysicalPages[i]);
+                            usedPhysicalPages.Add(page, pooledPhysicalPages[i]);
                             pooledPhysicalPages.RemoveAt(i);
                             break;
                         }
@@ -250,7 +253,7 @@ namespace Medical
 
                                 pTexPage.VirtualTexturePage = page;
                                 pooledPhysicalPages.RemoveAt(0);
-                                usedPhysicalPages.Add(pTexPage);
+                                usedPhysicalPages.Add(page, pTexPage);
 
                                 //Add to new indirection texture
                                 if(virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
