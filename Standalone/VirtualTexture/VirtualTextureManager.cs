@@ -103,7 +103,10 @@ namespace Medical
 
                     if (readbackThisFrame)
                     {
+                        beginPageUpdate();
                         feedbackBuffers[currentReadbackTexture].copyFromGpu();
+                        feedbackBuffers[currentReadbackTexture].analyzeBuffer();
+                        finishPageUpdate();
                         currentReadbackTexture = (currentReadbackTexture + 1) % feedbackBuffers.Length;
                         readbackThisFrame = false;
                     }
@@ -181,7 +184,7 @@ namespace Medical
             return indirectionTexturesById.TryGetValue(id, out tex);
         }
 
-        internal void beginPageUpdate()
+        private void beginPageUpdate()
         {
             foreach(var indirectionTex in indirectionTextures.Values)
             {
@@ -190,7 +193,7 @@ namespace Medical
             textureLoader.beginPageUpdate();
         }
 
-        internal void finishPageUpdate()
+        private void finishPageUpdate()
         {
             PerformanceMonitor.start("Finish Page Update");
             foreach (var indirectionTex in indirectionTextures.Values)

@@ -13,7 +13,8 @@ namespace Medical
         private HashSet<VTexPage> addedPages;
         private List<VTexPage> removedPages;
 
-        private List<PTexPage> pooledPhysicalPages; //FIFO queue for used pages, allows us to reuse pages if they are requested again quickly and keep track of what parts of the physical texture we can use
+        private List<PTexPage> physicalPageQueue; //FIFO queue for used pages, allows us to reuse pages if they are requested again quickly and keep track of what parts of the physical texture we can use
+        private Dictionary<VTexPage, PTexPage> physicalPagePool;
         private Dictionary<VTexPage, PTexPage> usedPhysicalPages;
 
         private VirtualTextureManager virtualTextureManager;
@@ -41,11 +42,12 @@ namespace Medical
             int y = 0;
             int pageX = 0;
             int pageY = 0;
-            pooledPhysicalPages = new List<PTexPage>(maxPages);
+            physicalPageQueue = new List<PTexPage>(maxPages);
+            physicalPagePool = new Dictionary<VTexPage, PTexPage>();
             usedPhysicalPages = new Dictionary<VTexPage, PTexPage>();
             for(int i = 0 ; i < maxPages; ++i)
             {
-                pooledPhysicalPages.Add(new PTexPage(x, y, pageX, pageY));
+                physicalPageQueue.Add(new PTexPage(x, y, pageX, pageY));
                 x += textelsPerPhysicalPage;
                 ++pageX;
                 if (x + textelsPerPhysicalPage >= physicalTextureSize.Width)
@@ -88,7 +90,8 @@ namespace Medical
                 PTexPage pTexPage;
                 if (usedPhysicalPages.TryGetValue(page, out pTexPage))
                 {
-                    pooledPhysicalPages.Add(pTexPage);
+                    physicalPageQueue.Add(pTexPage);
+                    physicalPagePool.Add(page, pTexPage);
                     usedPhysicalPages.Remove(page);
                 }
             }
@@ -97,40 +100,38 @@ namespace Medical
             foreach(var page in addedPages)
             {
                 //First see if we still have that page in our virtual texture pool
-                bool needsLoad = true;
-                for (int i = 0; i < pooledPhysicalPages.Count; ++i)
+                PTexPage pTexPage;
+                if(physicalPagePool.TryGetValue(page, out pTexPage))
                 {
-                    if (pooledPhysicalPages[i].VirtualTexturePage == page)
-                    {
-                        needsLoad = false;
-                        usedPhysicalPages.Add(page, pooledPhysicalPages[i]);
-                        pooledPhysicalPages.RemoveAt(i);
-                        break;
-                    }
+                    physicalPageQueue.Remove(pTexPage);
+                    physicalPagePool.Remove(page);
+                    usedPhysicalPages.Add(page, pTexPage);
                 }
-                if (needsLoad) //We do need to load
+                else if (physicalPageQueue.Count > 0) //Do we have pages available
                 {
-                    if (pooledPhysicalPages.Count > 0) //Do we have pages available
+                    pTexPage = physicalPageQueue[0]; //The physical page candidate, do not modify before usedPhysicalPages if statement below
+                    if (loadImage(page, pTexPage))
                     {
-                        var pTexPage = pooledPhysicalPages[0]; //The physical page candidate, do not modify before usedPhysicalPages if statement below
-                        if (loadImage(page, pTexPage))
+                        IndirectionTexture indirectionTex;
+                        //Alert old texture of removal if there was one, Do not modify pTexPage above this if block, we need the old data
+                        if (pTexPage.VirtualTexturePage != null)
                         {
-                            IndirectionTexture indirectionTex;
-                            //Alert old texture of removal if there was one, Do not modify pTexPage above this if block, we need the old data
-                            if (pTexPage.VirtualTexturePage != null && virtualTextureManager.getIndirectionTexture(pTexPage.VirtualTexturePage.indirectionTexId, out indirectionTex))
+                            if (virtualTextureManager.getIndirectionTexture(pTexPage.VirtualTexturePage.indirectionTexId, out indirectionTex))
                             {
                                 indirectionTex.removePhysicalPage(pTexPage);
                             }
 
-                            pooledPhysicalPages.RemoveAt(0);
-                            pTexPage.VirtualTexturePage = page;
-                            usedPhysicalPages.Add(page, pTexPage);
+                            physicalPagePool.Remove(pTexPage.VirtualTexturePage); //Be sure to remove the page from the pool if it was used previously
+                        }
 
-                            //Add to new indirection texture
-                            if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
-                            {
-                                indirectionTex.addPhysicalPage(pTexPage);
-                            }
+                        physicalPageQueue.RemoveAt(0);
+                        pTexPage.VirtualTexturePage = page;
+                        usedPhysicalPages.Add(page, pTexPage);
+
+                        //Add to new indirection texture
+                        if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
+                        {
+                            indirectionTex.addPhysicalPage(pTexPage);
                         }
                     }
                 }

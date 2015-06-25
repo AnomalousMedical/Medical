@@ -44,29 +44,13 @@ namespace Medical
             PerformanceMonitor.start("FeedbackBuffer Copy");
             pixelBuffer.Value.blitToMemory(fullBitmapBox);
             PerformanceMonitor.stop("FeedbackBuffer Copy");
-
-            analyzeBuffer(); //Doing this on main thread for now
         }
 
-        public float Frac(float value)
-        {
-            return value - (float)Math.Truncate(value);
-        }
-
-        public String TextureName
-        {
-            get
-            {
-                return "FeedbackBuffer" + id;
-            }
-        }
-
-        private unsafe void analyzeBuffer()
+        public unsafe void analyzeBuffer()
         {
             PerformanceMonitor.start("FeedbackBuffer Analyze");
             float u, v;
             byte m, t;
-            virtualTextureManager.beginPageUpdate();
             for (int slId = 0; slId < fullBitmap.Height; ++slId)
             {
                 var scanline = fullBitmap.GetScanline<RGBQUAD>(slId);
@@ -89,7 +73,14 @@ namespace Medical
                 }
             }
             PerformanceMonitor.stop("FeedbackBuffer Analyze");
-            virtualTextureManager.finishPageUpdate();
+        }
+
+        public String TextureName
+        {
+            get
+            {
+                return "FeedbackBuffer" + id;
+            }
         }
 
         internal void cameraDestroyed()
