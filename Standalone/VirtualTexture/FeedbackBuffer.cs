@@ -88,8 +88,8 @@ namespace Medical
                     }
                 }
             }
-            virtualTextureManager.finishPageUpdate();
             PerformanceMonitor.stop("FeedbackBuffer Analyze");
+            virtualTextureManager.finishPageUpdate();
         }
 
         internal void cameraDestroyed()
