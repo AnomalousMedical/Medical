@@ -12,14 +12,21 @@ namespace Medical
 {
     public class VirtualTextureManager : IDisposable
     {
+        enum Phase
+        {
+            RenderFeedback = 0,
+            CopyFeedbackToStaging = 1,
+            CopyStagingToMemory = 2,
+            AnalyzeFeedback = 3,
+            Max = 4
+        }
+
         public const String ResourceGroup = "VirtualTextureGroup";
 
-        FeedbackBuffer[] feedbackBuffers = new FeedbackBuffer[2];
+        FeedbackBuffer feedbackBuffer;
         int frameCount = 0;
-        int updateBufferFrame = 5;
-        bool readbackThisFrame = false;
-        int currentRenderTexture = 0;
-        int currentReadbackTexture = 0;
+        int updateBufferFrame = 2;
+        Phase phase = Phase.RenderFeedback;
         bool allowImageRender = true;
         int texelsPerPage = 64;
         int padding = 1;
@@ -39,12 +46,7 @@ namespace Medical
                 OgreResourceGroupManager.getInstance().createResourceGroup(VirtualTextureManager.ResourceGroup);
             }
 
-            for (int i = 0; i < feedbackBuffers.Length; ++i)
-            {
-                feedbackBuffers[i] = new FeedbackBuffer(window, this, i);
-            }
-
-            currentRenderTexture = feedbackBuffers.Length - 1; //Separate rendering from readback
+            feedbackBuffer = new FeedbackBuffer(window, this, 0);
 
             //Create physical textures
             physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", physicalTextureSize, this, texelsPerPage));
@@ -79,18 +81,12 @@ namespace Medical
 
         void window_CameraDestroyed(SceneViewWindow window)
         {
-            for (int i = 0; i < feedbackBuffers.Length; ++i)
-            {
-                feedbackBuffers[i].cameraDestroyed();
-            }
+            feedbackBuffer.cameraDestroyed();
         }
 
         void window_CameraCreated(SceneViewWindow window)
         {
-            for (int i = 0; i < feedbackBuffers.Length; ++i)
-            {
-                feedbackBuffers[i].cameraCreated();
-            }
+            feedbackBuffer.cameraCreated();
         }
 
         public void update(SceneViewWindow window, bool currentCameraRender)
@@ -101,22 +97,25 @@ namespace Medical
                 {
                     allowImageRender = false;
 
-                    if (readbackThisFrame)
+                    switch(phase)
                     {
-                        beginPageUpdate();
-                        feedbackBuffers[currentReadbackTexture].copyFromGpu();
-                        feedbackBuffers[currentReadbackTexture].analyzeBuffer();
-                        finishPageUpdate();
-                        currentReadbackTexture = (currentReadbackTexture + 1) % feedbackBuffers.Length;
-                        readbackThisFrame = false;
-                    }
-                    else
-                    {
-                        feedbackBuffers[currentRenderTexture].update();
-                        currentRenderTexture = (currentRenderTexture + 1) % feedbackBuffers.Length;
-                        readbackThisFrame = true;
+                        case Phase.RenderFeedback:
+                            feedbackBuffer.update();
+                            break;
+                        case Phase.CopyFeedbackToStaging:
+                            feedbackBuffer.blitToStaging();
+                            break;
+                        case Phase.CopyStagingToMemory:
+                            feedbackBuffer.blitStagingToMemory();
+                            break;
+                        case Phase.AnalyzeFeedback:
+                            beginPageUpdate();
+                            feedbackBuffer.analyzeBuffer();
+                            finishPageUpdate();
+                            break;
                     }
 
+                    phase = (Phase)(((int)phase + 1) % (int)Phase.Max);
                     allowImageRender = true;
 
                 });
@@ -223,12 +222,9 @@ namespace Medical
                 {
                     yield return item.TextureName;
                 }
-                foreach(var item in feedbackBuffers)
+                if (feedbackBuffer.TextureName != null)
                 {
-                    if(item.TextureName != null)
-                    {
-                        yield return item.TextureName;
-                    }
+                    yield return feedbackBuffer.TextureName;
                 }
                 foreach (var item in indirectionTextures.Values)
                 {

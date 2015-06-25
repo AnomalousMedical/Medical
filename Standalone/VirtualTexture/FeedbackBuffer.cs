@@ -39,11 +39,18 @@ namespace Medical
             PerformanceMonitor.stop("FeedbackBuffer Render");
         }
 
-        public void copyFromGpu()
+        public void blitToStaging()
         {
-            PerformanceMonitor.start("FeedbackBuffer Copy");
-            pixelBuffer.Value.blitToMemory(fullBitmapBox);
-            PerformanceMonitor.stop("FeedbackBuffer Copy");
+            PerformanceMonitor.start("FeedbackBuffer blit to staging");
+            pixelBuffer.Value.blitToStaging();
+            PerformanceMonitor.stop("FeedbackBuffer blit to staging");
+        }
+
+        public void blitStagingToMemory()
+        {
+            PerformanceMonitor.start("FeedbackBuffer blit staging to memory");
+            pixelBuffer.Value.blitStagingToMemory(fullBitmapBox);
+            PerformanceMonitor.stop("FeedbackBuffer blit staging to memory");
         }
 
         public unsafe void analyzeBuffer()
@@ -114,6 +121,7 @@ namespace Medical
             fullBitmapBox = fullBitmap.createPixelBox(OgrePlugin.PixelFormat.PF_A8R8G8B8);
 
             pixelBuffer = texture.Value.getBuffer();
+            pixelBuffer.Value.OptimizeReadback = true;
             renderTexture = pixelBuffer.Value.getRenderTarget();
             renderTexture.setAutoUpdated(false);
 

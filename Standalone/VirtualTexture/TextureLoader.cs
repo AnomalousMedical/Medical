@@ -84,6 +84,7 @@ namespace Medical
 
         public void updatePagesFromRequests()
         {
+            PerformanceMonitor.start("updatePagesFromRequests remove");
             //Remove pages
             foreach(var page in removedPages)
             {
@@ -95,7 +96,9 @@ namespace Medical
                     usedPhysicalPages.Remove(page);
                 }
             }
+            PerformanceMonitor.stop("updatePagesFromRequests remove");
 
+            PerformanceMonitor.start("updatePagesFromRequests add");
             //Add Pages
             foreach(var page in addedPages)
             {
@@ -136,6 +139,7 @@ namespace Medical
                     }
                 }
             }
+            PerformanceMonitor.stop("updatePagesFromRequests add");
         }
 
         /// <summary>
