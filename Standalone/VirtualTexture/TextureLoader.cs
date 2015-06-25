@@ -64,6 +64,7 @@ namespace Medical
 
         public void beginPageUpdate()
         {
+            //Note clearing these forces us to make sure we fully update each frame, or copy all this to another processing queue
             addedPages.Clear();
             removedPages.Clear();
         }

@@ -215,9 +215,6 @@ namespace Medical
                     virtualTextureManager.TextureLoader.addRequestedPage(page);
                     activePages.Add(page);
                 }
-
-                //Sort active pages by mip level
-                //activePages.Sort((x, y) => y.mip - x.mip); //Probably don't need the sort if we are going to load through another class, keeping for now
             }
         }
 
@@ -307,14 +304,6 @@ namespace Medical
             get
             {
                 return indirectionTexture.Value.Name;
-            }
-        }
-
-        internal IEnumerable<VTexPage> ActivePages
-        {
-            get
-            {
-                return activePages;
             }
         }
 
