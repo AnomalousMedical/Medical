@@ -164,25 +164,37 @@ namespace Medical
                     {
                         int mipCount = originalTexture.Value.NumMipmaps;
                         var srcRect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
-                        uint mipWidth = originalTexture.Value.Width >> page.mip;
-                        uint mipHeight = originalTexture.Value.Height >> page.mip;
+                        int mipWidth = (int)originalTexture.Value.Width >> page.mip;
+                        int mipHeight = (int)originalTexture.Value.Height >> page.mip;
                         if (page.mip < mipCount && srcRect.Right <= mipWidth && srcRect.Bottom <= mipHeight)
                         {
                             using (var sourceBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip))
                             {
-                                if (srcRect.Right + padding2 < mipWidth && srcRect.Bottom + padding2 < mipHeight)
+                                if (srcRect.Width + padding2 < mipWidth && srcRect.Height + padding2 < mipHeight)
                                 {
                                     //Can expand to fit, most common case
-                                    if (srcRect.Left > 0)
-                                    {
-                                        srcRect.Left -= 1;
-                                    }
-                                    if (srcRect.Top > 0)
-                                    {
-                                        srcRect.Top -= 1;
-                                    }
                                     srcRect.Width = textelsPerPhysicalPage;
                                     srcRect.Height = textelsPerPhysicalPage;
+                                    srcRect.Left -= padding;
+                                    srcRect.Top -= padding;
+
+                                    if (srcRect.Left < 0)
+                                    {
+                                        srcRect.Left = 0;
+                                    }
+                                    if (srcRect.Top < 0)
+                                    {
+                                        srcRect.Top = 0;
+                                    }
+
+                                    if (srcRect.Right > mipWidth)
+                                    {
+                                        srcRect.Left = mipWidth - srcRect.Width;
+                                    }
+                                    if (srcRect.Bottom > mipHeight)
+                                    {
+                                        srcRect.Top = mipHeight - srcRect.Height;
+                                    }
 
                                     var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
                                     physicalTexture.addPage(sourceBuffer, srcRect, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage));
