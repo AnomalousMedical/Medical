@@ -37,6 +37,12 @@ namespace Medical
             addedPages = new HashSet<VTexPage>();
             removedPages = new List<VTexPage>();
 
+            float scale = (float)textelsPerPage / textelsPerPhysicalPage;
+            PagePaddingScale = new Vector2(scale, scale);
+
+            scale = (float)padding / textelsPerPhysicalPage;
+            PagePaddingOffset = new Vector2(scale, scale);
+
             //Build pool
             int x = 0;
             int y = 0;
@@ -145,6 +151,10 @@ namespace Medical
             }
             PerformanceMonitor.stop("updatePagesFromRequests add");
         }
+
+        internal Vector2 PagePaddingScale { get; private set; }
+
+        internal Vector2 PagePaddingOffset { get; private set; }
 
         /// <summary>
         /// Load the given image. Note that pTexPage is constant for the duration of this function call

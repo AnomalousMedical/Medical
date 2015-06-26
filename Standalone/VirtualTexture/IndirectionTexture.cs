@@ -120,6 +120,8 @@ namespace Medical
                         {
                             gpuParams.Value.setNamedConstant("physicalSizeRecip", virtualTextureManager.PhysicalSizeRecrip);
                             gpuParams.Value.setNamedConstant("pageSizeLog2", new Vector2(virtualTextureManager.TexelsPerPageLog2, virtualTextureManager.TexelsPerPageLog2));
+                            gpuParams.Value.setNamedConstant("pagePaddingScale", virtualTextureManager.TextureLoader.PagePaddingScale);
+                            gpuParams.Value.setNamedConstant("pagePaddingOffset", virtualTextureManager.TextureLoader.PagePaddingOffset);
                         }
                         else
                         {

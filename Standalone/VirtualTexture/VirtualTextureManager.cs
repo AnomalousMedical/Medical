@@ -273,28 +273,12 @@ namespace Medical
             }
         }
 
-        public IntSize2 PhysicalSize
-        {
-            get
-            {
-                return physicalTextureSize;
-            }
-        }
-
         internal Vector2 PhysicalSizeRecrip
         {
             get
             {
                 float textelRatio = texelsPerPage + padding * 2;
                 return new Vector2(1.0f / (physicalTextureSize.Width / textelRatio), 1.0f / (physicalTextureSize.Height / textelRatio));
-            }
-        }
-
-        internal Vector2 AtlasScale
-        {
-            get
-            {
-                return new Vector2(texelsPerPage / physicalTextureSize.Width, texelsPerPage / physicalTextureSize.Height);
             }
         }
     }
