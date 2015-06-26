@@ -116,16 +116,14 @@ namespace Medical
                 {
                     using (var gpuParams = pass.getFragmentProgramParameters())
                     {
-                        if (gpuParams.Value.hasNamedConstant("pageTableSize"))
+                        if (gpuParams.Value.hasNamedConstant("physicalSizeRecip"))
                         {
-                            gpuParams.Value.setNamedConstant("pageTableSize", new Vector2(numPages.Width, numPages.Height));
                             gpuParams.Value.setNamedConstant("physicalSizeRecip", virtualTextureManager.PhysicalSizeRecrip);
                             gpuParams.Value.setNamedConstant("pageSizeLog2", new Vector2(virtualTextureManager.TexelsPerPageLog2, virtualTextureManager.TexelsPerPageLog2));
-                            gpuParams.Value.setNamedConstant("atlasScale", virtualTextureManager.AtlasScale);
                         }
                         else
                         {
-                            Logging.Log.Debug("page table size varaible missing");
+                            Logging.Log.Debug("physicalSizeRecip varaible missing");
                         }
                     }
                 }

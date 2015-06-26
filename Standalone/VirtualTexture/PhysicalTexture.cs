@@ -45,8 +45,8 @@ namespace Medical
         private int texelsPerPage;
         private IntSize2 size;
 
-        private FreeImageAPI.FreeImageBitmap blitBitmap;
-        private PixelBox blitBitmapBox;
+        //private FreeImageAPI.FreeImageBitmap blitBitmap;
+        //private PixelBox blitBitmapBox;
 
         public PhysicalTexture(String name, IntSize2 size, VirtualTextureManager virtualTextureManager, int texelsPerPage)
         {
@@ -55,41 +55,54 @@ namespace Medical
             this.size = size;
             this.virtualTextureManager = virtualTextureManager;
             this.textureName = "PhysicalTexture" + name;
-            physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, 
-                (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0); //Got as a render target for now so we can save the output.
+            switch(OgreInterface.Instance.SelectedTextureFormat)
+            {
+                case CompressedTextureSupport.None:
+                    physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, 
+                        (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0); //Got as a render target for now so we can save the output.
+                    break;
+                case CompressedTextureSupport.DXT:
+                    physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, 
+                        (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_DXT5, TextureUsage.TU_DEFAULT, null, false, 0); //Got as a render target for now so we can save the output.
+                    break;
+            }
+
             buffer = physicalTexture.Value.getBuffer();
 
-            blitBitmap = new FreeImageAPI.FreeImageBitmap(texelsPerPage, texelsPerPage, FreeImageAPI.PixelFormat.Format32bppArgb);
-            unsafe
-            {
-                blitBitmapBox = new PixelBox(0, 0, texelsPerPage, texelsPerPage, OgreDrawingUtility.getOgreFormat(blitBitmap.PixelFormat), blitBitmap.GetScanlinePointer(0).ToPointer());
-            }
+            //blitBitmap = new FreeImageAPI.FreeImageBitmap(texelsPerPage, texelsPerPage, FreeImageAPI.PixelFormat.Format32bppArgb);
+            //unsafe
+            //{
+            //    blitBitmapBox = new PixelBox(0, 0, texelsPerPage, texelsPerPage, OgreDrawingUtility.getOgreFormat(blitBitmap.PixelFormat), blitBitmap.GetScanlinePointer(0).ToPointer());
+            //}
         }
 
         public void Dispose()
         {
-            blitBitmapBox.Dispose();
-            blitBitmap.Dispose();
+            //blitBitmapBox.Dispose();
+            //blitBitmap.Dispose();
             buffer.Dispose();
             physicalTexture.Dispose();
         }
 
         public unsafe void color(Color color)
         {
-            using (var fiBitmap = new FreeImageAPI.FreeImageBitmap((int)physicalTexture.Value.Width, (int)physicalTexture.Value.Height, FreeImageAPI.PixelFormat.Format32bppArgb))
+            if (physicalTexture.Value.Format == PixelFormat.PF_A8R8G8B8)
             {
-                var fiColor = new FreeImageAPI.Color();
-                fiColor.R = (byte)(color.r * 255);
-                fiColor.G = (byte)(color.g * 255);
-                fiColor.B = (byte)(color.b * 255);
-                fiColor.A = (byte)(color.a * 255);
-                fiBitmap.FillBackground(new FreeImageAPI.RGBQUAD(fiColor));
-
-                using (var buffer = physicalTexture.Value.getBuffer())
+                using (var fiBitmap = new FreeImageAPI.FreeImageBitmap((int)physicalTexture.Value.Width, (int)physicalTexture.Value.Height, FreeImageAPI.PixelFormat.Format32bppArgb))
                 {
-                    using (PixelBox pixelBox = new PixelBox(0, 0, fiBitmap.Width, fiBitmap.Height, OgreDrawingUtility.getOgreFormat(fiBitmap.PixelFormat), fiBitmap.GetScanlinePointer(0).ToPointer()))
+                    var fiColor = new FreeImageAPI.Color();
+                    fiColor.R = (byte)(color.r * 255);
+                    fiColor.G = (byte)(color.g * 255);
+                    fiColor.B = (byte)(color.b * 255);
+                    fiColor.A = (byte)(color.a * 255);
+                    fiBitmap.FillBackground(new FreeImageAPI.RGBQUAD(fiColor));
+
+                    using (var buffer = physicalTexture.Value.getBuffer())
                     {
-                        buffer.Value.blitFromMemory(pixelBox);
+                        using (PixelBox pixelBox = new PixelBox(0, 0, fiBitmap.Width, fiBitmap.Height, OgreDrawingUtility.getOgreFormat(fiBitmap.PixelFormat), fiBitmap.GetScanlinePointer(0).ToPointer()))
+                        {
+                            buffer.Value.blitFromMemory(pixelBox);
+                        }
                     }
                 }
             }
@@ -108,12 +121,12 @@ namespace Medical
             }
         }
 
-        private void saveBlitBitmap()
-        {
-            using (var stream = System.IO.File.Open(name + "blit.bmp", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
-            {
-                blitBitmap.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
-            }
-        }
+        //private void saveBlitBitmap()
+        //{
+        //    using (var stream = System.IO.File.Open(name + "blit.bmp", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
+        //    {
+        //        blitBitmap.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
+        //    }
+        //}
     }
 }

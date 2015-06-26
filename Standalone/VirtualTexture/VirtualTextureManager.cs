@@ -29,7 +29,7 @@ namespace Medical
         Phase phase = Phase.RenderFeedback;
         bool allowImageRender = true;
         int texelsPerPage = 64;
-        int padding = 1;
+        int padding;
         IntSize2 physicalTextureSize = new IntSize2(4096, 4096);
 
         Dictionary<String, PhysicalTexture> physicalTextures = new Dictionary<string, PhysicalTexture>();
@@ -44,6 +44,16 @@ namespace Medical
             if (!OgreResourceGroupManager.getInstance().resourceGroupExists(VirtualTextureManager.ResourceGroup))
             {
                 OgreResourceGroupManager.getInstance().createResourceGroup(VirtualTextureManager.ResourceGroup);
+            }
+
+            switch (OgreInterface.Instance.SelectedTextureFormat)
+            {
+                case CompressedTextureSupport.DXT:
+                    padding = 4;
+                    break;
+                default:
+                    padding = 1;
+                    break;
             }
 
             feedbackBuffer = new FeedbackBuffer(window, this, 0);
