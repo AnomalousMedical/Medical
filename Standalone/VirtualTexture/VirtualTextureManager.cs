@@ -129,17 +129,16 @@ namespace Medical
                             }
                             PerformanceMonitor.stop("Finish Page Update");
 
+                            PerformanceMonitor.start("Update Texture Loader");
+                            textureLoader.updatePagesFromRequests();
+                            PerformanceMonitor.stop("Update Texture Loader");
+
                             PerformanceMonitor.start("Upload Indirection Texture Update");
-                            foreach (var indirectionTex in indirectionTextures.Values)
+                            foreach (var indirectionTex in indirectionTextures.Values) //This could be improved with a queue of just updated textures
                             {
                                 indirectionTex.uploadPageChanges();
                             }
                             PerformanceMonitor.stop("Upload Indirection Texture Update");
-
-                            PerformanceMonitor.start("Update Texture Loader");
-                            //textureLoader.findNewPages();
-                            textureLoader.updatePagesFromRequests();
-                            PerformanceMonitor.stop("Update Texture Loader");
                             break;
                     }
 
