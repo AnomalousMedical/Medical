@@ -72,6 +72,8 @@ namespace Medical
                     pixelBox[i] = new PixelBox(0, 0, fiBitmap[i].Width, fiBitmap[i].Height, OgreDrawingUtility.getOgreFormat(fiBitmap[i].PixelFormat), fiBitmap[i].GetScanlinePointer(0).ToPointer());
                 }
             }
+
+            addedPages.Add(new VTexPage(0, 0, (byte)(highestMip - 1), id));
         }
 
         public void Dispose()
@@ -154,13 +156,6 @@ namespace Medical
             }
         }
 
-        internal void beginPageUpdate()
-        {
-            visibleThisUpdate.Clear();
-            removedPages.Clear();
-            addedPages.Clear();
-        }
-
         internal void processPage(float u, float v, byte mip)
         {
             VTexPage page;
@@ -197,7 +192,7 @@ namespace Medical
         {
             foreach(var page in activePages)
             {
-                if(!visibleThisUpdate.Contains(page))
+                if(!visibleThisUpdate.Contains(page) && page.mip != highestMip - 1)
                 {
                     removedPages.Add(page);
                 }
@@ -215,7 +210,11 @@ namespace Medical
                     virtualTextureManager.TextureLoader.addRequestedPage(page);
                     activePages.Add(page);
                 }
-            }
+            } 
+            
+            visibleThisUpdate.Clear();
+            removedPages.Clear();
+            addedPages.Clear();
         }
 
         /// <summary>

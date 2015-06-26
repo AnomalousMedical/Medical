@@ -138,6 +138,10 @@ namespace Medical
                         }
                     }
                 }
+                else
+                {
+                    Logging.Log.Debug("Ran out of texture space");
+                }
             }
             PerformanceMonitor.stop("updatePagesFromRequests add");
         }
@@ -220,6 +224,10 @@ namespace Medical
                                     physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
 
                                     usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
+                                }
+                                else
+                                {
+                                    Logging.Log.Debug("Cannot load page {0}.", page);
                                 }
                             }
                         }

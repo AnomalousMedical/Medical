@@ -185,10 +185,6 @@ namespace Medical
 
         private void beginPageUpdate()
         {
-            foreach(var indirectionTex in indirectionTextures.Values)
-            {
-                indirectionTex.beginPageUpdate();
-            }
             textureLoader.beginPageUpdate();
         }
 
