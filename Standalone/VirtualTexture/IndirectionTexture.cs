@@ -265,8 +265,9 @@ namespace Medical
                 color = new FreeImageAPI.Color();
                 color.B = (byte)(highestMip - vTextPage.mip - 1);
             }
+            byte replacementMipLevel = (byte)(highestMip - vTextPage.mip - 1);
             fiBitmap[vTextPage.mip].SetPixel(vTextPage.x, vTextPage.y, color);
-            fillOutLowerMips(vTextPage, color, (c1, c2) => c1.B == c2.B);
+            fillOutLowerMips(vTextPage, color, (c1, c2) => c2.B == replacementMipLevel);
         }
 
         private void fillOutLowerMips(VTexPage vTextPage, FreeImageAPI.Color color, Func<FreeImageAPI.Color, FreeImageAPI.Color, bool> writePixel)
@@ -289,7 +290,7 @@ namespace Medical
                     for (int yi = 0; yi < h; ++yi)
                     {
                         var readPixel = mipLevelBitmap.GetPixel(x + xi, y + yi);
-                        if (writePixel.Invoke(color, readPixel)) //If the replacement mip level is greater than the current one (remember this is a shift mip inverted from normal mip)
+                        if (writePixel.Invoke(color, readPixel))
                         {
                             mipLevelBitmap.SetPixel(x + xi, y + yi, color);
                         }
