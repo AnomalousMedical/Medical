@@ -74,7 +74,7 @@ namespace Medical
 
         public void Dispose()
         {
-            foreach(var physicalTexture in physicalTextures.Values)
+            foreach (var physicalTexture in physicalTextures.Values)
             {
                 physicalTexture.Dispose();
             }
@@ -107,7 +107,7 @@ namespace Medical
                 {
                     allowImageRender = false;
 
-                    switch(phase)
+                    switch (phase)
                     {
                         case Phase.RenderFeedback:
                             feedbackBuffer.update();
@@ -119,9 +119,27 @@ namespace Medical
                             feedbackBuffer.blitStagingToMemory();
                             break;
                         case Phase.AnalyzeFeedback:
-                            beginPageUpdate();
+                            textureLoader.beginPageUpdate();
                             feedbackBuffer.analyzeBuffer();
-                            finishPageUpdate();
+
+                            PerformanceMonitor.start("Finish Page Update");
+                            foreach (var indirectionTex in indirectionTextures.Values)
+                            {
+                                indirectionTex.finishPageUpdate();
+                            }
+                            PerformanceMonitor.stop("Finish Page Update");
+
+                            PerformanceMonitor.start("Upload Indirection Texture Update");
+                            foreach (var indirectionTex in indirectionTextures.Values)
+                            {
+                                indirectionTex.uploadPageChanges();
+                            }
+                            PerformanceMonitor.stop("Upload Indirection Texture Update");
+
+                            PerformanceMonitor.start("Update Texture Loader");
+                            //textureLoader.findNewPages();
+                            textureLoader.updatePagesFromRequests();
+                            PerformanceMonitor.stop("Update Texture Loader");
                             break;
                     }
 
@@ -157,7 +175,7 @@ namespace Medical
         public bool getTextureSize(Technique technique, ref IntSize2 size)
         {
             int numPasses = technique.getNumPasses();
-            if(numPasses > 0)
+            if (numPasses > 0)
             {
                 var pass = technique.getPass(0);
                 ushort numTextureUnits = pass.getNumTextureUnitStates();
@@ -191,33 +209,6 @@ namespace Medical
         internal bool getIndirectionTexture(int id, out IndirectionTexture tex)
         {
             return indirectionTexturesById.TryGetValue(id, out tex);
-        }
-
-        private void beginPageUpdate()
-        {
-            textureLoader.beginPageUpdate();
-        }
-
-        private void finishPageUpdate()
-        {
-            PerformanceMonitor.start("Finish Page Update");
-            foreach (var indirectionTex in indirectionTextures.Values)
-            {
-                indirectionTex.finishPageUpdate();
-            }
-            PerformanceMonitor.stop("Finish Page Update");
-
-            PerformanceMonitor.start("Upload Indirection Texture Update");
-            foreach (var indirectionTex in indirectionTextures.Values)
-            {
-                indirectionTex.uploadPageChanges();
-            }
-            PerformanceMonitor.stop("Upload Indirection Texture Update");
-
-            PerformanceMonitor.start("Update Texture Loader");
-            //textureLoader.findNewPages();
-            textureLoader.updatePagesFromRequests();
-            PerformanceMonitor.stop("Update Texture Loader");
         }
 
         public IEnumerable<string> TextureNames
