@@ -15,7 +15,7 @@ namespace Medical
     /// <param name="scene">The scene for the event.</param>
     delegate void MedicalSceneControllerEvent(MedicalSceneController controller, SimScene scene);
 
-    class MedicalSceneController
+    class MedicalSceneController : IDisposable
     {
         private SimScene currentScene;
         private SimObjectManager currentSimObjects;
@@ -55,6 +55,11 @@ namespace Medical
         {
             this.pluginManager = pluginManager;
             sceneResourceManager = pluginManager.createLiveResourceManager("Scene");
+        }
+
+        public void Dispose()
+        {
+            sceneResourceManager.changeResourcesToMatch(pluginManager.createScratchResourceManager());
         }
 
         /// <summary>

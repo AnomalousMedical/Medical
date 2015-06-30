@@ -194,6 +194,7 @@ namespace Medical
             if (medicalScene != null)
             {
                 medicalScene.destroyScene();
+                medicalScene.Dispose();
             }
             if (eventManager != null)
             {

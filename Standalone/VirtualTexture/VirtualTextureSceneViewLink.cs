@@ -42,7 +42,7 @@ namespace Medical
             specularTexture.color(Color.Green);
             opacityTexture.color(Color.HotPink);
 
-            //OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
+            OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
         }
 
         public void Dispose()
@@ -89,6 +89,8 @@ namespace Medical
 
         void standaloneController_SceneLoaded(SimScene scene)
         {
+            return;
+
             //Dumb but easy way to detect virtual textures, iterate over everything in the material manager
             foreach(Material material in MaterialManager.getInstance().Iterator)
             {
@@ -140,8 +142,8 @@ namespace Medical
 
         public override MaterialPtr buildMaterial(MaterialDescription description)
         {
-            MaterialPtr material = MaterialManager.getInstance().create(description.Name, description.Group, false, null);
-            var mainTech = material.Value.createTechnique();
+            MaterialPtr material = MaterialManager.getInstance().create(determineName(description.Name, description), description.Group, false, null);
+            var mainTech = material.Value.getTechnique(0); //By default has a technique already
             switch(description.ShaderName)
             {
                 case "NormalMapSpecularMapGlossMap":
@@ -153,23 +155,26 @@ namespace Medical
                 var feedbackTechnique = material.Value.createTechnique();
                 VirtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048)).setupFeedbackBufferTechnique(feedbackTechnique);
             }
+            material.Value.compile();
+            material.Value.load();
             return material;
         }
 
         public override void destroyMaterial(MaterialPtr materialPtr)
         {
+            MaterialManager.getInstance().remove(materialPtr.Value.Name);
             materialPtr.Dispose();
         }
 
         private void createNormalMapSpecularMapGlossMap(Technique technique, MaterialDescription description)
         {
-            var pass = technique.createPass();
+            var pass = technique.getPass(0); //By default has a pass in the main technique (this is how ogre builds)
 
             pass.setSpecular(description.SpecularColor);
             pass.setDiffuse(description.DiffuseColor);
             pass.setEmissive(description.EmissiveColor);
 
-            setVertexProgram(pass, description);
+            pass.setVertexProgram(determineName("UnifiedVP", description));
 
             pass.setFragmentProgram("NormalMapSpecularMapGlossMapFP");
             using(var gpuParams = pass.getFragmentProgramParameters())
@@ -184,14 +189,14 @@ namespace Medical
             pass.createTextureUnitState(VirtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048)).TextureName); //Slow key
         }
 
-        private static void setVertexProgram(Pass pass, MaterialDescription description)
+        private static String determineName(String baseName, MaterialDescription description)
         {
-            StringBuilder programName = new StringBuilder("UnifiedVP");
-            if(description.NumHardwareBones > 0)
+            StringBuilder programName = new StringBuilder(baseName);
+            if (description.NumHardwareBones > 0)
             {
                 programName.AppendFormat("HardwareSkin{0}BonePerVertex", description.NumHardwareBones);
             }
-            if(description.NumHardwarePoses > 0)
+            if (description.NumHardwarePoses > 0)
             {
                 programName.AppendFormat("{0}Pose", description.NumHardwarePoses);
             }
@@ -199,7 +204,7 @@ namespace Medical
             {
                 programName.AppendFormat("Parity");
             }
-            pass.setVertexProgram(programName.ToString());
+            return programName.ToString();
         }
     }
 }
