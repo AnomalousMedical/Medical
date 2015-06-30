@@ -134,6 +134,7 @@ namespace Medical
 
         public void processMaterialAdded(String materialSetKey, Technique mainTechnique, Technique feedbackTechnique)
         {
+            //This funciton will not be needed in the future
             IndirectionTexture indirectionTex;
             if (!indirectionTextures.TryGetValue(materialSetKey, out indirectionTex))
             {
@@ -153,24 +154,44 @@ namespace Medical
             indirectionTex.reconfigureTechnique(mainTechnique, feedbackTechnique);
         }
 
-        public IndirectionTexture createOrRetrieveIndirectionTexture(String indirectionKey, IntSize2 textureSize)
+        /// <summary>
+        /// Create or retrieve an indirection texture, will return true if the texture was just created. Useful
+        /// for filling out other info on the texture if needed.
+        /// </summary>
+        /// <param name="indirectionKey">The key to use to search for this texture.</param>
+        /// <param name="textureSize">The size of the virtual texture this indirection texture needs to remap.</param>
+        /// <param name="indirectionTex">An out variable for the results.</param>
+        /// <returns>True if the texture was just created, false if not.</returns>
+        public bool createOrRetrieveIndirectionTexture(String indirectionKey, IntSize2 textureSize, out IndirectionTexture indirectionTex)
         {
-            IndirectionTexture indirectionTex;
             if (!indirectionTextures.TryGetValue(indirectionKey, out indirectionTex))
             {
                 indirectionTex = new IndirectionTexture(indirectionKey, textureSize, texelsPerPage, this);
                 indirectionTextures.Add(indirectionKey, indirectionTex);
                 indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
+                return true;
             }
-            return indirectionTex;
+            return false;
         }
 
-        public void setupFeedbackBufferTechnique(Technique technique)
+        public bool getIndirectionTexture(String indirectionKey, out IndirectionTexture indirectionTex)
         {
-            technique.setSchemeName("FeedbackBuffer");
-            var pass = technique.createPass();
-            pass.setVertexProgram("FeedbackBufferVP");
-            pass.setFragmentProgram("FeedbackBufferFP");
+            return indirectionTextures.TryGetValue(indirectionKey, out indirectionTex);
+        }
+
+        public void setupVirtualTextureFragmentParams(GpuProgramParametersSharedPtr gpuParams)
+        {
+            if (gpuParams.Value.hasNamedConstant("physicalSizeRecip"))
+            {
+                gpuParams.Value.setNamedConstant("physicalSizeRecip", PhysicalSizeRecrip);
+                gpuParams.Value.setNamedConstant("pageSizeLog2", new Vector2(TexelsPerPageLog2, TexelsPerPageLog2));
+                gpuParams.Value.setNamedConstant("pagePaddingScale", TextureLoader.PagePaddingScale);
+                gpuParams.Value.setNamedConstant("pagePaddingOffset", TextureLoader.PagePaddingOffset);
+            }
+            else
+            {
+                Logging.Log.Error("physicalSizeRecip varaible missing");
+            }
         }
 
         public bool getTextureSize(Technique technique, ref IntSize2 size)

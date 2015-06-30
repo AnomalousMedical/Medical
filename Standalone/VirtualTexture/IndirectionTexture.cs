@@ -48,7 +48,7 @@ namespace Medical
         private List<VTexPage> removedPages = new List<VTexPage>();
         private HashSet<VTexPage> addedPages = new HashSet<VTexPage>();
         private bool updateTextureOnApply = false;
-        private Dictionary<String, String> originalTextureUnits;
+        private Dictionary<String, String> originalTextureUnits = new Dictionary<string,string>();
 
         public IndirectionTexture(String materialSetKey, IntSize2 realTextureSize, int texelsPerPage, VirtualTextureManager virtualTextureManager)
         {
@@ -87,14 +87,16 @@ namespace Medical
             }
         }
 
+        public void addOriginalTexture(String textureUnitName, String textureName)
+        {
+            originalTextureUnits.Add(textureUnitName, textureName);
+        }
+
+        bool setupOriginalTextures = true;
+
         public void reconfigureTechnique(Technique mainTechnique, Technique feedbackTechnique)
         {
             bool foundTextures = true; //Mostly for debugging
-            bool setupOriginalTextureUnits = originalTextureUnits == null;
-            if(setupOriginalTextureUnits)
-            {
-                originalTextureUnits = new Dictionary<string, string>();
-            }
             int numPasses = mainTechnique.getNumPasses();
             for(ushort i = 0; i < numPasses; ++i)
             {
@@ -103,11 +105,12 @@ namespace Medical
                 for(ushort t = 0; t < numTextureUnits; ++t)
                 {
                     var texUnit = pass.getTextureUnitState(t);
-                    if (setupOriginalTextureUnits)
-                    {
-                        originalTextureUnits[texUnit.Name] = texUnit.TextureName;
-                    }
                     texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
+                    if (setupOriginalTextures)
+                    {
+                        originalTextureUnits.Add(texUnit.Name, texUnit.TextureName);
+                        setupOriginalTextures = false;
+                    }
                     //texUnit.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
                 }
                 var indirectionTexturePass = pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
@@ -148,11 +151,15 @@ namespace Medical
                     gpuParams.Value.setNamedConstant("spaceId", (float)id);
                 }
             }
+
+            setupOriginalTextures = false;
         }
 
-        public void setupFeedbackBufferTechnique(Technique technique)
+        public void setupFeedbackBufferTechnique(Material material)
         {
-            technique.setSchemeName("FeedbackBuffer");
+            var technique = material.createTechnique();
+            technique.setName(FeedbackBuffer.Scheme);
+            technique.setSchemeName(FeedbackBuffer.Scheme);
             var pass = technique.createPass();
             
             pass.setVertexProgram("FeedbackBufferVP");

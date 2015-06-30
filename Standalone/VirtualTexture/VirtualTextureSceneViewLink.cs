@@ -42,7 +42,7 @@ namespace Medical
             specularTexture.color(Color.Green);
             opacityTexture.color(Color.HotPink);
 
-            OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
+            //OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
         }
 
         public void Dispose()
@@ -89,8 +89,6 @@ namespace Medical
 
         void standaloneController_SceneLoaded(SimScene scene)
         {
-            return;
-
             //Dumb but easy way to detect virtual textures, iterate over everything in the material manager
             foreach(Material material in MaterialManager.getInstance().Iterator)
             {
@@ -142,18 +140,19 @@ namespace Medical
 
         public override MaterialPtr buildMaterial(MaterialDescription description)
         {
-            MaterialPtr material = MaterialManager.getInstance().create(determineName(description.Name, description), description.Group, false, null);
+            //MaterialPtr material = MaterialManager.getInstance().create(determineName(description.Name, description), description.Group, false, null);
+            MaterialPtr material = MaterialManager.getInstance().create(description.Name, description.Group, false, null);
             var mainTech = material.Value.getTechnique(0); //By default has a technique already
+            IndirectionTexture indirectionTex = null;
             switch(description.ShaderName)
             {
                 case "NormalMapSpecularMapGlossMap":
-                    createNormalMapSpecularMapGlossMap(mainTech, description);
+                    indirectionTex = createNormalMapSpecularMapGlossMap(mainTech, description);
                     break;
             }
-            if(description.HasTextures)
+            if(indirectionTex != null)
             {
-                var feedbackTechnique = material.Value.createTechnique();
-                VirtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048)).setupFeedbackBufferTechnique(feedbackTechnique);
+                indirectionTex.setupFeedbackBufferTechnique(material.Value);
             }
             material.Value.compile();
             material.Value.load();
@@ -166,7 +165,7 @@ namespace Medical
             materialPtr.Dispose();
         }
 
-        private void createNormalMapSpecularMapGlossMap(Technique technique, MaterialDescription description)
+        private IndirectionTexture createNormalMapSpecularMapGlossMap(Technique technique, MaterialDescription description)
         {
             var pass = technique.getPass(0); //By default has a pass in the main technique (this is how ogre builds)
 
@@ -179,6 +178,7 @@ namespace Medical
             pass.setFragmentProgram("NormalMapSpecularMapGlossMapFP");
             using(var gpuParams = pass.getFragmentProgramParameters())
             {
+                virtualTexture.setupVirtualTextureFragmentParams(gpuParams);
                 gpuParams.Value.setNamedConstant("glossyStart", description.GlossyStart);
                 gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
             }
@@ -186,7 +186,16 @@ namespace Medical
             pass.createTextureUnitState(normalTexture.TextureName);
             pass.createTextureUnitState(diffuseTexture.TextureName);
             pass.createTextureUnitState(specularTexture.TextureName);
-            pass.createTextureUnitState(VirtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048)).TextureName); //Slow key
+            IndirectionTexture indirectionTexture;
+            if (virtualTexture.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048), out indirectionTexture)) //Slow key
+            {
+                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + ".png");
+                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + ".png");
+                indirectionTexture.addOriginalTexture("Specular", description.SpecularMap + ".png");
+            }
+            setupIndirectionTexture(pass, indirectionTexture);
+
+            return indirectionTexture;
         }
 
         private static String determineName(String baseName, MaterialDescription description)
@@ -205,6 +214,12 @@ namespace Medical
                 programName.AppendFormat("Parity");
             }
             return programName.ToString();
+        }
+
+        private static void setupIndirectionTexture(Pass pass, IndirectionTexture indirectionTexture)
+        {
+            var indirectionTextureUnit = pass.createTextureUnitState(indirectionTexture.TextureName);
+            indirectionTextureUnit.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
         }
     }
 }
