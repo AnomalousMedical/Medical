@@ -36,14 +36,37 @@ namespace Medical
 
         void sceneViewController_WindowCreated(SceneViewWindow window)
         {
-            virtualTexture = new VirtualTextureManager(window);
+            virtualTexture = new VirtualTextureManager();
             window.RenderingStarted += window_RenderingStarted; //This leaks when disposed, need to track windows and remove these events
+            window.CameraCreated += window_CameraCreated;
+            window.CameraDestroyed += window_CameraDestroyed;
             this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
+        }
+
+        void window_CameraCreated(SceneViewWindow window)
+        {
+            int width = window.RenderWidth / 10;
+            if (width < 10)
+            {
+                width = 10;
+            }
+            int height = window.RenderHeight / 10;
+            if (height < 10)
+            {
+                height = 10;
+            }
+
+            VirtualTextureManager.createFeedbackBufferCamera(window.Camera, new IntSize2(width, height));
+        }
+
+        void window_CameraDestroyed(SceneViewWindow window)
+        {
+            VirtualTextureManager.destroyFeedbackBufferCamera();
         }
 
         void window_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
         {
-            virtualTexture.update(window, currentCameraRender);
+            virtualTexture.update();
         }
 
         void standaloneController_SceneLoaded(SimScene scene)

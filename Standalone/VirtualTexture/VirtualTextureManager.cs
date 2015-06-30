@@ -1,5 +1,4 @@
-﻿using Anomalous.GuiFramework.Cameras;
-using Engine;
+﻿using Engine;
 using Engine.Threads;
 using OgrePlugin;
 using System;
@@ -37,10 +36,8 @@ namespace Medical
         Dictionary<int, IndirectionTexture> indirectionTexturesById = new Dictionary<int, IndirectionTexture>();
         TextureLoader textureLoader;
 
-        public VirtualTextureManager(SceneViewWindow window)
+        public VirtualTextureManager()
         {
-            window.CameraCreated += window_CameraCreated;
-            window.CameraDestroyed += window_CameraDestroyed;
             if (!OgreResourceGroupManager.getInstance().resourceGroupExists(VirtualTextureManager.ResourceGroup))
             {
                 OgreResourceGroupManager.getInstance().createResourceGroup(VirtualTextureManager.ResourceGroup);
@@ -78,39 +75,26 @@ namespace Medical
             {
                 physicalTexture.Dispose();
             }
-            //This do not need to be disposed for now since the window cleans them up, but we want to remove that code if possible.
-            //foreach (var item in feedbackBuffers)
-            //{
-            //    item.Dispose();
-            //}
+
             foreach (var indirectionTexture in indirectionTextures.Values)
             {
                 indirectionTexture.Dispose();
             }
+
+            //Feedback buffer cameras are intended to be destroyed by the classes that create them, this does not provide automatic cleanup
         }
 
-        void window_CameraDestroyed(SceneViewWindow window)
+        public void destroyFeedbackBufferCamera()
         {
             feedbackBuffer.destroyCamera();
         }
 
-        void window_CameraCreated(SceneViewWindow window)
+        public void createFeedbackBufferCamera(Camera camera, IntSize2 size)
         {
-            int width = window.RenderWidth / 10;
-            if (width < 10)
-            {
-                width = 10;
-            }
-            int height = window.RenderHeight / 10;
-            if (height < 10)
-            {
-                height = 10;
-            }
-
-            feedbackBuffer.createCamera(window.Camera, new IntSize2(width, height));
+            feedbackBuffer.createCamera(camera, size);
         }
 
-        public void update(SceneViewWindow window, bool currentCameraRender)
+        public void update()
         {
             if (allowImageRender && frameCount == 0)
             {
