@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class VirtualTextureSceneViewLink : IDisposable
+    public class VirtualTextureSceneViewLink : MaterialBuilder, IDisposable
     {
         private VirtualTextureManager virtualTexture;
         private SceneViewController sceneViewController;
@@ -23,6 +23,8 @@ namespace Medical
             this.standaloneController = standaloneController;
 
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
+
+            //OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
         }
 
         public void Dispose()
@@ -85,6 +87,78 @@ namespace Medical
             {
                 return virtualTexture;
             }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "VirtualTexture";
+            }
+        }
+
+        public override MaterialPtr buildMaterial(MaterialDescription description)
+        {
+            MaterialPtr material = MaterialManager.getInstance().create(description.Name, description.Group, false, null);
+            var mainTech = material.Value.createTechnique();
+            switch(description.ShaderName)
+            {
+                case "NormalMapSpecularMapGlossMap":
+                    createNormalMapSpecularMapGlossMap(mainTech, description);
+                    break;
+            }
+            if(description.HasTextures)
+            {
+                var feedbackTechnique = material.Value.createTechnique();
+                VirtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048)).setupFeedbackBufferTechnique(feedbackTechnique);
+            }
+            return material;
+        }
+
+        public override void destroyMaterial(MaterialPtr materialPtr)
+        {
+            materialPtr.Dispose();
+        }
+
+        private void createNormalMapSpecularMapGlossMap(Technique technique, MaterialDescription description)
+        {
+            var pass = technique.createPass();
+
+            pass.setSpecular(description.SpecularColor);
+            pass.setDiffuse(description.DiffuseColor);
+            pass.setEmissive(description.EmissiveColor);
+
+            setVertexProgram(pass, description);
+
+            pass.setFragmentProgram("NormalMapSpecularMapGlossMapFP");
+            using(var gpuParams = pass.getFragmentProgramParameters())
+            {
+                gpuParams.Value.setNamedConstant("glossyStart", description.GlossyStart);
+                gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
+            }
+
+            pass.createTextureUnitState(VirtualTextureManager.getPhysicalTexture("NormalMap").TextureName);
+            pass.createTextureUnitState(VirtualTextureManager.getPhysicalTexture("Diffuse").TextureName);
+            pass.createTextureUnitState(VirtualTextureManager.getPhysicalTexture("Specular").TextureName);
+            pass.createTextureUnitState(VirtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048)).TextureName); //Slow key
+        }
+
+        private static void setVertexProgram(Pass pass, MaterialDescription description)
+        {
+            StringBuilder programName = new StringBuilder("UnifiedVP");
+            if(description.NumHardwareBones > 0)
+            {
+                programName.AppendFormat("HardwareSkin{0}BonePerVertex", description.NumHardwareBones);
+            }
+            if(description.NumHardwarePoses > 0)
+            {
+                programName.AppendFormat("{0}Pose", description.NumHardwarePoses);
+            }
+            if(description.Parity)
+            {
+                programName.AppendFormat("Parity");
+            }
+            pass.setVertexProgram(programName.ToString());
         }
     }
 }

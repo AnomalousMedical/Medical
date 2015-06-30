@@ -56,9 +56,9 @@ namespace Medical
                     break;
             }
 
-            feedbackBuffer = new FeedbackBuffer(window, this, 0);
+            feedbackBuffer = new FeedbackBuffer(this, 0);
 
-            //Create physical textures
+            //Create physical textures, don't do this here for real, have a create function that returns them
             physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", physicalTextureSize, this, texelsPerPage));
             physicalTextures.Add("NormalMap", new PhysicalTexture("NormalMap", physicalTextureSize, this, texelsPerPage));
             physicalTextures.Add("Specular", new PhysicalTexture("Specular", physicalTextureSize, this, texelsPerPage));
@@ -91,12 +91,23 @@ namespace Medical
 
         void window_CameraDestroyed(SceneViewWindow window)
         {
-            feedbackBuffer.cameraDestroyed();
+            feedbackBuffer.destroyCamera();
         }
 
         void window_CameraCreated(SceneViewWindow window)
         {
-            feedbackBuffer.cameraCreated();
+            int width = window.RenderWidth / 10;
+            if (width < 10)
+            {
+                width = 10;
+            }
+            int height = window.RenderHeight / 10;
+            if (height < 10)
+            {
+                height = 10;
+            }
+
+            feedbackBuffer.createCamera(window.Camera, new IntSize2(width, height));
         }
 
         public void update(SceneViewWindow window, bool currentCameraRender)
@@ -169,6 +180,26 @@ namespace Medical
                 }
             }
             indirectionTex.reconfigureTechnique(mainTechnique, feedbackTechnique);
+        }
+
+        public IndirectionTexture createOrRetrieveIndirectionTexture(String indirectionKey, IntSize2 textureSize)
+        {
+            IndirectionTexture indirectionTex;
+            if (!indirectionTextures.TryGetValue(indirectionKey, out indirectionTex))
+            {
+                indirectionTex = new IndirectionTexture(indirectionKey, textureSize, texelsPerPage, this);
+                indirectionTextures.Add(indirectionKey, indirectionTex);
+                indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
+            }
+            return indirectionTex;
+        }
+
+        public void setupFeedbackBufferTechnique(Technique technique)
+        {
+            technique.setSchemeName("FeedbackBuffer");
+            var pass = technique.createPass();
+            pass.setVertexProgram("FeedbackBufferVP");
+            pass.setFragmentProgram("FeedbackBufferFP");
         }
 
         public bool getTextureSize(Technique technique, ref IntSize2 size)

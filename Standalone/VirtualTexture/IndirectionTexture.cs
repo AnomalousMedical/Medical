@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class IndirectionTexture : IDisposable
+    public class IndirectionTexture : IDisposable
     {
         static byte currentId = 0;
         static byte maxId = 254;
@@ -147,6 +147,22 @@ namespace Medical
                     gpuParams.Value.setNamedConstant("mipSampleBias", -3.0f);
                     gpuParams.Value.setNamedConstant("spaceId", (float)id);
                 }
+            }
+        }
+
+        public void setupFeedbackBufferTechnique(Technique technique)
+        {
+            technique.setSchemeName("FeedbackBuffer");
+            var pass = technique.createPass();
+            
+            pass.setVertexProgram("FeedbackBufferVP");
+            
+            pass.setFragmentProgram("FeedbackBufferFP");
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                gpuParams.Value.setNamedConstant("virtTexSize", new Vector2(realTextureSize.Width, realTextureSize.Height));
+                gpuParams.Value.setNamedConstant("mipSampleBias", -3.0f);
+                gpuParams.Value.setNamedConstant("spaceId", (float)id);
             }
         }
 

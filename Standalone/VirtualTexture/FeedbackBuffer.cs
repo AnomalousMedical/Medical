@@ -22,13 +22,11 @@ namespace Medical
         VirtualTextureManager virtualTextureManager;
         int id;
 
-        SceneViewWindow window;
         Viewport vp;
 
-        public FeedbackBuffer(SceneViewWindow window, VirtualTextureManager virtualTextureManager, int id)
+        public FeedbackBuffer(VirtualTextureManager virtualTextureManager, int id)
         {
             this.id = id;
-            this.window = window;
             this.virtualTextureManager = virtualTextureManager;
         }
 
@@ -90,7 +88,7 @@ namespace Medical
             }
         }
 
-        internal void cameraDestroyed()
+        internal void destroyCamera()
         {
             renderTexture.destroyViewport(vp);
             vp = null;
@@ -102,20 +100,9 @@ namespace Medical
             fullBitmap.Dispose();
         }
 
-        internal void cameraCreated()
+        internal void createCamera(Camera camera, IntSize2 renderSize)
         {
-            int width = window.RenderWidth / 10;
-            if(width < 10)
-            {
-                width = 10;
-            }
-            int height = window.RenderHeight / 10;
-            if(height < 10)
-            {
-                height = 10;
-            }
-
-            texture = TextureManager.getInstance().createManual(TextureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
+            texture = TextureManager.getInstance().createManual(TextureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)renderSize.Width, (uint)renderSize.Height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
 
             fullBitmap = new FreeImageBitmap((int)texture.Value.Width, (int)texture.Value.Height, FreeImageAPI.PixelFormat.Format32bppRgb);
             fullBitmapBox = fullBitmap.createPixelBox(OgrePlugin.PixelFormat.PF_A8R8G8B8);
@@ -125,7 +112,7 @@ namespace Medical
             renderTexture = pixelBuffer.Value.getRenderTarget();
             renderTexture.setAutoUpdated(false);
 
-            vp = renderTexture.addViewport(window.Camera);
+            vp = renderTexture.addViewport(camera);
             vp.setMaterialScheme(Scheme);
             vp.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 1.0f));
             vp.clear();
