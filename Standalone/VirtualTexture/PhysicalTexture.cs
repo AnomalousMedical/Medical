@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class PhysicalTexture : IDisposable
+    public class PhysicalTexture : IDisposable
     {
         static FreeImageAPI.Color[] mipColors = new FreeImageAPI.Color[17];
         static PhysicalTexture()

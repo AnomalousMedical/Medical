@@ -16,6 +16,11 @@ namespace Medical
         private SceneViewController sceneViewController;
         private StandaloneController standaloneController;
 
+        private PhysicalTexture normalTexture;
+        private PhysicalTexture diffuseTexture;
+        private PhysicalTexture specularTexture;
+        private PhysicalTexture opacityTexture;
+
         public VirtualTextureSceneViewLink(StandaloneController standaloneController)
         {
             this.sceneViewController = standaloneController.SceneViewController;
@@ -23,6 +28,19 @@ namespace Medical
             this.standaloneController = standaloneController;
 
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
+
+            virtualTexture = new VirtualTextureManager();
+
+            diffuseTexture = virtualTexture.createPhysicalTexture("Diffuse");
+            normalTexture = virtualTexture.createPhysicalTexture("NormalMap");
+            specularTexture = virtualTexture.createPhysicalTexture("Specular");
+            opacityTexture = virtualTexture.createPhysicalTexture("Opacity");
+
+            //Debug texture colors
+            normalTexture.color(Color.Blue);
+            diffuseTexture.color(Color.Red);
+            specularTexture.color(Color.Green);
+            opacityTexture.color(Color.HotPink);
 
             //OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
         }
@@ -37,7 +55,6 @@ namespace Medical
 
         void sceneViewController_WindowCreated(SceneViewWindow window) //Only works for the first window
         {
-            virtualTexture = new VirtualTextureManager();
             standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
             window.CameraCreated += window_CameraCreated;
             window.CameraDestroyed += window_CameraDestroyed;
@@ -161,9 +178,9 @@ namespace Medical
                 gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
             }
 
-            pass.createTextureUnitState(VirtualTextureManager.getPhysicalTexture("NormalMap").TextureName);
-            pass.createTextureUnitState(VirtualTextureManager.getPhysicalTexture("Diffuse").TextureName);
-            pass.createTextureUnitState(VirtualTextureManager.getPhysicalTexture("Specular").TextureName);
+            pass.createTextureUnitState(normalTexture.TextureName);
+            pass.createTextureUnitState(diffuseTexture.TextureName);
+            pass.createTextureUnitState(specularTexture.TextureName);
             pass.createTextureUnitState(VirtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048)).TextureName); //Slow key
         }
 

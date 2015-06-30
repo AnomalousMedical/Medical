@@ -53,18 +53,6 @@ namespace Medical
             }
 
             feedbackBuffer = new FeedbackBuffer(this, 0);
-
-            //Create physical textures, don't do this here for real, have a create function that returns them
-            physicalTextures.Add("Diffuse", new PhysicalTexture("Diffuse", physicalTextureSize, this, texelsPerPage));
-            physicalTextures.Add("NormalMap", new PhysicalTexture("NormalMap", physicalTextureSize, this, texelsPerPage));
-            physicalTextures.Add("Specular", new PhysicalTexture("Specular", physicalTextureSize, this, texelsPerPage));
-            physicalTextures.Add("Opacity", new PhysicalTexture("Opacity", physicalTextureSize, this, texelsPerPage));
-
-            physicalTextures["NormalMap"].color(Color.Blue);
-            physicalTextures["Diffuse"].color(Color.Red);
-            physicalTextures["Specular"].color(Color.Green);
-            physicalTextures["Opacity"].color(Color.HotPink);
-
             textureLoader = new TextureLoader(this, new IntSize2(4096, 4096), texelsPerPage, padding);
         }
 
@@ -81,6 +69,13 @@ namespace Medical
             }
 
             //Feedback buffer cameras are intended to be destroyed by the classes that create them, this does not provide automatic cleanup
+        }
+
+        public PhysicalTexture createPhysicalTexture(String name)
+        {
+            PhysicalTexture pt = new PhysicalTexture(name, physicalTextureSize, this, texelsPerPage);
+            physicalTextures.Add(name, pt);
+            return pt;
         }
 
         public void destroyFeedbackBufferCamera()
