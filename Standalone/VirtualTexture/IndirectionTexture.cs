@@ -89,6 +89,7 @@ namespace Medical
 
         public void reconfigureTechnique(Technique mainTechnique, Technique feedbackTechnique)
         {
+            bool foundTextures = true; //Mostly for debugging
             bool setupOriginalTextureUnits = originalTextureUnits == null;
             if(setupOriginalTextureUnits)
             {
@@ -125,14 +126,15 @@ namespace Medical
                         }
                         else
                         {
-                            Logging.Log.Debug("physicalSizeRecip varaible missing");
+                            Logging.Log.Debug("physicalSizeRecip varaible missing {0}", mainTechnique.getParent().Name);
                         }
                     }
                 }
-                else
-                {
-                    Logging.Log.Debug("No Textures");
-                }
+            }
+
+            if(!foundTextures)
+            {
+                Logging.Log.Debug("Found no textures in any passes {0}", mainTechnique.getParent().Name);
             }
 
             numPasses = feedbackTechnique.getNumPasses();

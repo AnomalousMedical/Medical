@@ -28,7 +28,7 @@ namespace Medical
         int updateBufferFrame = 2;
         Phase phase = Phase.RenderFeedback;
         bool allowImageRender = true;
-        int texelsPerPage = 64;
+        int texelsPerPage = 128;
         int padding;
         IntSize2 physicalTextureSize = new IntSize2(4096, 4096);
 
@@ -189,8 +189,20 @@ namespace Medical
                             size.Height = (int)texture.Value.Height;
                             return true;
                         }
+                        else
+                        {
+                            Logging.Log.Debug("Texture {0} not found for material {1}", texUnit.TextureName, technique.getParent().Name);
+                        }
                     }
                 }
+                else
+                {
+                    Logging.Log.Debug("No texture units in material {0}", technique.getParent().Name);
+                }
+            }
+            else
+            {
+                Logging.Log.Debug("No passes in material {0}", technique.getParent().Name);
             }
             return false;
         }
