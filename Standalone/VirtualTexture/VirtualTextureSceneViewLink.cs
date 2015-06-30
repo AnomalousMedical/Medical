@@ -31,13 +31,14 @@ namespace Medical
         {
             this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
+            standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
             IDisposableUtil.DisposeIfNotNull(virtualTexture);
         }
 
-        void sceneViewController_WindowCreated(SceneViewWindow window)
+        void sceneViewController_WindowCreated(SceneViewWindow window) //Only works for the first window
         {
             virtualTexture = new VirtualTextureManager();
-            window.RenderingStarted += window_RenderingStarted; //This leaks when disposed, need to track windows and remove these events
+            standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
             window.CameraCreated += window_CameraCreated;
             window.CameraDestroyed += window_CameraDestroyed;
             this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
@@ -64,7 +65,7 @@ namespace Medical
             VirtualTextureManager.destroyFeedbackBufferCamera();
         }
 
-        void window_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
+        void MedicalController_OnLoopUpdate(Engine.Platform.Clock time)
         {
             virtualTexture.update();
         }

@@ -26,7 +26,6 @@ namespace Medical
         int frameCount = 0;
         int updateBufferFrame = 2;
         Phase phase = Phase.RenderFeedback;
-        bool allowImageRender = true;
         int texelsPerPage = 128;
         int padding;
         IntSize2 physicalTextureSize = new IntSize2(4096, 4096);
@@ -96,51 +95,44 @@ namespace Medical
 
         public void update()
         {
-            if (allowImageRender && frameCount == 0)
+            if (frameCount == 0)
             {
-                ThreadManager.invoke(() =>
+                switch (phase)
                 {
-                    allowImageRender = false;
+                    case Phase.RenderFeedback:
+                        feedbackBuffer.update();
+                        break;
+                    case Phase.CopyFeedbackToStaging:
+                        feedbackBuffer.blitToStaging();
+                        break;
+                    case Phase.CopyStagingToMemory:
+                        feedbackBuffer.blitStagingToMemory();
+                        break;
+                    case Phase.AnalyzeFeedback:
+                        textureLoader.beginPageUpdate();
+                        feedbackBuffer.analyzeBuffer();
 
-                    switch (phase)
-                    {
-                        case Phase.RenderFeedback:
-                            feedbackBuffer.update();
-                            break;
-                        case Phase.CopyFeedbackToStaging:
-                            feedbackBuffer.blitToStaging();
-                            break;
-                        case Phase.CopyStagingToMemory:
-                            feedbackBuffer.blitStagingToMemory();
-                            break;
-                        case Phase.AnalyzeFeedback:
-                            textureLoader.beginPageUpdate();
-                            feedbackBuffer.analyzeBuffer();
+                        PerformanceMonitor.start("Finish Page Update");
+                        foreach (var indirectionTex in indirectionTextures.Values)
+                        {
+                            indirectionTex.finishPageUpdate();
+                        }
+                        PerformanceMonitor.stop("Finish Page Update");
 
-                            PerformanceMonitor.start("Finish Page Update");
-                            foreach (var indirectionTex in indirectionTextures.Values)
-                            {
-                                indirectionTex.finishPageUpdate();
-                            }
-                            PerformanceMonitor.stop("Finish Page Update");
+                        PerformanceMonitor.start("Update Texture Loader");
+                        textureLoader.updatePagesFromRequests();
+                        PerformanceMonitor.stop("Update Texture Loader");
 
-                            PerformanceMonitor.start("Update Texture Loader");
-                            textureLoader.updatePagesFromRequests();
-                            PerformanceMonitor.stop("Update Texture Loader");
+                        PerformanceMonitor.start("Upload Indirection Texture Update");
+                        foreach (var indirectionTex in indirectionTextures.Values) //This could be improved with a queue of just updated textures
+                        {
+                            indirectionTex.uploadPageChanges();
+                        }
+                        PerformanceMonitor.stop("Upload Indirection Texture Update");
+                        break;
+                }
 
-                            PerformanceMonitor.start("Upload Indirection Texture Update");
-                            foreach (var indirectionTex in indirectionTextures.Values) //This could be improved with a queue of just updated textures
-                            {
-                                indirectionTex.uploadPageChanges();
-                            }
-                            PerformanceMonitor.stop("Upload Indirection Texture Update");
-                            break;
-                    }
-
-                    phase = (Phase)(((int)phase + 1) % (int)Phase.Max);
-                    allowImageRender = true;
-
-                });
+                phase = (Phase)(((int)phase + 1) % (int)Phase.Max);
             }
             frameCount = (frameCount + 1) % updateBufferFrame;
         }
