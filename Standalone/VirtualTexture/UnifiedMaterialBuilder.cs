@@ -14,7 +14,7 @@ namespace Medical
 
         private List<Material> createdMaterials = new List<Material>(); //This is only for detection
         private VirtualTextureManager virtualTextureManager;
-        private String textureFormat = ".png";
+        private String textureFormat;
         private Dictionary<String, CreateMaterial> materialCreationFuncs = new Dictionary<string, CreateMaterial>();
 
         private PhysicalTexture normalTexture;
@@ -24,6 +24,16 @@ namespace Medical
 
         public UnifiedMaterialBuilder(VirtualTextureManager virtualTextureManager)
         {
+            switch(OgreInterface.Instance.SelectedTextureFormat)
+            {
+                case CompressedTextureSupport.DXT:
+                    textureFormat = ".dds";
+                    break;
+                case CompressedTextureSupport.None:
+                    textureFormat = ".png";
+                    break;
+            }
+
             this.virtualTextureManager = virtualTextureManager;
 
             diffuseTexture = virtualTextureManager.createPhysicalTexture("Diffuse");
