@@ -144,13 +144,13 @@ namespace Medical
             MaterialPtr material = MaterialManager.getInstance().create(description.Name, description.Group, false, null);
             var mainTech = material.Value.getTechnique(0); //By default has a technique already
             IndirectionTexture indirectionTex = null;
-            switch(description.ShaderName)
+            switch (description.ShaderName)
             {
                 case "NormalMapSpecularMapGlossMap":
                     indirectionTex = createNormalMapSpecularMapGlossMap(mainTech, description);
                     break;
             }
-            if(indirectionTex != null)
+            if (indirectionTex != null)
             {
                 indirectionTex.setupFeedbackBufferTechnique(material.Value);
             }
@@ -176,7 +176,7 @@ namespace Medical
             pass.setVertexProgram(determineName("UnifiedVP", description));
 
             pass.setFragmentProgram("NormalMapSpecularMapGlossMapFP");
-            using(var gpuParams = pass.getFragmentProgramParameters())
+            using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTexture.setupVirtualTextureFragmentParams(gpuParams);
                 gpuParams.Value.setNamedConstant("glossyStart", description.GlossyStart);
@@ -209,7 +209,7 @@ namespace Medical
             {
                 programName.AppendFormat("{0}Pose", description.NumHardwarePoses);
             }
-            if(description.Parity)
+            if (description.Parity)
             {
                 programName.AppendFormat("Parity");
             }

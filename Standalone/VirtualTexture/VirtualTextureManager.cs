@@ -134,7 +134,6 @@ namespace Medical
 
         public void processMaterialAdded(String materialSetKey, Technique mainTechnique, Technique feedbackTechnique)
         {
-            //This funciton will not be needed in the future
             IndirectionTexture indirectionTex;
             if (!indirectionTextures.TryGetValue(materialSetKey, out indirectionTex))
             {
@@ -154,44 +153,24 @@ namespace Medical
             indirectionTex.reconfigureTechnique(mainTechnique, feedbackTechnique);
         }
 
-        /// <summary>
-        /// Create or retrieve an indirection texture, will return true if the texture was just created. Useful
-        /// for filling out other info on the texture if needed.
-        /// </summary>
-        /// <param name="indirectionKey">The key to use to search for this texture.</param>
-        /// <param name="textureSize">The size of the virtual texture this indirection texture needs to remap.</param>
-        /// <param name="indirectionTex">An out variable for the results.</param>
-        /// <returns>True if the texture was just created, false if not.</returns>
-        public bool createOrRetrieveIndirectionTexture(String indirectionKey, IntSize2 textureSize, out IndirectionTexture indirectionTex)
+        public IndirectionTexture createOrRetrieveIndirectionTexture(String indirectionKey, IntSize2 textureSize)
         {
+            IndirectionTexture indirectionTex;
             if (!indirectionTextures.TryGetValue(indirectionKey, out indirectionTex))
             {
                 indirectionTex = new IndirectionTexture(indirectionKey, textureSize, texelsPerPage, this);
                 indirectionTextures.Add(indirectionKey, indirectionTex);
                 indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
-                return true;
             }
-            return false;
+            return indirectionTex;
         }
 
-        public bool getIndirectionTexture(String indirectionKey, out IndirectionTexture indirectionTex)
+        public void setupFeedbackBufferTechnique(Technique technique)
         {
-            return indirectionTextures.TryGetValue(indirectionKey, out indirectionTex);
-        }
-
-        public void setupVirtualTextureFragmentParams(GpuProgramParametersSharedPtr gpuParams)
-        {
-            if (gpuParams.Value.hasNamedConstant("physicalSizeRecip"))
-            {
-                gpuParams.Value.setNamedConstant("physicalSizeRecip", PhysicalSizeRecrip);
-                gpuParams.Value.setNamedConstant("pageSizeLog2", new Vector2(TexelsPerPageLog2, TexelsPerPageLog2));
-                gpuParams.Value.setNamedConstant("pagePaddingScale", TextureLoader.PagePaddingScale);
-                gpuParams.Value.setNamedConstant("pagePaddingOffset", TextureLoader.PagePaddingOffset);
-            }
-            else
-            {
-                Logging.Log.Error("physicalSizeRecip varaible missing");
-            }
+            technique.setSchemeName("FeedbackBuffer");
+            var pass = technique.createPass();
+            pass.setVertexProgram("FeedbackBufferVP");
+            pass.setFragmentProgram("FeedbackBufferFP");
         }
 
         public bool getTextureSize(Technique technique, ref IntSize2 size)
@@ -304,6 +283,47 @@ namespace Medical
             {
                 float textelRatio = texelsPerPage + padding * 2;
                 return new Vector2(1.0f / (physicalTextureSize.Width / textelRatio), 1.0f / (physicalTextureSize.Height / textelRatio));
+            }
+        }
+
+        //New System
+        /// <summary>
+        /// Create or retrieve an indirection texture, will return true if the texture was just created. Useful
+        /// for filling out other info on the texture if needed.
+        /// </summary>
+        /// <param name="indirectionKey">The key to use to search for this texture.</param>
+        /// <param name="textureSize">The size of the virtual texture this indirection texture needs to remap.</param>
+        /// <param name="indirectionTex">An out variable for the results.</param>
+        /// <returns>True if the texture was just created, false if not.</returns>
+        public bool createOrRetrieveIndirectionTexture(String indirectionKey, IntSize2 textureSize, out IndirectionTexture indirectionTex)
+        {
+            if (!indirectionTextures.TryGetValue(indirectionKey, out indirectionTex))
+            {
+                indirectionTex = new IndirectionTexture(indirectionKey, textureSize, texelsPerPage, this);
+                indirectionTextures.Add(indirectionKey, indirectionTex);
+                indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
+                return true;
+            }
+            return false;
+        }
+
+        public bool getIndirectionTexture(String indirectionKey, out IndirectionTexture indirectionTex)
+        {
+            return indirectionTextures.TryGetValue(indirectionKey, out indirectionTex);
+        }
+
+        public void setupVirtualTextureFragmentParams(GpuProgramParametersSharedPtr gpuParams)
+        {
+            if (gpuParams.Value.hasNamedConstant("physicalSizeRecip"))
+            {
+                gpuParams.Value.setNamedConstant("physicalSizeRecip", PhysicalSizeRecrip);
+                gpuParams.Value.setNamedConstant("pageSizeLog2", new Vector2(TexelsPerPageLog2, TexelsPerPageLog2));
+                gpuParams.Value.setNamedConstant("pagePaddingScale", TextureLoader.PagePaddingScale);
+                gpuParams.Value.setNamedConstant("pagePaddingOffset", TextureLoader.PagePaddingOffset);
+            }
+            else
+            {
+                Logging.Log.Error("physicalSizeRecip varaible missing");
             }
         }
     }
