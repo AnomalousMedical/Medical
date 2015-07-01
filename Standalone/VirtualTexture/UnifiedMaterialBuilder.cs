@@ -57,8 +57,8 @@ namespace Medical
 
         public override void buildMaterial(MaterialDescription description, MaterialRepository repo)
         {
-            constructMaterial(description, repo, false);
-            if (description.CreateAlphaMaterial)
+            constructMaterial(description, repo, description.IsAlpha);
+            if (description.CreateAlphaMaterial && !description.IsAlpha)
             {
                 constructMaterial(description, repo, true);
             }
