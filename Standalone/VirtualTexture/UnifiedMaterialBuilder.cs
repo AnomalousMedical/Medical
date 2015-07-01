@@ -48,6 +48,8 @@ namespace Medical
             opacityTexture.color(Color.HotPink);
 
             materialCreationFuncs.Add("NormalMapSpecularMapGlossMap", createNormalMapSpecularMapGlossMap);
+            materialCreationFuncs.Add("NormalMapSpecularMap", createNormalMapSpecularMap);
+            materialCreationFuncs.Add("NormalMapSpecular", createNormalMapSpecular);
         }
 
         public bool isCreator(Material material)
@@ -98,7 +100,7 @@ namespace Medical
                     Technique technique = material.Value.createTechnique();
                     technique.setLodIndex(1);
                     technique.createPass();
-                    createNormalMapSpecularMapGlossMap(technique, description, alpha, false);
+                    createMaterial(technique, description, alpha, false);
                 }
 
                 if (indirectionTex != null)
@@ -143,9 +145,65 @@ namespace Medical
             return setupNormalDiffuseSpecularTextures(description, pass);
         }
 
+        private IndirectionTexture createNormalMapSpecularMap(Technique technique, MaterialDescription description, bool alpha, bool depthCheck) //Gives yellowy hue
+        {
+            //Create depth check pass if needed
+            var pass = createDepthPass(technique, description, alpha, depthCheck);
+
+            //Setup this pass
+            setupCommonPassAttributes(description, alpha, pass);
+
+            //Material specific, setup shaders
+            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+
+            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapFP", alpha));
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
+            }
+
+            //Setup textures
+            return setupNormalDiffuseSpecularTextures(description, pass);
+        }
+
+        private IndirectionTexture createNormalMapSpecular(Technique technique, MaterialDescription description, bool alpha, bool depthCheck) //More messed up than above
+        {
+            //Create depth check pass if needed
+            var pass = createDepthPass(technique, description, alpha, depthCheck);
+
+            //Setup this pass
+            setupCommonPassAttributes(description, alpha, pass);
+
+            //Material specific, setup shaders
+            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+
+            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapFP", alpha));
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
+            }
+
+            //Setup textures
+            return setupNormalDiffuseTextures(description, pass);
+        }
+
         //--------------------------------------
         //Shared helpers
         //--------------------------------------
+        private IndirectionTexture setupNormalDiffuseTextures(MaterialDescription description, Pass pass)
+        {
+            var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
+            pass.createTextureUnitState(diffuseTexture.TextureName);
+            IndirectionTexture indirectionTexture;
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(), out indirectionTexture)) //Slow key
+            {
+                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
+                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
+            }
+            setupIndirectionTexture(pass, indirectionTexture);
+            return indirectionTexture;
+        }
+
         private IndirectionTexture setupNormalDiffuseSpecularTextures(MaterialDescription description, Pass pass)
         {
             var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
