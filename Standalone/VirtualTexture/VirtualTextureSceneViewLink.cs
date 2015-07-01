@@ -10,17 +10,12 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class VirtualTextureSceneViewLink : MaterialBuilder, IDisposable
+    public class VirtualTextureSceneViewLink : IDisposable
     {
-        private VirtualTextureManager virtualTexture;
+        private VirtualTextureManager virtualTextureManager;
         private SceneViewController sceneViewController;
         private StandaloneController standaloneController;
-
-        private PhysicalTexture normalTexture;
-        private PhysicalTexture diffuseTexture;
-        private PhysicalTexture specularTexture;
-        private PhysicalTexture opacityTexture;
-        private List<Material> createdMaterials = new List<Material>(); //This is only for detection
+        private UnifiedMaterialBuilder materialBuilder;
 
         public VirtualTextureSceneViewLink(StandaloneController standaloneController)
         {
@@ -30,28 +25,19 @@ namespace Medical
 
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
 
-            virtualTexture = new VirtualTextureManager();
+            virtualTextureManager = new VirtualTextureManager();
 
-            diffuseTexture = virtualTexture.createPhysicalTexture("Diffuse");
-            normalTexture = virtualTexture.createPhysicalTexture("NormalMap");
-            specularTexture = virtualTexture.createPhysicalTexture("Specular");
-            opacityTexture = virtualTexture.createPhysicalTexture("Opacity");
-
-            //Debug texture colors
-            normalTexture.color(Color.Blue);
-            diffuseTexture.color(Color.Red);
-            specularTexture.color(Color.Green);
-            opacityTexture.color(Color.HotPink);
-
-            OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
+            materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager);
+            OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
         }
 
         public void Dispose()
         {
+            OgreInterface.Instance.MaterialParser.removeMaterialBuilder(materialBuilder);
             this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
-            IDisposableUtil.DisposeIfNotNull(virtualTexture);
+            IDisposableUtil.DisposeIfNotNull(virtualTextureManager);
         }
 
         void sceneViewController_WindowCreated(SceneViewWindow window) //Only works for the first window
@@ -85,13 +71,13 @@ namespace Medical
 
         void MedicalController_OnLoopUpdate(Engine.Platform.Clock time)
         {
-            virtualTexture.update();
+            virtualTextureManager.update();
         }
 
         void standaloneController_SceneLoaded(SimScene scene)
         {
             //Dumb but easy way to detect virtual textures, iterate over everything in the material manager
-            foreach(Material material in MaterialManager.getInstance().Iterator.Where(m => !createdMaterials.Contains(m)))
+            foreach(Material material in MaterialManager.getInstance().Iterator.Where(m => !materialBuilder.isCreator(m)))
             {
                 if(material.Name == "SkinMaterial_HWSkin")
                 {
@@ -120,7 +106,7 @@ namespace Medical
                             feedbackTechnique = material.getTechnique((ushort)(i - 1)); //The last one is the most likely feedbackTechnique
                             if(feedbackTechnique.SchemeName == FeedbackBuffer.Scheme)
                             {
-                                virtualTexture.processMaterialAdded(name, material.getTechnique(0), feedbackTechnique);
+                                virtualTextureManager.processMaterialAdded(name, material.getTechnique(0), feedbackTechnique);
                             }
                         }
                     }
@@ -132,150 +118,8 @@ namespace Medical
         {
             get
             {
-                return virtualTexture;
+                return virtualTextureManager;
             }
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "VirtualTexture";
-            }
-        }
-
-        public override void buildMaterial(MaterialDescription description, MaterialRepository repo)
-        {
-            constructMaterial(description, repo, false);
-            if(description.CreateAlphaMaterial)
-            {
-                constructMaterial(description, repo, true);
-            }
-        }
-
-        public override void destroyMaterial(MaterialPtr materialPtr)
-        {
-            createdMaterials.Remove(materialPtr.Value);
-            MaterialManager.getInstance().remove(materialPtr.Value.Name);
-            materialPtr.Dispose();
-        }
-
-        private void constructMaterial(MaterialDescription description, MaterialRepository repo, bool alpha)
-        {
-            String name = description.Name;
-            if(description.CreateAlphaMaterial && alpha) //Is this an automatic alpha material?
-            {
-                name += "Alpha";
-            }
-            MaterialPtr material = MaterialManager.getInstance().create(name, description.Group, false, null);
-            IndirectionTexture indirectionTex = null;
-            switch (description.ShaderName)
-            {
-                case "NormalMapSpecularMapGlossMap":
-                    indirectionTex = createNormalMapSpecularMapGlossMap(material.Value.getTechnique(0), description, alpha, true);
-                    if(alpha)
-                    {
-                        //Create no depth check technique
-                        Technique technique = material.Value.createTechnique();
-                        technique.setLodIndex(1);
-                        technique.createPass();
-                        createNormalMapSpecularMapGlossMap(technique, description, alpha, false);
-                    }
-                    break;
-            }
-            if (indirectionTex != null)
-            {
-                indirectionTex.setupFeedbackBufferTechnique(material.Value, determineVertexShaderName("", description.NumHardwareBones, description.NumHardwarePoses, false));
-            }
-            material.Value.compile();
-            material.Value.load();
-
-            createdMaterials.Add(material.Value);
-            repo.addMaterial(material, description);
-        }
-
-        private IndirectionTexture createNormalMapSpecularMapGlossMap(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
-        {
-            var pass = technique.getPass(0); //Make sure technique has one pass already defined
-            if(alpha && depthCheck)
-            {
-                //Setup depth check pass
-                pass.setColorWriteEnabled(false);
-                pass.setDepthBias(-1.0f);
-                pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
-
-                pass.setVertexProgram(determineVertexShaderName("DepthCheckVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
-                pass.setFragmentProgram("HiddenFP");
-
-                pass = technique.createPass(); //Get another pass
-            }
-
-            pass.setSpecular(description.SpecularColor);
-            pass.setDiffuse(description.DiffuseColor);
-            pass.setEmissive(description.EmissiveColor);
-
-            if(alpha)
-            {
-                pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
-                pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
-            }
-
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
-
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapGlossMapFP", alpha));
-            using (var gpuParams = pass.getFragmentProgramParameters())
-            {
-                virtualTexture.setupVirtualTextureFragmentParams(gpuParams);
-                gpuParams.Value.setNamedConstant("glossyStart", description.GlossyStart);
-                gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
-            }
-
-            var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
-            pass.createTextureUnitState(diffuseTexture.TextureName);
-            pass.createTextureUnitState(specularTexture.TextureName);
-            IndirectionTexture indirectionTexture;
-            if (virtualTexture.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048), out indirectionTexture)) //Slow key
-            {
-                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + ".png");
-                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + ".png");
-                indirectionTexture.addOriginalTexture("Specular", description.SpecularMap + ".png");
-            }
-            setupIndirectionTexture(pass, indirectionTexture);
-
-            return indirectionTexture;
-        }
-
-        private static String determineVertexShaderName(String baseName, int numHardwareBones, int numHardwarePoses, bool parity)
-        {
-            StringBuilder programName = new StringBuilder(baseName);
-            if (numHardwareBones > 0)
-            {
-                programName.AppendFormat("HardwareSkin{0}BonePerVertex", numHardwareBones);
-            }
-            if (numHardwarePoses > 0)
-            {
-                programName.AppendFormat("{0}Pose", numHardwarePoses);
-            }
-            if (parity)
-            {
-                programName.AppendFormat("Parity");
-            }
-            return programName.ToString();
-        }
-
-        private static String determineFragmentShaderName(String baseName, bool alpha)
-        {
-            if(alpha)
-            {
-                baseName += "Alpha";
-            }
-            return baseName;
-        }
-
-        private static void setupIndirectionTexture(Pass pass, IndirectionTexture indirectionTexture)
-        {
-            var indirectionTextureUnit = pass.createTextureUnitState(indirectionTexture.TextureName);
-            indirectionTextureUnit.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
         }
     }
 }

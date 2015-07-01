@@ -663,6 +663,7 @@
     <Compile Include="VirtualTexture\PhysicalTexture.cs" />
     <Compile Include="VirtualTexture\PTexPage.cs" />
     <Compile Include="VirtualTexture\TextureLoader.cs" />
+    <Compile Include="VirtualTexture\UnifiedMaterialBuilder.cs" />
     <Compile Include="VirtualTexture\VirtualTextureManager.cs" />
     <Compile Include="VirtualTexture\VirtualTextureSceneViewLink.cs" />
     <Compile Include="VirtualTexture\VTexPage.cs" />
