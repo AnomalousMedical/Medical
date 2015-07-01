@@ -10,9 +10,12 @@ namespace Medical
 {
     class UnifiedMaterialBuilder : MaterialBuilder
     {
+        delegate IndirectionTexture CreateMaterial(Technique technique, MaterialDescription description, bool alpha, bool depthCheck);
+
         private List<Material> createdMaterials = new List<Material>(); //This is only for detection
         private VirtualTextureManager virtualTextureManager;
         private String textureFormat = ".png";
+        private Dictionary<String, CreateMaterial> materialCreationFuncs = new Dictionary<string, CreateMaterial>();
 
         private PhysicalTexture normalTexture;
         private PhysicalTexture diffuseTexture;
@@ -33,6 +36,8 @@ namespace Medical
             diffuseTexture.color(Color.Red);
             specularTexture.color(Color.Green);
             opacityTexture.color(Color.HotPink);
+
+            materialCreationFuncs.Add("NormalMapSpecularMapGlossMap", createNormalMapSpecularMapGlossMap);
         }
 
         public bool isCreator(Material material)
@@ -73,31 +78,39 @@ namespace Medical
             }
             MaterialPtr material = MaterialManager.getInstance().create(name, description.Group, false, null);
             IndirectionTexture indirectionTex = null;
-            switch (description.ShaderName)
+            CreateMaterial createMaterial;
+            if(materialCreationFuncs.TryGetValue(description.ShaderName, out createMaterial))
             {
-                case "NormalMapSpecularMapGlossMap":
-                    indirectionTex = createNormalMapSpecularMapGlossMap(material.Value.getTechnique(0), description, alpha, true);
-                    if (alpha)
-                    {
-                        //Create no depth check technique
-                        Technique technique = material.Value.createTechnique();
-                        technique.setLodIndex(1);
-                        technique.createPass();
-                        createNormalMapSpecularMapGlossMap(technique, description, alpha, false);
-                    }
-                    break;
-            }
-            if (indirectionTex != null)
-            {
-                indirectionTex.setupFeedbackBufferTechnique(material.Value, determineVertexShaderName("", description.NumHardwareBones, description.NumHardwarePoses, false));
-            }
-            material.Value.compile();
-            material.Value.load();
+                indirectionTex = createMaterial(material.Value.getTechnique(0), description, alpha, true);
+                if (alpha)
+                {
+                    //Create no depth check technique
+                    Technique technique = material.Value.createTechnique();
+                    technique.setLodIndex(1);
+                    technique.createPass();
+                    createNormalMapSpecularMapGlossMap(technique, description, alpha, false);
+                }
 
-            createdMaterials.Add(material.Value);
-            repo.addMaterial(material, description);
+                if (indirectionTex != null)
+                {
+                    indirectionTex.setupFeedbackBufferTechnique(material.Value, determineVertexShaderName("", description.NumHardwareBones, description.NumHardwarePoses, false));
+                }
+
+                material.Value.compile();
+                material.Value.load();
+
+                createdMaterials.Add(material.Value);
+                repo.addMaterial(material, description);
+            }
+            else
+            {
+                Logging.Log.Error("Tried to create a material '{0}' with a shader '{1}' that does not exist. Please check your shader name.", description.Name, description.ShaderName);
+            }
         }
 
+        //--------------------------------------
+        //Specific material creation funcs
+        //--------------------------------------
         private IndirectionTexture createNormalMapSpecularMapGlossMap(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
         {
             //Create depth check pass if needed
@@ -113,14 +126,16 @@ namespace Medical
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
-                gpuParams.Value.setNamedConstant("glossyStart", description.GlossyStart);
-                gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
+                setGlossyness(description, gpuParams);
             }
 
             //Setup textures
             return setupNormalDiffuseSpecularTextures(description, pass);
         }
 
+        //--------------------------------------
+        //Shared helpers
+        //--------------------------------------
         private IndirectionTexture setupNormalDiffuseSpecularTextures(MaterialDescription description, Pass pass)
         {
             var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
@@ -204,6 +219,12 @@ namespace Medical
         {
             var indirectionTextureUnit = pass.createTextureUnitState(indirectionTexture.TextureName);
             indirectionTextureUnit.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
+        }
+
+        private static void setGlossyness(MaterialDescription description, GpuProgramParametersSharedPtr gpuParams)
+        {
+            gpuParams.Value.setNamedConstant("glossyStart", description.GlossyStart);
+            gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
         }
     }
 }
