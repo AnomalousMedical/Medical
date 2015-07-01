@@ -144,7 +144,7 @@ namespace Medical
             }
         }
 
-        public override MaterialPtr buildMaterial(MaterialDescription description)
+        public override void buildMaterial(MaterialDescription description, MaterialRepository repo)
         {
             //MaterialPtr material = MaterialManager.getInstance().create(determineName(description.Name, description), description.Group, false, null);
             MaterialPtr material = MaterialManager.getInstance().create(description.Name, description.Group, false, null);
@@ -164,8 +164,7 @@ namespace Medical
             material.Value.load();
 
             createdMaterials.Add(material.Value);
-
-            return material;
+            repo.addMaterial(material, description);
         }
 
         public override void destroyMaterial(MaterialPtr materialPtr)
