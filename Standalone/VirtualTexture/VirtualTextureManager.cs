@@ -165,14 +165,6 @@ namespace Medical
             return indirectionTex;
         }
 
-        public void setupFeedbackBufferTechnique(Technique technique)
-        {
-            technique.setSchemeName("FeedbackBuffer");
-            var pass = technique.createPass();
-            pass.setVertexProgram("FeedbackBufferVP");
-            pass.setFragmentProgram("FeedbackBufferFP");
-        }
-
         public bool getTextureSize(Technique technique, ref IntSize2 size)
         {
             int numPasses = technique.getNumPasses();

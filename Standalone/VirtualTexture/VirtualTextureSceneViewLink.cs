@@ -93,6 +93,11 @@ namespace Medical
             //Dumb but easy way to detect virtual textures, iterate over everything in the material manager
             foreach(Material material in MaterialManager.getInstance().Iterator.Where(m => !createdMaterials.Contains(m)))
             {
+                if(material.Name == "SkinMaterial_HWSkin")
+                {
+                    Logging.Log.Debug("");
+                }
+
                 int numTechniques = material.getNumTechniques();
                 Technique technique = material.getTechnique((ushort)(numTechniques - 1));
                 if (technique != null && technique.getSchemeName() == FeedbackBuffer.Scheme)
@@ -153,7 +158,7 @@ namespace Medical
             }
             if (indirectionTex != null)
             {
-                indirectionTex.setupFeedbackBufferTechnique(material.Value);
+                indirectionTex.setupFeedbackBufferTechnique(material.Value, determineName("", description.NumHardwareBones, description.NumHardwarePoses, false));
             }
             material.Value.compile();
             material.Value.load();
@@ -178,7 +183,7 @@ namespace Medical
             pass.setDiffuse(description.DiffuseColor);
             pass.setEmissive(description.EmissiveColor);
 
-            pass.setVertexProgram(determineName("UnifiedVP", description));
+            pass.setVertexProgram(determineName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
             pass.setFragmentProgram("NormalMapSpecularMapGlossMapFP");
             using (var gpuParams = pass.getFragmentProgramParameters())
@@ -204,18 +209,18 @@ namespace Medical
             return indirectionTexture;
         }
 
-        private static String determineName(String baseName, MaterialDescription description)
+        private static String determineName(String baseName, int numHardwareBones, int numHardwarePoses, bool parity)
         {
             StringBuilder programName = new StringBuilder(baseName);
-            if (description.NumHardwareBones > 0)
+            if (numHardwareBones > 0)
             {
-                programName.AppendFormat("HardwareSkin{0}BonePerVertex", description.NumHardwareBones);
+                programName.AppendFormat("HardwareSkin{0}BonePerVertex", numHardwareBones);
             }
-            if (description.NumHardwarePoses > 0)
+            if (numHardwarePoses > 0)
             {
-                programName.AppendFormat("{0}Pose", description.NumHardwarePoses);
+                programName.AppendFormat("{0}Pose", numHardwarePoses);
             }
-            if (description.Parity)
+            if (parity)
             {
                 programName.AppendFormat("Parity");
             }
