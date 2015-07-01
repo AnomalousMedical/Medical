@@ -12,6 +12,7 @@ namespace Medical
     {
         private List<Material> createdMaterials = new List<Material>(); //This is only for detection
         private VirtualTextureManager virtualTextureManager;
+        private String textureFormat = ".png";
 
         private PhysicalTexture normalTexture;
         private PhysicalTexture diffuseTexture;
@@ -99,6 +100,63 @@ namespace Medical
 
         private IndirectionTexture createNormalMapSpecularMapGlossMap(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
         {
+            //Create depth check pass if needed
+            var pass = createDepthPass(technique, description, alpha, depthCheck);
+
+            //Setup this pass
+            setupCommonPassAttributes(description, alpha, pass);
+
+            //Material specific, setup shaders
+            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+
+            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapGlossMapFP", alpha));
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
+                gpuParams.Value.setNamedConstant("glossyStart", description.GlossyStart);
+                gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
+            }
+
+            //Setup textures
+            return setupNormalDiffuseSpecularTextures(description, pass);
+        }
+
+        private IndirectionTexture setupNormalDiffuseSpecularTextures(MaterialDescription description, Pass pass)
+        {
+            var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
+            pass.createTextureUnitState(diffuseTexture.TextureName);
+            pass.createTextureUnitState(specularTexture.TextureName);
+            IndirectionTexture indirectionTexture;
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(), out indirectionTexture)) //Slow key
+            {
+                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
+                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
+                indirectionTexture.addOriginalTexture("Specular", description.SpecularMap + textureFormat);
+            }
+            setupIndirectionTexture(pass, indirectionTexture);
+            return indirectionTexture;
+        }
+
+        private static IntSize2 getTextureSize()
+        {
+            return new IntSize2(2048, 2048); //Hardcoded size for now.
+        }
+
+        private static void setupCommonPassAttributes(MaterialDescription description, bool alpha, Pass pass)
+        {
+            pass.setSpecular(description.SpecularColor);
+            pass.setDiffuse(description.DiffuseColor);
+            pass.setEmissive(description.EmissiveColor);
+
+            if (alpha)
+            {
+                pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
+                pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
+            }
+        }
+
+        private static Pass createDepthPass(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
+        {
             var pass = technique.getPass(0); //Make sure technique has one pass already defined
             if (alpha && depthCheck)
             {
@@ -112,40 +170,7 @@ namespace Medical
 
                 pass = technique.createPass(); //Get another pass
             }
-
-            pass.setSpecular(description.SpecularColor);
-            pass.setDiffuse(description.DiffuseColor);
-            pass.setEmissive(description.EmissiveColor);
-
-            if (alpha)
-            {
-                pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
-                pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
-            }
-
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
-
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapGlossMapFP", alpha));
-            using (var gpuParams = pass.getFragmentProgramParameters())
-            {
-                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
-                gpuParams.Value.setNamedConstant("glossyStart", description.GlossyStart);
-                gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
-            }
-
-            var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
-            pass.createTextureUnitState(diffuseTexture.TextureName);
-            pass.createTextureUnitState(specularTexture.TextureName);
-            IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, new IntSize2(2048, 2048), out indirectionTexture)) //Slow key
-            {
-                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + ".png");
-                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + ".png");
-                indirectionTexture.addOriginalTexture("Specular", description.SpecularMap + ".png");
-            }
-            setupIndirectionTexture(pass, indirectionTexture);
-
-            return indirectionTexture;
+            return pass;
         }
 
         private static String determineVertexShaderName(String baseName, int numHardwareBones, int numHardwarePoses, bool parity)
