@@ -200,7 +200,7 @@ namespace Medical
             {
                 foreach (var textureUnit in indirectionTexture.OriginalTextures)
                 {
-                    using (var originalTexture = TextureManager.getInstance().getByName(textureUnit.Value))
+                    using (var originalTexture = getTexture(textureUnit.Value))
                     {
                         int mipCount = originalTexture.Value.NumMipmaps;
                         var srcRect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
@@ -287,6 +287,22 @@ namespace Medical
                 }
             }
             return usedPhysicalPage;
+        }
+
+        private TexturePtr getTexture(String name)
+        {
+            var texture = TextureManager.getInstance().getByName(name);
+            if (texture.Value == null)
+            {
+                //As we start using up textures we might have to have ogre load them, this does that
+                String group = VirtualTextureManager.ResourceGroup + "HackTextureLoad" + name;
+                OgreResourceGroupManager.getInstance().createResourceGroup(group);
+                OgreResourceGroupManager.getInstance().declareResource(name, "Texture", group);
+                OgreResourceGroupManager.getInstance().initializeResourceGroup(group);
+                texture = TextureManager.getInstance().getByName(name);
+                texture.Value.load();
+            }
+            return texture;
         }
     }
 }

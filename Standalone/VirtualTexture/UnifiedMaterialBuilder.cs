@@ -190,7 +190,7 @@ namespace Medical
                 pass.setDepthBias(-1.0f);
                 pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
 
-                pass.setVertexProgram(determineVertexShaderName("DepthCheckVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+                pass.setVertexProgram(determineVertexShaderName("DepthCheckVP", description.NumHardwareBones, description.NumHardwarePoses, false));
                 pass.setFragmentProgram("HiddenFP");
 
                 pass = technique.createPass(); //Get another pass
