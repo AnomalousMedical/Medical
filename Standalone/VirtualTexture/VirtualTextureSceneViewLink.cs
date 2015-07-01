@@ -20,6 +20,7 @@ namespace Medical
         private PhysicalTexture diffuseTexture;
         private PhysicalTexture specularTexture;
         private PhysicalTexture opacityTexture;
+        private List<Material> createdMaterials = new List<Material>(); //This is only for detection
 
         public VirtualTextureSceneViewLink(StandaloneController standaloneController)
         {
@@ -42,7 +43,7 @@ namespace Medical
             specularTexture.color(Color.Green);
             opacityTexture.color(Color.HotPink);
 
-            //OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
+            OgreInterface.Instance.MaterialParser.addMaterialBuilder(this);
         }
 
         public void Dispose()
@@ -90,7 +91,7 @@ namespace Medical
         void standaloneController_SceneLoaded(SimScene scene)
         {
             //Dumb but easy way to detect virtual textures, iterate over everything in the material manager
-            foreach(Material material in MaterialManager.getInstance().Iterator)
+            foreach(Material material in MaterialManager.getInstance().Iterator.Where(m => !createdMaterials.Contains(m)))
             {
                 int numTechniques = material.getNumTechniques();
                 Technique technique = material.getTechnique((ushort)(numTechniques - 1));
@@ -156,11 +157,15 @@ namespace Medical
             }
             material.Value.compile();
             material.Value.load();
+
+            createdMaterials.Add(material.Value);
+
             return material;
         }
 
         public override void destroyMaterial(MaterialPtr materialPtr)
         {
+            createdMaterials.Remove(materialPtr.Value);
             MaterialManager.getInstance().remove(materialPtr.Value.Name);
             materialPtr.Dispose();
         }
@@ -183,7 +188,8 @@ namespace Medical
                 gpuParams.Value.setNamedConstant("glossyRange", description.GlossyRange);
             }
 
-            pass.createTextureUnitState(normalTexture.TextureName);
+            var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
+            //texUnit.Name = "woot";
             pass.createTextureUnitState(diffuseTexture.TextureName);
             pass.createTextureUnitState(specularTexture.TextureName);
             IndirectionTexture indirectionTexture;
