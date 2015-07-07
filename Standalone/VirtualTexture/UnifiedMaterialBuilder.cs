@@ -47,14 +47,15 @@ namespace Medical
             specularTexture.color(Color.Green);
             opacityTexture.color(Color.HotPink);
 
-            materialCreationFuncs.Add("NormalMapSpecularMapGlossMap", createNormalMapSpecularMapGlossMap);
-            materialCreationFuncs.Add("NormalMapSpecularMap", createNormalMapSpecularMap);
             materialCreationFuncs.Add("NormalMapSpecular", createNormalMapSpecular);
             materialCreationFuncs.Add("NormalMapSpecularHighlight", createNormalMapSpecularHighlight);
+            materialCreationFuncs.Add("NormalMapSpecularMap", createNormalMapSpecularMap);
+            materialCreationFuncs.Add("NormalMapSpecularMapGlossMap", createNormalMapSpecularMapGlossMap);
             materialCreationFuncs.Add("NormalMapSpecularOpacityMap", createNormalMapSpecularOpacityMap);
             materialCreationFuncs.Add("NormalMapSpecularMapOpacityMap", createNormalMapSpecularMapOpacityMap);
             materialCreationFuncs.Add("NormalMapSpecularMapOpacityMapNoDepth", createNormalMapSpecularMapOpacityMapNoDepth);
             materialCreationFuncs.Add("EyeOuter", createEyeOuterMaterial);
+            materialCreationFuncs.Add("ColoredNoTexture", createColoredNoTexture);
         }
 
         public bool isCreator(Material material)
@@ -307,6 +308,26 @@ namespace Medical
             pass.setVertexProgram("EyeOuterVP");
 
             pass.setFragmentProgram(determineFragmentShaderName("EyeOuterFP", alpha));
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
+            }
+
+            return null;
+        }
+
+        private IndirectionTexture createColoredNoTexture(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
+        {
+            //Create depth check pass if needed
+            var pass = createDepthPass(technique, description, alpha, depthCheck);
+
+            //Setup this pass
+            setupCommonPassAttributes(description, alpha, pass);
+
+            //Material specific, setup shaders
+            pass.setVertexProgram(determineVertexShaderName("NoTexturesVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+
+            pass.setFragmentProgram(determineFragmentShaderName("NoTexturesColoredFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
