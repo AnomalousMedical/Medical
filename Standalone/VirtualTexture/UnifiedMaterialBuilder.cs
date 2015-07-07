@@ -210,7 +210,7 @@ namespace Medical
             }
 
             //Setup textures
-            return setupNormalDiffuseTextures(description, pass);
+            return setupNormalDiffuseOpacityTextures(description, pass);
         }
 
         //--------------------------------------
@@ -258,6 +258,22 @@ namespace Medical
                 indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
                 indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
                 indirectionTexture.addOriginalTexture("Specular", description.SpecularMap + textureFormat);
+                indirectionTexture.addOriginalTexture("Opacity", description.OpacityMap + textureFormat);
+            }
+            setupIndirectionTexture(pass, indirectionTexture);
+            return indirectionTexture;
+        }
+
+        private IndirectionTexture setupNormalDiffuseOpacityTextures(MaterialDescription description, Pass pass)
+        {
+            pass.createTextureUnitState(normalTexture.TextureName);
+            pass.createTextureUnitState(diffuseTexture.TextureName);
+            pass.createTextureUnitState(opacityTexture.TextureName);
+            IndirectionTexture indirectionTexture;
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(), out indirectionTexture)) //Slow key
+            {
+                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
+                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
                 indirectionTexture.addOriginalTexture("Opacity", description.OpacityMap + textureFormat);
             }
             setupIndirectionTexture(pass, indirectionTexture);
