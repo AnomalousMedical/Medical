@@ -54,6 +54,7 @@ namespace Medical
             materialCreationFuncs.Add("NormalMapSpecularOpacityMap", createNormalMapSpecularOpacityMap);
             materialCreationFuncs.Add("NormalMapSpecularMapOpacityMap", createNormalMapSpecularMapOpacityMap);
             materialCreationFuncs.Add("NormalMapSpecularMapOpacityMapNoDepth", createNormalMapSpecularMapOpacityMapNoDepth);
+            materialCreationFuncs.Add("EyeOuter", createEyeOuterMaterial);
         }
 
         public bool isCreator(Material material)
@@ -287,6 +288,31 @@ namespace Medical
 
             //Setup textures
             return setupNormalDiffuseSpecularOpacityTextures(description, pass);
+        }
+
+        private IndirectionTexture createEyeOuterMaterial(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
+        {
+            //Create depth check pass if needed
+            var pass = createDepthPass(technique, description, alpha, depthCheck);
+
+            //Setup this pass
+            setupCommonPassAttributes(description, alpha, pass);
+
+            //Setup material specific depth values
+            pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
+            pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
+            pass.setDepthWriteEnabled(false);
+
+            //Material specific, setup shaders
+            pass.setVertexProgram("EyeOuterVP");
+
+            pass.setFragmentProgram(determineFragmentShaderName("EyeOuterFP", alpha));
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
+            }
+
+            return null;
         }
 
         //--------------------------------------
