@@ -51,6 +51,7 @@ namespace Medical
             materialCreationFuncs.Add("NormalMapSpecularMap", createNormalMapSpecularMap);
             materialCreationFuncs.Add("NormalMapSpecular", createNormalMapSpecular);
             materialCreationFuncs.Add("NormalMapSpecularOpacityMap", createNormalMapSpecularOpacityMap);
+            materialCreationFuncs.Add("NormalMapSpecularMapOpacityMap", createNormalMapSpecularMapOpacityMap);
         }
 
         public bool isCreator(Material material)
@@ -211,6 +212,31 @@ namespace Medical
 
             //Setup textures
             return setupNormalDiffuseOpacityTextures(description, pass);
+        }
+
+        private IndirectionTexture createNormalMapSpecularMapOpacityMap(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
+        {
+            //Create depth check pass if needed
+            var pass = createDepthPass(technique, description, alpha, depthCheck);
+
+            //Setup this pass
+            setupCommonPassAttributes(description, alpha, pass);
+
+            //Setup material specific depth values
+            pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
+            pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
+
+            //Material specific, setup shaders
+            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+
+            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapOpacityMapFP", alpha));
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
+            }
+
+            //Setup textures
+            return setupNormalDiffuseSpecularOpacityTextures(description, pass);
         }
 
         //--------------------------------------
