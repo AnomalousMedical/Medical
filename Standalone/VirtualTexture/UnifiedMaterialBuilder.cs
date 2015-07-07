@@ -50,8 +50,10 @@ namespace Medical
             materialCreationFuncs.Add("NormalMapSpecularMapGlossMap", createNormalMapSpecularMapGlossMap);
             materialCreationFuncs.Add("NormalMapSpecularMap", createNormalMapSpecularMap);
             materialCreationFuncs.Add("NormalMapSpecular", createNormalMapSpecular);
+            materialCreationFuncs.Add("NormalMapSpecularHighlight", createNormalMapSpecularHighlight);
             materialCreationFuncs.Add("NormalMapSpecularOpacityMap", createNormalMapSpecularOpacityMap);
             materialCreationFuncs.Add("NormalMapSpecularMapOpacityMap", createNormalMapSpecularMapOpacityMap);
+            materialCreationFuncs.Add("NormalMapSpecularMapOpacityMapNoDepth", createNormalMapSpecularMapOpacityMapNoDepth);
         }
 
         public bool isCreator(Material material)
@@ -179,6 +181,27 @@ namespace Medical
             //Material specific, setup shaders
             pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
+            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularFP", alpha));
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
+            }
+
+            //Setup textures
+            return setupNormalDiffuseTextures(description, pass);
+        }
+
+        private IndirectionTexture createNormalMapSpecularHighlight(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
+        {
+            //Create depth check pass if needed
+            var pass = createDepthPass(technique, description, alpha, depthCheck);
+
+            //Setup this pass
+            setupCommonPassAttributes(description, alpha, pass);
+
+            //Material specific, setup shaders
+            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+
             pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularHighlightFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
@@ -223,6 +246,33 @@ namespace Medical
             setupCommonPassAttributes(description, alpha, pass);
 
             //Setup material specific depth values
+            pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
+            pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
+
+            //Material specific, setup shaders
+            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+
+            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapOpacityMapFP", alpha));
+            using (var gpuParams = pass.getFragmentProgramParameters())
+            {
+                virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
+            }
+
+            //Setup textures
+            return setupNormalDiffuseSpecularOpacityTextures(description, pass);
+        }
+
+        private IndirectionTexture createNormalMapSpecularMapOpacityMapNoDepth(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
+        {
+            //Create depth check pass if needed
+            var pass = createDepthPass(technique, description, alpha, depthCheck);
+
+            //Setup this pass
+            setupCommonPassAttributes(description, alpha, pass);
+
+            //Setup material specific depth values
+            pass.setDepthWriteEnabled(false);
+            pass.setDepthCheckEnabled(true);
             pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
             pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
 
