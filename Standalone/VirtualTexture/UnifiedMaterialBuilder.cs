@@ -1,7 +1,9 @@
 ﻿using Engine;
+using Engine.Utility;
 using OgrePlugin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -344,7 +346,7 @@ namespace Medical
             var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
             pass.createTextureUnitState(diffuseTexture.TextureName);
             IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(), out indirectionTexture)) //Slow key
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormat)), out indirectionTexture)) //Slow key
             {
                 indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
                 indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
@@ -359,7 +361,7 @@ namespace Medical
             pass.createTextureUnitState(diffuseTexture.TextureName);
             pass.createTextureUnitState(specularTexture.TextureName);
             IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(), out indirectionTexture)) //Slow key
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormat)), out indirectionTexture)) //Slow key
             {
                 indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
                 indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
@@ -376,7 +378,7 @@ namespace Medical
             pass.createTextureUnitState(specularTexture.TextureName);
             pass.createTextureUnitState(opacityTexture.TextureName);
             IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(), out indirectionTexture)) //Slow key
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormat)), out indirectionTexture)) //Slow key
             {
                 indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
                 indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
@@ -393,7 +395,7 @@ namespace Medical
             pass.createTextureUnitState(diffuseTexture.TextureName);
             pass.createTextureUnitState(opacityTexture.TextureName);
             IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(), out indirectionTexture)) //Slow key
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormat)), out indirectionTexture)) //Slow key
             {
                 indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
                 indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
@@ -403,8 +405,22 @@ namespace Medical
             return indirectionTexture;
         }
 
-        private static IntSize2 getTextureSize()
+        private static IntSize2 getTextureSize(String texturePath)
         {
+            try
+            {
+                using (Stream stream = VirtualFileSystem.Instance.openStream(texturePath, Engine.Resources.FileMode.Open)) //Probably not the best idea to directly access vfs here
+                {
+                    int width, height;
+                    ImageUtility.GetImageInfo(stream, out width, out height);
+                    return new IntSize2(width, height);
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+
             return new IntSize2(2048, 2048); //Hardcoded size for now.
         }
 
