@@ -12,6 +12,8 @@ namespace Medical
         [STAThread]
         static void Main()
         {
+            OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None; //Temp, disable dds
+
             Medical.Main.Run();
         }
     }

@@ -134,75 +134,6 @@ namespace Medical
             frameCount = (frameCount + 1) % updateBufferFrame;
         }
 
-        public void processMaterialAdded(String materialSetKey, Technique mainTechnique, Technique feedbackTechnique)
-        {
-            IndirectionTexture indirectionTex;
-            if (!indirectionTextures.TryGetValue(materialSetKey, out indirectionTex))
-            {
-                IntSize2 textureSize = new IntSize2();
-                if (getTextureSize(mainTechnique, ref textureSize) && textureSize.Width > texelsPerPage && textureSize.Height > texelsPerPage)
-                {
-                    indirectionTex = new IndirectionTexture(materialSetKey, textureSize, texelsPerPage, this); //This is a terrible way to get size since ogre must load the resource first, trying to avoid that
-                    indirectionTextures.Add(materialSetKey, indirectionTex);
-                    indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
-                }
-                else
-                {
-                    Logging.Log.Debug("Could not create a feedback texture for material {0}", materialSetKey);
-                    return;
-                }
-            }
-            indirectionTex.reconfigureTechnique(mainTechnique, feedbackTechnique);
-        }
-
-        public IndirectionTexture createOrRetrieveIndirectionTexture(String indirectionKey, IntSize2 textureSize)
-        {
-            IndirectionTexture indirectionTex;
-            if (!indirectionTextures.TryGetValue(indirectionKey, out indirectionTex))
-            {
-                indirectionTex = new IndirectionTexture(indirectionKey, textureSize, texelsPerPage, this);
-                indirectionTextures.Add(indirectionKey, indirectionTex);
-                indirectionTexturesById.Add(indirectionTex.Id, indirectionTex);
-            }
-            return indirectionTex;
-        }
-
-        public bool getTextureSize(Technique technique, ref IntSize2 size)
-        {
-            int numPasses = technique.getNumPasses();
-            if (numPasses > 0)
-            {
-                var pass = technique.getPass(0);
-                ushort numTextureUnits = pass.getNumTextureUnitStates();
-                if (numTextureUnits > 0)
-                {
-                    var texUnit = pass.getTextureUnitState(0);
-                    using (var texture = TextureManager.getInstance().getByName(texUnit.TextureName, technique.getResourceGroup()))
-                    {
-                        if (texture.Value != null)
-                        {
-                            size.Width = (int)texture.Value.Width;
-                            size.Height = (int)texture.Value.Height;
-                            return true;
-                        }
-                        else
-                        {
-                            Logging.Log.Debug("Texture {0} not found for material {1}", texUnit.TextureName, technique.getParent().Name);
-                        }
-                    }
-                }
-                else
-                {
-                    Logging.Log.Debug("No texture units in material {0}", technique.getParent().Name);
-                }
-            }
-            else
-            {
-                Logging.Log.Debug("No passes in material {0}", technique.getParent().Name);
-            }
-            return false;
-        }
-
         public void processMaterialRemoved(Object materialSetKey)
         {
             //Need to do something here
@@ -314,11 +245,6 @@ namespace Medical
                 return true;
             }
             return false;
-        }
-
-        public bool getIndirectionTexture(String indirectionKey, out IndirectionTexture indirectionTex)
-        {
-            return indirectionTextures.TryGetValue(indirectionKey, out indirectionTex);
         }
 
         public void setupVirtualTextureFragmentParams(GpuProgramParametersSharedPtr gpuParams)

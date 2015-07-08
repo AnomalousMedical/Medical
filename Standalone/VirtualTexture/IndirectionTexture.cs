@@ -87,69 +87,6 @@ namespace Medical
             }
         }
 
-        public void reconfigureTechnique(Technique mainTechnique, Technique feedbackTechnique)
-        {
-            bool foundTextures = true; //Mostly for debugging
-            bool setupOriginalTextureUnits = originalTextureUnits == null;
-            if(setupOriginalTextureUnits)
-            {
-                originalTextureUnits = new Dictionary<string, string>();
-            }
-            int numPasses = mainTechnique.getNumPasses();
-            for(ushort i = 0; i < numPasses; ++i)
-            {
-                var pass = mainTechnique.getPass(i);
-                ushort numTextureUnits = pass.getNumTextureUnitStates();
-                for(ushort t = 0; t < numTextureUnits; ++t)
-                {
-                    var texUnit = pass.getTextureUnitState(t);
-                    if (setupOriginalTextureUnits)
-                    {
-                        originalTextureUnits[texUnit.Name] = texUnit.TextureName;
-                    }
-                    texUnit.TextureName = virtualTextureManager.getPhysicalTexture(texUnit.Name).TextureName;
-                    //texUnit.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
-                }
-                var indirectionTexturePass = pass.createTextureUnitState(indirectionTexture.Value.getName()); //Add indirection texture
-                indirectionTexturePass.setFilteringOptions(FilterOptions.Point, FilterOptions.Point, FilterOptions.None);
-
-                if (numTextureUnits > 0) //If this pass uses textures adjust its fragment program
-                {
-                    using (var gpuParams = pass.getFragmentProgramParameters())
-                    {
-                        if (gpuParams.Value.hasNamedConstant("physicalSizeRecip"))
-                        {
-                            gpuParams.Value.setNamedConstant("physicalSizeRecip", virtualTextureManager.PhysicalSizeRecrip);
-                            gpuParams.Value.setNamedConstant("pageSizeLog2", new Vector2(virtualTextureManager.TexelsPerPageLog2, virtualTextureManager.TexelsPerPageLog2));
-                            gpuParams.Value.setNamedConstant("pagePaddingScale", virtualTextureManager.TextureLoader.PagePaddingScale);
-                            gpuParams.Value.setNamedConstant("pagePaddingOffset", virtualTextureManager.TextureLoader.PagePaddingOffset);
-                        }
-                        else
-                        {
-                            Logging.Log.Debug("physicalSizeRecip varaible missing {0}", mainTechnique.getParent().Name);
-                        }
-                    }
-                }
-            }
-
-            if(!foundTextures)
-            {
-                Logging.Log.Debug("Found no textures in any passes {0}", mainTechnique.getParent().Name);
-            }
-
-            numPasses = feedbackTechnique.getNumPasses();
-            for (ushort i = 0; i < numPasses; ++i)
-            {
-                var pass = feedbackTechnique.getPass(i);
-                using (var gpuParams = pass.getFragmentProgramParameters())
-                {
-                    gpuParams.Value.setNamedConstant("virtTexSize", new Vector2(realTextureSize.Width, realTextureSize.Height));
-                    gpuParams.Value.setNamedConstant("mipSampleBias", -3.0f);
-                    gpuParams.Value.setNamedConstant("spaceId", (float)id);
-                }
-            }
-        }
-
         public byte Id
         {
             get
@@ -318,7 +255,7 @@ namespace Medical
         }
 
         //New System
-        internal void addOriginalTexture(string textureUnit, string textureName)
+        public void addOriginalTexture(string textureUnit, string textureName)
         {
             if(originalTextureUnits == null)
             {
