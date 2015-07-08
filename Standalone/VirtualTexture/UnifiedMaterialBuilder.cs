@@ -348,8 +348,8 @@ namespace Medical
             IndirectionTexture indirectionTexture;
             if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormat)), out indirectionTexture)) //Slow key
             {
-                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
-                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
+                indirectionTexture.addOriginalTexture("NormalMap", description.localizePath(description.NormalMap + textureFormat));
+                indirectionTexture.addOriginalTexture("Diffuse", description.localizePath(description.DiffuseMap + textureFormat));
             }
             setupIndirectionTexture(pass, indirectionTexture);
             return indirectionTexture;
@@ -363,9 +363,9 @@ namespace Medical
             IndirectionTexture indirectionTexture;
             if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormat)), out indirectionTexture)) //Slow key
             {
-                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
-                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
-                indirectionTexture.addOriginalTexture("Specular", description.SpecularMap + textureFormat);
+                indirectionTexture.addOriginalTexture("NormalMap", description.localizePath(description.NormalMap + textureFormat));
+                indirectionTexture.addOriginalTexture("Diffuse", description.localizePath(description.DiffuseMap + textureFormat));
+                indirectionTexture.addOriginalTexture("Specular", description.localizePath(description.SpecularMap + textureFormat));
             }
             setupIndirectionTexture(pass, indirectionTexture);
             return indirectionTexture;
@@ -380,10 +380,10 @@ namespace Medical
             IndirectionTexture indirectionTexture;
             if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormat)), out indirectionTexture)) //Slow key
             {
-                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
-                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
-                indirectionTexture.addOriginalTexture("Specular", description.SpecularMap + textureFormat);
-                indirectionTexture.addOriginalTexture("Opacity", description.OpacityMap + textureFormat);
+                indirectionTexture.addOriginalTexture("NormalMap", description.localizePath(description.NormalMap + textureFormat));
+                indirectionTexture.addOriginalTexture("Diffuse", description.localizePath(description.DiffuseMap + textureFormat));
+                indirectionTexture.addOriginalTexture("Specular", description.localizePath(description.SpecularMap + textureFormat));
+                indirectionTexture.addOriginalTexture("Opacity", description.localizePath(description.OpacityMap + textureFormat));
             }
             setupIndirectionTexture(pass, indirectionTexture);
             return indirectionTexture;
@@ -397,9 +397,9 @@ namespace Medical
             IndirectionTexture indirectionTexture;
             if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormat)), out indirectionTexture)) //Slow key
             {
-                indirectionTexture.addOriginalTexture("NormalMap", description.NormalMap + textureFormat);
-                indirectionTexture.addOriginalTexture("Diffuse", description.DiffuseMap + textureFormat);
-                indirectionTexture.addOriginalTexture("Opacity", description.OpacityMap + textureFormat);
+                indirectionTexture.addOriginalTexture("NormalMap", description.localizePath(description.NormalMap + textureFormat));
+                indirectionTexture.addOriginalTexture("Diffuse", description.localizePath(description.DiffuseMap + textureFormat));
+                indirectionTexture.addOriginalTexture("Opacity", description.localizePath(description.OpacityMap + textureFormat));
             }
             setupIndirectionTexture(pass, indirectionTexture);
             return indirectionTexture;

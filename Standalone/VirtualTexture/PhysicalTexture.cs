@@ -113,11 +113,24 @@ namespace Medical
             buffer.Value.blit(source, srcRect, destRect);
         }
 
+        public void addPage(PixelBox source, IntRect destRect)
+        {
+            buffer.Value.blitFromMemory(source, destRect);
+        }
+
         public String TextureName
         {
             get
             {
                 return textureName;
+            }
+        }
+
+        public PixelFormat TextureFormat
+        {
+            get
+            {
+                return physicalTexture.Value.Format;
             }
         }
 

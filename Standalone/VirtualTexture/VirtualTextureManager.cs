@@ -58,6 +58,8 @@ namespace Medical
 
         public void Dispose()
         {
+            textureLoader.Dispose();
+
             foreach (var physicalTexture in physicalTextures.Values)
             {
                 physicalTexture.Dispose();
@@ -275,6 +277,21 @@ namespace Medical
             {
                 float textelRatio = texelsPerPage + padding * 2;
                 return new Vector2(1.0f / (physicalTextureSize.Width / textelRatio), 1.0f / (physicalTextureSize.Height / textelRatio));
+            }
+        }
+
+        public PixelFormat PhysicalTextureFormat
+        {
+            get
+            {
+                switch (OgreInterface.Instance.SelectedTextureFormat)
+                {
+                    default:
+                    case CompressedTextureSupport.None:
+                        return PixelFormat.PF_A8R8G8B8;
+                    case CompressedTextureSupport.DXT:
+                        return PixelFormat.PF_DXT5;
+                }
             }
         }
 

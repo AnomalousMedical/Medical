@@ -2,13 +2,15 @@
 using OgrePlugin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Medical
 {
-    class TextureLoader
+    class TextureLoader : IDisposable
     {
         private HashSet<VTexPage> addedPages;
         private List<VTexPage> removedPages;
@@ -24,6 +26,9 @@ namespace Medical
         private int padding;
         private int padding2;
         private int textelsPerPhysicalPage;
+
+        private Image stagingTexture;
+        private PixelBox stagingTextureBox;
 
         public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding)
         {
@@ -70,6 +75,15 @@ namespace Medical
                     }
                 }
             }
+
+            stagingTexture = new Image((uint)textelsPerPhysicalPage, (uint)textelsPerPhysicalPage, 1, virtualTextureManager.PhysicalTextureFormat, 1, 0);
+            stagingTextureBox = stagingTexture.getPixelBox();
+        }
+
+        public void Dispose()
+        {
+            stagingTextureBox.Dispose();
+            stagingTexture.Dispose();
         }
 
         public void beginPageUpdate()
@@ -202,86 +216,13 @@ namespace Medical
                 {
                     using (var originalTexture = getTexture(textureUnit.Value))
                     {
-                        int mipCount = originalTexture.Value.NumMipmaps;
-                        var srcRect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
-                        int mipWidth = (int)originalTexture.Value.Width >> page.mip;
-                        int mipHeight = (int)originalTexture.Value.Height >> page.mip;
-                        if (page.mip < mipCount && srcRect.Right <= mipWidth && srcRect.Bottom <= mipHeight)
+                        if (originalTexture.Value != null)
                         {
-                            using (var sourceBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip))
-                            {
-                                if (srcRect.Width + padding2 < mipWidth && srcRect.Height + padding2 < mipHeight)
-                                {
-                                    //Can expand to fit, most common case
-                                    srcRect.Width = textelsPerPhysicalPage;
-                                    srcRect.Height = textelsPerPhysicalPage;
-                                    srcRect.Left -= padding;
-                                    srcRect.Top -= padding;
-
-                                    if (srcRect.Left < 0)
-                                    {
-                                        srcRect.Left = 0;
-                                    }
-                                    if (srcRect.Top < 0)
-                                    {
-                                        srcRect.Top = 0;
-                                    }
-
-                                    if (srcRect.Right > mipWidth)
-                                    {
-                                        srcRect.Left = mipWidth - srcRect.Width;
-                                    }
-                                    if (srcRect.Bottom > mipHeight)
-                                    {
-                                        srcRect.Top = mipHeight - srcRect.Height;
-                                    }
-
-                                    var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
-                                    physicalTexture.addPage(sourceBuffer, srcRect, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage));
-                                    usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
-                                }
-                                else if (srcRect.Width == mipWidth && srcRect.Height == mipHeight)
-                                {
-                                    //Mip level is the same as the page size, pad the left and right side with duplicate data
-                                    var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
-
-                                    //Write center
-                                    IntRect centerDest = new IntRect(pTexPage.x + padding, pTexPage.y + padding, textelsPerPage, textelsPerPage);
-                                    physicalTexture.addPage(sourceBuffer, srcRect, centerDest);
-
-                                    //Write left padding
-                                    IntRect paddingStripSrc = new IntRect(srcRect.Left, srcRect.Top, padding, textelsPerPage);
-                                    IntRect paddingStripDest = new IntRect(pTexPage.x, pTexPage.y + 1, padding, textelsPerPage);
-                                    physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
-
-                                    //Write right padding
-                                    paddingStripSrc.Left = srcRect.Right - padding;
-                                    paddingStripDest.Left = pTexPage.x + textelsPerPhysicalPage - padding;
-                                    physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
-
-                                    //Write Top padding
-                                    paddingStripSrc.Left = srcRect.Left;
-                                    paddingStripSrc.Width = textelsPerPage;
-                                    paddingStripSrc.Height = padding;
-
-                                    paddingStripDest.Left = pTexPage.x + 1;
-                                    paddingStripDest.Top = 0;
-                                    paddingStripDest.Width = textelsPerPage;
-                                    paddingStripDest.Height = padding;
-                                    physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
-
-                                    //Write bottom padding
-                                    paddingStripSrc.Top = srcRect.Bottom - padding;
-                                    paddingStripDest.Top = pTexPage.y + textelsPerPhysicalPage - padding;
-                                    physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
-
-                                    usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
-                                }
-                                else
-                                {
-                                    Logging.Log.Debug("Cannot load page {0}.", page);
-                                }
-                            }
+                            directOgreBlit(page, pTexPage, ref usedPhysicalPage, textureUnit, originalTexture);
+                        }
+                        else
+                        {
+                            loadFromDisk(page, pTexPage, ref usedPhysicalPage, textureUnit);
                         }
                     }
                 }
@@ -289,18 +230,152 @@ namespace Medical
             return usedPhysicalPage;
         }
 
+        private void loadFromDisk(VTexPage page, PTexPage pTexPage, ref bool usedPhysicalPage, KeyValuePair<string, string> textureUnit)
+        {
+            //Load or grab from cache
+            String textureName = String.Format("{0}_{1}", textureUnit.Value, page.mip);
+            Image image;
+            if (!loadedImages.TryGetValue(textureName, out image))
+            {
+                Logging.Log.Debug("Loading image {0}", textureUnit.Value);
+                image = new Image();
+                using (Stream stream = VirtualFileSystem.Instance.openStream(textureUnit.Value, Engine.Resources.FileMode.Open))
+                {
+                    String extension = Path.GetExtension(textureUnit.Value);
+                    if (extension.Length > 0)
+                    {
+                        extension = extension.Substring(1);
+                    }
+                    image.load(stream, extension);
+                }
+                if (page.mip != 0)
+                {
+                    image.resize(image.Width >> page.mip, image.Height >> page.mip, Image.Filter.FILTER_BILINEAR);
+                }
+                loadedImages.Add(textureName, image);
+            }
+
+            int mipCount = image.NumMipmaps;
+            //Blit
+            //if(mipCount == 0) //We always have to take from the largest size
+            {
+                using(PixelBox sourceBox = image.getPixelBox(0, 0))
+                {
+                    var srcRect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
+                    int mipWidth = (int)image.Width;
+                    int mipHeight = (int)image.Height;
+                    sourceBox.Rect = srcRect;
+                    if (/*page.mip < mipCount &&*/ srcRect.Right <= mipWidth && srcRect.Bottom <= mipHeight)
+                    {
+                        Image.Scale(sourceBox, stagingTextureBox, Image.Filter.FILTER_NEAREST);
+
+                        var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
+                        physicalTexture.addPage(stagingTextureBox, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage));
+                        usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
+                    }
+                }
+            }
+        }
+
+        private Dictionary<String, Image> loadedImages = new Dictionary<string, Image>();
+
+        private void directOgreBlit(VTexPage page, PTexPage pTexPage, ref bool usedPhysicalPage, KeyValuePair<string, string> textureUnit, TexturePtr originalTexture)
+        {
+            int mipCount = originalTexture.Value.NumMipmaps;
+            var srcRect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
+            int mipWidth = (int)originalTexture.Value.Width >> page.mip;
+            int mipHeight = (int)originalTexture.Value.Height >> page.mip;
+            if (page.mip < mipCount && srcRect.Right <= mipWidth && srcRect.Bottom <= mipHeight)
+            {
+                using (var sourceBuffer = originalTexture.Value.getBuffer(0, (uint)page.mip))
+                {
+                    if (srcRect.Width + padding2 < mipWidth && srcRect.Height + padding2 < mipHeight)
+                    {
+                        //Can expand to fit, most common case
+                        srcRect.Width = textelsPerPhysicalPage;
+                        srcRect.Height = textelsPerPhysicalPage;
+                        srcRect.Left -= padding;
+                        srcRect.Top -= padding;
+
+                        if (srcRect.Left < 0)
+                        {
+                            srcRect.Left = 0;
+                        }
+                        if (srcRect.Top < 0)
+                        {
+                            srcRect.Top = 0;
+                        }
+
+                        if (srcRect.Right > mipWidth)
+                        {
+                            srcRect.Left = mipWidth - srcRect.Width;
+                        }
+                        if (srcRect.Bottom > mipHeight)
+                        {
+                            srcRect.Top = mipHeight - srcRect.Height;
+                        }
+
+                        var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
+                        physicalTexture.addPage(sourceBuffer, srcRect, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage));
+                        usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
+                    }
+                    else if (srcRect.Width == mipWidth && srcRect.Height == mipHeight)
+                    {
+                        //Mip level is the same as the page size, pad the left and right side with duplicate data
+                        var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
+
+                        //Write center
+                        IntRect centerDest = new IntRect(pTexPage.x + padding, pTexPage.y + padding, textelsPerPage, textelsPerPage);
+                        physicalTexture.addPage(sourceBuffer, srcRect, centerDest);
+
+                        //Write left padding
+                        IntRect paddingStripSrc = new IntRect(srcRect.Left, srcRect.Top, padding, textelsPerPage);
+                        IntRect paddingStripDest = new IntRect(pTexPage.x, pTexPage.y + 1, padding, textelsPerPage);
+                        physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
+
+                        //Write right padding
+                        paddingStripSrc.Left = srcRect.Right - padding;
+                        paddingStripDest.Left = pTexPage.x + textelsPerPhysicalPage - padding;
+                        physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
+
+                        //Write Top padding
+                        paddingStripSrc.Left = srcRect.Left;
+                        paddingStripSrc.Width = textelsPerPage;
+                        paddingStripSrc.Height = padding;
+
+                        paddingStripDest.Left = pTexPage.x + 1;
+                        paddingStripDest.Top = 0;
+                        paddingStripDest.Width = textelsPerPage;
+                        paddingStripDest.Height = padding;
+                        physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
+
+                        //Write bottom padding
+                        paddingStripSrc.Top = srcRect.Bottom - padding;
+                        paddingStripDest.Top = pTexPage.y + textelsPerPhysicalPage - padding;
+                        physicalTexture.addPage(sourceBuffer, paddingStripSrc, paddingStripDest);
+
+                        usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
+                    }
+                    else
+                    {
+                        Logging.Log.Debug("Cannot load page {0}.", page);
+                    }
+                }
+            }
+        }
+
         private TexturePtr getTexture(String name)
         {
             var texture = TextureManager.getInstance().getByName(name);
             if (texture.Value == null)
             {
-                //As we start using up textures we might have to have ogre load them, this does that
-                String group = VirtualTextureManager.ResourceGroup + "HackTextureLoad" + name;
-                OgreResourceGroupManager.getInstance().createResourceGroup(group);
-                OgreResourceGroupManager.getInstance().declareResource(name, "Texture", group);
-                OgreResourceGroupManager.getInstance().initializeResourceGroup(group);
-                texture = TextureManager.getInstance().getByName(name);
-                texture.Value.load();
+                ////As we start using up textures we might have to have ogre load them, this does that
+                //String group = VirtualTextureManager.ResourceGroup + "HackTextureLoad" + name;
+                //OgreResourceGroupManager.getInstance().createResourceGroup(group);
+                //OgreResourceGroupManager.getInstance().declareResource(name, "Texture", group);
+                //OgreResourceGroupManager.getInstance().initializeResourceGroup(group);
+                //texture = TextureManager.getInstance().getByName(name);
+                //texture.Value.load();
             }
             return texture;
         }
