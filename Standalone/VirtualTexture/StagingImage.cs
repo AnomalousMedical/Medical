@@ -1,4 +1,5 @@
-﻿using OgrePlugin;
+﻿using Engine;
+using OgrePlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Medical
     {
         private Image texture;
         private PixelBox pixelBox;
+        private PhysicalTexture physicalTexture;
 
         public StagingImage(int textelsPerPhysicalPage, PixelFormat physicalTextureFormat)
         {
@@ -24,17 +26,15 @@ namespace Medical
             texture.Dispose();
         }
 
-        public void copyData(PixelBox sourceBox)
+        public void setData(PixelBox sourceBox, PhysicalTexture physicalTexture)
         {
             Image.Scale(sourceBox, pixelBox, Image.Filter.FILTER_NEAREST);
+            this.physicalTexture = physicalTexture;
         }
 
-        public PixelBox PixelBox
+        public void copyToGpu(IntRect destination)
         {
-            get
-            {
-                return pixelBox;
-            }
+            physicalTexture.addPage(pixelBox, destination);
         }
     }
 }

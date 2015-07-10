@@ -29,7 +29,7 @@ namespace Medical
         private int textelsPerPhysicalPage;
 
         private Dictionary<String, Image> loadedImages = new Dictionary<string, Image>();
-        private StagingImage stagingImage;
+        private List<StagingImage> stagingImages = new List<StagingImage>(4);
 
         public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding)
         {
@@ -77,7 +77,10 @@ namespace Medical
                 }
             }
 
-            stagingImage = new StagingImage(textelsPerPhysicalPage, virtualTextureManager.PhysicalTextureFormat);
+            for (int i = 0; i < stagingImages.Capacity; ++i)
+            {
+                stagingImages.Add(new StagingImage(textelsPerPhysicalPage, virtualTextureManager.PhysicalTextureFormat));
+            }
         }
 
         public void Dispose()
@@ -86,7 +89,10 @@ namespace Medical
             {
                 image.Dispose();
             }
-            stagingImage.Dispose();
+            foreach(var stagingImage in stagingImages)
+            {
+                stagingImage.Dispose();
+            }
         }
 
         public void beginPageUpdate()
@@ -166,7 +172,7 @@ namespace Medical
             else if (physicalPageQueue.Count > 0) //Do we have pages available
             {
                 pTexPage = physicalPageQueue[0]; //The physical page candidate, do not modify before usedPhysicalPages if statement below
-                if (loadImage(page, pTexPage))
+                if (loadImages(page, pTexPage))
                 {
                     //Alert old texture of removal if there was one, Do not modify pTexPage above this if block, we need the old data
                     IndirectionTexture oldIndirectionTexture = null;
@@ -189,7 +195,7 @@ namespace Medical
                     if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out newIndirectionTex))
                     {
                         newIndirectionTex.addPhysicalPage(pTexPage);
-                        ThreadManager.invokeAndWait(() =>
+                        ThreadManager.invokeAndWait(() => //Very important to wait here, we don't want to update any buffers multiple times
                             {
                                 if(oldIndirectionTexture != null) //If we changed the old texture
                                 {
@@ -221,8 +227,9 @@ namespace Medical
         /// <param name="page"></param>
         /// <param name="pTexPage"></param>
         /// <returns></returns>
-        private bool loadImage(VTexPage page, PTexPage pTexPage)
+        private bool loadImages(VTexPage page, PTexPage pTexPage)
         {
+            int i = 0;
             bool usedPhysicalPage = false;
             IndirectionTexture indirectionTexture;
             if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTexture))
@@ -234,22 +241,38 @@ namespace Medical
                     Image image;
                     if (!loadedImages.TryGetValue(textureName, out image))
                     {
-                        Logging.Log.Debug("Loading image {0}", textureUnit.Value);
-                        image = new Image();
-                        using (Stream stream = VirtualFileSystem.Instance.openStream(textureUnit.Value, Engine.Resources.FileMode.Open))
+                        //Try to get full size image from cache
+                        String fullSizeName = String.Format("{0}_0", textureUnit.Value);
+                        if(!loadedImages.TryGetValue(fullSizeName, out image))
                         {
-                            String extension = Path.GetExtension(textureUnit.Value);
-                            if (extension.Length > 0)
+                            Logging.Log.Debug("Loading image {0}", textureUnit.Value);
+                            image = new Image();
+                            using (Stream stream = VirtualFileSystem.Instance.openStream(textureUnit.Value, Engine.Resources.FileMode.Open))
                             {
-                                extension = extension.Substring(1);
+                                String extension = Path.GetExtension(textureUnit.Value);
+                                if (extension.Length > 0)
+                                {
+                                    extension = extension.Substring(1);
+                                }
+                                image.load(stream, extension);
                             }
-                            image.load(stream, extension);
+                            loadedImages.Add(fullSizeName, image);
                         }
+
+                        //If we aren't mip 0 resize accordingly
                         if (page.mip != 0)
                         {
-                            image.resize(image.Width >> page.mip, image.Height >> page.mip, Image.Filter.FILTER_BILINEAR);
+                            Image original = image;
+                            image = new Image(image.Width >> page.mip, image.Height >> page.mip, original.Depth, original.Format, original.NumFaces, original.NumMipmaps);
+                            using(var src = original.getPixelBox())
+                            {
+                                using(var dest = image.getPixelBox())
+                                {
+                                    Image.Scale(src, dest, Image.Filter.FILTER_BILINEAR);
+                                }
+                            }
+                            loadedImages.Add(textureName, image);
                         }
-                        loadedImages.Add(textureName, image);
                     }
 
                     //Blit
@@ -264,15 +287,21 @@ namespace Medical
                             sourceBox.Rect = srcRect;
                             if (srcRect.Right <= mipWidth && srcRect.Bottom <= mipHeight)
                             {
-                                stagingImage.copyData(sourceBox);
-
-                                var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
-                                ThreadManager.invokeAndWait(() => physicalTexture.addPage(stagingImage.PixelBox, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage)));
+                                stagingImages[i].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.Key));
                                 usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
                             }
                         }
                     }
+                    ++i;
                 }
+                ThreadManager.invoke(() => //We are safe not to wait on this invoke since we know we will be waiting in processpage
+                    {
+                        var dest = new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage);
+                        for(int u = 0; u < i; ++u)
+                        {
+                            stagingImages[u].copyToGpu(dest);
+                        }
+                    });
             }
             return usedPhysicalPage;
         }
