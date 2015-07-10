@@ -28,9 +28,8 @@ namespace Medical
         private int padding2;
         private int textelsPerPhysicalPage;
 
-        private Image stagingTexture;
-        private PixelBox stagingTextureBox;
         private Dictionary<String, Image> loadedImages = new Dictionary<string, Image>();
+        private StagingImage stagingImage;
 
         public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding)
         {
@@ -78,8 +77,7 @@ namespace Medical
                 }
             }
 
-            stagingTexture = new Image((uint)textelsPerPhysicalPage, (uint)textelsPerPhysicalPage, 1, virtualTextureManager.PhysicalTextureFormat, 1, 0);
-            stagingTextureBox = stagingTexture.getPixelBox();
+            stagingImage = new StagingImage(textelsPerPhysicalPage, virtualTextureManager.PhysicalTextureFormat);
         }
 
         public void Dispose()
@@ -88,8 +86,7 @@ namespace Medical
             {
                 image.Dispose();
             }
-            stagingTextureBox.Dispose();
-            stagingTexture.Dispose();
+            stagingImage.Dispose();
         }
 
         public void beginPageUpdate()
@@ -267,10 +264,10 @@ namespace Medical
                             sourceBox.Rect = srcRect;
                             if (srcRect.Right <= mipWidth && srcRect.Bottom <= mipHeight)
                             {
-                                Image.Scale(sourceBox, stagingTextureBox, Image.Filter.FILTER_NEAREST);
+                                stagingImage.copyData(sourceBox);
 
                                 var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
-                                ThreadManager.invokeAndWait(() => physicalTexture.addPage(stagingTextureBox, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage)));
+                                ThreadManager.invokeAndWait(() => physicalTexture.addPage(stagingImage.PixelBox, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage)));
                                 usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
                             }
                         }
