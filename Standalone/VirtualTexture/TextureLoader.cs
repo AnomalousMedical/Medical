@@ -270,7 +270,7 @@ namespace Medical
                         String extension = Path.GetExtension(file);
                         String directFile = textureUnit.Value.Substring(0, file.Length - extension.Length);
                         directFile = String.Format("{0}_{1}{2}", directFile, indirectionTexture.RealTextureSize.Width >> page.mip, extension);
-                        if (false && VirtualFileSystem.Instance.exists(directFile))
+                        if (VirtualFileSystem.Instance.exists(directFile))
                         {
                             Logging.Log.Debug("Loading image {0}", directFile);
                             image = new Image();
