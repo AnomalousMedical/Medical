@@ -42,6 +42,11 @@ namespace Medical
         private bool rerenderSplashOnUpdate = true;
         private bool allowSplashRestarts = false;
 
+        //Conditions to show the license screen
+        private bool foundLicense = false;
+        private bool finishedSplash = false;
+        private bool licenseValid = false;
+
         public event Action<AnomalousController, StandaloneController> AddAdditionalPlugins;
         public event Action<AnomalousController, StandaloneController> OnInitCompleted;
         public event Action<AnomalousController, StandaloneController> DataFileMissing;
@@ -154,6 +159,7 @@ namespace Medical
 
         private IEnumerable<IdleStatus> runSplashScreen()
         {
+            finishedSplash = false;
             if (String.IsNullOrEmpty(this.PrimaryArchive))
             {
                 allowSplashRestarts = true;
@@ -260,7 +266,13 @@ namespace Medical
                 yield return IdleStatus.Ok;
             }
 
-            splashScreen.updateStatus(WaitingForLicensePosition, "Waiting for License");
+            finishedSplash = true;
+
+            if (!foundLicense)
+            {
+                splashScreen.updateStatus(WaitingForLicensePosition, "Waiting for License");
+            }
+            checkCompleteSplash();
             yield return IdleStatus.Ok;
         }
 
@@ -340,21 +352,28 @@ namespace Medical
 
         void processKeyResults(bool valid)
         {
-            //This is fired when the idle function returns to the normal thread processor and the ThreadUtilities invokes
-            //its invoke functions, which will contain the results of the license check.
-            if (valid)
-            {
-                //Key was valid and the splash screen is still showing.
-                splashScreen.updateStatus(FinishingUpPosition, "Finishing up");
+            foundLicense = true;
+            licenseValid = valid;
+            checkCompleteSplash();
+        }
 
-                keyValid();
-                splashScreen.updateStatus(FinishedPosition, "");
-                splashScreen.hide();
-            }
-            else
+        void checkCompleteSplash()
+        {
+            if(finishedSplash && foundLicense)
             {
-                //Key was not valid, show the key dialog
-                showKeyDialog();
+                if (licenseValid)
+                {
+                    //Key was valid and the splash screen is still showing.
+                    splashScreen.updateStatus(FinishingUpPosition, "Finishing up");
+
+                    keyValid();
+                    splashScreen.updateStatus(FinishedPosition, "");
+                    splashScreen.hide();
+                }
+                else
+                {
+                    showKeyDialog();
+                }
             }
         }
 
