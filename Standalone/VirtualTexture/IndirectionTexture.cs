@@ -254,6 +254,14 @@ namespace Medical
             }
         }
 
+        public IntSize2 RealTextureSize
+        {
+            get
+            {
+                return realTextureSize;
+            }
+        }
+
         //New System
         public void addOriginalTexture(string textureUnit, string textureName)
         {

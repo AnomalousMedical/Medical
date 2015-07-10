@@ -234,41 +234,62 @@ namespace Medical
                 foreach (var textureUnit in indirectionTexture.OriginalTextures)
                 {
                     //Load or grab from cache
-                    String textureName = String.Format("{0}_{1}", textureUnit.Value, page.mip);
+                    String textureName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width >> page.mip);
                     Image image;
                     if (!textureCache.TryGetValue(textureName, out image))
                     {
-                        //Try to get full size image from cache
-                        String fullSizeName = String.Format("{0}_0", textureUnit.Value);
-                        if (!textureCache.TryGetValue(fullSizeName, out image))
+                        //Try to direct load smaller version
+                        String file = textureUnit.Value;
+                        String extension = Path.GetExtension(file);
+                        String directFile = textureUnit.Value.Substring(0, file.Length - extension.Length);
+                        directFile = String.Format("{0}_{1}{2}", directFile, indirectionTexture.RealTextureSize.Width >> page.mip, extension);
+                        if(VirtualFileSystem.Instance.exists(directFile))
                         {
-                            Logging.Log.Debug("Loading image {0}", textureUnit.Value);
+                            Logging.Log.Debug("Loading image {0}", directFile);
                             image = new Image();
-                            using (Stream stream = VirtualFileSystem.Instance.openStream(textureUnit.Value, Engine.Resources.FileMode.Open))
+                            using (Stream stream = VirtualFileSystem.Instance.openStream(directFile, Engine.Resources.FileMode.Open))
                             {
-                                String extension = Path.GetExtension(textureUnit.Value);
                                 if (extension.Length > 0)
                                 {
                                     extension = extension.Substring(1);
                                 }
                                 image.load(stream, extension);
                             }
-                            textureCache.Add(fullSizeName, image);
-                        }
-
-                        //If we aren't mip 0 resize accordingly
-                        if (page.mip != 0)
-                        {
-                            Image original = image;
-                            image = new Image(image.Width >> page.mip, image.Height >> page.mip, original.Depth, original.Format, original.NumFaces, original.NumMipmaps);
-                            using(var src = original.getPixelBox())
-                            {
-                                using(var dest = image.getPixelBox())
-                                {
-                                    Image.Scale(src, dest, Image.Filter.FILTER_BILINEAR);
-                                }
-                            }
                             textureCache.Add(textureName, image);
+                        }
+                        else
+                        {
+                            //Try to get full size image from cache
+                            String fullSizeName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width);
+                            if (!textureCache.TryGetValue(fullSizeName, out image))
+                            {
+                                Logging.Log.Debug("Loading image {0}", textureUnit.Value);
+                                image = new Image();
+                                using (Stream stream = VirtualFileSystem.Instance.openStream(textureUnit.Value, Engine.Resources.FileMode.Open))
+                                {
+                                    if (extension.Length > 0)
+                                    {
+                                        extension = extension.Substring(1);
+                                    }
+                                    image.load(stream, extension);
+                                }
+                                textureCache.Add(fullSizeName, image);
+                            }
+
+                            //If we aren't mip 0 resize accordingly
+                            if (page.mip != 0)
+                            {
+                                Image original = image;
+                                image = new Image(image.Width >> page.mip, image.Height >> page.mip, original.Depth, original.Format, original.NumFaces, original.NumMipmaps);
+                                using(var src = original.getPixelBox())
+                                {
+                                    using(var dest = image.getPixelBox())
+                                    {
+                                        Image.Scale(src, dest, Image.Filter.FILTER_BILINEAR);
+                                    }
+                                }
+                                textureCache.Add(textureName, image);
+                            }
                         }
                     }
 
