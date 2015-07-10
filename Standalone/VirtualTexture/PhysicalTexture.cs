@@ -108,11 +108,6 @@ namespace Medical
             }
         }
 
-        public void addPage(HardwarePixelBufferSharedPtr source, IntRect srcRect, IntRect destRect)
-        {
-            buffer.Value.blit(source, srcRect, destRect);
-        }
-
         public void addPage(PixelBox source, IntRect destRect)
         {
             buffer.Value.blitFromMemory(source, destRect);
