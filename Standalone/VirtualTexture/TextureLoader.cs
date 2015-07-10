@@ -27,6 +27,7 @@ namespace Medical
         private int padding;
         private int padding2;
         private int textelsPerPhysicalPage;
+        private bool cancelBackgroundLoad = false;
 
         private List<StagingImage> stagingImages = new List<StagingImage>(4);
         private TextureCache textureCache = new TextureCache();
@@ -85,10 +86,14 @@ namespace Medical
 
         public void Dispose()
         {
-            textureCache.Dispose();
-            foreach(var stagingImage in stagingImages)
+            lock (this)
             {
-                stagingImage.Dispose();
+                cancelBackgroundLoad = true;
+                textureCache.Dispose();
+                foreach (var stagingImage in stagingImages)
+                {
+                    stagingImage.Dispose();
+                }
             }
         }
 
@@ -112,46 +117,59 @@ namespace Medical
 
         public void updatePagesFromRequests()
         {
-            PerformanceMonitor.start("updatePagesFromRequests remove");
-            //Remove pages
-            foreach(var page in removedPages)
+            try
             {
-                PTexPage pTexPage;
-                if (usedPhysicalPages.TryGetValue(page, out pTexPage))
+                System.Threading.Monitor.Enter(this);
+                if(cancelBackgroundLoad) //We have a lock now, are we still ok to load?
                 {
-                    physicalPageQueue.Add(pTexPage);
-                    physicalPagePool.Add(page, pTexPage);
-                    usedPhysicalPages.Remove(page);
+                    throw new CancelThreadException();
                 }
-                else
-                {
-                    oversubscribedPages.Remove(page);
-                }
-            }
-            PerformanceMonitor.stop("updatePagesFromRequests remove");
 
-            PerformanceMonitor.start("updatePagesFromRequests oversubscribedPages");
-            for (int i = 0; i < oversubscribedPages.Count;)
-            {
-                var page = oversubscribedPages[i];
-                if (processPage(page, false))
+                PerformanceMonitor.start("updatePagesFromRequests remove");
+                //Remove pages
+                foreach (var page in removedPages)
                 {
-                    oversubscribedPages.RemoveAt(i);
+                    PTexPage pTexPage;
+                    if (usedPhysicalPages.TryGetValue(page, out pTexPage))
+                    {
+                        physicalPageQueue.Add(pTexPage);
+                        physicalPagePool.Add(page, pTexPage);
+                        usedPhysicalPages.Remove(page);
+                    }
+                    else
+                    {
+                        oversubscribedPages.Remove(page);
+                    }
                 }
-                else
-                {
-                    ++i;
-                }
-            }
-            PerformanceMonitor.stop("updatePagesFromRequests oversubscribedPages");
+                PerformanceMonitor.stop("updatePagesFromRequests remove");
 
-            PerformanceMonitor.start("updatePagesFromRequests add");
-            //Add Pages
-            foreach(var page in addedPages)
-            {
-                processPage(page, true);
+                PerformanceMonitor.start("updatePagesFromRequests oversubscribedPages");
+                for (int i = 0; i < oversubscribedPages.Count; )
+                {
+                    var page = oversubscribedPages[i];
+                    if (processPage(page, false))
+                    {
+                        oversubscribedPages.RemoveAt(i);
+                    }
+                    else
+                    {
+                        ++i;
+                    }
+                }
+                PerformanceMonitor.stop("updatePagesFromRequests oversubscribedPages");
+
+                PerformanceMonitor.start("updatePagesFromRequests add");
+                //Add Pages
+                foreach (var page in addedPages)
+                {
+                    processPage(page, true);
+                }
+                PerformanceMonitor.stop("updatePagesFromRequests add");
             }
-            PerformanceMonitor.stop("updatePagesFromRequests add");
+            finally
+            {
+                System.Threading.Monitor.Exit(this);
+            }
         }
 
         private bool processPage(VTexPage page, bool addToOversubscribe)
@@ -192,7 +210,11 @@ namespace Medical
                     if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out newIndirectionTex))
                     {
                         newIndirectionTex.addPhysicalPage(pTexPage);
-                        ThreadManager.invokeAndWait(() => //Very important to wait here, we don't want to update any buffers multiple times
+
+                        //Very important to wait here, we don't want to update any buffers multiple times
+                        //Also note that we give up our lock here, which allows this class to be disposed if appropriate
+                        System.Threading.Monitor.Exit(this);
+                        ThreadManager.invokeAndWait(() => 
                             {
                                 if(oldIndirectionTexture != null) //If we changed the old texture
                                 {
@@ -203,6 +225,11 @@ namespace Medical
                                     newIndirectionTex.uploadPageChanges();
                                 }
                             });
+                        System.Threading.Monitor.Enter(this);
+                        if(cancelBackgroundLoad) //Reaquired lock, are we still active
+                        {
+                            throw new CancelThreadException();
+                        }
                     }
                     added = true;
                 }
@@ -243,7 +270,7 @@ namespace Medical
                         String extension = Path.GetExtension(file);
                         String directFile = textureUnit.Value.Substring(0, file.Length - extension.Length);
                         directFile = String.Format("{0}_{1}{2}", directFile, indirectionTexture.RealTextureSize.Width >> page.mip, extension);
-                        if(VirtualFileSystem.Instance.exists(directFile))
+                        if (false && VirtualFileSystem.Instance.exists(directFile))
                         {
                             Logging.Log.Debug("Loading image {0}", directFile);
                             image = new Image();
@@ -281,9 +308,9 @@ namespace Medical
                             {
                                 Image original = image;
                                 image = new Image(image.Width >> page.mip, image.Height >> page.mip, original.Depth, original.Format, original.NumFaces, original.NumMipmaps);
-                                using(var src = original.getPixelBox())
+                                using (var src = original.getPixelBox())
                                 {
-                                    using(var dest = image.getPixelBox())
+                                    using (var dest = image.getPixelBox())
                                     {
                                         Image.Scale(src, dest, Image.Filter.FILTER_BILINEAR);
                                     }
@@ -315,7 +342,7 @@ namespace Medical
                 ThreadManager.invoke(() => //We are safe not to wait on this invoke since we know we will be waiting in processpage
                     {
                         var dest = new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage);
-                        for(int u = 0; u < i; ++u)
+                        for (int u = 0; u < i; ++u)
                         {
                             stagingImages[u].copyToGpu(dest);
                         }
