@@ -13,12 +13,12 @@ namespace Medical
     {
         enum Phase
         {
-            RenderFeedback = 0,
-            CopyFeedbackToStaging = 1,
-            CopyStagingToMemory = 2,
-            AnalyzeFeedback = 3,
+            RenderFeedback,
+            CopyFeedbackToStaging,
+            CopyStagingToMemory,
+            AnalyzeFeedback,
             Waiting,
-            Max = 4
+            InitialLoad,
         }
 
         public const String ResourceGroup = "VirtualTextureGroup";
@@ -26,7 +26,7 @@ namespace Medical
         FeedbackBuffer feedbackBuffer;
         int frameCount = 0;
         int updateBufferFrame = 2;
-        Phase phase = Phase.RenderFeedback;
+        Phase phase = Phase.InitialLoad; //All indirection textures will be created requesting their lowest mip levels, this will force us to load those as quickly as possible
         int texelsPerPage = 128;
         int padding;
         IntSize2 physicalTextureSize = new IntSize2(4096, 4096);
@@ -129,6 +129,26 @@ namespace Medical
 
                                 phase = Phase.RenderFeedback;
                             });
+                        break;
+                    case Phase.InitialLoad:
+                        phase = Phase.Waiting;
+                        ThreadManager.RunInBackground(() =>
+                        {
+                            textureLoader.beginPageUpdate();
+
+                            PerformanceMonitor.start("Finish Page Update");
+                            foreach (var indirectionTex in indirectionTextures.Values)
+                            {
+                                indirectionTex.finishPageUpdate();
+                            }
+                            PerformanceMonitor.stop("Finish Page Update");
+
+                            PerformanceMonitor.start("Update Texture Loader");
+                            textureLoader.updatePagesFromRequests();
+                            PerformanceMonitor.stop("Update Texture Loader");
+
+                            phase = Phase.RenderFeedback;
+                        });
                         break;
                 }
             }

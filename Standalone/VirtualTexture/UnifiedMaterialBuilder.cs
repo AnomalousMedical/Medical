@@ -24,6 +24,8 @@ namespace Medical
         private PhysicalTexture specularTexture;
         private PhysicalTexture opacityTexture;
 
+        public event Action<UnifiedMaterialBuilder> InitializationComplete;
+
         public UnifiedMaterialBuilder(VirtualTextureManager virtualTextureManager)
         {
             switch(OgreInterface.Instance.SelectedTextureFormat)
@@ -81,11 +83,27 @@ namespace Medical
             materialPtr.Dispose();
         }
 
+        public override void initializationComplete()
+        {
+            if(InitializationComplete != null)
+            {
+                InitializationComplete.Invoke(this);
+            }
+        }
+
         public override string Name
         {
             get
             {
                 return "VirtualTexture";
+            }
+        }
+
+        public int MaterialCount
+        {
+            get
+            {
+                return createdMaterials.Count;
             }
         }
 

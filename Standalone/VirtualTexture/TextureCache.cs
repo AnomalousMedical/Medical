@@ -11,7 +11,7 @@ namespace Medical
     {
         private LinkedList<String> lastAccessedOrder = new LinkedList<string>();
         private Dictionary<String, Image> loadedImages = new Dictionary<string, Image>();
-        private UInt64 maxCacheSize = 100000000;
+        private UInt64 maxCacheSize = 500 * 1024 * 1024;
         private UInt64 currentCacheSize;
 
         public TextureCache()
@@ -27,6 +27,13 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Get a texture from the cache, you should finish your work with it before calling
+        /// add again, since it could be destroyed at that time.
+        /// </summary>
+        /// <param name="textureName"></param>
+        /// <param name="image"></param>
+        /// <returns></returns>
         internal bool TryGetValue(string textureName, out Image image)
         {
             bool ret = loadedImages.TryGetValue(textureName, out image);
@@ -38,6 +45,12 @@ namespace Medical
             return ret;
         }
 
+        /// <summary>
+        /// Add a texture to the cache, be careful if you have outstanding pointers to objects in the
+        /// cache as they could be destroyed during this call.
+        /// </summary>
+        /// <param name="textureName"></param>
+        /// <param name="image"></param>
         internal void Add(string textureName, Image image)
         {
             UInt64 imageSize = image.Size;

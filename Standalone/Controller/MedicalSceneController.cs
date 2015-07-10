@@ -60,6 +60,7 @@ namespace Medical
         public void Dispose()
         {
             sceneResourceManager.changeResourcesToMatch(pluginManager.createScratchResourceManager());
+            sceneResourceManager.initializeResources();
         }
 
         /// <summary>

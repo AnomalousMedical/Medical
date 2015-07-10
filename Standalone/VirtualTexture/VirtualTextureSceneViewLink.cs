@@ -27,6 +27,16 @@ namespace Medical
 
             materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager);
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
+            materialBuilder.InitializationComplete += materialBuilder_InitializationComplete;
+        }
+
+        void materialBuilder_InitializationComplete(UnifiedMaterialBuilder obj)
+        {
+            if (obj.MaterialCount > 0)
+            {
+                materialBuilder.InitializationComplete -= materialBuilder_InitializationComplete;
+                virtualTextureManager.update();
+            }
         }
 
         public void Dispose()
