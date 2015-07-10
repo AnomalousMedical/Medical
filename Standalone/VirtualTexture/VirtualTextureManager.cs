@@ -17,6 +17,7 @@ namespace Medical
             CopyFeedbackToStaging = 1,
             CopyStagingToMemory = 2,
             AnalyzeFeedback = 3,
+            Waiting,
             Max = 4
         }
 
@@ -98,38 +99,38 @@ namespace Medical
                 {
                     case Phase.RenderFeedback:
                         feedbackBuffer.update();
+                        phase = Phase.CopyFeedbackToStaging;
                         break;
                     case Phase.CopyFeedbackToStaging:
                         feedbackBuffer.blitToStaging();
+                        phase = Phase.CopyStagingToMemory;
                         break;
                     case Phase.CopyStagingToMemory:
                         feedbackBuffer.blitStagingToMemory();
+                        phase = Phase.AnalyzeFeedback;
                         break;
                     case Phase.AnalyzeFeedback:
-                        textureLoader.beginPageUpdate();
-                        feedbackBuffer.analyzeBuffer();
+                        phase = Phase.Waiting;
+                        ThreadManager.RunInBackground(() =>
+                            {
+                                textureLoader.beginPageUpdate();
+                                feedbackBuffer.analyzeBuffer();
 
-                        PerformanceMonitor.start("Finish Page Update");
-                        foreach (var indirectionTex in indirectionTextures.Values)
-                        {
-                            indirectionTex.finishPageUpdate();
-                        }
-                        PerformanceMonitor.stop("Finish Page Update");
+                                PerformanceMonitor.start("Finish Page Update");
+                                foreach (var indirectionTex in indirectionTextures.Values)
+                                {
+                                    indirectionTex.finishPageUpdate();
+                                }
+                                PerformanceMonitor.stop("Finish Page Update");
 
-                        PerformanceMonitor.start("Update Texture Loader");
-                        textureLoader.updatePagesFromRequests();
-                        PerformanceMonitor.stop("Update Texture Loader");
+                                PerformanceMonitor.start("Update Texture Loader");
+                                textureLoader.updatePagesFromRequests();
+                                PerformanceMonitor.stop("Update Texture Loader");
 
-                        PerformanceMonitor.start("Upload Indirection Texture Update");
-                        foreach (var indirectionTex in indirectionTextures.Values) //This could be improved with a queue of just updated textures
-                        {
-                            indirectionTex.uploadPageChanges();
-                        }
-                        PerformanceMonitor.stop("Upload Indirection Texture Update");
+                                phase = Phase.RenderFeedback;
+                            });
                         break;
                 }
-
-                phase = (Phase)(((int)phase + 1) % (int)Phase.Max);
             }
             frameCount = (frameCount + 1) % updateBufferFrame;
         }

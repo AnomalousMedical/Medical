@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.Threads;
 using OgrePlugin;
 using System;
 using System.Collections.Generic;
@@ -170,13 +171,13 @@ namespace Medical
                 pTexPage = physicalPageQueue[0]; //The physical page candidate, do not modify before usedPhysicalPages if statement below
                 if (loadImage(page, pTexPage))
                 {
-                    IndirectionTexture indirectionTex;
                     //Alert old texture of removal if there was one, Do not modify pTexPage above this if block, we need the old data
+                    IndirectionTexture oldIndirectionTexture = null;
                     if (pTexPage.VirtualTexturePage != null)
                     {
-                        if (virtualTextureManager.getIndirectionTexture(pTexPage.VirtualTexturePage.indirectionTexId, out indirectionTex))
+                        if (virtualTextureManager.getIndirectionTexture(pTexPage.VirtualTexturePage.indirectionTexId, out oldIndirectionTexture))
                         {
-                            indirectionTex.removePhysicalPage(pTexPage);
+                            oldIndirectionTexture.removePhysicalPage(pTexPage);
                         }
 
                         physicalPagePool.Remove(pTexPage.VirtualTexturePage); //Be sure to remove the page from the pool if it was used previously
@@ -187,9 +188,21 @@ namespace Medical
                     usedPhysicalPages.Add(page, pTexPage);
 
                     //Add to new indirection texture
-                    if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTex))
+                    IndirectionTexture newIndirectionTex;
+                    if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out newIndirectionTex))
                     {
-                        indirectionTex.addPhysicalPage(pTexPage);
+                        newIndirectionTex.addPhysicalPage(pTexPage);
+                        ThreadManager.invokeAndWait(() =>
+                            {
+                                if(oldIndirectionTexture != null) //If we changed the old texture
+                                {
+                                    oldIndirectionTexture.uploadPageChanges();
+                                }
+                                if (oldIndirectionTexture != newIndirectionTex) //If the old texture and new texture are not the same
+                                {
+                                    newIndirectionTex.uploadPageChanges();
+                                }
+                            });
                     }
                     added = true;
                 }
@@ -257,7 +270,7 @@ namespace Medical
                                 Image.Scale(sourceBox, stagingTextureBox, Image.Filter.FILTER_NEAREST);
 
                                 var physicalTexture = virtualTextureManager.getPhysicalTexture(textureUnit.Key);
-                                physicalTexture.addPage(stagingTextureBox, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage));
+                                ThreadManager.invokeAndWait(() => physicalTexture.addPage(stagingTextureBox, new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage)));
                                 usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
                             }
                         }
