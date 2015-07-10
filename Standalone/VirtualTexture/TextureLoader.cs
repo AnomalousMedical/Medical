@@ -28,8 +28,8 @@ namespace Medical
         private int padding2;
         private int textelsPerPhysicalPage;
 
-        private Dictionary<String, Image> loadedImages = new Dictionary<string, Image>();
         private List<StagingImage> stagingImages = new List<StagingImage>(4);
+        private TextureCache textureCache = new TextureCache();
 
         public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding)
         {
@@ -85,10 +85,7 @@ namespace Medical
 
         public void Dispose()
         {
-            foreach(var image in loadedImages.Values)
-            {
-                image.Dispose();
-            }
+            textureCache.Dispose();
             foreach(var stagingImage in stagingImages)
             {
                 stagingImage.Dispose();
@@ -239,11 +236,11 @@ namespace Medical
                     //Load or grab from cache
                     String textureName = String.Format("{0}_{1}", textureUnit.Value, page.mip);
                     Image image;
-                    if (!loadedImages.TryGetValue(textureName, out image))
+                    if (!textureCache.TryGetValue(textureName, out image))
                     {
                         //Try to get full size image from cache
                         String fullSizeName = String.Format("{0}_0", textureUnit.Value);
-                        if(!loadedImages.TryGetValue(fullSizeName, out image))
+                        if (!textureCache.TryGetValue(fullSizeName, out image))
                         {
                             Logging.Log.Debug("Loading image {0}", textureUnit.Value);
                             image = new Image();
@@ -256,7 +253,7 @@ namespace Medical
                                 }
                                 image.load(stream, extension);
                             }
-                            loadedImages.Add(fullSizeName, image);
+                            textureCache.Add(fullSizeName, image);
                         }
 
                         //If we aren't mip 0 resize accordingly
@@ -271,7 +268,7 @@ namespace Medical
                                     Image.Scale(src, dest, Image.Filter.FILTER_BILINEAR);
                                 }
                             }
-                            loadedImages.Add(textureName, image);
+                            textureCache.Add(textureName, image);
                         }
                     }
 
