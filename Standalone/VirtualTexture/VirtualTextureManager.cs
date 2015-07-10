@@ -54,7 +54,7 @@ namespace Medical
             }
 
             feedbackBuffer = new FeedbackBuffer(this, 0);
-            textureLoader = new TextureLoader(this, new IntSize2(4096, 4096), texelsPerPage, padding);
+            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding);
         }
 
         public void Dispose()

@@ -46,10 +46,10 @@ namespace Medical
             opacityTexture = virtualTextureManager.createPhysicalTexture("Opacity");
 
             //Debug texture colors
-            normalTexture.color(Color.Blue);
-            diffuseTexture.color(Color.Red);
-            specularTexture.color(Color.Green);
-            opacityTexture.color(Color.HotPink);
+            //normalTexture.color(Color.Blue);
+            //diffuseTexture.color(Color.Red);
+            //specularTexture.color(Color.Green);
+            //opacityTexture.color(Color.HotPink);
 
             materialCreationFuncs.Add("NormalMapSpecular", createNormalMapSpecular);
             materialCreationFuncs.Add("NormalMapSpecularHighlight", createNormalMapSpecularHighlight);

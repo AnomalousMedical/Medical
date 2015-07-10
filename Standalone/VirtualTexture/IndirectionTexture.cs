@@ -262,6 +262,14 @@ namespace Medical
             }
         }
 
+        public IntSize2 NumPages
+        {
+            get
+            {
+                return numPages;
+            }
+        }
+
         //New System
         public void addOriginalTexture(string textureUnit, string textureName)
         {

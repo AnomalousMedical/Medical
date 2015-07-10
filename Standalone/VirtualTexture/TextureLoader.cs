@@ -36,7 +36,7 @@ namespace Medical
         {
             this.virtualTextureManager = virtualTextureManager;
             IntSize2 pageTableSize = physicalTextureSize / textelsPerPage;
-            maxPages = pageTableSize.Width * pageTableSize.Height;
+            this.maxPages = pageTableSize.Width * pageTableSize.Height;
             this.textelsPerPage = textelsPerPage;
             this.padding = padding;
             this.padding2 = padding * 2;
@@ -324,17 +324,21 @@ namespace Medical
                     int mipCount = image.NumMipmaps;
                     if (mipCount == 0) //We always have to take from the largest size
                     {
+                        IntSize2 largestSupportedPageIndex = indirectionTexture.NumPages;
+                        largestSupportedPageIndex.Width >>= page.mip;
+                        largestSupportedPageIndex.Height >>= page.mip;
                         using (PixelBox sourceBox = image.getPixelBox(0, 0))
                         {
-                            var srcRect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
-                            int mipWidth = (int)image.Width;
-                            int mipHeight = (int)image.Height;
-                            sourceBox.Rect = srcRect;
-                            if (srcRect.Right <= mipWidth && srcRect.Bottom <= mipHeight)
+                            if (page.x != 0 && page.y != 0 && page.x + 1 != largestSupportedPageIndex.Width && page.y + 1 != largestSupportedPageIndex.Height)
                             {
-                                stagingImages[i].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.Key));
-                                usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
+                                sourceBox.Rect = new IntRect(page.x * textelsPerPage - padding, page.y * textelsPerPage - padding, textelsPerPage + padding2, textelsPerPage + padding2);
                             }
+                            else
+                            {
+                                sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
+                            }
+                            stagingImages[i].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.Key), padding);
+                            usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
                         }
                     }
                     ++i;
