@@ -29,15 +29,15 @@ namespace Medical
         private int textelsPerPhysicalPage;
         private bool cancelBackgroundLoad = false;
 
-        private List<StagingImage> stagingImages = new List<StagingImage>(4);
-        private List<Task<bool>> copyTostagingImageTasks = new List<Task<bool>>(4);
+        private List<StagingImage> stagingImages;
+        private List<Task<bool>> copyTostagingImageTasks;
         private TextureCache textureCache = new TextureCache();
 
         Task loadingTask;
         bool stopLoading = false;
         List<VTexPage> pagesToLoad = new List<VTexPage>();
 
-        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding)
+        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int numPhysicalTextures)
         {
             this.virtualTextureManager = virtualTextureManager;
             IntSize2 pageTableSize = physicalTextureSize / textelsPerPage;
@@ -50,6 +50,9 @@ namespace Medical
             addedPages = new HashSet<VTexPage>();
             removedPages = new List<VTexPage>(10);
             pagesToLoad = new List<VTexPage>(10);
+
+            stagingImages = new List<StagingImage>(numPhysicalTextures);
+            copyTostagingImageTasks = new List<Task<bool>>(numPhysicalTextures);
 
             float scale = (float)textelsPerPage / textelsPerPhysicalPage;
             PagePaddingScale = new Vector2(scale, scale);

@@ -36,7 +36,7 @@ namespace Medical
         Dictionary<int, IndirectionTexture> indirectionTexturesById = new Dictionary<int, IndirectionTexture>();
         TextureLoader textureLoader;
 
-        public VirtualTextureManager()
+        public VirtualTextureManager(int numPhysicalTextures)
         {
             if (!OgreResourceGroupManager.getInstance().resourceGroupExists(VirtualTextureManager.ResourceGroup))
             {
@@ -54,7 +54,7 @@ namespace Medical
             }
 
             feedbackBuffer = new FeedbackBuffer(this, 0);
-            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding);
+            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, numPhysicalTextures);
         }
 
         public void Dispose()

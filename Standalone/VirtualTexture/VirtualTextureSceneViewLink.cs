@@ -23,7 +23,7 @@ namespace Medical
             this.sceneViewController.WindowCreated += sceneViewController_WindowCreated;
             this.standaloneController = standaloneController;
 
-            virtualTextureManager = new VirtualTextureManager();
+            virtualTextureManager = new VirtualTextureManager(4);
 
             materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager);
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
