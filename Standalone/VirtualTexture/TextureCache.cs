@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    /// <summary>
+    /// This class helps manage a handle to a resource in the TextureCache. This uses reference counting,
+    /// which is incremented internally for the checkout and is decremented on dispose. The idea is to
+    /// allow for a using block when using these handles.
+    /// </summary>
     class TextureCacheHandle : IDisposable
     {
         private int numCheckouts = 0;
@@ -19,6 +24,10 @@ namespace Medical
             this.destroyOnNoRef = destroyOnNoRef;
         }
 
+        /// <summary>
+        /// Dispose, call when finished with a checked out handle. Destroys
+        /// the image if there are no more outstanding resources and the cahce requested it.
+        /// </summary>
         public void Dispose()
         {
             --numCheckouts;
@@ -28,6 +37,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// The image for this handle.
+        /// </summary>
         public Image Image
         {
             get
@@ -36,6 +48,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// The size of the image.
+        /// </summary>
         public ulong Size
         {
             get
@@ -44,11 +59,17 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Internal function to increment the counter.
+        /// </summary>
         internal void checkout()
         {
             ++numCheckouts;
         }
 
+        /// <summary>
+        /// Internal management function to destroy the image if possible.
+        /// </summary>
         internal void destroyIfPossible()
         {
             destroyOnNoRef = true;
@@ -59,6 +80,10 @@ namespace Medical
         }
     }
 
+    /// <summary>
+    /// A texture cache that textures can be added to, it will automatically flush itself as items are added
+    /// that make it too large.
+    /// </summary>
     class TextureCache : IDisposable
     {
         private LinkedList<String> lastAccessedOrder = new LinkedList<string>();
@@ -82,7 +107,7 @@ namespace Medical
 
         /// <summary>
         /// Get a texture from the cache, you need to dispose the TextureCacheHandle that is
-        /// returned from this function.
+        /// returned through the image out variable.
         /// </summary>
         /// <param name="textureName"></param>
         /// <param name="image"></param>
@@ -104,7 +129,7 @@ namespace Medical
 
         /// <summary>
         /// Add a texture to the cache, this will return a TextureCacheHandle that you MUST dispose
-        /// when you aren't using it anymore. If 
+        /// when you aren't using it anymore.
         /// </summary>
         /// <param name="textureName"></param>
         /// <param name="image"></param>
