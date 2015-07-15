@@ -281,24 +281,14 @@ namespace Medical
                     copyTostagingImageTasks.Add(fireCopyToStaging(page, stagingImageIndex++, indirectionTexture, textureUnit));
                 }
                 //Wait for results
-                Task.WhenAll(copyTostagingImageTasks).Wait();
                 for (int i = 0; i < stagingImageIndex; ++i)
                 {
-                    //copyTostagingImageTasks[i].Wait();
+                    copyTostagingImageTasks[i].Wait();
                     if (copyTostagingImageTasks[i].Result)
                     {
                         usedPhysicalPage = true;
                     }
                 }
-
-                //Single threaded
-                //foreach (var textureUnit in indirectionTexture.OriginalTextures)
-                //{
-                //    if (copyToStaging(page, stagingImageIndex++, indirectionTexture, textureUnit))
-                //    {
-                //        usedPhysicalPage = true;
-                //    }
-                //}
 
                 //Sync back to main thread
                 ThreadManager.invoke(() => //We are safe not to wait on this invoke since we know we will be waiting in processpage
