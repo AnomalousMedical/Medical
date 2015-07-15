@@ -16,7 +16,7 @@ namespace Medical
     {
         private HashSet<VTexPage> addedPages;
         private List<VTexPage> removedPages;
-        private List<VTexPage> oversubscribedPages; //The llist of pages that could not load because we were oversubscribed
+        private HashSet<VTexPage> oversubscribedPages; //The llist of pages that could not load because we were oversubscribed
 
         private List<PTexPage> physicalPageQueue; //FIFO queue for used pages, allows us to reuse pages if they are requested again quickly and keep track of what parts of the physical texture we can use
         private Dictionary<VTexPage, PTexPage> physicalPagePool;
@@ -45,7 +45,7 @@ namespace Medical
 
             addedPages = new HashSet<VTexPage>();
             removedPages = new List<VTexPage>(10);
-            oversubscribedPages = new List<VTexPage>(10);
+            oversubscribedPages = new HashSet<VTexPage>();
 
             float scale = (float)textelsPerPage / textelsPerPhysicalPage;
             PagePaddingScale = new Vector2(scale, scale);
@@ -144,32 +144,17 @@ namespace Medical
                 }
                 PerformanceMonitor.stop("updatePagesFromRequests remove");
 
-                PerformanceMonitor.start("updatePagesFromRequests oversubscribedPages");
-                oversubscribedPages.Sort(VTexPage.Sort);
-
-                for (int i = 0; i < oversubscribedPages.Count; )
+                PerformanceMonitor.start("updatePagesFromRequests processing pages");
+                var updateList = oversubscribedPages.Concat(addedPages).ToList(); //Bad garbage
+                updateList.Sort(VTexPage.Sort);
+                foreach (var page in updateList)
                 {
-                    var page = oversubscribedPages[i];
-                    if (processPage(page, false))
+                    if(processPage(page, true))
                     {
-                        oversubscribedPages.RemoveAt(i);
-                    }
-                    else
-                    {
-                        ++i;
+                        oversubscribedPages.Remove(page);
                     }
                 }
-                PerformanceMonitor.stop("updatePagesFromRequests oversubscribedPages");
-
-                PerformanceMonitor.start("updatePagesFromRequests add");
-                //Add Pages
-                var added = addedPages.ToList(); //OMG the garbage
-                added.Sort(VTexPage.Sort);
-                foreach (var page in added)
-                {
-                    processPage(page, true);
-                }
-                PerformanceMonitor.stop("updatePagesFromRequests add");
+                PerformanceMonitor.stop("updatePagesFromRequests processing pages");
             }
             finally
             {
