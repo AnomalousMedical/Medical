@@ -29,8 +29,8 @@ namespace Medical
         private int textelsPerPhysicalPage;
         private bool cancelBackgroundLoad = false;
 
-        private List<StagingImage> stagingImages;
-        private List<Task<bool>> copyTostagingImageTasks;
+        private StagingImage[] stagingImages;
+        private Task<bool>[] copyTostagingImageTasks;
         private TextureCache textureCache = new TextureCache();
 
         Task loadingTask;
@@ -51,8 +51,8 @@ namespace Medical
             removedPages = new List<VTexPage>(10);
             pagesToLoad = new List<VTexPage>(10);
 
-            stagingImages = new List<StagingImage>(numPhysicalTextures);
-            copyTostagingImageTasks = new List<Task<bool>>(numPhysicalTextures);
+            stagingImages = new StagingImage[numPhysicalTextures];
+            copyTostagingImageTasks = new Task<bool>[numPhysicalTextures];
 
             float scale = (float)textelsPerPage / textelsPerPhysicalPage;
             PagePaddingScale = new Vector2(scale, scale);
@@ -86,9 +86,9 @@ namespace Medical
                 }
             }
 
-            for (int i = 0; i < stagingImages.Capacity; ++i)
+            for (int i = 0; i < numPhysicalTextures; ++i)
             {
-                stagingImages.Add(new StagingImage(textelsPerPhysicalPage, virtualTextureManager.PhysicalTextureFormat));
+                stagingImages[i] = new StagingImage(textelsPerPhysicalPage, virtualTextureManager.PhysicalTextureFormat);
             }
         }
 
@@ -272,7 +272,6 @@ namespace Medical
         /// <returns></returns>
         private bool loadImages(VTexPage page, PTexPage pTexPage)
         {
-            copyTostagingImageTasks.Clear();
             int stagingImageIndex = 0;
             bool usedPhysicalPage = false;
             IndirectionTexture indirectionTexture;
@@ -281,7 +280,8 @@ namespace Medical
                 //Fire off image loading and blitting tasks
                 foreach (var textureUnit in indirectionTexture.OriginalTextures)
                 {
-                    copyTostagingImageTasks.Add(fireCopyToStaging(page, stagingImageIndex++, indirectionTexture, textureUnit));
+                    copyTostagingImageTasks[stagingImageIndex] = fireCopyToStaging(page, stagingImageIndex, indirectionTexture, textureUnit);
+                    ++stagingImageIndex;
                 }
                 //Wait for results
                 for (int i = 0; i < stagingImageIndex; ++i)
