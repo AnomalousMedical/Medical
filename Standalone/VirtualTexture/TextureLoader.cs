@@ -297,6 +297,15 @@ namespace Medical
                     }
                 }
 
+                //Single threaded
+                //foreach (var textureUnit in indirectionTexture.OriginalTextures)
+                //{
+                //    if (copyToStaging(page, stagingImageIndex++, indirectionTexture, textureUnit))
+                //    {
+                //        usedPhysicalPage = true;
+                //    }
+                //}
+
                 //Sync back to main thread
                 ThreadManager.invoke(() => //We are safe not to wait on this invoke since we know we will be waiting in processpage
                     {

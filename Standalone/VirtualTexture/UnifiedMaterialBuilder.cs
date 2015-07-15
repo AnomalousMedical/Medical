@@ -40,10 +40,10 @@ namespace Medical
 
             this.virtualTextureManager = virtualTextureManager;
 
-            diffuseTexture = virtualTextureManager.createPhysicalTexture("Diffuse", false);
-            normalTexture = virtualTextureManager.createPhysicalTexture("NormalMap", true);
-            specularTexture = virtualTextureManager.createPhysicalTexture("Specular", false);
-            opacityTexture = virtualTextureManager.createPhysicalTexture("Opacity", false);
+            diffuseTexture = virtualTextureManager.createPhysicalTexture("Diffuse", PixelFormatUsageHint.NotSpecial);
+            normalTexture = virtualTextureManager.createPhysicalTexture("NormalMap", PixelFormatUsageHint.NormalMap);
+            specularTexture = virtualTextureManager.createPhysicalTexture("Specular", PixelFormatUsageHint.NotSpecial);
+            opacityTexture = virtualTextureManager.createPhysicalTexture("Opacity", PixelFormatUsageHint.OpacityMap);
 
             //Debug texture colors
             //normalTexture.color(Color.Blue);

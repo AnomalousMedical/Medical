@@ -30,7 +30,7 @@ namespace Medical
         {
             if (sourceBox.getWidth() == pixelBox.getWidth())
             {
-                Image.Scale(sourceBox, pixelBox, Image.Filter.FILTER_NEAREST);
+                PixelBox.BulkPixelConversion(sourceBox, pixelBox);
             }
             else
             {
@@ -40,27 +40,27 @@ namespace Medical
                 {
                     //Center
                     partialPixels.Rect = new IntRect(padding, padding, sourceRect.Width, sourceRect.Height);
-                    Image.Scale(sourceBox, partialPixels, Image.Filter.FILTER_NEAREST);
+                    PixelBox.BulkPixelConversion(sourceBox, partialPixels);
 
                     ////Left
                     partialPixels.Rect = new IntRect(0, padding, padding, sourceRect.Height);
                     sourceBox.Rect = new IntRect(sourceRect.Left, sourceRect.Top, padding, sourceRect.Height);
-                    Image.Scale(sourceBox, partialPixels, Image.Filter.FILTER_NEAREST);
+                    PixelBox.BulkPixelConversion(sourceBox, partialPixels);
                     
                     ////Top
                     partialPixels.Rect = new IntRect(padding, 0, sourceRect.Width, padding);
                     sourceBox.Rect = new IntRect(sourceRect.Left, sourceRect.Top, sourceRect.Width, padding);
-                    Image.Scale(sourceBox, partialPixels, Image.Filter.FILTER_NEAREST);
+                    PixelBox.BulkPixelConversion(sourceBox, partialPixels);
 
                     ////Right
                     partialPixels.Rect = new IntRect(sourceRect.Width + padding, padding, padding, sourceRect.Height);
                     sourceBox.Rect = new IntRect(sourceRect.Right - padding, sourceRect.Top, padding, sourceRect.Height);
-                    Image.Scale(sourceBox, partialPixels, Image.Filter.FILTER_NEAREST);
+                    PixelBox.BulkPixelConversion(sourceBox, partialPixels);
 
                     ////Bottom
                     partialPixels.Rect = new IntRect(padding, sourceRect.Height + padding, sourceRect.Width, padding);
                     sourceBox.Rect = new IntRect(sourceRect.Left, sourceRect.Bottom - padding, sourceRect.Width, padding);
-                    Image.Scale(sourceBox, partialPixels, Image.Filter.FILTER_NEAREST);
+                    PixelBox.BulkPixelConversion(sourceBox, partialPixels);
                 }
             }
             this.physicalTexture = physicalTexture;

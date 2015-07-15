@@ -11,6 +11,13 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    public enum PixelFormatUsageHint
+    {
+        NotSpecial,
+        NormalMap,
+        OpacityMap,
+    }
+
     public class PhysicalTexture : IDisposable
     {
         static FreeImageAPI.Color[] mipColors = new FreeImageAPI.Color[17];
@@ -45,7 +52,7 @@ namespace Medical
         private int texelsPerPage;
         private IntSize2 size;
 
-        public PhysicalTexture(String name, IntSize2 size, VirtualTextureManager virtualTextureManager, int texelsPerPage, CompressedTextureSupport texFormat, bool isNormalMap)
+        public PhysicalTexture(String name, IntSize2 size, VirtualTextureManager virtualTextureManager, int texelsPerPage, CompressedTextureSupport texFormat, PixelFormatUsageHint textureUsage)
         {
             this.name = name;
             this.texelsPerPage = texelsPerPage;
@@ -59,16 +66,15 @@ namespace Medical
                         (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0); //Got as a render target for now so we can save the output.
                     break;
                 case CompressedTextureSupport.DXT:
-                    if(isNormalMap)
-                    {
-                        physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
-                        (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_DXT5, TextureUsage.TU_DEFAULT, null, false, 0); //Got as a render target for now so we can save the output.
-                    }
-                    else
-                    {
-                        physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
-                        (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_DXT5, TextureUsage.TU_DEFAULT, null, false, 0); //Got as a render target for now so we can save the output.
-                    }
+                    PixelFormat pixelFormat = PixelFormat.PF_DXT5;
+                    //switch(textureUsage)
+                    //{
+                    //    case PixelFormatUsageHint.OpacityMap:
+                    //        pixelFormat = PixelFormat.PF_DXT1;
+                    //        break;
+                    //}
+                    physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
+                        (uint)size.Width, (uint)size.Height, 1, 0, pixelFormat, TextureUsage.TU_DEFAULT, null, false, 0); //Got as a render target for now so we can save the output.
                     break;
             }
 

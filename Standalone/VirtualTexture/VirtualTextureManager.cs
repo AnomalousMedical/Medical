@@ -68,9 +68,9 @@ namespace Medical
             //Feedback buffer cameras are intended to be destroyed by the classes that create them, this does not provide automatic cleanup
         }
 
-        public PhysicalTexture createPhysicalTexture(String name, bool isNormalMap)
+        public PhysicalTexture createPhysicalTexture(String name, PixelFormatUsageHint pixelFormatUsageHint)
         {
-            PhysicalTexture pt = new PhysicalTexture(name, physicalTextureSize, this, texelsPerPage, textureFormat, isNormalMap);
+            PhysicalTexture pt = new PhysicalTexture(name, physicalTextureSize, this, texelsPerPage, textureFormat, pixelFormatUsageHint);
             physicalTextures.Add(name, pt);
             textureLoader.addedPhysicalTexture(pt);
             return pt;
