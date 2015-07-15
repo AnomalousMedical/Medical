@@ -16,7 +16,6 @@ namespace Medical
     {
         private HashSet<VTexPage> addedPages;
         private List<VTexPage> removedPages;
-        private HashSet<VTexPage> oversubscribedPages; //The llist of pages that could not load because we were oversubscribed
 
         private List<PTexPage> physicalPageQueue; //FIFO queue for used pages, allows us to reuse pages if they are requested again quickly and keep track of what parts of the physical texture we can use
         private Dictionary<VTexPage, PTexPage> physicalPagePool;
@@ -33,6 +32,10 @@ namespace Medical
         private List<StagingImage> stagingImages = new List<StagingImage>(4);
         private TextureCache textureCache = new TextureCache();
 
+        Task loadingTask;
+        bool stopLoading = false;
+        List<VTexPage> pagesToLoad = new List<VTexPage>();
+
         public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding)
         {
             this.virtualTextureManager = virtualTextureManager;
@@ -45,7 +48,7 @@ namespace Medical
 
             addedPages = new HashSet<VTexPage>();
             removedPages = new List<VTexPage>(10);
-            oversubscribedPages = new HashSet<VTexPage>();
+            pagesToLoad = new List<VTexPage>(10);
 
             float scale = (float)textelsPerPage / textelsPerPhysicalPage;
             PagePaddingScale = new Vector2(scale, scale);
@@ -116,10 +119,6 @@ namespace Medical
             removedPages.Add(page);
         }
 
-        Task loadingTask;
-        bool stopLoading = false;
-        List<VTexPage> pagesToLoad = new List<VTexPage>();
-
         public void updatePagesFromRequests()
         {
             //If there are no added pages, there is nothing to do with this call, just return
@@ -145,20 +144,8 @@ namespace Medical
                 }
             }
 
-            //Synchronize results of loading back to main collections
-            //foreach(var page in loadedPages)
-            //{
-            //    oversubscribedPages.Remove(page);
-            //}
-            //foreach(var page in newOversubscribedPages)
-            //{
-            //    oversubscribedPages.Add(page);
-            //}
-
             //Reset
             stopLoading = false;
-            //loadedPages.Clear();
-            //newOversubscribedPages.Clear();
 
             //Remove pages
             PerformanceMonitor.start("updatePagesFromRequests remove");
