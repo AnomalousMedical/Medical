@@ -29,6 +29,7 @@ namespace Medical
         private int textelsPerPhysicalPage;
         private bool cancelBackgroundLoad = false;
 
+        private int stagingImageCount = 0;
         private StagingImage[] stagingImages;
         private Task<bool>[] copyTostagingImageTasks;
         private TextureCache textureCache = new TextureCache();
@@ -37,7 +38,7 @@ namespace Medical
         bool stopLoading = false;
         List<VTexPage> pagesToLoad = new List<VTexPage>();
 
-        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int numPhysicalTextures)
+        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int stagingImageCapacity)
         {
             this.virtualTextureManager = virtualTextureManager;
             IntSize2 pageTableSize = physicalTextureSize / textelsPerPage;
@@ -51,8 +52,8 @@ namespace Medical
             removedPages = new List<VTexPage>(10);
             pagesToLoad = new List<VTexPage>(10);
 
-            stagingImages = new StagingImage[numPhysicalTextures];
-            copyTostagingImageTasks = new Task<bool>[numPhysicalTextures];
+            stagingImages = new StagingImage[stagingImageCapacity];
+            copyTostagingImageTasks = new Task<bool>[stagingImageCapacity];
 
             float scale = (float)textelsPerPage / textelsPerPhysicalPage;
             PagePaddingScale = new Vector2(scale, scale);
@@ -85,11 +86,6 @@ namespace Medical
                     }
                 }
             }
-
-            for (int i = 0; i < numPhysicalTextures; ++i)
-            {
-                stagingImages[i] = new StagingImage(textelsPerPhysicalPage, virtualTextureManager.PhysicalTextureFormat);
-            }
         }
 
         public void Dispose()
@@ -102,6 +98,14 @@ namespace Medical
                 {
                     stagingImage.Dispose();
                 }
+            }
+        }
+
+        public void addedPhysicalTexture(PhysicalTexture physicalTexture)
+        {
+            if(stagingImageCount < stagingImages.Length)
+            {
+                stagingImages[stagingImageCount++] = new StagingImage(textelsPerPhysicalPage, physicalTexture.TextureFormat);
             }
         }
 
@@ -320,24 +324,37 @@ namespace Medical
             using (TextureCacheHandle cacheHandle = getImage(page, indirectionTexture, ref textureUnit, textureName))
             {
                 //Blit
-                int mipCount = cacheHandle.Image.NumMipmaps;
-                if (mipCount == 0) //We always have to take from the largest size
+                PixelBox sourceBox = null;
+                try
                 {
+                    int mipCount = cacheHandle.Image.NumMipmaps;
+                    if (mipCount == 0) //We always have to take from the largest size
+                    {
+                        sourceBox = cacheHandle.Image.getPixelBox(0, 0);
+                    }
+                    else
+                    {
+                        sourceBox = cacheHandle.Image.getPixelBox(0, page.mip);
+                    }
                     IntSize2 largestSupportedPageIndex = indirectionTexture.NumPages;
                     largestSupportedPageIndex.Width >>= page.mip;
                     largestSupportedPageIndex.Height >>= page.mip;
-                    using (PixelBox sourceBox = cacheHandle.Image.getPixelBox(0, 0))
+                    if (page.x != 0 && page.y != 0 && page.x + 1 != largestSupportedPageIndex.Width && page.y + 1 != largestSupportedPageIndex.Height)
                     {
-                        if (page.x != 0 && page.y != 0 && page.x + 1 != largestSupportedPageIndex.Width && page.y + 1 != largestSupportedPageIndex.Height)
-                        {
-                            sourceBox.Rect = new IntRect(page.x * textelsPerPage - padding, page.y * textelsPerPage - padding, textelsPerPage + padding2, textelsPerPage + padding2);
-                        }
-                        else
-                        {
-                            sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
-                        }
-                        stagingImages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.Key), padding);
-                        usedPhysicalPage = true;
+                        sourceBox.Rect = new IntRect(page.x * textelsPerPage - padding, page.y * textelsPerPage - padding, textelsPerPage + padding2, textelsPerPage + padding2);
+                    }
+                    else
+                    {
+                        sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
+                    }
+                    stagingImages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.Key), padding);
+                    usedPhysicalPage = true;
+                }
+                finally
+                {
+                    if(sourceBox != null)
+                    {
+                        sourceBox.Dispose();
                     }
                 }
                 return usedPhysicalPage;
@@ -368,7 +385,7 @@ namespace Medical
                     }
 
                     //If we aren't mip 0 resize accordingly
-                    if (page.mip != 0)
+                    if (page.mip > cacheHandle.Image.NumMipmaps && page.mip != 0)
                     {
                         using (TextureCacheHandle originalHandle = cacheHandle)
                         {

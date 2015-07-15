@@ -55,6 +55,14 @@ namespace Medical
             this.virtualTextureManager = virtualTextureManager;
             this.realTextureSize = realTextureSize;
             numPages = realTextureSize / texelsPerPage;
+            if(numPages.Width == 0)
+            {
+                numPages.Width = 1;
+            }
+            if(numPages.Height == 0)
+            {
+                numPages.Height = 1;
+            }
             for (highestMip = 0; realTextureSize.Width >> highestMip >= texelsPerPage && realTextureSize.Height >> highestMip >= texelsPerPage; ++highestMip) { }
             indirectionTexture = TextureManager.getInstance().createManual(String.Format("{0}_IndirectionTexture_{1}", materialSetKey, id), VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
                 (uint)numPages.Width, (uint)numPages.Height, 1, highestMip, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);

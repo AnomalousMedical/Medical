@@ -45,41 +45,38 @@ namespace Medical
         private int texelsPerPage;
         private IntSize2 size;
 
-        //private FreeImageAPI.FreeImageBitmap blitBitmap;
-        //private PixelBox blitBitmapBox;
-
-        public PhysicalTexture(String name, IntSize2 size, VirtualTextureManager virtualTextureManager, int texelsPerPage)
+        public PhysicalTexture(String name, IntSize2 size, VirtualTextureManager virtualTextureManager, int texelsPerPage, CompressedTextureSupport texFormat, bool isNormalMap)
         {
             this.name = name;
             this.texelsPerPage = texelsPerPage;
             this.size = size;
             this.virtualTextureManager = virtualTextureManager;
             this.textureName = "PhysicalTexture" + name;
-            switch(OgreInterface.Instance.SelectedTextureFormat)
+            switch (texFormat)
             {
                 case CompressedTextureSupport.None:
                     physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, 
                         (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0); //Got as a render target for now so we can save the output.
                     break;
                 case CompressedTextureSupport.DXT:
-                    physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, 
+                    if(isNormalMap)
+                    {
+                        physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
                         (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_DXT5, TextureUsage.TU_DEFAULT, null, false, 0); //Got as a render target for now so we can save the output.
+                    }
+                    else
+                    {
+                        physicalTexture = TextureManager.getInstance().createManual(textureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D,
+                        (uint)size.Width, (uint)size.Height, 1, 0, PixelFormat.PF_DXT5, TextureUsage.TU_DEFAULT, null, false, 0); //Got as a render target for now so we can save the output.
+                    }
                     break;
             }
 
             buffer = physicalTexture.Value.getBuffer();
-
-            //blitBitmap = new FreeImageAPI.FreeImageBitmap(texelsPerPage, texelsPerPage, FreeImageAPI.PixelFormat.Format32bppArgb);
-            //unsafe
-            //{
-            //    blitBitmapBox = new PixelBox(0, 0, texelsPerPage, texelsPerPage, OgreDrawingUtility.getOgreFormat(blitBitmap.PixelFormat), blitBitmap.GetScanlinePointer(0).ToPointer());
-            //}
         }
 
         public void Dispose()
         {
-            //blitBitmapBox.Dispose();
-            //blitBitmap.Dispose();
             buffer.Dispose();
             physicalTexture.Dispose();
         }
@@ -128,13 +125,5 @@ namespace Medical
                 return physicalTexture.Value.Format;
             }
         }
-
-        //private void saveBlitBitmap()
-        //{
-        //    using (var stream = System.IO.File.Open(name + "blit.bmp", System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite))
-        //    {
-        //        blitBitmap.Save(stream, FreeImageAPI.FREE_IMAGE_FORMAT.FIF_BMP);
-        //    }
-        //}
     }
 }

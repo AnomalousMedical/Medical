@@ -23,9 +23,21 @@ namespace Medical
             this.sceneViewController.WindowCreated += sceneViewController_WindowCreated;
             this.standaloneController = standaloneController;
 
-            virtualTextureManager = new VirtualTextureManager(4);
+            CompressedTextureSupport textureFormat = OgreInterface.Instance.SelectedTextureFormat;
+            int padding;
+            switch(textureFormat)
+            {
+                case CompressedTextureSupport.DXT:
+                    padding = 4;
+                    break;
+                default:
+                    padding = 1;
+                    break;
+            }
 
-            materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager);
+            virtualTextureManager = new VirtualTextureManager(4, textureFormat, padding);
+
+            materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat);
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
             materialBuilder.InitializationComplete += materialBuilder_InitializationComplete;
         }

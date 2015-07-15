@@ -29,6 +29,7 @@ namespace Medical
         Phase phase = Phase.InitialLoad; //All indirection textures will be created requesting their lowest mip levels, this will force us to load those as quickly as possible
         int texelsPerPage = 128;
         int padding;
+        CompressedTextureSupport textureFormat;
         IntSize2 physicalTextureSize = new IntSize2(4096, 4096);
 
         Dictionary<String, PhysicalTexture> physicalTextures = new Dictionary<string, PhysicalTexture>();
@@ -36,22 +37,15 @@ namespace Medical
         Dictionary<int, IndirectionTexture> indirectionTexturesById = new Dictionary<int, IndirectionTexture>();
         TextureLoader textureLoader;
 
-        public VirtualTextureManager(int numPhysicalTextures)
+        public VirtualTextureManager(int numPhysicalTextures, CompressedTextureSupport textureFormat, int padding)
         {
             if (!OgreResourceGroupManager.getInstance().resourceGroupExists(VirtualTextureManager.ResourceGroup))
             {
                 OgreResourceGroupManager.getInstance().createResourceGroup(VirtualTextureManager.ResourceGroup);
             }
 
-            switch (OgreInterface.Instance.SelectedTextureFormat)
-            {
-                case CompressedTextureSupport.DXT:
-                    padding = 4;
-                    break;
-                default:
-                    padding = 1;
-                    break;
-            }
+            this.padding = padding;
+            this.textureFormat = textureFormat;
 
             feedbackBuffer = new FeedbackBuffer(this, 0);
             textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, numPhysicalTextures);
@@ -74,10 +68,11 @@ namespace Medical
             //Feedback buffer cameras are intended to be destroyed by the classes that create them, this does not provide automatic cleanup
         }
 
-        public PhysicalTexture createPhysicalTexture(String name)
+        public PhysicalTexture createPhysicalTexture(String name, bool isNormalMap)
         {
-            PhysicalTexture pt = new PhysicalTexture(name, physicalTextureSize, this, texelsPerPage);
+            PhysicalTexture pt = new PhysicalTexture(name, physicalTextureSize, this, texelsPerPage, textureFormat, isNormalMap);
             physicalTextures.Add(name, pt);
+            textureLoader.addedPhysicalTexture(pt);
             return pt;
         }
 
@@ -229,21 +224,6 @@ namespace Medical
             {
                 float textelRatio = texelsPerPage + padding * 2;
                 return new Vector2(1.0f / (physicalTextureSize.Width / textelRatio), 1.0f / (physicalTextureSize.Height / textelRatio));
-            }
-        }
-
-        public PixelFormat PhysicalTextureFormat
-        {
-            get
-            {
-                switch (OgreInterface.Instance.SelectedTextureFormat)
-                {
-                    default:
-                    case CompressedTextureSupport.None:
-                        return PixelFormat.PF_A8R8G8B8;
-                    case CompressedTextureSupport.DXT:
-                        return PixelFormat.PF_DXT5;
-                }
             }
         }
 
