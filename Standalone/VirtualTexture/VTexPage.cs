@@ -9,11 +9,6 @@ namespace Medical
 {
     class VTexPage
     {
-        public static int Sort(VTexPage v1, VTexPage v2)
-        {
-            return v2.GetHashCode() - v1.GetHashCode();
-        }
-
         public VTexPage(byte x, byte y, byte mip, byte indirectionTexId)
         {
             this.x = x;

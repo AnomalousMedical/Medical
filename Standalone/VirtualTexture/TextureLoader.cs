@@ -116,53 +116,93 @@ namespace Medical
             removedPages.Add(page);
         }
 
+        Task loadingTask;
+        bool stopLoading = false;
+        List<VTexPage> pagesToLoad = new List<VTexPage>();
+
         public void updatePagesFromRequests()
         {
-            try
+            //If there are no added pages, there is nothing to do with this call, just return
+            if(addedPages.Count == 0)
             {
-                System.Threading.Monitor.Enter(this);
-                if(cancelBackgroundLoad) //We have a lock now, are we still ok to load?
+                return;
+            }
+
+            //Finish any current image loading and wait until that is complete
+            if (loadingTask != null)
+            {
+                stopLoading = true;
+                loadingTask.Wait();
+            }
+
+            //Careful with order, we want to make sure the loadingtask is done before getting a lock again since that function locks for its duration.
+            lock (this)
+            {
+                //We have a lock now, are we still ok to load?
+                if (cancelBackgroundLoad)
                 {
                     throw new CancelThreadException();
                 }
-
-                PerformanceMonitor.start("updatePagesFromRequests remove");
-                //Remove pages
-                foreach (var page in removedPages)
-                {
-                    PTexPage pTexPage;
-                    if (usedPhysicalPages.TryGetValue(page, out pTexPage))
-                    {
-                        physicalPageQueue.Add(pTexPage);
-                        physicalPagePool.Add(page, pTexPage);
-                        usedPhysicalPages.Remove(page);
-                    }
-                    else
-                    {
-                        oversubscribedPages.Remove(page);
-                    }
-                }
-                PerformanceMonitor.stop("updatePagesFromRequests remove");
-
-                PerformanceMonitor.start("updatePagesFromRequests processing pages");
-                var updateList = oversubscribedPages.Concat(addedPages).ToList(); //Bad garbage
-                updateList.Sort(VTexPage.Sort);
-                foreach (var page in updateList)
-                {
-                    if(processPage(page, true))
-                    {
-                        oversubscribedPages.Remove(page);
-                    }
-                }
-                PerformanceMonitor.stop("updatePagesFromRequests processing pages");
             }
-            finally
+
+            //Synchronize results of loading back to main collections
+            //foreach(var page in loadedPages)
+            //{
+            //    oversubscribedPages.Remove(page);
+            //}
+            //foreach(var page in newOversubscribedPages)
+            //{
+            //    oversubscribedPages.Add(page);
+            //}
+
+            //Reset
+            stopLoading = false;
+            //loadedPages.Clear();
+            //newOversubscribedPages.Clear();
+
+            //Remove pages
+            PerformanceMonitor.start("updatePagesFromRequests remove");
+            foreach (var page in removedPages)
             {
-                System.Threading.Monitor.Exit(this);
+                PTexPage pTexPage;
+                if (usedPhysicalPages.TryGetValue(page, out pTexPage))
+                {
+                    physicalPageQueue.Add(pTexPage);
+                    physicalPagePool.Add(page, pTexPage);
+                    usedPhysicalPages.Remove(page);
+                }
+                else
+                {
+                    pagesToLoad.Remove(page);
+                }
             }
+            PerformanceMonitor.stop("updatePagesFromRequests remove");
+
+            //Start loading task again
+            pagesToLoad.AddRange(addedPages.Where(p => !usedPhysicalPages.ContainsKey(p) && !pagesToLoad.Contains(p))); //Add all new pages that are not already used, could potentailly be slow, can second check be replaced by a hash map
+            pagesToLoad.Sort((v1, v2) => v1.GetHashCode() - v2.GetHashCode()); //When sorting can we prioritize pages that have already been loaded?
+            loadingTask = Task.Run(() =>
+                {
+                    lock(this)
+                    {
+                        PerformanceMonitor.start("updatePagesFromRequests processing pages");
+                        for (int i = pagesToLoad.Count - 1; i > -1; --i) //Process backwards, try to avoid as many collection element shifts as possible
+                        {
+                            if (processPage(pagesToLoad[i]))
+                            {
+                                pagesToLoad.RemoveAt(i);
+                            }
+                            if (stopLoading)
+                            {
+                                break;
+                            }
+                        }
+                        PerformanceMonitor.stop("updatePagesFromRequests processing pages");
+                    }
+                });
         }
 
-        private bool processPage(VTexPage page, bool addToOversubscribe)
+        private bool processPage(VTexPage page)
         {
             bool added = false;
             //First see if we still have that page in our virtual texture pool
@@ -224,10 +264,6 @@ namespace Medical
                     added = true;
                 }
             }
-            else if (addToOversubscribe)
-            {
-                oversubscribedPages.Add(page);
-            }
             return added;
         }
 
@@ -264,7 +300,6 @@ namespace Medical
                         directFile = String.Format("{0}_{1}{2}", directFile, indirectionTexture.RealTextureSize.Width >> page.mip, extension);
                         if (VirtualFileSystem.Instance.exists(directFile))
                         {
-                            //Logging.Log.Debug("Loading image {0}", directFile);
                             doLoadImage(textureName, extension, directFile, out image);
                         }
                         else
@@ -274,17 +309,6 @@ namespace Medical
                             if (!textureCache.TryGetValue(fullSizeName, out image))
                             {
                                 doLoadImage(fullSizeName, extension, textureUnit.Value, out image);
-                                //Logging.Log.Debug("Loading image {0}", textureUnit.Value);
-                                //image = new Image();
-                                //using (Stream stream = VirtualFileSystem.Instance.openStream(textureUnit.Value, Engine.Resources.FileMode.Open))
-                                //{
-                                //    if (extension.Length > 0)
-                                //    {
-                                //        extension = extension.Substring(1);
-                                //    }
-                                //    image.load(stream, extension);
-                                //}
-                                //textureCache.Add(fullSizeName, image);
                             }
 
                             //If we aren't mip 0 resize accordingly
