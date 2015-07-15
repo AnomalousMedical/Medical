@@ -30,6 +30,7 @@ namespace Medical
         private bool cancelBackgroundLoad = false;
 
         private List<StagingImage> stagingImages = new List<StagingImage>(4);
+        private List<Task<bool>> copyTostagingImageTasks = new List<Task<bool>>(4);
         private TextureCache textureCache = new TextureCache();
 
         Task loadingTask;
@@ -268,80 +269,42 @@ namespace Medical
         /// <returns></returns>
         private bool loadImages(VTexPage page, PTexPage pTexPage)
         {
-            int i = 0;
+            copyTostagingImageTasks.Clear();
+            int stagingImageIndex = 0;
             bool usedPhysicalPage = false;
             IndirectionTexture indirectionTexture;
             if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out indirectionTexture))
             {
+                //Fire off image loading and blitting tasks
                 foreach (var textureUnit in indirectionTexture.OriginalTextures)
                 {
-                    //Load or grab from cache
-                    String textureName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width >> page.mip);
-                    Image image;
-                    if (!textureCache.TryGetValue(textureName, out image))
-                    {
-                        //Try to direct load smaller version
-                        String file = textureUnit.Value;
-                        String extension = Path.GetExtension(file);
-                        String directFile = textureUnit.Value.Substring(0, file.Length - extension.Length);
-                        directFile = String.Format("{0}_{1}{2}", directFile, indirectionTexture.RealTextureSize.Width >> page.mip, extension);
-                        if (VirtualFileSystem.Instance.exists(directFile))
-                        {
-                            doLoadImage(textureName, extension, directFile, out image);
-                        }
-                        else
-                        {
-                            //Try to get full size image from cache
-                            String fullSizeName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width);
-                            if (!textureCache.TryGetValue(fullSizeName, out image))
-                            {
-                                doLoadImage(fullSizeName, extension, textureUnit.Value, out image);
-                            }
-
-                            //If we aren't mip 0 resize accordingly
-                            if (page.mip != 0)
-                            {
-                                Image original = image;
-                                image = new Image(image.Width >> page.mip, image.Height >> page.mip, original.Depth, original.Format, original.NumFaces, original.NumMipmaps);
-                                using (var src = original.getPixelBox())
-                                {
-                                    using (var dest = image.getPixelBox())
-                                    {
-                                        Image.Scale(src, dest, Image.Filter.FILTER_BILINEAR);
-                                    }
-                                }
-                                textureCache.Add(textureName, image);
-                            }
-                        }
-                    }
-
-                    //Blit
-                    int mipCount = image.NumMipmaps;
-                    if (mipCount == 0) //We always have to take from the largest size
-                    {
-                        IntSize2 largestSupportedPageIndex = indirectionTexture.NumPages;
-                        largestSupportedPageIndex.Width >>= page.mip;
-                        largestSupportedPageIndex.Height >>= page.mip;
-                        using (PixelBox sourceBox = image.getPixelBox(0, 0))
-                        {
-                            if (page.x != 0 && page.y != 0 && page.x + 1 != largestSupportedPageIndex.Width && page.y + 1 != largestSupportedPageIndex.Height)
-                            {
-                                sourceBox.Rect = new IntRect(page.x * textelsPerPage - padding, page.y * textelsPerPage - padding, textelsPerPage + padding2, textelsPerPage + padding2);
-                            }
-                            else
-                            {
-                                sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
-                            }
-                            stagingImages[i].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.Key), padding);
-                            usedPhysicalPage = true; //We finish marking the physical page used below, this part loops multiple times
-                        }
-                    }
-                    ++i;
+                    copyTostagingImageTasks.Add(fireCopyToStaging(page, stagingImageIndex++, indirectionTexture, textureUnit));
                 }
+                //Wait for results
+                Task.WhenAll(copyTostagingImageTasks).Wait();
+                for (int i = 0; i < stagingImageIndex; ++i)
+                {
+                    //copyTostagingImageTasks[i].Wait();
+                    if (copyTostagingImageTasks[i].Result)
+                    {
+                        usedPhysicalPage = true;
+                    }
+                }
+
+                //Single threaded
+                //foreach (var textureUnit in indirectionTexture.OriginalTextures)
+                //{
+                //    if (copyToStaging(page, stagingImageIndex++, indirectionTexture, textureUnit))
+                //    {
+                //        usedPhysicalPage = true;
+                //    }
+                //}
+
+                //Sync back to main thread
                 ThreadManager.invoke(() => //We are safe not to wait on this invoke since we know we will be waiting in processpage
                     {
                         var dest = new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage);
-                        for (int u = 0; u < i; ++u)
+                        for (int u = 0; u < stagingImageIndex; ++u)
                         {
                             stagingImages[u].copyToGpu(dest);
                         }
@@ -350,12 +313,95 @@ namespace Medical
             return usedPhysicalPage;
         }
 
-        private void doLoadImage(String cachedName, String extension, String file, out Image image)
+        private Task<bool> fireCopyToStaging(VTexPage page, int stagingImageIndex, IndirectionTexture indirectionTexture, KeyValuePair<string, string> textureUnit)
+        {
+            return Task.Run(() => copyToStaging(page, stagingImageIndex, indirectionTexture, textureUnit));
+        }
+
+        private bool copyToStaging(VTexPage page, int stagingImageIndex, IndirectionTexture indirectionTexture, KeyValuePair<string, string> textureUnit)
+        {
+            bool usedPhysicalPage = false;
+
+            //Load or grab from cache
+            String textureName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width >> page.mip);
+            using (TextureCacheHandle cacheHandle = getImage(page, indirectionTexture, ref textureUnit, textureName))
+            {
+                //Blit
+                int mipCount = cacheHandle.Image.NumMipmaps;
+                if (mipCount == 0) //We always have to take from the largest size
+                {
+                    IntSize2 largestSupportedPageIndex = indirectionTexture.NumPages;
+                    largestSupportedPageIndex.Width >>= page.mip;
+                    largestSupportedPageIndex.Height >>= page.mip;
+                    using (PixelBox sourceBox = cacheHandle.Image.getPixelBox(0, 0))
+                    {
+                        if (page.x != 0 && page.y != 0 && page.x + 1 != largestSupportedPageIndex.Width && page.y + 1 != largestSupportedPageIndex.Height)
+                        {
+                            sourceBox.Rect = new IntRect(page.x * textelsPerPage - padding, page.y * textelsPerPage - padding, textelsPerPage + padding2, textelsPerPage + padding2);
+                        }
+                        else
+                        {
+                            sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
+                        }
+                        stagingImages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.Key), padding);
+                        usedPhysicalPage = true;
+                    }
+                }
+                return usedPhysicalPage;
+            }
+        }
+
+        private TextureCacheHandle getImage(VTexPage page, IndirectionTexture indirectionTexture, ref KeyValuePair<string, string> textureUnit, String textureName)
+        {
+            TextureCacheHandle cacheHandle;
+            if (!textureCache.TryGetValue(textureName, out cacheHandle))
+            {
+                //Try to direct load smaller version
+                String file = textureUnit.Value;
+                String extension = Path.GetExtension(file);
+                String directFile = textureUnit.Value.Substring(0, file.Length - extension.Length);
+                directFile = String.Format("{0}_{1}{2}", directFile, indirectionTexture.RealTextureSize.Width >> page.mip, extension);
+                if (VirtualFileSystem.Instance.exists(directFile))
+                {
+                    cacheHandle = doLoadImage(textureName, extension, directFile);
+                }
+                else
+                {
+                    //Try to get full size image from cache
+                    String fullSizeName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width);
+                    if (!textureCache.TryGetValue(fullSizeName, out cacheHandle))
+                    {
+                        cacheHandle = doLoadImage(fullSizeName, extension, textureUnit.Value);
+                    }
+
+                    //If we aren't mip 0 resize accordingly
+                    if (page.mip != 0)
+                    {
+                        using (TextureCacheHandle originalHandle = cacheHandle)
+                        {
+                            Image original = originalHandle.Image;
+                            Image image = new Image(original.Width >> page.mip, original.Height >> page.mip, original.Depth, original.Format, original.NumFaces, original.NumMipmaps);
+                            using (var src = original.getPixelBox())
+                            {
+                                using (var dest = image.getPixelBox())
+                                {
+                                    Image.Scale(src, dest, Image.Filter.FILTER_BILINEAR);
+                                }
+                            }
+                            cacheHandle = textureCache.Add(textureName, image);
+                        }
+                    }
+                }
+            }
+            return cacheHandle;
+        }
+
+        private TextureCacheHandle doLoadImage(String cachedName, String extension, String file)
         {
             sw.Reset();
             sw.Start();
-            image = new Image();
-            using (Stream stream = VirtualFileSystem.Instance.openStream(file, Engine.Resources.FileMode.Open))
+            var image = new Image();
+            using (Stream stream = VirtualFileSystem.Instance.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
             {
                 if (extension.Length > 0)
                 {
@@ -363,9 +409,10 @@ namespace Medical
                 }
                 image.load(stream, extension);
             }
-            textureCache.Add(cachedName, image);
+            var handle = textureCache.Add(cachedName, image);
             sw.Stop();
             Logging.Log.Debug("Loaded image {0} in {1} ms", file, sw.ElapsedMilliseconds);
+            return handle;
         }
     }
 }

@@ -7,12 +7,65 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    class TextureCacheHandle : IDisposable
+    {
+        private int numCheckouts = 0;
+        private bool destroyOnNoRef = false;
+        private Image image;
+
+        public TextureCacheHandle(Image image, bool destroyOnNoRef)
+        {
+            this.image = image;
+            this.destroyOnNoRef = destroyOnNoRef;
+        }
+
+        public void Dispose()
+        {
+            --numCheckouts;
+            if(destroyOnNoRef && numCheckouts == 0)
+            {
+                image.Dispose();
+            }
+        }
+
+        public Image Image
+        {
+            get
+            {
+                return image;
+            }
+        }
+
+        public ulong Size
+        {
+            get
+            {
+                return image.Size;
+            }
+        }
+
+        internal void checkout()
+        {
+            ++numCheckouts;
+        }
+
+        internal void destroyIfPossible()
+        {
+            destroyOnNoRef = true;
+            if(numCheckouts == 0)
+            {
+                image.Dispose();
+            }
+        }
+    }
+
     class TextureCache : IDisposable
     {
         private LinkedList<String> lastAccessedOrder = new LinkedList<string>();
-        private Dictionary<String, Image> loadedImages = new Dictionary<string, Image>();
+        private Dictionary<String, TextureCacheHandle> loadedImages = new Dictionary<string, TextureCacheHandle>();
         private UInt64 maxCacheSize = 500 * 1024 * 1024;
         private UInt64 currentCacheSize;
+        private Object syncObject = new object();
 
         public TextureCache()
         {
@@ -23,52 +76,67 @@ namespace Medical
         {
             foreach(var image in loadedImages.Values)
             {
-                image.Dispose();
+                image.destroyIfPossible();
             }
         }
 
         /// <summary>
-        /// Get a texture from the cache, you should finish your work with it before calling
-        /// add again, since it could be destroyed at that time.
+        /// Get a texture from the cache, you need to dispose the TextureCacheHandle that is
+        /// returned from this function.
         /// </summary>
         /// <param name="textureName"></param>
         /// <param name="image"></param>
         /// <returns></returns>
-        internal bool TryGetValue(string textureName, out Image image)
+        internal bool TryGetValue(string textureName, out TextureCacheHandle image)
         {
-            bool ret = loadedImages.TryGetValue(textureName, out image);
-            if(ret)
+            lock (syncObject)
             {
-                lastAccessedOrder.Remove(textureName);
-                lastAccessedOrder.AddFirst(textureName);
+                bool ret = loadedImages.TryGetValue(textureName, out image);
+                if (ret)
+                {
+                    lastAccessedOrder.Remove(textureName);
+                    lastAccessedOrder.AddFirst(textureName);
+                    image.checkout();
+                }
+                return ret;
             }
-            return ret;
         }
 
         /// <summary>
-        /// Add a texture to the cache, be careful if you have outstanding pointers to objects in the
-        /// cache as they could be destroyed during this call.
+        /// Add a texture to the cache, this will return a TextureCacheHandle that you MUST dispose
+        /// when you aren't using it anymore. If 
         /// </summary>
         /// <param name="textureName"></param>
         /// <param name="image"></param>
-        internal void Add(string textureName, Image image)
+        internal TextureCacheHandle Add(string textureName, Image image)
         {
-            UInt64 imageSize = image.Size;
-            if (imageSize < maxCacheSize) //Image itself can fit
+            lock (syncObject)
             {
-                while(currentCacheSize + imageSize > maxCacheSize && lastAccessedOrder.Last != null)
+                TextureCacheHandle handle;
+                UInt64 imageSize = image.Size;
+                if (imageSize < maxCacheSize) //Image itself can fit
                 {
-                    //Drop oldest images until there is enough space
-                    String last = lastAccessedOrder.Last.Value;
-                    lastAccessedOrder.RemoveLast();
-                    var destroyImage = loadedImages[last];
-                    loadedImages.Remove(last);
-                    currentCacheSize -= destroyImage.Size;
-                    destroyImage.Dispose();
+                    while (currentCacheSize + imageSize > maxCacheSize && lastAccessedOrder.Last != null)
+                    {
+                        //Drop oldest images until there is enough space
+                        String last = lastAccessedOrder.Last.Value;
+                        lastAccessedOrder.RemoveLast();
+                        var destroyImage = loadedImages[last];
+                        loadedImages.Remove(last);
+                        currentCacheSize -= destroyImage.Size;
+                        destroyImage.destroyIfPossible();
+                    }
+                    currentCacheSize += image.Size;
+                    handle = new TextureCacheHandle(image, false);
+                    loadedImages.Add(textureName, handle);
+                    lastAccessedOrder.AddFirst(textureName);
                 }
-                currentCacheSize += image.Size;
-                loadedImages.Add(textureName, image);
-                lastAccessedOrder.AddFirst(textureName);
+                else
+                {
+                    handle = new TextureCacheHandle(image, true);
+                }
+                handle.checkout();
+                return handle;
             }
         }
     }
