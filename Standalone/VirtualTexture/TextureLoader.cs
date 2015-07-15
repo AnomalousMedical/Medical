@@ -3,6 +3,7 @@ using Engine.Threads;
 using OgrePlugin;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -144,6 +145,8 @@ namespace Medical
                 PerformanceMonitor.stop("updatePagesFromRequests remove");
 
                 PerformanceMonitor.start("updatePagesFromRequests oversubscribedPages");
+                oversubscribedPages.Sort(VTexPage.Sort);
+
                 for (int i = 0; i < oversubscribedPages.Count; )
                 {
                     var page = oversubscribedPages[i];
@@ -160,7 +163,9 @@ namespace Medical
 
                 PerformanceMonitor.start("updatePagesFromRequests add");
                 //Add Pages
-                foreach (var page in addedPages)
+                var added = addedPages.ToList(); //OMG the garbage
+                added.Sort(VTexPage.Sort);
+                foreach (var page in added)
                 {
                     processPage(page, true);
                 }
@@ -245,6 +250,8 @@ namespace Medical
 
         internal Vector2 PagePaddingOffset { get; private set; }
 
+        Stopwatch sw = new Stopwatch();
+
         /// <summary>
         /// Load the given image. Note that pTexPage is constant for the duration of this function call
         /// </summary>
@@ -272,17 +279,8 @@ namespace Medical
                         directFile = String.Format("{0}_{1}{2}", directFile, indirectionTexture.RealTextureSize.Width >> page.mip, extension);
                         if (VirtualFileSystem.Instance.exists(directFile))
                         {
-                            Logging.Log.Debug("Loading image {0}", directFile);
-                            image = new Image();
-                            using (Stream stream = VirtualFileSystem.Instance.openStream(directFile, Engine.Resources.FileMode.Open))
-                            {
-                                if (extension.Length > 0)
-                                {
-                                    extension = extension.Substring(1);
-                                }
-                                image.load(stream, extension);
-                            }
-                            textureCache.Add(textureName, image);
+                            //Logging.Log.Debug("Loading image {0}", directFile);
+                            doLoadImage(textureName, extension, directFile, out image);
                         }
                         else
                         {
@@ -290,17 +288,18 @@ namespace Medical
                             String fullSizeName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width);
                             if (!textureCache.TryGetValue(fullSizeName, out image))
                             {
-                                Logging.Log.Debug("Loading image {0}", textureUnit.Value);
-                                image = new Image();
-                                using (Stream stream = VirtualFileSystem.Instance.openStream(textureUnit.Value, Engine.Resources.FileMode.Open))
-                                {
-                                    if (extension.Length > 0)
-                                    {
-                                        extension = extension.Substring(1);
-                                    }
-                                    image.load(stream, extension);
-                                }
-                                textureCache.Add(fullSizeName, image);
+                                doLoadImage(fullSizeName, extension, textureUnit.Value, out image);
+                                //Logging.Log.Debug("Loading image {0}", textureUnit.Value);
+                                //image = new Image();
+                                //using (Stream stream = VirtualFileSystem.Instance.openStream(textureUnit.Value, Engine.Resources.FileMode.Open))
+                                //{
+                                //    if (extension.Length > 0)
+                                //    {
+                                //        extension = extension.Substring(1);
+                                //    }
+                                //    image.load(stream, extension);
+                                //}
+                                //textureCache.Add(fullSizeName, image);
                             }
 
                             //If we aren't mip 0 resize accordingly
@@ -353,6 +352,24 @@ namespace Medical
                     });
             }
             return usedPhysicalPage;
+        }
+
+        private void doLoadImage(String cachedName, String extension, String file, out Image image)
+        {
+            sw.Reset();
+            sw.Start();
+            image = new Image();
+            using (Stream stream = VirtualFileSystem.Instance.openStream(file, Engine.Resources.FileMode.Open))
+            {
+                if (extension.Length > 0)
+                {
+                    extension = extension.Substring(1);
+                }
+                image.load(stream, extension);
+            }
+            textureCache.Add(cachedName, image);
+            sw.Stop();
+            Logging.Log.Debug("Loaded image {0} in {1} ms", file, sw.ElapsedMilliseconds);
         }
     }
 }

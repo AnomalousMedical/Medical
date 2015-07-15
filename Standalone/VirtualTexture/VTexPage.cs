@@ -9,13 +9,18 @@ namespace Medical
 {
     class VTexPage
     {
+        public static int Sort(VTexPage v1, VTexPage v2)
+        {
+            return v2.GetHashCode() - v1.GetHashCode();
+        }
+
         public VTexPage(byte x, byte y, byte mip, byte indirectionTexId)
         {
             this.x = x;
             this.y = y;
             this.mip = mip;
             this.indirectionTexId = indirectionTexId;
-            this.hashCode = (int)((uint)(x << 24) + (uint)(y << 16) + (uint)(mip << 8) + (uint)indirectionTexId);
+            this.hashCode = (int)((uint)(mip << 24) + (uint)(indirectionTexId << 16) + (uint)(x << 8) + (uint)y); //This hash code can be computed in any order, 
         }
 
         public readonly byte x;
