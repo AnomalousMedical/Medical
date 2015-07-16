@@ -279,7 +279,7 @@ namespace Medical
         }
 
         //New System
-        public void addOriginalTexture(string textureUnit, string textureName)
+        public void addOriginalTexture(string textureUnit, string textureName, IntSize2 textureSize)
         {
             originalTextureUnits.Add(new OriginalTextureInfo(textureUnit, textureName, 0));
         }

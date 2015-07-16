@@ -364,10 +364,14 @@ namespace Medical
             var texUnit = pass.createTextureUnitState(normalTexture.TextureName);
             pass.createTextureUnitState(diffuseTexture.TextureName);
             IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormatExtension)), out indirectionTexture)) //Slow key
+            String fileName = description.localizePath(description.NormalMap + textureFormatExtension);
+            IntSize2 textureSize = getTextureSize(fileName);
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, textureSize, out indirectionTexture)) //Slow key
             {
-                indirectionTexture.addOriginalTexture("NormalMap", description.localizePath(description.NormalMap + textureFormatExtension));
-                indirectionTexture.addOriginalTexture("Diffuse", description.localizePath(description.DiffuseMap + textureFormatExtension));
+                indirectionTexture.addOriginalTexture("NormalMap", fileName, textureSize);
+
+                fileName = description.localizePath(description.DiffuseMap + textureFormatExtension);
+                indirectionTexture.addOriginalTexture("Diffuse", fileName, getTextureSize(fileName));
             }
             setupIndirectionTexture(pass, indirectionTexture);
             return indirectionTexture;
@@ -379,11 +383,17 @@ namespace Medical
             pass.createTextureUnitState(diffuseTexture.TextureName);
             pass.createTextureUnitState(specularTexture.TextureName);
             IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormatExtension)), out indirectionTexture)) //Slow key
+            String fileName = description.localizePath(description.NormalMap + textureFormatExtension);
+            IntSize2 textureSize = getTextureSize(fileName);
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, textureSize, out indirectionTexture)) //Slow key
             {
-                indirectionTexture.addOriginalTexture("NormalMap", description.localizePath(description.NormalMap + textureFormatExtension));
-                indirectionTexture.addOriginalTexture("Diffuse", description.localizePath(description.DiffuseMap + textureFormatExtension));
-                indirectionTexture.addOriginalTexture("Specular", description.localizePath(description.SpecularMap + textureFormatExtension));
+                indirectionTexture.addOriginalTexture("NormalMap", fileName, textureSize);
+
+                fileName = description.localizePath(description.DiffuseMap + textureFormatExtension);
+                indirectionTexture.addOriginalTexture("Diffuse", fileName, getTextureSize(fileName));
+
+                fileName = description.localizePath(description.SpecularMap + textureFormatExtension);
+                indirectionTexture.addOriginalTexture("Specular", fileName, getTextureSize(fileName));
             }
             setupIndirectionTexture(pass, indirectionTexture);
             return indirectionTexture;
@@ -396,12 +406,20 @@ namespace Medical
             pass.createTextureUnitState(specularTexture.TextureName);
             pass.createTextureUnitState(opacityTexture.TextureName);
             IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormatExtension)), out indirectionTexture)) //Slow key
+            String fileName = description.localizePath(description.NormalMap + textureFormatExtension);
+            IntSize2 textureSize = getTextureSize(fileName);
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, textureSize, out indirectionTexture)) //Slow key
             {
-                indirectionTexture.addOriginalTexture("NormalMap", description.localizePath(description.NormalMap + textureFormatExtension));
-                indirectionTexture.addOriginalTexture("Diffuse", description.localizePath(description.DiffuseMap + textureFormatExtension));
-                indirectionTexture.addOriginalTexture("Specular", description.localizePath(description.SpecularMap + textureFormatExtension));
-                indirectionTexture.addOriginalTexture("Opacity", description.localizePath(description.OpacityMap + textureFormatExtension));
+                indirectionTexture.addOriginalTexture("NormalMap", fileName, textureSize);
+
+                fileName = description.localizePath(description.DiffuseMap + textureFormatExtension);
+                indirectionTexture.addOriginalTexture("Diffuse", fileName, getTextureSize(fileName));
+
+                fileName = description.localizePath(description.SpecularMap + textureFormatExtension);
+                indirectionTexture.addOriginalTexture("Specular", fileName, getTextureSize(fileName));
+
+                fileName = description.localizePath(description.OpacityMap + textureFormatExtension);
+                indirectionTexture.addOriginalTexture("Opacity", fileName, getTextureSize(fileName));
             }
             setupIndirectionTexture(pass, indirectionTexture);
             return indirectionTexture;
@@ -413,11 +431,17 @@ namespace Medical
             pass.createTextureUnitState(diffuseTexture.TextureName);
             pass.createTextureUnitState(opacityTexture.TextureName);
             IndirectionTexture indirectionTexture;
-            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, getTextureSize(description.localizePath(description.NormalMap + textureFormatExtension)), out indirectionTexture)) //Slow key
+            String fileName = description.localizePath(description.NormalMap + textureFormatExtension);
+            IntSize2 textureSize = getTextureSize(fileName);
+            if (virtualTextureManager.createOrRetrieveIndirectionTexture(description.TextureSet, textureSize, out indirectionTexture)) //Slow key
             {
-                indirectionTexture.addOriginalTexture("NormalMap", description.localizePath(description.NormalMap + textureFormatExtension));
-                indirectionTexture.addOriginalTexture("Diffuse", description.localizePath(description.DiffuseMap + textureFormatExtension));
-                indirectionTexture.addOriginalTexture("Opacity", description.localizePath(description.OpacityMap + textureFormatExtension));
+                indirectionTexture.addOriginalTexture("NormalMap", fileName, textureSize);
+
+                fileName = description.localizePath(description.DiffuseMap + textureFormatExtension);
+                indirectionTexture.addOriginalTexture("Diffuse", fileName, getTextureSize(fileName));
+
+                fileName = description.localizePath(description.OpacityMap + textureFormatExtension);
+                indirectionTexture.addOriginalTexture("Opacity", fileName, getTextureSize(fileName));
             }
             setupIndirectionTexture(pass, indirectionTexture);
             return indirectionTexture;
