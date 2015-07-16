@@ -660,6 +660,7 @@
     <Compile Include="Utility\ZipEntryExtensions.cs" />
     <Compile Include="VirtualTexture\FeedbackBuffer.cs" />
     <Compile Include="VirtualTexture\IndirectionTexture.cs" />
+    <Compile Include="VirtualTexture\OriginalTextureInfo.cs" />
     <Compile Include="VirtualTexture\PhysicalTexture.cs" />
     <Compile Include="VirtualTexture\PTexPage.cs" />
     <Compile Include="VirtualTexture\StagingImage.cs" />

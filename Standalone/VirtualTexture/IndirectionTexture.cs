@@ -48,7 +48,7 @@ namespace Medical
         private List<VTexPage> removedPages = new List<VTexPage>();
         private HashSet<VTexPage> addedPages = new HashSet<VTexPage>();
         private bool updateTextureOnApply = false;
-        private Dictionary<String, String> originalTextureUnits;
+        private List<OriginalTextureInfo> originalTextureUnits = new List<OriginalTextureInfo>(4);
 
         public IndirectionTexture(String materialSetKey, IntSize2 realTextureSize, int texelsPerPage, VirtualTextureManager virtualTextureManager)
         {
@@ -254,7 +254,7 @@ namespace Medical
             }
         }
 
-        internal IReadOnlyDictionary<String, String> OriginalTextures
+        internal IEnumerable<OriginalTextureInfo> OriginalTextures
         {
             get
             {
@@ -281,11 +281,7 @@ namespace Medical
         //New System
         public void addOriginalTexture(string textureUnit, string textureName)
         {
-            if(originalTextureUnits == null)
-            {
-                originalTextureUnits = new Dictionary<string, string>();
-            }
-            originalTextureUnits.Add(textureUnit, textureName);
+            originalTextureUnits.Add(new OriginalTextureInfo(textureUnit, textureName, 0));
         }
 
         public void setupFeedbackBufferTechnique(Material material, String vertexShaderHint)

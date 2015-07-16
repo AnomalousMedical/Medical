@@ -319,18 +319,18 @@ namespace Medical
             return usedPhysicalPage;
         }
 
-        private Task<bool> fireCopyToStaging(VTexPage page, int stagingImageIndex, IndirectionTexture indirectionTexture, KeyValuePair<string, string> textureUnit)
+        private Task<bool> fireCopyToStaging(VTexPage page, int stagingImageIndex, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
         {
             return Task.Run(() => copyToStaging(page, stagingImageIndex, indirectionTexture, textureUnit));
         }
 
-        private bool copyToStaging(VTexPage page, int stagingImageIndex, IndirectionTexture indirectionTexture, KeyValuePair<string, string> textureUnit)
+        private bool copyToStaging(VTexPage page, int stagingImageIndex, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
         {
             bool usedPhysicalPage = false;
 
             //Load or grab from cache
-            String textureName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width >> page.mip);
-            using (TextureCacheHandle cacheHandle = getImage(page, indirectionTexture, ref textureUnit, textureName))
+            String textureName = String.Format("{0}_{1}", textureUnit.TextureFileName, indirectionTexture.RealTextureSize.Width >> page.mip);
+            using (TextureCacheHandle cacheHandle = getImage(page, indirectionTexture, textureUnit, textureName))
             {
                 //Blit
                 PixelBox sourceBox = null;
@@ -356,7 +356,7 @@ namespace Medical
                     {
                         sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
                     }
-                    stagingImages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.Key), padding);
+                    stagingImages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.TextureUnit), padding);
                     usedPhysicalPage = true;
                 }
                 finally
@@ -370,15 +370,15 @@ namespace Medical
             }
         }
 
-        private TextureCacheHandle getImage(VTexPage page, IndirectionTexture indirectionTexture, ref KeyValuePair<string, string> textureUnit, String textureName)
+        private TextureCacheHandle getImage(VTexPage page, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit, String textureName)
         {
             TextureCacheHandle cacheHandle;
             if (!textureCache.TryGetValue(textureName, out cacheHandle))
             {
                 //Try to direct load smaller version
-                String file = textureUnit.Value;
+                String file = textureUnit.TextureFileName;
                 String extension = Path.GetExtension(file);
-                String directFile = textureUnit.Value.Substring(0, file.Length - extension.Length);
+                String directFile = textureUnit.TextureFileName.Substring(0, file.Length - extension.Length);
                 directFile = String.Format("{0}_{1}{2}", directFile, indirectionTexture.RealTextureSize.Width >> page.mip, extension);
                 if (VirtualFileSystem.Instance.exists(directFile))
                 {
@@ -387,10 +387,10 @@ namespace Medical
                 else
                 {
                     //Try to get full size image from cache
-                    String fullSizeName = String.Format("{0}_{1}", textureUnit.Value, indirectionTexture.RealTextureSize.Width);
+                    String fullSizeName = String.Format("{0}_{1}", textureUnit.TextureFileName, indirectionTexture.RealTextureSize.Width);
                     if (!textureCache.TryGetValue(fullSizeName, out cacheHandle))
                     {
-                        cacheHandle = doLoadImage(fullSizeName, extension, textureUnit.Value);
+                        cacheHandle = doLoadImage(fullSizeName, extension, textureUnit.TextureFileName);
                     }
 
                     //If we aren't mip 0 resize accordingly
