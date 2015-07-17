@@ -8,7 +8,7 @@ namespace Medical
 {
     class OriginalTextureInfo
     {
-        public OriginalTextureInfo(String textureUnit, String textureFileName, int mipOffset)
+        public OriginalTextureInfo(String textureUnit, String textureFileName, byte mipOffset)
         {
             this.TextureUnit = textureUnit;
             this.TextureFileName = textureFileName;
@@ -19,6 +19,6 @@ namespace Medical
 
         public String TextureFileName { get; private set; }
 
-        public int MipOffset { get; private set; }
+        public byte MipOffset { get; private set; }
     }
 }

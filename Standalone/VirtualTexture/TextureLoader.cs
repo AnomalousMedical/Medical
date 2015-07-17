@@ -328,46 +328,49 @@ namespace Medical
         {
             bool usedPhysicalPage = false;
 
-            //Load or grab from cache
-            String textureName = String.Format("{0}_{1}", textureUnit.TextureFileName, indirectionTexture.RealTextureSize.Width >> page.mip);
-            using (TextureCacheHandle cacheHandle = getImage(page, indirectionTexture, textureUnit, textureName))
+            if (page.mip >= textureUnit.MipOffset)
             {
-                //Blit
-                PixelBox sourceBox = null;
-                try
+                //Load or grab from cache
+                String textureName = String.Format("{0}_{1}", textureUnit.TextureFileName, indirectionTexture.RealTextureSize.Width >> page.mip);
+                using (TextureCacheHandle cacheHandle = getImage(page, indirectionTexture, textureUnit, textureName))
                 {
-                    int mipCount = cacheHandle.Image.NumMipmaps;
-                    if (mipCount == 0) //We always have to take from the largest size
+                    //Blit
+                    PixelBox sourceBox = null;
+                    try
                     {
-                        sourceBox = cacheHandle.Image.getPixelBox(0, 0);
+                        int mipCount = cacheHandle.Image.NumMipmaps;
+                        if (mipCount == 0) //We always have to take from the largest size
+                        {
+                            sourceBox = cacheHandle.Image.getPixelBox(0, 0);
+                        }
+                        else
+                        {
+                            sourceBox = cacheHandle.Image.getPixelBox(0, (uint)(page.mip - textureUnit.MipOffset));
+                        }
+                        IntSize2 largestSupportedPageIndex = indirectionTexture.NumPages;
+                        largestSupportedPageIndex.Width >>= page.mip;
+                        largestSupportedPageIndex.Height >>= page.mip;
+                        if (page.x != 0 && page.y != 0 && page.x + 1 != largestSupportedPageIndex.Width && page.y + 1 != largestSupportedPageIndex.Height)
+                        {
+                            sourceBox.Rect = new IntRect(page.x * textelsPerPage - padding, page.y * textelsPerPage - padding, textelsPerPage + padding2, textelsPerPage + padding2);
+                        }
+                        else
+                        {
+                            sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
+                        }
+                        stagingImages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.TextureUnit), padding);
+                        usedPhysicalPage = true;
                     }
-                    else
+                    finally
                     {
-                        sourceBox = cacheHandle.Image.getPixelBox(0, page.mip);
+                        if (sourceBox != null)
+                        {
+                            sourceBox.Dispose();
+                        }
                     }
-                    IntSize2 largestSupportedPageIndex = indirectionTexture.NumPages;
-                    largestSupportedPageIndex.Width >>= page.mip;
-                    largestSupportedPageIndex.Height >>= page.mip;
-                    if (page.x != 0 && page.y != 0 && page.x + 1 != largestSupportedPageIndex.Width && page.y + 1 != largestSupportedPageIndex.Height)
-                    {
-                        sourceBox.Rect = new IntRect(page.x * textelsPerPage - padding, page.y * textelsPerPage - padding, textelsPerPage + padding2, textelsPerPage + padding2);
-                    }
-                    else
-                    {
-                        sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
-                    }
-                    stagingImages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.TextureUnit), padding);
-                    usedPhysicalPage = true;
                 }
-                finally
-                {
-                    if(sourceBox != null)
-                    {
-                        sourceBox.Dispose();
-                    }
-                }
-                return usedPhysicalPage;
             }
+            return usedPhysicalPage;
         }
 
         private TextureCacheHandle getImage(VTexPage page, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit, String textureName)
