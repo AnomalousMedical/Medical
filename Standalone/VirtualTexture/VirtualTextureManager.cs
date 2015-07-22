@@ -27,18 +27,20 @@ namespace Medical
         int frameCount = 0;
         int updateBufferFrame = 2;
         Phase phase = Phase.InitialLoad; //All indirection textures will be created requesting their lowest mip levels, this will force us to load those as quickly as possible
-        int texelsPerPage = 128;
+        int texelsPerPage;
         int padding;
         CompressedTextureSupport textureFormat;
-        IntSize2 physicalTextureSize = new IntSize2(4096, 4096);
+        IntSize2 physicalTextureSize;
 
         Dictionary<String, PhysicalTexture> physicalTextures = new Dictionary<string, PhysicalTexture>();
         Dictionary<String, IndirectionTexture> indirectionTextures = new Dictionary<string, IndirectionTexture>();
         Dictionary<int, IndirectionTexture> indirectionTexturesById = new Dictionary<int, IndirectionTexture>();
         TextureLoader textureLoader;
 
-        public VirtualTextureManager(int numPhysicalTextures, CompressedTextureSupport textureFormat, int padding)
+        public VirtualTextureManager(int numPhysicalTextures, IntSize2 physicalTextureSize, int texelsPerPage, CompressedTextureSupport textureFormat, int padding)
         {
+            this.physicalTextureSize = physicalTextureSize;
+            this.texelsPerPage = texelsPerPage;
             if (!OgreResourceGroupManager.getInstance().resourceGroupExists(VirtualTextureManager.ResourceGroup))
             {
                 OgreResourceGroupManager.getInstance().createResourceGroup(VirtualTextureManager.ResourceGroup);

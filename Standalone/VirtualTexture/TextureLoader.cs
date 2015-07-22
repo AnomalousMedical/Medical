@@ -370,6 +370,10 @@ namespace Medical
                     }
                 }
             }
+            else
+            {
+                Logging.Log.Warning("Unable to load mip map level {0} for texture {1}", page.mip - textureUnit.MipOffset, textureUnit.TextureFileName);
+            }
             return usedPhysicalPage;
         }
 

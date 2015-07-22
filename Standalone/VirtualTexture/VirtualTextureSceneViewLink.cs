@@ -35,7 +35,7 @@ namespace Medical
                     break;
             }
 
-            virtualTextureManager = new VirtualTextureManager(4, textureFormat, padding);
+            virtualTextureManager = new VirtualTextureManager(4, new IntSize2(4096, 4096), 128, textureFormat, padding);
 
             materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat);
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
