@@ -30,7 +30,7 @@ namespace Medical
         private bool cancelBackgroundLoad = false;
 
         private int stagingImageCount = 0;
-        private StagingImage[] stagingImages;
+        private StagingPhysicalPage[] stagingPhysicalPages;
         private Task<bool>[] copyTostagingImageTasks;
         private TextureCache textureCache;
 
@@ -53,7 +53,7 @@ namespace Medical
             removedPages = new List<VTexPage>(10);
             pagesToLoad = new List<VTexPage>(10);
 
-            stagingImages = new StagingImage[stagingImageCapacity];
+            stagingPhysicalPages = new StagingPhysicalPage[stagingImageCapacity];
             copyTostagingImageTasks = new Task<bool>[stagingImageCapacity];
 
             float scale = (float)textelsPerPage / textelsPerPhysicalPage;
@@ -95,7 +95,7 @@ namespace Medical
             {
                 cancelBackgroundLoad = true;
                 textureCache.Dispose();
-                foreach (var stagingImage in stagingImages)
+                foreach (var stagingImage in stagingPhysicalPages)
                 {
                     stagingImage.Dispose();
                 }
@@ -104,9 +104,9 @@ namespace Medical
 
         public void addedPhysicalTexture(PhysicalTexture physicalTexture)
         {
-            if(stagingImageCount < stagingImages.Length)
+            if(stagingImageCount < stagingPhysicalPages.Length)
             {
-                stagingImages[stagingImageCount++] = new StagingImage(textelsPerPhysicalPage, physicalTexture.TextureFormat);
+                stagingPhysicalPages[stagingImageCount++] = new StagingPhysicalPage(textelsPerPhysicalPage, physicalTexture.TextureFormat);
             }
         }
 
@@ -318,7 +318,7 @@ namespace Medical
                         var dest = new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage);
                         for (int u = 0; u < stagingImageIndex; ++u)
                         {
-                            stagingImages[u].copyToGpu(dest);
+                            stagingPhysicalPages[u].copyToGpu(dest);
                         }
                     });
             }
@@ -364,7 +364,7 @@ namespace Medical
                         {
                             sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
                         }
-                        stagingImages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.TextureUnit), padding);
+                        stagingPhysicalPages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.TextureUnit), padding);
                         usedPhysicalPage = true;
                     }
                     finally

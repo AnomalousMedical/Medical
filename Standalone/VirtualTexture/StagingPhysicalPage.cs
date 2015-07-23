@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class StagingImage : IDisposable
+    class StagingPhysicalPage : IDisposable
     {
         private Image texture;
         private PixelBox pixelBox;
         private PhysicalTexture physicalTexture;
 
-        public StagingImage(int textelsPerPhysicalPage, PixelFormat physicalTextureFormat)
+        public StagingPhysicalPage(int textelsPerPhysicalPage, PixelFormat physicalTextureFormat)
         {
             texture = new Image((uint)textelsPerPhysicalPage, (uint)textelsPerPhysicalPage, 1, physicalTextureFormat, 1, 0);
             pixelBox = texture.getPixelBox();
