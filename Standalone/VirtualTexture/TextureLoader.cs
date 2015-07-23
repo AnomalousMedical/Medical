@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Medical
@@ -114,15 +115,17 @@ namespace Medical
         private bool cancelBackgroundLoad = false;
 
         private int stagingImageCount = 0;
-        private StagingBufferSet[] stagingBufferSets;
+        private List<StagingBufferSet> stagingBufferSets;
         private Task<bool>[] copyTostagingImageTasks;
+        private ManualResetEventSlim stagingBufferWaitEvent = new ManualResetEventSlim(true);
+
         private TextureCache textureCache;
 
         Task loadingTask;
         bool stopLoading = false;
         List<VTexPage> pagesToLoad = new List<VTexPage>();
 
-        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int stagingImageCapacity, UInt64 maxCacheSizeBytes)
+        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int stagingBufferCount, int stagingImageCapacity, UInt64 maxCacheSizeBytes)
         {
             textureCache = new TextureCache(maxCacheSizeBytes);
             this.virtualTextureManager = virtualTextureManager;
@@ -137,10 +140,10 @@ namespace Medical
             removedPages = new List<VTexPage>(10);
             pagesToLoad = new List<VTexPage>(10);
 
-            stagingBufferSets = new StagingBufferSet[1];
-            for (int i = 0; i < stagingBufferSets.Length; ++i)
+            stagingBufferSets = new List<StagingBufferSet>(stagingBufferCount);
+            for (int i = 0; i < stagingBufferCount; ++i)
             {
-                stagingBufferSets[i] = new StagingBufferSet(stagingImageCapacity);
+                stagingBufferSets.Add(new StagingBufferSet(stagingImageCapacity));
             }
             copyTostagingImageTasks = new Task<bool>[stagingImageCapacity];
 
@@ -187,6 +190,7 @@ namespace Medical
                 {
                     stagingBuffer.Dispose();
                 }
+                stagingBufferWaitEvent.Dispose();
             }
         }
 
@@ -276,20 +280,34 @@ namespace Medical
                         PerformanceMonitor.start("updatePagesFromRequests processing pages");
                         for (int i = pagesToLoad.Count - 1; i > -1; --i) //Process backwards, try to avoid as many collection element shifts as possible, this is sorted so the desired read order is reversed in actual memory
                         {
-                            StagingBufferSet stagingBuffers = this.stagingBufferSets[0];
+                            stagingBufferWaitEvent.Wait(); //Make sure we actually can dequeue a staging buffer
+                            StagingBufferSet stagingBuffers;
+                            lock (stagingBufferSets)
+                            {
+                                stagingBuffers = this.stagingBufferSets[0];
+                                stagingBufferSets.RemoveAt(0);
+                                if(stagingBufferSets.Count == 0)
+                                {
+                                    //We have no more staging buffers, force next iteration to wait until the last one has been returned.
+                                    stagingBufferWaitEvent.Reset();
+                                }
+                            }
                             stagingBuffers.reset();
                             if (processPage(pagesToLoad[i], stagingBuffers)) //need to put a real stagingbuffers here
                             {
                                 pagesToLoad.RemoveAt(i);
-                                //Very important to wait here, we don't want to update any buffers multiple times
-                                //Also note that we give up our lock here, which allows this class to be disposed if appropriate
                                 System.Threading.Monitor.Exit(syncObject);
                                 if (stagingBuffers.NumUpdatedTextures > 0)
                                 {
-                                    ThreadManager.invokeAndWait(() =>
+                                    ThreadManager.invoke(() =>
                                     {
                                         stagingBuffers.uploadTexturesToGpu();
+                                        returnStagingBuffer(stagingBuffers);
                                     });
+                                }
+                                else
+                                {
+                                    returnStagingBuffer(stagingBuffers);
                                 }
                                 System.Threading.Monitor.Enter(syncObject);
                                 if (cancelBackgroundLoad) //Reaquired lock, are we still active
@@ -305,6 +323,18 @@ namespace Medical
                         PerformanceMonitor.stop("updatePagesFromRequests processing pages");
                     }
                 });
+        }
+
+        private void returnStagingBuffer(StagingBufferSet stagingBuffers)
+        {
+            lock (stagingBufferSets)
+            {
+                stagingBufferSets.Add(stagingBuffers);
+                if (stagingBufferSets.Count > 0)
+                {
+                    stagingBufferWaitEvent.Set();
+                }
+            }
         }
 
         private bool processPage(VTexPage page, StagingBufferSet stagingBuffers)
