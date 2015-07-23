@@ -15,10 +15,13 @@ namespace Developer.GUI
     {
         ComboBox textureCombo;
         ImageBox textureImage;
+        VirtualTextureManager virtualTextureManager;
 
         public VirtualTextureDebugger(VirtualTextureManager virtualTextureManager)
             : base("Developer.GUI.VirtualTextureDebugger.VirtualTextureDebugger.layout")
         {
+            this.virtualTextureManager = virtualTextureManager;
+
             textureCombo = window.findWidget("TextureCombo") as ComboBox;
             textureCombo.EventComboAccept += textureCombo_EventComboAccept;
             foreach (String textureName in virtualTextureManager.TextureNames)
@@ -30,6 +33,9 @@ namespace Developer.GUI
 
             Button save = window.findWidget("SaveButton") as Button;
             save.MouseButtonClick += save_MouseButtonClick;
+
+            Button reset = window.findWidget("ResetButton") as Button;
+            reset.MouseButtonClick += reset_MouseButtonClick;
         }
 
         void textureCombo_EventComboAccept(Widget source, EventArgs e)
@@ -73,6 +79,11 @@ namespace Developer.GUI
                     }
                 }
             }
+        }
+
+        void reset_MouseButtonClick(Widget source, EventArgs e)
+        {
+            virtualTextureManager.reset();
         }
     }
 }

@@ -88,21 +88,18 @@ namespace Medical
     {
         private LinkedList<String> lastAccessedOrder = new LinkedList<string>();
         private Dictionary<String, TextureCacheHandle> loadedImages = new Dictionary<string, TextureCacheHandle>();
-        private UInt64 maxCacheSize = 500 * 1024 * 1024;
+        private UInt64 maxCacheSize;
         private UInt64 currentCacheSize;
         private Object syncObject = new object();
 
-        public TextureCache()
+        public TextureCache(UInt64 maxCacheSize)
         {
-
+            this.maxCacheSize = maxCacheSize;
         }
 
         public void Dispose()
         {
-            foreach(var image in loadedImages.Values)
-            {
-                image.destroyIfPossible();
-            }
+            clear();
         }
 
         /// <summary>
@@ -163,6 +160,17 @@ namespace Medical
                 handle.checkout();
                 return handle;
             }
+        }
+
+        internal void clear()
+        {
+            foreach (var image in loadedImages.Values)
+            {
+                image.destroyIfPossible();
+            }
+            loadedImages.Clear();
+            lastAccessedOrder.Clear();
+            currentCacheSize = 0;
         }
     }
 }

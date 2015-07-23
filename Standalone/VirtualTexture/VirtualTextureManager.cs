@@ -19,6 +19,7 @@ namespace Medical
             AnalyzeFeedback,
             Waiting,
             InitialLoad,
+            Reset
         }
 
         public const String ResourceGroup = "VirtualTextureGroup";
@@ -50,7 +51,7 @@ namespace Medical
             this.textureFormat = textureFormat;
 
             feedbackBuffer = new FeedbackBuffer(this, 0);
-            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, numPhysicalTextures);
+            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, numPhysicalTextures, 500 * 1024 * 1024);
         }
 
         public void Dispose()
@@ -133,16 +134,28 @@ namespace Medical
                         {
                             textureLoader.beginPageUpdate();
 
-                            PerformanceMonitor.start("Finish Page Update");
                             foreach (var indirectionTex in indirectionTextures.Values)
                             {
                                 indirectionTex.finishPageUpdate();
                             }
-                            PerformanceMonitor.stop("Finish Page Update");
 
-                            PerformanceMonitor.start("Update Texture Loader");
                             textureLoader.updatePagesFromRequests();
-                            PerformanceMonitor.stop("Update Texture Loader");
+
+                            phase = Phase.RenderFeedback;
+                        });
+                        break;
+                    case Phase.Reset:
+                        phase = Phase.Waiting;
+                        ThreadManager.RunInBackground(() =>
+                        {
+                            textureLoader.beginPageUpdate();
+
+                            foreach (var indirectionTex in indirectionTextures.Values)
+                            {
+                                indirectionTex.finishPageUpdate();
+                            }
+                            textureLoader.updatePagesFromRequests();
+                            textureLoader.clearCache();
 
                             phase = Phase.RenderFeedback;
                         });
@@ -150,6 +163,11 @@ namespace Medical
                 }
             }
             frameCount = (frameCount + 1) % updateBufferFrame;
+        }
+
+        public void reset()
+        {
+            phase = Phase.Reset;
         }
 
         public void processMaterialRemoved(Object materialSetKey)

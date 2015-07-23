@@ -32,14 +32,15 @@ namespace Medical
         private int stagingImageCount = 0;
         private StagingImage[] stagingImages;
         private Task<bool>[] copyTostagingImageTasks;
-        private TextureCache textureCache = new TextureCache();
+        private TextureCache textureCache;
 
         Task loadingTask;
         bool stopLoading = false;
         List<VTexPage> pagesToLoad = new List<VTexPage>();
 
-        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int stagingImageCapacity)
+        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int stagingImageCapacity, UInt64 maxCacheSizeBytes)
         {
+            textureCache = new TextureCache(maxCacheSizeBytes);
             this.virtualTextureManager = virtualTextureManager;
             IntSize2 pageTableSize = physicalTextureSize / textelsPerPage;
             this.maxPages = pageTableSize.Width * pageTableSize.Height;
@@ -130,7 +131,7 @@ namespace Medical
         public void updatePagesFromRequests()
         {
             //If there are no added pages, there is nothing to do with this call, just return
-            if(addedPages.Count == 0)
+            if(addedPages.Count == 0 && removedPages.Count == 0)
             {
                 return;
             }
@@ -260,6 +261,11 @@ namespace Medical
                 }
             }
             return added;
+        }
+
+        internal void clearCache()
+        {
+            textureCache.clear();
         }
 
         internal Vector2 PagePaddingScale { get; private set; }

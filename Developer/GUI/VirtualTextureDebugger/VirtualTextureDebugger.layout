@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Window" skin="WindowCSX" position="59 82 474 530" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="59 82 560 530" layer="Overlapped">
         <Property key="Caption" value="Virtual Texture Debugger"/>
         <Widget type="ComboBox" skin="ComboBox" position="2 4 265 30" name="TextureCombo"/>
-        <Widget type="ImageBox" skin="ImageBox" position="1 37 460 460" align="Stretch" name="TextureImage"/>
+        <Widget type="ImageBox" skin="ImageBox" position="1 37 546 460" align="Stretch" name="TextureImage"/>
         <Widget type="Button" skin="Button" position="270 4 126 30" name="SaveButton">
             <Property key="Caption" value="Save"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="401 4 126 30" name="ResetButton">
+            <Property key="Caption" value="Reset"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
