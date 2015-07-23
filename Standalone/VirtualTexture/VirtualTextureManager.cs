@@ -38,7 +38,7 @@ namespace Medical
         Dictionary<int, IndirectionTexture> indirectionTexturesById = new Dictionary<int, IndirectionTexture>();
         TextureLoader textureLoader;
 
-        public VirtualTextureManager(int numPhysicalTextures, IntSize2 physicalTextureSize, int texelsPerPage, CompressedTextureSupport textureFormat, int padding)
+        public VirtualTextureManager(int numPhysicalTextures, IntSize2 physicalTextureSize, int texelsPerPage, CompressedTextureSupport textureFormat, int padding, int stagingBufferCount)
         {
             this.physicalTextureSize = physicalTextureSize;
             this.texelsPerPage = texelsPerPage;
@@ -51,7 +51,7 @@ namespace Medical
             this.textureFormat = textureFormat;
 
             feedbackBuffer = new FeedbackBuffer(this, 0);
-            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, 10, numPhysicalTextures, 500 * 1024 * 1024);
+            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, stagingBufferCount, numPhysicalTextures, 500 * 1024 * 1024);
         }
 
         public void Dispose()
