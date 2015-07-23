@@ -12,6 +12,81 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
+    class StagingBuffers : IDisposable
+    {
+        private StagingPhysicalPage[] stagingPhysicalPages;
+        private StagingIndirectionTexture oldIndirectionTextureStaging;
+        private StagingIndirectionTexture newIndirectionTextureStaging;
+        private bool updateOldIndirectionTexture = false;
+        private bool updateNewIndirectionTexture = false;
+
+        public StagingBuffers(int stagingImageCapacity)
+        {
+            stagingPhysicalPages = new StagingPhysicalPage[stagingImageCapacity];
+            oldIndirectionTextureStaging = new StagingIndirectionTexture(6);
+            newIndirectionTextureStaging = new StagingIndirectionTexture(6);
+        }
+
+        public void Dispose()
+        {
+            foreach (var stagingImage in stagingPhysicalPages)
+            {
+                if (stagingImage != null)
+                {
+                    stagingImage.Dispose();
+                }
+            }
+            oldIndirectionTextureStaging.Dispose();
+            newIndirectionTextureStaging.Dispose();
+        }
+
+        public void addedPhysicalTexture(PhysicalTexture physicalTexture, int index, int textelsPerPhysicalPage)
+        {
+            stagingPhysicalPages[index] = new StagingPhysicalPage(textelsPerPhysicalPage, physicalTexture.TextureFormat);
+        }
+
+        public void setIndirectionTextures(IndirectionTexture oldIndirectionTexture, IndirectionTexture newIndirectionTexture)
+        {
+            updateOldIndirectionTexture = oldIndirectionTexture != null;
+            updateNewIndirectionTexture = oldIndirectionTexture != newIndirectionTexture;
+            if (updateOldIndirectionTexture)
+            {
+                oldIndirectionTextureStaging.setData(oldIndirectionTexture);
+            }
+            if(updateNewIndirectionTexture)
+            {
+                newIndirectionTextureStaging.setData(newIndirectionTexture);
+            }
+        }
+
+        public void uploadIndirectionTexturesToGpu()
+        {
+            for (int u = 0; u < NumUpdatedTextures; ++u)
+            {
+                stagingPhysicalPages[u].copyToGpu(Dest);
+            }
+
+            if(updateOldIndirectionTexture)
+            {
+                oldIndirectionTextureStaging.uploadToGpu();
+            }
+
+            if(updateNewIndirectionTexture)
+            {
+                newIndirectionTextureStaging.uploadToGpu();
+            }
+        }
+
+        internal void setPhysicalPage(int stagingImageIndex, PixelBox sourceBox, PhysicalTexture physicalTexture, int padding)
+        {
+            stagingPhysicalPages[stagingImageIndex].setData(sourceBox, physicalTexture, padding);
+        }
+
+        public IntRect Dest { get; set; }
+
+        public int NumUpdatedTextures { get; set; }
+    }
+
     class TextureLoader : IDisposable
     {
         private HashSet<VTexPage> addedPages;
@@ -30,9 +105,7 @@ namespace Medical
         private bool cancelBackgroundLoad = false;
 
         private int stagingImageCount = 0;
-        private StagingPhysicalPage[] stagingPhysicalPages;
-        private StagingIndirectionTexture oldIndirectionTextureStaging;
-        private StagingIndirectionTexture newIndirectionTextureStaging;
+        private StagingBuffers[] stagingBuffers;
         private Task<bool>[] copyTostagingImageTasks;
         private TextureCache textureCache;
 
@@ -55,9 +128,11 @@ namespace Medical
             removedPages = new List<VTexPage>(10);
             pagesToLoad = new List<VTexPage>(10);
 
-            stagingPhysicalPages = new StagingPhysicalPage[stagingImageCapacity];
-            oldIndirectionTextureStaging = new StagingIndirectionTexture(6);
-            newIndirectionTextureStaging = new StagingIndirectionTexture(6);
+            stagingBuffers = new StagingBuffers[1];
+            for (int i = 0; i < stagingBuffers.Length; ++i)
+            {
+                stagingBuffers[i] = new StagingBuffers(stagingImageCapacity);
+            }
             copyTostagingImageTasks = new Task<bool>[stagingImageCapacity];
 
             float scale = (float)textelsPerPage / textelsPerPhysicalPage;
@@ -99,18 +174,22 @@ namespace Medical
             {
                 cancelBackgroundLoad = true;
                 textureCache.Dispose();
-                foreach (var stagingImage in stagingPhysicalPages)
+                foreach(var stagingBuffer in stagingBuffers)
                 {
-                    stagingImage.Dispose();
+                    stagingBuffer.Dispose();
                 }
             }
         }
 
         public void addedPhysicalTexture(PhysicalTexture physicalTexture)
         {
-            if(stagingImageCount < stagingPhysicalPages.Length)
+            if (stagingImageCount < copyTostagingImageTasks.Length)
             {
-                stagingPhysicalPages[stagingImageCount++] = new StagingPhysicalPage(textelsPerPhysicalPage, physicalTexture.TextureFormat);
+                foreach(var buffer in stagingBuffers)
+                {
+                    buffer.addedPhysicalTexture(physicalTexture, stagingImageCount, textelsPerPhysicalPage);
+                }
+                ++stagingImageCount;
             }
         }
 
@@ -188,7 +267,7 @@ namespace Medical
                         PerformanceMonitor.start("updatePagesFromRequests processing pages");
                         for (int i = pagesToLoad.Count - 1; i > -1; --i) //Process backwards, try to avoid as many collection element shifts as possible
                         {
-                            if (processPage(pagesToLoad[i]))
+                            if (processPage(pagesToLoad[i], stagingBuffers[0])) //need to put a real stagingbuffers here
                             {
                                 pagesToLoad.RemoveAt(i);
                             }
@@ -202,7 +281,7 @@ namespace Medical
                 });
         }
 
-        private bool processPage(VTexPage page)
+        private bool processPage(VTexPage page, StagingBuffers stagingBuffers)
         {
             bool added = false;
             //First see if we still have that page in our virtual texture pool, possible optimization to sort these to the front of the list
@@ -217,18 +296,15 @@ namespace Medical
             else if (physicalPageQueue.Count > 0) //Do we have pages available
             {
                 pTexPage = physicalPageQueue[0]; //The physical page candidate, do not modify before usedPhysicalPages if statement below
-                if (loadImages(page, pTexPage))
+                if (loadImages(page, pTexPage, stagingBuffers))
                 {
                     //Alert old texture of removal if there was one, Do not modify pTexPage above this if block, we need the old data
-                    bool changedOldTexture = false;
+                    IndirectionTexture oldIndirectionTexture = null;
                     if (pTexPage.VirtualTexturePage != null)
                     {
-                        IndirectionTexture oldIndirectionTexture = null;
                         if (virtualTextureManager.getIndirectionTexture(pTexPage.VirtualTexturePage.indirectionTexId, out oldIndirectionTexture))
                         {
                             oldIndirectionTexture.removePhysicalPage(pTexPage);
-                            changedOldTexture = true;
-                            oldIndirectionTextureStaging.setData(oldIndirectionTexture);
                         }
 
                         physicalPagePool.Remove(pTexPage.VirtualTexturePage); //Be sure to remove the page from the pool if it was used previously
@@ -243,27 +319,14 @@ namespace Medical
                     if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out newIndirectionTex))
                     {
                         newIndirectionTex.addPhysicalPage(pTexPage);
-                        newIndirectionTextureStaging.setData(newIndirectionTex);
+                        stagingBuffers.setIndirectionTextures(oldIndirectionTexture, newIndirectionTex);
 
                         //Very important to wait here, we don't want to update any buffers multiple times
                         //Also note that we give up our lock here, which allows this class to be disposed if appropriate
                         System.Threading.Monitor.Exit(this);
                         ThreadManager.invokeAndWait(() => 
                             {
-                                if(changedOldTexture)
-                                {
-                                    oldIndirectionTextureStaging.uploadToGpu();
-                                }
-                                newIndirectionTextureStaging.uploadToGpu();
-                                //Loss of optimization compared to dead code, can fix later
-                                //if(oldIndirectionTexture != null) //If we changed the old texture
-                                //{
-                                //    oldIndirectionTexture.uploadPageChanges();
-                                //}
-                                //if (oldIndirectionTexture != newIndirectionTex) //If the old texture and new texture are not the same
-                                //{
-                                //    newIndirectionTex.uploadPageChanges();
-                                //}
+                                stagingBuffers.uploadIndirectionTexturesToGpu();
                             });
                         System.Threading.Monitor.Enter(this);
                         if(cancelBackgroundLoad) //Reaquired lock, are we still active
@@ -294,7 +357,7 @@ namespace Medical
         /// <param name="page"></param>
         /// <param name="pTexPage"></param>
         /// <returns></returns>
-        private bool loadImages(VTexPage page, PTexPage pTexPage)
+        private bool loadImages(VTexPage page, PTexPage pTexPage, StagingBuffers stagingBuffers)
         {
             int stagingImageIndex = 0;
             bool usedPhysicalPage = false;
@@ -304,7 +367,7 @@ namespace Medical
                 //Fire off image loading and blitting tasks
                 foreach (var textureUnit in indirectionTexture.OriginalTextures)
                 {
-                    copyTostagingImageTasks[stagingImageIndex] = fireCopyToStaging(page, stagingImageIndex, indirectionTexture, textureUnit);
+                    copyTostagingImageTasks[stagingImageIndex] = fireCopyToStaging(page, stagingImageIndex, stagingBuffers, indirectionTexture, textureUnit);
                     ++stagingImageIndex;
                 }
                 //Wait for results
@@ -326,25 +389,19 @@ namespace Medical
                 //    }
                 //}
 
-                //Sync back to main thread
-                ThreadManager.invoke(() => //We are safe not to wait on this invoke since we know we will be waiting in processpage
-                    {
-                        var dest = new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage);
-                        for (int u = 0; u < stagingImageIndex; ++u)
-                        {
-                            stagingPhysicalPages[u].copyToGpu(dest);
-                        }
-                    });
+                //Update staging buffer info
+                stagingBuffers.Dest = new IntRect(pTexPage.x, pTexPage.y, textelsPerPhysicalPage, textelsPerPhysicalPage);
+                stagingBuffers.NumUpdatedTextures = stagingImageIndex;
             }
             return usedPhysicalPage;
         }
 
-        private Task<bool> fireCopyToStaging(VTexPage page, int stagingImageIndex, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
+        private Task<bool> fireCopyToStaging(VTexPage page, int stagingImageIndex, StagingBuffers buffers, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
         {
-            return Task.Run(() => copyToStaging(page, stagingImageIndex, indirectionTexture, textureUnit));
+            return Task.Run(() => copyToStaging(page, stagingImageIndex, buffers, indirectionTexture, textureUnit));
         }
 
-        private bool copyToStaging(VTexPage page, int stagingImageIndex, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
+        private bool copyToStaging(VTexPage page, int stagingImageIndex, StagingBuffers buffers, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
         {
             bool usedPhysicalPage = false;
 
@@ -378,7 +435,7 @@ namespace Medical
                         {
                             sourceBox.Rect = new IntRect(page.x * textelsPerPage, page.y * textelsPerPage, textelsPerPage, textelsPerPage);
                         }
-                        stagingPhysicalPages[stagingImageIndex].setData(sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.TextureUnit), padding);
+                        buffers.setPhysicalPage(stagingImageIndex, sourceBox, virtualTextureManager.getPhysicalTexture(textureUnit.TextureUnit), padding);
                         usedPhysicalPage = true;
                     }
                     finally
