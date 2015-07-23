@@ -45,6 +45,13 @@ namespace Medical
             stagingPhysicalPages[index] = new StagingPhysicalPage(textelsPerPhysicalPage, physicalTexture.TextureFormat);
         }
 
+        public void reset()
+        {
+            NumUpdatedTextures = 0;
+            updateOldIndirectionTexture = false;
+            updateNewIndirectionTexture = false;
+        }
+
         public void setIndirectionTextures(IndirectionTexture oldIndirectionTexture, IndirectionTexture newIndirectionTexture)
         {
             updateOldIndirectionTexture = oldIndirectionTexture != null;
@@ -59,7 +66,7 @@ namespace Medical
             }
         }
 
-        public void uploadIndirectionTexturesToGpu()
+        public void uploadTexturesToGpu()
         {
             for (int u = 0; u < NumUpdatedTextures; ++u)
             {
@@ -265,11 +272,28 @@ namespace Medical
                     lock(this)
                     {
                         PerformanceMonitor.start("updatePagesFromRequests processing pages");
-                        for (int i = pagesToLoad.Count - 1; i > -1; --i) //Process backwards, try to avoid as many collection element shifts as possible
+                        for (int i = pagesToLoad.Count - 1; i > -1; --i) //Process backwards, try to avoid as many collection element shifts as possible, this is sorted so the desired read order is reversed in actual memory
                         {
-                            if (processPage(pagesToLoad[i], stagingBuffers[0])) //need to put a real stagingbuffers here
+                            StagingBuffers stagingBuffers = this.stagingBuffers[0];
+                            stagingBuffers.reset();
+                            if (processPage(pagesToLoad[i], stagingBuffers)) //need to put a real stagingbuffers here
                             {
                                 pagesToLoad.RemoveAt(i);
+                                //Very important to wait here, we don't want to update any buffers multiple times
+                                //Also note that we give up our lock here, which allows this class to be disposed if appropriate
+                                System.Threading.Monitor.Exit(this);
+                                if (stagingBuffers.NumUpdatedTextures > 0)
+                                {
+                                    ThreadManager.invokeAndWait(() =>
+                                    {
+                                        stagingBuffers.uploadTexturesToGpu();
+                                    });
+                                }
+                                System.Threading.Monitor.Enter(this);
+                                if (cancelBackgroundLoad) //Reaquired lock, are we still active
+                                {
+                                    throw new CancelThreadException();
+                                }
                             }
                             if (stopLoading)
                             {
@@ -320,19 +344,6 @@ namespace Medical
                     {
                         newIndirectionTex.addPhysicalPage(pTexPage);
                         stagingBuffers.setIndirectionTextures(oldIndirectionTexture, newIndirectionTex);
-
-                        //Very important to wait here, we don't want to update any buffers multiple times
-                        //Also note that we give up our lock here, which allows this class to be disposed if appropriate
-                        System.Threading.Monitor.Exit(this);
-                        ThreadManager.invokeAndWait(() => 
-                            {
-                                stagingBuffers.uploadIndirectionTexturesToGpu();
-                            });
-                        System.Threading.Monitor.Enter(this);
-                        if(cancelBackgroundLoad) //Reaquired lock, are we still active
-                        {
-                            throw new CancelThreadException();
-                        }
                     }
                     added = true;
                 }
