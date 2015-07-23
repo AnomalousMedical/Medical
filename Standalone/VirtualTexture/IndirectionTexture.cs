@@ -164,18 +164,21 @@ namespace Medical
             addedPages.Clear();
         }
 
-        /// <summary>
-        /// Apply page changes to the texture, this writes to the gpu so it must be called from the render thread.
-        /// </summary>
-        internal void uploadPageChanges()
+        internal void copyToStaging(PixelBox[] destinations)
         {
-            if (updateTextureOnApply)
+            int srcIndex = 0;
+            for (int i = destinations.Length - highestMip; i < destinations.Length; ++i)
             {
-                for (int i = 0; i < highestMip; ++i)
-                {
-                    buffer[i].Value.blitFromMemory(pixelBox[i]); //Need this line
-                }
-                updateTextureOnApply = false;
+                PixelBox.BulkPixelConversion(pixelBox[srcIndex++], destinations[i]);
+            }
+        }
+
+        internal void uploadStagingToGpu(PixelBox[] sources)
+        {
+            int destIndex = 0;
+            for (int i = sources.Length - highestMip; i < sources.Length; ++i)
+            {
+                buffer[destIndex++].Value.blitFromMemory(sources[i]);
             }
         }
 

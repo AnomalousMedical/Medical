@@ -663,6 +663,7 @@
     <Compile Include="VirtualTexture\OriginalTextureInfo.cs" />
     <Compile Include="VirtualTexture\PhysicalTexture.cs" />
     <Compile Include="VirtualTexture\PTexPage.cs" />
+    <Compile Include="VirtualTexture\StagingIndirectionTexture.cs" />
     <Compile Include="VirtualTexture\StagingPhysicalPage.cs" />
     <Compile Include="VirtualTexture\TextureCache.cs" />
     <Compile Include="VirtualTexture\TextureLoader.cs" />

@@ -31,6 +31,8 @@ namespace Medical
 
         private int stagingImageCount = 0;
         private StagingPhysicalPage[] stagingPhysicalPages;
+        private StagingIndirectionTexture oldIndirectionTextureStaging;
+        private StagingIndirectionTexture newIndirectionTextureStaging;
         private Task<bool>[] copyTostagingImageTasks;
         private TextureCache textureCache;
 
@@ -54,6 +56,8 @@ namespace Medical
             pagesToLoad = new List<VTexPage>(10);
 
             stagingPhysicalPages = new StagingPhysicalPage[stagingImageCapacity];
+            oldIndirectionTextureStaging = new StagingIndirectionTexture(6);
+            newIndirectionTextureStaging = new StagingIndirectionTexture(6);
             copyTostagingImageTasks = new Task<bool>[stagingImageCapacity];
 
             float scale = (float)textelsPerPage / textelsPerPhysicalPage;
@@ -201,7 +205,7 @@ namespace Medical
         private bool processPage(VTexPage page)
         {
             bool added = false;
-            //First see if we still have that page in our virtual texture pool
+            //First see if we still have that page in our virtual texture pool, possible optimization to sort these to the front of the list
             PTexPage pTexPage;
             if (physicalPagePool.TryGetValue(page, out pTexPage))
             {
@@ -216,12 +220,15 @@ namespace Medical
                 if (loadImages(page, pTexPage))
                 {
                     //Alert old texture of removal if there was one, Do not modify pTexPage above this if block, we need the old data
-                    IndirectionTexture oldIndirectionTexture = null;
+                    bool changedOldTexture = false;
                     if (pTexPage.VirtualTexturePage != null)
                     {
+                        IndirectionTexture oldIndirectionTexture = null;
                         if (virtualTextureManager.getIndirectionTexture(pTexPage.VirtualTexturePage.indirectionTexId, out oldIndirectionTexture))
                         {
                             oldIndirectionTexture.removePhysicalPage(pTexPage);
+                            changedOldTexture = true;
+                            oldIndirectionTextureStaging.setData(oldIndirectionTexture);
                         }
 
                         physicalPagePool.Remove(pTexPage.VirtualTexturePage); //Be sure to remove the page from the pool if it was used previously
@@ -236,20 +243,27 @@ namespace Medical
                     if (virtualTextureManager.getIndirectionTexture(page.indirectionTexId, out newIndirectionTex))
                     {
                         newIndirectionTex.addPhysicalPage(pTexPage);
+                        newIndirectionTextureStaging.setData(newIndirectionTex);
 
                         //Very important to wait here, we don't want to update any buffers multiple times
                         //Also note that we give up our lock here, which allows this class to be disposed if appropriate
                         System.Threading.Monitor.Exit(this);
                         ThreadManager.invokeAndWait(() => 
                             {
-                                if(oldIndirectionTexture != null) //If we changed the old texture
+                                if(changedOldTexture)
                                 {
-                                    oldIndirectionTexture.uploadPageChanges();
+                                    oldIndirectionTextureStaging.uploadToGpu();
                                 }
-                                if (oldIndirectionTexture != newIndirectionTex) //If the old texture and new texture are not the same
-                                {
-                                    newIndirectionTex.uploadPageChanges();
-                                }
+                                newIndirectionTextureStaging.uploadToGpu();
+                                //Loss of optimization compared to dead code, can fix later
+                                //if(oldIndirectionTexture != null) //If we changed the old texture
+                                //{
+                                //    oldIndirectionTexture.uploadPageChanges();
+                                //}
+                                //if (oldIndirectionTexture != newIndirectionTex) //If the old texture and new texture are not the same
+                                //{
+                                //    newIndirectionTex.uploadPageChanges();
+                                //}
                             });
                         System.Threading.Monitor.Enter(this);
                         if(cancelBackgroundLoad) //Reaquired lock, are we still active
