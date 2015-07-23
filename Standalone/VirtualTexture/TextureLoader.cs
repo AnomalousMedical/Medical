@@ -280,6 +280,15 @@ namespace Medical
                         PerformanceMonitor.start("updatePagesFromRequests processing pages");
                         for (int i = pagesToLoad.Count - 1; i > -1; --i) //Process backwards, try to avoid as many collection element shifts as possible, this is sorted so the desired read order is reversed in actual memory
                         {
+                            if (cancelBackgroundLoad) //Reaquired lock, are we still active
+                            {
+                                throw new CancelThreadException();
+                            }
+                            if (stopLoading)
+                            {
+                                break;
+                            }
+                            System.Threading.Monitor.Exit(syncObject);
                             stagingBufferWaitEvent.Wait(); //Make sure we actually can dequeue a staging buffer
                             StagingBufferSet stagingBuffers;
                             lock (stagingBufferSets)
@@ -292,11 +301,11 @@ namespace Medical
                                     stagingBufferWaitEvent.Reset();
                                 }
                             }
+                            System.Threading.Monitor.Enter(syncObject);
                             stagingBuffers.reset();
-                            if (processPage(pagesToLoad[i], stagingBuffers)) //need to put a real stagingbuffers here
+                            if (processPage(pagesToLoad[i], stagingBuffers))
                             {
                                 pagesToLoad.RemoveAt(i);
-                                System.Threading.Monitor.Exit(syncObject);
                                 if (stagingBuffers.NumUpdatedTextures > 0)
                                 {
                                     ThreadManager.invoke(() =>
@@ -309,15 +318,6 @@ namespace Medical
                                 {
                                     returnStagingBuffer(stagingBuffers);
                                 }
-                                System.Threading.Monitor.Enter(syncObject);
-                                if (cancelBackgroundLoad) //Reaquired lock, are we still active
-                                {
-                                    throw new CancelThreadException();
-                                }
-                            }
-                            if (stopLoading)
-                            {
-                                break;
                             }
                         }
                         PerformanceMonitor.stop("updatePagesFromRequests processing pages");
