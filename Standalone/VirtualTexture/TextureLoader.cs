@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class StagingBuffers : IDisposable
+    class StagingBufferSet : IDisposable
     {
         private StagingPhysicalPage[] stagingPhysicalPages;
         private StagingIndirectionTexture oldIndirectionTextureStaging;
@@ -20,7 +20,7 @@ namespace Medical
         private bool updateOldIndirectionTexture = false;
         private bool updateNewIndirectionTexture = false;
 
-        public StagingBuffers(int stagingImageCapacity)
+        public StagingBufferSet(int stagingImageCapacity)
         {
             stagingPhysicalPages = new StagingPhysicalPage[stagingImageCapacity];
             oldIndirectionTextureStaging = new StagingIndirectionTexture(6);
@@ -96,6 +96,8 @@ namespace Medical
 
     class TextureLoader : IDisposable
     {
+        private Object syncObject = new object();
+
         private HashSet<VTexPage> addedPages;
         private List<VTexPage> removedPages;
 
@@ -112,7 +114,7 @@ namespace Medical
         private bool cancelBackgroundLoad = false;
 
         private int stagingImageCount = 0;
-        private StagingBuffers[] stagingBuffers;
+        private StagingBufferSet[] stagingBufferSets;
         private Task<bool>[] copyTostagingImageTasks;
         private TextureCache textureCache;
 
@@ -135,10 +137,10 @@ namespace Medical
             removedPages = new List<VTexPage>(10);
             pagesToLoad = new List<VTexPage>(10);
 
-            stagingBuffers = new StagingBuffers[1];
-            for (int i = 0; i < stagingBuffers.Length; ++i)
+            stagingBufferSets = new StagingBufferSet[1];
+            for (int i = 0; i < stagingBufferSets.Length; ++i)
             {
-                stagingBuffers[i] = new StagingBuffers(stagingImageCapacity);
+                stagingBufferSets[i] = new StagingBufferSet(stagingImageCapacity);
             }
             copyTostagingImageTasks = new Task<bool>[stagingImageCapacity];
 
@@ -177,11 +179,11 @@ namespace Medical
 
         public void Dispose()
         {
-            lock (this)
+            lock (syncObject)
             {
                 cancelBackgroundLoad = true;
                 textureCache.Dispose();
-                foreach(var stagingBuffer in stagingBuffers)
+                foreach(var stagingBuffer in stagingBufferSets)
                 {
                     stagingBuffer.Dispose();
                 }
@@ -192,7 +194,7 @@ namespace Medical
         {
             if (stagingImageCount < copyTostagingImageTasks.Length)
             {
-                foreach(var buffer in stagingBuffers)
+                foreach(var buffer in stagingBufferSets)
                 {
                     buffer.addedPhysicalTexture(physicalTexture, stagingImageCount, textelsPerPhysicalPage);
                 }
@@ -234,7 +236,7 @@ namespace Medical
             }
 
             //Careful with order, we want to make sure the loadingtask is done before getting a lock again since that function locks for its duration.
-            lock (this)
+            lock (syncObject)
             {
                 //We have a lock now, are we still ok to load?
                 if (cancelBackgroundLoad)
@@ -269,19 +271,19 @@ namespace Medical
             pagesToLoad.Sort((v1, v2) => v1.GetHashCode() - v2.GetHashCode()); //When sorting can we prioritize pages that have already been loaded?
             loadingTask = Task.Run(() =>
                 {
-                    lock(this)
+                    lock (syncObject)
                     {
                         PerformanceMonitor.start("updatePagesFromRequests processing pages");
                         for (int i = pagesToLoad.Count - 1; i > -1; --i) //Process backwards, try to avoid as many collection element shifts as possible, this is sorted so the desired read order is reversed in actual memory
                         {
-                            StagingBuffers stagingBuffers = this.stagingBuffers[0];
+                            StagingBufferSet stagingBuffers = this.stagingBufferSets[0];
                             stagingBuffers.reset();
                             if (processPage(pagesToLoad[i], stagingBuffers)) //need to put a real stagingbuffers here
                             {
                                 pagesToLoad.RemoveAt(i);
                                 //Very important to wait here, we don't want to update any buffers multiple times
                                 //Also note that we give up our lock here, which allows this class to be disposed if appropriate
-                                System.Threading.Monitor.Exit(this);
+                                System.Threading.Monitor.Exit(syncObject);
                                 if (stagingBuffers.NumUpdatedTextures > 0)
                                 {
                                     ThreadManager.invokeAndWait(() =>
@@ -289,7 +291,7 @@ namespace Medical
                                         stagingBuffers.uploadTexturesToGpu();
                                     });
                                 }
-                                System.Threading.Monitor.Enter(this);
+                                System.Threading.Monitor.Enter(syncObject);
                                 if (cancelBackgroundLoad) //Reaquired lock, are we still active
                                 {
                                     throw new CancelThreadException();
@@ -305,7 +307,7 @@ namespace Medical
                 });
         }
 
-        private bool processPage(VTexPage page, StagingBuffers stagingBuffers)
+        private bool processPage(VTexPage page, StagingBufferSet stagingBuffers)
         {
             bool added = false;
             //First see if we still have that page in our virtual texture pool, possible optimization to sort these to the front of the list
@@ -368,7 +370,7 @@ namespace Medical
         /// <param name="page"></param>
         /// <param name="pTexPage"></param>
         /// <returns></returns>
-        private bool loadImages(VTexPage page, PTexPage pTexPage, StagingBuffers stagingBuffers)
+        private bool loadImages(VTexPage page, PTexPage pTexPage, StagingBufferSet stagingBuffers)
         {
             int stagingImageIndex = 0;
             bool usedPhysicalPage = false;
@@ -407,12 +409,12 @@ namespace Medical
             return usedPhysicalPage;
         }
 
-        private Task<bool> fireCopyToStaging(VTexPage page, int stagingImageIndex, StagingBuffers buffers, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
+        private Task<bool> fireCopyToStaging(VTexPage page, int stagingImageIndex, StagingBufferSet buffers, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
         {
             return Task.Run(() => copyToStaging(page, stagingImageIndex, buffers, indirectionTexture, textureUnit));
         }
 
-        private bool copyToStaging(VTexPage page, int stagingImageIndex, StagingBuffers buffers, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
+        private bool copyToStaging(VTexPage page, int stagingImageIndex, StagingBufferSet buffers, IndirectionTexture indirectionTexture, OriginalTextureInfo textureUnit)
         {
             bool usedPhysicalPage = false;
 
