@@ -1,5 +1,6 @@
 ﻿using Anomalous.GuiFramework.Cameras;
 using Engine;
+using Engine.ObjectManagement;
 using FreeImageAPI;
 using OgrePlugin;
 using System;
@@ -23,6 +24,9 @@ namespace Medical
         int id;
 
         Viewport vp;
+        Camera camera;
+        SceneNode node;
+        FeedbackCameraPositioner cameraPositioner;
 
         public FeedbackBuffer(VirtualTextureManager virtualTextureManager, int id)
         {
@@ -33,6 +37,8 @@ namespace Medical
         public void update()
         {
             PerformanceMonitor.start("FeedbackBuffer Render");
+            node.setPosition(cameraPositioner.Translation);
+            camera.lookAt(cameraPositioner.LookAt);
             renderTexture.update();
             PerformanceMonitor.stop("FeedbackBuffer Render");
         }
@@ -88,8 +94,11 @@ namespace Medical
             }
         }
 
-        internal void destroyCamera()
+        internal void destroyCamera(SimScene scene)
         {
+            SimSubScene defaultScene = scene.getDefaultSubScene();
+            OgreSceneManager sceneManager = defaultScene.getSimElementManager<OgreSceneManager>();
+
             renderTexture.destroyViewport(vp);
             vp = null;
             renderTexture.Dispose();
@@ -98,10 +107,18 @@ namespace Medical
             texture.Dispose();
             fullBitmapBox.Dispose();
             fullBitmap.Dispose();
+            node.detachObject(camera);
+            sceneManager.SceneManager.destroyCamera(camera);
+            sceneManager.SceneManager.destroySceneNode(node);
+            cameraPositioner = null;
         }
 
-        internal void createCamera(Camera camera, IntSize2 renderSize)
+        internal void createCamera(SimScene scene, FeedbackCameraPositioner cameraPositioner, IntSize2 renderSize)
         {
+            this.cameraPositioner = cameraPositioner;
+            SimSubScene defaultScene = scene.getDefaultSubScene();
+            OgreSceneManager sceneManager = defaultScene.getSimElementManager<OgreSceneManager>();
+
             texture = TextureManager.getInstance().createManual(TextureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)renderSize.Width, (uint)renderSize.Height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
 
             fullBitmap = new FreeImageBitmap((int)texture.Value.Width, (int)texture.Value.Height, FreeImageAPI.PixelFormat.Format32bppRgb);
@@ -111,6 +128,13 @@ namespace Medical
             pixelBuffer.Value.OptimizeReadback = true;
             renderTexture = pixelBuffer.Value.getRenderTarget();
             renderTexture.setAutoUpdated(false);
+
+            camera = sceneManager.SceneManager.createCamera("VirtualTexturing.FeedbackBufferCamera");
+            camera.setNearClipDistance(1.0f);
+            camera.setAutoAspectRatio(true);
+            camera.setFOVy(new Degree(10.0f));
+            node = sceneManager.SceneManager.createSceneNode("VirtualTexturing.FeedbackBufferCameraNode");
+            node.attachObject(camera);
 
             vp = renderTexture.addViewport(camera);
             vp.setMaterialScheme(Scheme);

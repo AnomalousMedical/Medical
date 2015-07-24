@@ -659,6 +659,7 @@
     <Compile Include="Utility\SharedXmlSaver.cs" />
     <Compile Include="Utility\ZipEntryExtensions.cs" />
     <Compile Include="VirtualTexture\FeedbackBuffer.cs" />
+    <Compile Include="VirtualTexture\FeedbackCameraPositioner.cs" />
     <Compile Include="VirtualTexture\IndirectionTexture.cs" />
     <Compile Include="VirtualTexture\OriginalTextureInfo.cs" />
     <Compile Include="VirtualTexture\PhysicalTexture.cs" />

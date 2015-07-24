@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.ObjectManagement;
 using Engine.Threads;
 using OgrePlugin;
 using System;
@@ -79,14 +80,14 @@ namespace Medical
             return pt;
         }
 
-        public void destroyFeedbackBufferCamera()
+        public void destroyFeedbackBufferCamera(SimScene scene)
         {
-            feedbackBuffer.destroyCamera();
+            feedbackBuffer.destroyCamera(scene);
         }
 
-        public void createFeedbackBufferCamera(Camera camera, IntSize2 size)
+        public void createFeedbackBufferCamera(SimScene scene, FeedbackCameraPositioner cameraPositioner, IntSize2 size)
         {
-            feedbackBuffer.createCamera(camera, size);
+            feedbackBuffer.createCamera(scene, cameraPositioner, size);
         }
 
         public void update()

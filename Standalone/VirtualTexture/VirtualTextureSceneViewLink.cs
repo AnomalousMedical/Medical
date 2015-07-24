@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class VirtualTextureSceneViewLink : IDisposable
+    public class VirtualTextureSceneViewLink : IDisposable, FeedbackCameraPositioner
     {
         private VirtualTextureManager virtualTextureManager;
         private SceneViewController sceneViewController;
@@ -20,8 +20,10 @@ namespace Medical
         public VirtualTextureSceneViewLink(StandaloneController standaloneController)
         {
             this.sceneViewController = standaloneController.SceneViewController;
-            this.sceneViewController.WindowCreated += sceneViewController_WindowCreated;
             this.standaloneController = standaloneController;
+
+            standaloneController.SceneLoaded += standaloneController_SceneLoaded;
+            standaloneController.SceneUnloading += standaloneController_SceneUnloading;
 
             CompressedTextureSupport textureFormat = OgreInterface.Instance.SelectedTextureFormat;
             int padding;
@@ -54,41 +56,10 @@ namespace Medical
         public void Dispose()
         {
             //OgreInterface.Instance.MaterialParser.removeMaterialBuilder(materialBuilder); //Don't do this for now, it makes this leaky but need to figure out order
-            this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
+            standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
+            standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
             IDisposableUtil.DisposeIfNotNull(virtualTextureManager);
-        }
-
-        void sceneViewController_WindowCreated(SceneViewWindow window) //Only works for the first window
-        {
-            window.CameraCreated += window_CameraCreated;
-            window.CameraDestroyed += window_CameraDestroyed;
-            this.sceneViewController.WindowCreated -= sceneViewController_WindowCreated;
-        }
-
-        void window_CameraCreated(SceneViewWindow window)
-        {
-            int width = window.RenderWidth / 10;
-            if (width < 10)
-            {
-                width = 10;
-            }
-            int height = window.RenderHeight / 10;
-            if (height < 10)
-            {
-                height = 10;
-            }
-
-            VirtualTextureManager.createFeedbackBufferCamera(window.Camera, new IntSize2(width, height));
-
-            standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
-        }
-
-        void window_CameraDestroyed(SceneViewWindow window)
-        {
-            VirtualTextureManager.destroyFeedbackBufferCamera();
-
-            standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
         }
 
         void MedicalController_OnLoopUpdate(Engine.Platform.Clock time)
@@ -101,6 +72,34 @@ namespace Medical
             get
             {
                 return virtualTextureManager;
+            }
+        }
+
+        void standaloneController_SceneUnloading(SimScene scene)
+        {
+            standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
+            virtualTextureManager.destroyFeedbackBufferCamera(scene);
+        }
+
+        void standaloneController_SceneLoaded(SimScene scene)
+        {
+            virtualTextureManager.createFeedbackBufferCamera(scene, this, new IntSize2(128, 128));
+            standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
+        }
+
+        public Vector3 Translation
+        {
+            get
+            {
+                return sceneViewController.ActiveWindow.Translation;
+            }
+        }
+
+        public Vector3 LookAt
+        {
+            get
+            {
+                return sceneViewController.ActiveWindow.LookAt;
             }
         }
     }
