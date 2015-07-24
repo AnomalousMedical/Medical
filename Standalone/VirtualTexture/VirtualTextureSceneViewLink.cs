@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    public class VirtualTextureSceneViewLink : IDisposable, FeedbackCameraPositioner
+    public class VirtualTextureSceneViewLink : IDisposable
     {
         private VirtualTextureManager virtualTextureManager;
-        private SceneViewController sceneViewController;
         private StandaloneController standaloneController;
         private UnifiedMaterialBuilder materialBuilder;
+        private CameraLink cameraLink;
 
         public VirtualTextureSceneViewLink(StandaloneController standaloneController)
         {
-            this.sceneViewController = standaloneController.SceneViewController;
             this.standaloneController = standaloneController;
-
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
+
+            cameraLink = new CameraLink(standaloneController.SceneViewController);
 
             CompressedTextureSupport textureFormat = OgreInterface.Instance.SelectedTextureFormat;
             int padding;
@@ -37,7 +37,7 @@ namespace Medical
                     break;
             }
 
-            virtualTextureManager = new VirtualTextureManager(4, new IntSize2(4096, 4096), 128, textureFormat, padding, 10, new IntSize2(128, 128));
+            virtualTextureManager = new VirtualTextureManager(4, new IntSize2(4096, 4096), 128, textureFormat, padding, 10, new IntSize2(256, 128));
 
             materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat);
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
@@ -83,29 +83,39 @@ namespace Medical
 
         void standaloneController_SceneLoaded(SimScene scene)
         {
-            virtualTextureManager.createFeedbackBufferCamera(scene, this);
+            virtualTextureManager.createFeedbackBufferCamera(scene, cameraLink);
             standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
         }
 
-        public Vector3 Translation
+        class CameraLink : FeedbackCameraPositioner
         {
-            get
-            {
-                return sceneViewController.ActiveWindow.Translation;
-            }
-        }
+            SceneViewController sceneViewController;
 
-        public Vector3 LookAt
-        {
-            get
+            public CameraLink(SceneViewController sceneViewController)
             {
-                return sceneViewController.ActiveWindow.LookAt;
+                this.sceneViewController = sceneViewController;
             }
-        }
 
-        public void preRender()
-        {
-            TransparencyController.applyTransparencyState(sceneViewController.ActiveWindow.CurrentTransparencyState);
+            public Vector3 Translation
+            {
+                get
+                {
+                    return sceneViewController.ActiveWindow.Translation;
+                }
+            }
+
+            public Vector3 LookAt
+            {
+                get
+                {
+                    return sceneViewController.ActiveWindow.LookAt;
+                }
+            }
+
+            public void preRender()
+            {
+                TransparencyController.applyTransparencyState(sceneViewController.ActiveWindow.CurrentTransparencyState);
+            }
         }
     }
 }
