@@ -15,7 +15,7 @@ namespace Medical
     /// <param name="scene">The scene for the event.</param>
     delegate void MedicalSceneControllerEvent(MedicalSceneController controller, SimScene scene);
 
-    class MedicalSceneController : IDisposable
+    class MedicalSceneController
     {
         private SimScene currentScene;
         private SimObjectManager currentSimObjects;
@@ -57,7 +57,10 @@ namespace Medical
             sceneResourceManager = pluginManager.createLiveResourceManager("Scene");
         }
 
-        public void Dispose()
+        /// <summary>
+        /// Remove all resources from the scene resource manager. This will force anything loaded to unload.
+        /// </summary>
+        public void clearResources()
         {
             sceneResourceManager.changeResourcesToMatch(pluginManager.createScratchResourceManager());
             sceneResourceManager.initializeResources();

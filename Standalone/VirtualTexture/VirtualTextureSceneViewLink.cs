@@ -55,7 +55,7 @@ namespace Medical
 
         public void Dispose()
         {
-            //OgreInterface.Instance.MaterialParser.removeMaterialBuilder(materialBuilder); //Don't do this for now, it makes this leaky but need to figure out order
+            OgreInterface.Instance.MaterialParser.removeMaterialBuilder(materialBuilder); //Don't do this for now, it makes this leaky but need to figure out order
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;

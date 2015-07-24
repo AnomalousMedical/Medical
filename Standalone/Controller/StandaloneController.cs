@@ -144,6 +144,7 @@ namespace Medical
         {
             saveConfiguration();
             unloadScene();
+            medicalController.unloadSceneAndResources();
             IDisposableUtil.DisposeIfNotNull(virtualTextureSceneViewLink);
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);

@@ -193,8 +193,7 @@ namespace Medical
             }
             if (medicalScene != null)
             {
-                medicalScene.destroyScene();
-                medicalScene.Dispose();
+                unloadSceneAndResources();
             }
             if (eventManager != null)
             {
@@ -287,6 +286,12 @@ namespace Medical
             {
                 Log.Error("Could not load scene {0}.", filename);
             }
+        }
+
+        public void unloadSceneAndResources()
+        {
+            medicalScene.destroyScene();
+            medicalScene.clearResources();
         }
 
         public void addSimObject(SimObjectBase simObject)
