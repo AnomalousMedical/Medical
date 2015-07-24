@@ -82,7 +82,6 @@ namespace Medical
 
         public override void destroyMaterial(MaterialPtr materialPtr)
         {
-            //Logging.Log.Debug("Destroying {0}", materialPtr.Value.Name);
             createdMaterials.Remove(materialPtr.Value);
             MaterialManager.getInstance().remove(materialPtr.Value.Name);
             materialPtr.Dispose();
