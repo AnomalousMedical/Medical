@@ -12,6 +12,8 @@ namespace Medical
 {
     class UnifiedMaterialBuilder : MaterialBuilder
     {
+        private const String GroupName = "UnifiedMaterialBuilder__Reserved";
+
         delegate IndirectionTexture CreateMaterial(Technique technique, MaterialDescription description, bool alpha, bool depthCheck);
 
         private List<Material> createdMaterials = new List<Material>(); //This is only for detection
@@ -60,6 +62,8 @@ namespace Medical
             materialCreationFuncs.Add("NormalMapSpecularMapOpacityMapNoDepth", createNormalMapSpecularMapOpacityMapNoDepth);
             materialCreationFuncs.Add("EyeOuter", createEyeOuterMaterial);
             materialCreationFuncs.Add("ColoredNoTexture", createColoredNoTexture);
+
+            OgreResourceGroupManager.getInstance().createResourceGroup(GroupName);
         }
 
         public bool isCreator(Material material)
@@ -78,6 +82,7 @@ namespace Medical
 
         public override void destroyMaterial(MaterialPtr materialPtr)
         {
+            //Logging.Log.Debug("Destroying {0}", materialPtr.Value.Name);
             createdMaterials.Remove(materialPtr.Value);
             MaterialManager.getInstance().remove(materialPtr.Value.Name);
             materialPtr.Dispose();
@@ -114,7 +119,7 @@ namespace Medical
             {
                 name += "Alpha";
             }
-            MaterialPtr material = MaterialManager.getInstance().create(name, description.Group, false, null);
+            MaterialPtr material = MaterialManager.getInstance().create(name, GroupName, false, null);
             IndirectionTexture indirectionTex = null;
             CreateMaterial createMaterial;
             if(materialCreationFuncs.TryGetValue(description.ShaderName, out createMaterial))
