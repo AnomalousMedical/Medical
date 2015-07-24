@@ -21,11 +21,11 @@ namespace Medical
         private bool updateOldIndirectionTexture = false;
         private bool updateNewIndirectionTexture = false;
 
-        public StagingBufferSet(int stagingImageCapacity)
+        public StagingBufferSet(int stagingImageCapacity, int maxMipCount)
         {
             stagingPhysicalPages = new StagingPhysicalPage[stagingImageCapacity];
-            oldIndirectionTextureStaging = new StagingIndirectionTexture(6);
-            newIndirectionTextureStaging = new StagingIndirectionTexture(6);
+            oldIndirectionTextureStaging = new StagingIndirectionTexture(maxMipCount);
+            newIndirectionTextureStaging = new StagingIndirectionTexture(maxMipCount);
         }
 
         public void Dispose()
@@ -125,7 +125,7 @@ namespace Medical
         bool stopLoading = false;
         List<VTexPage> pagesToLoad = new List<VTexPage>();
 
-        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int stagingBufferCount, int stagingImageCapacity, UInt64 maxCacheSizeBytes)
+        public TextureLoader(VirtualTextureManager virtualTextureManager, IntSize2 physicalTextureSize, int textelsPerPage, int padding, int stagingBufferCount, int stagingImageCapacity, int maxMipCount, UInt64 maxCacheSizeBytes)
         {
             textureCache = new TextureCache(maxCacheSizeBytes);
             this.virtualTextureManager = virtualTextureManager;
@@ -143,7 +143,7 @@ namespace Medical
             stagingBufferSets = new List<StagingBufferSet>(stagingBufferCount);
             for (int i = 0; i < stagingBufferCount; ++i)
             {
-                stagingBufferSets.Add(new StagingBufferSet(stagingImageCapacity));
+                stagingBufferSets.Add(new StagingBufferSet(stagingImageCapacity, maxMipCount));
             }
             copyTostagingImageTasks = new Task<bool>[stagingImageCapacity];
 

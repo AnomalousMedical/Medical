@@ -52,7 +52,7 @@ namespace Medical
             this.textureFormat = textureFormat;
 
             feedbackBuffer = new FeedbackBuffer(this, feedbackBufferSize, 0);
-            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, stagingBufferCount, numPhysicalTextures, 500 * 1024 * 1024);
+            textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, stagingBufferCount, numPhysicalTextures, 6, 500 * 1024 * 1024);
         }
 
         public void Dispose()

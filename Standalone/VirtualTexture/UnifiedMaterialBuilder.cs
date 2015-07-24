@@ -137,6 +137,13 @@ namespace Medical
                 {
                     indirectionTex.setupFeedbackBufferTechnique(material.Value, determineVertexShaderName("", description.NumHardwareBones, description.NumHardwarePoses, false));
                 }
+                else
+                {
+                    //This is probably not the best way to hide things (should use visibility masks) but this allows us control per material instead of per entity
+                    //and has mostly the same cost as rendering these in regular colors anyway without creating garbage data in the feedback buffer.
+                    //In short its a good band-aid for now.
+                    setupHiddenMaterialTechnique(material.Value);
+                }
 
                 material.Value.compile();
                 material.Value.load();
@@ -148,6 +155,17 @@ namespace Medical
             {
                 Logging.Log.Error("Tried to create a material '{0}' with a shader '{1}' that does not exist. Please check your shader name.", description.Name, description.ShaderName);
             }
+        }
+
+        private void setupHiddenMaterialTechnique(Material material)
+        {
+            var technique = material.createTechnique();
+            technique.setName(FeedbackBuffer.Scheme);
+            technique.setSchemeName(FeedbackBuffer.Scheme);
+
+            var pass = technique.createPass();
+            pass.setVertexProgram("HiddenVP");
+            pass.setFragmentProgram("HiddenFP");
         }
 
         //--------------------------------------
