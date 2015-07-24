@@ -37,7 +37,7 @@ namespace Medical
                     break;
             }
 
-            virtualTextureManager = new VirtualTextureManager(4, new IntSize2(4096, 4096), 128, textureFormat, padding, 10);
+            virtualTextureManager = new VirtualTextureManager(4, new IntSize2(4096, 4096), 128, textureFormat, padding, 10, new IntSize2(128, 128));
 
             materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat);
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
@@ -83,7 +83,7 @@ namespace Medical
 
         void standaloneController_SceneLoaded(SimScene scene)
         {
-            virtualTextureManager.createFeedbackBufferCamera(scene, this, new IntSize2(128, 128));
+            virtualTextureManager.createFeedbackBufferCamera(scene, this);
             standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
         }
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class FeedbackBuffer
+    class FeedbackBuffer : IDisposable
     {
         public const String Scheme = "FeedbackBuffer";
 
@@ -23,15 +23,36 @@ namespace Medical
         VirtualTextureManager virtualTextureManager;
         int id;
 
+        //Per scene
         Viewport vp;
         Camera camera;
         SceneNode node;
         FeedbackCameraPositioner cameraPositioner;
 
-        public FeedbackBuffer(VirtualTextureManager virtualTextureManager, int id)
+        public FeedbackBuffer(VirtualTextureManager virtualTextureManager, IntSize2 renderSize, int id)
         {
             this.id = id;
             this.virtualTextureManager = virtualTextureManager;
+
+            texture = TextureManager.getInstance().createManual(TextureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)renderSize.Width, (uint)renderSize.Height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
+
+            fullBitmap = new FreeImageBitmap((int)texture.Value.Width, (int)texture.Value.Height, FreeImageAPI.PixelFormat.Format32bppRgb);
+            fullBitmapBox = fullBitmap.createPixelBox(OgrePlugin.PixelFormat.PF_A8R8G8B8);
+
+            pixelBuffer = texture.Value.getBuffer();
+            pixelBuffer.Value.OptimizeReadback = true;
+            renderTexture = pixelBuffer.Value.getRenderTarget();
+            renderTexture.setAutoUpdated(false);
+        }
+
+        public void Dispose()
+        {
+            renderTexture.Dispose();
+            renderTexture = null;
+            pixelBuffer.Dispose();
+            texture.Dispose();
+            fullBitmapBox.Dispose();
+            fullBitmap.Dispose();
         }
 
         public void update()
@@ -101,33 +122,18 @@ namespace Medical
 
             renderTexture.destroyViewport(vp);
             vp = null;
-            renderTexture.Dispose();
-            renderTexture = null;
-            pixelBuffer.Dispose();
-            texture.Dispose();
-            fullBitmapBox.Dispose();
-            fullBitmap.Dispose();
+            
             node.detachObject(camera);
             sceneManager.SceneManager.destroyCamera(camera);
             sceneManager.SceneManager.destroySceneNode(node);
             cameraPositioner = null;
         }
 
-        internal void createCamera(SimScene scene, FeedbackCameraPositioner cameraPositioner, IntSize2 renderSize)
+        internal void createCamera(SimScene scene, FeedbackCameraPositioner cameraPositioner)
         {
             this.cameraPositioner = cameraPositioner;
             SimSubScene defaultScene = scene.getDefaultSubScene();
             OgreSceneManager sceneManager = defaultScene.getSimElementManager<OgreSceneManager>();
-
-            texture = TextureManager.getInstance().createManual(TextureName, VirtualTextureManager.ResourceGroup, TextureType.TEX_TYPE_2D, (uint)renderSize.Width, (uint)renderSize.Height, 1, 0, OgrePlugin.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, null, false, 0);
-
-            fullBitmap = new FreeImageBitmap((int)texture.Value.Width, (int)texture.Value.Height, FreeImageAPI.PixelFormat.Format32bppRgb);
-            fullBitmapBox = fullBitmap.createPixelBox(OgrePlugin.PixelFormat.PF_A8R8G8B8);
-
-            pixelBuffer = texture.Value.getBuffer();
-            pixelBuffer.Value.OptimizeReadback = true;
-            renderTexture = pixelBuffer.Value.getRenderTarget();
-            renderTexture.setAutoUpdated(false);
 
             camera = sceneManager.SceneManager.createCamera("VirtualTexturing.FeedbackBufferCamera");
             camera.setNearClipDistance(1.0f);

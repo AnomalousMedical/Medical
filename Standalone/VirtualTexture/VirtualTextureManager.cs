@@ -39,7 +39,7 @@ namespace Medical
         Dictionary<int, IndirectionTexture> indirectionTexturesById = new Dictionary<int, IndirectionTexture>();
         TextureLoader textureLoader;
 
-        public VirtualTextureManager(int numPhysicalTextures, IntSize2 physicalTextureSize, int texelsPerPage, CompressedTextureSupport textureFormat, int padding, int stagingBufferCount)
+        public VirtualTextureManager(int numPhysicalTextures, IntSize2 physicalTextureSize, int texelsPerPage, CompressedTextureSupport textureFormat, int padding, int stagingBufferCount, IntSize2 feedbackBufferSize)
         {
             this.physicalTextureSize = physicalTextureSize;
             this.texelsPerPage = texelsPerPage;
@@ -51,13 +51,14 @@ namespace Medical
             this.padding = padding;
             this.textureFormat = textureFormat;
 
-            feedbackBuffer = new FeedbackBuffer(this, 0);
+            feedbackBuffer = new FeedbackBuffer(this, feedbackBufferSize, 0);
             textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, stagingBufferCount, numPhysicalTextures, 500 * 1024 * 1024);
         }
 
         public void Dispose()
         {
             textureLoader.Dispose();
+            feedbackBuffer.Dispose();
 
             foreach (var physicalTexture in physicalTextures.Values)
             {
@@ -68,8 +69,6 @@ namespace Medical
             {
                 indirectionTexture.Dispose();
             }
-
-            //Feedback buffer cameras are intended to be destroyed by the classes that create them, this does not provide automatic cleanup
         }
 
         public PhysicalTexture createPhysicalTexture(String name, PixelFormatUsageHint pixelFormatUsageHint)
@@ -85,9 +84,9 @@ namespace Medical
             feedbackBuffer.destroyCamera(scene);
         }
 
-        public void createFeedbackBufferCamera(SimScene scene, FeedbackCameraPositioner cameraPositioner, IntSize2 size)
+        public void createFeedbackBufferCamera(SimScene scene, FeedbackCameraPositioner cameraPositioner)
         {
-            feedbackBuffer.createCamera(scene, cameraPositioner, size);
+            feedbackBuffer.createCamera(scene, cameraPositioner);
         }
 
         public void update()
