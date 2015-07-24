@@ -270,9 +270,26 @@ namespace Medical
             }
             PerformanceMonitor.stop("updatePagesFromRequests remove");
 
+            //Process pages into loaded and not loaded
+            foreach(var addedPage in addedPages)
+            {
+                PTexPage pTexPage;
+                //Does the virtual texture already contain the page?
+                if (physicalPagePool.TryGetValue(addedPage, out pTexPage))
+                {
+                    //Already contained, just update the queue and pool, this requires no texture updates
+                    physicalPageQueue.Remove(pTexPage);
+                    physicalPagePool.Remove(addedPage);
+                    usedPhysicalPages.Add(addedPage, pTexPage);
+                }
+                else if (!usedPhysicalPages.ContainsKey(addedPage) && !pagesToLoad.Contains(addedPage)) //Add all new pages that are not already used, could potentailly be slow, can second check be replaced by a hash map
+                {
+                    pagesToLoad.Add(addedPage);
+                }
+            }
+
             //Start loading task again
-            pagesToLoad.AddRange(addedPages.Where(p => !usedPhysicalPages.ContainsKey(p) && !pagesToLoad.Contains(p))); //Add all new pages that are not already used, could potentailly be slow, can second check be replaced by a hash map
-            pagesToLoad.Sort((v1, v2) => v1.GetHashCode() - v2.GetHashCode()); //When sorting can we prioritize pages that have already been loaded?
+            pagesToLoad.Sort((v1, v2) => v1.GetHashCode() - v2.GetHashCode());
             loadingTask = Task.Run(() =>
                 {
                     lock (syncObject)
@@ -303,7 +320,7 @@ namespace Medical
                             }
                             System.Threading.Monitor.Enter(syncObject);
                             stagingBuffers.reset();
-                            if (processPage(pagesToLoad[i], stagingBuffers))
+                            if (loadPage(pagesToLoad[i], stagingBuffers))
                             {
                                 pagesToLoad.RemoveAt(i);
                                 if (stagingBuffers.NumUpdatedTextures > 0)
@@ -337,21 +354,13 @@ namespace Medical
             }
         }
 
-        private bool processPage(VTexPage page, StagingBufferSet stagingBuffers)
+        private bool loadPage(VTexPage page, StagingBufferSet stagingBuffers)
         {
             bool added = false;
             //First see if we still have that page in our virtual texture pool, possible optimization to sort these to the front of the list
-            PTexPage pTexPage;
-            if (physicalPagePool.TryGetValue(page, out pTexPage))
+            if (physicalPageQueue.Count > 0) //Do we have pages available
             {
-                physicalPageQueue.Remove(pTexPage);
-                physicalPagePool.Remove(page);
-                usedPhysicalPages.Add(page, pTexPage);
-                added = true;
-            }
-            else if (physicalPageQueue.Count > 0) //Do we have pages available
-            {
-                pTexPage = physicalPageQueue[0]; //The physical page candidate, do not modify before usedPhysicalPages if statement below
+                PTexPage pTexPage = physicalPageQueue[0]; //The physical page candidate, do not modify before usedPhysicalPages if statement below
                 if (loadImages(page, pTexPage, stagingBuffers))
                 {
                     //Alert old texture of removal if there was one, Do not modify pTexPage above this if block, we need the old data
