@@ -102,5 +102,10 @@ namespace Medical
                 return sceneViewController.ActiveWindow.LookAt;
             }
         }
+
+        public void preRender()
+        {
+            TransparencyController.applyTransparencyState(sceneViewController.ActiveWindow.CurrentTransparencyState);
+        }
     }
 }

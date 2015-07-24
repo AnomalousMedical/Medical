@@ -58,6 +58,7 @@ namespace Medical
         public void update()
         {
             PerformanceMonitor.start("FeedbackBuffer Render");
+            cameraPositioner.preRender();
             node.setPosition(cameraPositioner.Translation);
             camera.lookAt(cameraPositioner.LookAt);
             renderTexture.update();
@@ -117,16 +118,19 @@ namespace Medical
 
         internal void destroyCamera(SimScene scene)
         {
-            SimSubScene defaultScene = scene.getDefaultSubScene();
-            OgreSceneManager sceneManager = defaultScene.getSimElementManager<OgreSceneManager>();
+            if (cameraPositioner != null)
+            {
+                SimSubScene defaultScene = scene.getDefaultSubScene();
+                OgreSceneManager sceneManager = defaultScene.getSimElementManager<OgreSceneManager>();
 
-            renderTexture.destroyViewport(vp);
-            vp = null;
-            
-            node.detachObject(camera);
-            sceneManager.SceneManager.destroyCamera(camera);
-            sceneManager.SceneManager.destroySceneNode(node);
-            cameraPositioner = null;
+                renderTexture.destroyViewport(vp);
+                vp = null;
+
+                node.detachObject(camera);
+                sceneManager.SceneManager.destroyCamera(camera);
+                sceneManager.SceneManager.destroySceneNode(node);
+                cameraPositioner = null;
+            }
         }
 
         internal void createCamera(SimScene scene, FeedbackCameraPositioner cameraPositioner)

@@ -12,5 +12,7 @@ namespace Medical
         Vector3 Translation { get; }
 
         Vector3 LookAt { get; }
+
+        void preRender();
     }
 }
