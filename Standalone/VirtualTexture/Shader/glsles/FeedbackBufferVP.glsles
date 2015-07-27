@@ -1,0 +1,18 @@
+precision highp float;
+
+uniform mat4 worldViewProj;	//The world view projection matrix
+
+//Input
+attribute vec4 vertex; //Vertex
+
+//Output
+varying vec2 texCoords;
+
+//----------------------------------
+//Depth Check Vertex Program
+//----------------------------------
+void main(void)
+{
+	gl_Position = worldViewProj * vertex;
+	texCoords = uv0;
+}

@@ -1,4 +1,5 @@
 ﻿using Engine;
+using Engine.Resources;
 using Engine.Utility;
 using OgrePlugin;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class UnifiedMaterialBuilder : MaterialBuilder
+    class UnifiedMaterialBuilder : MaterialBuilder, IDisposable
     {
         private const String GroupName = "UnifiedMaterialBuilder__Reserved";
 
@@ -26,9 +27,11 @@ namespace Medical
         private PhysicalTexture specularTexture;
         private PhysicalTexture opacityTexture;
 
+        private UnifiedShaderFactory shaderFactory;
+
         public event Action<UnifiedMaterialBuilder> InitializationComplete;
 
-        public UnifiedMaterialBuilder(VirtualTextureManager virtualTextureManager, CompressedTextureSupport textureFormat)
+        public UnifiedMaterialBuilder(VirtualTextureManager virtualTextureManager, CompressedTextureSupport textureFormat, ResourceManager liveResourceManager)
         {
             switch(textureFormat)
             {
@@ -41,6 +44,7 @@ namespace Medical
             }
 
             this.virtualTextureManager = virtualTextureManager;
+            shaderFactory = new UnifiedShaderFactory(liveResourceManager);
 
             diffuseTexture = virtualTextureManager.createPhysicalTexture("Diffuse", PixelFormatUsageHint.NotSpecial);
             normalTexture = virtualTextureManager.createPhysicalTexture("NormalMap", PixelFormatUsageHint.NormalMap);
@@ -64,6 +68,11 @@ namespace Medical
             materialCreationFuncs.Add("ColoredNoTexture", createColoredNoTexture);
 
             OgreResourceGroupManager.getInstance().createResourceGroup(GroupName);
+        }
+
+        public void Dispose()
+        {
+            shaderFactory.Dispose();
         }
 
         public bool isCreator(Material material)
@@ -135,7 +144,7 @@ namespace Medical
 
                 if (indirectionTex != null)
                 {
-                    indirectionTex.setupFeedbackBufferTechnique(material.Value, determineVertexShaderName("", description.NumHardwareBones, description.NumHardwarePoses, false));
+                    indirectionTex.setupFeedbackBufferTechnique(material.Value, UnifiedShaderFactory.DetermineVertexShaderName("", description.NumHardwareBones, description.NumHardwarePoses, false));
                 }
                 else
                 {
@@ -180,9 +189,9 @@ namespace Medical
             setupCommonPassAttributes(description, alpha, pass);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(shaderFactory.createVertexProgram("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapGlossMapFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NormalMapSpecularMapGlossMapFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -202,9 +211,9 @@ namespace Medical
             setupCommonPassAttributes(description, alpha, pass);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(shaderFactory.createVertexProgram("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NormalMapSpecularMapFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -223,9 +232,9 @@ namespace Medical
             setupCommonPassAttributes(description, alpha, pass);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(shaderFactory.createVertexProgram("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NormalMapSpecularFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -244,9 +253,9 @@ namespace Medical
             setupCommonPassAttributes(description, alpha, pass);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(shaderFactory.createVertexProgram("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularHighlightFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NormalMapSpecularHighlightFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -269,9 +278,9 @@ namespace Medical
             pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(shaderFactory.createVertexProgram("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularOpacityMapFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NormalMapSpecularOpacityMapFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -294,9 +303,9 @@ namespace Medical
             pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(shaderFactory.createVertexProgram("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapOpacityMapFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NormalMapSpecularMapOpacityMapFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -321,9 +330,9 @@ namespace Medical
             pass.setDepthFunction(CompareFunction.CMPF_LESS_EQUAL);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(determineVertexShaderName("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(shaderFactory.createVertexProgram("UnifiedVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(determineFragmentShaderName("NormalMapSpecularMapOpacityMapFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NormalMapSpecularMapOpacityMapFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -349,7 +358,7 @@ namespace Medical
             //Material specific, setup shaders
             pass.setVertexProgram("EyeOuterVP");
 
-            pass.setFragmentProgram(determineFragmentShaderName("EyeOuterFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("EyeOuterFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -367,9 +376,9 @@ namespace Medical
             setupCommonPassAttributes(description, alpha, pass);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(determineVertexShaderName("NoTexturesVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(UnifiedShaderFactory.DetermineVertexShaderName("NoTexturesVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(determineFragmentShaderName("NoTexturesColoredFP", alpha));
+            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NoTexturesColoredFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);
@@ -512,39 +521,12 @@ namespace Medical
                 pass.setDepthBias(-1.0f);
                 pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
 
-                pass.setVertexProgram(determineVertexShaderName("DepthCheckVP", description.NumHardwareBones, description.NumHardwarePoses, false));
+                pass.setVertexProgram(UnifiedShaderFactory.DetermineVertexShaderName("DepthCheckVP", description.NumHardwareBones, description.NumHardwarePoses, false));
                 pass.setFragmentProgram("HiddenFP");
 
                 pass = technique.createPass(); //Get another pass
             }
             return pass;
-        }
-
-        private static String determineVertexShaderName(String baseName, int numHardwareBones, int numHardwarePoses, bool parity)
-        {
-            StringBuilder programName = new StringBuilder(baseName);
-            if (numHardwareBones > 0)
-            {
-                programName.AppendFormat("HardwareSkin{0}BonePerVertex", numHardwareBones);
-            }
-            if (numHardwarePoses > 0)
-            {
-                programName.AppendFormat("{0}Pose", numHardwarePoses);
-            }
-            if (parity)
-            {
-                programName.AppendFormat("Parity");
-            }
-            return programName.ToString();
-        }
-
-        private static String determineFragmentShaderName(String baseName, bool alpha)
-        {
-            if (alpha)
-            {
-                baseName += "Alpha";
-            }
-            return baseName;
         }
 
         private static void setupIndirectionTexture(Pass pass, IndirectionTexture indirectionTexture)

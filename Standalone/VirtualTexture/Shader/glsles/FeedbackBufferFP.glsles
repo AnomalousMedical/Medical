@@ -1,0 +1,13 @@
+uniform vec4 diffuseColor;
+
+void main()
+{
+	gl_FragColor.rg = input.texCoords.xy;
+
+	float mipLevel = texMipLevel(input.texCoords.xy, virtTexSize) + mipSampleBias;
+	mipLevel = clamp(mipLevel, 0.0, 15.0); //Could clamp this smaller, remember a higher mip index is a smaller actual texture (full size is 0)
+	gl_FragColor.b = mipLevel / 255.0;
+
+	gl_FragColor.a = spaceId / 255.0;
+	return result;
+}

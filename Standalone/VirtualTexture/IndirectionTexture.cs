@@ -305,7 +305,7 @@ namespace Medical
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 gpuParams.Value.setNamedConstant("virtTexSize", new Vector2(realTextureSize.Width, realTextureSize.Height));
-                gpuParams.Value.setNamedConstant("mipSampleBias", -3.0f);
+                gpuParams.Value.setNamedConstant("mipSampleBias", virtualTextureManager.MipSampleBias);
                 gpuParams.Value.setNamedConstant("spaceId", (float)id);
             }
         }

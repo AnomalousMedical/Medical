@@ -39,7 +39,7 @@ namespace Medical
 
             virtualTextureManager = new VirtualTextureManager(4, new IntSize2(4096, 4096), 128, textureFormat, padding, 10, new IntSize2(256, 128));
 
-            materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat);
+            materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat, standaloneController.MedicalController.PluginManager.createLiveResourceManager("UnifiedShaders"));
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
             materialBuilder.InitializationComplete += materialBuilder_InitializationComplete;
         }
@@ -60,6 +60,7 @@ namespace Medical
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             standaloneController.MedicalController.OnLoopUpdate -= MedicalController_OnLoopUpdate;
             IDisposableUtil.DisposeIfNotNull(virtualTextureManager);
+            materialBuilder.Dispose();
         }
 
         void MedicalController_OnLoopUpdate(Engine.Platform.Clock time)

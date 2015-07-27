@@ -53,6 +53,8 @@ namespace Medical
 
             feedbackBuffer = new FeedbackBuffer(this, feedbackBufferSize, 0);
             textureLoader = new TextureLoader(this, physicalTextureSize, texelsPerPage, padding, stagingBufferCount, numPhysicalTextures, 6, 500 * 1024 * 1024);
+
+            MipSampleBias = -3.0f;
         }
 
         public void Dispose()
@@ -237,6 +239,8 @@ namespace Medical
                 return (int)(Math.Log(texelsPerPage, 2.0) / 6.0f);
             }
         }
+
+        public float MipSampleBias { get; set; }
 
         internal Vector2 PhysicalSizeRecrip
         {
