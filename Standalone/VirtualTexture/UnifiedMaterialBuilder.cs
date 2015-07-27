@@ -358,9 +358,9 @@ namespace Medical
             pass.setDepthWriteEnabled(false);
 
             //Material specific, setup shaders
-            pass.setVertexProgram("EyeOuterVP");
+            pass.setVertexProgram(shaderFactory.createVertexProgram("EyeOuterVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
-            pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("EyeOuterFP", alpha));
+            pass.setFragmentProgram(shaderFactory.createFragmentProgram("EyeOuterFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 virtualTextureManager.setupVirtualTextureFragmentParams(gpuParams);

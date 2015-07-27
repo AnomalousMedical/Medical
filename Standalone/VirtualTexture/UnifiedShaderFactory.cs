@@ -10,7 +10,10 @@ namespace Medical
 {
     class UnifiedShaderFactory : IDisposable
     {
-        private const String ShaderBaseName = "Medical.VirtualTexture.Shader.D3D11.";
+        private const String ShaderPathBase = "Medical.VirtualTexture";
+        private const String UnifiedShaderBase = ShaderPathBase + ".Unified.D3D11.";
+        private const String EyeShaderBase = ShaderPathBase + ".Eye.D3D11.";
+        private const String ColoredUntexturedShaderBase = ShaderPathBase + ".ColoredUntextured.D3D11.";
 
         private Dictionary<String, Action<String, int, int, bool>> vertexBuilderFuncs = new Dictionary<string, Action<String, int, int, bool>>();
         private Dictionary<String, Action<String, bool>> fragmentBuilderFuncs = new Dictionary<string, Action<String, bool>>();
@@ -30,6 +33,7 @@ namespace Medical
             vertexBuilderFuncs.Add("NoTexturesVP", setupNoTexturesVP);
             vertexBuilderFuncs.Add("FeedbackBufferVP", setupFeedbackBufferVP);
             vertexBuilderFuncs.Add("HiddenVP", setupHiddenVP);
+            vertexBuilderFuncs.Add("EyeOuterVP", setupEyeOuterVP);
 
             fragmentBuilderFuncs.Add("FeedbackBufferFP", createFeedbackBufferFP);
             fragmentBuilderFuncs.Add("NormalMapSpecularFP", createNormalMapSpecularFP);
@@ -41,6 +45,7 @@ namespace Medical
             fragmentBuilderFuncs.Add("NormalMapSpecularMapOpacityMapGlossMapFP", createNormalMapSpecularMapOpacityMapGlossMapFP);
             fragmentBuilderFuncs.Add("HiddenFP", createHiddenFP);
             fragmentBuilderFuncs.Add("NoTexturesColoredFP", createNoTexturesColoredFP);
+            fragmentBuilderFuncs.Add("EyeOuterFP", createEyeOuterFP);
         }
 
         public void Dispose()
@@ -76,7 +81,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedVS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedVS.hlsl";
             if (numHardwareBones > 0 || numHardwarePoses > 0)
             {
                 program.Value.setParam("entry_point", "mainVPHardwareSkin");
@@ -124,7 +129,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedVS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedVS.hlsl";
             if (numHardwareBones > 0 || numHardwarePoses > 0)
             {
                 program.Value.setParam("entry_point", "NoTexturesVPHardwareSkin");
@@ -174,7 +179,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "DepthCheck.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "DepthCheck.hlsl";
             if (numHardwareBones > 0 || numHardwarePoses > 0)
             {
                 program.Value.setParam("entry_point", "depthCheckSkinPose");
@@ -217,7 +222,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "Hidden.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "Hidden.hlsl";
             program.Value.setParam("entry_point", "hiddenVP");
             program.Value.setParam("target", "vs_4_0");
             program.Value.setParam("column_major_matrices", "false");
@@ -234,7 +239,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "FeedbackBuffer.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "FeedbackBuffer.hlsl";
             if (numHardwareBones > 0 || numHardwarePoses > 0)
             {
                 program.Value.setParam("entry_point", "FeedbackBufferVPHardwareSkinPose");
@@ -270,6 +275,30 @@ namespace Medical
             }
         }
 
+        private void setupEyeOuterVP(String name, int numHardwareBones, int numHardwarePoses, bool parity)
+        {
+            numHardwareBones = 0;
+            numHardwarePoses = 0;
+            parity = false;
+
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = EyeShaderBase + "Eye.hlsl";
+            program.Value.setParam("entry_point", "mainVP");
+
+            program.Value.setParam("target", "vs_4_0");
+            program.Value.load();
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("worldViewProj", AutoConstantType.ACT_WORLDVIEWPROJ_MATRIX);
+                defaultParams.Value.setNamedAutoConstant("eyePosition", AutoConstantType.ACT_CAMERA_POSITION_OBJECT_SPACE);
+                defaultParams.Value.setNamedAutoConstant("lightAttenuation", AutoConstantType.ACT_LIGHT_ATTENUATION, 0);
+                defaultParams.Value.setNamedAutoConstant("lightPosition", AutoConstantType.ACT_LIGHT_POSITION_OBJECT_SPACE, 0);
+            }
+        }
+
         #endregion Vertex Programs
 
         #region Fragment Programs
@@ -297,7 +326,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedFS.hlsl";
             program.Value.setParam("entry_point", "normalMapSpecularFP");
             program.Value.setParam("target", "ps_4_0");
             program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
@@ -320,7 +349,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedFS.hlsl";
             program.Value.setParam("entry_point", "normalMapSpecularHighlightFP");
             program.Value.setParam("target", "ps_4_0");
             program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
@@ -344,7 +373,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedFS.hlsl";
             program.Value.setParam("entry_point", "normalMapSpecularMapFP");
             program.Value.setParam("target", "ps_4_0");
             program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
@@ -366,7 +395,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedFS.hlsl";
             program.Value.setParam("entry_point", "normalMapSpecularOpacityMapFP");
             program.Value.setParam("target", "ps_4_0");
             program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
@@ -389,7 +418,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedFS.hlsl";
             program.Value.setParam("entry_point", "normalMapSpecularMapGlossMapFP");
             program.Value.setParam("target", "ps_4_0");
             program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
@@ -412,7 +441,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedFS.hlsl";
             program.Value.setParam("entry_point", "normalMapSpecularMapOpacityMapFP");
             program.Value.setParam("target", "ps_4_0");
             program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
@@ -434,7 +463,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedFS.hlsl";
             program.Value.setParam("entry_point", "normalMapSpecularMapOpacityMapGlossMapFP");
             program.Value.setParam("target", "ps_4_0");
             program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
@@ -457,7 +486,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "UnifiedFS.hlsl";
             program.Value.setParam("entry_point", "NoTexturesColoredFP");
             program.Value.setParam("target", "ps_4_0");
             program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
@@ -483,7 +512,7 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "FeedbackBuffer.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "FeedbackBuffer.hlsl";
             program.Value.setParam("entry_point", "FeedbackBufferFP");
             program.Value.setParam("target", "ps_4_0");
         }
@@ -495,9 +524,30 @@ namespace Medical
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
             createdPrograms.Add(name, program);
 
-            program.Value.SourceFile = ShaderBaseName + "Hidden.hlsl";
+            program.Value.SourceFile = UnifiedShaderBase + "Hidden.hlsl";
             program.Value.setParam("entry_point", "hiddenFP");
             program.Value.setParam("target", "ps_4_0");
+        }
+
+        public void createEyeOuterFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = EyeShaderBase + "Eye.hlsl";
+            program.Value.setParam("entry_point", "eyeOuterFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("specularColor", AutoConstantType.ACT_SURFACE_SPECULAR_COLOUR);
+                //if (alpha)
+                //{
+                //    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                //}
+            }
         }
 
         #endregion Fragment Programs
@@ -520,7 +570,7 @@ namespace Medical
             return programName.ToString();
         }
 
-        public static String DetermineFragmentShaderName(String baseName, bool alpha)
+        private static String DetermineFragmentShaderName(String baseName, bool alpha)
         {
             if (alpha)
             {
