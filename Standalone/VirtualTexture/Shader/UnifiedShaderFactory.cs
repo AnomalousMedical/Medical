@@ -12,8 +12,9 @@ namespace Medical
     {
         private const String ShaderBaseName = "Medical.VirtualTexture.Shader.D3D11.";
 
-        private Dictionary<String, Action<String, int, int, bool>> shaderBuilderFuncs = new Dictionary<string, Action<String, int, int, bool>>();
-        private Dictionary<String, HighLevelGpuProgramSharedPtr> createdVertexPrograms = new Dictionary<string, HighLevelGpuProgramSharedPtr>();
+        private Dictionary<String, Action<String, int, int, bool>> vertexBuilderFuncs = new Dictionary<string, Action<String, int, int, bool>>();
+        private Dictionary<String, Action<String, bool>> fragmentBuilderFuncs = new Dictionary<string, Action<String, bool>>();
+        private Dictionary<String, HighLevelGpuProgramSharedPtr> createdPrograms = new Dictionary<string, HighLevelGpuProgramSharedPtr>();
         private ResourceGroup shaderResourceGroup;
 
         public UnifiedShaderFactory(ResourceManager liveResourceManager)
@@ -24,30 +25,37 @@ namespace Medical
             
             liveResourceManager.initializeResources();
 
-            shaderBuilderFuncs.Add("UnifiedVP", setupUnifiedVP);
+            vertexBuilderFuncs.Add("UnifiedVP", setupUnifiedVP);
+            vertexBuilderFuncs.Add("DepthCheckVP", setupDepthCheckVP);
+            vertexBuilderFuncs.Add("NoTexturesVP", setupNoTexturesVP);
+            vertexBuilderFuncs.Add("FeedbackBufferVP", setupFeedbackBufferVP);
+
+            fragmentBuilderFuncs.Add("FeedbackBufferFP", createFeedbackBufferFP);
         }
 
         public void Dispose()
         {
-            foreach(var program in createdVertexPrograms.Values)
+            foreach(var program in createdPrograms.Values)
             {
                 program.Dispose();
             }
         }
 
+        #region Vertex Programs
+
         public String createVertexProgram(String baseName, int numHardwareBones, int numHardwarePoses, bool parity)
         {
             String shaderName = DetermineVertexShaderName(baseName, numHardwareBones, numHardwarePoses, parity);
-            if(!createdVertexPrograms.ContainsKey(shaderName))
+            if(!createdPrograms.ContainsKey(shaderName))
             {
                 Action<String, int, int, bool> buildFunc;
-                if(shaderBuilderFuncs.TryGetValue(baseName, out buildFunc))
+                if(vertexBuilderFuncs.TryGetValue(baseName, out buildFunc))
                 {
                     buildFunc(shaderName, numHardwareBones, numHardwarePoses, parity);
                 }
                 else
                 {
-                    Logging.Log.Error("Cannot build shader '{0}' no setup function defined.", shaderName);
+                    Logging.Log.Error("Cannot build vertex shader '{0}' no setup function defined.", shaderName);
                 }
             }
             return shaderName;
@@ -56,7 +64,7 @@ namespace Medical
         private void setupUnifiedVP(String name, int numHardwareBones, int numHardwarePoses, bool parity)
         {
             var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
-            createdVertexPrograms.Add(name, program);
+            createdPrograms.Add(name, program);
 
             program.Value.SourceFile = ShaderBaseName + "UnifiedVS.hlsl";
             if (numHardwareBones > 0 || numHardwarePoses > 0)
@@ -100,6 +108,176 @@ namespace Medical
                 }
             }
         }
+
+        private void setupNoTexturesVP(String name, int numHardwareBones, int numHardwarePoses, bool parity)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedVS.hlsl";
+            if (numHardwareBones > 0 || numHardwarePoses > 0)
+            {
+                program.Value.setParam("entry_point", "NoTexturesVPHardwareSkin");
+            }
+            else
+            {
+                program.Value.setParam("entry_point", "NoTexturesVP");
+            }
+
+            program.Value.setParam("target", "vs_4_0");
+            program.Value.setParam("column_major_matrices", "false");
+            program.Value.SkeletalAnimationIncluded = numHardwareBones > 0;
+            program.Value.NumberOfPoses = (ushort)numHardwarePoses;
+            program.Value.setParam("preprocessor_defines", DeterminePreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
+            program.Value.load();
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                if (numHardwareBones > 0 || numHardwarePoses > 0)
+                {
+                    defaultParams.Value.setNamedAutoConstant("worldEyePosition", AutoConstantType.ACT_CAMERA_POSITION);
+                    defaultParams.Value.setNamedAutoConstant("lightAttenuation", AutoConstantType.ACT_LIGHT_ATTENUATION, 0);
+                    defaultParams.Value.setNamedAutoConstant("worldLightPosition", AutoConstantType.ACT_LIGHT_POSITION, 0);
+
+                    defaultParams.Value.setNamedAutoConstant("worldMatrix3x4Array", AutoConstantType.ACT_WORLD_MATRIX_ARRAY_3x4);
+                    defaultParams.Value.setNamedAutoConstant("viewProjectionMatrix", AutoConstantType.ACT_VIEWPROJ_MATRIX);
+
+                    if (numHardwarePoses > 0)
+                    {
+                        defaultParams.Value.setNamedAutoConstant("poseAnimAmount", AutoConstantType.ACT_ANIMATION_PARAMETRIC);
+                    }
+                }
+                else
+                {
+                    defaultParams.Value.setNamedAutoConstant("worldViewProj", AutoConstantType.ACT_WORLDVIEWPROJ_MATRIX);
+                    defaultParams.Value.setNamedAutoConstant("eyePosition", AutoConstantType.ACT_CAMERA_POSITION_OBJECT_SPACE);
+                    defaultParams.Value.setNamedAutoConstant("lightAttenuation", AutoConstantType.ACT_LIGHT_ATTENUATION, 0);
+                    defaultParams.Value.setNamedAutoConstant("lightPosition", AutoConstantType.ACT_LIGHT_POSITION_OBJECT_SPACE, 0);
+                }
+            }
+        }
+
+        private void setupDepthCheckVP(String name, int numHardwareBones, int numHardwarePoses, bool parity)
+        {
+            parity = false; //Does not do parity
+
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "DepthCheck.hlsl";
+            if (numHardwareBones > 0 || numHardwarePoses > 0)
+            {
+                program.Value.setParam("entry_point", "depthCheckSkinPose");
+            }
+            else
+            {
+                program.Value.setParam("entry_point", "depthCheckVP");
+            }
+
+            program.Value.setParam("target", "vs_4_0");
+            program.Value.setParam("column_major_matrices", "false");
+            program.Value.SkeletalAnimationIncluded = numHardwareBones > 0;
+            program.Value.NumberOfPoses = (ushort)numHardwarePoses;
+            program.Value.setParam("preprocessor_defines", DeterminePreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
+            program.Value.load();
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                if (numHardwareBones > 0 || numHardwarePoses > 0)
+                {
+                    defaultParams.Value.setNamedAutoConstant("worldMatrix3x4Array", AutoConstantType.ACT_WORLD_MATRIX_ARRAY_3x4);
+                    defaultParams.Value.setNamedAutoConstant("viewProjectionMatrix", AutoConstantType.ACT_VIEWPROJ_MATRIX);
+
+                    if (numHardwarePoses > 0)
+                    {
+                        defaultParams.Value.setNamedAutoConstant("poseAnimAmount", AutoConstantType.ACT_ANIMATION_PARAMETRIC);
+                    }
+                }
+                else
+                {
+                    defaultParams.Value.setNamedAutoConstant("worldViewProj", AutoConstantType.ACT_WORLDVIEWPROJ_MATRIX);
+                }
+            }
+        }
+
+        private void setupFeedbackBufferVP(String name, int numHardwareBones, int numHardwarePoses, bool parity)
+        {
+            parity = false; //Does not do parity
+
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "FeedbackBuffer.hlsl";
+            if (numHardwareBones > 0 || numHardwarePoses > 0)
+            {
+                program.Value.setParam("entry_point", "FeedbackBufferVPHardwareSkinPose");
+            }
+            else
+            {
+                program.Value.setParam("entry_point", "FeedbackBufferVP");
+            }
+
+            program.Value.setParam("target", "vs_4_0");
+            program.Value.setParam("column_major_matrices", "false");
+            program.Value.SkeletalAnimationIncluded = numHardwareBones > 0;
+            program.Value.NumberOfPoses = (ushort)numHardwarePoses;
+            program.Value.setParam("preprocessor_defines", DeterminePreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
+            program.Value.load();
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                if (numHardwareBones > 0 || numHardwarePoses > 0)
+                {
+                    defaultParams.Value.setNamedAutoConstant("worldMatrix3x4Array", AutoConstantType.ACT_WORLD_MATRIX_ARRAY_3x4);
+                    defaultParams.Value.setNamedAutoConstant("viewProjectionMatrix", AutoConstantType.ACT_VIEWPROJ_MATRIX);
+
+                    if (numHardwarePoses > 0)
+                    {
+                        defaultParams.Value.setNamedAutoConstant("poseAnimAmount", AutoConstantType.ACT_ANIMATION_PARAMETRIC);
+                    }
+                }
+                else
+                {
+                    defaultParams.Value.setNamedAutoConstant("worldViewProj", AutoConstantType.ACT_WORLDVIEWPROJ_MATRIX);
+                }
+            }
+        }
+
+        #endregion Vertex Programs
+
+        #region Fragment Programs
+
+        public String createFragmentProgram(String baseName, bool alpha)
+        {
+            String shaderName = DetermineFragmentShaderName(baseName, alpha);
+            if (!createdPrograms.ContainsKey(shaderName))
+            {
+                Action<String, bool> buildFunc;
+                if (fragmentBuilderFuncs.TryGetValue(baseName, out buildFunc))
+                {
+                    buildFunc(shaderName, alpha);
+                }
+                else
+                {
+                    Logging.Log.Error("Cannot build fragment shader '{0}' no setup function defined.", shaderName);
+                }
+            }
+            return shaderName;
+        }
+
+        public void createFeedbackBufferFP(String name, bool alpha)
+        {
+            alpha = false; //Never does alpha
+
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "FeedbackBuffer.hlsl";
+            program.Value.setParam("entry_point", "FeedbackBufferFP");
+            program.Value.setParam("target", "ps_4_0");
+        }
+
+        #endregion Fragment Programs
 
         public static String DetermineVertexShaderName(String baseName, int numHardwareBones, int numHardwarePoses, bool parity)
         {

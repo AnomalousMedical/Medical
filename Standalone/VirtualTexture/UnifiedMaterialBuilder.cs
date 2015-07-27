@@ -144,7 +144,9 @@ namespace Medical
 
                 if (indirectionTex != null)
                 {
-                    indirectionTex.setupFeedbackBufferTechnique(material.Value, UnifiedShaderFactory.DetermineVertexShaderName("", description.NumHardwareBones, description.NumHardwarePoses, false));
+                    String vertexShaderName = shaderFactory.createVertexProgram(indirectionTex.FeedbackBufferVPName, description.NumHardwareBones, description.NumHardwarePoses, false);
+                    String fragmentShaderName = shaderFactory.createFragmentProgram(indirectionTex.FeedbackBufferFPName, false);
+                    indirectionTex.setupFeedbackBufferTechnique(material.Value, vertexShaderName);
                 }
                 else
                 {
@@ -376,7 +378,7 @@ namespace Medical
             setupCommonPassAttributes(description, alpha, pass);
 
             //Material specific, setup shaders
-            pass.setVertexProgram(UnifiedShaderFactory.DetermineVertexShaderName("NoTexturesVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
+            pass.setVertexProgram(shaderFactory.createVertexProgram("NoTexturesVP", description.NumHardwareBones, description.NumHardwarePoses, description.Parity));
 
             pass.setFragmentProgram(UnifiedShaderFactory.DetermineFragmentShaderName("NoTexturesColoredFP", alpha));
             using (var gpuParams = pass.getFragmentProgramParameters())
@@ -511,7 +513,7 @@ namespace Medical
             }
         }
 
-        private static Pass createDepthPass(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
+        private Pass createDepthPass(Technique technique, MaterialDescription description, bool alpha, bool depthCheck)
         {
             var pass = technique.getPass(0); //Make sure technique has one pass already defined
             if (alpha && depthCheck)
@@ -521,7 +523,7 @@ namespace Medical
                 pass.setDepthBias(-1.0f);
                 pass.setSceneBlending(SceneBlendType.SBT_TRANSPARENT_ALPHA);
 
-                pass.setVertexProgram(UnifiedShaderFactory.DetermineVertexShaderName("DepthCheckVP", description.NumHardwareBones, description.NumHardwarePoses, false));
+                pass.setVertexProgram(shaderFactory.createVertexProgram("DepthCheckVP", description.NumHardwareBones, description.NumHardwarePoses, false));
                 pass.setFragmentProgram("HiddenFP");
 
                 pass = technique.createPass(); //Get another pass

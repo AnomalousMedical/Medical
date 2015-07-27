@@ -292,21 +292,37 @@ namespace Medical
             originalTextureUnits.Add(new OriginalTextureInfo(textureUnit, textureName, mipOffset));
         }
 
-        public void setupFeedbackBufferTechnique(Material material, String vertexShaderHint)
+        public void setupFeedbackBufferTechnique(Material material, String vertexShaderName)
         {
             var technique = material.createTechnique();
             technique.setName(FeedbackBuffer.Scheme);
             technique.setSchemeName(FeedbackBuffer.Scheme);
             var pass = technique.createPass();
 
-            pass.setVertexProgram("FeedbackBufferVP" + vertexShaderHint);
+            pass.setVertexProgram(vertexShaderName);
 
-            pass.setFragmentProgram("FeedbackBufferFP");
+            pass.setFragmentProgram(FeedbackBufferFPName);
             using (var gpuParams = pass.getFragmentProgramParameters())
             {
                 gpuParams.Value.setNamedConstant("virtTexSize", new Vector2(realTextureSize.Width, realTextureSize.Height));
                 gpuParams.Value.setNamedConstant("mipSampleBias", virtualTextureManager.MipSampleBias);
                 gpuParams.Value.setNamedConstant("spaceId", (float)id);
+            }
+        }
+
+        public String FeedbackBufferVPName
+        {
+            get
+            {
+                return "FeedbackBufferVP";
+            }
+        }
+
+        public String FeedbackBufferFPName
+        {
+            get
+            {
+                return "FeedbackBufferFP";
             }
         }
     }
