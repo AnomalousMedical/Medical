@@ -29,8 +29,18 @@ namespace Medical
             vertexBuilderFuncs.Add("DepthCheckVP", setupDepthCheckVP);
             vertexBuilderFuncs.Add("NoTexturesVP", setupNoTexturesVP);
             vertexBuilderFuncs.Add("FeedbackBufferVP", setupFeedbackBufferVP);
+            vertexBuilderFuncs.Add("HiddenVP", setupHiddenVP);
 
             fragmentBuilderFuncs.Add("FeedbackBufferFP", createFeedbackBufferFP);
+            fragmentBuilderFuncs.Add("NormalMapSpecularFP", createNormalMapSpecularFP);
+            fragmentBuilderFuncs.Add("NormalMapSpecularHighlightFP", createNormalMapSpecularHighlightFP);
+            fragmentBuilderFuncs.Add("NormalMapSpecularMapFP", createNormalMapSpecularMapFP);
+            fragmentBuilderFuncs.Add("NormalMapSpecularOpacityMapFP", createNormalMapSpecularOpacityMapFP);
+            fragmentBuilderFuncs.Add("NormalMapSpecularMapGlossMapFP", createNormalMapSpecularMapGlossMapFP);
+            fragmentBuilderFuncs.Add("NormalMapSpecularMapOpacityMapFP", createNormalMapSpecularMapOpacityMapFP);
+            fragmentBuilderFuncs.Add("NormalMapSpecularMapOpacityMapGlossMapFP", createNormalMapSpecularMapOpacityMapGlossMapFP);
+            fragmentBuilderFuncs.Add("HiddenFP", createHiddenFP);
+            fragmentBuilderFuncs.Add("NoTexturesColoredFP", createNoTexturesColoredFP);
         }
 
         public void Dispose()
@@ -80,7 +90,7 @@ namespace Medical
             program.Value.setParam("column_major_matrices", "false");
             program.Value.SkeletalAnimationIncluded = numHardwareBones > 0;
             program.Value.NumberOfPoses = (ushort)numHardwarePoses;
-            program.Value.setParam("preprocessor_defines", DeterminePreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
+            program.Value.setParam("preprocessor_defines", DetermineVertexPreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
             program.Value.load();
 
             using (var defaultParams = program.Value.getDefaultParameters())
@@ -128,7 +138,7 @@ namespace Medical
             program.Value.setParam("column_major_matrices", "false");
             program.Value.SkeletalAnimationIncluded = numHardwareBones > 0;
             program.Value.NumberOfPoses = (ushort)numHardwarePoses;
-            program.Value.setParam("preprocessor_defines", DeterminePreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
+            program.Value.setParam("preprocessor_defines", DetermineVertexPreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
             program.Value.load();
 
             using (var defaultParams = program.Value.getDefaultParameters())
@@ -178,7 +188,7 @@ namespace Medical
             program.Value.setParam("column_major_matrices", "false");
             program.Value.SkeletalAnimationIncluded = numHardwareBones > 0;
             program.Value.NumberOfPoses = (ushort)numHardwarePoses;
-            program.Value.setParam("preprocessor_defines", DeterminePreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
+            program.Value.setParam("preprocessor_defines", DetermineVertexPreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
             program.Value.load();
 
             using (var defaultParams = program.Value.getDefaultParameters())
@@ -198,6 +208,23 @@ namespace Medical
                     defaultParams.Value.setNamedAutoConstant("worldViewProj", AutoConstantType.ACT_WORLDVIEWPROJ_MATRIX);
                 }
             }
+        }
+
+        private void setupHiddenVP(String name, int numHardwareBones, int numHardwarePoses, bool parity)
+        {
+            parity = false; //Does not do parity
+
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_VERTEX_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "Hidden.hlsl";
+            program.Value.setParam("entry_point", "hiddenVP");
+            program.Value.setParam("target", "vs_4_0");
+            program.Value.setParam("column_major_matrices", "false");
+            program.Value.SkeletalAnimationIncluded = numHardwareBones > 0;
+            program.Value.NumberOfPoses = (ushort)numHardwarePoses;
+            program.Value.setParam("preprocessor_defines", DetermineVertexPreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
+            program.Value.load();
         }
 
         private void setupFeedbackBufferVP(String name, int numHardwareBones, int numHardwarePoses, bool parity)
@@ -221,7 +248,7 @@ namespace Medical
             program.Value.setParam("column_major_matrices", "false");
             program.Value.SkeletalAnimationIncluded = numHardwareBones > 0;
             program.Value.NumberOfPoses = (ushort)numHardwarePoses;
-            program.Value.setParam("preprocessor_defines", DeterminePreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
+            program.Value.setParam("preprocessor_defines", DetermineVertexPreprocessorDefines(numHardwareBones, numHardwarePoses, parity));
             program.Value.load();
 
             using (var defaultParams = program.Value.getDefaultParameters())
@@ -265,6 +292,190 @@ namespace Medical
             return shaderName;
         }
 
+        public void createNormalMapSpecularFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.setParam("entry_point", "normalMapSpecularFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using(var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("specularColor", AutoConstantType.ACT_SURFACE_SPECULAR_COLOUR);
+                defaultParams.Value.setNamedAutoConstant("glossyness", AutoConstantType.ACT_SURFACE_SHININESS);
+                defaultParams.Value.setNamedAutoConstant("emissiveColor", AutoConstantType.ACT_SURFACE_EMISSIVE_COLOUR);
+                if(alpha)
+                {
+                    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                }
+            }
+        }
+
+        public void createNormalMapSpecularHighlightFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.setParam("entry_point", "normalMapSpecularHighlightFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("specularColor", AutoConstantType.ACT_SURFACE_SPECULAR_COLOUR);
+                defaultParams.Value.setNamedAutoConstant("glossyness", AutoConstantType.ACT_SURFACE_SHININESS);
+                defaultParams.Value.setNamedAutoConstant("emissiveColor", AutoConstantType.ACT_SURFACE_EMISSIVE_COLOUR);
+                defaultParams.Value.setNamedAutoConstant("highlightColor", AutoConstantType.ACT_CUSTOM, 1);
+                if (alpha)
+                {
+                    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                }
+            }
+        }
+
+        public void createNormalMapSpecularMapFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.setParam("entry_point", "normalMapSpecularMapFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("glossyness", AutoConstantType.ACT_SURFACE_SHININESS);
+                defaultParams.Value.setNamedAutoConstant("emissiveColor", AutoConstantType.ACT_SURFACE_EMISSIVE_COLOUR);
+                if (alpha)
+                {
+                    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                }
+            }
+        }
+
+        public void createNormalMapSpecularOpacityMapFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.setParam("entry_point", "normalMapSpecularOpacityMapFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("specularColor", AutoConstantType.ACT_SURFACE_SPECULAR_COLOUR);
+                defaultParams.Value.setNamedAutoConstant("glossyness", AutoConstantType.ACT_SURFACE_SHININESS);
+                defaultParams.Value.setNamedAutoConstant("emissiveColor", AutoConstantType.ACT_SURFACE_EMISSIVE_COLOUR);
+                if (alpha)
+                {
+                    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                }
+            }
+        }
+
+        public void createNormalMapSpecularMapGlossMapFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.setParam("entry_point", "normalMapSpecularMapGlossMapFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("emissiveColor", AutoConstantType.ACT_SURFACE_EMISSIVE_COLOUR);
+                defaultParams.Value.setNamedConstant("glossyStart", 40.0f);
+                defaultParams.Value.setNamedConstant("glossyRange", 0.0f);
+                if (alpha)
+                {
+                    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                }
+            }
+        }
+
+        public void createNormalMapSpecularMapOpacityMapFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.setParam("entry_point", "normalMapSpecularMapOpacityMapFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("glossyness", AutoConstantType.ACT_SURFACE_SHININESS);
+                defaultParams.Value.setNamedAutoConstant("emissiveColor", AutoConstantType.ACT_SURFACE_EMISSIVE_COLOUR);
+                if (alpha)
+                {
+                    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                }
+            }
+        }
+
+        public void createNormalMapSpecularMapOpacityMapGlossMapFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.setParam("entry_point", "normalMapSpecularMapOpacityMapGlossMapFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("emissiveColor", AutoConstantType.ACT_SURFACE_EMISSIVE_COLOUR);
+                defaultParams.Value.setNamedConstant("glossyStart", 40.0f);
+                defaultParams.Value.setNamedConstant("glossyRange", 0.0f);
+                if (alpha)
+                {
+                    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                }
+            }
+        }
+
+        public void createNoTexturesColoredFP(String name, bool alpha)
+        {
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "UnifiedFS.hlsl";
+            program.Value.setParam("entry_point", "NoTexturesColoredFP");
+            program.Value.setParam("target", "ps_4_0");
+            program.Value.setParam("preprocessor_defines", DetermineFragmentPreprocessorDefines(alpha));
+
+            using (var defaultParams = program.Value.getDefaultParameters())
+            {
+                defaultParams.Value.setNamedAutoConstant("diffuseColor", AutoConstantType.ACT_SURFACE_DIFFUSE_COLOUR);
+                defaultParams.Value.setNamedAutoConstant("lightDiffuseColor", AutoConstantType.ACT_LIGHT_DIFFUSE_COLOUR, 0);
+                defaultParams.Value.setNamedAutoConstant("specularColor", AutoConstantType.ACT_SURFACE_SPECULAR_COLOUR);
+                defaultParams.Value.setNamedAutoConstant("glossyness", AutoConstantType.ACT_SURFACE_SHININESS);
+                defaultParams.Value.setNamedAutoConstant("emissiveColor", AutoConstantType.ACT_SURFACE_EMISSIVE_COLOUR);
+                if (alpha)
+                {
+                    defaultParams.Value.setNamedAutoConstant("alpha", AutoConstantType.ACT_CUSTOM, 0);
+                }
+            }
+        }
+
         public void createFeedbackBufferFP(String name, bool alpha)
         {
             alpha = false; //Never does alpha
@@ -277,9 +488,21 @@ namespace Medical
             program.Value.setParam("target", "ps_4_0");
         }
 
+        public void createHiddenFP(String name, bool alpha)
+        {
+            alpha = false; //Never does alpha
+
+            var program = HighLevelGpuProgramManager.Instance.createProgram(name, shaderResourceGroup.FullName, "hlsl", GpuProgramType.GPT_FRAGMENT_PROGRAM);
+            createdPrograms.Add(name, program);
+
+            program.Value.SourceFile = ShaderBaseName + "Hidden.hlsl";
+            program.Value.setParam("entry_point", "hiddenFP");
+            program.Value.setParam("target", "ps_4_0");
+        }
+
         #endregion Fragment Programs
 
-        public static String DetermineVertexShaderName(String baseName, int numHardwareBones, int numHardwarePoses, bool parity)
+        private static String DetermineVertexShaderName(String baseName, int numHardwareBones, int numHardwarePoses, bool parity)
         {
             StringBuilder programName = new StringBuilder(baseName);
             if (numHardwareBones > 0)
@@ -306,7 +529,7 @@ namespace Medical
             return baseName;
         }
 
-        private static String DeterminePreprocessorDefines(int numHardwareBones, int numHardwarePoses, bool parity)
+        private static String DetermineVertexPreprocessorDefines(int numHardwareBones, int numHardwarePoses, bool parity)
         {
             StringBuilder definesBuilder = new StringBuilder();
             if (parity)
@@ -320,6 +543,16 @@ namespace Medical
             if(numHardwarePoses > 0)
             {
                 definesBuilder.AppendFormat("POSE_COUNT={0};", numHardwarePoses);
+            }
+            return definesBuilder.ToString();
+        }
+
+        private static String DetermineFragmentPreprocessorDefines(bool alpha)
+        {
+            StringBuilder definesBuilder = new StringBuilder("VIRTUAL_TEXTURE;");
+            if(alpha)
+            {
+                definesBuilder.Append("ALPHA;");
             }
             return definesBuilder.ToString();
         }
