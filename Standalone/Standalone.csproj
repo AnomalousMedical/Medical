@@ -803,12 +803,6 @@
     <EmbeddedResource Include="VirtualTexture\Unified\glsl\NoTexturesVPHardwareSkin.glsl" />
     <EmbeddedResource Include="VirtualTexture\Unified\glsl\Pack.glsl" />
     <EmbeddedResource Include="VirtualTexture\Unified\glsl\Unpack.glsl" />
-    <EmbeddedResource Include="VirtualTexture\ColoredUntextured\glsles\ColoredUntexturedFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\ColoredUntextured\glsles\ColoredUntexturedFPAlpha.glsles" />
-    <EmbeddedResource Include="VirtualTexture\ColoredUntextured\glsles\ColoredUntexturedVP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\ColoredUntextured\glsl\ColoredUntexturedFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\ColoredUntextured\glsl\ColoredUntexturedFPAlpha.glsl" />
-    <EmbeddedResource Include="VirtualTexture\ColoredUntextured\glsl\ColoredUntexturedVP.glsl" />
     <EmbeddedResource Include="VirtualTexture\Eye\glsles\EyeOuterFP.glsles" />
     <EmbeddedResource Include="VirtualTexture\Eye\glsles\EyeOuterVP.glsles" />
     <EmbeddedResource Include="VirtualTexture\Eye\glsl\EyeOuterFP.glsl" />
@@ -821,7 +815,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="VirtualTexture\ColoredUntextured\D3D11\ColoredUntextured.hlsl" />
     <EmbeddedResource Include="VirtualTexture\Eye\D3D11\Eye.hlsl" />
     <EmbeddedResource Include="VirtualTexture\Unified\D3D11\DepthCheck.hlsl" />
     <EmbeddedResource Include="VirtualTexture\Unified\D3D11\FeedbackBuffer.hlsl" />

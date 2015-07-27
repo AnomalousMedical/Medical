@@ -13,7 +13,6 @@ namespace Medical
         private const String ShaderPathBase = "Medical.VirtualTexture";
         private const String UnifiedShaderBase = ShaderPathBase + ".Unified.D3D11.";
         private const String EyeShaderBase = ShaderPathBase + ".Eye.D3D11.";
-        private const String ColoredUntexturedShaderBase = ShaderPathBase + ".ColoredUntextured.D3D11.";
 
         private Dictionary<String, Action<String, int, int, bool>> vertexBuilderFuncs = new Dictionary<string, Action<String, int, int, bool>>();
         private Dictionary<String, Action<String, bool>> fragmentBuilderFuncs = new Dictionary<string, Action<String, bool>>();
