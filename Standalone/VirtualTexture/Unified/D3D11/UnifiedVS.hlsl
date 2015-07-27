@@ -306,8 +306,23 @@ void NoTexturesVPHardwareSkin
 
 		const uniform float3x4 worldMatrix3x4Array[60], //This is an array of bones, the index is the maximum amount of bones supported
 		const uniform float4x4 viewProjectionMatrix
+
+		#if POSE_COUNT > 0
+				, float3 pose1pos  : TEXCOORD1
+			#if POSE_COUNT > 1
+					, float3 pose2pos  : TEXCOORD2
+			#endif
+				, uniform float4 poseAnimAmount
+		#endif
 )
 {
+	//Hardware Pose Animation
+#if POSE_COUNT == 1
+	input.position.xyz = input.position.xyz + poseAnimAmount.x * pose1pos;
+#elif POSE_COUNT == 2
+	input.position.xyz = input.position.xyz + poseAnimAmount.x * pose1pos + poseAnimAmount.y * pose2pos;
+#endif
+
 	//Hardware Skinning
 	float4 blendPos = float4(0,0,0,0);
 	float3 newNormal = float3(0,0,0);
