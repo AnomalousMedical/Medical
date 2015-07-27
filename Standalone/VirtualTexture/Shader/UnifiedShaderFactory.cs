@@ -47,7 +47,7 @@ namespace Medical
                 }
                 else
                 {
-                    Logging.Log.Error("Cannot build shader '{0}' no setup function defined.");
+                    Logging.Log.Error("Cannot build shader '{0}' no setup function defined.", shaderName);
                 }
             }
             return shaderName;
@@ -141,7 +141,7 @@ namespace Medical
             }
             if(numHardwarePoses > 0)
             {
-                definesBuilder.AppendFormat("POSE_COUNT={0};", numHardwareBones);
+                definesBuilder.AppendFormat("POSE_COUNT={0};", numHardwarePoses);
             }
             return definesBuilder.ToString();
         }
