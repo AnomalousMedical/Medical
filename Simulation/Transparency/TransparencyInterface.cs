@@ -117,6 +117,10 @@ namespace Medical
         [DoNotSave]
         private TransparencyOverrider transparencyOverrider;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private byte originalRenderGroup;
+
         public TransparencyInterface()
         {
             ObjectName = "";
@@ -220,6 +224,8 @@ namespace Medical
                     blacklist("Cannot find entity named '{0}' in node '{1}'.", entityName, nodeName);
                 }
             }
+
+            originalRenderGroup = entity.getRenderQueueGroup();
 
             if(useHiddenMaterialIfSoftwareSkinned && !entity.isHardwareAnimationEnabled())
             {
@@ -345,7 +351,7 @@ namespace Medical
                 {
                     status = TransparencyStatus.Solid;
                     subEntity.setMaterialName(baseMaterialName);
-                    entity.setRenderQueueGroup(0);
+                    entity.setRenderQueueGroup(originalRenderGroup);
                     subEntity.setVisible(true);
                     entity.setMaterialLodBias(1.0f, 0, 0);
                 }
