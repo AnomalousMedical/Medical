@@ -76,7 +76,7 @@ namespace Medical
             VirtualFileSystem archive = VirtualFileSystem.Instance;
 
             //Setup microcode cache load
-            OgreInterface.MicrocodeCacheBaseFile = Path.Combine(FolderFinder.LocalPrivateDataFolder, "ShaderCache");
+            OgreInterface.MicrocodeCachePath = Path.Combine(FolderFinder.LocalPrivateDataFolder, "ShaderCache.mcc");
             OgreInterface.AllowMicrocodeCacheLoad = MedicalConfig.LastShaderVersion == UnifiedMaterialBuilder.Version;
             MedicalConfig.LastShaderVersion = UnifiedMaterialBuilder.Version;
 
