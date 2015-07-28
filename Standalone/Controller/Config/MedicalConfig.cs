@@ -322,6 +322,18 @@ namespace Medical
             }
         }
 
+        public static String LastShaderVersion
+        {
+            get
+            {
+                return program.getValue("LastShaderVersion", "");
+            }
+            set
+            {
+                program.setValue("LastShaderVersion", value);
+            }
+        }
+
         public static UIExtraScale ExtraScaling
         {
             get

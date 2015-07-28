@@ -77,6 +77,8 @@ namespace Medical
 
             //Setup microcode cache load
             OgreInterface.MicrocodeCacheBaseFile = Path.Combine(FolderFinder.LocalPrivateDataFolder, "ShaderCache");
+            OgreInterface.AllowMicrocodeCacheLoad = MedicalConfig.LastShaderVersion == UnifiedMaterialBuilder.Version;
+            MedicalConfig.LastShaderVersion = UnifiedMaterialBuilder.Version;
 
             MyGUIInterface.EventLayerKey = EventLayers.Gui;
             MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.TouchType == TouchType.Screen;
