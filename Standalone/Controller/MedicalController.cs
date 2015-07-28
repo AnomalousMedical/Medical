@@ -76,30 +76,7 @@ namespace Medical
             VirtualFileSystem archive = VirtualFileSystem.Instance;
 
             //Setup microcode cache load
-            OgreInterface.LoadMicrocodeCacheCallback = (rs, gpuProgMan) =>
-            {
-                String microcodeFile = Path.Combine(FolderFinder.LocalPrivateDataFolder, rs.Name + ".mcc");
-                if (File.Exists(microcodeFile))
-                {
-                    using (Stream stream = File.OpenRead(microcodeFile))
-                    {
-                        gpuProgMan.loadMicrocodeCache(stream);
-                        Log.Info("Using microcode cache {0}", microcodeFile);
-                    }
-                }
-                return true;
-            };
-
-            OgreInterface.SaveMicrocodeCacheCallback = (rs, gpuProgMan) =>
-            {
-                String microcodeFile = Path.Combine(FolderFinder.LocalPrivateDataFolder, rs.Name + ".mcc");
-                using (Stream stream = File.Open(microcodeFile, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite, System.IO.FileShare.Read))
-                {
-                    gpuProgMan.saveMicrocodeCache(stream);
-                    Log.Info("Saved microcode cache {0}", microcodeFile);
-                }
-                return true;
-            };
+            OgreInterface.MicrocodeCacheBaseFile = Path.Combine(FolderFinder.LocalPrivateDataFolder, "ShaderCache");
 
             MyGUIInterface.EventLayerKey = EventLayers.Gui;
             MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.TouchType == TouchType.Screen;
