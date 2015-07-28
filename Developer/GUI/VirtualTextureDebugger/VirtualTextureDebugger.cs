@@ -3,6 +3,7 @@ using Engine;
 using Medical;
 using MyGUIPlugin;
 using OgrePlugin;
+using OgrePlugin.VirtualTexture;
 using System;
 using System.Collections.Generic;
 using System.Linq;

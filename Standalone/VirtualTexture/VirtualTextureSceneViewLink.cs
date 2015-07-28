@@ -2,6 +2,7 @@
 using Engine;
 using Engine.ObjectManagement;
 using OgrePlugin;
+using OgrePlugin.VirtualTexture;
 using System;
 using System.Collections.Generic;
 using System.Linq;

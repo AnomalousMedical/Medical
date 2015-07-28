@@ -23,6 +23,7 @@ using Engine.Threads;
 using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;
+using OgrePlugin.VirtualTexture;
 
 namespace Medical
 {
