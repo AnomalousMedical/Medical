@@ -658,21 +658,7 @@
     <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
     <Compile Include="Utility\SharedXmlSaver.cs" />
     <Compile Include="Utility\ZipEntryExtensions.cs" />
-    <Compile Include="VirtualTexture\FeedbackBuffer.cs" />
-    <Compile Include="VirtualTexture\FeedbackCameraPositioner.cs" />
-    <Compile Include="VirtualTexture\IndirectionTexture.cs" />
-    <Compile Include="VirtualTexture\OriginalTextureInfo.cs" />
-    <Compile Include="VirtualTexture\PhysicalTexture.cs" />
-    <Compile Include="VirtualTexture\PTexPage.cs" />
-    <Compile Include="VirtualTexture\UnifiedShaderFactory.cs" />
-    <Compile Include="VirtualTexture\StagingIndirectionTexture.cs" />
-    <Compile Include="VirtualTexture\StagingPhysicalPage.cs" />
-    <Compile Include="VirtualTexture\TextureCache.cs" />
-    <Compile Include="VirtualTexture\TextureLoader.cs" />
-    <Compile Include="VirtualTexture\UnifiedMaterialBuilder.cs" />
-    <Compile Include="VirtualTexture\VirtualTextureManager.cs" />
     <Compile Include="VirtualTexture\VirtualTextureSceneViewLink.cs" />
-    <Compile Include="VirtualTexture\VTexPage.cs" />
     <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -766,47 +752,6 @@
     <EmbeddedResource Include="Resources\Rml\Wysiwyg.rcss" />
     <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
     <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\DepthCheckVP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\DepthCheckVPHardwareSkin.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\FeedbackBufferFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\FeedbackBufferVP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\HiddenFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\HiddenVP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\MainVP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\MainVPHardwareSkin.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NormalMapSpecularFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NormalMapSpecularHighlightFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NormalMapSpecularMapFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NormalMapSpecularMapGlossMapFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NormalMapSpecularMapOpacityMapFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NormalMapSpecularMapOpacityMapGlossMapFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NormalMapSpecularOpacityMapFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NoTexturesColoredFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NoTexturesVP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsles\NoTexturesVPHardwareSkin.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\DepthCheckVP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\DepthCheckVPHardwareSkin.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\HiddenFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\HiddenVP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\Lighting.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\MainVP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\MainVPHardwareSkin.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NormalMapSpecularFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NormalMapSpecularHighlightFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NormalMapSpecularMapFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NormalMapSpecularMapGlossMapFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NormalMapSpecularMapOpacityMapFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NormalMapSpecularMapOpacityMapGlossMapFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NormalMapSpecularOpacityMapFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NoTexturesColoredFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NoTexturesVP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\NoTexturesVPHardwareSkin.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\Pack.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\glsl\Unpack.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Eye\glsles\EyeOuterFP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Eye\glsles\EyeOuterVP.glsles" />
-    <EmbeddedResource Include="VirtualTexture\Eye\glsl\EyeOuterFP.glsl" />
-    <EmbeddedResource Include="VirtualTexture\Eye\glsl\EyeOuterVP.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
@@ -815,12 +760,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="VirtualTexture\Eye\D3D11\Eye.hlsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\D3D11\DepthCheck.hlsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\D3D11\FeedbackBuffer.hlsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\D3D11\Hidden.hlsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\D3D11\UnifiedFS.hlsl" />
-    <EmbeddedResource Include="VirtualTexture\Unified\D3D11\UnifiedVS.hlsl" />
     <None Include="Properties\Standalone.manifest" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecoratorTransparent.layout" />
