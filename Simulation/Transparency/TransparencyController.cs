@@ -8,6 +8,9 @@ namespace Medical
 {
     public static class TransparencyController
     {
+        public const uint OpaqueVisibilityMask = 0x1;
+        public const uint TransparentVisibilityMask = 0x2;
+
         public static event Action<String> ActiveTransparencyStateChanged;
         public static event Action<String> TransparencyStateAdded;
         public static event Action<String> TransparencyStateRemoved;

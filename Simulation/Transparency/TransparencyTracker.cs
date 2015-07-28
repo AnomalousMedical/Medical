@@ -48,6 +48,10 @@ namespace Medical
         [DoNotSave]
         Quaternion alphaQuat = new Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
 
+        [DoNotCopy]
+        [DoNotSave]
+        private byte originalRenderGroup;
+
         protected override void constructed()
         {
             SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
@@ -60,6 +64,9 @@ namespace Medical
             {
                 blacklist("No entity specified or entity is not found.");
             }
+
+            originalRenderGroup = entity.getRenderQueueGroup();
+
             if (subEntityIndex >= entity.getNumSubEntities())
             {
                 blacklist("Entity {0} only has {1} SubEntities. Index {2} is invalid.", entity.getName(), entity.getNumSubEntities(), subEntityIndex);
@@ -104,7 +111,8 @@ namespace Medical
                 {
                     status = TransparencyStatus.Solid;
                     subEntity.setMaterialName(baseMaterialName);
-                    entity.setRenderQueueGroup(0);
+                    entity.setRenderQueueGroup(originalRenderGroup);
+                    entity.setVisibilityFlags(TransparencyController.OpaqueVisibilityMask);
                     subEntity.setVisible(true);
                     //entity.setMaterialLodBias(1.0f, 0, 0);
                 }
@@ -129,6 +137,7 @@ namespace Medical
                     subEntity.setVisible(true);
                     //entity.setMaterialLodBias(1.0f, 1, 1);
                     entity.setRenderQueueGroup(RenderGroupQueue.GetQueue(RenderGroup, (byte)renderGroupOffset));
+                    entity.setVisibilityFlags(TransparencyController.TransparentVisibilityMask);
                 }
             }
         }
