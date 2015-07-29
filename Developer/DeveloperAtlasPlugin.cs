@@ -11,6 +11,7 @@ using libRocketPlugin;
 using Engine;
 using Anomalous.libRocketWidget;
 using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Debugging;
 
 namespace Developer
 {

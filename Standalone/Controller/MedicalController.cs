@@ -26,6 +26,7 @@ using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;
 using Anomalous.GuiFramework.Editor;
+using Anomalous.GuiFramework.Debugging;
 
 namespace Medical
 {
@@ -125,6 +126,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(RocketWidgetInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkCamerasInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkEditorInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(GuiFrameworkDebuggingInterface).Assembly);
             pluginManager.initializePlugins();
 
             performanceMetricTimer = new NativeSystemTimer();
