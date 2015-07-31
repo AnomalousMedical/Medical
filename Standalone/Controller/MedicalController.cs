@@ -79,10 +79,12 @@ namespace Medical
             //Setup microcode cache load
             OgreInterface.MicrocodeCachePath = Path.Combine(FolderFinder.LocalPrivateDataFolder, "ShaderCache.mcc");
             OgreInterface.AllowMicrocodeCacheLoad = MedicalConfig.LastShaderVersion == UnifiedMaterialBuilder.Version;
+            OgreInterface.TrackMemoryLeaks = MedicalConfig.TrackMemoryLeaks;
             MedicalConfig.LastShaderVersion = UnifiedMaterialBuilder.Version;
 
             MyGUIInterface.EventLayerKey = EventLayers.Gui;
             MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.TouchType == TouchType.Screen;
+            MyGUIInterface.TrackMemoryLeaks = MedicalConfig.TrackMemoryLeaks;
 
             //Configure plugins
             pluginManager.OnConfigureDefaultWindow = delegate(out WindowInfo defaultWindow)

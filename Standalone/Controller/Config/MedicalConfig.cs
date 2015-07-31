@@ -90,6 +90,7 @@ namespace Medical
                 CertificateStoreTrustedSignature = systemOverride.getValue("CertificateStoreTrustedSignature", (String)null);
                 UnrestrictedEnvironmentOverride = systemOverride.getValue("UnrestrictedEnvironmentOverride", UnrestrictedEnvironmentOverride);
                 ThemeFileOverride = systemOverride.getValue("ThemeFileOverride", ThemeFileOverride);
+                TrackMemoryLeaks = systemOverride.getValue("TrackMemoryLeaks", TrackMemoryLeaks);
             }
 #endif
             //Fix up paths based on the build name
@@ -538,6 +539,8 @@ namespace Medical
         public static String SubscriberAgreementUrl { get; set; }
 
         public static String WebsiteHostUrl { get; private set; }
+
+        public static bool TrackMemoryLeaks { get; private set; }
 
         public static DateTime LastCertificateStoreCheckTime
         {
