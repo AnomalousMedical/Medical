@@ -27,6 +27,11 @@ namespace Medical
 
         static ServerConnection()
         {
+            //Toggle security protocols without hopefully trashing new ones that are added.
+            ServicePointManager.SecurityProtocol &= ~SecurityProtocolType.Ssl3; //Disable SSL v3.
+            ServicePointManager.SecurityProtocol &= ~SecurityProtocolType.Tls; //Disable TLS 1.0.
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12; //Enable TLS 1.1 and 1.2
+
             ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
             DefaultTimeout = 60000;
         }
