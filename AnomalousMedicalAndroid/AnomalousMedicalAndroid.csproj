@@ -12,7 +12,7 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>AnomalousMedicalAndroid</AssemblyName>
     <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
@@ -113,7 +113,6 @@
   <ItemGroup>
     <Folder Include="lib\" />
     <Folder Include="lib\armeabi-v7a\" />
-    <Folder Include="lib\x86\" />
     <Folder Include="ObbDownloader\" />
   </ItemGroup>
   <ItemGroup>
@@ -123,59 +122,29 @@
     <AndroidNativeLibrary Include="..\..\Dependencies\FreeImage.NET\AndroidBuild\libs\armeabi-v7a\libFreeImage.so">
       <Link>lib\armeabi-v7a\libFreeImage.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libBulletWrapper.so">
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libBulletWrapper.so">
       <Link>lib\armeabi-v7a\libBulletWrapper.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libMyGUIWrapper.so">
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libMyGUIWrapper.so">
       <Link>lib\armeabi-v7a\libMyGUIWrapper.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libOgreCWrapper.so">
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libOgreCWrapper.so">
       <Link>lib\armeabi-v7a\libOgreCWrapper.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libOSHelper.so">
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libOSHelper.so">
       <Link>lib\armeabi-v7a\libOSHelper.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libRocketWrapper.so">
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libRocketWrapper.so">
       <Link>lib\armeabi-v7a\libRocketWrapper.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libSoundWrapper.so">
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libSoundWrapper.so">
       <Link>lib\armeabi-v7a\libSoundWrapper.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libZip.so">
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libZip.so">
       <Link>lib\armeabi-v7a\libZip.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Tegra-Android\libgnustl_shared.so">
+    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libgnustl_shared.so">
       <Link>lib\armeabi-v7a\libgnustl_shared.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libBulletWrapper.so">
-      <Link>lib\x86\libBulletWrapper.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libMyGUIWrapper.so">
-      <Link>lib\x86\libMyGUIWrapper.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libOgreCWrapper.so">
-      <Link>lib\x86\libOgreCWrapper.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libOSHelper.so">
-      <Link>lib\x86\libOSHelper.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libRocketWrapper.so">
-      <Link>lib\x86\libRocketWrapper.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libSoundWrapper.so">
-      <Link>lib\x86\libSoundWrapper.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libZip.so">
-      <Link>lib\x86\libZip.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\x86-Android-NVIDIA\libgnustl_shared.so">
-      <Link>lib\x86\libgnustl_shared.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Dependencies\FreeImage.NET\AndroidBuildx86\libs\x86\libFreeImage.so">
-      <Link>lib\x86\libFreeImage.so</Link>
-    </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\x86\libopenal.so">
-      <Link>lib\x86\libopenal.so</Link>
     </AndroidNativeLibrary>
   </ItemGroup>
 </Project>
