@@ -57,6 +57,7 @@ Source: ..\..\..\PublicRelease\GuiFramework.Editor.dll; DestDir: {app}; Flags: i
 Source: ..\..\..\PublicRelease\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Newtonsoft.Json.dll; DestDir: {app}; Flags: ignoreversion
 
 ;x86 Files
 Source: ..\..\..\PublicRelease\x86\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
