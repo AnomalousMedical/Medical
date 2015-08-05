@@ -36,6 +36,31 @@ namespace Medical
             DefaultTimeout = 60000;
         }
 
+		/// <summary>
+		/// This property controls whether TLS 1.0 is enabled (through ServicePointManager, although ideally this class is in charge of networking).
+		/// This is unsafe but as of today 8-5-15 it does not appear that mono supports tls 1.1 and 1.2, so we need a way to enable this on mono
+		/// based platforms.
+		/// </summary>
+		/// <value><c>true</c> to allow TLS 1.0 connections; otherwise, <c>false</c>.</value>
+		public static bool EnableUnsafeTLS1_0
+		{
+			get 
+			{
+				return (ServicePointManager.SecurityProtocol & SecurityProtocolType.Tls) == SecurityProtocolType.Tls;
+			}
+			set 
+			{
+				if (value) 
+				{
+					ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls; //Enable TLS 1.0.
+				} 
+				else 
+				{
+					ServicePointManager.SecurityProtocol &= ~SecurityProtocolType.Tls; //Disable TLS 1.0.
+				}
+			}
+		}
+
         public static int DefaultTimeout { get; set; }
 
         public ServerConnection(String url)

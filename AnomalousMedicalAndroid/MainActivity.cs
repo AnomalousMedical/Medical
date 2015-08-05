@@ -29,6 +29,7 @@ namespace AnomalousMedicalAndroid
         {
             Java.Lang.JavaSystem.LoadLibrary("gnustl_shared");
             Java.Lang.JavaSystem.LoadLibrary("openal");
+			ServerConnection.EnableUnsafeTLS1_0 = true;
         }
 
         private ObbDownloader dl;
