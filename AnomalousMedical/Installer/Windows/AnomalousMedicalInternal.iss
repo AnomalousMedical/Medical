@@ -56,6 +56,7 @@ Source: ..\..\..\Release\GuiFramework.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\GuiFramework.Cameras.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\GuiFramework.Editor.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\GuiFramework.Debugging.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 
@@ -125,8 +126,8 @@ Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{tmp}\vcredist_x86.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2013 Redistributable (x86)";
-Filename: "{tmp}\vcredist_x64.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2013 Redistributable (x64)";
+Filename: "{tmp}\vcredist_x86.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2015 Redistributable (x86)";
+Filename: "{tmp}\vcredist_x64.exe"; Parameters: "/q /norestart"; StatusMsg: "Installing Visual Studio 2015 Redistributable (x64)";
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, "&", "&&")}}"; Flags: nowait postinstall skipifsilent
 
 [Code]
