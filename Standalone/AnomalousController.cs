@@ -195,11 +195,6 @@ namespace Medical
             controller.LicenseManager.getKey(processKeyResults);
             licenseDisplay.setSceneViewController(controller.SceneViewController);
 
-            //Setup shader resources
-            var shaderGroup = ogreResources.addResourceGroup("Shaders");
-            shaderGroup.addResource("Shaders/Articulometrics", "EngineArchive", true);
-            shaderGroup.initialize();
-
             //GUI
             splashScreen.updateStatus(CreatingGuiPosition, "Creating GUI");
             yield return IdleStatus.Ok;
