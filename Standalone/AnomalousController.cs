@@ -183,7 +183,7 @@ namespace Medical
             //Configure the filesystem
             VirtualFileSystem archive = VirtualFileSystem.Instance;
             //Add primary archive
-            archive.addArchive(this.PrimaryArchive);
+            bool mainArchiveAdded = archive.addArchive(this.PrimaryArchive);
 
             controller.addWorkingArchive();
 
@@ -227,7 +227,16 @@ namespace Medical
             splashScreen.updateStatus(currentPosition, message);
             yield return IdleStatus.Ok;
 
-            foreach (var status in controller.openNewSceneStatus(DefaultScene))
+            String sceneToLoad = DefaultScene;
+            ResourceProvider sceneResourceProvider = new VirtualFilesystemResourceProvider();
+
+            if (!mainArchiveAdded && !sceneResourceProvider.exists(sceneToLoad))
+            {
+                //Make sure we have one of our scenes
+                sceneToLoad = "omg";
+            }
+
+            foreach (var status in controller.openNewSceneStatus(sceneToLoad))
             {
                 switch (status.Subsystem)
                 {

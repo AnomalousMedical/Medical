@@ -87,7 +87,7 @@ namespace Medical
             MyGUIInterface.TrackMemoryLeaks = MedicalConfig.TrackMemoryLeaks;
 
             //Configure plugins
-            pluginManager.OnConfigureDefaultWindow = delegate(out WindowInfo defaultWindow)
+            pluginManager.OnConfigureDefaultWindow = delegate (out WindowInfo defaultWindow)
             {
                 //Setup main window
                 defaultWindow = new WindowInfo(mainWindow, "Primary");
@@ -168,7 +168,7 @@ namespace Medical
             GuiFrameworkInterface.Instance.handleCursors(mainWindow);
             SoundPluginInterface.Instance.setResourceWindow(mainWindow);
 
-            if(PlatformConfig.ForwardTouchAsMouse)
+            if (PlatformConfig.ForwardTouchAsMouse)
             {
                 TouchMouseGuiForwarder = new TouchMouseGuiForwarder(eventManager, inputHandler, systemTimer, mainWindow, EventLayers.Last);
                 var myGuiKeyboard = new MyGUIOnscreenKeyboardManager(TouchMouseGuiForwarder);
@@ -241,13 +241,20 @@ namespace Medical
         /// <returns>True if the scene was loaded, false on an error.</returns>
         public IEnumerable<SceneBuildStatus> openScene(String filename)
         {
+            foreach (var status in openScene(filename, new VirtualFilesystemResourceProvider()))
+            {
+                yield return status;
+            }
+        }
+
+        public IEnumerable<SceneBuildStatus> openScene(String filename, ResourceProvider resourceProvider)
+        {
             medicalScene.destroyScene();
-            VirtualFileSystem sceneArchive = VirtualFileSystem.Instance;
-            if (sceneArchive.exists(filename))
+            if (resourceProvider.exists(filename))
             {
                 currentSceneFile = VirtualFileSystem.GetFileName(filename);
                 currentSceneDirectory = VirtualFileSystem.GetDirectoryName(filename);
-                using (Stream file = sceneArchive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                using (Stream file = resourceProvider.openFile(filename))
                 {
                     XmlTextReader textReader = null;
                     ScenePackage scenePackage = null;
@@ -370,6 +377,6 @@ namespace Medical
             }
         }
 
-		public TouchMouseGuiForwarder TouchMouseGuiForwarder { get;	private set; }
+        public TouchMouseGuiForwarder TouchMouseGuiForwarder { get; private set; }
     }
 }

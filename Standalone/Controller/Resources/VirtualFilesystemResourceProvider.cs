@@ -13,6 +13,12 @@ namespace Medical
         private int parentPathLength;
         private VirtualFileSystem virtualFileSystem;
 
+        public VirtualFilesystemResourceProvider()
+            :this("")
+        {
+
+        }
+
         public VirtualFilesystemResourceProvider(String path)
         {
             this.parentPath = path.Replace('\\', '/');

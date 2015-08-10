@@ -418,8 +418,16 @@ namespace Medical
 
         public IEnumerable<SceneBuildStatus> openNewSceneStatus(String filename)
         {
+            foreach(var status in openNewSceneStatus(filename, new VirtualFilesystemResourceProvider()))
+            {
+                yield return status;
+            }
+        }
+
+        public IEnumerable<SceneBuildStatus> openNewSceneStatus(String filename, ResourceProvider resourceProvider)
+        {
             medicalStateController.clearStates();
-            foreach(var status in changeSceneStatus(filename))
+            foreach(var status in changeSceneStatus(filename, resourceProvider))
             {
                 yield return status;
             }
@@ -680,6 +688,14 @@ namespace Medical
 
         internal IEnumerable<SceneBuildStatus> changeSceneStatus(String file)
         {
+            foreach (var status in changeSceneStatus(file, new VirtualFilesystemResourceProvider()))
+            {
+                yield return status;
+            }
+        }
+
+        internal IEnumerable<SceneBuildStatus> changeSceneStatus(String file, ResourceProvider resourceProvider)
+        {
 #if ALLOW_OVERRIDE
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -688,7 +704,7 @@ namespace Medical
             unloadScene();
             SimObjectErrorManager.Clear();
             
-            foreach(var status in medicalController.openScene(file))
+            foreach(var status in medicalController.openScene(file, resourceProvider))
             {
                 yield return status;
             }
