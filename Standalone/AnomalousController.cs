@@ -235,6 +235,7 @@ namespace Medical
                 //Make sure we have one of our scenes
                 sceneToLoad = "Empty.sim.xml";
                 sceneResourceProvider = new EmbeddedResourceProvider(GetType().Assembly, "Medical.Resources.");
+                controller.NotificationManager.showNotification("No data files found.\nPlease reinstall.", MyGUIResourceNames.ErrorIcon);
             }
 
             foreach (var status in controller.openNewSceneStatus(sceneToLoad, sceneResourceProvider))
