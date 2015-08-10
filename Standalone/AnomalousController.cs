@@ -233,10 +233,11 @@ namespace Medical
             if (!mainArchiveAdded && !sceneResourceProvider.exists(sceneToLoad))
             {
                 //Make sure we have one of our scenes
-                sceneToLoad = "omg";
+                sceneToLoad = "Empty.sim.xml";
+                sceneResourceProvider = new EmbeddedResourceProvider(GetType().Assembly, "Medical.Resources.");
             }
 
-            foreach (var status in controller.openNewSceneStatus(sceneToLoad))
+            foreach (var status in controller.openNewSceneStatus(sceneToLoad, sceneResourceProvider))
             {
                 switch (status.Subsystem)
                 {

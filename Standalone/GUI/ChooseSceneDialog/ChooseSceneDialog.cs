@@ -65,35 +65,42 @@ namespace Medical.GUI
 
         void findSceneFiles()
         {
-            VirtualFileSystem archive = VirtualFileSystem.Instance;
-            String sceneDirectory = MedicalConfig.SceneDirectory;
-            IEnumerable<String> files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
-            foreach (String file in files)
+            try
             {
-                String fileName = VirtualFileSystem.GetFileName(file);
-                String baseName = fileName.Substring(0, fileName.IndexOf('.'));
-                String pictureFileName = sceneDirectory + "/" + baseName + ".png";
-                String imageKey = null;
-                if (archive.exists(pictureFileName))
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                String sceneDirectory = MedicalConfig.SceneDirectory;
+                IEnumerable<String> files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
+                foreach (String file in files)
                 {
-                    using (Stream imageStream = archive.openStream(pictureFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                    String fileName = VirtualFileSystem.GetFileName(file);
+                    String baseName = fileName.Substring(0, fileName.IndexOf('.'));
+                    String pictureFileName = sceneDirectory + "/" + baseName + ".png";
+                    String imageKey = null;
+                    if (archive.exists(pictureFileName))
                     {
-                        using (var image = new FreeImageBitmap(imageStream))
+                        using (Stream imageStream = archive.openStream(pictureFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                         {
-                            if (image != null)
+                            using (var image = new FreeImageBitmap(imageStream))
                             {
-                                imageKey = imageAtlas.addImage(pictureFileName, image);
+                                if (image != null)
+                                {
+                                    imageKey = imageAtlas.addImage(pictureFileName, image);
+                                }
                             }
                         }
                     }
+                    ButtonGridItem item = sceneFileGrid.addItem("Main", baseName, imageKey);
+                    item.ItemClicked += new EventHandler(item_ItemClicked);
+                    item.UserObject = file;
                 }
-                ButtonGridItem item = sceneFileGrid.addItem("Main", baseName, imageKey);
-                item.ItemClicked += new EventHandler(item_ItemClicked);
-                item.UserObject = file;
+                if (sceneFileGrid.Count > 0)
+                {
+                    sceneFileGrid.SelectedItem = sceneFileGrid.getItem(0);
+                }
             }
-            if (sceneFileGrid.Count > 0)
+            catch (Exception ex)
             {
-                sceneFileGrid.SelectedItem = sceneFileGrid.getItem(0);
+                Logging.Log.Error("{0} loading scene files for ChooseScneDialog.\nMessage: {1}", ex.GetType().Name, ex.Message);
             }
         }
 

@@ -300,14 +300,21 @@ namespace Medical.GUI
 
         void findSceneFiles()
         {
-            VirtualFileSystem archive = VirtualFileSystem.Instance;
-            String sceneDirectory = MedicalConfig.SceneDirectory;
-            IEnumerable<String> files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
-            foreach (String file in files)
+            try
             {
-                String fileName = VirtualFileSystem.GetFileName(file);
-                String baseName = fileName.Substring(0, fileName.IndexOf('.'));
-                defaultSceneCombo.addItem(baseName, fileName);
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                String sceneDirectory = MedicalConfig.SceneDirectory;
+                IEnumerable<String> files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
+                foreach (String file in files)
+                {
+                    String fileName = VirtualFileSystem.GetFileName(file);
+                    String baseName = fileName.Substring(0, fileName.IndexOf('.'));
+                    defaultSceneCombo.addItem(baseName, fileName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Log.Error("{0} loading scene files for OptionsDialog.\nMessage: {1}", ex.GetType().Name, ex.Message);
             }
         }
     }
