@@ -27,16 +27,7 @@ namespace Medical
             cameraLink = new CameraLink(standaloneController.SceneViewController);
 
             CompressedTextureSupport textureFormat = OgreInterface.Instance.SelectedTextureFormat;
-            int padding;
-            switch(textureFormat)
-            {
-                case CompressedTextureSupport.DXT:
-                    padding = 4;
-                    break;
-                default:
-                    padding = 1;
-                    break;
-            }
+            int padding = VirtualTextureManager.SuggestPadding(textureFormat);
 
             virtualTextureManager = new VirtualTextureManager(4, new IntSize2(4096, 4096), 128, textureFormat, padding, 10, new IntSize2(256, 128));
             virtualTextureManager.TransparentFeedbackBufferVisibilityMask = TransparencyController.TransparentVisibilityMask;
