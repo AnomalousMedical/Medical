@@ -85,7 +85,7 @@ namespace Medical
             }
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
             //Unload sequences
             if(loadedSequences != null)
@@ -101,12 +101,15 @@ namespace Medical
             ResourceManager.Instance.destroyAllTexturesForResource(BrandingImageKey);
             ResourceManager.Instance.removeByName(BrandingImageKey);
 
-            TaskController taskController = standaloneController.TaskController;
-            foreach (DDPluginTask task in tasks)
+            if (!shuttingDown)
             {
-                taskController.removeTask(task, willReload);
-                ResourceManager.Instance.destroyAllTexturesForResource(task.IconName);
-                ResourceManager.Instance.removeByName(task.IconName);
+                TaskController taskController = standaloneController.TaskController;
+                foreach (DDPluginTask task in tasks)
+                {
+                    taskController.removeTask(task, willReload);
+                    ResourceManager.Instance.destroyAllTexturesForResource(task.IconName);
+                    ResourceManager.Instance.removeByName(task.IconName);
+                }
             }
         }
 

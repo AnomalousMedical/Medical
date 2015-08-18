@@ -76,7 +76,7 @@ namespace UnitTestPlugin
             standaloneController.TaskController.addTask(new MDIDialogOpenTask(testImageAtlas, "UnitTestPlugin.TestImageAtlas", "Image Atlas", CommonResources.NoIcon, "Unit Test", true));
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
 
         }

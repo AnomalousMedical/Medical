@@ -135,7 +135,7 @@ namespace Medical
             standaloneController.ViewHostFactory.addFactory(new OffsetSequenceEditorFactory(standaloneController.MedicalController, standaloneController.Clipboard));
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
 
         }

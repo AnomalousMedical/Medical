@@ -72,7 +72,7 @@ namespace Lecture
             standaloneController.ViewHostFactory.addFactory(new SlideTaskbarFactory());
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
 
         }

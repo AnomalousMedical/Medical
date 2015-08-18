@@ -17,7 +17,9 @@ namespace Medical
         /// Unload the plugin, only needed if AllowRuntimeUninstall is true. Is not called on program termination
         /// only when plugins are uninstalled or reloading (which uninstalls and then reloads).
         /// </summary>
-        void unload(StandaloneController standaloneController, bool willReload);
+        /// <param name="willReload">True if this plugin will reload.</param>
+        /// <param name="shuttingDown">True if the program is shutting down, can probably skip some items in this case.</param>
+        void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown);
 
         void sceneLoaded(SimScene scene);
 

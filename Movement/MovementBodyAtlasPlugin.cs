@@ -47,7 +47,7 @@ namespace Medical.Movement
             taskController.addTask(movementDialogTask);
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
 
         }

@@ -146,12 +146,12 @@ namespace Medical
             saveConfiguration();
             unloadScene();
             medicalController.unloadSceneAndResources();
-            IDisposableUtil.DisposeIfNotNull(virtualTextureSceneViewLink);
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
 			IDisposableUtil.DisposeIfNotNull(downloadController);
             IDisposableUtil.DisposeIfNotNull(anatomyController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
+            IDisposableUtil.DisposeIfNotNull(virtualTextureSceneViewLink);
             IDisposableUtil.DisposeIfNotNull(notificationManager);
             IDisposableUtil.DisposeIfNotNull(imageRendererProgress);
             IDisposableUtil.DisposeIfNotNull(continuePrompt);

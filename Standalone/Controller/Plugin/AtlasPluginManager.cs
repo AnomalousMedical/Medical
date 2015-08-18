@@ -68,6 +68,7 @@ namespace Medical
         {
             foreach (AtlasPlugin plugin in plugins)
             {
+                plugin.unload(standaloneController, false, true);
                 plugin.Dispose();
             }
 
@@ -493,7 +494,7 @@ namespace Medical
         {
             String dataFileName = Path.GetFileNameWithoutExtension(plugin.Location);
 
-            plugin.unload(standaloneController, willReload);
+            plugin.unload(standaloneController, willReload, false);
 
             loadedPluginNames.Remove(dataFileName);
             usedPluginIds.Remove(plugin.PluginId);

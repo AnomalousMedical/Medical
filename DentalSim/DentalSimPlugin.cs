@@ -95,7 +95,7 @@ namespace DentalSim
             movementSequenceController.addMovementSequence("Vertical Opening", new EmbeddedMovementSequenceInfo(assembly, "Tapping Teeth", "DentalSim.Sequences.VerticalOpening.Tapping Teeth.seq"));
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
 
         }

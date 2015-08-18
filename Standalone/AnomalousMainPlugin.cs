@@ -324,7 +324,7 @@ namespace Medical.GUI
             standaloneController.ViewHostFactory.addFactory(new WizardComponentFactory(teethToolController));
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
 
         }

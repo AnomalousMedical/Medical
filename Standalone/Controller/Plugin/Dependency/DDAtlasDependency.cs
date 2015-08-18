@@ -66,7 +66,7 @@ namespace Medical
             }
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
             if (resources.Count > 0)
             {
