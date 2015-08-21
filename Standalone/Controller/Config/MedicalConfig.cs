@@ -91,6 +91,7 @@ namespace Medical
                 UnrestrictedEnvironmentOverride = systemOverride.getValue("UnrestrictedEnvironmentOverride", UnrestrictedEnvironmentOverride);
                 ThemeFileOverride = systemOverride.getValue("ThemeFileOverride", ThemeFileOverride);
                 TrackMemoryLeaks = systemOverride.getValue("TrackMemoryLeaks", TrackMemoryLeaks);
+                OpenGLESEmulatorPath = systemOverride.getValue("OpenGLESEmulatorPath", OpenGLESEmulatorPath);
             }
 #endif
             //Fix up paths based on the build name
@@ -406,6 +407,8 @@ namespace Medical
         }
 
         public static String ThemeFileOverride { get; private set; }
+
+        public static String OpenGLESEmulatorPath { get; private set; }
 #endif
 
         public static String DefaultScene

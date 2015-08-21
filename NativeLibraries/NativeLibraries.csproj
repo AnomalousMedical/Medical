@@ -147,6 +147,10 @@
       <Link>Debug\x86\RenderSystem_Direct3D11_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\Engine\Debug\x86\RenderSystem_GLES2_d.dll">
+      <Link>Debug\x86\RenderSystem_GLES2_d.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Engine\Debug\x86\RenderSystem_GL_d.dll">
       <Link>Debug\x86\RenderSystem_GL_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -241,6 +245,10 @@
     </Content>
     <Content Include="..\..\Engine\Release\x86\RenderSystem_GL.dll">
       <Link>Release\x86\RenderSystem_GL.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\RenderSystem_GLES2.dll">
+      <Link>Release\x86\RenderSystem_GLES2.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\x86\SoundWrapper.dll">

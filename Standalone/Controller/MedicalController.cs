@@ -86,6 +86,10 @@ namespace Medical
             MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.TouchType == TouchType.Screen;
             MyGUIInterface.TrackMemoryLeaks = MedicalConfig.TrackMemoryLeaks;
 
+#if ALLOW_OVERRIDE
+            NativePlatformPlugin.addPath(MedicalConfig.OpenGLESEmulatorPath);
+#endif
+
             //Configure plugins
             pluginManager.OnConfigureDefaultWindow = delegate (out WindowInfo defaultWindow)
             {
