@@ -384,6 +384,29 @@ namespace Medical
 
         public static float PixelScaleOverride { get; private set; }
 
+        /// <summary>
+        /// Set the number of virtual texture staging buffer uploads per frame. Can reduce
+        /// stuttering while still allowing efficient background loading of textures. This
+        /// can be higher than the total number of staging buffers which implies unlimited
+        /// upload per frame.
+        /// </summary>
+        public static int MaxStagingVirtualTextureUploadsPerFrame { get; set; } = int.MaxValue;
+
+        /// <summary>
+        /// Set the number of staging buffers for the virtual texture. The more of these
+        /// there are the more textures can be loaded in the background without needing
+        /// to stop the background thread.
+        /// </summary>
+        public static int VirtualTextureStagingBufferCount { get; set; } = 10;
+
+        public static ulong TextureCacheSize { get; set; } = 100 * 1024 * 1024;
+
+        public static IntSize2 FeedbackBufferSize { get; set; } = new IntSize2(256, 128);
+
+        public static IntSize2 PhysicalTextureSize { get; set; } = new IntSize2(4096, 4096);
+
+        public static int PageSize { get; set; } = 128;
+
         public static bool OverrideCertificateStore
         {
             get
