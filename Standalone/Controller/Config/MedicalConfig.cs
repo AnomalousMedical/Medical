@@ -44,6 +44,16 @@ namespace Medical
         private static ConfigSection resources = null;
 #endif
 
+        static MedicalConfig()
+        {
+            MaxStagingVirtualTextureUploadsPerFrame = int.MaxValue;
+            VirtualTextureStagingBufferCount = 10;
+            TextureCacheSize = 100 * 1024 * 1024;
+            FeedbackBufferSize = new IntSize2(256, 128);
+            PhysicalTextureSize = new IntSize2(4096, 4096);
+            PageSize = 128;
+        }
+
         public MedicalConfig()
         {
             BuildName = null;
@@ -390,22 +400,22 @@ namespace Medical
         /// can be higher than the total number of staging buffers which implies unlimited
         /// upload per frame.
         /// </summary>
-        public static int MaxStagingVirtualTextureUploadsPerFrame { get; set; } = int.MaxValue;
+        public static int MaxStagingVirtualTextureUploadsPerFrame { get; set; }
 
         /// <summary>
         /// Set the number of staging buffers for the virtual texture. The more of these
         /// there are the more textures can be loaded in the background without needing
         /// to stop the background thread.
         /// </summary>
-        public static int VirtualTextureStagingBufferCount { get; set; } = 10;
+        public static int VirtualTextureStagingBufferCount { get; set; }
 
-        public static ulong TextureCacheSize { get; set; } = 100 * 1024 * 1024;
+        public static ulong TextureCacheSize { get; set; }
 
-        public static IntSize2 FeedbackBufferSize { get; set; } = new IntSize2(256, 128);
+        public static IntSize2 FeedbackBufferSize { get; set; }
 
-        public static IntSize2 PhysicalTextureSize { get; set; } = new IntSize2(4096, 4096);
+        public static IntSize2 PhysicalTextureSize { get; set; }
 
-        public static int PageSize { get; set; } = 128;
+        public static int PageSize { get; set; }
 
         public static bool OverrideCertificateStore
         {
