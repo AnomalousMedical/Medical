@@ -94,15 +94,15 @@ Source: ..\..\..\Release\x64\WinMTDriver.dll; DestDir: {app}\x64; Flags: ignorev
 Source: ..\..\..\Release\x64\Zip.dll; DestDir: {app}\x64; Flags: ignoreversion
 
 ;Microcode Caches
-Source: ..\..\..\Release\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\Release\OpenGL Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
+;Source: ..\..\..\Release\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
+;Source: ..\..\..\Release\OpenGL Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
 
 ;VS 2013 Redistributable
-Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
-Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x64.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+Source: "..\..\..\..\Dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
+Source: "..\..\..\..\Dependencies\InstallerDependencies\Windows\vcredist_x64.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 
 ;.Net 4.5.2
-Source: S:\dependencies\InstallerDependencies\Windows\NDP452-KB2901954-Web.exe; DestDir: {tmp}; 
+Source: ..\..\..\..\Dependencies\InstallerDependencies\Windows\NDP452-KB2901954-Web.exe; DestDir: {tmp}; 
 
 ;Old files to delete, this will probably have to stay pretty much forever unless we rename these dlls
 [InstallDelete]
