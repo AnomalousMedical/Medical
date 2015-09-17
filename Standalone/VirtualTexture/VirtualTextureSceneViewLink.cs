@@ -28,7 +28,7 @@ namespace Medical
 
             CompressedTextureSupport textureFormat = OgreInterface.Instance.SelectedTextureFormat;
 
-            virtualTextureManager = new VirtualTextureManager(UnifiedMaterialBuilder.GetNumCompressedTexturesNeeded(textureFormat), MedicalConfig.PhysicalTextureSize, MedicalConfig.PageSize, 4096, textureFormat, MedicalConfig.VirtualTextureStagingBufferCount, MedicalConfig.FeedbackBufferSize, MedicalConfig.TextureCacheSize);
+            virtualTextureManager = new VirtualTextureManager(UnifiedMaterialBuilder.GetNumCompressedTexturesNeeded(textureFormat), MedicalConfig.PhysicalTextureSize, MedicalConfig.PageSize, 4096, textureFormat, MedicalConfig.VirtualTextureStagingBufferCount, MedicalConfig.FeedbackBufferSize, MedicalConfig.TextureCacheSize, UnifiedMaterialBuilder.AreTexturesPagedOnDisk(textureFormat));
             virtualTextureManager.MaxStagingUploadPerFrame = MedicalConfig.MaxStagingVirtualTextureUploadsPerFrame;
             virtualTextureManager.TransparentFeedbackBufferVisibilityMask = TransparencyController.TransparentVisibilityMask;
             virtualTextureManager.OpaqueFeedbackBufferVisibilityMask = TransparencyController.OpaqueVisibilityMask;
