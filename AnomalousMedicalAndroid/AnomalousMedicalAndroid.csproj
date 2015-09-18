@@ -120,7 +120,7 @@
     <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\armeabi-v7a\libopenal.so">
       <Link>lib\armeabi-v7a\libopenal.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Dependencies\FreeImage.NET\AndroidBuild\libs\armeabi-v7a\libFreeImage.so">
+    <AndroidNativeLibrary Include="..\..\Dependencies\FreeImage.NET\AndroidBuild\libs\armeabi-v7a\Release\libFreeImage.so">
       <Link>lib\armeabi-v7a\libFreeImage.so</Link>
     </AndroidNativeLibrary>
     <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libBulletWrapper.so">
