@@ -13,6 +13,7 @@ namespace Medical
         public static void Run()
         {
             NativePlatformPlugin.StaticInitialize();
+            OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
 
             AnomalousController anomalous = null;
             try

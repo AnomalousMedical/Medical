@@ -50,7 +50,7 @@ namespace AnomalousMedicalAndroid
         protected override void createApp()
         {
             NativePlatformPlugin.StaticInitialize();
-            OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.ETC2;
+            OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
             OgrePlugin.OgreInterface.InitialClearColor = new Color(0.156f, 0.156f, 0.156f);
 
             #if DEBUG
@@ -67,20 +67,29 @@ namespace AnomalousMedicalAndroid
 
             String archiveName = null;
 
+            #if DEBUG
+            String testingArtFile = "/storage/emulated/0/InternalRelease.dat";
+            if (File.Exists(testingArtFile))
+            {
+                archiveName = testingArtFile;
+            }
+            else
+            {
+            #endif
+                
             if (dl.AreExpansionFilesDelivered(SucceedIfEmpty))
             {
                 archiveName = findExpansionFile();
             }
-            #if DEBUG
-            else if (File.Exists("/storage/emulated/0/InternalRelease_Android.dat"))
-            {
-                archiveName = "/storage/emulated/0/InternalRelease_Android.dat";
-            }
-            #endif
 
+            #if DEBUG
+            }
+            Logging.Log.Debug("Archive Name {0}", archiveName);
+            #endif
+            
             anomalousController = new AnomalousController()
             {
-                PrimaryArchive = archiveName
+                    PrimaryArchive = archiveName
             };
             anomalousController.OnInitCompleted += HandleOnInitCompleted;
             anomalousController.DataFileMissing += HandleDataFileMissing;
