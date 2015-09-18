@@ -217,7 +217,7 @@ namespace Medical
             }
 
             Log.Info("Medical Controller Shutdown");
-            logListener.closeLogFile();
+            logListener.Dispose();
         }
 
         public void saveCrashLog()
