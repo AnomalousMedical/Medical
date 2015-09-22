@@ -56,14 +56,6 @@
     <Reference Include="BEPUikPlugin">
       <HintPath>..\..\Engine\Release\BEPUikPlugin.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetZip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\DotNetZip\bin\Release\DotNetZip.dll</HintPath>
-    </Reference>
-    <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\FreeImage.NET\Library\bin\Release\FreeImageNET.dll</HintPath>
-    </Reference>
     <Reference Include="GuiFramework">
       <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
     </Reference>
@@ -86,9 +78,6 @@
     <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\Lucene.net\build\bin\core\Release\NET40\Lucene.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Anomalous.Security">
-      <HintPath>..\..\Dependencies\Mono\lib\Release\Mono.Anomalous.Security.dll</HintPath>
     </Reference>
     <Reference Include="OSPlatform">
       <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
@@ -758,6 +747,18 @@
     <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Dependencies\DotNetZip\DotNetZip.csproj">
+      <Project>{5068f53b-8d7b-4aee-af54-7428b0e997a3}</Project>
+      <Name>DotNetZip</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj">
+      <Project>{6598a7cd-8f27-4d3f-a675-5ae63113a7c3}</Project>
+      <Name>FreeImageDotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\Mono\Mono.Security\Mono.Anomalous.Security.csproj">
+      <Project>{a21b2895-668e-4ca9-8c28-d3ff89168e4e}</Project>
+      <Name>Mono.Anomalous.Security</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>

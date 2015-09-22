@@ -47,7 +47,7 @@ namespace Medical
         static MedicalConfig()
         {
             MaxStagingVirtualTextureUploadsPerFrame = int.MaxValue;
-            VirtualTextureStagingBufferCount = 10;
+            VirtualTextureStagingBufferCount = 20;
             TextureCacheSize = 100 * 1024 * 1024;
             FeedbackBufferSize = new IntSize2(256, 128);
             PhysicalTextureSize = new IntSize2(4096, 4096);
