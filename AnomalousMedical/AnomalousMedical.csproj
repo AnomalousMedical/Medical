@@ -93,56 +93,6 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BulletPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\BulletPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="Engine, Version=1.0.0.1169, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\FreeImage.NET\Library\bin\Release\FreeImageNET.dll</HintPath>
-    </Reference>
-    <Reference Include="GuiFramework">
-      <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="GuiFramework.Cameras, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\GuiFramework.Cameras.dll</HintPath>
-    </Reference>
-    <Reference Include="GuiFramework.Editor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\GuiFramework.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="libRocketPlugin, Version=1.0.0.1688, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="libRocketWidget, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\libRocketWidget.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Anomalous.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\Mono\lib\Release\Mono.Anomalous.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="OgrePlugin, Version=1.0.0.1169, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="OSPlatform">
-      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
-    </Reference>
-    <Reference Include="SoundPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\SoundPlugin.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -163,10 +113,6 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Simulation\Simulation.csproj">
-      <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
-      <Name>Simulation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Standalone\Standalone.csproj">
       <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
       <Name>Standalone</Name>

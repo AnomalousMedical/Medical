@@ -28,6 +28,7 @@ namespace AnomalousMedicalAndroid
         static MainActivity()
         {
             Java.Lang.JavaSystem.LoadLibrary("gnustl_shared");
+            Java.Lang.JavaSystem.LoadLibrary("FreeImage");
             Java.Lang.JavaSystem.LoadLibrary("openal");
 			ServerConnection.EnableUnsafeTLS1_0 = true;
         }
