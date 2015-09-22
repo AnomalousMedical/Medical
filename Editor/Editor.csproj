@@ -55,10 +55,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="BulletPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\BulletPlugin.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Documents\UnknownDocumentHandler.cs" />
@@ -145,6 +141,10 @@
     <ProjectReference Include="..\..\Dependencies\Irony\Irony\Irony.csproj">
       <Project>{d81f5c91-d7db-46e5-bc99-49488fb6814c}</Project>
       <Name>Irony</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\BulletWrapperPlugin\BulletWrapperPlugin.csproj">
+      <Project>{eba88dc3-837d-45d8-a91a-e291c6ae444e}</Project>
+      <Name>BulletWrapperPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
       <Project>{57c253f1-157f-4a6a-9fed-345a776b97d5}</Project>
