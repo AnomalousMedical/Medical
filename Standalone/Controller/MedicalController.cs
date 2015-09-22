@@ -26,7 +26,7 @@ using Anomalous.OSPlatform;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;
 using Anomalous.GuiFramework.Editor;
-using Anomalous.GuiFramework.Debugging;
+using System.Reflection;
 
 namespace Medical
 {
@@ -132,7 +132,15 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(RocketWidgetInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkCamerasInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkEditorInterface).Assembly);
-            pluginManager.addPluginAssembly(typeof(GuiFrameworkDebuggingInterface).Assembly);
+            try
+            {
+                Assembly assembly = Assembly.LoadFrom("GuiFramework.Debugging.dll");
+                pluginManager.addPluginAssembly(assembly);
+            }
+            catch(Exception)
+            {
+
+            }
             pluginManager.initializePlugins();
 
             performanceMetricTimer = new NativeSystemTimer();

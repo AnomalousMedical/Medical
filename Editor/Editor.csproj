@@ -49,25 +49,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GuiFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="GuiFramework.Cameras, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\GuiFramework.Cameras.dll</HintPath>
-    </Reference>
-    <Reference Include="GuiFramework.Editor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\GuiFramework.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="libRocketPlugin, Version=1.0.0.1387, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="OSPlatform">
-      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -77,22 +58,6 @@
     <Reference Include="BulletPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\BulletPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="Engine, Version=1.0.0.1004, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="OgrePlugin, Version=1.0.0.1004, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="SoundPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\SoundPlugin.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +145,42 @@
     <ProjectReference Include="..\..\Dependencies\Irony\Irony\Irony.csproj">
       <Project>{d81f5c91-d7db-46e5-bc99-49488fb6814c}</Project>
       <Name>Irony</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
+      <Project>{57c253f1-157f-4a6a-9fed-345a776b97d5}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\GuiFramework.Cameras\GuiFramework.Cameras.csproj">
+      <Project>{83d4bb54-ff33-4011-9819-582458329d9b}</Project>
+      <Name>GuiFramework.Cameras</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\GuiFramework.Editor\GuiFramework.Editor.csproj">
+      <Project>{acbba2d0-c648-4798-9d40-ce8b797642ad}</Project>
+      <Name>GuiFramework.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\GuiFramework\GuiFramework.csproj">
+      <Project>{fc299a06-61bd-4562-a315-0f0be454925a}</Project>
+      <Name>GuiFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\libRocketPlugin\libRocketPlugin.csproj">
+      <Project>{a221c2f5-2089-495b-b51a-54710507344a}</Project>
+      <Name>libRocketPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\MyGUIPlugin\MyGUIPlugin.csproj">
+      <Project>{02d4da85-fd6c-421f-81c3-8f58f790bc81}</Project>
+      <Name>MyGUIPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
+      <Project>{e9fd5768-32e1-42c7-8256-4d7b97c22a9b}</Project>
+      <Name>OgrePlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
+      <Project>{6e594c78-9cd8-432d-a135-11c4a72f3bcf}</Project>
+      <Name>OSPlatform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\SoundPlugin\SoundPlugin.csproj">
+      <Project>{ccaefe0a-ad1f-42e8-88da-5a685cc7c73d}</Project>
+      <Name>SoundPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
