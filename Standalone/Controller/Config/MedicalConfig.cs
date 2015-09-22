@@ -394,29 +394,6 @@ namespace Medical
 
         public static float PixelScaleOverride { get; private set; }
 
-        /// <summary>
-        /// Set the number of virtual texture staging buffer uploads per frame. Can reduce
-        /// stuttering while still allowing efficient background loading of textures. This
-        /// can be higher than the total number of staging buffers which implies unlimited
-        /// upload per frame.
-        /// </summary>
-        public static int MaxStagingVirtualTextureUploadsPerFrame { get; set; }
-
-        /// <summary>
-        /// Set the number of staging buffers for the virtual texture. The more of these
-        /// there are the more textures can be loaded in the background without needing
-        /// to stop the background thread.
-        /// </summary>
-        public static int VirtualTextureStagingBufferCount { get; set; }
-
-        public static ulong TextureCacheSize { get; set; }
-
-        public static IntSize2 FeedbackBufferSize { get; set; }
-
-        public static IntSize2 PhysicalTextureSize { get; set; }
-
-        public static int PageSize { get; set; }
-
         public static bool OverrideCertificateStore
         {
             get
@@ -443,6 +420,29 @@ namespace Medical
 
         public static String OpenGLESEmulatorPath { get; private set; }
 #endif
+
+        /// <summary>
+        /// Set the number of virtual texture staging buffer uploads per frame. Can reduce
+        /// stuttering while still allowing efficient background loading of textures. This
+        /// can be higher than the total number of staging buffers which implies unlimited
+        /// upload per frame.
+        /// </summary>
+        public static int MaxStagingVirtualTextureUploadsPerFrame { get; set; }
+
+        /// <summary>
+        /// Set the number of staging buffers for the virtual texture. The more of these
+        /// there are the more textures can be loaded in the background without needing
+        /// to stop the background thread.
+        /// </summary>
+        public static int VirtualTextureStagingBufferCount { get; set; }
+
+        public static ulong TextureCacheSize { get; set; }
+
+        public static IntSize2 FeedbackBufferSize { get; set; }
+
+        public static IntSize2 PhysicalTextureSize { get; set; }
+
+        public static int PageSize { get; set; }
 
         public static String DefaultScene
         {
