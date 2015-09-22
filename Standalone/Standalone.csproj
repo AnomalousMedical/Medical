@@ -75,10 +75,6 @@
     <Reference Include="libRocketWidget">
       <HintPath>..\..\Engine\Release\libRocketWidget.dll</HintPath>
     </Reference>
-    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\Lucene.net\build\bin\core\Release\NET40\Lucene.Net.dll</HintPath>
-    </Reference>
     <Reference Include="OSPlatform">
       <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
     </Reference>
@@ -754,6 +750,10 @@
     <ProjectReference Include="..\..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj">
       <Project>{6598a7cd-8f27-4d3f-a675-5ae63113a7c3}</Project>
       <Name>FreeImageDotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\Lucene.net\src\core\Lucene.Net.csproj">
+      <Project>{5d4ad9be-1ffb-41ab-9943-25737971bf57}</Project>
+      <Name>Lucene.Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Dependencies\Mono\Mono.Security\Mono.Anomalous.Security.csproj">
       <Project>{a21b2895-668e-4ca9-8c28-d3ff89168e4e}</Project>

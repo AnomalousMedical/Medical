@@ -61,10 +61,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\GuiFramework.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Irony">
-      <HintPath>..\..\Dependencies\Irony\Irony\bin\Release\Irony.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="libRocketPlugin, Version=1.0.0.1387, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
@@ -181,6 +177,10 @@
     <EmbeddedResource Include="Controller\Project\MasterTemplate.trml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Dependencies\Irony\Irony\Irony.csproj">
+      <Project>{d81f5c91-d7db-46e5-bc99-49488fb6814c}</Project>
+      <Name>Irony</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>
