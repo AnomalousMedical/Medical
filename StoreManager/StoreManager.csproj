@@ -44,21 +44,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Engine">
-      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="libRocketPlugin, Version=1.0.0.1585, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="OSPlatform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -97,6 +82,22 @@
     <ProjectReference Include="..\..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj">
       <Project>{6598a7cd-8f27-4d3f-a675-5ae63113a7c3}</Project>
       <Name>FreeImageDotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
+      <Project>{57c253f1-157f-4a6a-9fed-345a776b97d5}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\libRocketPlugin\libRocketPlugin.csproj">
+      <Project>{a221c2f5-2089-495b-b51a-54710507344a}</Project>
+      <Name>libRocketPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\MyGUIPlugin\MyGUIPlugin.csproj">
+      <Project>{02d4da85-fd6c-421f-81c3-8f58f790bc81}</Project>
+      <Name>MyGUIPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
+      <Project>{6e594c78-9cd8-432d-a135-11c4a72f3bcf}</Project>
+      <Name>OSPlatform</Name>
     </ProjectReference>
     <ProjectReference Include="..\Standalone\Standalone.csproj">
       <Project>{e217c194-a14f-41de-a838-c401e60adf15}</Project>

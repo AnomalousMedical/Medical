@@ -53,33 +53,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="libRocketPlugin">
-      <HintPath>..\..\Engine\Release\libRocketPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="libRocketWidget">
-      <HintPath>..\..\Engine\Release\libRocketWidget.dll</HintPath>
-    </Reference>
-    <Reference Include="OSPlatform">
-      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="OgrePlugin, Version=1.0.0.1004, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="SoundPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\SoundPlugin.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
@@ -758,6 +737,30 @@
     <ProjectReference Include="..\..\Engine\GuiFramework\GuiFramework.csproj">
       <Project>{fc299a06-61bd-4562-a315-0f0be454925a}</Project>
       <Name>GuiFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\libRocketPlugin\libRocketPlugin.csproj">
+      <Project>{a221c2f5-2089-495b-b51a-54710507344a}</Project>
+      <Name>libRocketPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\libRocketWidget\libRocketWidget.csproj">
+      <Project>{922f9aec-9921-4234-89e5-14ce09625a07}</Project>
+      <Name>libRocketWidget</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\MyGUIPlugin\MyGUIPlugin.csproj">
+      <Project>{02d4da85-fd6c-421f-81c3-8f58f790bc81}</Project>
+      <Name>MyGUIPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
+      <Project>{e9fd5768-32e1-42c7-8256-4d7b97c22a9b}</Project>
+      <Name>OgrePlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
+      <Project>{6e594c78-9cd8-432d-a135-11c4a72f3bcf}</Project>
+      <Name>OSPlatform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\SoundPlugin\SoundPlugin.csproj">
+      <Project>{ccaefe0a-ad1f-42e8-88da-5a685cc7c73d}</Project>
+      <Name>SoundPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
