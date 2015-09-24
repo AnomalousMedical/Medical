@@ -104,29 +104,6 @@ namespace Medical
             }
         }
 
-        protected override ProcessStartInfo RestartProcInfoImpl
-        {
-            get
-            {
-                //ANROID_FIXLATER: probably not right
-                String[] args = Environment.GetCommandLineArgs();
-                return new ProcessStartInfo(args[0]);
-            }
-        }
-
-        protected override ProcessStartInfo RestartAdminProcInfoImpl
-        {
-            get
-            {
-                //ANROID_FIXLATER: probably not right
-                var startInfo = RestartProcInfoImpl;
-                startInfo.Verb = "runas";
-                startInfo.UseShellExecute = true;
-
-                return startInfo;
-            }
-        }
-
         protected override bool DefaultEnableMultitouchImpl
         {
             get

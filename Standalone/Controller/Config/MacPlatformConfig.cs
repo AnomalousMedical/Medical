@@ -105,29 +105,6 @@ namespace Medical
             }
         }
 
-        protected override ProcessStartInfo RestartProcInfoImpl
-        {
-            get
-            {
-                String appBundle = Path.GetFullPath("../../");
-                if (appBundle.Length > 1)
-                {
-                    appBundle = appBundle.Substring(0, appBundle.Length - 1);
-                }
-                ProcessStartInfo startInfo = new ProcessStartInfo("open", String.Format("-a '{0}' -n", appBundle));
-                startInfo.UseShellExecute = false;
-                return startInfo;
-            }
-        }
-
-        protected override ProcessStartInfo RestartAdminProcInfoImpl
-        {
-            get
-            {
-                return RestartProcInfoImpl;
-            }
-        }
-
         protected override bool DefaultEnableMultitouchImpl
         {
             get

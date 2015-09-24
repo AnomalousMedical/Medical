@@ -103,27 +103,6 @@ namespace Medical
             }
         }
 
-        protected override ProcessStartInfo RestartProcInfoImpl
-        {
-            get
-            {
-                String[] args = Environment.GetCommandLineArgs();
-                return new ProcessStartInfo(args[0]);
-            }
-        }
-
-        protected override ProcessStartInfo RestartAdminProcInfoImpl
-        {
-            get
-            {
-                var startInfo = RestartProcInfoImpl;
-                startInfo.Verb = "runas";
-                startInfo.UseShellExecute = true;
-
-                return startInfo;
-            }
-        }
-
         protected override bool DefaultEnableMultitouchImpl
         {
             get

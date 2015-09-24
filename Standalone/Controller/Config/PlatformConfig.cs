@@ -137,22 +137,6 @@ namespace Medical
             }
         }
 
-        public static ProcessStartInfo RestartProcInfo
-        {
-            get
-            {
-                return currentConfig.RestartProcInfoImpl;
-            }
-        }
-
-        public static ProcessStartInfo RestartAdminProcInfo
-        {
-            get
-            {
-                return currentConfig.RestartAdminProcInfoImpl;
-            }
-        }
-
         public static RuntimeOperatingSystem OsId { get; private set; }
 
         public static bool DefaultEnableMultitouch
@@ -276,8 +260,6 @@ namespace Medical
 
         protected abstract String OverrideFileLocationImpl { get; }
 
-        protected abstract ProcessStartInfo RestartProcInfoImpl { get; }
-
         protected abstract bool DefaultEnableMultitouchImpl { get; }
 
         protected abstract bool HasCustomSSLValidationImpl { get; }
@@ -287,8 +269,6 @@ namespace Medical
         protected abstract bool UnrestrictedEnvironmentImpl { get; }
 
         protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
-
-        protected abstract ProcessStartInfo RestartAdminProcInfoImpl { get; }
 
         protected abstract bool AllowDllPluginsToLoadImpl { get; }
 
