@@ -58,6 +58,14 @@
       <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
       <Name>Standalone</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\Android.Play.ExpansionLibrary\ExpansionDownloader\ExpansionDownloader.csproj">
+      <Project>{C1B3041A-48E8-42A4-95DD-00159872548C}</Project>
+      <Name>ExpansionDownloader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\Android.Play.ExpansionLibrary\LicenseVerificationLibrary\LicenseVerificationLibrary.csproj">
+      <Project>{C95FFDB8-C066-4669-8328-AAEEDBA94C87}</Project>
+      <Name>LicenseVerificationLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -75,12 +83,6 @@
     </Reference>
     <Reference Include="OgrePlugin">
       <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="ExpansionDownloader">
-      <HintPath>..\..\Dependencies\Android.Play.ExpansionLibrary\Prebuilt\ExpansionDownloader.dll</HintPath>
-    </Reference>
-    <Reference Include="LicenseVerificationLibrary">
-      <HintPath>..\..\Dependencies\Android.Play.ExpansionLibrary\Prebuilt\LicenseVerificationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="MyGUIPlugin">
       <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
