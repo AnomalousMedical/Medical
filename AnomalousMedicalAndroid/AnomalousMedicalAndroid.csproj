@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -50,6 +50,26 @@
     <AndroidLinkSkip>System;System.Core;System.Xml;System.Xml.Linq;mscorlib</AndroidLinkSkip>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
+      <Project>{57C253F1-157F-4A6A-9FED-345A776B97D5}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\MyGUIPlugin\MyGUIPlugin.csproj">
+      <Project>{02D4DA85-FD6C-421F-81C3-8F58F790BC81}</Project>
+      <Name>MyGUIPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
+      <Project>{E9FD5768-32E1-42C7-8256-4D7B97C22A9B}</Project>
+      <Name>OgrePlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform.Android\OSPlatform.Android.csproj">
+      <Project>{ab582550-fea0-4b33-88f5-7d59d0119ac2}</Project>
+      <Name>OSPlatform.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
+      <Project>{6E594C78-9CD8-432D-A135-11C4A72F3BCF}</Project>
+      <Name>OSPlatform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>
@@ -72,21 +92,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Engine">
-      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="OSPlatform">
-      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
-    </Reference>
-    <Reference Include="OSPlatform.Android">
-      <HintPath>..\..\Engine\Release\OSPlatform.Android.dll</HintPath>
-    </Reference>
-    <Reference Include="OgrePlugin">
-      <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="MyGUIPlugin">
-      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
@@ -113,11 +118,7 @@
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="lib\" />
-    <Folder Include="lib\armeabi-v7a\" />
-    <Folder Include="ObbDownloader\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\armeabi-v7a\libopenal.so">
       <Link>lib\armeabi-v7a\libopenal.so</Link>
