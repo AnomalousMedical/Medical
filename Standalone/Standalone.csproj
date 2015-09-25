@@ -730,6 +730,10 @@
       <Project>{83d4bb54-ff33-4011-9819-582458329d9b}</Project>
       <Name>GuiFramework.Cameras</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\GuiFramework.Debugging\GuiFramework.Debugging.csproj">
+      <Project>{9183c078-d330-459b-be70-da4cc96a361d}</Project>
+      <Name>GuiFramework.Debugging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\GuiFramework.Editor\GuiFramework.Editor.csproj">
       <Project>{acbba2d0-c648-4798-9d40-ce8b797642ad}</Project>
       <Name>GuiFramework.Editor</Name>
