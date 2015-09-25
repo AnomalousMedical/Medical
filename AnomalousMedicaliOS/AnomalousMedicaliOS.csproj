@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -84,6 +84,10 @@
     <MtouchLink>None</MtouchLink>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
+      <Project>{e9fd5768-32e1-42c7-8256-4d7b97c22a9b}</Project>
+      <Name>OgrePlugin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>
@@ -123,32 +127,84 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-152.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-76.png" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait.png" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape.png" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape%402x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashTall.png" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashTall%402x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide.png" />
-    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide%402x.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-40.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-80.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\29.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\58.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\87.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\80.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\120.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\57.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\114.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\180.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\50.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\100.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\72.png" />
-    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\144.png" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-152.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-76.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Contents.json">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Portrait%402x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\Default-Landscape%402x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashTall.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashTall%402x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\LaunchImage.launchimage\SplashWide%402x.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-40.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\icon-80.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\29.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\58.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\87.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\80.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\120.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\57.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\114.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\180.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\50.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\100.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\72.png">
+      <InProject>false</InProject>
+    </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\144.png">
+      <InProject>false</InProject>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
