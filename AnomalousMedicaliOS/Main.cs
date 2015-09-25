@@ -27,6 +27,8 @@ namespace AnomalousMedicaliOS
 		static void Main (string[] args)
 		{
 			NativePlatformPlugin.StaticInitialize();
+            OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
+            ServerConnection.EnableUnsafeTLS1_0 = true;
 
 			#if DEBUG
 			Logging.Log.Default.addLogListener(new Logging.LogConsoleListener());
@@ -47,18 +49,8 @@ namespace AnomalousMedicaliOS
 			}
 			catch (Exception e)
 			{
-//				Logging.Log.Default.printException(e);
-//				if (anomalous != null)
-//				{
-//					anomalous.saveCrashLog();
-//				}
-//				String errorMessage = e.Message + "\n" + e.StackTrace;
-//				while (e.InnerException != null)
-//				{
-//					e = e.InnerException;
-//					errorMessage += "\n" + e.Message + "\n" + e.StackTrace;
-//				}
-//				MessageDialog.showErrorDialog(errorMessage, "Exception");
+				Logging.Log.Default.printException(e);
+                Logging.Log.Error("{0} occured. Message: {1}", e.GetType().Name, e.Message);
 			}
 			finally
 			{
