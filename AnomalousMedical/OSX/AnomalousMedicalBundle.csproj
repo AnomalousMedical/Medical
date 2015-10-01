@@ -74,12 +74,14 @@
 	<ResourceFiles Include="..\..\$(Configuration)\Standalone.dll" />
 	<ResourceFiles Include="..\..\$(Configuration)\libRocketPlugin.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\Mono.Anomalous.Security.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\Newtonsoft.Json.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\DotNetZip.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\FreeImageNET.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\Lucene.Net.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.Cameras.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.Editor.dll" />
+    <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.Debugging.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\OSPlatform.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\libRocketWidget.dll" />
     <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
@@ -91,7 +93,7 @@
 	<ResourceFiles Include="..\..\../Engine/Release/libSoundWrapper.dylib" />
 	<ResourceFiles Include="..\..\../Engine/Release/libZip.dylib" />
 	<ResourceFiles Include="..\..\../Engine/Release/libRocketWrapper.dylib" />
-    <ResourceFiles Include="..\..\../Dependencies/FreeImage.NET/OSXBuild/src/FreeImage/Release/libFreeImage.dylib" />
+    <ResourceFiles Include="..\..\../Dependencies/OgreDeps/OSXInstall/lib/libFreeImage.dylib" />
   </ItemGroup>
   
   <!-- Common frameworks, items and target. -->
