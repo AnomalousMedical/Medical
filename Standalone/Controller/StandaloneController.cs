@@ -294,7 +294,7 @@ namespace Medical
 
             layerController = new LayerController();
 
-            //Temp, create virtual texture manager
+            //Create virtual texture manager
             virtualTextureSceneViewLink = new VirtualTextureSceneViewLink(this);
         }
 

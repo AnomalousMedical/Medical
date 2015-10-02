@@ -265,6 +265,7 @@ namespace Medical
 
                 if (updateStatus)
                 {
+                    controller.VirtualTextureManager.update();
                     splashScreen.updateStatus(currentPosition, message);
                 }
 
