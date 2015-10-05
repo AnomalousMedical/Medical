@@ -869,7 +869,6 @@
     <EmbeddedResource Include="Resources\AppButton.xml" />
     <EmbeddedResource Include="Resources\AppButton%402x.png" />
     <EmbeddedResource Include="Resources\AppButton%402x.xml" />
-    <EmbeddedResource Include="Resources\Background\AnomalousMedicalWatermark.png" />
     <EmbeddedResource Include="Resources\BodyAtlasImagesets.xml" />
     <EmbeddedResource Include="Resources\BookmarksIcons.png" />
     <EmbeddedResource Include="Resources\BookmarksIcons.xml" />

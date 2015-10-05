@@ -9,9 +9,9 @@ material BodyAtlasBackground
 				
 			}	
 
-			fragment_program_ref BasicTexturedNoLightColoredPS
+			fragment_program_ref Vignette
 			{
-				param_named_auto bgColor viewport_background_colour
+				
 			}
 
 			iteration once
@@ -20,11 +20,6 @@ material BodyAtlasBackground
 			cull_hardware none
 			cull_software none
 			depth_write off
-
-			texture_unit Watermark
-			{
-				texture Medical.Resources.Background.AnomalousMedicalWatermark.png
-			}
 		}
 	}
 }
