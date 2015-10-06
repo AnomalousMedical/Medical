@@ -36,6 +36,7 @@ namespace Medical
 
             materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat, standaloneController.MedicalController.PluginManager.createLiveResourceManager("UnifiedShaders"));
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
+            TransparencyController.initialize(materialBuilder);
         }
 
         public void Dispose()

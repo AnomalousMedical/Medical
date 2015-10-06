@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using OgrePlugin;
 
 namespace Medical
 {
@@ -20,10 +21,16 @@ namespace Medical
 
         static FastIteratorMap<String, TransparencyInterface> transparencyInterfaces = new FastIteratorMap<String, TransparencyInterface>();
         static List<String> transparencyStateNames = new List<string>();
+        static UnifiedMaterialBuilder materialBuilder;
 
         static TransparencyController()
         {
             transparencyStateNames.Add(DefaultTransparencyState);
+        }
+
+        public static void initialize(UnifiedMaterialBuilder materialBuilder)
+        {
+            TransparencyController.materialBuilder = materialBuilder;
         }
 
         internal static void addTransparencyObject(TransparencyInterface alphaObject)
@@ -200,6 +207,11 @@ namespace Medical
             {
                 return transparencyStateNames;
             }
+        }
+
+        internal static bool isVirtualTextureMaterial(Material mat)
+        {
+            return materialBuilder.isVirtualTextureMaterial(mat);
         }
     }
 }

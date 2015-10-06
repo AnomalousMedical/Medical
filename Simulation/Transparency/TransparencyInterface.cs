@@ -121,6 +121,10 @@ namespace Medical
         [DoNotSave]
         private byte originalRenderGroup;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private bool usesVirtualTexture;
+
         public TransparencyInterface()
         {
             ObjectName = "";
@@ -263,6 +267,16 @@ namespace Medical
                     blacklist("Cannot find automatic alpha material '{0}'.  Please ensure one exists or define a custom alpha behavior.", baseMaterialName + alphaSuffix);
                 }
             }
+
+            using (var mat = subEntity.getMaterial())
+            {
+                usesVirtualTexture = TransparencyController.isVirtualTextureMaterial(mat.Value);
+                if(!usesVirtualTexture)
+                {
+                    entity.setVisibilityFlags(TransparencyController.HiddenVisibilityMask);
+                }
+            }
+
             TransparencyController.addTransparencyObject(this);
 
             applyAlphaToMaterial(getCurrentTransparency(activeTransparencyState));
@@ -352,7 +366,10 @@ namespace Medical
                     status = TransparencyStatus.Solid;
                     subEntity.setMaterialName(baseMaterialName);
                     entity.setRenderQueueGroup(originalRenderGroup);
-                    entity.setVisibilityFlags(TransparencyController.OpaqueVisibilityMask);
+                    if (usesVirtualTexture)
+                    {
+                        entity.setVisibilityFlags(TransparencyController.OpaqueVisibilityMask);
+                    }
                     subEntity.setVisible(true);
                     entity.setMaterialLodBias(1.0f, 0, 0);
                 }
@@ -372,7 +389,10 @@ namespace Medical
                         subEntity.setMaterialName(hiddenMaterialName);
                         entity.setRenderQueueGroup(0);
                     }
-                    entity.setVisibilityFlags(TransparencyController.HiddenVisibilityMask);
+                    if (usesVirtualTexture)
+                    {
+                        entity.setVisibilityFlags(TransparencyController.HiddenVisibilityMask);
+                    }
                 }
             }
             else
@@ -391,7 +411,10 @@ namespace Medical
                         entity.setMaterialLodBias(1.0f, 1, 1);
                     }
                     entity.setRenderQueueGroup(RenderGroupQueue.GetQueue(RenderGroup, (byte)renderGroupOffset));
-                    entity.setVisibilityFlags(TransparencyController.TransparentVisibilityMask);
+                    if (usesVirtualTexture)
+                    {
+                        entity.setVisibilityFlags(TransparencyController.TransparentVisibilityMask);
+                    }
                 }
             }
 
