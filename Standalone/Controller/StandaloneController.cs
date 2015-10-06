@@ -235,7 +235,7 @@ namespace Medical
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGUI.OgrePlatform.RenderManager, background);
             sceneViewController.WindowCreated += sceneViewController_WindowCreated;
             sceneViewController.WindowDestroyed += sceneViewController_WindowDestroyed;
-            sceneViewController.DefaultBackgroundColor = new Color(0.45f, 0.45f, 0.45f);
+            sceneViewController.DefaultBackgroundColor = new Color(0.274f, 0.274f, 0.274f);
             sceneStatsDisplayManager = new SceneStatsDisplayManager(sceneViewController, OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget);
             sceneStatsDisplayManager.StatsVisible = MedicalConfig.EngineConfig.ShowStatistics;
             MedicalConfig.EngineConfig.ShowStatsToggled += engineConfig => sceneStatsDisplayManager.StatsVisible = engineConfig.ShowStatistics;

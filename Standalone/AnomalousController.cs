@@ -333,7 +333,7 @@ namespace Medical
         {
             commonResources.addResource(this.GetType().AssemblyQualifiedName, "EmbeddedResource", true);
             commonResources.initialize();
-            BackgroundScene background = new BackgroundScene("SourceBackground", "BodyAtlasBackground", 900, 5000, 5000, 50, 50);
+            BackgroundScene background = new BackgroundScene("SourceBackground", "BodyAtlasBackground", 900, 500, 200, 1, 1);
             background.setVisible(true);
             return background;
         }
