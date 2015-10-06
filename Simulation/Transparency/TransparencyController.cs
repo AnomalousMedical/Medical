@@ -10,6 +10,7 @@ namespace Medical
     {
         public const uint OpaqueVisibilityMask = 0x1;
         public const uint TransparentVisibilityMask = 0x2;
+        public const uint HiddenVisibilityMask = 0x4;
 
         public static event Action<String> ActiveTransparencyStateChanged;
         public static event Action<String> TransparencyStateAdded;

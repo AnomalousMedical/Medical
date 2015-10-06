@@ -371,8 +371,8 @@ namespace Medical
                         entity.setMaterialLodBias(1.0f, 0, 0);
                         subEntity.setMaterialName(hiddenMaterialName);
                         entity.setRenderQueueGroup(0);
-                        entity.setVisibilityFlags(TransparencyController.OpaqueVisibilityMask);
                     }
+                    entity.setVisibilityFlags(TransparencyController.HiddenVisibilityMask);
                 }
             }
             else
