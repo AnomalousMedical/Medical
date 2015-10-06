@@ -69,7 +69,7 @@ namespace AnomalousMedicalAndroid
             String archiveName = null;
 
             #if DEBUG
-            String testingArtFile = "/storage/emulated/0/InternalRelease.dat";
+            String testingArtFile = "/storage/emulated/0/AnomalousMedical.dat";
             if (File.Exists(testingArtFile))
             {
                 archiveName = testingArtFile;
