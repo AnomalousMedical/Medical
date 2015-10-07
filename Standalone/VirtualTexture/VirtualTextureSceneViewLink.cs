@@ -33,6 +33,7 @@ namespace Medical
             virtualTextureManager.TransparentFeedbackBufferVisibilityMask = TransparencyController.TransparentVisibilityMask;
             virtualTextureManager.OpaqueFeedbackBufferVisibilityMask = TransparencyController.OpaqueVisibilityMask;
             virtualTextureManager.MipSampleBias = -3;
+            virtualTextureManager.AutoAdjustMipLevel = false;
 
             materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat, standaloneController.MedicalController.PluginManager.createLiveResourceManager("UnifiedShaders"));
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
