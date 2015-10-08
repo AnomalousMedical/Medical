@@ -76,12 +76,14 @@ namespace Medical
         {
             HttpClient client = new HttpClient();
             HttpRequestMessage message = new HttpRequestMessage();
+            message.Method = HttpMethod.Get;
+            MultipartFormDataContent content = null;
             try
             {
                 message.RequestUri = new Uri(Url);
                 if (arguments != null)
                 {
-                    var content = new MultipartFormDataContent();
+                    content = new MultipartFormDataContent();
                     foreach (Tuple<String, String> arg in arguments)
                     {
                         content.Add(new StringContent(arg.Item2), arg.Item1);
@@ -89,9 +91,20 @@ namespace Medical
                     message.Content = content;
                     message.Method = HttpMethod.Post;
                 }
-                else
+                if(fileStreams != null)
                 {
-                    message.Method = HttpMethod.Get;
+                    if(content == null)
+                    {
+                        content = new MultipartFormDataContent();
+                        message.Content = content;
+                        message.Method = HttpMethod.Post;
+                    }
+                    foreach(var item in fileStreams)
+                    {
+                        var streamContent = new StreamContent(item.Stream, (int)item.Stream.Length);
+                        streamContent.Headers.Add("Content-Type", item.ContentType);
+                        content.Add(streamContent, item.Key, item.FileName);
+                    }
                 }
                 var t = client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead);
 
@@ -112,9 +125,9 @@ namespace Medical
             }
             finally
             {
-                if(message.Content != null)
+                if(content != null)
                 {
-                    message.Content.Dispose();
+                    content.Dispose();
                 }
                 message.Dispose();
                 client.Dispose();
