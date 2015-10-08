@@ -84,6 +84,12 @@
     <MtouchLink>None</MtouchLink>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Dependencies\ModernHttpClient\src\ModernHttpClient\ModernHttpClient.iOS64.csproj">
+      <Project>{6941f069-ac02-40ee-bbf3-9fe3331030ef}</Project>
+      <Name>ModernHttpClient.iOS64</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
       <Project>{e9fd5768-32e1-42c7-8256-4d7b97c22a9b}</Project>
       <Name>OgrePlugin</Name>
