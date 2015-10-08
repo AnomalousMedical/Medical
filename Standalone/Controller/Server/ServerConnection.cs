@@ -239,14 +239,17 @@ namespace Medical
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(Url));
             request.Timeout = Timeout;
-            request.Method = "POST";
-            byte[] byteArray = Encoding.UTF8.GetBytes(postData.ToString());
-            request.ContentType = "application/x-www-form-urlencoded";
 
-            request.ContentLength = byteArray.Length;
-            using (Stream dataStream = request.GetRequestStream())
+            if (arguments != null)
             {
-                dataStream.Write(byteArray, 0, byteArray.Length);
+                request.Method = "POST";
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData.ToString());
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                }
             }
 
             return request;

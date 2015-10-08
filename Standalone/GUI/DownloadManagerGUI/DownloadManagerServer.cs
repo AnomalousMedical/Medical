@@ -235,17 +235,13 @@ namespace Medical.GUI
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(url));
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                FreeImageBitmap image = null;
+                ServerConnection serverConnection = new ServerConnection(url);
+                serverConnection.makeRequestGetStream((responseStream) =>
                 {
-                    if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
-                    {
-                        using (Stream responseStream = response.GetResponseStream())
-                        {
-                            return new FreeImageBitmap(responseStream);
-                        }
-                    }
-                }
+                    image = new FreeImageBitmap(responseStream);
+                });
+                return image;
             }
             catch (Exception e)
             {
