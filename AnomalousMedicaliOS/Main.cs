@@ -41,7 +41,7 @@ namespace AnomalousMedicaliOS
 			{
 				anomalous = new AnomalousController()
                     {
-                        PrimaryArchive = Path.Combine(FolderFinder.ExecutableFolder, "AnomalousMedicaliOS.dat")
+                        PrimaryArchive = Path.Combine(FolderFinder.ExecutableFolder, "AnomalousMedical.dat")
                     };
 				anomalous.OnInitCompleted += HandleOnInitCompleted;
 				anomalous.AddAdditionalPlugins += HandleAddAdditionalPlugins;
