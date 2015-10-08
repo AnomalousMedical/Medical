@@ -11,6 +11,8 @@ using CoreGraphics;
 using Medical.Controller;
 using Anomalous.OSPlatform;
 using System.IO;
+using System.Net.Http;
+using ModernHttpClient;
 
 #if ALLOW_OVERRIDE
 using Medical.Movement;
@@ -29,6 +31,7 @@ namespace AnomalousMedicaliOS
 			NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
             ServerConnection.EnableUnsafeTLS1_0 = true;
+            ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
 
 			#if DEBUG
 			Logging.Log.Default.addLogListener(new Logging.LogConsoleListener());
