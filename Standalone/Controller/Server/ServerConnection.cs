@@ -20,6 +20,8 @@ namespace Medical
         private List<Tuple<String, String>> arguments;
         private List<UploadFileInfo> fileStreams;
 
+        public static Func<HttpClient> HttpClientProvider;
+
         /// <summary>
         /// This event is fired when this server connection gets a result that is not HttpStatusCode.OK
         /// when makeRequest is called. This also means that some sort of connection was established
@@ -36,6 +38,8 @@ namespace Medical
 
             ServicePointManager.ServerCertificateValidationCallback = checkValidationResult;
             DefaultTimeout = 60000;
+
+            HttpClientProvider = () => new HttpClient();
         }
 
         /// <summary>
@@ -74,7 +78,7 @@ namespace Medical
 
         public virtual void makeRequest(Action<HttpResponseMessage> response)
         {
-            HttpClient client = new HttpClient();
+            HttpClient client = HttpClientProvider();
             HttpRequestMessage message = new HttpRequestMessage();
             message.Method = HttpMethod.Get;
             MultipartFormDataContent content = null;
@@ -91,15 +95,15 @@ namespace Medical
                     message.Content = content;
                     message.Method = HttpMethod.Post;
                 }
-                if(fileStreams != null)
+                if (fileStreams != null)
                 {
-                    if(content == null)
+                    if (content == null)
                     {
                         content = new MultipartFormDataContent();
                         message.Content = content;
                         message.Method = HttpMethod.Post;
                     }
-                    foreach(var item in fileStreams)
+                    foreach (var item in fileStreams)
                     {
                         var streamContent = new StreamContent(item.Stream, (int)item.Stream.Length);
                         streamContent.Headers.Add("Content-Type", item.ContentType);
@@ -125,11 +129,15 @@ namespace Medical
             }
             finally
             {
-                if(content != null)
+                if (content != null)
                 {
                     content.Dispose();
                 }
-                message.Dispose();
+                try
+                {
+                    message.Dispose();
+                }
+                catch(NullReferenceException) { } //Ignore the null ref exceptions thrown on some platforms when disposing (ModernHttpClient on Android).
                 client.Dispose();
             }
         }

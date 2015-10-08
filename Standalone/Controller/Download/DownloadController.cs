@@ -161,7 +161,7 @@ namespace Medical
                         streamTask.Wait();
                         using (Stream serverDataStream = streamTask.Result)
                         {
-                            download.FileName = Path.GetFileName(webResponse.Content.Headers.ContentLocation.ToString());
+                            download.FileName = Path.GetFileName(webResponse.RequestMessage.RequestUri.AbsolutePath);
                             long? sizeStr = webResponse.Content.Headers.ContentLength;
                             download.TotalSize = sizeStr.HasValue ? sizeStr.Value : 0;
                             String pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);

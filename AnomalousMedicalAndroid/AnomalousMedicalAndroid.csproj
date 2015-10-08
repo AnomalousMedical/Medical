@@ -50,6 +50,10 @@
     <AndroidLinkSkip>System;System.Core;System.Xml;System.Xml.Linq;mscorlib</AndroidLinkSkip>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Dependencies\ModernHttpClient\src\ModernHttpClient\ModernHttpClient.Android.csproj">
+      <Project>{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}</Project>
+      <Name>ModernHttpClient.Android</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
       <Project>{57C253F1-157F-4A6A-9FED-345A776B97D5}</Project>
       <Name>Engine</Name>
@@ -93,6 +97,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

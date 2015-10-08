@@ -16,6 +16,8 @@ using Engine;
 using Medical;
 using System.IO;
 using MyGUIPlugin;
+using System.Net.Http;
+using ModernHttpClient;
 
 namespace AnomalousMedicalAndroid
 {
@@ -31,6 +33,7 @@ namespace AnomalousMedicalAndroid
             Java.Lang.JavaSystem.LoadLibrary("FreeImage");
             Java.Lang.JavaSystem.LoadLibrary("openal");
 			ServerConnection.EnableUnsafeTLS1_0 = true;
+            ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
         }
 
         private ObbDownloader dl;
