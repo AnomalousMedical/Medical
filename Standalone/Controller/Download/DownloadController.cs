@@ -157,11 +157,13 @@ namespace Medical
                 serverConnection.addArgument(download.IdName, download.Id);
                 serverConnection.makeRequest(webResponse =>
                     {
-                        using (Stream serverDataStream = webResponse.GetResponseStream())
+                        var streamTask = webResponse.Content.ReadAsStreamAsync();
+                        streamTask.Wait();
+                        using (Stream serverDataStream = streamTask.Result)
                         {
-                            download.FileName = Path.GetFileName(webResponse.ResponseUri.LocalPath);
-                            String sizeStr = webResponse.Headers["Content-Length"];
-                            download.TotalSize = NumberParser.ParseLong(sizeStr);
+                            download.FileName = Path.GetFileName(webResponse.Content.Headers.ContentLocation.ToString());
+                            long? sizeStr = webResponse.Content.Headers.ContentLength;
+                            download.TotalSize = sizeStr.HasValue ? sizeStr.Value : 0;
                             String pluginFileLocation = Path.Combine(download.DestinationFolder, download.FileName);
                             try
                             {

@@ -10,6 +10,8 @@ using System.Net.Security;
 using Engine.Saving;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Medical
 {
@@ -36,30 +38,30 @@ namespace Medical
             DefaultTimeout = 60000;
         }
 
-		/// <summary>
-		/// This property controls whether TLS 1.0 is enabled (through ServicePointManager, although ideally this class is in charge of networking).
-		/// This is unsafe but as of today 8-5-15 it does not appear that mono supports tls 1.1 and 1.2, so we need a way to enable this on mono
-		/// based platforms.
-		/// </summary>
-		/// <value><c>true</c> to allow TLS 1.0 connections; otherwise, <c>false</c>.</value>
-		public static bool EnableUnsafeTLS1_0
-		{
-			get 
-			{
-				return (ServicePointManager.SecurityProtocol & SecurityProtocolType.Tls) == SecurityProtocolType.Tls;
-			}
-			set 
-			{
-				if (value) 
-				{
-					ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls; //Enable TLS 1.0.
-				} 
-				else 
-				{
-					ServicePointManager.SecurityProtocol &= ~SecurityProtocolType.Tls; //Disable TLS 1.0.
-				}
-			}
-		}
+        /// <summary>
+        /// This property controls whether TLS 1.0 is enabled (through ServicePointManager, although ideally this class is in charge of networking).
+        /// This is unsafe but as of today 8-5-15 it does not appear that mono supports tls 1.1 and 1.2, so we need a way to enable this on mono
+        /// based platforms.
+        /// </summary>
+        /// <value><c>true</c> to allow TLS 1.0 connections; otherwise, <c>false</c>.</value>
+        public static bool EnableUnsafeTLS1_0
+        {
+            get
+            {
+                return (ServicePointManager.SecurityProtocol & SecurityProtocolType.Tls) == SecurityProtocolType.Tls;
+            }
+            set
+            {
+                if (value)
+                {
+                    ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls; //Enable TLS 1.0.
+                }
+                else
+                {
+                    ServicePointManager.SecurityProtocol &= ~SecurityProtocolType.Tls; //Disable TLS 1.0.
+                }
+            }
+        }
 
         public static int DefaultTimeout { get; set; }
 
@@ -70,42 +72,66 @@ namespace Medical
             ResponseStatusCode = HttpStatusCode.Unused;
         }
 
-        public virtual void makeRequest(Action<HttpWebResponse> response)
+        public virtual void makeRequest(Action<HttpResponseMessage> response)
         {
-            HttpWebRequest request;
-            if (fileStreams != null)
+            HttpClient client = new HttpClient();
+            HttpRequestMessage message = new HttpRequestMessage();
+            try
             {
-                request = buildRequestFormMultipart();
-            }
-            else
-            {
-                request = buildRequestFormUrlEncoded();
-            }
+                message.RequestUri = new Uri(Url);
+                if (arguments != null)
+                {
+                    var content = new MultipartFormDataContent();
+                    foreach (Tuple<String, String> arg in arguments)
+                    {
+                        content.Add(new StringContent(arg.Item2), arg.Item1);
+                    }
+                    message.Content = content;
+                    message.Method = HttpMethod.Post;
+                }
+                else
+                {
+                    message.Method = HttpMethod.Get;
+                }
+                var t = client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead);
 
-            // Get the response.
-            using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponse())
+                //Get the response
+                t.Wait();
+                using (HttpResponseMessage httpResponse = t.Result)
+                {
+                    ResponseStatusCode = httpResponse.StatusCode;
+                    if (ResponseStatusCode == HttpStatusCode.OK)
+                    {
+                        response(httpResponse);
+                    }
+                    else if (NonOkResultEvent != null)
+                    {
+                        NonOkResultEvent.Invoke(this);
+                    }
+                }
+            }
+            finally
             {
-                ResponseStatusCode = webResponse.StatusCode;
-                if (ResponseStatusCode == HttpStatusCode.OK)
+                if(message.Content != null)
                 {
-                    response(webResponse);
+                    message.Content.Dispose();
                 }
-                else if(NonOkResultEvent != null)
-                {
-                    NonOkResultEvent.Invoke(this);
-                }
+                message.Dispose();
+                client.Dispose();
             }
         }
 
         public void makeRequestGetStream(Action<Stream> response)
         {
-            makeRequest(webResponse =>
+            makeRequest(new Action<HttpResponseMessage>(httpResponse =>
+            {
+                var task = httpResponse.Content.ReadAsStreamAsync();
+                task.Wait();
+                using (Stream responseStream = task.Result)
                 {
-                    using (Stream responseStream = webResponse.GetResponseStream())
-                    {
-                        response(responseStream);
-                    }
-                });
+                    response(responseStream);
+                }
+            }));
         }
 
         public void makeRequestDownloadResponse(Action<MemoryStream> response)
@@ -206,15 +232,15 @@ namespace Medical
                 if (host != null)
                 {
                     bool trusted = PlatformConfig.TrustSSLCertificate(certificate, host);
-					if (!trusted) 
-					{
-						Logging.Log.Error("Could not trust ssl certificate with subject '{0}' for host '{1}'. Connections to this server will not be possible", certificate.Subject, host);
-					}
-					return trusted;
+                    if (!trusted)
+                    {
+                        Logging.Log.Error("Could not trust ssl certificate with subject '{0}' for host '{1}'. Connections to this server will not be possible", certificate.Subject, host);
+                    }
+                    return trusted;
                 }
                 else
                 {
-					Logging.Log.Error("Host not specified when validating ssl certificate with subject '{0}'. Connections to this server will not be possible", certificate.Subject, host);
+                    Logging.Log.Error("Host not specified when validating ssl certificate with subject '{0}'. Connections to this server will not be possible", certificate.Subject, host);
                     return false; //If we cannot check with the hosts, we just want to fail.
                 }
             }
@@ -324,6 +350,37 @@ namespace Medical
             }
 
             return request;
+        }
+
+        private Task<HttpResponseMessage> setupClientFormUrlEncoded(HttpClient client)
+        {
+            using (HttpRequestMessage message = new HttpRequestMessage())
+            {
+                message.RequestUri = new Uri(Url);
+                if (arguments != null)
+                {
+                    using (MultipartFormDataContent content = new MultipartFormDataContent())
+                    {
+                        foreach (Tuple<String, String> arg in arguments)
+                        {
+                            content.Add(new StringContent(arg.Item2), arg.Item1);
+                        }
+                        message.Content = content;
+                        message.Method = HttpMethod.Post;
+                    }
+                }
+                else
+                {
+                    message.Method = HttpMethod.Get;
+                }
+                return client.SendAsync(message, HttpCompletionOption.ResponseHeadersRead);
+            }
+
+        }
+
+        private Task<HttpResponseMessage> setupClientFormMultipart(HttpClient client)
+        {
+            return client.GetAsync(new Uri(Url), HttpCompletionOption.ResponseHeadersRead);
         }
     }
 }

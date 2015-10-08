@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 
 namespace Medical
 {
@@ -16,13 +17,12 @@ namespace Medical
             this.Pass = pass;
         }
 
-        public override void makeRequest(Action<HttpWebResponse> response)
+        public override void makeRequest(Action<HttpResponseMessage> response)
         {
             addArgument("User", User);
             addArgument("Pass", Pass);
             base.makeRequest(response);
         }
-
         public String User { get; set; }
 
         public String Pass { get; set; }
