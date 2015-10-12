@@ -41,13 +41,13 @@
   
   <!-- PiperJBO app specific info -->
   <PropertyGroup>
-    <AppBundleName>Anomalous Medical.app</AppBundleName>
-	<AppBundleOutDir>../../$(Configuration)</AppBundleOutDir>
+    <AppBundleName>AnomalousMedicalMac.app</AppBundleName>
+	<AppBundleOutDir>../bin/$(Configuration)</AppBundleOutDir>
   </PropertyGroup>
   
   <ItemGroup>
 	<!-- These items will go in the Contents/Resources folder -->
-	<ResourceFiles Include="BundleSource/Contents/Resources/AnomalousMedical.exe.config" />
+	<MonoBundleFiles Include="BundleSource/Contents/Resources/AnomalousMedical.exe.config" />
 	<ResourceFiles Include="BundleSource/Contents/Resources/Skull.icns" />
 	<ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.exe" />
 
@@ -63,37 +63,7 @@
   
   <!-- Common items for Resources folder. -->
   <ItemGroup>
-    <ResourceFiles Include="..\..\$(Configuration)\BulletPlugin.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\BEPUikPlugin.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\Engine.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\MyGUIPlugin.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\OgrePlugin.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\ShapeLoader.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\Simulation.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\SoundPlugin.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\Standalone.dll" />
-	<ResourceFiles Include="..\..\$(Configuration)\libRocketPlugin.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\Mono.Anomalous.Security.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\Newtonsoft.Json.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\DotNetZip.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\FreeImageNET.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\Lucene.Net.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.Cameras.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.Editor.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\GuiFramework.Debugging.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\OSPlatform.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\libRocketWidget.dll" />
-    <ResourceFiles Include="..\..\$(Configuration)\AnomalousMedical.dat" />
-	
-	<ResourceFiles Include="..\..\../Engine/Release/libOSHelper.dylib" />
-	<ResourceFiles Include="..\..\../Engine/Release/libBulletWrapper.dylib" />
-	<ResourceFiles Include="..\..\../Engine/Release/libMyGUIWrapper.dylib" />
-	<ResourceFiles Include="..\..\../Engine/Release/libOgreCWrapper.dylib" />
-	<ResourceFiles Include="..\..\../Engine/Release/libSoundWrapper.dylib" />
-	<ResourceFiles Include="..\..\../Engine/Release/libZip.dylib" />
-	<ResourceFiles Include="..\..\../Engine/Release/libRocketWrapper.dylib" />
-    <ResourceFiles Include="..\..\../Dependencies/OgreDeps/OSXInstall/lib/libFreeImage.dylib" />
+    
   </ItemGroup>
   
   <!-- Common frameworks, items and target. -->
@@ -138,6 +108,7 @@
     <!-- Create bundle -->
 	<Copy SourceFiles="@(ContentsFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/%(RecursiveDir)" />
     <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Resources/%(RecursiveDir)" />
+    <Copy SourceFiles="@(MonoBundleFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/MonoBundle/%(RecursiveDir)" />
 	<Copy SourceFiles="@(MacOSFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/MacOS/%(RecursiveDir)" />
 	
 	<!-- Call CopyFrameworks task -->
