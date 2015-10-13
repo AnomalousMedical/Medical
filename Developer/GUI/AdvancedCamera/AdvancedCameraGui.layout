@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="131 108 224 102" layer="Overlapped">
+        <Property key="Caption" value="Advanced Camera Settings"/>
+        <Property key="MinSize" value="178 273"/>
+        <UserString key="CurrentDockLocation" value="Floating"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <Widget type="TextBox" skin="TextBox" position="3 8 207 20">
+            <Property key="Caption" value="Camera Fov Y"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="3 34 206 25" align="HStretch Top" name="FovYEdit"/>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>

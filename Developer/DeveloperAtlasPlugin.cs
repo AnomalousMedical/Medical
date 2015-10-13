@@ -29,6 +29,7 @@ namespace Developer
         private ChangeRenderingMode changeRenderingMode;
         private DebugVisualizer debugVisualizer;
         private VirtualTextureDebugger virtualTextureDebugger;
+        private AdvancedCameraGui advancedCameraGui;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -47,6 +48,7 @@ namespace Developer
             discControl.Dispose();
             gridProperties.Dispose();
             performanceGui.Dispose();
+            advancedCameraGui.Dispose();
             IDisposableUtil.DisposeIfNotNull(virtualTextureDebugger);
         }
 
@@ -84,6 +86,9 @@ namespace Developer
             debugVisualizer = new DebugVisualizer(standaloneController);
             guiManager.addManagedDialog(debugVisualizer);
 
+            advancedCameraGui = new AdvancedCameraGui(standaloneController.SceneViewController);
+            guiManager.addManagedDialog(advancedCameraGui);
+
             libRocketDebugger = new ShowLibRocketDebugger(guiManager, "ShowLibRocketDebugger", "Show LibRocket Debugger", "Developer.libRocketDebugger", "Developer");
 
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
@@ -100,6 +105,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", "Developer.StatisticsIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(debugVisualizer, "Developer.DebugVisualizer", "Debug Visualizer", "Developer.DebugVisualizer", TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(advancedCameraGui, "Developer.AdvancedCameraGui", "Advanced Camera Settings", CommonResources.NoIcon, TaskMenuCategories.Developer));
             taskController.addTask(libRocketDebugger);
             taskController.addTask(new SaveMicrocodeCacheTask());
             taskController.addTask(new CallbackTask("Developer.SaveToMax", "Save to 3ds Max", "Developer.MaxDumpIcon", TaskMenuCategories.Developer, (item) =>

@@ -67,6 +67,7 @@
     <Compile Include="Controller\ZipStatusTextWriter.cs" />
     <Compile Include="DeveloperAtlasPlugin.cs" />
     <Compile Include="DeveloperAtlasPluginEntryPoint.cs" />
+    <Compile Include="GUI\AdvancedCamera\AdvancedCameraGui.cs" />
     <Compile Include="GUI\MaxExport\MaxExport.cs" />
     <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleControlSlider.cs" />
     <Compile Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.cs" />
@@ -88,6 +89,9 @@
     <None Include="Properties\AssemblyInfoSource.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\AdvancedCamera\AdvancedCameraGui.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\MaxExport\MaxExport.layout" />
     <EmbeddedResource Include="GUI\AdvancedMandibleMovement\AdvancedMandibleMovementDialog.layout">
       <SubType>Designer</SubType>
