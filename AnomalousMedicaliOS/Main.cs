@@ -30,7 +30,6 @@ namespace AnomalousMedicaliOS
 		{
 			NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
-            ServerConnection.EnableUnsafeTLS1_0 = true;
             ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
 
 			#if DEBUG
