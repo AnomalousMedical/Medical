@@ -10,6 +10,7 @@ THIS_FOLDER=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 pushd $THIS_FOLDER
 
+rm -rf ../../bin/Release/Anomalous\ Medical.app
 mv ../../bin/Release/AnomalousMedicalMac.app ../../bin/Release/Anomalous\ Medical.app
 
 codesign -s "Developer ID Application" ../../bin/Release/Anomalous\ Medical.app --deep
