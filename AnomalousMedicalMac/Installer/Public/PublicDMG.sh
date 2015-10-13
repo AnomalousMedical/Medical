@@ -10,9 +10,11 @@ THIS_FOLDER=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 pushd $THIS_FOLDER
 
-codesign -s "Developer ID Application" ../../../../PublicRelease/Anomalous\ Medical.app --deep
+mv ../../bin/PublicRelease/AnomalousMedicalMac.app ../../bin/PublicRelease/Anomalous\ Medical.app
 
-sh ../MakeDMG.sh "Anomalous Medical" "../../../../PublicRelease" "Anomalous Medical" "../Layout" "../../License"
+codesign -s "Developer ID Application" ../../bin/PublicRelease/Anomalous\ Medical.app --deep
+
+sh ../MakeDMG.sh "Anomalous Medical" "../../bin/PublicRelease" "Anomalous Medical" "../Layout" "../../../AnomalousMedical/Installer/License"
 
 rm AnomalousMedical.dmg
 
