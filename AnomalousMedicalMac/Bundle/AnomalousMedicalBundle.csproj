@@ -46,9 +46,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-	<!-- These items will go in the Contents/Resources folder -->
-	<ResourceFiles Include="BundleSource/Contents/Resources/Skull.icns" />
-
     <!-- These items will go in the Contents/MacOS folder-->
 	<MacOSFiles Include="BundleSource/Contents/MacOS/AnomalousMedical" />
 	<MakeExecutable Include="$(AppBundleOutDir)/$(AppBundleName)/Contents/MacOS/AnomalousMedical" />
