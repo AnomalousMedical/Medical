@@ -15,7 +15,7 @@ xbuild "$SOLUTION_PATH" /p:Configuration=Release /t:clean
 xbuild "$SOLUTION_PATH" /p:Configuration=Release
 
 #Build Installer
-sh $THIS_FOLDER/AnomalousMedical/Installer/OSX/Internal/InternalDMG.sh
+sh $THIS_FOLDER/AnomalousMedicalMac/Installer/Internal/InternalDMG.sh
 
 #Finish up
 cd "$START_PATH"
