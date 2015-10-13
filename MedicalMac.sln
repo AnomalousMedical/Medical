@@ -69,8 +69,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicalMac", "Anom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicalBundle", "AnomalousMedicalMac\Bundle\AnomalousMedicalBundle.csproj", "{D8592C64-2FB3-422B-A7B0-F0C62E728221}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyFrameworks", "AnomalousMedicalMac\Frameworks\CopyFrameworks.csproj", "{4E6F0146-59C9-44D7-A2F5-A3084097BC30}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,12 +100,6 @@ Global
 		{39F1AB5F-F0B1-45FD-AD66-9C03AF1F022E}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{39F1AB5F-F0B1-45FD-AD66-9C03AF1F022E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39F1AB5F-F0B1-45FD-AD66-9C03AF1F022E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E6F0146-59C9-44D7-A2F5-A3084097BC30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E6F0146-59C9-44D7-A2F5-A3084097BC30}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E6F0146-59C9-44D7-A2F5-A3084097BC30}.PublicRelease|Any CPU.ActiveCfg = PublicRelease|Any CPU
-		{4E6F0146-59C9-44D7-A2F5-A3084097BC30}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
-		{4E6F0146-59C9-44D7-A2F5-A3084097BC30}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E6F0146-59C9-44D7-A2F5-A3084097BC30}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5068F53B-8D7B-4AEE-AF54-7428B0E997A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5068F53B-8D7B-4AEE-AF54-7428B0E997A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5068F53B-8D7B-4AEE-AF54-7428B0E997A3}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
