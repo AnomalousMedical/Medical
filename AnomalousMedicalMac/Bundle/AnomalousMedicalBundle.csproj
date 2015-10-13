@@ -39,7 +39,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   
-  <!-- PiperJBO app specific info -->
+  <!-- App specific info -->
   <PropertyGroup>
     <AppBundleName>AnomalousMedicalMac.app</AppBundleName>
 	<AppBundleOutDir>../bin/$(Configuration)</AppBundleOutDir>
