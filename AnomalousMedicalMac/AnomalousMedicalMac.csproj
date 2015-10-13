@@ -84,6 +84,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
+    <None Include="AnomalousMedicalMac.exe.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -128,8 +131,5 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Skull.icns" />
-    <BundleResource Include="AnomalousMedicalMac.exe.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </BundleResource>
   </ItemGroup>
 </Project>
