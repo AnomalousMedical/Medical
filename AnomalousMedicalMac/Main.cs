@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Drawing;
 using MonoMac.Foundation;
 using MonoMac.AppKit;
 using MonoMac.ObjCRuntime;
+using Medical;
+using System.Net.Http;
+using MonoMac.HttpClient;
 
 namespace AnomalousMedicalMac
 {
@@ -10,6 +12,8 @@ namespace AnomalousMedicalMac
     {
         static void Main(string[] args)
         {
+            ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
+
             Medical.Main.Run();
         }
     }
