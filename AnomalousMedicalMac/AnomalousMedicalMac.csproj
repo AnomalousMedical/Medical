@@ -128,5 +128,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Skull.icns" />
+    <BundleResource Include="AnomalousMedicalMac.exe.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
   </ItemGroup>
 </Project>
