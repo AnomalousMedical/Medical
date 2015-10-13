@@ -12,6 +12,8 @@ namespace AnomalousMedicalMac
     {
         static void Main(string[] args)
         {
+            NSApplication.Init();
+
             ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
 
             Medical.Main.Run();
