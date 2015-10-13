@@ -10,9 +10,8 @@ SOLUTION_NAME=MedicalMac.sln
 #Do Build
 SOLUTION_PATH=$THIS_FOLDER/$SOLUTION_NAME
 
-#cleaning doesn't work for some reason
-xbuild "$SOLUTION_PATH" /p:Configuration=Release /t:clean
-xbuild "$SOLUTION_PATH" /p:Configuration=Release
+/Applications/Xamarin\ Studio.app/Contents/MacOS/mdtool build -c:Release -t:Clean "$SOLUTION_PATH"
+/Applications/Xamarin\ Studio.app/Contents/MacOS/mdtool build -c:Release "$SOLUTION_PATH"
 
 #Build Installer
 sh $THIS_FOLDER/AnomalousMedicalMac/Installer/Internal/InternalDMG.sh
