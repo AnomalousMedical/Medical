@@ -113,14 +113,6 @@ namespace Medical
             }
         }
 
-        protected override bool HasCustomSSLValidationImpl
-        {
-            get
-            {
-                return true;
-            }
-        }
-
         protected override int DefaultFPSCapImpl
         {
             get

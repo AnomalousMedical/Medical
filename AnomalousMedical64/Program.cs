@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace AnomalousMedical64
         [STAThread]
         static void Main()
         {
-            Medical.Main.Run();
+            Medical.Program.Main();
         }
     }
 }

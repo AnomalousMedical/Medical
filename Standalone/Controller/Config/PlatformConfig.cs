@@ -147,14 +147,6 @@ namespace Medical
             }
         }
 
-        public static bool HasCustomSSLValidation
-        {
-            get
-            {
-                return currentConfig.HasCustomSSLValidationImpl;
-            }
-        }
-
         public static int DefaultFPSCap
         {
             get
@@ -261,8 +253,6 @@ namespace Medical
         protected abstract String OverrideFileLocationImpl { get; }
 
         protected abstract bool DefaultEnableMultitouchImpl { get; }
-
-        protected abstract bool HasCustomSSLValidationImpl { get; }
 
         protected abstract int DefaultFPSCapImpl { get; }
 

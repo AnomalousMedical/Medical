@@ -75,6 +75,10 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AnomalousMedical\AnomalousMedical.csproj">
+      <Project>{d8a56807-3dac-44ea-947c-3b232d049ac9}</Project>
+      <Name>AnomalousMedical</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Standalone\Standalone.csproj">
       <Project>{e217c194-a14f-41de-a838-c401e60adf15}</Project>
       <Name>Standalone</Name>

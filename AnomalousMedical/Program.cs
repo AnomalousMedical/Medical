@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Medical
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        public static void Main()
         {
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12; //Enable TLS 1.1 and 1.2
+
             Medical.Main.Run();
         }
     }
