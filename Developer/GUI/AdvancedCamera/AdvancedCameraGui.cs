@@ -24,7 +24,7 @@ namespace Developer.GUI
             fovyEdit.MinValue = 5;
             fovyEdit.MaxValue = 180;
             fovyEdit.AllowFloat = true;
-            fovyEdit.Increment = 10;
+            fovyEdit.Increment = 5;
             fovyEdit.ValueChanged += FovyEdit_ValueChanged;
             SceneViewController_ActiveWindowChanged(sceneViewController.ActiveWindow);
         }
