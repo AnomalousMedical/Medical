@@ -76,6 +76,9 @@
       <HintPath>..\..\Dependencies\Mono\OSXBuild\bin\MonoMac.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="core">
+      <HintPath>..\..\Dependencies\Mono\OSXBuild\bin\core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
