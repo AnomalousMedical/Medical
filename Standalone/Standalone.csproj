@@ -440,7 +440,6 @@
     <Compile Include="GUI\ViewsGui\ViewsGui.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
     <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
-    <Compile Include="Main.cs" />
     <Compile Include="Model\MedicalStateInfoModel.cs" />
     <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
     <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />
