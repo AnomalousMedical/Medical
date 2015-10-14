@@ -232,4 +232,7 @@
       <Link>Resources\AnomalousMedical.dat</Link>
     </BundleResource>
   </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="LaunchScreen.storyboard" />
+  </ItemGroup>
 </Project>
