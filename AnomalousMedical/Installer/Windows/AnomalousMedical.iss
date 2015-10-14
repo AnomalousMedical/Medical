@@ -56,8 +56,8 @@ Source: ..\..\..\PublicRelease\GuiFramework.Cameras.dll; DestDir: {app}; Flags: 
 Source: ..\..\..\PublicRelease\GuiFramework.Editor.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\Newtonsoft.Json.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\DataFiles\Public\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 
 ;x86 Files
 Source: ..\..\..\PublicRelease\x86\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
