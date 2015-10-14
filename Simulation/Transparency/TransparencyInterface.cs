@@ -71,15 +71,13 @@ namespace Medical
         //An optional alpha material, if this is defined the alpha suffix will be ignored
         //and this material will be used instead.
         [Editable] private String alphaMaterialName = null;
-        [Editable] private String hiddenMaterialName = null;
         [Editable] private String nodeName;
         [Editable] private String childNodeName;
         [Editable] private String entityName;
-        [Editable] private bool disableOnHidden = true;
+        [Editable] private bool disableEntireEntity = true;
         [Editable] private int renderGroupOffset = 0;
         [Editable] private uint subEntityIndex = 0;
         [Editable] private bool useDepthCheck = false;
-        [Editable] private bool useHiddenMaterialIfSoftwareSkinned = false; //If this is true and the model is software skinned the hidden material will be used instead of disabling the entity, this overrides disableOnHidden
 
         [Editable] public String ObjectName { get; private set; }
         [Editable] public RenderGroup RenderGroup { get; private set; }
@@ -231,11 +229,6 @@ namespace Medical
 
             originalRenderGroup = entity.getRenderQueueGroup();
 
-            if(useHiddenMaterialIfSoftwareSkinned && !entity.isHardwareAnimationEnabled())
-            {
-                disableOnHidden = false;
-            }
-
             if (subEntityIndex >= entity.getNumSubEntities())
             {
                 blacklist("Entity '{0}' only has '{1}' SubEntities. Index '{2}' is invalid.", entity.getName(), entity.getNumSubEntities(), subEntityIndex);
@@ -312,18 +305,6 @@ namespace Medical
             }
         }
 
-        public bool DisableOnHidden
-        {
-            get
-            {
-                return disableOnHidden;
-            }
-            set
-            {
-                disableOnHidden = value;
-            }
-        }
-
         [DoNotCopy]
         internal int ActiveTransparencyState
         {
@@ -371,6 +352,10 @@ namespace Medical
                         entity.setVisibilityFlags(TransparencyController.OpaqueVisibilityMask);
                     }
                     subEntity.setVisible(true);
+                    if (disableEntireEntity)
+                    {
+                        entity.setVisible(true);
+                    }
                     entity.setMaterialLodBias(1.0f, 0, 0);
                 }
             }
@@ -379,15 +364,10 @@ namespace Medical
                 if (status != TransparencyStatus.Hidden)
                 {
                     status = TransparencyStatus.Hidden;
-                    if (disableOnHidden)
+                    subEntity.setVisible(false);
+                    if (disableEntireEntity)
                     {
-                        subEntity.setVisible(false);
-                    }
-                    else if (hiddenMaterialName != null)
-                    {
-                        entity.setMaterialLodBias(1.0f, 0, 0);
-                        subEntity.setMaterialName(hiddenMaterialName);
-                        entity.setRenderQueueGroup(0);
+                        entity.setVisible(false);
                     }
                     if (usesVirtualTexture)
                     {
@@ -402,6 +382,10 @@ namespace Medical
                     status = TransparencyStatus.Transparent;
                     subEntity.setMaterialName(finalAlphaMaterialName);
                     subEntity.setVisible(true);
+                    if (disableEntireEntity)
+                    {
+                        entity.setVisible(true);
+                    }
                     if (useDepthCheck)
                     {
                         entity.setMaterialLodBias(1.0f, 0, 0);
