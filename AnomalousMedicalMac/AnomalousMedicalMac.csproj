@@ -102,6 +102,18 @@
       <Project>{54F79BBA-CFBA-4A90-BD25-7FCAE4573D6A}</Project>
       <Name>MonoMac.HttpClient</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
+      <Project>{6E594C78-9CD8-432D-A135-11C4A72F3BCF}</Project>
+      <Name>OSPlatform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
+      <Project>{E9FD5768-32E1-42C7-8256-4D7B97C22A9B}</Project>
+      <Name>OgrePlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
+      <Project>{57C253F1-157F-4A6A-9FED-345A776B97D5}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <NativeReference Include="..\..\Engine\Release\libOSHelper.dylib">
@@ -139,5 +151,15 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Skull.icns" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
+    <BundleResource Include="..\DataFiles\Internal\AnomalousMedical.dat">
+      <Link>Resources\AnomalousMedical.dat</Link>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='PublicRelease'">
+    <BundleResource Include="..\DataFiles\Public\AnomalousMedical.dat">
+      <Link>Resources\AnomalousMedical.dat</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>
