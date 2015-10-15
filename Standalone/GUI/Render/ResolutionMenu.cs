@@ -89,16 +89,22 @@ namespace Medical.GUI
 
         private void savePresets()
         {
-            RenderPresetCollection container = new RenderPresetCollection();
-            uint count = presets.getItemCount();
-            for (uint i = 0; i < count; ++i)
-            {
-                container.AddLast((RenderPreset)presets.getItemDataAt(i));
+            try {
+                RenderPresetCollection container = new RenderPresetCollection();
+                uint count = presets.getItemCount();
+                for (uint i = 0; i < count; ++i)
+                {
+                    container.AddLast((RenderPreset)presets.getItemDataAt(i));
+                }
+                using (XmlTextWriter xmlWriter = new XmlTextWriter(RenderPresetsFile, Encoding.Unicode))
+                {
+                    xmlWriter.Formatting = Formatting.Indented;
+                    xmlSaver.saveObject(container, xmlWriter);
+                }
             }
-            using (XmlTextWriter xmlWriter = new XmlTextWriter(RenderPresetsFile, Encoding.Unicode))
+            catch(Exception ex)
             {
-                xmlWriter.Formatting = Formatting.Indented;
-                xmlSaver.saveObject(container, xmlWriter);
+                Logging.Log.Error("{0} saving presets. Reason: {1}", ex.GetType().Name, ex.Message);
             }
         }
 
