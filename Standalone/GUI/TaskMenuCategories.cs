@@ -23,9 +23,10 @@ namespace Anomalous.GuiFramework
 
             public MedicalTaskSorter()
             {
-                groupOrder.Add(Explore, 0);
-                groupOrder.Add(Create, 1);
-                groupOrder.Add(Patient, 2);
+                groupOrder.Add(TaskMenu.SearchResultsCategory, 0);
+                groupOrder.Add(Explore, 1);
+                groupOrder.Add(Create, 2);
+                groupOrder.Add(Patient, 3);
                 groupOrder.Add(Developer, int.MaxValue - 1);
                 groupOrder.Add(System, int.MaxValue);
             }
