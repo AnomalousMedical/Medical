@@ -18,6 +18,7 @@ namespace Developer
     class DataPublishController
     {
         private List<FileInfo> files = new List<FileInfo>();
+        private HashSet<String> uncompressedTypes = new HashSet<string>(new String[] { ".ptex", ".png", ".jpeg", ".jpg" });
 
         public DataPublishController()
         {
@@ -137,6 +138,15 @@ namespace Developer
 
                 using (ZipFile zipFile = new ZipFile(zipFileName, new ZipStatusTextWriter()))
                 {
+                    zipFile.SetCompression = (localFileName, archiveFileName) =>
+                    {
+                        String ext = Path.GetExtension(localFileName);
+                        if (!String.IsNullOrEmpty(ext) && uncompressedTypes.Contains(ext.ToLowerInvariant()))
+                        {
+                            return Ionic.Zlib.CompressionLevel.None;
+                        }
+                        return Ionic.Zlib.CompressionLevel.Default;
+                    };
                     zipFile.AddDirectory(zipTempDirectory, "");
                     zipFile.Save();
                 }
