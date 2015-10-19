@@ -73,6 +73,7 @@ namespace Medical.GUI
             currentAnatomyWindow.Position = calculateChildPosition(anatomyFinder.DeadZone, windowCoord, anatomyFinder.TriggeredSelection);
             
             currentAnatomyWindow.ensureVisible();
+            currentAnatomyWindow.bringToFront();
 
             return currentAnatomyWindow;
         }
@@ -300,9 +301,20 @@ namespace Medical.GUI
                 {
                     position = new IntVector2(deadzoneRight, windowTop);
                 }
-                else //Cannot fit to the right go to the left instead
+                else if(deadzoneLeft - windowWidth > 0) //Cannot fit to the right go to the left instead
                 {
                     position = new IntVector2(deadzoneLeft - windowWidth, windowTop);
+                }
+                else //Can't fit anywhere, go fully to left or right depending on which is closer
+                {
+                    if (deadzoneLeft > RenderManager.Instance.ViewWidth - deadzoneRight)
+                    {
+                        position = new IntVector2(0, windowTop);
+                    }
+                    else
+                    {
+                        position = new IntVector2(RenderManager.Instance.ViewWidth - windowWidth, windowTop);
+                    }
                 }
             }
 
