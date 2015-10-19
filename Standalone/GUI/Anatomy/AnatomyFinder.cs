@@ -250,18 +250,19 @@ namespace Medical.GUI
             IntVector3 absMouse = eventLayer.Mouse.AbsolutePosition;
             if (eventLayer.EventProcessingAllowed && !travelTracker.TraveledOverLimit)
             {
-                if (clickedAnatomy.DoNewClickSearch)
+                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+                DisplayHintLocation = new IntVector2(absMouse.x + MouseClickWindowOffset, absMouse.y + MouseClickWindowOffset);
+                TriggeredSelection = false;
+                Ray3 cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
+
+                AnatomyIdentifier firstMatch;
+                IEnumerable<Anatomy> matches = anatomyController.findAnatomy(cameraRay, out firstMatch);
+
+                if (!clickedAnatomy.clickedSameAnatomy(firstMatch))
                 {
-                    SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
-                    DisplayHintLocation = new IntVector2(absMouse.x + MouseClickWindowOffset, absMouse.y + MouseClickWindowOffset);
-                    TriggeredSelection = false;
-                    Ray3 cameraRay = activeWindow.getCameraToViewportRayScreen(absMouse.x, absMouse.y);
-
-                    IEnumerable<Anatomy> matches = anatomyController.findAnatomy(cameraRay);
-
                     if (matches != null)
                     {
-                        clickedAnatomy.setNewResults(matches, eventLayer);
+                        clickedAnatomy.setNewResults(matches, firstMatch);
                         anatomyController.processSelection(clickedAnatomy.CurrentMatch, clickedAnatomy.PreviousMatch);
                         clickedAnatomy.moveNext();
 

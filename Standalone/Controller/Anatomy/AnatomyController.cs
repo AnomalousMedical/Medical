@@ -104,8 +104,10 @@ namespace Medical
         /// </summary>
         /// <param name="ray">The ray to check for anatomy along.</param>
         /// <returns>An enumerator over results or null if there are no results to enumerate.</returns>
-        public IEnumerable<Anatomy> findAnatomy(Ray3 ray)
+        public IEnumerable<Anatomy> findAnatomy(Ray3 ray, out AnatomyIdentifier firstMatch)
         {
+            firstMatch = null;
+
             fireSearchStarted(SuggestedDisplaySortMode.Alphabetical);
             fireClearDisplayedAnatomy();
 
@@ -119,6 +121,11 @@ namespace Medical
                 HashSet<String> displayedGroups = new HashSet<String>();
                 foreach (AnatomyIdentifier anatomy in matches.Anatomy)
                 {
+                    if(firstMatch == null)
+                    {
+                        firstMatch = anatomy;
+                    }
+
                     fireDisplayAnatomy(anatomy);
                     foreach (var group in luceneSearch.relatedGroupsFor(anatomy))
                     {

@@ -14,10 +14,8 @@ namespace Medical.GUI
     /// </summary>
     class ClickedAnatomyManager
     {
-        private EventLayer currentEventLayer = null;
-        private TravelTracker travelTracker = new TravelTracker();
-        private IEnumerator<Anatomy> currentClickAnatomy = null;
-        private IntVector3 lastMousePos;
+        private IEnumerator<Anatomy> currentAnatomy = null;
+        private AnatomyIdentifier reclickAnatomy;
 
         /// <summary>
         /// Constructor.
@@ -32,21 +30,18 @@ namespace Medical.GUI
         /// </summary>
         /// <param name="matches">The matches to iterate.</param>
         /// <param name="eventLayer">The event layer to watch for mouse movements.</param>
-        public void setNewResults(IEnumerable<Anatomy> matches, EventLayer eventLayer)
+        public void setNewResults(IEnumerable<Anatomy> matches, AnatomyIdentifier reclickAnatomy)
         {
-            stopListeningToEvents();
-            this.currentEventLayer = eventLayer;
-            currentClickAnatomy = matches.GetEnumerator();
+            currentAnatomy = matches.GetEnumerator();
             PreviousMatch = null;
-            if(currentClickAnatomy.MoveNext())
+            if(currentAnatomy.MoveNext())
             {
-                lastMousePos = currentEventLayer.Mouse.AbsolutePosition;
-                currentEventLayer.Mouse.Moved += Mouse_Moved;
-                travelTracker.reset();
+                this.reclickAnatomy = reclickAnatomy;
             }
             else
             {
-                currentClickAnatomy = null;
+                this.reclickAnatomy = null;
+                currentAnatomy = null;
             }
         }
 
@@ -55,14 +50,14 @@ namespace Medical.GUI
         /// </summary>
         public void moveNext()
         {
-            if(currentClickAnatomy != null)
+            if(currentAnatomy != null)
             {
                 PreviousMatch = CurrentMatch;
-                if(!currentClickAnatomy.MoveNext())
+                if(!currentAnatomy.MoveNext())
                 {
-                    stopListeningToEvents();
-                    currentClickAnatomy = null;
+                    currentAnatomy = null;
                     PreviousMatch = null;
+                    reclickAnatomy = null;
                 }
             }
         }
@@ -72,21 +67,23 @@ namespace Medical.GUI
         /// </summary>
         public void clear()
         {
-            stopListeningToEvents();
-            currentClickAnatomy = null;
+            currentAnatomy = null;
+            reclickAnatomy = null;
             PreviousMatch = null;
         }
 
         /// <summary>
-        /// Will be true if a new click search should be done and false if this iterator
-        /// still has more results.
+        /// Determine if the piece of anatomy that was clicked is the same as what was reclicked.
         /// </summary>
-        public bool DoNewClickSearch
+        /// <param name="anatomy"></param>
+        /// <returns></returns>
+        public bool clickedSameAnatomy(Anatomy anatomy)
         {
-            get
+            if(anatomy == null && reclickAnatomy == null)
             {
-                return currentClickAnatomy == null;
+                return false;
             }
+            return reclickAnatomy == anatomy;
         }
 
         /// <summary>
@@ -96,7 +93,7 @@ namespace Medical.GUI
         {
             get
             {
-                return currentClickAnatomy != null ? currentClickAnatomy.Current : null;
+                return currentAnatomy != null ? currentAnatomy.Current : null;
             }
         }
 
@@ -104,26 +101,5 @@ namespace Medical.GUI
         /// The anatomy that was selected previously.
         /// </summary>
         public Anatomy PreviousMatch { get; private set; }
-
-        void Mouse_Moved(Mouse mouse)
-        {
-            travelTracker.traveled(mouse.AbsolutePosition - lastMousePos); //Have to use absolute position since RelativePosition has not been calculated
-            lastMousePos = mouse.AbsolutePosition;
-            if(travelTracker.TraveledOverLimit)
-            {
-                stopListeningToEvents();
-                currentClickAnatomy = null;
-                PreviousMatch = null;
-            }
-        }
-
-        private void stopListeningToEvents()
-        {
-            if (currentEventLayer != null)
-            {
-                currentEventLayer.Mouse.Moved -= Mouse_Moved;
-                currentEventLayer = null;
-            }
-        }
     }
 }
