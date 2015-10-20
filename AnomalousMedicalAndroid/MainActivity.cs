@@ -52,6 +52,15 @@ namespace AnomalousMedicalAndroid
 
         protected override void createApp()
         {
+            ActivityManager actManager = GetSystemService(ActivityService) as ActivityManager;
+            var memoryInfo = new ActivityManager.MemoryInfo();
+            actManager.GetMemoryInfo(memoryInfo);
+
+            if (memoryInfo.TotalMem < 1536000000)
+            {
+                MedicalConfig.SetVirtualTextureMemoryUsageMode(MedicalConfig.VTMemoryMode.Small);
+            }
+
             NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
             OgrePlugin.OgreInterface.InitialClearColor = new Color(0.156f, 0.156f, 0.156f);
@@ -70,7 +79,7 @@ namespace AnomalousMedicalAndroid
 
             String archiveName = null;
 
-            #if DEBUG
+            #if ALLOW_DATA_FILE
             String testingArtFile = "/storage/emulated/0/AnomalousMedical.dat";
             if (File.Exists(testingArtFile))
             {
@@ -85,7 +94,7 @@ namespace AnomalousMedicalAndroid
                 archiveName = findExpansionFile();
             }
 
-            #if DEBUG
+            #if ALLOW_DATA_FILE
             }
             Logging.Log.Debug("Archive Name {0}", archiveName);
             #endif

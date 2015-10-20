@@ -46,12 +46,47 @@ namespace Medical
 
         static MedicalConfig()
         {
-            MaxStagingVirtualTextureUploadsPerFrame = int.MaxValue;
-            VirtualTextureStagingBufferCount = 20;
-            TextureCacheSize = 100 * 1024 * 1024;
-            FeedbackBufferSize = new IntSize2(256, 128);
-            PhysicalTextureSize = new IntSize2(4096, 4096);
-            PageSize = 128;
+            SetVirtualTextureMemoryUsageMode(VTMemoryMode.Normal);
+        }
+
+        public enum VTMemoryMode
+        {
+            Small,
+            Normal,
+            Large
+        }
+
+        public static void SetVirtualTextureMemoryUsageMode(VTMemoryMode mode)
+        {
+            switch (mode)
+            {
+                case VTMemoryMode.Small:
+                    MaxStagingVirtualTextureUploadsPerFrame = int.MaxValue;
+                    VirtualTextureStagingBufferCount = 20;
+                    TextureCacheSize = 100 * 1024 * 1024;
+                    FeedbackBufferSize = new IntSize2(256, 128);
+                    PhysicalTextureSize = new IntSize2(2048, 2048);
+                    PageSize = 64;
+                    break;
+
+                case VTMemoryMode.Normal:
+                    MaxStagingVirtualTextureUploadsPerFrame = int.MaxValue;
+                    VirtualTextureStagingBufferCount = 20;
+                    TextureCacheSize = 100 * 1024 * 1024;
+                    FeedbackBufferSize = new IntSize2(256, 128);
+                    PhysicalTextureSize = new IntSize2(4096, 4096);
+                    PageSize = 128;
+                    break;
+
+                case VTMemoryMode.Large:
+                    MaxStagingVirtualTextureUploadsPerFrame = int.MaxValue;
+                    VirtualTextureStagingBufferCount = 20;
+                    TextureCacheSize = 500 * 1024 * 1024;
+                    FeedbackBufferSize = new IntSize2(256, 128);
+                    PhysicalTextureSize = new IntSize2(8192, 8192);
+                    PageSize = 128;
+                    break;
+            }
         }
 
         public MedicalConfig()
