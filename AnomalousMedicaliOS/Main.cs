@@ -33,6 +33,8 @@ namespace AnomalousMedicaliOS
                 MedicalConfig.SetVirtualTextureMemoryUsageMode(MedicalConfig.VTMemoryMode.Small);
             }
 
+            MedicalConfig.PlatformExtraScaling = 0.25f;
+
 			NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
             ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());

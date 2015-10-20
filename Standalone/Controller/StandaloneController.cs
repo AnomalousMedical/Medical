@@ -120,6 +120,8 @@ namespace Medical
             }
 #endif
 
+            pixelScale += MedicalConfig.PlatformExtraScaling;
+
             switch (MedicalConfig.ExtraScaling)
             {
                 case UIExtraScale.Smaller:

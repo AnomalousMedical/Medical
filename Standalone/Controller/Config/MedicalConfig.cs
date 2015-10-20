@@ -47,6 +47,7 @@ namespace Medical
         static MedicalConfig()
         {
             SetVirtualTextureMemoryUsageMode(VTMemoryMode.Normal);
+            PlatformExtraScaling = 0.0f;
         }
 
         public enum VTMemoryMode
@@ -380,6 +381,12 @@ namespace Medical
                 program.setValue("LastShaderVersion", value);
             }
         }
+
+        /// <summary>
+        /// Set some extra scaling for a particular platform, added when the main pixel scale is calculated.
+        /// </summary>
+        /// <value>The platform extra scaling.</value>
+        public static float PlatformExtraScaling { get; set; }
 
         public static UIExtraScale ExtraScaling
         {
