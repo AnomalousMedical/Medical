@@ -28,6 +28,11 @@ namespace AnomalousMedicaliOS
 		// This is the main entry point of the application.
 		static void Main (string[] args)
 		{
+            if (NSProcessInfo.ProcessInfo.PhysicalMemory < 1536000000)
+            {
+                MedicalConfig.SetVirtualTextureMemoryUsageMode(MedicalConfig.VTMemoryMode.Small);
+            }
+
 			NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
             ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
