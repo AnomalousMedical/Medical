@@ -120,15 +120,16 @@ namespace Medical
             }
 #endif
 
-            pixelScale += MedicalConfig.PlatformExtraScaling;
+            float scaleFactor = pixelScale;
+            pixelScale += MedicalConfig.PlatformExtraScaling * scaleFactor;
 
             switch (MedicalConfig.ExtraScaling)
             {
                 case UIExtraScale.Smaller:
-                    pixelScale -= .15f;
+                    pixelScale -= .15f * scaleFactor;
                     break;
                 case UIExtraScale.Larger:
-                    pixelScale += .25f;
+                    pixelScale += .25f * scaleFactor;
                     break;
             }
 
