@@ -3,7 +3,7 @@
     <Widget type="Widget" skin="Medical.TaskMenuBackground" position="70 96 800 600" layer="Overlapped">
         <Widget type="Button" skin="ButtonXBig" position="770 3 24 20" align="Right Top" name="CloseButton"/>
         <Widget type="TextBox" skin="TextBox" position="4 5 112 15">
-            <Property key="Caption" value="My Downloads"/>
+            <Property key="Caption" value="Downloads"/>
             <Property key="TextColour" value="#FFFFFF"/>
         </Widget>
         <Widget type="TextBox" skin="TextBox" position="7 25 250 19" name="ReadingInfo">

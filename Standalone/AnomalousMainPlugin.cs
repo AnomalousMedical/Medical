@@ -203,7 +203,7 @@ namespace Medical.GUI
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Explore, 0));
 
-            downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "My Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5);
+            downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5);
             standaloneController.DownloadController.OpenDownloadGUITask = downloadsTask;
             taskController.addTask(downloadsTask);
 
