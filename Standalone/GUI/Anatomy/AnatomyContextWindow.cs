@@ -110,6 +110,12 @@ namespace Medical.GUI
                 {
                     width = totalWidth;
                 }
+
+                if(width > RenderManager.Instance.ViewWidth)
+                {
+                    width = RenderManager.Instance.ViewWidth;
+                }
+
                 window.setSize(width, windowStartSize.Height);
                 transparencySlider.clearCommands();
                 var commandPermissions = windowManager.CommandPermissions;
