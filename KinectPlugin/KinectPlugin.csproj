@@ -32,31 +32,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BEPUikPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>S:\Engine\Release\BEPUikPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="Engine">
-      <HintPath>S:\Engine\Release\Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="GuiFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\GuiFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Kinect.Face, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
-    <Reference Include="MyGUIPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\MyGUIPlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="OgrePlugin, Version=1.0.0.1935, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>S:\Engine\Release\OgrePlugin.dll</HintPath>
-    </Reference>
-    <Reference Include="OSPlatform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\OSPlatform.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -79,16 +56,6 @@
     <Compile Include="Utility\KinectDebugVisualizer.cs" />
     <Compile Include="Utility\KinectUtilities.cs" />
     <Compile Include="Utility\FilterDoubleExponential.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Simulation\Simulation.csproj">
-      <Project>{b05d69f8-6463-4276-8077-d7f3f0c02a9e}</Project>
-      <Name>Simulation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Standalone\Standalone.csproj">
-      <Project>{e217c194-a14f-41de-a838-c401e60adf15}</Project>
-      <Name>Standalone</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\MovementSequenceRecorder.layout" />
@@ -114,6 +81,40 @@
     <EmbeddedResource Include="Resources\KinectIcons%402x.xml" />
     <EmbeddedResource Include="Resources\KinectIcons.png" />
     <EmbeddedResource Include="Resources\KinectIcons.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\BEPUikPlugin\BEPUikPlugin.csproj">
+      <Project>{39f1ab5f-f0b1-45fd-ad66-9c03af1f022e}</Project>
+      <Name>BEPUikPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
+      <Project>{57c253f1-157f-4a6a-9fed-345a776b97d5}</Project>
+      <Name>Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\GuiFramework\GuiFramework.csproj">
+      <Project>{fc299a06-61bd-4562-a315-0f0be454925a}</Project>
+      <Name>GuiFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\MyGUIPlugin\MyGUIPlugin.csproj">
+      <Project>{02d4da85-fd6c-421f-81c3-8f58f790bc81}</Project>
+      <Name>MyGUIPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
+      <Project>{e9fd5768-32e1-42c7-8256-4d7b97c22a9b}</Project>
+      <Name>OgrePlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
+      <Project>{6e594c78-9cd8-432d-a135-11c4a72f3bcf}</Project>
+      <Name>OSPlatform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simulation\Simulation.csproj">
+      <Project>{b05d69f8-6463-4276-8077-d7f3f0c02a9e}</Project>
+      <Name>Simulation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Standalone\Standalone.csproj">
+      <Project>{e217c194-a14f-41de-a838-c401e60adf15}</Project>
+      <Name>Standalone</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

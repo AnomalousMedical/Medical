@@ -74,7 +74,7 @@ namespace KinectPlugin
             taskController.addTask(new MDIDialogOpenTask(sequenceRecorder, "KinectPlugin.KinectMovementSequenceRecorder", "Record Sequence", "KinectPlugin.Record", "Kinect"));
         }
 
-        public void unload(StandaloneController standaloneController, bool willReload)
+        public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
 
         }

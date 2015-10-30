@@ -168,7 +168,7 @@ namespace KinectPlugin
                 //We are having to create the texture as a rendertarget when we should probably use a dynamic texture instead, however,
                 //the D3D11 plugin will crash if we use any other kind of texture, so for now we are just using this.
                 //If putting the texture in mygui it is important to tell its render manager to destroy the texture also (like the RocketWidget does).
-                PixelFormat pixelFormat = PixelFormat.PF_BYTE_RGBA;
+                PixelFormat pixelFormat = PixelFormat.PF_R8G8B8A8;
                 IntSize2 colorFrameSize = sensorManager.ColorFrameSize;
                 colorTexture = TextureManager.getInstance().createManual("KinectColorSensor", MyGUIInterface.Instance.CommonResourceGroup.FullName, TextureType.TEX_TYPE_2D, (uint)colorFrameSize.Width, (uint)colorFrameSize.Height, 1, 0, pixelFormat, TextureUsage.TU_RENDERTARGET, null, false, 0);
                 hwBuffer = colorTexture.Value.getBuffer();
