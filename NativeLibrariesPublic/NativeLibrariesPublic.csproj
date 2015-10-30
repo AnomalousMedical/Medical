@@ -78,6 +78,10 @@
       <Link>x64\SoundWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\Engine\Release\x64\Win32UniversalBridge.dll">
+      <Link>x64\Win32UniversalBridge.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Engine\Release\x64\WinMTDriver.dll">
       <Link>x64\WinMTDriver.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -132,6 +136,10 @@
     </Content>
     <Content Include="..\..\Engine\Release\x86\SoundWrapper.dll">
       <Link>x86\SoundWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\Win32UniversalBridge.dll">
+      <Link>x86\Win32UniversalBridge.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Release\x86\WinMTDriver.dll">

@@ -74,6 +74,7 @@ Source: ..\..\..\Release\x86\OSHelper.dll; DestDir: {app}\x86; Flags: ignorevers
 Source: ..\..\..\Release\x86\RenderSystem_Direct3D11.dll; DestDir: {app}\x86; Flags: ignoreversion
 Source: ..\..\..\Release\x86\RenderSystem_GL.dll; DestDir: {app}\x86; Flags: ignoreversion
 Source: ..\..\..\Release\x86\SoundWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\Win32UniversalBridge.dll; DestDir: {app}\x86; Flags: ignoreversion
 Source: ..\..\..\Release\x86\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
 Source: ..\..\..\Release\x86\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
 
@@ -90,6 +91,7 @@ Source: ..\..\..\Release\x64\OSHelper.dll; DestDir: {app}\x64; Flags: ignorevers
 Source: ..\..\..\Release\x64\RenderSystem_Direct3D11.dll; DestDir: {app}\x64; Flags: ignoreversion
 Source: ..\..\..\Release\x64\RenderSystem_GL.dll; DestDir: {app}\x64; Flags: ignoreversion
 Source: ..\..\..\Release\x64\SoundWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\Win32UniversalBridge.dll; DestDir: {app}\x86; Flags: ignoreversion
 Source: ..\..\..\Release\x64\WinMTDriver.dll; DestDir: {app}\x64; Flags: ignoreversion
 Source: ..\..\..\Release\x64\Zip.dll; DestDir: {app}\x64; Flags: ignoreversion
 

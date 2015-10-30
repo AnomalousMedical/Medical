@@ -173,12 +173,10 @@ namespace Medical
             GuiFrameworkInterface.Instance.handleCursors(mainWindow);
             SoundPluginInterface.Instance.setResourceWindow(mainWindow);
 
-            if (PlatformConfig.ForwardTouchAsMouse)
-            {
-                TouchMouseGuiForwarder = new TouchMouseGuiForwarder(eventManager, inputHandler, systemTimer, mainWindow, EventLayers.Last);
-                var myGuiKeyboard = new MyGUIOnscreenKeyboardManager(TouchMouseGuiForwarder);
-                var rocketKeyboard = new RocketWidgetOnscreenKeyboardManager(TouchMouseGuiForwarder);
-            }
+            TouchMouseGuiForwarder = new TouchMouseGuiForwarder(eventManager, inputHandler, systemTimer, mainWindow, EventLayers.Last);
+            TouchMouseGuiForwarder.ForwardTouchesAsMouse = PlatformConfig.ForwardTouchAsMouse;
+            var myGuiKeyboard = new MyGUIOnscreenKeyboardManager(TouchMouseGuiForwarder);
+            var rocketKeyboard = new RocketWidgetOnscreenKeyboardManager(TouchMouseGuiForwarder);
         }
 
         /// <summary>
