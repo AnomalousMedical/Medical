@@ -103,6 +103,8 @@ namespace Medical
                 {
                     mainWindow.setSize(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
                     mainWindow.ExclusiveFullscreen = true;
+                    defaultWindow.Width = MedicalConfig.EngineConfig.HorizontalRes;
+                    defaultWindow.Height = MedicalConfig.EngineConfig.VerticalRes;
                 }
                 else
                 {
