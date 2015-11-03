@@ -114,6 +114,8 @@ namespace AnomalousMedicalAndroid
         {
             dl.cancelDownloads();
             base.OnDestroy();
+            anomalousController.Dispose();
+            this.killAppProcess();
         }
 
         protected override void OnResume()
