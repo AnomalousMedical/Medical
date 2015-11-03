@@ -37,13 +37,7 @@ namespace AnomalousMedicalMac
                 {
                     anomalous.saveCrashLog();
                 }
-                String errorMessage = e.Message + "\n" + e.StackTrace;
-                while (e.InnerException != null)
-                {
-                    e = e.InnerException;
-                    errorMessage += "\n" + e.Message + "\n" + e.StackTrace;
-                }
-                MessageDialog.showErrorDialog(errorMessage, "Exception");
+                MessageDialog.showErrorDialog(String.Format("{0} occured. Message: {1}.\nPlease see log file for more information" , e.GetType().Name, e.Message), "Anomalous Medical Has Crashed");
             }
             finally
             {
