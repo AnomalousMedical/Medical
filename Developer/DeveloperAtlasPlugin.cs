@@ -130,6 +130,11 @@ namespace Developer
             disablePhysics = new DisablePhysicsTask(int.MaxValue);
             taskController.addTask(disablePhysics);
 
+            taskController.addTask(new CallbackTask("Developer.Crash", "Crash The Program", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
+            {
+                throw new Exception("Manually crashed program");
+            }));
+
             standaloneController.ViewHostFactory.addFactory(new WizardComponentViews());
 
             if (PlatformConfig.AllowFullscreenToggle)

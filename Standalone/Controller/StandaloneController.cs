@@ -146,7 +146,6 @@ namespace Medical
 
         public void Dispose()
         {
-            saveConfiguration();
             unloadScene();
             medicalController.unloadSceneAndResources();
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);

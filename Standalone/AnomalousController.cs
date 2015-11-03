@@ -85,13 +85,19 @@ namespace Medical
             return true;
         }
 
+        public override void Dispose()
+        {
+            controller.Dispose();
+            base.Dispose();
+        }
+
         public override int OnExit()
         {
             if(UpdateController.promptForUpdate())
             {
                 cancelRestart();
             }
-            controller.Dispose();
+            controller.saveConfiguration();
             return 0;
         }
 
