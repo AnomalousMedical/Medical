@@ -7,6 +7,7 @@ using System.Net.Http;
 using MonoMac.HttpClient;
 using Anomalous.OSPlatform;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace AnomalousMedicalMac
 {
@@ -38,6 +39,7 @@ namespace AnomalousMedicalMac
                     anomalous.saveCrashLog();
                 }
                 MessageDialog.showErrorDialog(String.Format("{0} occured. Message: {1}.\nPlease see log file for more information" , e.GetType().Name, e.Message), "Anomalous Medical Has Crashed");
+                CocoaApp_alertCrashing();
             }
             finally
             {
@@ -47,5 +49,10 @@ namespace AnomalousMedicalMac
                 }
             }
         }
+
+        private const String LibraryName = "OSHelper";
+
+        [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
+        private static extern void CocoaApp_alertCrashing();
     }
 }
