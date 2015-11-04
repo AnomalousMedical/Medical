@@ -130,10 +130,12 @@ namespace Developer
             disablePhysics = new DisablePhysicsTask(int.MaxValue);
             taskController.addTask(disablePhysics);
 
+#if ALLOW_CRASH_PROGRAM
             taskController.addTask(new CallbackTask("Developer.Crash", "Crash The Program", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
             {
                 throw new Exception("Manually crashed program");
             }));
+#endif
 
             standaloneController.ViewHostFactory.addFactory(new WizardComponentViews());
 
