@@ -139,7 +139,7 @@ namespace Medical
 
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
-            return MacOSXFunctions.TrustSSLCertificate(certificate, hostName);
+            throw new NotImplementedException();
         }
 
         private String OldUserDocRoot
