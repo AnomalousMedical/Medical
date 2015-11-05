@@ -564,20 +564,20 @@ Global
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4099E18-746C-41F3-B494-6AA207D17B23}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{C4099E18-746C-41F3-B494-6AA207D17B23}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{C4099E18-746C-41F3-B494-6AA207D17B23}.Debug|iPhone.ActiveCfg = ReleaseAOT|Any CPU
+		{C4099E18-746C-41F3-B494-6AA207D17B23}.Debug|iPhone.Build.0 = ReleaseAOT|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
-		{C4099E18-746C-41F3-B494-6AA207D17B23}.PublicRelease|iPhone.ActiveCfg = Release|Any CPU
-		{C4099E18-746C-41F3-B494-6AA207D17B23}.PublicRelease|iPhone.Build.0 = Release|Any CPU
+		{C4099E18-746C-41F3-B494-6AA207D17B23}.PublicRelease|iPhone.ActiveCfg = ReleaseAOT|Any CPU
+		{C4099E18-746C-41F3-B494-6AA207D17B23}.PublicRelease|iPhone.Build.0 = ReleaseAOT|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.PublicRelease|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.PublicRelease|iPhoneSimulator.Build.0 = Release|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4099E18-746C-41F3-B494-6AA207D17B23}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{C4099E18-746C-41F3-B494-6AA207D17B23}.Release|iPhone.Build.0 = Release|Any CPU
+		{C4099E18-746C-41F3-B494-6AA207D17B23}.Release|iPhone.ActiveCfg = ReleaseAOT|Any CPU
+		{C4099E18-746C-41F3-B494-6AA207D17B23}.Release|iPhone.Build.0 = ReleaseAOT|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{C4099E18-746C-41F3-B494-6AA207D17B23}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
