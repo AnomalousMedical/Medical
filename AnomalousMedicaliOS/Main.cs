@@ -13,6 +13,7 @@ using Anomalous.OSPlatform;
 using System.IO;
 using System.Net.Http;
 using ModernHttpClient;
+using Anomalous.OSPlatform.iOS;
 
 #if ALLOW_OVERRIDE
 using Medical.Movement;
@@ -35,7 +36,7 @@ namespace AnomalousMedicaliOS
 
             MedicalConfig.PlatformExtraScaling = 0.25f;
 
-			NativePlatformPlugin.StaticInitialize();
+            iOSRuntimePlatformInfo.Initialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
             ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
 

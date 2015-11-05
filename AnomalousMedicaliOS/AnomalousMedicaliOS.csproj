@@ -105,6 +105,12 @@
       <Project>{E9FD5768-32E1-42C7-8256-4D7B97C22A9B}</Project>
       <Name>OgrePlugin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform.iOS\OSPlatform.iOS.csproj">
+      <Project>{c4099e18-746c-41f3-b494-6aa207d17b23}</Project>
+      <Name>OSPlatform.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>
