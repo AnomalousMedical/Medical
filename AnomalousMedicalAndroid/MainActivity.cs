@@ -63,7 +63,6 @@ namespace AnomalousMedicalAndroid
 
             MedicalConfig.PlatformExtraScaling = 0.25f;
 
-            NativePlatformPlugin.StaticInitialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
             OgrePlugin.OgreInterface.InitialClearColor = new Color(0.156f, 0.156f, 0.156f);
 
