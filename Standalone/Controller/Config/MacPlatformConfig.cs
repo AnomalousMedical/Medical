@@ -137,59 +137,6 @@ namespace Medical
             }
         }
 
-        protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
-        {
-            throw new NotImplementedException();
-        }
-
-        private String OldUserDocRoot
-        {
-            get
-            {
-                return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support/Anomalous Medical");
-            }
-        }
-
-        protected override void moveConfigurationIfNeededImpl()
-        {
-            try
-            {
-                String configFile = Path.Combine(OldUserDocRoot, "config.ini");
-                if (File.Exists(configFile))
-                {
-                    //Ensure the folder exists
-                    if(!Directory.Exists(FolderFinder.LocalUserDocumentsFolder))
-                    {
-                        Directory.CreateDirectory(FolderFinder.LocalUserDocumentsFolder);
-                    }
-
-                    //Move the files
-                    File.Move(configFile, Path.Combine(FolderFinder.LocalUserDocumentsFolder, "config.ini"));
-					moveDirectory(Path.Combine(OldUserDocRoot, "Users"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "Users"));
-					moveDirectory(Path.Combine(OldUserDocRoot, "SavedFiles"), Path.Combine(FolderFinder.LocalUserDocumentsFolder, "SavedFiles"));
-					moveDirectory(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Plugins"), Path.Combine(FolderFinder.LocalDataFolder, "Plugins"));
-					moveDirectory(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Downloads"), Path.Combine(FolderFinder.LocalDataFolder, "Downloads"));
-					moveDirectory(Path.Combine(OldUserDocRoot, "Common", "Anomalous Medical", "Temp"), Path.Combine(FolderFinder.LocalDataFolder, "Temp"));
-                }
-            }
-            catch (Exception ex)
-            {
-                Logging.Log.Error("{0} copying legacy files from '{1}'. Message: {2}", ex.GetType().ToString(), OldUserDocRoot, ex.Message);
-            }
-        }
-
-		private void moveDirectory(String src, String dst)
-		{
-			try
-			{
-				Directory.Move(src, dst);
-			}
-			catch (Exception ex)
-			{
-				Logging.Log.Error("{0} copying legacy files from '{1}'. Message: {2}", ex.GetType().ToString(), OldUserDocRoot, ex.Message);
-			}
-        }
-
         protected override bool AutoSelectTextImpl
         {
             get

@@ -86,7 +86,6 @@ namespace Medical
 
         public StandaloneController(App app)
         {
-            PlatformConfig.MoveConfigurationIfNeeded();
             medicalConfig = new MedicalConfig();
             this.app = app;
 

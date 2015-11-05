@@ -214,21 +214,6 @@ namespace Medical
             }
         }
 
-        public static bool TrustSSLCertificate(X509Certificate certificate, String hostName)
-        {
-            return currentConfig.TrustSSLCertificateImpl(certificate, hostName);
-        }
-
-        /// <summary>
-        /// This function moves the configuration files for a specific os if they need to move.
-        /// We can remove this at some point in the future when we no longer need to check if files need
-        /// to be moved.
-        /// </summary>
-        public static void MoveConfigurationIfNeeded()
-        {
-            currentConfig.moveConfigurationIfNeededImpl();
-        }
-
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
 
@@ -258,11 +243,7 @@ namespace Medical
 
         protected abstract bool UnrestrictedEnvironmentImpl { get; }
 
-        protected abstract bool TrustSSLCertificateImpl(X509Certificate certificate, String hostName);
-
         protected abstract bool AllowDllPluginsToLoadImpl { get; }
-
-        protected abstract void moveConfigurationIfNeededImpl();
 
         protected abstract bool AutoSelectTextImpl { get; }
 
