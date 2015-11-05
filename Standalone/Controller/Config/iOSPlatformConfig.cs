@@ -134,11 +134,7 @@ namespace Medical
 
         protected override bool TrustSSLCertificateImpl(X509Certificate certificate, string hostName)
         {
-			if(hostName.Equals("anomalousmedicalweb.blob.core.windows.net", StringComparison.InvariantCultureIgnoreCase))
-			{
-				return true; //IOS_FIXLATER - always trusting blob storage
-			}
-            return MacOSXFunctions.TrustSSLCertificate(certificate, hostName);
+            throw new NotImplementedException();
         }
 
         protected override void moveConfigurationIfNeededImpl()

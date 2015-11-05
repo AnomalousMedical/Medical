@@ -114,6 +114,10 @@
       <Project>{57C253F1-157F-4A6A-9FED-345A776B97D5}</Project>
       <Name>Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform.Mac\OSPlatform.Mac.csproj">
+      <Project>{6660B346-FAAE-43C5-99BE-9DC8653922E7}</Project>
+      <Name>OSPlatform.Mac</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <NativeReference Include="..\..\Engine\Release\libOSHelper.dylib">

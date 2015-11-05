@@ -8,6 +8,7 @@ using MonoMac.HttpClient;
 using Anomalous.OSPlatform;
 using System.IO;
 using System.Runtime.InteropServices;
+using Anomalous.OSPlatform.Mac;
 
 namespace AnomalousMedicalMac
 {
@@ -19,7 +20,7 @@ namespace AnomalousMedicalMac
 
             ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
 
-            NativePlatformPlugin.StaticInitialize();
+            MacRuntimePlatformInfo.Initialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
 
             AnomalousController anomalous = null;
