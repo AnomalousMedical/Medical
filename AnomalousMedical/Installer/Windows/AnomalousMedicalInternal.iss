@@ -58,6 +58,7 @@ Source: ..\..\..\Release\GuiFramework.Editor.dll; DestDir: {app}; Flags: ignorev
 Source: ..\..\..\Release\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\GuiFramework.Debugging.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\OSPlatform.Win32.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\Newtonsoft.Json.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\DataFiles\Internal\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 

@@ -88,7 +88,7 @@ namespace Medical
             MyGUIInterface.TrackMemoryLeaks = MedicalConfig.TrackMemoryLeaks;
 
 #if ALLOW_OVERRIDE
-            NativePlatformPlugin.addPath(MedicalConfig.OpenGLESEmulatorPath);
+            RuntimePlatformInfo.addPath(MedicalConfig.OpenGLESEmulatorPath);
 #endif
 
             //Configure plugins

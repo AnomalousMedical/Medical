@@ -121,6 +121,10 @@
       <Project>{e9fd5768-32e1-42c7-8256-4d7b97c22a9b}</Project>
       <Name>OgrePlugin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform.Win32\OSPlatform.Win32.csproj">
+      <Project>{acbb3920-b6d8-497b-8bae-9350c7a85c09}</Project>
+      <Name>OSPlatform.Win32</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
       <Project>{6e594c78-9cd8-432d-a135-11c4a72f3bcf}</Project>
       <Name>OSPlatform</Name>

@@ -1,6 +1,6 @@
 ﻿using Anomalous.OSPlatform;
+using Anomalous.OSPlatform.Win32;
 using System;
-using System.Collections.Generic;
 using System.Net;
 
 namespace Medical
@@ -15,7 +15,7 @@ namespace Medical
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12; //Enable TLS 1.1 and 1.2
 
-            NativePlatformPlugin.StaticInitialize();
+            Win32Platform.Initialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
 
             AnomalousController anomalous = null;
