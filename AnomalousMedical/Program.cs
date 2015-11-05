@@ -15,7 +15,7 @@ namespace Medical
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12; //Enable TLS 1.1 and 1.2
 
-            Win32Platform.Initialize();
+            WindowsRuntimePlatformInfo.Initialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
 
             AnomalousController anomalous = null;
