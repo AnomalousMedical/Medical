@@ -94,10 +94,6 @@ Source: ..\..\..\PublicRelease\x64\Win32UniversalBridge.dll; DestDir: {app}\x64;
 Source: ..\..\..\PublicRelease\x64\WinMTDriver.dll; DestDir: {app}\x64; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\x64\Zip.dll; DestDir: {app}\x64; Flags: ignoreversion
 
-;Microcode Caches
-Source: ..\..\..\PublicRelease\Direct3D11 Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\OpenGL Rendering Subsystem.mcc; DestDir: {app}; Flags: ignoreversion
-
 ;VS 2013 Redistributable
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x64.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
