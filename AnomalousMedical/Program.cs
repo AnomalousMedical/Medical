@@ -15,6 +15,12 @@ namespace Medical
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12; //Enable TLS 1.1 and 1.2
 
+            var osVersion = Environment.OSVersion.Version;
+            if (!(osVersion.Major == 6 && osVersion.Minor == 0)) //Only disable if not on vista (6.0) we don't worry about earlier versions since this won't even run on xp and vista's days are numbered
+            {
+                ServicePointManager.SecurityProtocol &= ~SecurityProtocolType.Tls11;
+            }
+
             WindowsRuntimePlatformInfo.Initialize();
             OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;
 
