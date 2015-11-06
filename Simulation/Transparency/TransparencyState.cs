@@ -23,6 +23,12 @@ namespace Medical
         private float startOpacity;
         private EasingFunctionDelegate easeFunc;
 
+        public TransparencyState(float startAlpha)
+        {
+            this.workingAlpha = startAlpha;
+            this.targetOpacity = startAlpha;
+        }
+
         public void smoothBlend(float targetOpacity, float blendDuration, EasingFunction easingFunction)
         {
             changingOpacity = true;

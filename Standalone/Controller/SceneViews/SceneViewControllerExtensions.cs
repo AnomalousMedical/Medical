@@ -63,25 +63,13 @@ namespace Medical
                     if (BookmarksController != null)
                     {
                         bmk = BookmarksController.loadBookmark(String.Format("Cameras/{0}.bmk", camera.CurrentTransparencyState));
-                    }
-                    
-                    if(bmk == null)
-                    {
-                        String defaultBookmarkFile = String.Format("Scenes\\MasterScene\\DefaultCameras\\{0}.bmk", camera.CurrentTransparencyState);
-                        if (VirtualFileSystem.Instance.fileExists(defaultBookmarkFile))
-                        {
-                            using (Stream bookmarkStream = VirtualFileSystem.Instance.openStream(defaultBookmarkFile, Engine.Resources.FileMode.Open))
-                            {
-                                bmk = SharedXmlSaver.Load<Bookmark>(bookmarkStream);
-                            }
-                        }
-                    }
 
-                    if (bmk != null)
-                    {
-                        camera.setPosition(bmk.CameraPosition, 0.0f);
-                        TransparencyController.ActiveTransparencyState = camera.CurrentTransparencyState;
-                        bmk.Layers.instantlyApply();
+                        if (bmk != null)
+                        {
+                            camera.setPosition(bmk.CameraPosition, 0.0f);
+                            TransparencyController.ActiveTransparencyState = camera.CurrentTransparencyState;
+                            bmk.Layers.instantlyApply();
+                        }
                     }
                 }
                 if (toSelect == null)

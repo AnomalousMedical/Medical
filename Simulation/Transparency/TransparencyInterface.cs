@@ -78,6 +78,7 @@ namespace Medical
         [Editable] private int renderGroupOffset = 0;
         [Editable] private uint subEntityIndex = 0;
         [Editable] private bool useDepthCheck = false;
+        [Editable] private float startingTransparency = 1.0f;
 
         [Editable] public String ObjectName { get; private set; }
         [Editable] public RenderGroup RenderGroup { get; private set; }
@@ -153,7 +154,7 @@ namespace Medical
 
         internal void createTransparencyState()
         {
-            transparencyStates.Add(new TransparencyState());
+            transparencyStates.Add(new TransparencyState(startingTransparency));
         }
 
         internal void removeTransparencyState(int index)
@@ -197,7 +198,7 @@ namespace Medical
         protected override void constructed()
         {
             transparencyStates = new List<TransparencyState>();
-            transparencyStates.Add(new TransparencyState());
+            transparencyStates.Add(new TransparencyState(startingTransparency));
 
             SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
             if(sceneNode == null)
