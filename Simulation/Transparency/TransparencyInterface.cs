@@ -142,6 +142,7 @@ namespace Medical
                 subInterfaces = new List<TransparencySubInterface>();
             }
             subInterfaces.Add(subInterface);
+            subInterface.setAlpha(getCurrentTransparency(activeTransparencyState));
         }
 
         internal void removeSubInterface(TransparencySubInterface subInterface)
