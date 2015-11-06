@@ -340,7 +340,7 @@ namespace Medical.GUI
             anatomyFinder.sceneUnloading();
         }
 
-        public void sceneRevealed()
+        public void setupUserBookmarks(bool instantBookmarkApply)
         {
             ResourceProvider bookmarksResourceProvider;
             if (bookmarksController.PremiumBookmarks)
@@ -352,6 +352,25 @@ namespace Medical.GUI
                 bookmarksResourceProvider = createNonPremiumBookmarksResourceProvider();
             }
             bookmarksController.loadSavedBookmarks(bookmarksResourceProvider);
+
+            var camera = standaloneController.SceneViewController.ActiveWindow;
+            if (camera != null)
+            {
+                var bmk = bookmarksController.loadBookmark(String.Format("Cameras/{0}.bmk", camera.CurrentTransparencyState));
+                if (bmk != null)
+                {
+                    if (instantBookmarkApply)
+                    {
+                        camera.setPosition(bmk.CameraPosition, 0.0f);
+                        TransparencyController.ActiveTransparencyState = camera.CurrentTransparencyState;
+                        bmk.Layers.instantlyApply();
+                    }
+                    else
+                    {
+                        bookmarksController.applyBookmark(bmk);
+                    }
+                }
+            }
         }
 
         public void allPluginsLoaded()

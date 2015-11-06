@@ -1,6 +1,9 @@
 ﻿using Anomalous.GuiFramework.Cameras;
+using Engine;
+using Medical.Controller;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +12,8 @@ namespace Medical
 {
     public static class SceneViewControllerExtensions
     {
+        public static BookmarksController BookmarksController { get; set; }
+
         public static void createFromPresets(this SceneViewController controller, SceneViewWindowPresetSet presets, bool keepOldSettings = true)
         {
             //Capture current window configuration info
@@ -54,6 +59,30 @@ namespace Medical
                 else
                 {
                     camera = controller.createWindow(preset.Name, preset.Position, preset.LookAt, preset.BoundMin, preset.BoundMax, preset.OrbitMinDistance, preset.OrbitMaxDistance, zOrder, controller.findWindow(preset.ParentWindow), preset.WindowPosition);
+                    Bookmark bmk = null;
+                    if (BookmarksController != null)
+                    {
+                        bmk = BookmarksController.loadBookmark(String.Format("Cameras/{0}.bmk", camera.CurrentTransparencyState));
+                    }
+                    
+                    if(bmk == null)
+                    {
+                        String defaultBookmarkFile = String.Format("Scenes\\MasterScene\\DefaultCameras\\{0}.bmk", camera.CurrentTransparencyState);
+                        if (VirtualFileSystem.Instance.fileExists(defaultBookmarkFile))
+                        {
+                            using (Stream bookmarkStream = VirtualFileSystem.Instance.openStream(defaultBookmarkFile, Engine.Resources.FileMode.Open))
+                            {
+                                bmk = SharedXmlSaver.Load<Bookmark>(bookmarkStream);
+                            }
+                        }
+                    }
+
+                    if (bmk != null)
+                    {
+                        camera.setPosition(bmk.CameraPosition, 0.0f);
+                        TransparencyController.ActiveTransparencyState = camera.CurrentTransparencyState;
+                        bmk.Layers.instantlyApply();
+                    }
                 }
                 if (toSelect == null)
                 {

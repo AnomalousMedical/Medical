@@ -70,6 +70,7 @@ namespace Medical
             controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
             splashScreen = new SplashScreen(controller.MainWindow, FinishedPosition, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += splashScreen_Hidden;
+            splashScreen.Hiding += SplashScreen_Hiding;
             splashScreen.StatusUpdated += splashScreen_StatusUpdated;
 
             UpdateController.CurrentVersion = Assembly.GetAssembly(typeof(AnomalousMainPlugin)).GetName().Version;
@@ -344,14 +345,18 @@ namespace Medical
             return background;
         }
 
+        private void SplashScreen_Hiding(SplashScreen obj)
+        {
+            if (mainPlugin != null)
+            {
+                mainPlugin.setupUserBookmarks(true);
+            }
+        }
+
         void splashScreen_Hidden(SplashScreen sender)
         {
             splashScreen.Dispose();
             splashScreen = null;
-            if (mainPlugin != null)
-            {
-                mainPlugin.sceneRevealed();
-            }
         }
 
         void splashScreen_StatusUpdated(SplashScreen sender)
@@ -397,8 +402,8 @@ namespace Medical
                     Root.getSingleton()._updateAllRenderTargets();
                     keyValid();
                     mvcLogin.close();
-                    //Let plugins know the scene has been revealed, since the license dialog had to be opened.
-                    mainPlugin.sceneRevealed();
+                    //Let plugins know to setup the user's bookmarks, since the license dialog had to be opened.
+                    mainPlugin.setupUserBookmarks(false);
                 };
             mvcLogin.showContext();
 

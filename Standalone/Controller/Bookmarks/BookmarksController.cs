@@ -77,6 +77,7 @@ namespace Medical.Controller
             this.standaloneController = standaloneController;
             this.premiumBookmarks = premiumBookmarks;
             this.loadBookmarks = new LoadBookmarksBgTask(this);
+            SceneViewControllerExtensions.BookmarksController = this;
         }
 
         public void Dispose()
@@ -233,6 +234,25 @@ namespace Medical.Controller
             {
                 BookmarkPathsCleared.Invoke();
             }
+        }
+
+        public Bookmark loadBookmark(String bookmarkPath)
+        {
+            try
+            {
+                if (bookmarksResourceProvider != null && bookmarksResourceProvider.fileExists(bookmarkPath))
+                {
+                    using (var stream = bookmarksResourceProvider.openFile(bookmarkPath))
+                    {
+                        return SharedXmlSaver.Load<Bookmark>(stream);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Log.Error("{0} loading bookmark '{1}'. Message: {2}", ex.GetType().Name, bookmarkPath, ex.Message);
+            }
+            return null;
         }
 
         public BookmarkPath CurrentPath
