@@ -33,7 +33,6 @@ namespace Medical
         {
             //Toggle security protocols without hopefully trashing new ones that are added.
             ServicePointManager.SecurityProtocol &= ~SecurityProtocolType.Ssl3; //Disable SSL v3.
-            ServicePointManager.SecurityProtocol &= ~SecurityProtocolType.Tls; //Disable TLS 1.0.
 
             DefaultTimeout = 60000;
 
