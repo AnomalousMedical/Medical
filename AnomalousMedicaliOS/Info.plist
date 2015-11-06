@@ -25,10 +25,8 @@
 	<string>Resources/Images.xcassets/AppIcons.appiconset</string>
 	<key>XSLaunchImageAssets</key>
 	<string>Resources/Images.xcassets/LaunchImage.launchimage</string>
-	<key>CFBundleShortVersionString</key>
-	<string>2.7</string>
 	<key>CFBundleVersion</key>
-	<string>2.7.0</string>
+	<string>3.0.0</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -47,5 +45,7 @@
 	<string>LaunchScreen</string>
 	<key>UIRequiresFullScreen</key>
 	<false/>
+	<key>CFBundleShortVersionString</key>
+	<string>3.0</string>
 </dict>
 </plist>
