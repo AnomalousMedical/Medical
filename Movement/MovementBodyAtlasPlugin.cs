@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Engine.ObjectManagement;
-using MyGUIPlugin;
 using Medical.Controller;
-using Medical.GUI;
 using Engine;
 using Medical.Movement.GUI;
 using Anomalous.GuiFramework;
