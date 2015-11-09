@@ -29,7 +29,7 @@ namespace Medical.GUI
         Widget dataPanel;
 
         public SavePatientDialog(GUIManager guiManager)
-            : base("Medical.GUI.FileManagement.SavePatientDialog.layout", guiManager)
+            : base("DentalSim.GUI.FileManagement.SavePatientDialog.layout", guiManager)
         {
             firstText = widget.findWidget("Save/FirstName") as EditBox;
             lastText = widget.findWidget("Save/LastName") as EditBox;

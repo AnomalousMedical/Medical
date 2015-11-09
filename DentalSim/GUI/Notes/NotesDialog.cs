@@ -19,7 +19,7 @@ namespace Medical.GUI
         private MedicalState currentState;
 
         public NotesDialog(MedicalStateController stateController)
-            : base("Medical.GUI.Notes.NotesDialog.layout")
+            : base("DentalSim.GUI.Notes.NotesDialog.layout")
         {
             window.Visible = false;
 

@@ -18,6 +18,11 @@ namespace DentalSim
     {
         //Dialogs
         private MandibleMovementDialog mandibleMovementDialog;
+        private NotesDialog notesDialog;
+        private StateListDialog stateList;
+        private SavePatientDialog savePatientDialog;
+        private OpenPatientDialog openPatientDialog;
+
         private StandaloneController standaloneController;
 
         public DentalSimPlugin()
@@ -28,6 +33,10 @@ namespace DentalSim
         public void Dispose()
         {
             mandibleMovementDialog.Dispose();
+            stateList.Dispose();
+            notesDialog.Dispose();
+            savePatientDialog.Dispose();
+            openPatientDialog.Dispose();
         }
 
         public void loadGUIResources()
@@ -37,13 +46,28 @@ namespace DentalSim
 
         public void initialize(StandaloneController standaloneController)
         {
+            standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController));
+
             this.standaloneController = standaloneController;
+            standaloneController.PatientDataController.PatientDataChanged += new Action<PatientDataFile>(PatientDataController_PatientDataChanged);
 
             GUIManager guiManager = standaloneController.GUIManager;
 
             //Dialogs
             mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController, standaloneController.MusclePositionController);
             guiManager.addManagedDialog(mandibleMovementDialog);
+
+            notesDialog = new NotesDialog(standaloneController.MedicalStateController);
+            guiManager.addManagedDialog(notesDialog);
+
+            stateList = new StateListDialog(standaloneController.MedicalStateController);
+            guiManager.addManagedDialog(stateList);
+
+            savePatientDialog = new SavePatientDialog(guiManager);
+            savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
+
+            openPatientDialog = new OpenPatientDialog(guiManager);
+            openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
@@ -61,6 +85,22 @@ namespace DentalSim
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalCT", "Clinical CT", "DentalSimIcons/ClinicalCT", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalCT.", "ClinicalCT.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalMRI", "Clinical MRI", "DentalSimIcons/ClinicalMRI", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalMRI.", "ClinicalMRI.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalOrthoAndSkeletal", "Clinical Orthodontic and Skeletal", "DentalSimIcons/ClinicalOrthodonticAndSkeletal", "Dental Simulation", GetType(), "DentalSim.Wizards.", "ClinicalOrthoAndSkeletal.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
+
+            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "PremiumFeatures/Open", TaskMenuCategories.Patient, 1));
+
+            PinableMDIDialogOpenTask statesTask = new PinableMDIDialogOpenTask(stateList, "Medical.StateList", "States", "PremiumFeatures/StatesIcon", TaskMenuCategories.Patient);
+            taskController.addTask(statesTask);
+
+            PinableMDIDialogOpenTask notesTask = new PinableMDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "PremiumFeatures/NotesIcon", TaskMenuCategories.Patient);
+            taskController.addTask(notesTask);
+
+            CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "CommonToolstrip/Save", TaskMenuCategories.Patient, 2, false);
+            saveTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveTaskItem_OnClicked);
+            taskController.addTask(saveTaskItem);
+
+            CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "CommonToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
+            saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
+            taskController.addTask(saveAsTaskItem);
 
             //Movement Sequences
             MovementSequenceController movementSequenceController = standaloneController.MovementSequenceController;
@@ -166,6 +206,66 @@ namespace DentalSim
             {
                 return IEnumerableUtil<long>.EmptyIterator;
             }
+        }
+
+        public void save()
+        {
+            if (standaloneController.MedicalStateController.getNumStates() == 0)
+            {
+                MessageBox.show("No information to save. Please create some states or perform an exam.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
+            else
+            {
+                savePatientDialog.save();
+            }
+        }
+
+        public void saveAs()
+        {
+            if (standaloneController.MedicalStateController.getNumStates() == 0)
+            {
+                MessageBox.show("No information to save. Please create some states using the wizards first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
+            else
+            {
+                savePatientDialog.saveAs();
+            }
+        }
+
+        public void PatientDataController_PatientDataChanged(PatientDataFile patientData)
+        {
+            if (patientData != null)
+            {
+                MainWindow.Instance.updateWindowTitle(String.Format("{0} {1}", patientData.FirstName, patientData.LastName));
+                standaloneController.DocumentController.addToRecentDocuments(patientData.BackingFile);
+            }
+            else
+            {
+                MainWindow.Instance.clearWindowTitle();
+            }
+            savePatientDialog.PatientData = patientData;
+        }
+
+        private void savePatientDialog_SaveFile(object sender, EventArgs e)
+        {
+            PatientDataFile patientData = savePatientDialog.PatientData;
+            standaloneController.PatientDataController.saveMedicalState(patientData);
+        }
+
+        private void openPatientDialog_OpenFile(object sender, EventArgs e)
+        {
+            PatientDataFile patientData = openPatientDialog.CurrentFile;
+            standaloneController.PatientDataController.openPatientFile(patientData);
+        }
+
+        void saveAsTaskItem_OnClicked(Task item)
+        {
+            saveAs();
+        }
+
+        void saveTaskItem_OnClicked(Task item)
+        {
+            save();
         }
     }
 }

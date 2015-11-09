@@ -19,7 +19,7 @@ namespace Medical.GUI
         private MedicalStateController stateController;
 
         public StateListDialog(MedicalStateController stateController)
-            :base("Medical.GUI.StateList.StateListDialog.layout")
+            :base("DentalSim.GUI.StateList.StateListDialog.layout")
         {
             stateListBox = new SingleSelectButtonGrid(window.findWidget("StateList/ScrollView") as ScrollView, new ButtonGridListLayout());
 

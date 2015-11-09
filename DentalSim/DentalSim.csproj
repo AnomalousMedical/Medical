@@ -56,11 +56,21 @@
   <ItemGroup>
     <Compile Include="DentalSimAtlasPluginEntryPoint.cs" />
     <Compile Include="DentalSimPlugin.cs" />
+    <Compile Include="Documents\PatientDocumentHandler.cs" />
+    <Compile Include="GUI\FileManagement\ListPatientsBgTask.cs" />
+    <Compile Include="GUI\FileManagement\OpenPatientDialog.cs" />
+    <Compile Include="GUI\FileManagement\SavePatientDialog.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
+    <Compile Include="GUI\Notes\NotesDialog.cs" />
+    <Compile Include="GUI\StateList\StateListDialog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Tasks\ShowToothContactsTaskMenuItem.cs" />
+    <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />
+    <EmbeddedResource Include="GUI\FileManagement\SavePatientDialog.layout" />
+    <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
+    <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
     <EmbeddedResource Include="Wizards\Dentition.mvc" />
     <EmbeddedResource Include="Wizards\DiscClock\DiscClockFace.mvc" />
     <EmbeddedResource Include="Wizards\Eminence.mvc" />
@@ -180,6 +190,10 @@
     <EmbeddedResource Include="Resources\MovementIcons.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj">
+      <Project>{6598a7cd-8f27-4d3f-a675-5ae63113a7c3}</Project>
+      <Name>FreeImageDotNet</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Engine\BulletWrapperPlugin\BulletWrapperPlugin.csproj">
       <Project>{eba88dc3-837d-45d8-a91a-e291c6ae444e}</Project>
       <Name>BulletWrapperPlugin</Name>
@@ -199,6 +213,10 @@
     <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
       <Project>{e9fd5768-32e1-42c7-8256-4d7b97c22a9b}</Project>
       <Name>OgrePlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
+      <Project>{6e594c78-9cd8-432d-a135-11c4a72f3bcf}</Project>
+      <Name>OSPlatform</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>

@@ -35,7 +35,7 @@ namespace Medical.GUI
         private ListPatientsBgTask listPatientsTask;
 
         public OpenPatientDialog(GUIManager guiManager)
-            : base("Medical.GUI.FileManagement.OpenPatientDialog.layout", guiManager)
+            : base("DentalSim.GUI.FileManagement.OpenPatientDialog.layout", guiManager)
         {
             fileDataGrid = widget.findWidget("Open/FileList") as MultiListBox;
             locationTextBox = widget.findWidget("Open/LoadLocation") as EditBox;
