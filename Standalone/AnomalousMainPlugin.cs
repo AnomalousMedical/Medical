@@ -398,11 +398,6 @@ namespace Medical.GUI
             else if (MedicalConfig.FirstRun)
             {
                 MedicalConfig.FirstRun = false;
-                Task introTask = standaloneController.TaskController.getTask("Medical.IntroductionTutorial.Bootstrap");
-                if (introTask != null)
-                {
-                    introTask.clicked(EmptyTaskPositioner.Instance);
-                }
             }
 
             guiTaskManager.setLoadingTasksToMissing(CommonResources.NoIcon);
