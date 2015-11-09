@@ -43,7 +43,7 @@ namespace Medical
 
         public string getIcon(string filename)
         {
-            return "PremiumFeatures/PatientDataIcon";
+            return "DentalSimIcons/PatientDataIcon";
         }
     }
 }

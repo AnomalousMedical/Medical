@@ -86,12 +86,12 @@ namespace DentalSim
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalMRI", "Clinical MRI", "DentalSimIcons/ClinicalMRI", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalMRI.", "ClinicalMRI.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
             taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalOrthoAndSkeletal", "Clinical Orthodontic and Skeletal", "DentalSimIcons/ClinicalOrthodonticAndSkeletal", "Dental Simulation", GetType(), "DentalSim.Wizards.", "ClinicalOrthoAndSkeletal.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
 
-            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "PremiumFeatures/Open", TaskMenuCategories.Patient, 1));
+            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "DentalSimIcons/Open", TaskMenuCategories.Patient, 1));
 
-            PinableMDIDialogOpenTask statesTask = new PinableMDIDialogOpenTask(stateList, "Medical.StateList", "States", "PremiumFeatures/StatesIcon", TaskMenuCategories.Patient);
+            PinableMDIDialogOpenTask statesTask = new PinableMDIDialogOpenTask(stateList, "Medical.StateList", "States", "DentalSimIcons/StatesIcon", TaskMenuCategories.Patient);
             taskController.addTask(statesTask);
 
-            PinableMDIDialogOpenTask notesTask = new PinableMDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "PremiumFeatures/NotesIcon", TaskMenuCategories.Patient);
+            PinableMDIDialogOpenTask notesTask = new PinableMDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "DentalSimIcons/NotesIcon", TaskMenuCategories.Patient);
             taskController.addTask(notesTask);
 
             CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "CommonToolstrip/Save", TaskMenuCategories.Patient, 2, false);

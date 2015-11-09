@@ -12,39 +12,7 @@
   <Resource type="ResourceImageSet" name="PremiumFeatures/CloneWindow">
     <Group name="Icons" texture="Medical.Resources.PremiumIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="0 32"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="PremiumFeatures/NotesIcon">
-    <Group name="Icons" texture="Medical.Resources.PremiumIcons.png" size="32 32">
-      <Index name="Icon">
         <Frame point="32 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="PremiumFeatures/Open">
-    <Group name="Icons" texture="Medical.Resources.PremiumIcons.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="32 32"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="PremiumFeatures/PatientDataIcon">
-    <Group name="Icons" texture="Medical.Resources.PremiumIcons.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="64 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="PremiumFeatures/StatesIcon">
-    <Group name="Icons" texture="Medical.Resources.PremiumIcons.png" size="32 32">
-      <Index name="Icon">
-        <Frame point="96 0"/>
       </Index>
     </Group>
   </Resource>
@@ -52,7 +20,7 @@
   <Resource type="ResourceImageSet" name="PremiumFeatures/WindowLayoutIcon">
     <Group name="Icons" texture="Medical.Resources.PremiumIcons.png" size="32 32">
       <Index name="Icon">
-        <Frame point="64 32"/>
+        <Frame point="64 0"/>
       </Index>
     </Group>
   </Resource>
