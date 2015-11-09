@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Window" skin="WindowCSX" position="137 32 224 154" layer="Overlapped">
+        <Property key="Caption" value="Set Window Resolution"/>
+        <UserString key="CurrentDockLocation" value="Floating"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <Widget type="TextBox" skin="TextBox" position="0 8 212 20">
+            <Property key="Caption" value="Window Resolution"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position="0 34 104 25" align="HStretch Top" name="XRes"/>
+        <Widget type="EditBox" skin="EditBox" position="107 34 105 25" name="YRes"/>
+        <Widget type="Button" skin="Button" position="0 62 104 25" name="SetSize">
+            <Property key="Caption" value="Set Size"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="107 62 105 25" name="GetSize">
+            <Property key="Caption" value="Get Size"/>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>

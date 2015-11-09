@@ -12,6 +12,9 @@ using Engine;
 using Anomalous.libRocketWidget;
 using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Debugging;
+using OgrePlugin;
+using System.IO;
+using Engine.Platform;
 
 namespace Developer
 {
@@ -30,6 +33,7 @@ namespace Developer
         private DebugVisualizer debugVisualizer;
         private VirtualTextureDebugger virtualTextureDebugger;
         private AdvancedCameraGui advancedCameraGui;
+        private ResolutionGui resolutionGui;
 
         public DeveloperAtlasPlugin(StandaloneController standaloneController)
         {
@@ -38,6 +42,7 @@ namespace Developer
 
         public void Dispose()
         {
+            resolutionGui.Dispose();
             debugVisualizer.Dispose();
             changeRenderingMode.Dispose();
             libRocketDebugger.Dispose();
@@ -91,6 +96,9 @@ namespace Developer
 
             libRocketDebugger = new ShowLibRocketDebugger(guiManager, "ShowLibRocketDebugger", "Show LibRocket Debugger", "Developer.libRocketDebugger", "Developer");
 
+            resolutionGui = new ResolutionGui(standaloneController.MainWindow);
+            guiManager.addManagedDialog(resolutionGui);
+
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
 
             //Task Controller
@@ -106,6 +114,7 @@ namespace Developer
             taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(debugVisualizer, "Developer.DebugVisualizer", "Debug Visualizer", "Developer.DebugVisualizer", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(advancedCameraGui, "Developer.AdvancedCameraGui", "Advanced Camera Settings", CommonResources.NoIcon, TaskMenuCategories.Developer));
+            taskController.addTask(new MDIDialogOpenTask(resolutionGui, "Developer.SetResolution", "Set Resolution", CommonResources.NoIcon, TaskMenuCategories.Developer));
             taskController.addTask(libRocketDebugger);
             taskController.addTask(new SaveMicrocodeCacheTask());
             taskController.addTask(new CallbackTask("Developer.SaveToMax", "Save to 3ds Max", "Developer.MaxDumpIcon", TaskMenuCategories.Developer, (item) =>
@@ -124,6 +133,7 @@ namespace Developer
                         };
                     }
                 }));
+
             changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
             taskController.addTask(changeRenderingMode);
 
@@ -154,6 +164,27 @@ namespace Developer
                 guiManager.addManagedDialog(virtualTextureDebugger);
                 taskController.addTask(new MDIDialogOpenTask(virtualTextureDebugger, "Developer.VirtualTextureDebugger", "Virtual Texture Debugger", CommonResources.NoIcon, TaskMenuCategories.Developer));
             }
+
+            var screenshotButtonEvent = new ButtonEvent(EventLayers.Gui, frameUp: (evtMgr) =>
+            {
+                try
+                {
+                    String screenshotFolder = Path.Combine(MedicalConfig.UserDocRoot, "Screenshots");
+                    if (!Directory.Exists(screenshotFolder))
+                    {
+                        Directory.CreateDirectory(screenshotFolder);
+                    }
+
+                    OgreInterface.Instance.OgrePrimaryWindow.OgreRenderTarget.writeContentsToTimestampedFile(Path.Combine(screenshotFolder, "Screenshot"), ".png");
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.show(String.Format("{0} saving screenshot. Message {1}", ex.GetType().Name, ex.Message), "Error saving screenshot", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
+            });
+            screenshotButtonEvent.addButton(KeyboardButtonCode.KC_F8);
+            screenshotButtonEvent.addButton(KeyboardButtonCode.KC_LSHIFT);
+            standaloneController.MedicalController.EventManager.addEvent(screenshotButtonEvent);
         }
 
         public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
