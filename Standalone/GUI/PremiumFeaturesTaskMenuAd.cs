@@ -25,6 +25,7 @@ namespace Medical.GUI
             this.taskMenu = taskMenu;
             taskMenu.AdProvider = this;
             taskMenu.Showing += taskMenu_Showing;
+            this.LayoutChanged += PremiumFeaturesTaskMenuAd_LayoutChanged;
         }
 
         public void Dispose()
@@ -50,6 +51,7 @@ namespace Medical.GUI
                 rocketWidget = new RocketWidget(adImage, false);
                 openRml();
                 Right = adImage.Right;
+                Top = 100;
                 fireAdCreated();
                 taskMenu.Showing -= taskMenu_Showing;
             }
@@ -96,6 +98,26 @@ namespace Medical.GUI
             if (url != null)
             {
                 OtherProcessManager.openUrlInBrowser(String.Format("{0}/{1}", MedicalConfig.WebsiteHostUrl, url.StringValue));
+            }
+        }
+
+        private void PremiumFeaturesTaskMenuAd_LayoutChanged(TaskMenuAdProvider obj)
+        {
+            switch(obj.AdAlignment)
+            {
+                case Alignment.Vertical:
+                    adImage.Coord = new IntCoord(obj.AdRect.Left, obj.AdRect.Top, AdWidth, AdHeight);
+                    rocketWidget.resized();
+                    adImage.Visible = true;
+                    break;
+                case Alignment.Horizontal:
+                    adImage.Coord = new IntCoord(obj.AdRect.Left, obj.AdRect.Top, obj.AdRect.Width, obj.AdRect.Height);
+                    rocketWidget.resized();
+                    adImage.Visible = true;
+                    break;
+                case Alignment.Hidden:
+                    adImage.Visible = false;
+                    break;
             }
         }
     }
