@@ -20,6 +20,8 @@ namespace Medical.GUI
         private static readonly int AdWidth = ScaleHelper.Scaled(230);
         private static readonly int AdHeight = ScaleHelper.Scaled(460);
 
+        private static readonly int HorizontalAdHeight = ScaleHelper.Scaled(98);
+
         public PremiumFeaturesTaskMenuAd(TaskMenu taskMenu)
         {
             this.taskMenu = taskMenu;
@@ -51,7 +53,7 @@ namespace Medical.GUI
                 rocketWidget = new RocketWidget(adImage, false);
                 openRml();
                 Right = adImage.Right;
-                Top = 100;
+                Top = HorizontalAdHeight;
                 fireAdCreated();
                 taskMenu.Showing -= taskMenu_Showing;
             }
