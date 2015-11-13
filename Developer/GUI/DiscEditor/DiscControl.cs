@@ -46,9 +46,9 @@ namespace Medical.GUI
             captureButton.MouseButtonClick += captureButton_MouseButtonClick;
 
             this.Visible = true;
-            leftDiscPanel = new DiscPanel(window, 6, 295, "Left Disc");
+            leftDiscPanel = new DiscPanel(window, ScaleHelper.Scaled(6), ScaleHelper.Scaled(295), "Left Disc");
             leftDiscPanel.DiscName = "LeftTMJDisc";
-            rightDiscPanel = new DiscPanel(window, 6, 35, "Right Disc");
+            rightDiscPanel = new DiscPanel(window, ScaleHelper.Scaled(6), ScaleHelper.Scaled(35), "Right Disc");
             rightDiscPanel.DiscName = "RightTMJDisc";
             this.Visible = false;
         }
