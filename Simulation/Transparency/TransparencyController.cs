@@ -185,7 +185,7 @@ namespace Medical
         }
 
         private static int transparencyStateIndex = 0;//Do not modify directly, use property instead.
-        private static int TransparencyStateIndex
+        internal static int TransparencyStateIndex
         {
             get
             {

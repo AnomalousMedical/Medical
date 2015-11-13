@@ -213,6 +213,7 @@ namespace Medical
                 //Put the tooth back if extracted
                 if (this.extracted && !value)
                 {
+                    transparency.AllowVisible = true;
                     extracted = false;
                     actorElement.clearCollisionFlag(CollisionFlags.NoContactResponse);
                     entity.setVisible(true);
@@ -220,6 +221,7 @@ namespace Medical
                 //Extract the tooth if it is in the scene
                 else if (!this.extracted && value)
                 {
+                    transparency.AllowVisible = false;
                     extracted = true;
                     actorElement.raiseCollisionFlag(CollisionFlags.NoContactResponse);
                     entity.setVisible(false);

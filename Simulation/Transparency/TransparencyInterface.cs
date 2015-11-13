@@ -124,6 +124,10 @@ namespace Medical
         [DoNotSave]
         private bool usesVirtualTexture;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private bool allowVisible = true;
+
         public TransparencyInterface()
         {
             ObjectName = "";
@@ -320,6 +324,22 @@ namespace Medical
             }
         }
 
+        public bool AllowVisible
+        {
+            get
+            {
+                return allowVisible;
+            }
+            set
+            {
+                if (allowVisible != value)
+                {
+                    allowVisible = value;
+                    applyTransparencyState(TransparencyController.TransparencyStateIndex);
+                }
+            }
+        }
+
         public override void update(Clock clock, EventManager eventManager)
         {
             foreach (TransparencyState state in transparencyStates)
@@ -340,75 +360,95 @@ namespace Medical
 
         private void applyAlphaToMaterial(float alpha)
         {
-            alphaQuat.w = alpha;
-            subEntity.setCustomParameter(0, alphaQuat);
-            if (alpha >= 0.9999f)
+            if (allowVisible)
             {
-                if (status != TransparencyStatus.Solid)
+                alphaQuat.w = alpha;
+                subEntity.setCustomParameter(0, alphaQuat);
+                if (alpha >= 0.9999f)
                 {
-                    status = TransparencyStatus.Solid;
-                    subEntity.setMaterialName(baseMaterialName);
-                    entity.setRenderQueueGroup(originalRenderGroup);
-                    if (usesVirtualTexture)
+                    if (status != TransparencyStatus.Solid)
                     {
-                        entity.setVisibilityFlags(TransparencyController.OpaqueVisibilityMask);
+                        status = TransparencyStatus.Solid;
+                        subEntity.setMaterialName(baseMaterialName);
+                        entity.setRenderQueueGroup(originalRenderGroup);
+                        if (usesVirtualTexture)
+                        {
+                            entity.setVisibilityFlags(TransparencyController.OpaqueVisibilityMask);
+                        }
+                        subEntity.setVisible(true);
+                        if (disableEntireEntity)
+                        {
+                            entity.setVisible(true);
+                        }
+                        entity.setMaterialLodBias(1.0f, 0, 0);
                     }
-                    subEntity.setVisible(true);
-                    if (disableEntireEntity)
-                    {
-                        entity.setVisible(true);
-                    }
-                    entity.setMaterialLodBias(1.0f, 0, 0);
                 }
-            }
-            else if (alpha <= 0.00008f)
-            {
-                if (status != TransparencyStatus.Hidden)
+                else if (alpha <= 0.00008f)
                 {
-                    status = TransparencyStatus.Hidden;
-                    subEntity.setVisible(false);
-                    if (disableEntireEntity)
+                    setHiddenTransparency();
+                }
+                else
+                {
+                    if (status != TransparencyStatus.Transparent)
                     {
-                        entity.setVisible(false);
+                        status = TransparencyStatus.Transparent;
+                        subEntity.setMaterialName(finalAlphaMaterialName);
+                        subEntity.setVisible(true);
+                        if (disableEntireEntity)
+                        {
+                            entity.setVisible(true);
+                        }
+                        if (useDepthCheck)
+                        {
+                            entity.setMaterialLodBias(1.0f, 0, 0);
+                        }
+                        else
+                        {
+                            entity.setMaterialLodBias(1.0f, 1, 1);
+                        }
+                        entity.setRenderQueueGroup(RenderGroupQueue.GetQueue(RenderGroup, (byte)renderGroupOffset));
+                        if (usesVirtualTexture)
+                        {
+                            entity.setVisibilityFlags(TransparencyController.TransparentVisibilityMask);
+                        }
                     }
-                    if (usesVirtualTexture)
+                }
+
+                if (subInterfaces != null)
+                {
+                    foreach (TransparencySubInterface subInterface in subInterfaces)
                     {
-                        entity.setVisibilityFlags(TransparencyController.HiddenVisibilityMask);
+                        subInterface.setAlpha(alpha);
                     }
                 }
             }
             else
             {
-                if (status != TransparencyStatus.Transparent)
+                setHiddenTransparency();
+
+                if (subInterfaces != null)
                 {
-                    status = TransparencyStatus.Transparent;
-                    subEntity.setMaterialName(finalAlphaMaterialName);
-                    subEntity.setVisible(true);
-                    if (disableEntireEntity)
+                    foreach (TransparencySubInterface subInterface in subInterfaces)
                     {
-                        entity.setVisible(true);
-                    }
-                    if (useDepthCheck)
-                    {
-                        entity.setMaterialLodBias(1.0f, 0, 0);
-                    }
-                    else
-                    {
-                        entity.setMaterialLodBias(1.0f, 1, 1);
-                    }
-                    entity.setRenderQueueGroup(RenderGroupQueue.GetQueue(RenderGroup, (byte)renderGroupOffset));
-                    if (usesVirtualTexture)
-                    {
-                        entity.setVisibilityFlags(TransparencyController.TransparentVisibilityMask);
+                        subInterface.setAlpha(alpha);
                     }
                 }
             }
+        }
 
-            if (subInterfaces != null)
+        private void setHiddenTransparency()
+        {
+            if (status != TransparencyStatus.Hidden)
             {
-                foreach (TransparencySubInterface subInterface in subInterfaces)
+                status = TransparencyStatus.Hidden;
+                subEntity.setVisible(false);
+                if (disableEntireEntity)
                 {
-                    subInterface.setAlpha(alpha);
+                    entity.setVisible(false);
+                }
+                if (usesVirtualTexture)
+                {
+                    entity.setVisibilityFlags(TransparencyController.HiddenVisibilityMask);
                 }
             }
         }
