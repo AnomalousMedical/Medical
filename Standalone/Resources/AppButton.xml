@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MyGUI type="Resource" version="1.1">
 
-  <Resource type="ResourceImageSet" name="AppButton/NarrowImage">
-    <Group name="Icons" texture="Medical.Resources.AppButton.png" size="28 32">
+  <Resource type="ResourceImageSet" name="AppButton/Hamburger">
+    <Group name="Icons" texture="Medical.Resources.AppButton.png" size="32 32">
       <Index name="Icon">
         <Frame point="0 0"/>
-      </Index>
-    </Group>
-  </Resource>
-
-  <Resource type="ResourceImageSet" name="AppButton/WideImage">
-    <Group name="Icons" texture="Medical.Resources.AppButton.png" size="114 32">
-      <Index name="Icon">
-        <Frame point="28 0"/>
       </Index>
     </Group>
   </Resource>

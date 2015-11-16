@@ -137,6 +137,8 @@
     <Compile Include="Animation\Proxy\ProxyBone.cs" />
     <Compile Include="Animation\Proxy\ProxyChainSegment.cs" />
     <Compile Include="Animation\Proxy\InterpolatedRotationSegment.cs" />
+    <Compile Include="Measurement\VolumeCalculator.cs" />
+    <Compile Include="Measurement\VolumeController.cs" />
     <Compile Include="MouthInterior\BottomLipSection.cs" />
     <Compile Include="MouthInterior\LipController.cs" />
     <Compile Include="MouthInterior\LipSection.cs" />
