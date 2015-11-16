@@ -134,6 +134,19 @@ namespace Developer
                     }
                 }));
 
+            taskController.addTask(new CallbackTask("Developer.TestVolumeCalc", "Test Volume Calculation", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
+            {
+                VolumeCalculator calc;
+                if(VolumeController.tryGetCalculator("LeftMasseter", out calc))
+                {
+                    Logging.Log.Debug("Volume is {0}", calc.CurrentVolume);
+                }
+                else
+                {
+                    Logging.Log.Debug("Cannot find volume calculator");
+                }
+            }));
+
             changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
             taskController.addTask(changeRenderingMode);
 
