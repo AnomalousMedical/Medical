@@ -1,4 +1,5 @@
 ﻿using Anomalous.GuiFramework.Editor;
+using Engine.Editing;
 using libRocketPlugin;
 using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
 using System;
@@ -11,7 +12,14 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 {
     class DataStrategy : ElementStrategy
     {
-        private ElementAttributeEditor attributeEditor;
+        enum DataDisplayType
+        {
+            volume,
+            measurement
+        }
+
+        private EditInterfaceEditor editInterfaceEditor;
+        private DataElementEditor dataElementEditor;
 
         public DataStrategy(String tag, String previewIconName = CommonResources.NoIcon)
             : base(tag, previewIconName, true)
@@ -21,16 +29,86 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, GuiFrameworkUICallback uiCallback, int left, int top)
         {
-            attributeEditor = new ElementAttributeEditor(element, uiCallback);
+            dataElementEditor = new DataElementEditor(element);
+            EditInterface editInterface = dataElementEditor.EditInterface;
+            editInterfaceEditor = new EditInterfaceEditor("Data Display Properties", editInterface, uiCallback);
+            dataElementEditor.EditInterfaceEditor = editInterfaceEditor;
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
-            editor.addElementEditor(attributeEditor);
+            editor.addElementEditor(editInterfaceEditor);
             return editor;
         }
 
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            attributeEditor.applyToElement(element);
+            dataElementEditor.applyToElement(element);
             return true;
+        }
+
+        private class DataElementEditor
+        {
+            private DataDisplayType dataType;
+            private String target;
+            private EditInterface editInterface;
+
+            public DataElementEditor(Element element)
+            {
+                DataDisplayType type;
+                if (!Enum.TryParse<DataDisplayType>(element.GetAttributeString("type"), out type))
+                {
+                    type = DataDisplayType.volume;
+                }
+                dataType = type;
+
+                target = element.GetAttributeString("target");
+            }
+
+            public void applyToElement(Element element)
+            {
+                element.SetAttribute("type", DataType.ToString());
+                element.SetAttribute("target", Target);
+            }
+
+            [Editable]
+            public DataDisplayType DataType
+            {
+                get
+                {
+                    return dataType;
+                }
+                set
+                {
+                    dataType = value;
+                    EditInterfaceEditor.alertChangesMade();
+                }
+            }
+
+            [Editable]
+            public String Target
+            {
+                get
+                {
+                    return target;
+                }
+                set
+                {
+                    target = value;
+                    EditInterfaceEditor.alertChangesMade();
+                }
+            }
+
+            public EditInterfaceEditor EditInterfaceEditor { get; set; }
+
+            public EditInterface EditInterface
+            {
+                get
+                {
+                    if (editInterface == null)
+                    {
+                        editInterface = ReflectedEditInterface.createEditInterface(this, "Data Display");
+                    }
+                    return editInterface;
+                }
+            }
         }
     }
 }
