@@ -31,8 +31,8 @@ namespace Medical.GUI.AnomalousMvc
             }
             else
             {
-                Log.Warning("Could not find a volume measurement named {0}. The volume will not be displayed.", volumeName);
-                element.InnerRml = String.Format("Cannot find volume {0} in scene.", volumeName);
+                Log.Warning("Could not find a volume measurement named '{0}'. The volume will not be displayed.", volumeName);
+                element.InnerRml = String.Format("Cannot find volume '{0}' in scene.", volumeName);
             }
         }
 

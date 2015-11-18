@@ -31,8 +31,8 @@ namespace Medical.GUI.AnomalousMvc
             }
             else
             {
-                Log.Warning("Could not find a measurement named {0}. The measurement will not be displayed.", name);
-                element.InnerRml = String.Format("Cannot find measurement {0} in scene.", name);
+                Log.Warning("Could not find a measurement named '{0}'. The measurement will not be displayed.", name);
+                element.InnerRml = String.Format("Cannot find measurement '{0}' in scene.", name);
             }
         }
 

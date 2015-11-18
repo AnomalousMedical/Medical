@@ -389,7 +389,8 @@ namespace Medical.GUI.AnomalousMvc
                         dataDisplays.Add(new MeasurementDisplay(element.GetAttributeString("target"), element, context, rocketWidget));
                         break;
                     default:
-                        Logging.Log.Error("Could not create a display type for {0}", element.GetAttributeString("type"));
+                        element.InnerRml = String.Format("Unknown data display type '{0}'", element.GetAttributeString("type"));
+                        Logging.Log.Error("Could not create a display type for '{0}'", element.GetAttributeString("type"));
                         break;
                 }
             }
