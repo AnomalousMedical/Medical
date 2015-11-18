@@ -23,6 +23,8 @@ namespace Medical.GUI.AnomalousMvc
 
         private AnomalousMvcContext context;
 
+        private List<DataDisplay> dataDisplays = new List<DataDisplay>();
+
         public RmlWidgetComponent(RmlView view, AnomalousMvcContext context, MyGUIViewHost viewHost)
             :base("Medical.GUI.AnomalousMvc.RmlView.RmlWidgetComponent.layout", viewHost)
         {
@@ -103,6 +105,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override void closing()
         {
+            destroyDataDisplays();
             rocketWidget.RenderingEnabled = false;
             rocketWidget.InputEnabled = false;
             base.closing();
@@ -356,12 +359,29 @@ namespace Medical.GUI.AnomalousMvc
 
         public void startRmlUpdate()
         {
+            destroyDataDisplays();
             RocketEventListenerInstancer.setEventController(eventController);
+        }
+
+        private void destroyDataDisplays()
+        {
+            foreach (var dispaly in dataDisplays)
+            {
+                dispaly.Dispose();
+            }
+            dataDisplays.Clear();
         }
 
         public void endRmlUpdate()
         {
             RocketEventListenerInstancer.resetEventController();
+
+            //Find all custom controls and hook them up
+            ElementDocument document = rocketWidget.Context.GetDocument(0);
+            foreach (Element element in document.GetElementsByTagName("data"))
+            {
+                dataDisplays.Add(new VolumeDisplay("LeftMasseter1", element, context, rocketWidget));
+            }
         }
     }
 }

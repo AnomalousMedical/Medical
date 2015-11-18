@@ -108,6 +108,7 @@ namespace Lecture
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Add Heading Here</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
                 new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" style=\"width:200px;\"></img>", RmlWysiwygComponent.DefaultImage)),
+                new WysiwygDragDropItem("Data Dispaly", CommonResources.NoIcon, "<data>Data Display</data>"),
                 new WysiwygCallbackDragDropItem("Trigger", "Lecture.Icon.TriggerIcon", "<a class=\"TriggerLink\" onclick=\"\">Add trigger text here.</a>",
                     () => //Markup Callback
                     {

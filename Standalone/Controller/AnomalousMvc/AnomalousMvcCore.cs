@@ -310,6 +310,18 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public event LoopUpdate OnLoopUpdate
+        {
+            add
+            {
+                standaloneController.MedicalController.OnLoopUpdate += value;
+            }
+            remove
+            {
+                standaloneController.MedicalController.OnLoopUpdate -= value;
+            }
+        }
+
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
             if (TimelineStopped != null && !timelineController.HasQueuedTimeline)

@@ -520,6 +520,18 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public event LoopUpdate OnLoopUpdate
+        {
+            add
+            {
+                core.OnLoopUpdate += value;
+            }
+            remove
+            {
+                core.OnLoopUpdate -= value;
+            }
+        }
+
         protected AnomalousMvcContext(LoadInfo info)
         {
             StartupAction = info.GetString("StartupAction");
@@ -684,7 +696,7 @@ namespace Medical.Controller.AnomalousMvc
         {
             if (editInterface == null)
             {
-                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "MVC", null);// new EditInterface("MVC");
+                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, "MVC", null);
                 editInterface.addSubInterface(views.getEditInterface("Views"));
                 editInterface.addSubInterface(controllers.getEditInterface("Controllers"));
                 editInterface.addSubInterface(models.getEditInterface("Models"));

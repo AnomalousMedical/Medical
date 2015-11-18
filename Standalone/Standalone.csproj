@@ -275,8 +275,10 @@
     <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugView.cs" />
+    <Compile Include="GUI\AnomalousMvc\RmlView\DataDisplay.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RawRmlView.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlViewHostControl.cs" />
+    <Compile Include="GUI\AnomalousMvc\RmlView\VolumeDisplay.cs" />
     <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
