@@ -385,6 +385,9 @@ namespace Medical.GUI.AnomalousMvc
                     case "volume":
                         dataDisplays.Add(new VolumeDisplay(element.GetAttributeString("target"), element, context, rocketWidget));
                         break;
+                    case "measurement":
+                        dataDisplays.Add(new MeasurementDisplay(element.GetAttributeString("target"), element, context, rocketWidget));
+                        break;
                     default:
                         Logging.Log.Error("Could not create a display type for {0}", element.GetAttributeString("type"));
                         break;

@@ -130,7 +130,7 @@ namespace Developer.GUI
                         spaceCount += 5;
                     }
                     
-                    sb.AppendFormat(" *  #555566{0}{2}#000000{1} mm\n", measurement.MeasurementName, deltaString, spaceString.Substring(0, spaceCount));
+                    sb.AppendFormat(" *  #555566{0}{2}#000000{1} mm\n", measurement.PrettyName, deltaString, spaceString.Substring(0, spaceCount));
                 }
             }
             text.Caption = sb.ToString();

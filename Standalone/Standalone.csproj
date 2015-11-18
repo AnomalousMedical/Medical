@@ -276,6 +276,7 @@
     <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugView.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\DataDisplay.cs" />
+    <Compile Include="GUI\AnomalousMvc\RmlView\MeasurementDisplay.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RawRmlView.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\RmlViewHostControl.cs" />
     <Compile Include="GUI\AnomalousMvc\RmlView\VolumeDisplay.cs" />

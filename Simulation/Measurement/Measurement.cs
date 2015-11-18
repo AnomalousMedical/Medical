@@ -36,6 +36,9 @@ namespace Medical
         String measurementName;
 
         [Editable]
+        String prettyName;
+
+        [Editable]
         String category;
 
         [Editable]
@@ -105,6 +108,18 @@ namespace Medical
             set
             {
                 measurementName = value;
+            }
+        }
+
+        public String PrettyName
+        {
+            get
+            {
+                return prettyName;
+            }
+            set
+            {
+                prettyName = value;
             }
         }
 
