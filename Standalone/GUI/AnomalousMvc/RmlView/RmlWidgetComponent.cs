@@ -380,7 +380,15 @@ namespace Medical.GUI.AnomalousMvc
             ElementDocument document = rocketWidget.Context.GetDocument(0);
             foreach (Element element in document.GetElementsByTagName("data"))
             {
-                dataDisplays.Add(new VolumeDisplay("LeftMasseter1", element, context, rocketWidget));
+                switch(element.GetAttributeString("type"))
+                {
+                    case "volume":
+                        dataDisplays.Add(new VolumeDisplay(element.GetAttributeString("target"), element, context, rocketWidget));
+                        break;
+                    default:
+                        Logging.Log.Error("Could not create a display type for {0}", element.GetAttributeString("type"));
+                        break;
+                }
             }
         }
     }

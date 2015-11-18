@@ -29,6 +29,7 @@ namespace Medical.GUI
 
             //Controls
             defaultElementStrategyManager.add(new InputStrategy("input"));
+            defaultElementStrategyManager.add(new DataStrategy("data"));
         }
 
         private Dictionary<String, ElementStrategy> strategies = new Dictionary<string, ElementStrategy>();

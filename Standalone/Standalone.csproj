@@ -382,6 +382,7 @@
     <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\Editor\QuickSoundRecorder\QuickSoundRecorder.cs" />
+    <Compile Include="GUI\Editor\RmlWysiwyg\Elements\DataStrategy.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\HighlightProvider.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\WysiwygCallbackDragDropItem.cs" />
     <Compile Include="GUI\Editor\RmlWysiwyg\DraggingElementManager.cs" />
