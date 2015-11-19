@@ -82,7 +82,6 @@ namespace Medical.GUI.RmlWysiwyg.Elements
                 }
             }
 
-            [Editable]
             public String Target
             {
                 get
@@ -105,8 +104,95 @@ namespace Medical.GUI.RmlWysiwyg.Elements
                     if (editInterface == null)
                     {
                         editInterface = ReflectedEditInterface.createEditInterface(this, "Data Display");
+                        editInterface.addEditableProperty(new TargetEditableProperty(this));
                     }
                     return editInterface;
+                }
+            }
+
+            private class TargetEditableProperty : EditableProperty
+            {
+                private DataElementEditor dataElementEditor;
+
+                public TargetEditableProperty(DataElementEditor dataElementEditor)
+                {
+                    this.dataElementEditor = dataElementEditor;
+                }
+
+                public bool Advanced
+                {
+                    get
+                    {
+                        return false;
+                    }
+                }
+
+                public bool canParseString(int column, string value, out string errorMessage)
+                {
+                    errorMessage = null;
+                    return true;
+                }
+
+                public Browser getBrowser(int column, EditUICallback uiCallback)
+                {
+                    switch(dataElementEditor.DataType)
+                    {
+                        case DataDisplayType.volume:
+                            return VolumeController.Browser;
+                        case DataDisplayType.measurement:
+                            return MeasurementController.Browser;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                }
+
+                public Type getPropertyType(int column)
+                {
+                    return typeof(String);
+                }
+
+                public object getRealValue(int column)
+                {
+                    if(column == 1)
+                    {
+                        return dataElementEditor.Target;
+                    }
+                    return "Target";
+                }
+
+                public string getValue(int column)
+                {
+                    if (column == 1)
+                    {
+                        return dataElementEditor.Target;
+                    }
+                    return "Target";
+                }
+
+                public bool hasBrowser(int column)
+                {
+                    return column == 1;
+                }
+
+                public bool readOnly(int column)
+                {
+                    return false;
+                }
+
+                public void setValue(int column, object value)
+                {
+                    if(column == 1)
+                    {
+                        dataElementEditor.Target = value.ToString();
+                    }
+                }
+
+                public void setValueStr(int column, string value)
+                {
+                    if (column == 1)
+                    {
+                        dataElementEditor.Target = value;
+                    }
                 }
             }
         }

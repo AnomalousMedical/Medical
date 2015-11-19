@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.Editing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,19 @@ namespace Medical
         public static bool tryGetCalculator(String name, out VolumeCalculator calculator)
         {
             return volumes.TryGetValue(name, out calculator);
+        }
+
+        public static Browser Browser
+        {
+            get
+            {
+                Browser browser = new Browser("Volumes", "Choose a Volume");
+                foreach (var volume in volumes.Values)
+                {
+                    browser.addNode("", new BrowserNode(volume.Name, volume.Name));
+                }
+                return browser;
+            }
         }
     }
 }

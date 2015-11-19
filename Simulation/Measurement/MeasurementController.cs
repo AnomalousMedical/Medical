@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -55,6 +56,19 @@ namespace Medical
                 {
                     measurementDrawer.DrawLines = value;
                 }
+            }
+        }
+
+        public static Browser Browser
+        {
+            get
+            {
+                Browser browser = new Browser("Measurements", "Choose a Measurement");
+                foreach(var measurement in Measurements)
+                {
+                    browser.addNode(measurement.Category, new BrowserNode(measurement.PrettyName, measurement.MeasurementName));
+                }
+                return browser;
             }
         }
     }
