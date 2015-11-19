@@ -18,6 +18,8 @@ namespace Medical
         private String entityName = "Entity";
         [Editable]
         private String name;
+        [Editable]
+        private String prettyName;
 
         Entity entity;
 
@@ -67,11 +69,19 @@ namespace Medical
             }
         }
 
-        public String Name
+        public String VolumeName
         {
             get
             {
                 return name;
+            }
+        }
+
+        public String PrettyName
+        {
+            get
+            {
+                return prettyName;
             }
         }
     }

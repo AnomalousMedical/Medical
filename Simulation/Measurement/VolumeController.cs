@@ -13,12 +13,12 @@ namespace Medical
 
         internal static void addVolume(VolumeCalculator volumeCalculator)
         {
-            volumes.Add(volumeCalculator.Name, volumeCalculator);
+            volumes.Add(volumeCalculator.VolumeName, volumeCalculator);
         }
 
         internal static void removeVolume(VolumeCalculator volumeCalculator)
         {
-            volumes.Remove(volumeCalculator.Name);
+            volumes.Remove(volumeCalculator.VolumeName);
         }
 
         public static bool tryGetCalculator(String name, out VolumeCalculator calculator)
@@ -33,7 +33,7 @@ namespace Medical
                 Browser browser = new Browser("Volumes", "Choose a Volume");
                 foreach (var volume in volumes.Values)
                 {
-                    browser.addNode("", new BrowserNode(volume.Name, volume.Name));
+                    browser.addNode("", new BrowserNode(volume.PrettyName, volume.VolumeName));
                 }
                 return browser;
             }
