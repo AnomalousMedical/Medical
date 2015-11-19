@@ -55,6 +55,9 @@ namespace Developer.GUI
         {
             Dictionary<String, List<Measurement>> categories = new Dictionary<String, List<Measurement>>();
             StringBuilder sb = new StringBuilder();
+
+            sb.Append("\nMeasurements\n");
+
             foreach (Measurement measurement in MeasurementController.Measurements)
             {
                 List<Measurement> category;
@@ -133,6 +136,13 @@ namespace Developer.GUI
                     sb.AppendFormat(" *  #555566{0}{2}#000000{1} mm\n", measurement.PrettyName, deltaString, spaceString.Substring(0, spaceCount));
                 }
             }
+
+            sb.Append("\nVolumes\n");
+            foreach (var volume in VolumeController.Volumes)
+            {
+                sb.AppendFormat(" *  #555566{0}     #000000{1}\n", volume.PrettyName, volume.CurrentVolume);
+            }
+
             text.Caption = sb.ToString();
         }
 

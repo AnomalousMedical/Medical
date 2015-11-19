@@ -38,5 +38,13 @@ namespace Medical
                 return browser;
             }
         }
+
+        public static IEnumerable<VolumeCalculator> Volumes
+        {
+            get
+            {
+                return volumes.Values;
+            }
+        }
     }
 }
