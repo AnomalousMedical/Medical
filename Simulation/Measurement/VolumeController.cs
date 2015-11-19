@@ -33,7 +33,7 @@ namespace Medical
                 Browser browser = new Browser("Volumes", "Choose a Volume");
                 foreach (var volume in volumes.Values)
                 {
-                    browser.addNode("", new BrowserNode(volume.PrettyName, volume.VolumeName));
+                    browser.addNode(volume.Category, new BrowserNode(volume.PrettyName, volume.VolumeName));
                 }
                 return browser;
             }

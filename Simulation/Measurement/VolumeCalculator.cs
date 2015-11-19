@@ -20,6 +20,8 @@ namespace Medical
         private String name;
         [Editable]
         private String prettyName;
+        [Editable]
+        private String category;
 
         Entity entity;
 
@@ -82,6 +84,14 @@ namespace Medical
             get
             {
                 return prettyName;
+            }
+        }
+
+        public String Category
+        {
+            get
+            {
+                return category;
             }
         }
     }
