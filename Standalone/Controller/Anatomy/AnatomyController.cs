@@ -400,10 +400,13 @@ namespace Medical
         {
             if (showPremiumAnatomy)
             {
-                switch(PickingMode)
+                Anatomy groupSelection = null;
+                AnatomyGroup precursor;
+
+                switch (PickingMode)
                 {
                     case AnatomyPickingMode.Group:
-                        Anatomy groupSelection = null;
+                        //Start with group and go to individual
                         try
                         {
                             groupSelection = currentTopLevelMode.buildGroupSelectionFor(matches.Closest);
@@ -414,7 +417,6 @@ namespace Medical
                             yield return groupSelection;
                         }
 
-                        AnatomyGroup precursor;
                         if(matches.Closest.IndividualSelectionPrecursor != null
                              && luceneSearch.tryGetGroup(matches.Closest.IndividualSelectionPrecursor, out precursor))
                         {
@@ -424,7 +426,25 @@ namespace Medical
                         yield return matches.Closest;
                         break;
                     case AnatomyPickingMode.Individual:
+                        //Go from individual to group
                         yield return matches.Closest;
+
+                        if (matches.Closest.IndividualSelectionPrecursor != null
+                             && luceneSearch.tryGetGroup(matches.Closest.IndividualSelectionPrecursor, out precursor))
+                        {
+                            yield return precursor;
+                        }
+
+                        try
+                        {
+                            groupSelection = currentTopLevelMode.buildGroupSelectionFor(matches.Closest);
+                        }
+                        catch (Exception) { } //Ignore any exceptions.
+                        if (groupSelection != null)
+                        {
+                            yield return groupSelection;
+                        }
+
                         break;
                 }
             }
