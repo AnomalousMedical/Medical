@@ -122,6 +122,11 @@ namespace Medical
                 return createFileBrowser(searchPattern, prompt);
             });
 
+            this.addSyncCustomQuery<Browser>(AnatomyManager.CustomQueries.BuildBrowser, () =>
+            {
+                return AnatomyManager.buildBrowser();
+            });
+
             this.addSyncCustomQuery<Browser>(PropBrowserEditableProperty.CustomQueries.BuildBrowser, () =>
             {
                 Browser browser = new Browser("Props", "Choose Prop");

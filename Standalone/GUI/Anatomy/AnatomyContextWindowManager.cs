@@ -16,6 +16,7 @@ namespace Medical.GUI
         private AnatomyContextWindow currentAnatomyWindow;
         private SceneViewController sceneViewController;
         private AnatomyFinder anatomyFinder;
+        private AnatomyTaskManager anatomyTaskManager;
 
         private AnatomyController anatomyController;
         private LayerController layerController;
@@ -23,13 +24,14 @@ namespace Medical.GUI
 
         private LiveThumbnailController liveThumbnailController;
 
-        public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController, LayerController layerController, AnatomyFinder anatomyFinder)
+        public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController, LayerController layerController, AnatomyFinder anatomyFinder, AnatomyTaskManager anatomyTaskManager)
         {
             this.sceneViewController = sceneViewController;
             this.anatomyController = anatomyController;
             this.anatomyController.SelectedAnatomy.SelectedAnatomyChanged += anatomyController_SelectedAnatomyChanged;
             this.anatomyFinder = anatomyFinder;
             this.layerController = layerController;
+            this.anatomyTaskManager = anatomyTaskManager;
 
             liveThumbnailController = new LiveThumbnailController("ContextWindows_", new IntSize2(ThumbRenderSize, ThumbRenderSize), sceneViewController);
             liveThumbnailController.MaxPoolSize = 1;

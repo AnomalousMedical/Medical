@@ -57,7 +57,7 @@ namespace Medical.GUI
 
         public event Action ShowBuyMessage;
 
-        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, LayerController layerController)
+        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController, LayerController layerController, AnatomyTaskManager anatomyTaskManager)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
             this.anatomyController = anatomyController;
@@ -86,7 +86,7 @@ namespace Medical.GUI
             layerController.OnUndoRedoChanged += updateUndoRedo;
             layerController.OnActiveTransparencyStateChanged += updateUndoRedo;
 
-            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, layerController, this);
+            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController, layerController, this, anatomyTaskManager);
             anatomyFilter = new AnatomyFilter(anatomyController);
             anatomyFilter.refreshCategories();
             anatomyFilter.FilterChanged += anatomyFilter_FilterChanged;

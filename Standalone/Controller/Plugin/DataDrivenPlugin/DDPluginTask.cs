@@ -121,7 +121,10 @@ namespace Medical
                 if (editInterface == null)
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, scanner, String.Format("{0} - {1}", UniqueName, GetType().Name), null);
-                    editInterface.addSubInterfaceForObject(taggedAnatomy, new StringListlikeEditInterface(taggedAnatomy, "TaggedAnatomy", null));
+                    editInterface.addSubInterfaceForObject(taggedAnatomy, new StringListlikeEditInterface(taggedAnatomy, "TaggedAnatomy", null, (uiCallback) =>
+                    {
+                        return uiCallback.runSyncCustomQuery<Browser>(AnatomyManager.CustomQueries.BuildBrowser);
+                    }));
                 }
                 return editInterface;
             }

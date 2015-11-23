@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Logging;
+using Engine.Editing;
 
 namespace Medical
 {
     public class AnatomyManager
     {
+        public enum CustomQueries
+        {
+            BuildBrowser
+        }
+
         private AnatomyManager() { }
 
         private static List<AnatomyIdentifier> anatomyList = new List<AnatomyIdentifier>();
@@ -61,6 +67,23 @@ namespace Medical
             }
             results.sort();
             return results;
+        }
+
+        public static Browser buildBrowser()
+        {
+            var browser = new Browser("Anatomy", "Choose Anatomy");
+            foreach (var anatomy in anatomyList)
+            {
+                try
+                {
+                    browser.addNode("", new BrowserNode(anatomy.AnatomicalName, anatomy.AnatomicalName));
+                }
+                catch(Exception ex)
+                {
+                    //Exceptions are ok, this is just a list, prevents duplicates from being an issue
+                }
+            }
+            return browser;
         }
     }
 }
