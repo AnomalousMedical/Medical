@@ -225,7 +225,7 @@ namespace Medical.GUI
 
         internal void showTaskMenuFor(Anatomy anatomy)
         {
-
+            anatomyTaskManager.highlightTasks(anatomy.AnatomicalName);
         }
 
         void anatomyController_SelectedAnatomyChanged(AnatomySelection anatomySelection)

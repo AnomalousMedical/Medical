@@ -256,7 +256,6 @@ namespace Medical
 
             //Anatomy Controller
             anatomyController = new AnatomyController();
-            anatomyTaskManager = new AnatomyTaskManager();
 
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
@@ -289,6 +288,8 @@ namespace Medical
 
             //Tasks
             taskController = new TaskController();
+
+            anatomyTaskManager = new AnatomyTaskManager(taskController);
 
             //Coroutine
             Coroutine.SetTimer(medicalController.MainTimer);

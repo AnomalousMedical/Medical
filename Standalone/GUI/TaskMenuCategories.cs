@@ -8,7 +8,7 @@ namespace Anomalous.GuiFramework
 {
     public static class TaskMenuCategories
     {
-        const int DynamicGroupBase = 3;
+        const int DynamicGroupBase = 10;
 
         public const String Explore = "Explore";
         public const String Patient = "Patient";
@@ -20,20 +20,35 @@ namespace Anomalous.GuiFramework
         {
             private Dictionary<String, int> groupOrder = new Dictionary<string, int>();
             private List<String> externalGroups = new List<string>();
+            private String highlightGroup;
 
             public MedicalTaskSorter()
             {
                 groupOrder.Add(TaskMenu.SearchResultsCategory, 0);
-                groupOrder.Add(Explore, 1);
-                groupOrder.Add(Create, 2);
-                groupOrder.Add(Patient, 3);
+                //1 is the highlight group
+                groupOrder.Add(Explore, 2);
+                groupOrder.Add(Create, 3);
+                groupOrder.Add(Patient, 4);
                 groupOrder.Add(Developer, int.MaxValue - 1);
                 groupOrder.Add(System, int.MaxValue);
             }
 
             public int compareGroups(string x, string y)
             {
-                return groupOrder[x] - groupOrder[y];
+                //Treat not found items as loweset value
+
+                int xVal;
+                int yVal;
+                if(!groupOrder.TryGetValue(x, out xVal))
+                {
+                    xVal = 1;
+                }
+                if(!groupOrder.TryGetValue(y, out yVal))
+                {
+                    yVal = 1;
+                }
+
+                return xVal - yVal;
             }
 
             public void groupAdded(string name)

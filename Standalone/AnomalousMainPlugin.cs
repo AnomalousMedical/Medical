@@ -187,6 +187,7 @@ namespace Medical.GUI
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
+            standaloneController.AnatomyTaskManager.HighlightTasks += AnatomyTaskManager_HighlightTasks;
 
             //Tasks
             cameraMovementModeTask = new CameraMovementModeTask(standaloneController.SceneViewController);
@@ -322,6 +323,15 @@ namespace Medical.GUI
             standaloneController.ImageRenderer.ImageRenderCompleted += teethToolController.ScreenshotRenderCompleted;
 
             standaloneController.ViewHostFactory.addFactory(new WizardComponentFactory(teethToolController));
+        }
+
+        private void AnatomyTaskManager_HighlightTasks(string arg1, IEnumerable<Task> arg2)
+        {
+            if (guiManager.MainGuiShowing)
+            {
+                taskMenu.setHighlightTasks(arg1, arg2);
+                taskMenu.show(0, 0);
+            }
         }
 
         public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
