@@ -62,6 +62,7 @@ namespace Medical
         private SceneViewLightManager lightManager;
         private LayerController layerController;
         private VirtualTextureSceneViewLink virtualTextureSceneViewLink;
+        private AnatomyTaskManager anatomyTaskManager;
 
         //GUI
         private GUIManager guiManager;
@@ -255,6 +256,7 @@ namespace Medical
 
             //Anatomy Controller
             anatomyController = new AnatomyController();
+            anatomyTaskManager = new AnatomyTaskManager();
 
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
@@ -637,6 +639,14 @@ namespace Medical
             get
             {
                 return virtualTextureSceneViewLink != null ? virtualTextureSceneViewLink.VirtualTextureManager : null;
+            }
+        }
+
+        public AnatomyTaskManager AnatomyTaskManager
+        {
+            get
+            {
+                return anatomyTaskManager;
             }
         }
 

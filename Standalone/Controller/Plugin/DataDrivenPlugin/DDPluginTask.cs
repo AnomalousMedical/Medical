@@ -12,6 +12,7 @@ namespace Medical
     public abstract partial class DDPluginTask : Task, Saveable
     {
         private DDAtlasPlugin plugin;
+        private List<String> taggedAnatomy = new List<string>();
 
         public DDPluginTask(String uniqueName, String name, String iconName, String category)
             : base(uniqueName, name, iconName, category)
@@ -70,6 +71,8 @@ namespace Medical
         [Editable]
         public String TaskUniqueName { get; set; }
 
+        public IEnumerable<String> TaggedAnatomy { get; set; }
+
         /// <summary>
         /// Set the plugin for this task. DO NOT TOUCH if you are not DDAtlasPlugin.
         /// </summary>
@@ -89,6 +92,7 @@ namespace Medical
             TaskUniqueName = info.GetString("TaskUniqueName", UniqueName);
             ShowOnTaskbar = info.GetBoolean("ShowOnTaskbar", ShowOnTaskbar);
             ShowOnTaskMenu = info.GetBoolean("ShowOnTaskMenu", ShowOnTaskMenu);
+            info.RebuildList("TaggedAnatomy", taggedAnatomy);
         }
 
         public virtual void getInfo(SaveInfo info)
@@ -100,6 +104,7 @@ namespace Medical
             info.AddValue("TaskUniqueName", TaskUniqueName);
             info.AddValue("ShowOnTaskbar", ShowOnTaskbar);
             info.AddValue("ShowOnTaskMenu", ShowOnTaskMenu);
+            info.ExtractList("TaggedAnatomy", taggedAnatomy);
         }
     }
 
@@ -116,6 +121,7 @@ namespace Medical
                 if (editInterface == null)
                 {
                     editInterface = ReflectedEditInterface.createEditInterface(this, scanner, String.Format("{0} - {1}", UniqueName, GetType().Name), null);
+                    editInterface.addSubInterfaceForObject(taggedAnatomy, new StringListlikeEditInterface(taggedAnatomy, "TaggedAnatomy", null));
                 }
                 return editInterface;
             }

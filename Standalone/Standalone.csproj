@@ -254,6 +254,7 @@
     <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
     <Compile Include="GUI\Anatomy\AnatomyFilter.cs" />
     <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyTaskManager.cs" />
     <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
     <Compile Include="GUI\Anatomy\ClickedAnatomyManager.cs" />
     <Compile Include="GUI\Anatomy\CommandButton.cs" />

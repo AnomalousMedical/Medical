@@ -52,6 +52,7 @@ namespace Medical
             {
                 task._setPlugin(this);
                 taskController.addTask(task);
+                standaloneController.AnatomyTaskManager.addTask(task.TaggedAnatomy, task);
             }
 
             //Load sequences
@@ -106,6 +107,7 @@ namespace Medical
                 TaskController taskController = standaloneController.TaskController;
                 foreach (DDPluginTask task in tasks)
                 {
+                    standaloneController.AnatomyTaskManager.removeTask(task.TaggedAnatomy, task);
                     taskController.removeTask(task, willReload);
                     ResourceManager.Instance.destroyAllTexturesForResource(task.IconName);
                     ResourceManager.Instance.removeByName(task.IconName);
