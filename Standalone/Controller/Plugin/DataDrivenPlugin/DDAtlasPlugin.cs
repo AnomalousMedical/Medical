@@ -47,12 +47,11 @@ namespace Medical
             MvcCore = standaloneController.MvcCore;
             GuiManager = standaloneController.GUIManager;
 
-            TaskController taskController = standaloneController.TaskController;
+            AnatomyTaskManager anatomyTasks = standaloneController.AnatomyTaskManager;
             foreach (DDPluginTask task in tasks)
             {
                 task._setPlugin(this);
-                taskController.addTask(task);
-                standaloneController.AnatomyTaskManager.addTask(task.TaggedAnatomy, task);
+                anatomyTasks.addTask(task, task.TaggedAnatomy);
             }
 
             //Load sequences
@@ -104,11 +103,10 @@ namespace Medical
 
             if (!shuttingDown)
             {
-                TaskController taskController = standaloneController.TaskController;
+                AnatomyTaskManager anatomyTasks = standaloneController.AnatomyTaskManager;
                 foreach (DDPluginTask task in tasks)
                 {
-                    standaloneController.AnatomyTaskManager.removeTask(task.TaggedAnatomy, task);
-                    taskController.removeTask(task, willReload);
+                    anatomyTasks.removeTask(task, willReload, task.TaggedAnatomy);
                     ResourceManager.Instance.destroyAllTexturesForResource(task.IconName);
                     ResourceManager.Instance.removeByName(task.IconName);
                 }

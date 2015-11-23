@@ -18,48 +18,52 @@ namespace Medical.GUI
             this.taskController = taskController;
         }
 
-        public void addTask(IEnumerable<String> anatomyNames, Task task)
+        /// <summary>
+        /// Add a task to be associated with anatomy. This will also add the task to the main TaskController, 
+        /// so you only need to do it once.
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="anatomyNames"></param>
+        public void addTask(Task task, IEnumerable<String> anatomyNames)
         {
+            taskController.addTask(task);
             if (anatomyNames != null)
             {
                 foreach (var name in anatomyNames)
                 {
-                    addTask(name, task);
+                    List<Task> taskList;
+                    if (!tasks.TryGetValue(name, out taskList))
+                    {
+                        taskList = new List<Task>();
+                        tasks.Add(name, taskList);
+                    }
+                    taskList.Add(task);
                 }
             }
         }
 
-        public void addTask(String anatomyName, Task task)
+        /// <summary>
+        /// Remove a task to be associated with anatomy. This will also remove the task from the main TaskController, 
+        /// so you only need to do it once.
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="anatomyNames"></param>
+        public void removeTask(Task task, bool willReload, IEnumerable<String> anatomyNames)
         {
-            List<Task> taskList;
-            if (!tasks.TryGetValue(anatomyName, out taskList))
-            {
-                taskList = new List<Task>();
-                tasks.Add(anatomyName, taskList);
-            }
-            taskList.Add(task);
-        }
-
-        public void removeTask(IEnumerable<String> anatomyNames, Task task)
-        {
+            taskController.removeTask(task, willReload);
             if (anatomyNames != null)
             {
                 foreach (var name in anatomyNames)
                 {
-                    removeTask(name, task);
-                }
-            }
-        }
-
-        public void removeTask(String anatomyName, Task task)
-        {
-            List<Task> taskList;
-            if (tasks.TryGetValue(anatomyName, out taskList))
-            {
-                taskList.Remove(task);
-                if(taskList.Count == 0)
-                {
-                    tasks.Remove(anatomyName);
+                    List<Task> taskList;
+                    if (tasks.TryGetValue(name, out taskList))
+                    {
+                        taskList.Remove(task);
+                        if (taskList.Count == 0)
+                        {
+                            tasks.Remove(name);
+                        }
+                    }
                 }
             }
         }
@@ -77,11 +81,6 @@ namespace Medical.GUI
                 return taskList;
             }
             return IEnumerableUtil<Task>.EmptyIterator;
-        }
-
-        public void highlightTasks(String highlightTaskCategory, IEnumerable<Task> highlightTasks)
-        {
-            
         }
 
         internal void highlightTasks(string anatomicalName)
