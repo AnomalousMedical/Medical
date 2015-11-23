@@ -71,20 +71,21 @@ namespace DentalSim
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
+            AnatomyTaskManager anatomyTasks = standaloneController.AnatomyTaskManager;
 
             taskController.addTask(new ShowToothContactsTask(0));
 
             PinableMDIDialogOpenTask mandibleMovementTask = new PinableMDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "DentalSimIcons/ManualMovement", "Dental Simulation", 2);
             taskController.addTask(mandibleMovementTask);
 
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.Eminence", "Eminence", "DentalSimIcons/Eminence", "Dental Simulation", GetType(), "DentalSim.Wizards.", "Eminence.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.Dentition", "Dentition", "DentalSimIcons/Dentition", "Dental Simulation", GetType(), "DentalSim.Wizards.", "Dentition.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.DiscClockFace", "Disc Clock Face", "DentalSimIcons/DiscClockFace", "Dental Simulation", GetType(), "DentalSim.Wizards.DiscClock.", "DiscClockFace.mvc", standaloneController.TimelineController, standaloneController.MvcCore, true));
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.Mandible", "Mandible", "DentalSimIcons/Mandible", "Dental Simulation", GetType(), "DentalSim.Wizards.", "Mandible.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalDoppler", "Clinical Doppler", "DentalSimIcons/ClinicalDoppler", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalDoppler.", "ClinicalDoppler.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalCT", "Clinical CT", "DentalSimIcons/ClinicalCT", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalCT.", "ClinicalCT.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalMRI", "Clinical MRI", "DentalSimIcons/ClinicalMRI", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalMRI.", "ClinicalMRI.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
-            taskController.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalOrthoAndSkeletal", "Clinical Orthodontic and Skeletal", "DentalSimIcons/ClinicalOrthodonticAndSkeletal", "Dental Simulation", GetType(), "DentalSim.Wizards.", "ClinicalOrthoAndSkeletal.mvc", standaloneController.TimelineController, standaloneController.MvcCore));
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.Eminence", "Eminence", "DentalSimIcons/Eminence", "Dental Simulation", GetType(), "DentalSim.Wizards.", "Eminence.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[]{ "Outer Skull", "Inner Skull"});
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.Dentition", "Dentition", "DentalSimIcons/Dentition", "Dental Simulation", GetType(), "DentalSim.Wizards.", "Dentition.mvc", standaloneController.TimelineController, standaloneController.MvcCore), TeethNames);
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.DiscClockFace", "Disc Clock Face", "DentalSimIcons/DiscClockFace", "Dental Simulation", GetType(), "DentalSim.Wizards.DiscClock.", "DiscClockFace.mvc", standaloneController.TimelineController, standaloneController.MvcCore, true), new String[] { "Left TMJ Disc", "Right TMJ Disc" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.Mandible", "Mandible", "DentalSimIcons/Mandible", "Dental Simulation", GetType(), "DentalSim.Wizards.", "Mandible.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Mandible" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalDoppler", "Clinical Doppler", "DentalSimIcons/ClinicalDoppler", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalDoppler.", "ClinicalDoppler.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalCT", "Clinical CT", "DentalSimIcons/ClinicalCT", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalCT.", "ClinicalCT.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalMRI", "Clinical MRI", "DentalSimIcons/ClinicalMRI", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalMRI.", "ClinicalMRI.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalOrthoAndSkeletal", "Clinical Orthodontic and Skeletal", "DentalSimIcons/ClinicalOrthodonticAndSkeletal", "Dental Simulation", GetType(), "DentalSim.Wizards.", "ClinicalOrthoAndSkeletal.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
 
             taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "DentalSimIcons/Open", TaskMenuCategories.Patient, 1));
 
@@ -133,6 +134,17 @@ namespace DentalSim
             movementSequenceController.addMovementSequence("Vertical Opening", new EmbeddedMovementSequenceInfo(assembly, "Hinge Opening", "DentalSim.Sequences.VerticalOpening.Hinge Opening.seq"));
             movementSequenceController.addMovementSequence("Vertical Opening", new EmbeddedMovementSequenceInfo(assembly, "Maximal Opening", "DentalSim.Sequences.VerticalOpening.Maximal Opening.seq"));
             movementSequenceController.addMovementSequence("Vertical Opening", new EmbeddedMovementSequenceInfo(assembly, "Tapping Teeth", "DentalSim.Sequences.VerticalOpening.Tapping Teeth.seq"));
+        }
+
+        private IEnumerable<String> TeethNames
+        {
+            get
+            {
+                for(int i = 1; i < 33; ++i)
+                {
+                    yield return "Tooth " + i;
+                }
+            }
         }
 
         public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)

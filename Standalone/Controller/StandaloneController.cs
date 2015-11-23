@@ -289,7 +289,7 @@ namespace Medical
             //Tasks
             taskController = new TaskController();
 
-            anatomyTaskManager = new AnatomyTaskManager(taskController);
+            anatomyTaskManager = new AnatomyTaskManager(taskController, guiManager);
 
             //Coroutine
             Coroutine.SetTimer(medicalController.MainTimer);

@@ -11,11 +11,13 @@ namespace Medical.GUI
     {
         private Dictionary<String, List<Task>> tasks = new Dictionary<String, List<Task>>();
         private TaskController taskController;
+        private GUIManager guiManager;
         public event Action<String, IEnumerable<Task>> HighlightTasks;
 
-        public AnatomyTaskManager(TaskController taskController)
+        public AnatomyTaskManager(TaskController taskController, GUIManager guiManager)
         {
             this.taskController = taskController;
+            this.guiManager = guiManager;
         }
 
         /// <summary>
@@ -68,9 +70,9 @@ namespace Medical.GUI
             }
         }
 
-        internal bool hasTasks(string anatomicalName)
+        internal bool showShowTaskButton(string anatomicalName)
         {
-            return tasks.ContainsKey(anatomicalName);
+            return guiManager.MainGuiShowing && tasks.ContainsKey(anatomicalName);
         }
 
         internal IEnumerable<Task> tasksFor(string anatomicalName)

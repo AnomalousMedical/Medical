@@ -220,7 +220,7 @@ namespace Medical.GUI
 
         internal bool hasTasks(Anatomy anatomy)
         {
-            return anatomyTaskManager.hasTasks(anatomy.AnatomicalName);
+            return anatomyTaskManager.showShowTaskButton(anatomy.AnatomicalName);
         }
 
         internal void showTaskMenuFor(Anatomy anatomy)
