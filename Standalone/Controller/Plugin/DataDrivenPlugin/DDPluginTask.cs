@@ -71,7 +71,13 @@ namespace Medical
         [Editable]
         public String TaskUniqueName { get; set; }
 
-        public IEnumerable<String> TaggedAnatomy { get; set; }
+        public IEnumerable<String> TaggedAnatomy
+        {
+            get
+            {
+                return taggedAnatomy;
+            }
+        }
 
         /// <summary>
         /// Set the plugin for this task. DO NOT TOUCH if you are not DDAtlasPlugin.

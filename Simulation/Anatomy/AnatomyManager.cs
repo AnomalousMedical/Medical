@@ -72,7 +72,7 @@ namespace Medical
         public static Browser buildBrowser()
         {
             var browser = new Browser("Anatomy", "Choose Anatomy");
-            foreach (var anatomy in anatomyList)
+            foreach (var anatomy in anatomyList.OrderBy(a => a.AnatomicalName, new NaturalSort<String>()))
             {
                 try
                 {

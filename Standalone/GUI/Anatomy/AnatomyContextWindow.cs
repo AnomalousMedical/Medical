@@ -153,6 +153,13 @@ namespace Medical.GUI
                     }
                 }
 
+                if(windowManager.hasTasks(value))
+                {
+                    var taskButton = new CommandButton(commandScroller, this);
+                    addCommandUI("Show Tasks", taskButton);
+                    taskButton.addCommand(new ShowTasksAnatomyCommand(windowManager, value));
+                }
+
                 IntSize2 desiredSize = layoutContainer.DesiredSize;
                 int scrollHeight = desiredSize.Height;
                 if(scrollHeight > MaxScrollerSize) //Height of controls larger than scroll area

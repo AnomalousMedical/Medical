@@ -32,6 +32,7 @@ namespace Medical.GUI
             if (!tasks.TryGetValue(anatomyName, out taskList))
             {
                 taskList = new List<Task>();
+                tasks.Add(anatomyName, taskList);
             }
             taskList.Add(task);
         }
@@ -58,6 +59,11 @@ namespace Medical.GUI
                     tasks.Remove(anatomyName);
                 }
             }
+        }
+
+        internal bool hasTasks(string anatomicalName)
+        {
+            return tasks.ContainsKey(anatomicalName);
         }
     }
 }

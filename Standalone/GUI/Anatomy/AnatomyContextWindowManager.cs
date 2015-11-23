@@ -218,6 +218,16 @@ namespace Medical.GUI
             return right;
         }
 
+        internal bool hasTasks(Anatomy anatomy)
+        {
+            return anatomyTaskManager.hasTasks(anatomy.AnatomicalName);
+        }
+
+        internal void showTaskMenuFor(Anatomy anatomy)
+        {
+
+        }
+
         void anatomyController_SelectedAnatomyChanged(AnatomySelection anatomySelection)
         {
             Anatomy anatomy = anatomySelection.Anatomy;
