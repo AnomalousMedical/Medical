@@ -335,7 +335,8 @@ namespace Medical
                 if (allowVisible != value)
                 {
                     allowVisible = value;
-                    applyTransparencyState(TransparencyController.TransparencyStateIndex);
+                    float workingAlpha = getCurrentTransparency(TransparencyController.TransparencyStateIndex);
+                    applyAlphaToMaterial(workingAlpha);
                 }
             }
         }
