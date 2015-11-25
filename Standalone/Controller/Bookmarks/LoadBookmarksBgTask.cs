@@ -45,6 +45,11 @@ namespace Medical.Controller
                     ObjectBuffer<Bookmark> bookmarks = new ObjectBuffer<Bookmark>(5);
                     foreach (String file in controller.bookmarksResourceProvider.listFiles("*.bmk", currentPath.Path, false))
                     {
+                        if (bgWorker.CancellationPending)
+                        {
+                            break;
+                        }
+
                         Bookmark bookmark;
                         using (XmlTextReader xmlReader = new XmlTextReader(controller.bookmarksResourceProvider.openFile(file)))
                         {
@@ -61,7 +66,7 @@ namespace Medical.Controller
                         if (bookmark != null)
                         {
                             bookmark.BackingFile = file;
-                            if(bookmarks.addItem(bookmark))
+                            if (bookmarks.addItem(bookmark))
                             {
                                 yield return bookmarks;
                             }
