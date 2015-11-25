@@ -44,7 +44,10 @@ namespace Medical
                 {
                     standaloneController.changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
                     medicalStateController.setStates(states);
-                    medicalStateController.blend(0.0f);
+                    if (states.DefaultState != null)
+                    {
+                        medicalStateController.blendTo(states.DefaultState, 0.0f);
+                    }
                 }
                 else
                 {

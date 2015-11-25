@@ -47,6 +47,14 @@ namespace Medical
             return states;
         }
 
+        public MedicalState DefaultState
+        {
+            get
+            {
+                return states.Count > 0 ? states[0] : null;
+            }
+        }
+
         #endregion
     }
 }

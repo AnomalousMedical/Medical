@@ -173,6 +173,7 @@ namespace Medical.Controller.AnomalousMvc
             }
 
             standaloneController.MedicalStateController.addState(createdState);
+            standaloneController.MedicalStateController.blendTo(createdState, 0.0f);
         }
 
         public void applyCameraPosition(CameraPosition cameraPosition)

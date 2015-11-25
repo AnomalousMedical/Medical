@@ -83,7 +83,6 @@ namespace Medical.GUI
             entry.UserObject = state;
             entries.Add(state, entry);
             entry.ItemClicked += entry_ItemClicked;
-            stateListBox.SelectedItem = entries[state];
         }
 
         private void removeMedicalState(MedicalState state)
