@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Engine.Platform;
 using Engine.Editing;
 using OgrePlugin;
+using Engine.Attributes;
+using Engine.Threads;
 
 namespace Medical
 {
@@ -22,6 +24,10 @@ namespace Medical
         private String prettyName;
         [Editable]
         private String category;
+
+        [DoNotCopy]
+        [DoNotSave]
+        private float initialVolume;
 
         Entity entity;
 
@@ -55,6 +61,12 @@ namespace Medical
             VolumeController.addVolume(this);
 
             base.constructed();
+
+            //VERY hacky and bad, figure out another way to do this
+            ThreadManager.invoke(() =>
+            {
+                initialVolume = CurrentVolume;
+            });
         }
 
         protected override void destroy()
@@ -68,6 +80,14 @@ namespace Medical
             get
             {
                 return entity.calculateVolume();
+            }
+        }
+
+        public float InitialVolume
+        {
+            get
+            {
+                return initialVolume;
             }
         }
 

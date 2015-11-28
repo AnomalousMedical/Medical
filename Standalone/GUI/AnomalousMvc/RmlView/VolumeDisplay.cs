@@ -44,11 +44,11 @@ namespace Medical.GUI.AnomalousMvc
 
         private void Context_OnLoopUpdate(Clock time)
         {
-            float currentVolume = calculator.CurrentVolume;
+            float currentVolume = SimulationConfig.GetCm(calculator.CurrentVolume);
             if (currentVolume != lastVolume)
             {
                 rocketWidget.renderOnNextFrame();
-                element.InnerRml = String.Format("{0} eu^3", currentVolume);
+                element.InnerRml = String.Format("{0} cm^3", currentVolume);
                 lastVolume = currentVolume;
             }
         }

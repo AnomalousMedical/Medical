@@ -140,7 +140,8 @@ namespace Developer.GUI
             sb.Append("\nVolumes\n");
             foreach (var volume in VolumeController.Volumes)
             {
-                sb.AppendFormat(" *  #555566{0}     #000000{1}\n", volume.PrettyName, volume.CurrentVolume);
+                sb.AppendFormat(" *  #555566{0}     #000000{1} cm^3\n", volume.PrettyName, SimulationConfig.GetCm(volume.CurrentVolume));
+                sb.AppendFormat(" *  #555566{0} Percent Offset     #000000{1} %\n", volume.PrettyName, volume.CurrentVolume / volume.InitialVolume * 100.0f);
             }
 
             text.Caption = sb.ToString();
