@@ -30,7 +30,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private List<MultiPropSection> sections = new List<MultiPropSection>();
+        private Dictionary<String, MultiPropSection> sections = new Dictionary<String, MultiPropSection>();
 
         [DoNotCopy]
         [DoNotSave]
@@ -54,49 +54,14 @@ namespace Medical
 
             ogreSceneManager = Owner.SubScene.getSimElementManager<OgreSceneManager>();
 
-            sections.Add(new MultiPropSection("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity, this));
-            sections.Add(new MultiPropSection("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity, this));
-            sections.Add(new MultiPropSection("Woot3", "PerfTooth01.mesh", "Tooth1collision", new Vector3(0, 0, 1), Quaternion.Identity, this));
-
-            //setupShape("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity);
-            //setupShape("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity);
-            //setupShape("Woot3", "PerfTooth01.mesh", "Tooth1collision", new Vector3(0, 0, 1), Quaternion.Identity);
-        }
-
-        //private void setupShape(String name, String mesh, String collision, Vector3 translation, Quaternion rotation)
-        //{
-        //    var node = ogreSceneManager.SceneManager.createSceneNode(String.Format("{0}_MultiPropNode_{1}", Owner.Name, name));
-        //    node.setPosition(translation);
-        //    node.setOrientation(rotation);
-        //    mainNode.addChild(node);
-        //    nodes.Add(node);
-
-        //    var entity = ogreSceneManager.SceneManager.createEntity(String.Format("{0}_MultiPropEntity_{1}", Owner.Name, name), mesh);
-        //    node.attachObject(entity);
-
-        //    if(!rigidBody.addNamedShape(name, collision, translation, rotation))
-        //    {
-        //        Logging.Log.Error("Cannot find collision shape '{0}'", collision);
-        //    }
-        //}
-
-        private float currentScale = 0.0f;
-            
-
-        public override void update(Clock clock, EventManager eventManager)
-        {
-            //rigidBody.moveOrigin("Woot3", new Vector3(0, 2, 0), Quaternion.Identity);
-            currentScale += 0.1f * clock.DeltaSeconds;
-            currentScale %= 1.0f;
-            rigidBody.setLocalScaling("Woot3", new Vector3(1, currentScale, 1));
-            rigidBody.forceActivationState(ActivationState.ActiveTag);
-
-            rigidBody.recomputeMassProps();
+            addSection(new MultiPropSection("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity, Vector3.ScaleIdentity, this));
+            addSection(new MultiPropSection("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity, Vector3.ScaleIdentity, this));
+            addSection(new MultiPropSection("Woot3", "PerfTooth01.mesh", "Tooth1collision", new Vector3(0, 0, 1), Quaternion.Identity, Vector3.ScaleIdentity, this));
         }
 
         protected override void willDestroy()
         {
-            foreach(var section in sections)
+            foreach(var section in sections.Values)
             {
                 section.destroy(this);
             }
@@ -108,6 +73,31 @@ namespace Medical
         protected override void destroy()
         {
             base.destroy();
+        }
+
+        private float currentScale = 0.0f;
+
+
+        public override void update(Clock clock, EventManager eventManager)
+        {
+            currentScale += 0.1f * clock.DeltaSeconds;
+            currentScale %= 1.0f;
+
+            var section = sections["Woot3"];
+            section.Scale = new Vector3(1, currentScale, 1);
+            section.updatePosition(this);
+            updateRigidBody();
+        }
+
+        private void updateRigidBody()
+        {
+            rigidBody.recomputeMassProps();
+            rigidBody.forceActivationState(ActivationState.ActiveTag);
+        }
+
+        private void addSection(MultiPropSection section)
+        {
+            sections.Add(section.Name, section);
         }
 
         internal OgreSceneManager OgreSceneManager
