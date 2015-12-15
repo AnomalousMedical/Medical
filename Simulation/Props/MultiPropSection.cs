@@ -46,9 +46,9 @@ namespace Medical
 
         internal void updatePosition(MultiProp multiProp)
         {
-            //node.setPosition(Translation);
-            //node.setOrientation(Rotation);
-            //node.setScale(Scale);
+            node.setPosition(Translation);
+            node.setOrientation(Rotation);
+            node.setScale(Scale);
 
             multiProp.RigidBody.moveOrigin(name, Translation, Rotation);
             multiProp.RigidBody.setLocalScaling(name, Scale);

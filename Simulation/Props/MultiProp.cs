@@ -86,6 +86,11 @@ namespace Medical
             var section = sections["Woot3"];
             section.Scale = new Vector3(1, currentScale, 1);
             section.updatePosition(this);
+
+            section = sections["Woot2"];
+            section.Translation = new Vector3(currentScale, 0, 0);
+            section.updatePosition(this);
+
             updateRigidBody();
         }
 
