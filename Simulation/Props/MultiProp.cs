@@ -8,10 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Platform;
 
 namespace Medical
 {
-    class MultiProp : BehaviorInterface
+    class MultiProp : Behavior
     {
         [Editable]
         private String mainNodeName = "Node";
@@ -29,11 +30,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private List<SceneNode> nodes = new List<SceneNode>();
-
-        [DoNotCopy]
-        [DoNotSave]
-        private List<Entity> entities = new List<Entity>();
+        private List<MultiPropSection> sections = new List<MultiPropSection>();
 
         [DoNotCopy]
         [DoNotSave]
@@ -57,42 +54,53 @@ namespace Medical
 
             ogreSceneManager = Owner.SubScene.getSimElementManager<OgreSceneManager>();
 
-            setupShape("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity);
-            setupShape("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity);
+            sections.Add(new MultiPropSection("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity, this));
+            sections.Add(new MultiPropSection("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity, this));
+            sections.Add(new MultiPropSection("Woot3", "PerfTooth01.mesh", "Tooth1collision", new Vector3(0, 0, 1), Quaternion.Identity, this));
+
+            //setupShape("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity);
+            //setupShape("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity);
+            //setupShape("Woot3", "PerfTooth01.mesh", "Tooth1collision", new Vector3(0, 0, 1), Quaternion.Identity);
         }
 
-        private void setupShape(String name, String mesh, String collision, Vector3 translation, Quaternion rotation)
+        //private void setupShape(String name, String mesh, String collision, Vector3 translation, Quaternion rotation)
+        //{
+        //    var node = ogreSceneManager.SceneManager.createSceneNode(String.Format("{0}_MultiPropNode_{1}", Owner.Name, name));
+        //    node.setPosition(translation);
+        //    node.setOrientation(rotation);
+        //    mainNode.addChild(node);
+        //    nodes.Add(node);
+
+        //    var entity = ogreSceneManager.SceneManager.createEntity(String.Format("{0}_MultiPropEntity_{1}", Owner.Name, name), mesh);
+        //    node.attachObject(entity);
+
+        //    if(!rigidBody.addNamedShape(name, collision, translation, rotation))
+        //    {
+        //        Logging.Log.Error("Cannot find collision shape '{0}'", collision);
+        //    }
+        //}
+
+        private float currentScale = 0.0f;
+            
+
+        public override void update(Clock clock, EventManager eventManager)
         {
-            var node = ogreSceneManager.SceneManager.createSceneNode(String.Format("{0}_MultiPropNode_{1}", Owner.Name, name));
-            node.setPosition(translation);
-            node.setOrientation(rotation);
-            mainNode.addChild(node);
-            nodes.Add(node);
+            //rigidBody.moveOrigin("Woot3", new Vector3(0, 2, 0), Quaternion.Identity);
+            currentScale += 0.1f * clock.DeltaSeconds;
+            currentScale %= 1.0f;
+            rigidBody.setLocalScaling("Woot3", new Vector3(1, currentScale, 1));
+            rigidBody.forceActivationState(ActivationState.ActiveTag);
 
-            var entity = ogreSceneManager.SceneManager.createEntity(String.Format("{0}_MultiPropEntity_{1}", Owner.Name, name), mesh);
-            node.attachObject(entity);
-
-            if(!rigidBody.addNamedShape(name, collision, translation, rotation))
-            {
-                
-            }
+            rigidBody.recomputeMassProps();
         }
 
         protected override void willDestroy()
         {
-            foreach(var entity in entities)
+            foreach(var section in sections)
             {
-                entity.detachFromParent();
-                ogreSceneManager.SceneManager.destroyEntity(entity);
+                section.destroy(this);
             }
-            entities.Clear();
-
-            foreach(var node in nodes)
-            {
-                mainNode.removeChild(node);
-                ogreSceneManager.SceneManager.destroySceneNode(node);
-            }
-            nodes.Clear();
+            sections.Clear();
 
             base.willDestroy();
         }
@@ -100,6 +108,30 @@ namespace Medical
         protected override void destroy()
         {
             base.destroy();
+        }
+
+        internal OgreSceneManager OgreSceneManager
+        {
+            get
+            {
+                return ogreSceneManager;
+            }
+        }
+
+        internal SceneNodeElement MainNode
+        {
+            get
+            {
+                return mainNode;
+            }
+        }
+
+        internal ReshapeableRigidBody RigidBody
+        {
+            get
+            {
+                return rigidBody;
+            }
         }
     }
 }
