@@ -14,23 +14,30 @@ namespace Medical
         private SceneNode node;
         private Entity entity;
         private String name;
+        private String collision;
+        private String mesh;
 
-        public MultiPropSection(String name, String mesh, String collision, Vector3 translation, Quaternion rotation, Vector3 scale, MultiProp multiProp)
+        public MultiPropSection(String name, String mesh, String collision, Vector3 translation, Quaternion rotation, Vector3 scale)
         {
             this.name = name;
             this.Translation = translation;
             this.Rotation = rotation;
             this.Scale = scale;
+            this.collision = collision;
+            this.mesh = mesh;            
+        }
 
+        internal void create(MultiProp multiProp)
+        {
             node = multiProp.OgreSceneManager.SceneManager.createSceneNode(String.Format("{0}_MultiPropNode_{1}", multiProp.Owner.Name, name));
-            node.setPosition(translation);
-            node.setOrientation(rotation);
+            node.setPosition(Translation);
+            node.setOrientation(Rotation);
             multiProp.MainNode.addChild(node);
 
             entity = multiProp.OgreSceneManager.SceneManager.createEntity(String.Format("{0}_MultiPropEntity_{1}", multiProp.Owner.Name, name), mesh);
             node.attachObject(entity);
 
-            if (!multiProp.RigidBody.addNamedShape(name, collision, translation, rotation, scale))
+            if (!multiProp.RigidBody.addNamedShape(name, collision, Translation, Rotation, Scale))
             {
                 Logging.Log.Error("Cannot find collision shape '{0}'", collision);
             }

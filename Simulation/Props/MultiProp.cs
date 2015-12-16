@@ -54,9 +54,14 @@ namespace Medical
 
             ogreSceneManager = Owner.SubScene.getSimElementManager<OgreSceneManager>();
 
-            addSection(new MultiPropSection("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity, Vector3.ScaleIdentity, this));
-            addSection(new MultiPropSection("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity, Vector3.ScaleIdentity, this));
-            addSection(new MultiPropSection("Woot3", "PerfTooth01.mesh", "Tooth1collision", new Vector3(0, 0, 1), Quaternion.Identity, Vector3.ScaleIdentity, this));
+            addSection(new MultiPropSection("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity, Vector3.ScaleIdentity));
+            addSection(new MultiPropSection("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity, Vector3.ScaleIdentity));
+            //addSection(new MultiPropSection("Woot3", "PerfTooth01.mesh", "Tooth1collision", new Vector3(0, 0, 1), Quaternion.Identity, Vector3.ScaleIdentity));
+
+            foreach(var section in sections.Values)
+            {
+                section.create(this);
+            }
         }
 
         protected override void willDestroy()
