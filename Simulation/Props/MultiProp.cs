@@ -12,7 +12,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    class MultiProp : Behavior
+    class MultiProp : BehaviorInterface
     {
         [Editable]
         private String mainNodeName = "Node";
@@ -54,23 +54,30 @@ namespace Medical
 
             ogreSceneManager = Owner.SubScene.getSimElementManager<OgreSceneManager>();
 
-            addSection(new MultiPropSection("Woot1", "Box016.mesh", "Box016", new Vector3(-1, 0, 0), Quaternion.Identity, Vector3.ScaleIdentity));
-            addSection(new MultiPropSection("Woot2", "Box016.mesh", "Box016", new Vector3(1, 0, 0), Quaternion.Identity, Vector3.ScaleIdentity));
-            //addSection(new MultiPropSection("Woot3", "PerfTooth01.mesh", "Tooth1collision", new Vector3(0, 0, 1), Quaternion.Identity, Vector3.ScaleIdentity));
-
-            foreach(var section in sections.Values)
+            if (sections.Count > 0)
             {
-                section.create(this);
+                beginUpdates();
+
+                foreach (var section in sections.Values)
+                {
+                    section.create(this);
+                }
+
+                finishUpdates();
             }
         }
 
         protected override void willDestroy()
         {
-            foreach(var section in sections.Values)
+            beginUpdates();
+
+            foreach (var section in sections.Values)
             {
                 section.destroy(this);
             }
             sections.Clear();
+
+            finishUpdates();
 
             base.willDestroy();
         }
@@ -80,34 +87,44 @@ namespace Medical
             base.destroy();
         }
 
-        private float currentScale = 0.0f;
-
-
-        public override void update(Clock clock, EventManager eventManager)
+        public void beginUpdates()
         {
-            currentScale += 0.1f * clock.DeltaSeconds;
-            currentScale %= 1.0f;
-
-            var section = sections["Woot3"];
-            section.Scale = new Vector3(1, currentScale, 1);
-            section.updatePosition(this);
-
-            section = sections["Woot2"];
-            section.Translation = new Vector3(currentScale, 0, 0);
-            section.updatePosition(this);
-
-            updateRigidBody();
+            rigidBody.beginUpdates();
         }
 
-        private void updateRigidBody()
+        public void finishUpdates()
         {
-            rigidBody.recomputeMassProps();
+            rigidBody.finishUpdates();
             rigidBody.forceActivationState(ActivationState.ActiveTag);
         }
 
-        private void addSection(MultiPropSection section)
+        public MultiPropSection addSection(MultiPropSection section)
         {
             sections.Add(section.Name, section);
+            section.create(this);
+            return section;
+        }
+
+        public void removeSection(String name)
+        {
+            MultiPropSection section;
+            if(sections.TryGetValue(name, out section))
+            {
+                removeSection(section);
+            }
+        }
+
+        public void removeSection(MultiPropSection section)
+        {
+            if(sections.Remove(section.Name))
+            {
+                section.destroy(this);
+            }
+        }
+
+        public bool tryGetSection(String name, out MultiPropSection value)
+        {
+            return sections.TryGetValue(name, out value);
         }
 
         internal OgreSceneManager OgreSceneManager

@@ -1,4 +1,5 @@
-﻿using Engine;
+﻿using BulletPlugin;
+using Engine;
 using Engine.ObjectManagement;
 using OgrePlugin;
 using System;
@@ -16,6 +17,7 @@ namespace Medical
         private String name;
         private String collision;
         private String mesh;
+        private ReshapeableRigidBodySection rigidBodySection;
 
         public MultiPropSection(String name, String mesh, String collision, Vector3 translation, Quaternion rotation, Vector3 scale)
         {
@@ -37,7 +39,9 @@ namespace Medical
             entity = multiProp.OgreSceneManager.SceneManager.createEntity(String.Format("{0}_MultiPropEntity_{1}", multiProp.Owner.Name, name), mesh);
             node.attachObject(entity);
 
-            if (!multiProp.RigidBody.addNamedShape(name, collision, Translation, Rotation, Scale))
+            rigidBodySection = multiProp.RigidBody.createSection(collision, Translation, Rotation, Scale);
+
+            if (rigidBodySection == null)
             {
                 Logging.Log.Error("Cannot find collision shape '{0}'", collision);
             }
@@ -49,16 +53,17 @@ namespace Medical
             multiProp.OgreSceneManager.SceneManager.destroyEntity(entity);
             multiProp.MainNode.removeChild(node);
             multiProp.OgreSceneManager.SceneManager.destroySceneNode(node);
+            multiProp.RigidBody.destroySection(rigidBodySection);
         }
 
-        internal void updatePosition(MultiProp multiProp)
+        public void updatePosition()
         {
             node.setPosition(Translation);
             node.setOrientation(Rotation);
             node.setScale(Scale);
 
-            multiProp.RigidBody.moveOrigin(name, Translation, Rotation);
-            multiProp.RigidBody.setLocalScaling(name, Scale);
+            rigidBodySection.moveOrigin(Translation, Rotation);
+            rigidBodySection.setScaling(Scale);
         }
 
         public Vector3 Translation { get; set; }
