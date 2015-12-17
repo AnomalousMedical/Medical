@@ -26,7 +26,8 @@ h4.Center,
 h5.Center,
 h6.Center,
 p.Center,
-a.Center
+a.Center,
+data.Center
 {
 	text-align:center;
 }
@@ -38,7 +39,8 @@ h4.Bold,
 h5.Bold,
 h6.Bold,
 p.Bold,
-a.Bold
+a.Bold,
+data.Bold
 {
 	font-weight:bold;
 }
@@ -50,7 +52,8 @@ h4.Italic,
 h5.Italic,
 h6.Italic,
 p.Italic,
-a.Italic
+a.Italic,
+data.Italic
 {
 	font-style:italic;
 }
@@ -63,7 +66,8 @@ h5.Break,
 h6.Break,
 p.Break,
 a.Break,
-img.Break
+img.Break,
+data.Break
 {
 	clear:both;
 }
@@ -86,7 +90,8 @@ h4.Flow,
 h5.Flow,
 h6.Flow,
 p.Flow,
-a.Flow
+a.Flow,
+data.Flow
 {
 	display:inline;
 }

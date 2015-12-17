@@ -28,6 +28,9 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         private EditInterfaceEditor editInterfaceEditor;
         private DataElementEditor dataElementEditor;
 
+        private EditInterfaceEditor appearanceEditor;
+        private TextElementStyle elementStyle;
+
         public DataStrategy(String tag, String previewIconName = CommonResources.NoIcon)
             : base(tag, previewIconName, true)
         {
@@ -36,19 +39,64 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, GuiFrameworkUICallback uiCallback, int left, int top)
         {
+            elementStyle = new TextElementStyle(element, true);
+            elementStyle.Changed += elementStyle_Changed;
+            appearanceEditor = new EditInterfaceEditor("Appearance", elementStyle.getEditInterface(), uiCallback);
+
             dataElementEditor = new DataElementEditor(element);
             EditInterface editInterface = dataElementEditor.EditInterface;
             editInterfaceEditor = new EditInterfaceEditor("Data Display Properties", editInterface, uiCallback);
             dataElementEditor.EditInterfaceEditor = editInterfaceEditor;
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
+
             editor.addElementEditor(editInterfaceEditor);
+            editor.addElementEditor(appearanceEditor);
+
             return editor;
         }
 
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            dataElementEditor.applyToElement(element);
+            build(element);
             return true;
+        }
+
+        void elementStyle_Changed(StyleDefinition obj)
+        {
+            appearanceEditor.alertChangesMade();
+        }
+
+        public override void applySizeChange(Element element)
+        {
+            appearanceEditor.alertChangesMade();
+        }
+
+        private void build(Element element)
+        {
+            element.ClearLocalStyles();
+            dataElementEditor.applyToElement(element);
+
+            StringBuilder style = new StringBuilder();
+            elementStyle.buildStyleAttribute(style);
+            if (style.Length > 0)
+            {
+                element.SetAttribute("style", style.ToString());
+            }
+            else
+            {
+                element.RemoveAttribute("style");
+            }
+
+            StringBuilder classes = new StringBuilder();
+            elementStyle.buildClassList(classes);
+            if (classes.Length > 0)
+            {
+                element.SetAttribute("class", classes.ToString());
+            }
+            else
+            {
+                element.RemoveAttribute("class");
+            }
         }
 
         private class DataElementEditor
