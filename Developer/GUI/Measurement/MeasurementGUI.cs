@@ -86,7 +86,7 @@ namespace Developer.GUI
                 
                 foreach (Measurement measurement in category)
                 {
-                    String deltaString = measurement.CurrentDelta.ToString("f2");
+                    String deltaString = SimulationConfig.GetMm(measurement.CurrentDelta).ToString("f2");
                     int spaceCount = spaceString.Length - measurement.MeasurementName.Length - deltaString.Length;
                     if (spaceCount < 0)
                     {

@@ -18,6 +18,13 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             measurement
         }
 
+        enum DataDisplayUnits
+        {
+            percent,
+            millimeters,
+            centimeters,
+        }
+
         private EditInterfaceEditor editInterfaceEditor;
         private DataElementEditor dataElementEditor;
 
@@ -48,24 +55,29 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         {
             private DataDisplayType dataType;
             private String target;
+            private DataDisplayUnits units;
             private EditInterface editInterface;
 
             public DataElementEditor(Element element)
             {
-                DataDisplayType type;
-                if (!Enum.TryParse<DataDisplayType>(element.GetAttributeString("type"), out type))
+                if (!Enum.TryParse<DataDisplayType>(element.GetAttributeString("type"), out dataType))
                 {
-                    type = DataDisplayType.volume;
+                    dataType = DataDisplayType.volume;
                 }
-                dataType = type;
 
                 target = element.GetAttributeString("target");
+
+                if (!Enum.TryParse<DataDisplayUnits>(element.GetAttributeString("units"), out units))
+                {
+                    units = DataDisplayUnits.millimeters;
+                }
             }
 
             public void applyToElement(Element element)
             {
                 element.SetAttribute("type", DataType.ToString());
                 element.SetAttribute("target", Target);
+                element.SetAttribute("units", units.ToString());
             }
 
             [Editable]
@@ -91,6 +103,20 @@ namespace Medical.GUI.RmlWysiwyg.Elements
                 set
                 {
                     target = value;
+                    EditInterfaceEditor.alertChangesMade();
+                }
+            }
+
+            [Editable]
+            public DataDisplayUnits Units
+            {
+                get
+                {
+                    return units;
+                }
+                set
+                {
+                    units = value;
                     EditInterfaceEditor.alertChangesMade();
                 }
             }
@@ -135,7 +161,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
                 public Browser getBrowser(int column, EditUICallback uiCallback)
                 {
-                    switch(dataElementEditor.DataType)
+                    switch (dataElementEditor.DataType)
                     {
                         case DataDisplayType.volume:
                             return VolumeController.Browser;
@@ -153,7 +179,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
                 public object getRealValue(int column)
                 {
-                    if(column == 1)
+                    if (column == 1)
                     {
                         return dataElementEditor.Target;
                     }
@@ -181,7 +207,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
                 public void setValue(int column, object value)
                 {
-                    if(column == 1)
+                    if (column == 1)
                     {
                         dataElementEditor.Target = value.ToString();
                     }

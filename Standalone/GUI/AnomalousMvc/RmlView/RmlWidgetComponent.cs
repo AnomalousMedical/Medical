@@ -383,10 +383,10 @@ namespace Medical.GUI.AnomalousMvc
                 switch(element.GetAttributeString("type"))
                 {
                     case "volume":
-                        dataDisplays.Add(new VolumeDisplay(element.GetAttributeString("target"), element, context, rocketWidget));
+                        dataDisplays.Add(new VolumeDisplay(element, context, rocketWidget));
                         break;
                     case "measurement":
-                        dataDisplays.Add(new MeasurementDisplay(element.GetAttributeString("target"), element, context, rocketWidget));
+                        dataDisplays.Add(new MeasurementDisplay(element, context, rocketWidget));
                         break;
                     default:
                         element.InnerRml = String.Format("Unknown data display type '{0}'", element.GetAttributeString("type"));

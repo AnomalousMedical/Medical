@@ -20,5 +20,10 @@ namespace Medical
         {
             return engineUnit * UnitsToMM / 10;
         }
+
+        public static float GetMm(float engineUnit)
+        {
+            return engineUnit * UnitsToMM;
+        }
     }
 }

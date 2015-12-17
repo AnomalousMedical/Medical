@@ -58,6 +58,9 @@ namespace Medical
         [DoNotSave]
         float currentDelta;
 
+        [DoNotSave]
+        float startingDelta;
+
         [DoNotCopy]
         [DoNotSave]
         public event MeasurementEvent MeasurementChanged;
@@ -70,6 +73,12 @@ namespace Medical
                 blacklist("Cannot find delta sim object {0}.", deltaSimObjectName);
             }
             MeasurementController.addMesurement(this);
+
+            startingDelta = calculateDelta().length();
+            if(startingDelta == 0.0f) //Handle 0, just be a straight scaler in that case, really pretty unlikely
+            {
+                startingDelta = 1.0f;
+            }
         }
 
         protected override void destroy()
@@ -79,11 +88,11 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            Vector3 diff = (deltaSimObject.Translation - Owner.Translation) * measurementScale;
+            Vector3 diff = calculateDelta();
             if (diff != lastLength)
             {
                 lastLength = diff;
-                currentDelta = diff.length() * SimulationConfig.UnitsToMM;
+                currentDelta = diff.length();
                 if (MeasurementChanged != null)
                 {
                     MeasurementChanged.Invoke(this);
@@ -91,11 +100,22 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Current delta between the points in engine units
+        /// </summary>
         public float CurrentDelta
         {
             get
             {
                 return currentDelta;
+            }
+        }
+
+        public float StartingDelta
+        {
+            get
+            {
+                return startingDelta;
             }
         }
 
@@ -150,6 +170,11 @@ namespace Medical
         internal void draw(MeasurementDrawer drawer)
         {
             drawer.drawLine(color, Owner.Translation, deltaSimObject.Translation);
+        }
+
+        private Vector3 calculateDelta()
+        {
+            return (deltaSimObject.Translation - Owner.Translation) * measurementScale;
         }
     }
 }

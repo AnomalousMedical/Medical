@@ -19,32 +19,70 @@ namespace Medical.GUI.AnomalousMvc
         private float lastValue = float.MinValue;
         private RocketWidget rocketWidget;
 
-        public MeasurementDisplay(String name, Element element, AnomalousMvcContext context, RocketWidget rocketWidget)
+        public MeasurementDisplay(Element element, AnomalousMvcContext context, RocketWidget rocketWidget)
         {
             this.context = context;
             this.element = element;
             this.rocketWidget = rocketWidget;
 
-            if (MeasurementController.tryGetCalculator(name, out measurement))
+            String target = element.GetAttributeString("target");
+
+            if (MeasurementController.tryGetCalculator(target, out measurement))
             {
-                context.OnLoopUpdate += Context_OnLoopUpdate;
+                switch (element.GetAttributeString("units"))
+                {
+                    case "percent":
+                        context.OnLoopUpdate += Context_OnLoopUpdatePercent;
+                        break;
+                    case "centimeters":
+                        context.OnLoopUpdate += Context_OnLoopUpdateCm;
+                        break;
+                    case "millimeters":
+                    default:
+                        context.OnLoopUpdate += Context_OnLoopUpdateMm;
+                        break;
+                }
             }
             else
             {
-                Log.Warning("Could not find a measurement named '{0}'. The measurement will not be displayed.", name);
-                element.InnerRml = String.Format("Cannot find measurement '{0}' in scene.", name);
+                Log.Warning("Could not find a measurement named '{0}'. The measurement will not be displayed.", target);
+                element.InnerRml = String.Format("Cannot find measurement '{0}' in scene.", target);
             }
         }
 
         public override void Dispose()
         {
-            context.OnLoopUpdate -= Context_OnLoopUpdate;
+            context.OnLoopUpdate -= Context_OnLoopUpdatePercent;
+            context.OnLoopUpdate -= Context_OnLoopUpdateCm;
+            context.OnLoopUpdate -= Context_OnLoopUpdateMm;
             base.Dispose();
         }
 
-        private void Context_OnLoopUpdate(Clock time)
+        private void Context_OnLoopUpdatePercent(Clock time)
         {
             float currentValue = measurement.CurrentDelta;
+            if (currentValue != lastValue)
+            {
+                rocketWidget.renderOnNextFrame();
+                element.InnerRml = String.Format("{0}%", currentValue / measurement.StartingDelta * 100.0f);
+                lastValue = currentValue;
+            }
+        }
+
+        private void Context_OnLoopUpdateCm(Clock time)
+        {
+            float currentValue = SimulationConfig.GetCm(measurement.CurrentDelta);
+            if (currentValue != lastValue)
+            {
+                rocketWidget.renderOnNextFrame();
+                element.InnerRml = String.Format("{0} cm", currentValue);
+                lastValue = currentValue;
+            }
+        }
+
+        private void Context_OnLoopUpdateMm(Clock time)
+        {
+            float currentValue = SimulationConfig.GetMm(measurement.CurrentDelta);
             if (currentValue != lastValue)
             {
                 rocketWidget.renderOnNextFrame();
