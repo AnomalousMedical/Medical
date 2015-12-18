@@ -702,10 +702,10 @@ namespace Medical.GUI
                 {
                     if (!disposed && editor.applyChanges(this))
                     {
+                        rocketWidget.Context.GetDocument(0).MakeDirtyForScaleChange();
                         rmlModified();
                         updateUndoStatus(editor.UndoRml, true);
                         editor.UndoRml = UnformattedRml;
-                        rocketWidget.Context.GetDocument(0).MakeDirtyForScaleChange();
                     }
                 };
                 editor.MoveElementUp += upElement =>
