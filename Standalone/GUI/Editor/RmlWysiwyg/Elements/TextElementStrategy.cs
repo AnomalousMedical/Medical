@@ -126,14 +126,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
             StringBuilder classes = new StringBuilder();
             elementStyle.buildClassList(classes);
-            if (classes.Length > 0)
-            {
-                element.SetAttribute("class", classes.ToString());
-            }
-            else
-            {
-                element.RemoveAttribute("class");
-            }
+            element.ClassNames = classes.ToString();
         }
 
         void elementStyle_Changed(StyleDefinition obj)

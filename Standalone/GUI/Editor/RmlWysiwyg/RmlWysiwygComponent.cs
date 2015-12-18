@@ -705,6 +705,7 @@ namespace Medical.GUI
                         rmlModified();
                         updateUndoStatus(editor.UndoRml, true);
                         editor.UndoRml = UnformattedRml;
+                        rocketWidget.Context.GetDocument(0).MakeDirtyForScaleChange();
                     }
                 };
                 editor.MoveElementUp += upElement =>
