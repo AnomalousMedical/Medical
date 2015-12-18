@@ -21,19 +21,38 @@ namespace Medical.GUI.RmlWysiwyg.Elements
 
         public override RmlElementEditor openEditor(Element element, GuiFrameworkUICallback uiCallback, int left, int top)
         {
-            textEditor = new ElementTextEditor(element.InnerRml);
-            attributeEditor = new ElementAttributeEditor(element, uiCallback);
             RmlElementEditor editor = RmlElementEditor.openEditor(element, left, top, this);
-            editor.addElementEditor(textEditor);
-            editor.addElementEditor(attributeEditor);
+            switch (element.GetAttributeString("type"))
+            {
+                case "range":
+                    attributeEditor = new ElementAttributeEditor(element, uiCallback);
+                    editor.addElementEditor(attributeEditor);
+                    break;
+                default:
+                    textEditor = new ElementTextEditor(element.InnerRml);
+                    attributeEditor = new ElementAttributeEditor(element, uiCallback);
+                    editor.addElementEditor(textEditor);
+                    editor.addElementEditor(attributeEditor);
+                    break;
+            }
             return editor;
         }
 
         public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
         {
-            String text = textEditor.Text;
-            element.InnerRml = textEditor.Text;
-            attributeEditor.applyToElement(element);
+            switch (element.GetAttributeString("type"))
+            {
+                case "range":
+                    attributeEditor.applyToElement(element);
+                    break;
+                default:
+                    String text = textEditor.Text;
+                    element.InnerRml = textEditor.Text;
+                    attributeEditor.applyToElement(element);
+                    break;
+            }
+
+            
             return true;
         }
     }

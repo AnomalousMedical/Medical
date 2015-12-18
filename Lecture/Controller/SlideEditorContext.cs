@@ -117,7 +117,16 @@ namespace Lecture
                         action.captureSceneState(uiCallback);
                         slide.addAction(action);
                         return String.Format("<a class=\"TriggerLink\" onclick=\"{0}\">Add trigger text here.</a>", actionName);
-                    })
+                    })/*,
+                new WysiwygCallbackDragDropItem("Slider", CommonResources.NoIcon, "<input type=\"range\" min=\"0\" max=\"100\" value=\"0\" change=\"\"/>",
+                    () => //Markup Callback
+                    {
+                        String actionName = Guid.NewGuid().ToString();
+                        //SetupSceneAction action = new SetupSceneAction(actionName);
+                        //action.captureSceneState(uiCallback);
+                        //slide.addAction(action);
+                        return String.Format("<input type=\"range\" min=\"0\" max=\"100\" value=\"0\" onchange=\"{0}\"/>", actionName);
+                    })*/
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {

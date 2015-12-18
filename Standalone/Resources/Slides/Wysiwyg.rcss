@@ -100,3 +100,8 @@ data.Flow
 {
 	display:inline;
 }
+
+input.range
+{
+    width: 100%;
+}
