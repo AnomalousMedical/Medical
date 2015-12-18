@@ -72,6 +72,11 @@ data.Break
 	clear:both;
 }
 
+data
+{
+    display:block;
+}
+
 a.TriggerLink
 {
 	display:block;
