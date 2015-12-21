@@ -57,6 +57,7 @@ namespace Lecture
 
         SlideImageStrategy imageStrategy;
         SlideTriggerStrategy triggerStrategy;
+        SlideInputStrategy inputStrategy;
 
         public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, StandaloneController standaloneController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, MedicalSlideItemTemplate itemTemplate, Action<String, String> wysiwygUndoCallback)
         {
@@ -85,6 +86,8 @@ namespace Lecture
             imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
             triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", standaloneController.NotificationManager, previewTriggerAction);
             triggerStrategy.PreviewTrigger += triggerStrategy_PreviewTrigger;
+            inputStrategy = new SlideInputStrategy(slide, undoBuffer, standaloneController.NotificationManager, previewTriggerAction, "input", CommonResources.NoIcon);
+            inputStrategy.PreviewTrigger += triggerStrategy_PreviewTrigger;
 
             mvcContext = new AnomalousMvcContext();
             mvcContext.StartupAction = "Common/Start";
@@ -117,16 +120,16 @@ namespace Lecture
                         action.captureSceneState(uiCallback);
                         slide.addAction(action);
                         return String.Format("<a class=\"TriggerLink\" onclick=\"{0}\">Add trigger text here.</a>", actionName);
-                    })/*,
+                    }),
                 new WysiwygCallbackDragDropItem("Slider", CommonResources.NoIcon, "<input type=\"range\" min=\"0\" max=\"100\" value=\"0\" change=\"\"/>",
                     () => //Markup Callback
                     {
                         String actionName = Guid.NewGuid().ToString();
-                        //SetupSceneAction action = new SetupSceneAction(actionName);
-                        //action.captureSceneState(uiCallback);
-                        //slide.addAction(action);
+                        BlendSceneAction action = new BlendSceneAction(actionName);
+                        action.captureSceneToStartAndEnd(uiCallback);
+                        slide.addAction(action);
                         return String.Format("<input type=\"range\" min=\"0\" max=\"100\" value=\"0\" onchange=\"{0}\"/>", actionName);
-                    })*/
+                    })
                 );
             htmlDragDrop.Dragging += (item, position) =>
                 {
@@ -673,6 +676,7 @@ namespace Lecture
                 rmlView.GetMissingRmlCallback = getDefaultMissingRml;
                 rmlView.addCustomStrategy(imageStrategy);
                 rmlView.addCustomStrategy(triggerStrategy);
+                rmlView.addCustomStrategy(inputStrategy);
                 mvcContext.Views.add(rmlView);
                 rmlEditors.Add(rmlView.Name, new RmlEditorViewInfo(rmlView, panel, editorController.ResourceProvider));
                 showEditorWindowsCommand.addCommand(new ShowViewCommand(rmlView.Name));

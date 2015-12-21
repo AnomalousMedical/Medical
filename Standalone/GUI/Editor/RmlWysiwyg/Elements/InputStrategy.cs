@@ -13,7 +13,7 @@ namespace Medical.GUI.RmlWysiwyg.Elements
         private ElementTextEditor textEditor;
         private ElementAttributeEditor attributeEditor;
 
-        public InputStrategy(String tag, String previewIconName = "Editor/ButtonIcon")
+        public InputStrategy(String tag, String previewIconName = CommonResources.NoIcon)
             : base(tag, previewIconName, true)
         {
 

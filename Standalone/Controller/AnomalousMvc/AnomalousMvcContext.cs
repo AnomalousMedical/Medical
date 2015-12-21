@@ -220,6 +220,18 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public String getActionArgument(String name)
+        {
+            if (runningActionDataProvider != null)
+            {
+                return runningActionDataProvider.getValue(name);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public IEnumerable<Tuple<String, String>> ActionArguments
         {
             get
@@ -311,6 +323,11 @@ namespace Medical.Controller.AnomalousMvc
         public void applyCameraPosition(CameraPosition cameraPosition)
         {
             core.applyCameraPosition(cameraPosition);
+        }
+
+        public void applyCameraPosition(CameraPosition cameraPosition, float duration)
+        {
+            core.applyCameraPosition(cameraPosition, duration);
         }
 
         public void setResourceProvider(ResourceProvider resourceProvider)

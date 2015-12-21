@@ -80,6 +80,7 @@
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\CallbackAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Back\GoBackAction.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Back\RecordBackAction.cs" />
+    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Camera\MoveBlendedCameraCommand.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\CollectFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\AnalyzeFormData.cs" />
     <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\PopulateFormData.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Controller\Server\ServerOperationResult.cs" />
     <Compile Include="Controller\Server\UploadFileInfo.cs" />
     <Compile Include="Controller\SharePluginController.cs" />
+    <Compile Include="Controller\Slideshow\Actions\BlendSceneAction.cs" />
     <Compile Include="Controller\Slideshow\Actions\PlayTimelineAction.cs" />
     <Compile Include="Controller\Slideshow\Actions\SetupSceneAction.cs" />
     <Compile Include="Controller\Slideshow\Actions\StopTimelineAction.cs" />

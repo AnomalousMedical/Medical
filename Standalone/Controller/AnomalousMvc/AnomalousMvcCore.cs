@@ -178,10 +178,15 @@ namespace Medical.Controller.AnomalousMvc
 
         public void applyCameraPosition(CameraPosition cameraPosition)
         {
+            applyCameraPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
+        }
+
+        public void applyCameraPosition(CameraPosition cameraPosition, float duration)
+        {
             SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
             if (window != null)
             {
-                window.setPosition(cameraPosition, MedicalConfig.CameraTransitionTime);
+                window.setPosition(cameraPosition, duration);
             }
         }
 
