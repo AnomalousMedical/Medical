@@ -315,9 +315,19 @@ namespace Medical.Controller.AnomalousMvc
             core.applyLayers(layers);
         }
 
+        public void applyBlendedLayers(LayerState start, LayerState end, float blend)
+        {
+            core.applyBlendedLayers(start, end, blend);
+        }
+
         public void applyPresetState(PresetState presetState, float duration)
         {
             core.applyPresetState(presetState, duration);
+        }
+
+        public void blendPresetStates(PresetState startState, PresetState endState, float percent)
+        {
+            core.blendPresetStates(startState, endState, percent);
         }
 
         public void applyCameraPosition(CameraPosition cameraPosition)

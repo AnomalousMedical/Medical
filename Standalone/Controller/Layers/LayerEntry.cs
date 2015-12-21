@@ -60,6 +60,16 @@ namespace Medical
             }
         }
 
+        internal void instantlyApplyBlended(List<TransparencyInterface> unvisitedInterfaces, float endAlphaValue, float percent)
+        {
+            TransparencyInterface obj = TransparencyController.getTransparencyObject(transparencyObject);
+            if (obj != null)
+            {
+                obj.CurrentAlpha = NumberFunctions.lerp(alphaValue, endAlphaValue, percent);
+                unvisitedInterfaces.Remove(obj);
+            }
+        }
+
         public String TransparencyObject
         {
             get

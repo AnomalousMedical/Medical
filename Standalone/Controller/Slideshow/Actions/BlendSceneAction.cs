@@ -21,24 +21,35 @@ namespace Medical.SlideshowActions
         private bool musclePosition;
         private bool camera;
         private bool medicalState;
-        private bool highlightTeeth;
 
         private MoveBlendedCameraCommand cameraCommand;
+        private BlendMedicalStateCommand medicalStateCommand;
+        private BlendLayersCommand layersCommand;
 
         public BlendSceneAction(String name)
         {
             action = new RunCommandsAction(name);
-            //Layers = true;
+            Layers = true;
             Camera = true;
             //MusclePosition = true;
-            //MedicalState = true;
+            MedicalState = true;
             AllowPreview = true;
         }
 
         public void captureSceneToStartAndEnd(EditUICallback callback)
         {
-            captureSceneStateTo(callback, () => cameraCommand.CameraStartPosition);
-            captureSceneStateTo(callback, () => cameraCommand.CameraEndPosition);
+            captureStartState(callback);
+            captureEndState(callback);
+        }
+
+        public void captureStartState(EditUICallback callback)
+        {
+            captureSceneStateTo(callback, () => layersCommand.StartLayers.captureState(), camPos => cameraCommand.CameraStartPosition = camPos, state => medicalStateCommand.captureStartFromMedicalState(state));
+        }
+
+        public void captureEndState(EditUICallback callback)
+        {
+            captureSceneStateTo(callback, () => layersCommand.EndLayers.captureState(), camPos => cameraCommand.CameraEndPosition = camPos, state => medicalStateCommand.captureEndFromMedicalState(state));
         }
 
         public override EditInterface getEditInterface()
@@ -48,26 +59,38 @@ namespace Medical.SlideshowActions
                 editInterface = ReflectedEditInterface.createEditInterface(this, "Setup Scene");
                 editInterface.addCommand(new EditInterfaceCommand("Capture Start", callback =>
                 {
-                    captureSceneStateTo(callback, () => cameraCommand.CameraStartPosition);
+                    captureStartState(callback);
                     fireChangesMade();
                 }));
                 editInterface.addCommand(new EditInterfaceCommand("Capture End", callback =>
                 {
-                    captureSceneStateTo(callback, () => cameraCommand.CameraEndPosition);
+                    captureEndState(callback);
                     fireChangesMade();
                 }));
             }
             return editInterface;
         }
 
-        public void captureSceneStateTo(EditUICallback callback, Func<CameraPosition> getCameraPositionFunc)
+        public void captureSceneStateTo(EditUICallback callback, Action setLayerState, Action<CameraPosition> setCameraPosition, Action<MedicalState> setMedicalState)
         {
-            //if (Layers)
-            //{
-            //    ChangeLayersCommand changeLayers = new ChangeLayersCommand();
-            //    changeLayers.Layers.captureState();
-            //    action.addCommand(changeLayers);
-            //}
+            if (Layers)
+            {
+                if(layersCommand == null)
+                {
+                    layersCommand = new BlendLayersCommand();
+                    action.addCommand(layersCommand);
+                }
+
+                setLayerState();
+            }
+            else
+            {
+                if (layersCommand != null)
+                {
+                    action.removeCommand(layersCommand);
+                    layersCommand = null;
+                }
+            }
 
             //if (MusclePosition)
             //{
@@ -84,7 +107,9 @@ namespace Medical.SlideshowActions
                     action.addCommand(cameraCommand);
                 }
 
-                callback.runOneWayCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, getCameraPositionFunc());
+                CameraPosition camPos = new CameraPosition();
+                callback.runOneWayCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, camPos);
+                setCameraPosition(camPos);
             }
             else
             {
@@ -95,14 +120,26 @@ namespace Medical.SlideshowActions
                 }
             }
 
-            //if (MedicalState)
-            //{
-            //    ChangeMedicalStateCommand medicalState = new ChangeMedicalStateCommand();
-            //    MedicalState medState = new MedicalState("");
-            //    medState.update();
-            //    medicalState.captureFromMedicalState(medState);
-            //    action.addCommand(medicalState);
-            //}
+            if (MedicalState)
+            {
+                if(medicalStateCommand == null)
+                {
+                    medicalStateCommand = new BlendMedicalStateCommand();
+                    action.addCommand(medicalStateCommand);
+                }
+
+                MedicalState medState = new MedicalState("");
+                medState.update();
+                setMedicalState(medState);
+            }
+            else
+            {
+                if(medicalStateCommand != null)
+                {
+                    action.removeCommand(medicalStateCommand);
+                    medicalStateCommand = null;
+                }
+            }
         }
 
         public override void addToController(Slide slide, MvcController controller)
@@ -122,18 +159,18 @@ namespace Medical.SlideshowActions
             clone.clear();
         }
 
-        //[Editable(PrettyName = "Capture Layers")]
-        //public bool Layers
-        //{
-        //    get
-        //    {
-        //        return layers;
-        //    }
-        //    set
-        //    {
-        //        layers = value;
-        //    }
-        //}
+        [Editable(PrettyName = "Capture Layers")]
+        public bool Layers
+        {
+            get
+            {
+                return layers;
+            }
+            set
+            {
+                layers = value;
+            }
+        }
 
         //[Editable(PrettyName = "Capture Muscle Position")]
         //public bool MusclePosition
@@ -161,18 +198,18 @@ namespace Medical.SlideshowActions
             }
         }
 
-        //[Editable(PrettyName = "Capture Medical State")]
-        //public bool MedicalState
-        //{
-        //    get
-        //    {
-        //        return medicalState;
-        //    }
-        //    set
-        //    {
-        //        medicalState = value;
-        //    }
-        //}
+        [Editable(PrettyName = "Capture Medical State")]
+        public bool MedicalState
+        {
+            get
+            {
+                return medicalState;
+            }
+            set
+            {
+                medicalState = value;
+            }
+        }
 
         public override string Name
         {

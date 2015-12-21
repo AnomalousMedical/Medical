@@ -139,6 +139,14 @@ namespace Medical.Controller.AnomalousMvc
             }
         }
 
+        public void applyBlendedLayers(LayerState start, LayerState end, float blend)
+        {
+            if(start != null && end != null)
+            {
+                start.instantlyApplyBlended(end, blend);
+            }
+        }
+
         public void applyPresetState(PresetState presetState, float duration)
         {
             TemporaryStateBlender stateBlender = standaloneController.TemporaryStateBlender;
@@ -146,6 +154,16 @@ namespace Medical.Controller.AnomalousMvc
             createdState = stateBlender.createBaselineState();
             presetState.applyToState(createdState);
             stateBlender.startTemporaryBlend(createdState);
+        }
+
+        public void blendPresetStates(PresetState startState, PresetState endState, float percent)
+        {
+            TemporaryStateBlender stateBlender = standaloneController.TemporaryStateBlender;
+            MedicalState startMedicalState = stateBlender.createBaselineState();
+            startState.applyToState(startMedicalState);
+            MedicalState endMedicalState = stateBlender.createBaselineState();
+            endState.applyToState(endMedicalState);
+            startMedicalState.blend(percent, endMedicalState);
         }
 
         public void applyMedicalState(MedicalState medicalState)

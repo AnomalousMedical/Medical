@@ -118,6 +118,25 @@ namespace Medical
             }
         }
 
+        public void instantlyApplyBlended(LayerState end, float percent)
+        {
+            List<TransparencyInterface> unvisitedInterfaces = new List<TransparencyInterface>(TransparencyController.TransparencyInterfaces);
+            foreach (LayerEntry entry in entries)
+            {
+                var endEntry = end.entries.FirstOrDefault(e => e.TransparencyObject == entry.TransparencyObject);
+                float endValue = 0.0f;
+                if(endEntry != null)
+                {
+                    endValue = endEntry.AlphaValue;
+                }
+                entry.instantlyApplyBlended(unvisitedInterfaces, endValue, percent);
+            }
+            foreach (TransparencyInterface unvisited in unvisitedInterfaces)
+            {
+                unvisited.CurrentAlpha = 0.0f;
+            }
+        }
+
         /// <summary>
         /// Tries to determine if this layer state is the same as the given one. This will check the sizes of the entries lists,
         /// if they are not the same it will be false. If they are the same it will compare each entry, if the entries do not
