@@ -78,6 +78,12 @@ namespace Medical
             blend(this, 1.0f);
         }
 
+        /// <summary>
+        /// Primary blend funciton, will always use the terminating state's mandible muscle force and target offset.
+        /// This is to retain compatability with animations that rely on this blend funciton to work.
+        /// </summary>
+        /// <param name="targetState"></param>
+        /// <param name="blendFactor"></param>
         public void blend(MusclePosition targetState, float blendFactor)
         {
             float modifiedBlendFactor = blendFactor;
@@ -90,6 +96,45 @@ namespace Medical
             {
                 MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
                 MuscleController.MovingTarget.Offset = targetState.movingTargetPosition;
+
+                ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
+                float delta = targetState.leftCPPosition - leftCPPosition;
+                leftCP.setLocation(leftCPPosition + delta * modifiedBlendFactor);
+
+                ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
+                delta = targetState.rightCPPosition - rightCPPosition;
+                rightCP.setLocation(rightCPPosition + delta * modifiedBlendFactor);
+            }
+
+            FKRoot pelvis;
+            if (pelvisChainState != null && targetState.pelvisChainState != null && PoseableObjectsManager.tryGetFkChainRoot("Pelvis", out pelvis))
+            {
+                //This creates garbage, but it is unknown if this has negative effects
+                FKChainState blendedState = new FKChainState();
+                blendedState.setToBlendOf(pelvisChainState, targetState.pelvisChainState, modifiedBlendFactor);
+                pelvis.applyChainState(blendedState);
+            }
+        }
+
+        /// <summary>
+        /// This blend is better for incremental blends since it will also blend the moving target and forces
+        /// instead of using the target state values for these items as the other blend function does (our animations
+        /// are setup this old way and cannot be changed now).
+        /// </summary>
+        /// <param name="targetState"></param>
+        /// <param name="blendFactor"></param>
+        public void incrementalBlend(MusclePosition targetState, float blendFactor)
+        {
+            float modifiedBlendFactor = blendFactor;
+            if (blendFactor < 1.0f)
+            {
+                EasingFunctions.Ease(targetState.Easing, 0, 1, blendFactor, 1);
+            }
+
+            if (MuscleController.MovingTarget != null) //If this is null then the whole mandible simulation is invalid and its better to do nothing
+            {
+                MuscleController.changeForce("MovingMuscleDynamic", NumberFunctions.lerp(muscleForce, targetState.muscleForce, modifiedBlendFactor));
+                MuscleController.MovingTarget.Offset = movingTargetPosition.lerp(ref targetState.movingTargetPosition, ref modifiedBlendFactor);
 
                 ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
                 float delta = targetState.leftCPPosition - leftCPPosition;
