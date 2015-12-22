@@ -219,6 +219,7 @@
     <Compile Include="Controller\Slideshow\Actions\BlendSceneAction.cs" />
     <Compile Include="Controller\Slideshow\Actions\PlayTimelineAction.cs" />
     <Compile Include="Controller\Slideshow\Actions\SetupSceneAction.cs" />
+    <Compile Include="Controller\Slideshow\Actions\ShowPopupImageAction.cs" />
     <Compile Include="Controller\Slideshow\Actions\StopTimelineAction.cs" />
     <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
     <Compile Include="Controller\Slideshow\BorderSlideLayoutStrategy.cs" />

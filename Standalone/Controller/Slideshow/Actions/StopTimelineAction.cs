@@ -30,7 +30,7 @@ namespace Medical.SlideshowActions
             return editInterface;
         }
 
-        public override void addToController(Slide slide, MvcController controller)
+        public override void addToController(Slide slide, MvcController controller, AnomalousMvcContext context)
         {
             RunCommandsAction action = new RunCommandsAction(name);
             setupAction(slide, action);

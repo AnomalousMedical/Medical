@@ -151,7 +151,7 @@ namespace Medical.SlideshowActions
             }
         }
 
-        public override void addToController(Slide slide, MvcController controller)
+        public override void addToController(Slide slide, MvcController controller, AnomalousMvcContext context)
         {
             RunCommandsAction setupSceneAction = new RunCommandsAction(action.Name);
             setupAction(slide, setupSceneAction);

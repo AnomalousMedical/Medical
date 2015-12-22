@@ -49,7 +49,7 @@ namespace Medical
             }
             foreach (var action in triggerActions.Values)
             {
-                action.addToController(this, controller);
+                action.addToController(this, controller, context);
             }
             context.Controllers.add(controller);
 

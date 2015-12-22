@@ -26,7 +26,7 @@ namespace Medical.SlideshowActions
         /// </summary>
         /// <param name="slide"></param>
         /// <param name="controller"></param>
-        public abstract void addToController(Slide slide, MvcController controller);
+        public abstract void addToController(Slide slide, MvcController controller, AnomalousMvcContext context);
 
         /// <summary>
         /// Setup a RunCommandsAction that works for this SlideAction.
