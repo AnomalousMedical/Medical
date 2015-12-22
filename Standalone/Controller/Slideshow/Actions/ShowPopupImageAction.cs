@@ -99,7 +99,7 @@ namespace Medical.SlideshowActions
     <link type = ""text/rcss"" href=""SlideStyle.rcss"" />
   </head>
   <body template = ""MasterTemplate"">
-    <img src=""{0}"" width=""100%""/>
+    <img src=""{0}"" style=""width:100%;""/>
   </body>
 </rml>";
     }
