@@ -46,8 +46,9 @@ namespace Medical.SlideshowActions
 
             RawRmlView popupView = new RawRmlView(name);
             popupView.ElementName = new LayoutElementName(GUILocationNames.ContentAreaPopup);
-            popupView.Buttons.add(new CloseButtonDefinition(String.Format("CloseButton__{0}", name), closeCommandName));
+            popupView.Buttons.add(new CloseButtonDefinition(String.Format("CloseButton__{0}", name), String.Format("{0}/{1}", slide.UniqueName, closeCommandName)));
             popupView.Rml = String.Format(ImageRml, imageName);
+            popupView.FakePath = Path.Combine(slide.UniqueName, "ImagePopup.rml");
             context.Views.add(popupView);
         }
 
@@ -71,6 +72,18 @@ namespace Medical.SlideshowActions
             set
             {
                 name = value;
+            }
+        }
+
+        public String ImageName
+        {
+            get
+            {
+                return imageName;
+            }
+            set
+            {
+                imageName = value;
             }
         }
 

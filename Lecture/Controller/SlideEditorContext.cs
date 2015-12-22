@@ -110,7 +110,17 @@ namespace Lecture
             htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Add Heading Here</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
-                new WysiwygDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" style=\"width:200px;\"></img>", RmlWysiwygComponent.DefaultImage)),
+                new WysiwygCallbackDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" style=\"width:200px;\"></img>", RmlWysiwygComponent.DefaultImage), 
+                    () => //Markup Callback
+                    {
+                        String actionName = Guid.NewGuid().ToString();
+                        ShowPopupImageAction action = new ShowPopupImageAction(actionName)
+                        {
+                            ImageName = RmlWysiwygComponent.DefaultImage
+                        };
+                        slide.addAction(action);
+                        return String.Format("<img src=\"{0}\" style=\"width:200px;\" onclick=\"{1}\"></img>", RmlWysiwygComponent.DefaultImage, actionName);
+                    }),
                 new WysiwygDragDropItem("Data Dispaly", CommonResources.NoIcon, "<data type=\"volume\" target=\"\">Data Display</data>"),
                 new WysiwygCallbackDragDropItem("Trigger", "Lecture.Icon.TriggerIcon", "<a class=\"TriggerLink\" onclick=\"\">Add trigger text here.</a>",
                     () => //Markup Callback
