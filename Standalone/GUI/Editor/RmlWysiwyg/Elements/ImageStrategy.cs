@@ -1,4 +1,5 @@
-﻿using Anomalous.GuiFramework.Editor;
+﻿using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Editor;
 using libRocketPlugin;
 using Medical.GUI.RmlWysiwyg.ElementEditorComponents;
 using System;
@@ -27,8 +28,9 @@ namespace Medical.GUI.RmlWysiwyg.Elements
             return editor;
         }
 
-        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component, out TwoWayCommand additionalUndoOperations)
         {
+            additionalUndoOperations = null;
             return attributeEditor.applyToElement(element);
         }
 

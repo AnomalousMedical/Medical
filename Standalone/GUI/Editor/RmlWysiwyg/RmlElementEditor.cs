@@ -7,6 +7,7 @@ using Engine.Editing;
 using libRocketPlugin;
 using Medical.Editor;
 using Engine;
+using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {
@@ -92,13 +93,15 @@ namespace Medical.GUI
         /// </summary>
         /// <param name="component"></param>
         /// <returns>True if changes are made.</returns>
-        public bool applyChanges(RmlWysiwygComponent component)
+        public bool applyChanges(RmlWysiwygComponent component, out TwoWayCommand additionalUndoOperations)
         {
             if (hasChanges)
             {
                 hasChanges = false;
-                return elementStrategy.applyChanges(element, this, component);
+                return elementStrategy.applyChanges(element, this, component, out additionalUndoOperations);
             }
+
+            additionalUndoOperations = null;
             return false;
         }
 

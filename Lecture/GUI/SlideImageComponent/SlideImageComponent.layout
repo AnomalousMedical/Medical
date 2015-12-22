@@ -11,6 +11,9 @@
                 <Property key="Caption" value="Loading"/>
             </Widget>
         </Widget>
+        <Widget type="Button" skin="CheckBox" position="102 183 255 27" align="Left Bottom" name="FullscreenCheck">
+            <Property key="Caption" value="Show Fullscreen On Click"/>
+        </Widget>
     </Widget>
     <CodeGeneratorSettings/>
 </MyGUI>

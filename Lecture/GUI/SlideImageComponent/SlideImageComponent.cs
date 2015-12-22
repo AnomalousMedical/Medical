@@ -25,11 +25,12 @@ namespace Lecture.GUI
         String imageName;
         Widget imagePanel;
         Widget loadingLabel;
+        CheckButton showFullscreen;
 
         const bool Key = false;
         private bool NotDisposed = true;
 
-        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName)
+        public SlideImageComponent(EditorResourceProvider resourceProvider, String subdirectory, String currentImageName, bool hasFullscreenDisplay)
             : base("Lecture.GUI.SlideImageComponent.SlideImageComponent.layout", "Image")
         {
             this.resourceProvider = resourceProvider;
@@ -37,6 +38,10 @@ namespace Lecture.GUI
 
             Button browseButton = (Button)widget.findWidget("Browse");
             browseButton.MouseButtonClick += browseButton_MouseButtonClick;
+
+            showFullscreen = new CheckButton(widget.findWidget("FullscreenCheck") as Button);
+            showFullscreen.Checked = hasFullscreenDisplay;
+            showFullscreen.CheckedChanged += ShowFullscreen_CheckedChanged;
 
             imagePreview = (ImageBox)widget.findWidget("Image");
             imagePanel = widget.findWidget("ImagePanel");
@@ -71,6 +76,22 @@ namespace Lecture.GUI
             NotDisposed = false;
             base.Dispose();
             imageAtlas.Dispose();
+        }
+
+        public String ImageName
+        {
+            get
+            {
+                return imageName;
+            }
+        }
+
+        public bool ShowFullscreen
+        {
+            get
+            {
+                return showFullscreen.Checked;
+            }
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
@@ -120,6 +141,12 @@ namespace Lecture.GUI
                     }
                 }
             });
+        }
+
+        private void ShowFullscreen_CheckedChanged(Widget source, EventArgs e)
+        {
+            fireChangesMade();
+            fireApplyChanges();
         }
 
         private void openImageBGThread(String filename, bool applyUpdate)
@@ -178,17 +205,6 @@ namespace Lecture.GUI
             {
                 Logging.Log.Error("Could not load image '{0}'. Reason: {1}", filename, ex.Message);
             }
-        }
-
-        internal bool applyToElement(Element element)
-        {
-            element.SetAttribute("src", imageName);
-            return true;
-        }
-
-        public void applyChanges()
-        {
-            fireApplyChanges();
         }
     }
 }

@@ -83,7 +83,7 @@ namespace Lecture
 
             RunCommandsAction previewTriggerAction = new RunCommandsAction("PreviewTrigger");
 
-            imageStrategy = new SlideImageStrategy("img", this.slideEditorController.ResourceProvider, slide.UniqueName);
+            imageStrategy = new SlideImageStrategy(slide, undoBuffer, this.slideEditorController.ResourceProvider, slide.UniqueName);
             triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", standaloneController.NotificationManager, previewTriggerAction);
             triggerStrategy.PreviewTrigger += triggerStrategy_PreviewTrigger;
             inputStrategy = new SlideInputStrategy(slide, undoBuffer, standaloneController.NotificationManager, previewTriggerAction, "input", CommonResources.NoIcon);

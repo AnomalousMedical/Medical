@@ -1,4 +1,5 @@
-﻿using Anomalous.GuiFramework.Editor;
+﻿using Anomalous.GuiFramework;
+using Anomalous.GuiFramework.Editor;
 using Engine;
 using libRocketPlugin;
 using System;
@@ -64,8 +65,9 @@ namespace Medical.GUI
             return null;
         }
 
-        public virtual bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public virtual bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component, out TwoWayCommand additionalUndoOperations)
         {
+            additionalUndoOperations = null;
             return false;
         }
 

@@ -439,13 +439,13 @@ namespace Medical.GUI
         {
             get
             {
-                if(rocketWidget == null)
+                if (rocketWidget == null)
                 {
                     return null;
                 }
 
                 Element document = rocketWidget.Context.GetDocument(0);
-                if(document == null)
+                if (document == null)
                 {
                     return null;
                 }
@@ -700,11 +700,12 @@ namespace Medical.GUI
                 };
                 editor.ChangesMade += (applyElement) =>
                 {
-                    if (!disposed && editor.applyChanges(this))
+                    TwoWayCommand additionalUndoOperations;
+                    if (!disposed && editor.applyChanges(this, out additionalUndoOperations))
                     {
                         rocketWidget.Context.GetDocument(0).MakeDirtyForScaleChange();
                         rmlModified();
-                        updateUndoStatus(editor.UndoRml, true);
+                        updateUndoStatus(editor.UndoRml, true, additionalUndoOperations);
                         editor.UndoRml = UnformattedRml;
                     }
                 };
@@ -845,18 +846,37 @@ namespace Medical.GUI
             return position.y - element.AbsoluteTop < element.OffsetHeight / 2;
         }
 
-        public void updateUndoStatus(String oldMarkup, bool check = false)
+        public void updateUndoStatus(String oldMarkup, bool check = false, TwoWayCommand additionalUndoOperations = null)
         {
             //This is a hacky way to check for changes (optionally) it should not be needed when the popup editor is overhauled.
             //You can remove check and keep only the line in the if statement when you no longer need the check.
             String currentMarkup = UnformattedRml;
             if (!check || currentMarkup != oldMarkup)
             {
-                undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(currentMarkup, oldMarkup, new TwoWayDelegateCommand<string, string>.Funcs()
+                if (additionalUndoOperations == null)
                 {
-                    ExecuteFunc = undoRedoCallback,
-                    UndoFunc = undoRedoCallback
-                }));
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(currentMarkup, oldMarkup, new TwoWayDelegateCommand<string, string>.Funcs()
+                    {
+                        ExecuteFunc = undoRedoCallback,
+                        UndoFunc = undoRedoCallback
+                    }));
+                }
+                else
+                {
+                    undoBuffer.pushAndSkip(new TwoWayDelegateCommand<String, String>(currentMarkup, oldMarkup, new TwoWayDelegateCommand<string, string>.Funcs()
+                    {
+                        ExecuteFunc = rml =>
+                        {
+                            undoRedoCallback(rml);
+                            additionalUndoOperations.execute();
+                        },
+                        UndoFunc = rml =>
+                        {
+                            undoRedoCallback(rml);
+                            additionalUndoOperations.undo();
+                        }
+                    }));
+                }
             }
         }
 

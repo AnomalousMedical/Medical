@@ -49,8 +49,9 @@ namespace Lecture.GUI
             }
         }
 
-        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component)
+        public override bool applyChanges(Element element, RmlElementEditor editor, RmlWysiwygComponent component, out TwoWayCommand additionalUndoOperations)
         {
+            additionalUndoOperations = null;
             switch (element.GetAttributeString("type"))
             {
                 case "range":
