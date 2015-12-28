@@ -59,7 +59,7 @@ namespace Lecture
         SlideTriggerStrategy triggerStrategy;
         SlideInputStrategy inputStrategy;
 
-        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, StandaloneController standaloneController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, MedicalSlideItemTemplate itemTemplate, Action<String, String> wysiwygUndoCallback)
+        public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, StandaloneController standaloneController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, MedicalSlideItemTemplate itemTemplate, bool autoSetupScene, Action<String, String> wysiwygUndoCallback)
         {
             this.slide = slide;
             this.uiCallback = uiCallback;
@@ -239,28 +239,31 @@ namespace Lecture
             mvcContext.Views.add(taskbar);
 
             setupScene = new RunCommandsAction("SetupScene");
-            setupScene.addCommand(new CallbackCommand(context =>
-                {
-                    undoState = LayerState.CreateAndCapture();
-                    undoCamera = sceneViewController.ActiveWindow != null ? sceneViewController.ActiveWindow.createCameraPosition() : null;
-                }));
-            slide.populateCommand(setupScene);
-            setupScene.addCommand(new CallbackCommand(context =>
+            if (autoSetupScene)
             {
-                if (undoState != null)
-                {
-                    layerController.pushUndoState(undoState);
-                    undoState = null;
-                }
-                if(undoCamera != null)
-                {
-                    if(sceneViewController.ActiveWindow != null)
+                setupScene.addCommand(new CallbackCommand(context =>
                     {
-                        sceneViewController.ActiveWindow.pushUndoState(undoCamera);
+                        undoState = LayerState.CreateAndCapture();
+                        undoCamera = sceneViewController.ActiveWindow != null ? sceneViewController.ActiveWindow.createCameraPosition() : null;
+                    }));
+                slide.populateCommand(setupScene);
+                setupScene.addCommand(new CallbackCommand(context =>
+                {
+                    if (undoState != null)
+                    {
+                        layerController.pushUndoState(undoState);
+                        undoState = null;
                     }
-                    undoCamera = null;
-                }
-            }));
+                    if (undoCamera != null)
+                    {
+                        if (sceneViewController.ActiveWindow != null)
+                        {
+                            sceneViewController.ActiveWindow.pushUndoState(undoCamera);
+                        }
+                        undoCamera = null;
+                    }
+                }));
+            }
 
             mvcContext.Controllers.add(new MvcController("Editor",
                 setupScene,

@@ -59,6 +59,7 @@ namespace Lecture
             this.timelineController = timelineController;
             editorController.ProjectChanged += editorController_ProjectChanged;
             slideImageManager = new SlideImageManager(this);
+            this.AllowSlideSceneSetup = true;
 
             //Show Type Controller
             showTypeController = new ShowTypeController(editorController);
@@ -165,7 +166,7 @@ namespace Lecture
         private bool openEditorContextForSlide(Slide slide)
         {
             bool openedEditContext = false;
-            slideEditorContext = new SlideEditorContext(slide, "Slide " + (slideshow.indexOf(slide) + 1), this, standaloneController, uiCallback, undoBuffer, medicalSlideTemplate, (panelName, rml) =>
+            slideEditorContext = new SlideEditorContext(slide, "Slide " + (slideshow.indexOf(slide) + 1), this, standaloneController, uiCallback, undoBuffer, medicalSlideTemplate, AllowSlideSceneSetup, (panelName, rml) =>
             {
                 slideEditorContext.setWysiwygRml(panelName, rml, true);
             });
@@ -905,6 +906,8 @@ namespace Lecture
             }
         }
 
+        public bool AllowSlideSceneSetup { get; set; }
+
         void editorController_ProjectChanged(EditorController editorController)
         {
             closeEditors();
@@ -1116,18 +1119,6 @@ namespace Lecture
                 MessageBox.show(String.Format("Error creating slide.\n{0}", ex.Message), "Error Creating Slide", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
             }
         }
-
-        //private void createItem(AddItemTemplate itemTemplate)
-        //{
-        //    try
-        //    {
-        //        ((ProjectItemTemplate)itemTemplate).createItem("", editorController);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.show(String.Format("Error creating item.\n{0}", ex.Message), "Error Creating Item", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-        //    }
-        //}
 
         private void cleanupThumbnail(SlideInfo slideInfo)
         {

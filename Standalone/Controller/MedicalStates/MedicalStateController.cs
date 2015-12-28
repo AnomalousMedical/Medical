@@ -293,6 +293,7 @@ namespace Medical
                 }
             }
         }
+
         private void blend(float percent)
         {
             if (percent >= 1.0f)

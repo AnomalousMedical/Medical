@@ -70,11 +70,15 @@ namespace Lecture
 
             CommonEditorResources.initialize(standaloneController);
             standaloneController.ViewHostFactory.addFactory(new SlideTaskbarFactory());
+
+            standaloneController.MedicalStateController.StateAdded += MedicalStateController_StateAdded;
+            standaloneController.MedicalStateController.BlendingStopped += MedicalStateController_BlendingStopped;
         }
 
         public void unload(StandaloneController standaloneController, bool willReload, bool shuttingDown)
         {
-
+            standaloneController.MedicalStateController.StateAdded -= MedicalStateController_StateAdded;
+            standaloneController.MedicalStateController.BlendingStopped -= MedicalStateController_BlendingStopped;
         }
 
         public void sceneLoaded(Engine.ObjectManagement.SimScene scene)
@@ -151,6 +155,16 @@ namespace Lecture
             {
                 return IEnumerableUtil<long>.EmptyIterator;
             }
+        }
+
+        private void MedicalStateController_BlendingStopped(MedicalStateController controller)
+        {
+            slideshowEditController.AllowSlideSceneSetup = true;
+        }
+
+        private void MedicalStateController_StateAdded(MedicalStateController controller, MedicalState state)
+        {
+            slideshowEditController.AllowSlideSceneSetup = false;
         }
     }
 }
