@@ -207,29 +207,6 @@ namespace Medical
             }
         }
 
-        /// <summary>
-        /// Blend a certain percentage to the end state.
-        /// </summary>
-        /// <param name="percent"></param>
-        public void blend(float percent)
-        {
-            if (percent >= 1.0f)
-            {
-                directEndState.blend(0, directEndState);
-                if (StateChanged != null)
-                {
-                    StateChanged.Invoke(directEndState);
-                }
-            }
-            else
-            {
-                if (directStartState != null)
-                {
-                    directStartState.blend(percent, directEndState);
-                }
-            }
-        }
-
         public SavedMedicalStates getSavedState(String currentSceneName)
         {
             return new SavedMedicalStates(states, currentSceneName);
@@ -313,6 +290,24 @@ namespace Medical
                 if (BlendingStarted != null)
                 {
                     BlendingStarted.Invoke(this);
+                }
+            }
+        }
+        private void blend(float percent)
+        {
+            if (percent >= 1.0f)
+            {
+                directEndState.blend(0, directEndState);
+                if (StateChanged != null)
+                {
+                    StateChanged.Invoke(directEndState);
+                }
+            }
+            else
+            {
+                if (directStartState != null)
+                {
+                    directStartState.blend(percent, directEndState);
                 }
             }
         }
