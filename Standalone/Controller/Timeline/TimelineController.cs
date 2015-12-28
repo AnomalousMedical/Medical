@@ -365,14 +365,6 @@ namespace Medical
             }
         }
 
-        public TemporaryStateBlender StateBlender
-        {
-            get
-            {
-                return standaloneController.TemporaryStateBlender;
-            }
-        }
-
         public MovementSequenceController MovementSequenceController
         {
             get

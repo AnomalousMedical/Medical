@@ -77,6 +77,13 @@ namespace Medical
             state.update();
             return state;
         }
+        
+        public MedicalState createFromPreset(PresetState preset)
+        {
+            MedicalState state = new MedicalState(preset.Name);
+            preset.applyToState(state);
+            return state;
+        }
 
         public PresetState createPresetState(String name)
         {
@@ -252,6 +259,15 @@ namespace Medical
                 blendDuration = float.Epsilon;
             }
             startPlayback();
+        }
+
+        public void forceFinishBlend()
+        {
+            if (playing)
+            {
+                stopBlending();
+                blend(1.0f);
+            }
         }
 
         public void stopBlending()

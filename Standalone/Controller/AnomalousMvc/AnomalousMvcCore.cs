@@ -149,37 +149,32 @@ namespace Medical.Controller.AnomalousMvc
 
         public void applyPresetState(PresetState presetState, float duration)
         {
-            TemporaryStateBlender stateBlender = standaloneController.TemporaryStateBlender;
-            MedicalState createdState;
-            createdState = stateBlender.createBaselineState();
-            presetState.applyToState(createdState);
-            stateBlender.startTemporaryBlend(createdState);
+            var stateBlender = standaloneController.MedicalStateController;
+            stateBlender.blendTo(stateBlender.createFromPreset(presetState), duration);
         }
 
         public void blendPresetStates(PresetState startState, PresetState endState, float percent)
         {
-            TemporaryStateBlender stateBlender = standaloneController.TemporaryStateBlender;
-            MedicalState startMedicalState = stateBlender.createBaselineState();
-            startState.applyToState(startMedicalState);
-            MedicalState endMedicalState = stateBlender.createBaselineState();
-            endState.applyToState(endMedicalState);
+            var stateBlender = standaloneController.MedicalStateController;
+            MedicalState startMedicalState = stateBlender.createFromPreset(startState);
+            MedicalState endMedicalState = stateBlender.createFromPreset(endState);
             startMedicalState.blend(percent, endMedicalState);
         }
 
         public void applyMedicalState(MedicalState medicalState)
         {
-            standaloneController.TemporaryStateBlender.startTemporaryBlend(medicalState);
+            standaloneController.MedicalStateController.blendTo(medicalState, 1.0f);
         }
 
         public MedicalState generateMedicalState()
         {
-            return standaloneController.TemporaryStateBlender.createBaselineState();
+            return standaloneController.MedicalStateController.createState("Baseline");
         }
 
         internal void createMedicalState(MedicalStateInfoModel stateInfo)
         {
-            standaloneController.TemporaryStateBlender.forceFinishBlend();
-            MedicalState createdState = standaloneController.TemporaryStateBlender.createBaselineState();
+            standaloneController.MedicalStateController.forceFinishBlend();
+            MedicalState createdState = standaloneController.MedicalStateController.createState("Baseline");
             createdState.Notes.DataSource = stateInfo.DataSource;
             createdState.Notes.Notes = stateInfo.Notes;
             createdState.Notes.ProcedureDate = stateInfo.ProcedureDate;

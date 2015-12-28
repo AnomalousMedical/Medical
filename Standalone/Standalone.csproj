@@ -586,7 +586,6 @@
     <Compile Include="Controller\MedicalStates\MedicalStateController.cs" />
     <Compile Include="Controller\MedicalStates\PatientDataFile.cs" />
     <Compile Include="Controller\MedicalStates\SavedMedicalStates.cs" />
-    <Compile Include="Controller\MedicalStates\TemporaryStateBlender.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceController.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceGroup.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceInfo.cs" />

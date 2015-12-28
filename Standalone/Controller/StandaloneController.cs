@@ -44,7 +44,6 @@ namespace Medical
         //Controller
         private MedicalController medicalController;
         private MedicalStateController medicalStateController;
-        private TemporaryStateBlender tempStateBlender;
         private MusclePositionController musclePositionController;
         private MovementSequenceController movementSequenceController;
         private ImageRenderer imageRenderer;
@@ -261,7 +260,6 @@ namespace Medical
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
             SceneLoaded += medicalStateController.sceneLoaded;
             SceneUnloading += medicalStateController.sceneUnloading;
-            tempStateBlender = new TemporaryStateBlender(medicalController.MainTimer, medicalStateController);
 
             //Movement sequences
             movementSequenceController = new MovementSequenceController(medicalController);
@@ -444,14 +442,6 @@ namespace Medical
             get
             {
                 return medicalController;
-            }
-        }
-
-        public TemporaryStateBlender TemporaryStateBlender
-        {
-            get
-            {
-                return tempStateBlender;
             }
         }
 
