@@ -72,7 +72,7 @@ namespace Lecture.GUI
             idLabel.Caption = view.DisplayName;
         }
 
-        public IntSize2 getDesiredSize(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
+        public IntSize2 getDesiredSize(LayoutContainer layoutContainer, IntSize2 widgetSize, MyGUIView view)
         {
             int widgetWidth = layoutContainer.RigidParentWorkingSize.Width;
             int itemsWidth = (TaskButtonWidth + TaskButtonPadding) * taskbarItems.Count;

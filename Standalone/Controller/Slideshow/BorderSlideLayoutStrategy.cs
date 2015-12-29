@@ -149,7 +149,7 @@ namespace Medical
                 view.GetDesiredSizeOverride = this.layoutView;
             }
 
-            public IntSize2 layoutView(LayoutContainer layoutContainer, Widget widget, MyGUIView view)
+            public IntSize2 layoutView(LayoutContainer layoutContainer, IntSize2 originalSize, MyGUIView view)
             {
                 float ratio = 1.0f;
                 if (displayManager.VectorMode)
@@ -163,13 +163,13 @@ namespace Medical
                 switch (view.ElementName.LocationHint)
                 {
                     case ViewLocations.Left:
-                        return new IntSize2(size, widget.Height);
+                        return new IntSize2(size, originalSize.Height);
                     case ViewLocations.Right:
-                        return new IntSize2(size, widget.Height);
+                        return new IntSize2(size, originalSize.Height);
                     case ViewLocations.Top:
-                        return new IntSize2(widget.Width, size);
+                        return new IntSize2(originalSize.Width, size);
                     case ViewLocations.Bottom:
-                        return new IntSize2(widget.Width, size);
+                        return new IntSize2(originalSize.Width, size);
                     default:
                         return new IntSize2(size, size);
                 }

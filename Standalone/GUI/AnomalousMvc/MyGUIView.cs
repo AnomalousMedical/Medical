@@ -22,7 +22,7 @@ namespace Medical.GUI.AnomalousMvc
         [DoNotSave]
         public event Action<MyGUIViewHost> ViewHostCreated;
 
-        public delegate IntSize2 GetDesiredSizeDelegate(LayoutContainer layoutContainer, Widget widget, MyGUIView view);        
+        public delegate IntSize2 GetDesiredSizeDelegate(LayoutContainer layoutContainer, IntSize2 widgetSize, MyGUIView view);        
 
         public MyGUIView(String name)
             : base(name)
@@ -54,11 +54,11 @@ namespace Medical.GUI.AnomalousMvc
             }
         }
 
-        public bool fireGetDesiredSizeOverride(LayoutContainer layoutContainer, Widget widget, out IntSize2 size)
+        public bool fireGetDesiredSizeOverride(LayoutContainer layoutContainer, IntSize2 widgetSize, out IntSize2 size)
         {
             if (getDesiredSizeOverride != null)
             {
-                size = getDesiredSizeOverride(layoutContainer, widget, this);
+                size = getDesiredSizeOverride(layoutContainer, widgetSize, this);
                 return true;
             }
             size = new IntSize2();

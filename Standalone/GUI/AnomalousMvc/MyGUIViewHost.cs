@@ -133,7 +133,7 @@ namespace Medical.GUI.AnomalousMvc
         IntSize2 getDesiredSize()
         {
             IntSize2 workingSize;
-            if (!myGUIView.fireGetDesiredSizeOverride(layoutContainer, layoutContainer.Widget, out workingSize))
+            if (!myGUIView.fireGetDesiredSizeOverride(layoutContainer, layoutContainer.WidgetOriginalSize, out workingSize))
             {
                 workingSize = layoutContainer.WidgetOriginalSize;
             }
