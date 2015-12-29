@@ -147,6 +147,12 @@ namespace Developer
                 }
             }));
 
+            taskController.addTask(new CallbackTask("ToggleCompactMode", "Toggle Compact Mode", CommonResources.NoIcon, TaskMenuCategories.Developer, item =>
+            {
+                standaloneController.GUIManager.CompactMode = !standaloneController.GUIManager.CompactMode;
+                standaloneController.GUIManager.layout();
+            }));
+
             changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
             taskController.addTask(changeRenderingMode);
 
