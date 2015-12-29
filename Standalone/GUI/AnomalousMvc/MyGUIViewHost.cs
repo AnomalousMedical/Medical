@@ -133,12 +133,30 @@ namespace Medical.GUI.AnomalousMvc
         IntSize2 getDesiredSize()
         {
             IntSize2 workingSize;
-            if (myGUIView.fireGetDesiredSizeOverride(layoutContainer, layoutContainer.Widget, out workingSize))
+            if (!myGUIView.fireGetDesiredSizeOverride(layoutContainer, layoutContainer.Widget, out workingSize))
             {
-                return workingSize;
+                workingSize = layoutContainer.WidgetOriginalSize;
             }
 
-            return new IntSize2(layoutContainer.Widget.Width, layoutContainer.Widget.Height);
+            int numPeers = 2 + layoutContainer.getNumberOfPeers(View.ElementName);
+            var rigidParentSize = layoutContainer.RigidParentWorkingSize;
+            switch (layoutContainer.getLayoutType(View.ElementName))
+            {
+                case LayoutType.Horizontal:
+                    if (workingSize.Width > rigidParentSize.Width / numPeers)
+                    {
+                        workingSize.Width = rigidParentSize.Width / numPeers;
+                    }
+                    break;
+                case LayoutType.Vertical:
+                    if (workingSize.Height > rigidParentSize.Height / numPeers)
+                    {
+                        workingSize.Height = rigidParentSize.Height / numPeers;
+                    }
+                    break;
+            }
+
+            return workingSize;
         }
 
         void layoutContainer_LayoutChanged()

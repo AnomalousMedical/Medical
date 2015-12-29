@@ -18,7 +18,7 @@ namespace Medical.GUI.AnomalousMvc
         private static IntVector2 FlowStartLocation = new IntVector2(ScaleHelper.Scaled(4), ScaleHelper.Scaled(10));
 
         private ScrollView iconScrollView;
-        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, CaptionPadding, FlowStartLocation);
+        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(LayoutType.Horizontal, CaptionPadding, FlowStartLocation);
         private List<NavigationButton> buttons = new List<NavigationButton>();
         private NavigationButton selectedButton;
         private NavigationView view;
