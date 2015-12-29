@@ -56,7 +56,8 @@ namespace Lecture
         private SceneViewController sceneViewController;
 
         SlideImageStrategy imageStrategy;
-        SlideTriggerStrategy triggerStrategy;
+        SlideTriggerStrategy linkTriggerStrategy;
+        SlideTriggerStrategy buttonTriggerStragegy;
         SlideInputStrategy inputStrategy;
 
         public SlideEditorContext(Slide slide, String slideName, SlideshowEditController editorController, StandaloneController standaloneController, LectureUICallback uiCallback, UndoRedoBuffer undoBuffer, MedicalSlideItemTemplate itemTemplate, bool autoSetupScene, Action<String, String> wysiwygUndoCallback)
@@ -84,8 +85,10 @@ namespace Lecture
             RunCommandsAction previewTriggerAction = new RunCommandsAction("PreviewTrigger");
 
             imageStrategy = new SlideImageStrategy(slide, undoBuffer, this.slideEditorController.ResourceProvider, slide.UniqueName);
-            triggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "Lecture.Icon.TriggerIcon", standaloneController.NotificationManager, previewTriggerAction);
-            triggerStrategy.PreviewTrigger += triggerStrategy_PreviewTrigger;
+            linkTriggerStrategy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "a", "TriggerLink", "Lecture.Icon.TriggerIcon", standaloneController.NotificationManager, previewTriggerAction);
+            linkTriggerStrategy.PreviewTrigger += triggerStrategy_PreviewTrigger;
+            buttonTriggerStragegy = new SlideTriggerStrategy(slide, createTriggerActionBrowser(), undoBuffer, "button", "Trigger", "Lecture.Icon.TriggerIcon", standaloneController.NotificationManager, previewTriggerAction);
+            buttonTriggerStragegy.PreviewTrigger += triggerStrategy_PreviewTrigger;
             inputStrategy = new SlideInputStrategy(slide, undoBuffer, standaloneController.NotificationManager, previewTriggerAction, "input", CommonResources.NoIcon);
             inputStrategy.PreviewTrigger += triggerStrategy_PreviewTrigger;
 
@@ -110,7 +113,7 @@ namespace Lecture
             htmlDragDrop = new DragAndDropTaskManager<WysiwygDragDropItem>(
                 new WysiwygDragDropItem("Heading", "Editor/HeaderIcon", "<h1>Add Heading Here</h1>"),
                 new WysiwygDragDropItem("Paragraph", "Editor/ParagraphsIcon", "<p>Add paragraph text here.</p>"),
-                new WysiwygCallbackDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" style=\"width:200px;\"></img>", RmlWysiwygComponent.DefaultImage), 
+                new WysiwygCallbackDragDropItem("Image", "Editor/ImageIcon", String.Format("<img src=\"{0}\" class=\"Center\" style=\"width:80%;\"></img>", RmlWysiwygComponent.DefaultImage), 
                     () => //Markup Callback
                     {
                         String actionName = Guid.NewGuid().ToString();
@@ -119,17 +122,17 @@ namespace Lecture
                             ImageName = RmlWysiwygComponent.DefaultImage
                         };
                         slide.addAction(action);
-                        return String.Format("<img src=\"{0}\" style=\"width:200px;\" onclick=\"{1}\"></img>", RmlWysiwygComponent.DefaultImage, actionName);
+                        return String.Format("<img src=\"{0}\" class=\"Center\" style=\"width:80%;\" onclick=\"{1}\"></img>", RmlWysiwygComponent.DefaultImage, actionName);
                     }),
                 new WysiwygDragDropItem("Data Dispaly", CommonResources.NoIcon, "<data type=\"volume\" target=\"\">Data Display</data>"),
-                new WysiwygCallbackDragDropItem("Trigger", "Lecture.Icon.TriggerIcon", "<a class=\"TriggerLink\" onclick=\"\">Add trigger text here.</a>",
+                new WysiwygCallbackDragDropItem("Trigger", "Lecture.Icon.TriggerIcon", "<button class=\"Trigger\" onclick=\"\">Add trigger text here.</a>",
                     () => //Markup Callback
                     {
                         String actionName = Guid.NewGuid().ToString();
                         SetupSceneAction action = new SetupSceneAction(actionName);
                         action.captureSceneState(uiCallback);
                         slide.addAction(action);
-                        return String.Format("<a class=\"TriggerLink\" onclick=\"{0}\">Add trigger text here.</a>", actionName);
+                        return String.Format("<button class=\"Trigger\" onclick=\"{0}\">Add trigger text here.</a>", actionName);
                     }),
                 new WysiwygCallbackDragDropItem("Slider", CommonResources.NoIcon, "<input type=\"range\" min=\"0\" max=\"100\" value=\"0\" change=\"\"/>",
                     () => //Markup Callback
@@ -688,7 +691,8 @@ namespace Lecture
                 };
                 rmlView.GetMissingRmlCallback = getDefaultMissingRml;
                 rmlView.addCustomStrategy(imageStrategy);
-                rmlView.addCustomStrategy(triggerStrategy);
+                rmlView.addCustomStrategy(linkTriggerStrategy);
+                rmlView.addCustomStrategy(buttonTriggerStragegy);
                 rmlView.addCustomStrategy(inputStrategy);
                 mvcContext.Views.add(rmlView);
                 rmlEditors.Add(rmlView.Name, new RmlEditorViewInfo(rmlView, panel, editorController.ResourceProvider));

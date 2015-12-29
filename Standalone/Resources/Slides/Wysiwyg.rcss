@@ -1,5 +1,6 @@
 img
 {
+    margin-top:5px;
 	display: block;
 }
 
@@ -74,11 +75,18 @@ data.Break
 
 data
 {
+    margin-top:5px;
     display:block;
+}
+
+p
+{
+    margin-top:5px;
 }
 
 a.TriggerLink
 {
+    margin-top:5px;
 	display:block;
 	color: #0070C0;
 }
@@ -86,6 +94,14 @@ a.TriggerLink
 a.TriggerLink:hover
 {
 	text-decoration: underline;
+}
+
+button.Trigger
+{
+    margin-top:5px;
+    padding-top: 12px;
+    display:block;
+    padding-bottom: 12px;
 }
 
 h1.Flow,
@@ -103,5 +119,45 @@ data.Flow
 
 input.range
 {
+	height: 25px;
+    display:block;
     width: 100%;
+    margin-top:5px;
+}
+
+input.range slidertrack
+{
+	height:6px;
+	background-color: #c7c7c7;
+	margin-top:auto;
+	margin-bottom:auto;
+}
+
+input.range sliderbar
+{
+	width:20px;
+	height:25px;
+	background-color: #4477aa;
+}
+
+input.range sliderbar:hover
+{
+	background-color: #6699cc;
+}
+
+input.range sliderbar:active
+{
+	background-color: #5588bb;
+}
+
+input.range sliderarrowdec
+{
+	width: 0gsp;
+	height: 0gsp;
+}
+
+input.range sliderarrowinc
+{
+	width: 0gsp;
+	height: 0gsp;
 }

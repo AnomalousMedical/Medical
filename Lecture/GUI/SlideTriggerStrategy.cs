@@ -29,6 +29,7 @@ namespace Lecture.GUI
         private TextElementStyle elementStyle;
         private NotificationGUIManager notificationManager;
         private RunCommandsAction previewTriggerAction;
+        private String primaryClassName;
 
         public event Action PreviewTrigger;
 
@@ -36,9 +37,10 @@ namespace Lecture.GUI
         /// Create a slide trigger strategy. The ActionTypeBrowser determines the slide action types that can be put on the slide.
         /// Be sure to set the DefaultSelection on this browser, this is used when the trigger has no action as the default.
         /// </summary>
-        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, UndoRedoBuffer undoBuffer, String tag, String previewIconName, NotificationGUIManager notificationManager, RunCommandsAction previewTriggerAction)
+        public SlideTriggerStrategy(Slide slide, Browser actionTypeBrowser, UndoRedoBuffer undoBuffer, String tag, String primaryClassName, String previewIconName, NotificationGUIManager notificationManager, RunCommandsAction previewTriggerAction)
             : base(tag, previewIconName, true)
         {
+            this.primaryClassName = primaryClassName;
             this.previewTriggerAction = previewTriggerAction;
             this.undoBuffer = undoBuffer;
             this.slide = slide;
@@ -193,7 +195,7 @@ namespace Lecture.GUI
             }
 
             StringBuilder classes = new StringBuilder();
-            classes.Append("TriggerLink ");
+            classes.AppendFormat("{0} ", primaryClassName);
             elementStyle.buildClassList(classes);
             if (classes.Length > 0)
             {

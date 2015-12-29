@@ -35,7 +35,7 @@ namespace Medical
         private List<Slide> slides = new List<Slide>();
 
         private int version;
-        private bool vectorMode = true;
+        private bool vectorMode = false;
 
         public Slideshow()
         {
