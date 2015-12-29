@@ -882,15 +882,13 @@ namespace Lecture
 
         private void makeTempPresets()
         {
-            const int TitleSize = 150;
             const int SideSize = 480;
-            const int FooterSize = 200;
 
             String defaultRml = EmbeddedResourceHelpers.ReadResourceContents(EmbeddedTemplateNames.SimpleSlide_rml, EmbeddedTemplateNames.Assembly);
             //Couple simple presets
             TemplateSlide presetSlide = new TemplateSlide()
             {
-                Name = "Text",
+                Name = "Single Panel",
                 IconName = "Lecture.SlideLayouts.OnePanel"
             };
             presetSlide.addPanel(new RmlSlidePanelTemplate()
@@ -903,26 +901,7 @@ namespace Lecture
 
             presetSlide = new TemplateSlide()
             {
-                Name = "Title and Text",
-                IconName = "Lecture.SlideLayouts.LeftTop"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = SideSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = TitleSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Comparison",
+                Name = "Dual Panel",
                 IconName = "Lecture.SlideLayouts.TwoPanel"
             };
             presetSlide.addPanel(new RmlSlidePanelTemplate()
@@ -936,87 +915,6 @@ namespace Lecture
                 Rml = defaultRml,
                 Size = SideSize,
                 ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Title and\nComparison",
-                IconName = "Lecture.SlideLayouts.ThreePanel"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = SideSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = SideSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = TitleSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Comparison\nand Footer",
-                IconName = "Lecture.SlideLayouts.FourPanel"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = SideSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = SideSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = FooterSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
-            });
-            slideLayoutPicker.addPresetSlide(presetSlide);
-
-            presetSlide = new TemplateSlide()
-            {
-                Name = "Everything",
-                IconName = "Lecture.SlideLayouts.FourPanel"
-            };
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = SideSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Left),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = SideSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Right),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = TitleSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Top),
-            });
-            presetSlide.addPanel(new RmlSlidePanelTemplate()
-            {
-                Rml = defaultRml,
-                Size = FooterSize,
-                ElementName = new BorderLayoutElementName(GUILocationNames.ContentArea, BorderLayoutLocations.Bottom),
             });
             slideLayoutPicker.addPresetSlide(presetSlide);
 
