@@ -81,6 +81,7 @@ namespace Medical
         public MedicalState createFromPreset(PresetState preset)
         {
             MedicalState state = new MedicalState(preset.Name);
+            state.update();
             preset.applyToState(state);
             return state;
         }
