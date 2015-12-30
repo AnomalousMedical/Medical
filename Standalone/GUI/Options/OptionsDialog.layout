@@ -65,7 +65,7 @@
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="SeparatorInverseSkin" position="10 126 -6030 1" align="HStretch Top">
-                <Property key="NumResponsiveColumns" value="12"/>
+                <Property key="NumResponsiveColumns" value="12 12"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="10 131 385 155">
                 <Property key="ForwardMouseWheelToParent" value="true"/>
@@ -117,7 +117,7 @@
                 <Widget type="EditBox" skin="EditBox" position="0 33 385 23" align="HStretch Top" name="MaxFPS"/>
             </Widget>
             <Widget type="Widget" skin="SeparatorInverseSkin" position="10 290 -6030 1" align="HStretch Top">
-                <Property key="NumResponsiveColumns" value="12"/>
+                <Property key="NumResponsiveColumns" value="12 12"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="10 295 390 25">
                 <Property key="ForwardMouseWheelToParent" value="true"/>
@@ -127,7 +127,7 @@
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="SeparatorInverseSkin" position="10 324 -6030 1" align="HStretch Top">
-                <Property key="NumResponsiveColumns" value="12"/>
+                <Property key="NumResponsiveColumns" value="12 12"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="10 329 390 99">
                 <Property key="ForwardMouseWheelToParent" value="true"/>

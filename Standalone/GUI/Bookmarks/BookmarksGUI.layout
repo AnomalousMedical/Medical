@@ -25,14 +25,14 @@
             <Property key="HorizontalMaxSize" value="400"/>
             <Widget type="ScrollView" skin="ScrollView" position="2 0 123 454" align="Stretch" name="FolderTree">
                 <Property key="CanvasAlign" value="Left Top"/>
-                <Property key="NumResponsiveColumns" value="3"/>
+                <Property key="NumResponsiveColumns" value="3 3"/>
                 <UserString key="NodeHeight" value="30"/>
             </Widget>
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="127 0 370 454" align="Stretch" name="BookmarksList">
                 <Property key="CanvasAlign" value="Left Top"/>
                 <Property key="CanvasSize" value="209 10"/>
                 <Property key="VisibleHScroll" value="false"/>
-                <Property key="NumResponsiveColumns" value="9"/>
+                <Property key="NumResponsiveColumns" value="9 9"/>
                 <UserString key="ButtonSkin" value="Medical.BookmarkListIconButtonButton"/>
                 <UserString key="ItemHeight" value="127"/>
                 <UserString key="ItemWidth" value="122"/>

@@ -17,12 +17,12 @@
             <Property key="HorizontalMaxSize" value="400"/>
             <Widget type="ScrollView" skin="ScrollView" position="2 0 330 532" align="Left VStretch" name="PluginScrollList">
                 <Property key="CanvasAlign" value="Left Top"/>
-                <Property key="NumResponsiveColumns" value="5"/>
+                <Property key="NumResponsiveColumns" value="5 7"/>
                 <UserString key="ButtonSkin" value="ButtonListIconButton"/>
                 <UserString key="ItemHeight" value="102"/>
             </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="334 0 463 532">
-                <Property key="NumResponsiveColumns" value="7"/>
+                <Property key="NumResponsiveColumns" value="7 5"/>
                 <Widget type="Widget" skin="PanelEmpty" position="0 0 463 532" align="Stretch" name="InstallPanel">
                     <Property key="Visible" value="true"/>
                     <Widget type="Button" skin="Button" position="2 109 91 26" name="InstallButton">
