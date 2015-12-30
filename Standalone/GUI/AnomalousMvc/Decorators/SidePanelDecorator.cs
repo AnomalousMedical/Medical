@@ -14,6 +14,7 @@ namespace Medical.GUI.AnomalousMvc
 
         private IntVector2 childPosition;
         private IntSize2 childSizeOffset;
+        bool allowSizeUpdates = true;
 
         public SidePanelDecorator(ViewHostComponent child, ButtonCollection buttons, bool transparent)
             : base(transparent ? "Medical.GUI.AnomalousMvc.Decorators.SidePanelDecoratorTransparent.layout" : "Medical.GUI.AnomalousMvc.Decorators.SidePanelDecorator.layout")
@@ -40,13 +41,17 @@ namespace Medical.GUI.AnomalousMvc
 
         public void topLevelResized()
         {
-            child.topLevelResized();
+            if (allowSizeUpdates)
+            {
+                child.topLevelResized();
+            }
         }
 
         public void animatedResizeStarted(IntSize2 finalSize)
         {
             //This class eats this event, it sets up the child to be a fixed size at the final size
             //This prevents it from laying out the child a million times during animation.
+            allowSizeUpdates = false;
             child.Widget.Align = Align.Left | Align.Top;
             child.Widget.setPosition(childPosition.x, childPosition.y);
             child.Widget.setSize(finalSize.Width - childSizeOffset.Width, finalSize.Height - childSizeOffset.Height);
@@ -60,6 +65,7 @@ namespace Medical.GUI.AnomalousMvc
             child.Widget.setPosition(childPosition.x, childPosition.y);
             child.Widget.setSize(finalSize.Width - childSizeOffset.Width, finalSize.Height - childSizeOffset.Height);
             child.topLevelResized();
+            allowSizeUpdates = true;
         }
 
         public void opening()
