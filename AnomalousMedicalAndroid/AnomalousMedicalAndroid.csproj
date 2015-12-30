@@ -75,6 +75,22 @@
       <Project>{6E594C78-9CD8-432D-A135-11C4A72F3BCF}</Project>
       <Name>OSPlatform</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DentalSim\DentalSim.csproj">
+      <Project>{27ee2890-0bd9-413e-a504-ef77312b7c38}</Project>
+      <Name>DentalSim</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Developer\Developer.csproj">
+      <Project>{75ca7304-5cc0-48b0-b40c-1e2e5e891f2b}</Project>
+      <Name>Developer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Movement\Movement.csproj">
+      <Project>{207f9849-ef23-4677-b825-f43d05f78c00}</Project>
+      <Name>Movement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Premium\Premium.csproj">
+      <Project>{1f96d2f8-95a5-44b0-9631-3e0ac0669d7b}</Project>
+      <Name>Premium</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>

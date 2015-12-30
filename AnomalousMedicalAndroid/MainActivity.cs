@@ -18,6 +18,12 @@ using System.IO;
 using MyGUIPlugin;
 using System.Net.Http;
 using ModernHttpClient;
+using DentalSim;
+
+#if ALLOW_DATA_FILE
+using Medical.Movement;
+using Developer;
+#endif
 
 namespace AnomalousMedicalAndroid
 {
@@ -106,6 +112,7 @@ namespace AnomalousMedicalAndroid
             };
             anomalousController.OnInitCompleted += HandleOnInitCompleted;
             anomalousController.DataFileMissing += HandleDataFileMissing;
+            anomalousController.AddAdditionalPlugins += HandleAddAdditionalPlugins;
             anomalousController.run();
         }
 
@@ -133,6 +140,30 @@ namespace AnomalousMedicalAndroid
         {
             setInputHandler(controller.MedicalController.InputHandler);
             printRuntimeInfo();
+        }
+
+        static void HandleAddAdditionalPlugins(AnomalousController anomalousController, StandaloneController controller)
+        {
+            controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(controller)
+                {
+                    AllowUninstall = false
+                });
+
+            controller.AtlasPluginManager.addPlugin(new DentalSimPlugin()
+                {
+                    AllowUninstall = false
+                });
+
+            #if ALLOW_DATA_FILE
+            controller.AtlasPluginManager.addPlugin(new MovementBodyAtlasPlugin()
+            {
+            AllowUninstall = false
+            });
+            controller.AtlasPluginManager.addPlugin(new DeveloperAtlasPlugin(controller)
+            {
+            AllowUninstall = false
+            });
+            #endif
         }
 
         void openUrl(String url)
