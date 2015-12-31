@@ -30,6 +30,8 @@ namespace Medical.GUI.AnomalousMvc
 
         public void Dispose()
         {
+            imageGrid.Dispose();
+            imageGrid = null;
             thumbnailImages.Dispose();
         }
 
@@ -48,28 +50,44 @@ namespace Medical.GUI.AnomalousMvc
         {
             if (imageRenderer != null)
             {
-                thumbnailImages.clear();
-                imageGrid.SuppressLayout = true;
-                imageGrid.clear();
-                foreach (ThumbnailPickerInfo thumbProp in thumbnailProperties)
-                {
-                    using (FreeImageBitmap thumb = imageRenderer.renderImage(thumbProp.ImageProperties))
-                    {
-                        String imageId = thumbnailImages.addImage(thumb, thumb);
-                        ButtonGridItem item = imageGrid.addItem("Main", "", imageId);
-                        item.UserObject = thumbProp;
-                    }
-                }
-                if (imageGrid.Count > 0)
-                {
-                    imageGrid.SelectedItem = imageGrid.getItem(0);
-                }
-                imageGrid.SuppressLayout = false;
-                imageGrid.layout();
+                Coroutine.Start(doUpdateThumbnails());
             }
             else
             {
                 throw new Exception("Cannot generate thumbnails for the Thumbnail Picker. Image Renderer is null.");
+            }
+        }
+
+        private IEnumerator<YieldAction> doUpdateThumbnails()
+        {
+            imageGrid.clear();
+            yield return Coroutine.WaitSeconds(0.1f);
+            foreach (ThumbnailPickerInfo thumbProp in thumbnailProperties)
+            {
+                if (imageGrid == null)
+                {
+                    yield break;
+                }
+
+                String imageId;
+                using (FreeImageBitmap thumb = imageRenderer.renderImage(thumbProp.ImageProperties))
+                {
+                    imageId = thumbnailImages.addImage(thumb, thumb);
+                }
+
+                imageGrid.SuppressLayout = true;
+                ButtonGridItem item = imageGrid.addItem("Main", "", imageId);
+                item.UserObject = thumbProp;
+
+                imageGrid.SuppressLayout = false;
+                imageGrid.layout();
+
+                if (imageGrid.Count == 1) //Select first item
+                {
+                    imageGrid.SelectedItem = imageGrid.getItem(0);
+                }
+
+                yield return Coroutine.WaitSeconds(0.1f);
             }
         }
 

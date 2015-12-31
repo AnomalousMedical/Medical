@@ -29,11 +29,12 @@ namespace Medical.GUI.AnomalousMvc
             notes.EventEditTextChange += new MyGUIEvent(notes_EventEditTextChange);
 
             thumbnailPicker = new ThumbnailPickerGUI(context.ImageRenderer, widget.findWidget("Notes/Thumbnails") as ScrollView);
-            thumbnailPicker.SelectedThumbnailChanged += new ThumbnailPickerGUIEvent(thumbnailPicker_SelectedThumbnailChanged);
+            thumbnailPicker.SelectedThumbnailChanged += thumbnailPicker_SelectedThumbnailChanged;
         }
 
         public override void Dispose()
         {
+            thumbnailPicker.SelectedThumbnailChanged -= thumbnailPicker_SelectedThumbnailChanged;
             thumbnailPicker.Dispose();
             base.Dispose();
         }
