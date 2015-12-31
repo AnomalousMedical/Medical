@@ -277,6 +277,7 @@
     <Compile Include="GUI\AnomalousMvc\Decorators\FloatingPanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\MDIDialogDecorator.cs" />
+    <Compile Include="GUI\AnomalousMvc\Decorators\ScrollViewDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.cs" />
     <Compile Include="GUI\AnomalousMvc\MyGUIView.cs" />

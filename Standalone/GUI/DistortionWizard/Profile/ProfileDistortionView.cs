@@ -18,7 +18,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new ProfileDistortionGUI(this, context, viewHost);
+            return new ScrollViewDecorator(new ProfileDistortionGUI(this, context, viewHost));
         }
 
         [EditableAction]

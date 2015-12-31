@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="62 74 352 369" layer="Overlapped">
-        <Property key="CanvasSize" value="352 369"/>
-        <Property key="CanvasAlign" value="Left Top"/>
         <Widget type="TextBox" skin="TextBox" position="4 4 343 15" align="HStretch Top">
             <Property key="Caption" value="Adjust the sliders to match the patient&apos;s right condyle."/>
             <Property key="TextAlign" value="Left Top"/>

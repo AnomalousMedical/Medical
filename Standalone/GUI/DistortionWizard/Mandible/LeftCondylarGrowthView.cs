@@ -17,7 +17,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new LeftCondylarGrowthGUI(this, context, viewHost);
+            return new ScrollViewDecorator(new LeftCondylarGrowthGUI(this, context, viewHost));
         }
 
         protected LeftCondylarGrowthView(LoadInfo info)
