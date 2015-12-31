@@ -17,7 +17,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new TeethHeightAdaptationGUI(this, context, viewHost);
+            return new ScrollViewDecorator(new TeethHeightAdaptationGUI(this, context, viewHost));
         }
 
         protected TeethHeightAdaptationView(LoadInfo info)
