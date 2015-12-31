@@ -17,7 +17,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new FossaGUI("RightFossa", "Medical.GUI.DistortionWizard.Fossa.FossaGUIRight.layout", this, context, viewHost);
+            return new ScrollViewDecorator(new FossaGUI("RightFossa", "Medical.GUI.DistortionWizard.Fossa.FossaGUIRight.layout", this, context, viewHost));
         }
 
         protected RightFossaView(LoadInfo info)
