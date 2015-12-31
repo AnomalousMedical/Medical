@@ -28,7 +28,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             this.subDirectory = wizardView.PresetDirectory;
 
-            presetListView = new SingleSelectButtonGrid(widget.findWidget("PresetPanel/ScrollView") as ScrollView);
+            presetListView = new SingleSelectButtonGrid(widget as ScrollView);
             presetListView.SelectedValueChanged += new EventHandler(presetListView_SelectedValueChanged);
 
             imageAtlas = new ImageAtlas("PresetStateGUI_" + subDirectory, new IntSize2(100, 100));
@@ -38,6 +38,12 @@ namespace Medical.GUI.AnomalousMvc
         {
             imageAtlas.Dispose();
             base.Dispose();
+        }
+
+        public override void topLevelResized()
+        {
+            base.topLevelResized();
+            presetListView.resizeAndLayout();
         }
 
         void presetListView_SelectedValueChanged(object sender, EventArgs e)
