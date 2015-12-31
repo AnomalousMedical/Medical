@@ -19,7 +19,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new DiscSpaceGUI(StateDirectory, this, context, viewHost);
+            return new ScrollViewDecorator(new DiscSpaceGUI(StateDirectory, this, context, viewHost));
         }
 
         [Editable]
