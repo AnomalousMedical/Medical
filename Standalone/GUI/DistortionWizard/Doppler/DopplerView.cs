@@ -20,7 +20,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new DopplerGUI(this, context, viewHost);
+            return new ScrollViewDecorator(new DopplerGUI(this, context, viewHost));
         }
 
         [Editable]
