@@ -7,27 +7,27 @@
             <Property key="TextAlign" value="Left VCenter"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="17 23 53 53" name="ProfilePanel/RightCamera">
+        <Widget type="Button" skin="ButtonImageBackground" position="17 23 53 53" align="LeftRelative Top" name="ProfilePanel/RightCamera">
             <Property key="Caption" value="Right"/>
             <Property key="ImageResource" value="ProfileIcons/ProfileRightLateral"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="84 23 53 53" name="ProfilePanel/RightMidCamera">
+        <Widget type="Button" skin="ButtonImageBackground" position="84 23 53 53" align="LeftRelative Top" name="ProfilePanel/RightMidCamera">
             <Property key="Caption" value="Mid\nRight"/>
             <Property key="ImageResource" value="ProfileIcons/ProfileRightMidLateral"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="150 23 53 53" name="ProfilePanel/MidlineCamera">
+        <Widget type="Button" skin="ButtonImageBackground" position="150 23 53 53" align="LeftRelative Top" name="ProfilePanel/MidlineCamera">
             <Property key="Caption" value="Midline"/>
             <Property key="ImageResource" value="ProfileIcons/ProfileMidline"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="216 23 53 53" name="ProfilePanel/MidLeftCamera">
+        <Widget type="Button" skin="ButtonImageBackground" position="216 23 53 53" align="LeftRelative Top" name="ProfilePanel/MidLeftCamera">
             <Property key="Caption" value="Mid\n Left"/>
             <Property key="ImageResource" value="ProfileIcons/ProfileLeftMidLateral"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="282 23 53 53" name="ProfilePanel/LeftCamera">
+        <Widget type="Button" skin="ButtonImageBackground" position="282 23 53 53" align="LeftRelative Top" name="ProfilePanel/LeftCamera">
             <Property key="Caption" value="Left"/>
             <Property key="ImageResource" value="ProfileIcons/ProfileLeftLateral"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>

@@ -6,17 +6,17 @@
             <Property key="Caption" value="Choose a camera angle."/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="6 22 53 53" name="DopplerPanel/LateralJointCamera">
+        <Widget type="Button" skin="ButtonImageBackground" position="6 22 53 53" align="LeftRelative Top" name="DopplerPanel/LateralJointCamera">
             <Property key="Caption" value="Joint"/>
             <Property key="ImageResource" value="DopplerPanelImages/JointLateral"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="66 22 53 53" name="DopplerPanel/SuperiorJointCamera">
+        <Widget type="Button" skin="ButtonImageBackground" position="66 22 53 53" align="LeftRelative Top" name="DopplerPanel/SuperiorJointCamera">
             <Property key="Caption" value="Top"/>
             <Property key="ImageResource" value="DopplerPanelImages/JointTop"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="ButtonImageBackground" position="127 22 53 53" name="DopplerPanel/BothJointsCamera">
+        <Widget type="Button" skin="ButtonImageBackground" position="127 22 53 53" align="LeftRelative Top" name="DopplerPanel/BothJointsCamera">
             <Property key="Caption" value="Jaw"/>
             <Property key="ImageResource" value="DopplerPanelImages/BothJoints"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
