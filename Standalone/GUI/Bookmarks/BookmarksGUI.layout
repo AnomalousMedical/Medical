@@ -37,7 +37,7 @@
                 <UserString key="ItemHeight" value="127"/>
                 <UserString key="ItemWidth" value="122"/>
                 <UserString key="ShowGroupCaptions" value="false"/>
-                <UserString key="ItemPaddingX" value="10"/>
+                <UserString key="ItemPaddingX" value="2"/>
                 <UserString key="ItemPaddingY" value="10"/>
             </Widget>
         </Widget>
