@@ -17,7 +17,7 @@ namespace Medical.GUI.AnomalousMvc
 
         public override ViewHostComponent createViewHost(AnomalousMvcContext context, MyGUIViewHost viewHost)
         {
-            return new RemoveTeethGUI("Medical.GUI.DistortionWizard.Teeth.RemoveTopTeethGUI.layout", this, context, viewHost);
+            return new ScrollViewDecorator(new RemoveTeethGUI("Medical.GUI.DistortionWizard.Teeth.RemoveTopTeethGUI.layout", this, context, viewHost));
         }
 
         protected RemoveTopTeethView(LoadInfo info)
