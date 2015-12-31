@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position="63 73 352 122" layer="Overlapped">
-        <Property key="CanvasSize" value="352 135"/>
-        <Property key="CanvasAlign" value="Left Top"/>
+        <Property key="ForwardMouseWheelToParent" value="true"/>
         <Widget type="TextBox" skin="TextBox" position="4 4 344 15" align="HStretch Top">
             <Property key="Caption" value="Adjust the slider to change the left fossa flatness."/>
             <Property key="TextAlign" value="Left Top"/>

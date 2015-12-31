@@ -25,8 +25,9 @@ namespace Medical.GUI.AnomalousMvc
             child.Widget.setPosition(0, 0);
 
             scrollView.CanvasAlign = Align.Left | Align.Top;
+            scrollView.VisibleHScroll = false;
             var viewCoord = scrollView.ViewCoord;
-            scrollView.CanvasSize = new IntSize2(viewCoord.width, viewCoord.height);
+            scrollView.CanvasSize = new IntSize2(viewCoord.width, child.Widget.Height);
         }
 
         public void Dispose()

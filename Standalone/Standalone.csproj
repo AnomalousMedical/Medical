@@ -643,7 +643,9 @@
     <EmbeddedResource Include="GUI\DistortionWizard\Mandible\RightCondylarGrowthGUI.layout" />
     <EmbeddedResource Include="GUI\DistortionWizard\Notes\NotesGUI.layout" />
     <EmbeddedResource Include="GUI\DistortionWizard\Preset\PresetStateGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Profile\ProfileDistortionGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Profile\ProfileDistortionGUI.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveBottomTeethGUI.layout" />
     <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
