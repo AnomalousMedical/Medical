@@ -194,7 +194,6 @@
     <Compile Include="State\MedicalState.cs" />
     <Compile Include="State\MedicalStateNotes.cs" />
     <Compile Include="State\PresetState.cs" />
-    <Compile Include="State\PresetStateSet.cs" />
     <Compile Include="Teeth\Static\BottomTooth.cs" />
     <Compile Include="Teeth\Static\StaticTooth.cs" />
     <Compile Include="Teeth\TeethController.cs" />

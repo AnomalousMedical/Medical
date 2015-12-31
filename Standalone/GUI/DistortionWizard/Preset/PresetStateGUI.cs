@@ -29,13 +29,16 @@ namespace Medical.GUI.AnomalousMvc
             this.subDirectory = wizardView.PresetDirectory;
 
             presetListView = new SingleSelectButtonGrid(widget as ScrollView);
-            presetListView.SelectedValueChanged += new EventHandler(presetListView_SelectedValueChanged);
+            presetListView.SelectedValueChanged += presetListView_SelectedValueChanged;
 
             imageAtlas = new ImageAtlas("PresetStateGUI_" + subDirectory, new IntSize2(100, 100));
         }
 
         public override void Dispose()
         {
+            presetListView.SelectedValueChanged -= presetListView_SelectedValueChanged;
+            presetListView.Dispose();
+            presetListView = null;
             imageAtlas.Dispose();
             base.Dispose();
         }
@@ -61,18 +64,22 @@ namespace Medical.GUI.AnomalousMvc
 
         public override void opening()
         {
-            PresetStateSet presets = new PresetStateSet(subDirectory, subDirectory);
-            loadPresetSet(presets);
-            this.clear();
-            this.initialize(presets);
+            Coroutine.Start(initialize());
         }
 
-        public void initialize(PresetStateSet presetStateSet)
+        public IEnumerator<YieldAction> initialize()
         {
-            presetListView.SuppressLayout = true;
-            foreach (PresetState state in presetStateSet.Presets)
+            this.clear();
+            yield return Coroutine.WaitSeconds(0.1f);
+
+            foreach (PresetState state in loadPresets(subDirectory))
             {
-                String fullImageName = presetStateSet.SourceDirectory + "/" + state.ImageName;
+                if(presetListView == null)
+                {
+                    yield break;
+                }
+
+                String fullImageName = subDirectory + "/" + state.ImageName;
                 String imageKey = null;
                 if (!imageAtlas.containsImage(fullImageName))
                 {
@@ -95,14 +102,20 @@ namespace Medical.GUI.AnomalousMvc
                         Log.Error("Could not open image preview file {0}.", fullImageName);
                     }
                 }
+                presetListView.SuppressLayout = true;
+
                 ButtonGridItem item = presetListView.addItem(state.Category, state.Name, imageKey);
                 item.UserObject = state;
-            }
-            presetListView.SuppressLayout = false;
-            presetListView.layout();
-            if (presetListView.Count > 0)
-            {
-                defaultItem = presetListView.getItem(0);
+
+                presetListView.SuppressLayout = false;
+                presetListView.layout();
+
+                if (presetListView.Count == 1) //Select first item
+                {
+                    defaultItem = presetListView.getItem(0);
+                }
+
+                yield return Coroutine.WaitSeconds(0.1f);
             }
         }
 
@@ -117,9 +130,9 @@ namespace Medical.GUI.AnomalousMvc
             imageAtlas.clear();
         }
 
-        private void loadPresetSet(PresetStateSet presetStateSet)
+        private IEnumerable<PresetState> loadPresets(String sourceDirectory)
         {
-            IEnumerable<String> files = context.ResourceProvider.listFiles("*.pre", presetStateSet.SourceDirectory, false);
+            IEnumerable<String> files = context.ResourceProvider.listFiles("*.pre", sourceDirectory, false);
             foreach (String file in files)
             {
                 using (XmlTextReader reader = new XmlTextReader(context.ResourceProvider.openFile(file)))
@@ -127,7 +140,7 @@ namespace Medical.GUI.AnomalousMvc
                     PresetState preset = xmlSaver.restoreObject(reader) as PresetState;
                     if (preset != null)
                     {
-                        presetStateSet.addPresetState(preset);
+                        yield return preset;
                     }
                     else
                     {
