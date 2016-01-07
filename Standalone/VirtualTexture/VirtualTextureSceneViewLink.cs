@@ -83,7 +83,7 @@ namespace Medical
 
         private void MainWindow_DestroyInternalResources(OSWindow window, InternalResourceType resourceType)
         {
-            if ((resourceType & InternalResourceType.Graphics) == InternalResourceType.Graphics)
+            if ((resourceType & InternalResourceType.LargeReloadableResources) == InternalResourceType.LargeReloadableResources)
             {
                 virtualTextureManager.suspend();
             }
@@ -91,7 +91,7 @@ namespace Medical
 
         private void MainWindow_CreateInternalResources(OSWindow window, InternalResourceType resourceType)
         {
-            if ((resourceType & InternalResourceType.Graphics) == InternalResourceType.Graphics)
+            if ((resourceType & InternalResourceType.LargeReloadableResources) == InternalResourceType.LargeReloadableResources)
             {
                 virtualTextureManager.resume();
             }
