@@ -394,6 +394,11 @@ namespace Medical.GUI.AnomalousMvc
                         break;
                 }
             }
+
+            if (document.NumChildren == 1)
+            {
+                widget.Height = (int)(document.FirstChild.ScrollHeight + 0.5f);
+            }
         }
     }
 }
