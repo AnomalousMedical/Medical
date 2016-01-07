@@ -1,6 +1,7 @@
 ﻿using Anomalous.GuiFramework.Cameras;
 using Engine;
 using Engine.ObjectManagement;
+using Engine.Platform;
 using OgrePlugin;
 using OgrePlugin.VirtualTexture;
 using System;
@@ -38,10 +39,15 @@ namespace Medical
             materialBuilder = new UnifiedMaterialBuilder(virtualTextureManager, OgreInterface.Instance.SelectedTextureFormat, standaloneController.MedicalController.PluginManager.createLiveResourceManager("UnifiedShaders"));
             OgreInterface.Instance.MaterialParser.addMaterialBuilder(materialBuilder);
             TransparencyController.initialize(materialBuilder);
+
+            standaloneController.MainWindow.DestroyInternalResources += MainWindow_DestroyInternalResources;
+            standaloneController.MainWindow.CreateInternalResources += MainWindow_CreateInternalResources;
         }
 
         public void Dispose()
         {
+            standaloneController.MainWindow.DestroyInternalResources -= MainWindow_DestroyInternalResources;
+            standaloneController.MainWindow.CreateInternalResources -= MainWindow_CreateInternalResources;
             OgreInterface.Instance.MaterialParser.removeMaterialBuilder(materialBuilder);
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
@@ -73,6 +79,22 @@ namespace Medical
         {
             virtualTextureManager.createFeedbackBufferCamera(scene, cameraLink);
             standaloneController.MedicalController.OnLoopUpdate += MedicalController_OnLoopUpdate;
+        }
+
+        private void MainWindow_DestroyInternalResources(OSWindow window, InternalResourceType resourceType)
+        {
+            if ((resourceType & InternalResourceType.Graphics) == InternalResourceType.Graphics)
+            {
+                virtualTextureManager.suspend();
+            }
+        }
+
+        private void MainWindow_CreateInternalResources(OSWindow window, InternalResourceType resourceType)
+        {
+            if ((resourceType & InternalResourceType.Graphics) == InternalResourceType.Graphics)
+            {
+                virtualTextureManager.resume();
+            }
         }
 
         class CameraLink : FeedbackCameraPositioner

@@ -134,16 +134,15 @@ namespace Developer
                     }
                 }));
 
-            taskController.addTask(new CallbackTask("Developer.TestVolumeCalc", "Test Volume Calculation", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
+            taskController.addTask(new CallbackTask("Developer.TogglePhysicalTextures", "Toggle Physical Textures", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
             {
-                VolumeCalculator calc;
-                if(VolumeController.tryGetCalculator("LeftMasseter", out calc))
+                if(standaloneController.VirtualTextureManager.Active)
                 {
-                    Logging.Log.Debug("Volume is {0}", calc.CurrentVolume);
+                    standaloneController.VirtualTextureManager.suspend();
                 }
                 else
                 {
-                    Logging.Log.Debug("Cannot find volume calculator");
+                    standaloneController.VirtualTextureManager.resume();
                 }
             }));
 
