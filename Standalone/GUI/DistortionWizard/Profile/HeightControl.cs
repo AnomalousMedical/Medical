@@ -26,13 +26,16 @@ namespace Medical.GUI.AnomalousMvc
 
         public void sceneChanged()
         {
-            AnimationManipulator ramus = MandibleController.Mandible.getAnimationManipulator("leftRamusHeightMandible");
-            AnimationManipulator condyle = MandibleController.Mandible.getAnimationManipulator("leftCondyleHeightMandible");
-            leftHeightSlider.initialize(condyle, ramus);
+            if (MandibleController.Mandible != null)
+            {
+                AnimationManipulator ramus = MandibleController.Mandible.getAnimationManipulator("leftRamusHeightMandible");
+                AnimationManipulator condyle = MandibleController.Mandible.getAnimationManipulator("leftCondyleHeightMandible");
+                leftHeightSlider.initialize(condyle, ramus);
 
-            ramus = MandibleController.Mandible.getAnimationManipulator("rightRamusHeightMandible");
-            condyle = MandibleController.Mandible.getAnimationManipulator("rightCondyleHeightMandible");
-            rightHeightSlider.initialize(condyle, ramus);
+                ramus = MandibleController.Mandible.getAnimationManipulator("rightRamusHeightMandible");
+                condyle = MandibleController.Mandible.getAnimationManipulator("rightCondyleHeightMandible");
+                rightHeightSlider.initialize(condyle, ramus);
+            }
         }
 
         public void getPositionFromScene()

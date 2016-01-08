@@ -30,7 +30,7 @@ namespace Medical.GUI.AnomalousMvc
         {
             foreach (BoneManipulatorSlider slider in openingValues)
             {
-                if (slider != null)
+                if (slider != null && MandibleController.Mandible != null)
                 {
                     if (slider.BoneManipulator != null)
                     {
