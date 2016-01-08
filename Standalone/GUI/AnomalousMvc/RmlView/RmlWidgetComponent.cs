@@ -33,7 +33,8 @@ namespace Medical.GUI.AnomalousMvc
 
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent);
-            imageHeight = rmlImage.Height;
+            imageHeight = widget.Height;
+            imageWidth = widget.Width;
 
             if (view.RmlFile != null)
             {
@@ -67,6 +68,8 @@ namespace Medical.GUI.AnomalousMvc
             rmlImage = (ImageBox)widget;
             rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent);
             imageHeight = rmlImage.Height;
+            imageWidth = rmlImage.Width;
+
             if (view.FakePath != null)
             {
                 this.documentName = RocketInterface.createValidFileUrl(context.ResourceProvider.getFullFilePath(view.FakePath));
@@ -317,7 +320,6 @@ namespace Medical.GUI.AnomalousMvc
                 imageHeight = widget.Height;
                 imageWidth = widget.Width;
             }
-            base.topLevelResized();
         }
 
         public void reloadDocument()
@@ -398,6 +400,7 @@ namespace Medical.GUI.AnomalousMvc
             if (document.NumChildren == 1)
             {
                 widget.Height = (int)(document.FirstChild.ScrollHeight + 0.5f);
+                rocketWidget.resized();
             }
         }
     }

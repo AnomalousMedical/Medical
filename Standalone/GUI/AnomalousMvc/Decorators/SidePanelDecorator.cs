@@ -55,7 +55,7 @@ namespace Medical.GUI.AnomalousMvc
             child.Widget.Align = Align.Left | Align.Top;
             child.Widget.setPosition(childPosition.x, childPosition.y);
             child.Widget.setSize(finalSize.Width - childSizeOffset.Width, finalSize.Height - childSizeOffset.Height);
-            child.topLevelResized();
+            child.topLevelResized(); //Note we need to fire this since we changed the child size
         }
 
         public void animatedResizeCompleted(IntSize2 finalSize)
@@ -64,7 +64,6 @@ namespace Medical.GUI.AnomalousMvc
             child.Widget.Align = Align.HStretch | Align.VStretch;
             child.Widget.setPosition(childPosition.x, childPosition.y);
             child.Widget.setSize(finalSize.Width - childSizeOffset.Width, finalSize.Height - childSizeOffset.Height);
-            child.topLevelResized();
             allowSizeUpdates = true;
         }
 
