@@ -138,24 +138,6 @@ namespace Medical.GUI.AnomalousMvc
                 workingSize = layoutContainer.WidgetOriginalSize;
             }
 
-            int numPeers = 2 + layoutContainer.getNumberOfPeers(View.ElementName);
-            var rigidParentSize = layoutContainer.RigidParentWorkingSize;
-            switch (layoutContainer.getLayoutType(View.ElementName))
-            {
-                case LayoutType.Horizontal:
-                    if (workingSize.Width > rigidParentSize.Width / numPeers)
-                    {
-                        workingSize.Width = rigidParentSize.Width / numPeers;
-                    }
-                    break;
-                case LayoutType.Vertical:
-                    if (workingSize.Height > rigidParentSize.Height / numPeers)
-                    {
-                        workingSize.Height = rigidParentSize.Height / numPeers;
-                    }
-                    break;
-            }
-
             return workingSize;
         }
 
