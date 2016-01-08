@@ -210,11 +210,11 @@ namespace Medical
             layoutChain.addLink(new SingleChildChainLink(GUILocationNames.Notifications, controller.NotificationManager.LayoutContainer), true);
             layoutChain.addLink(new PopupAreaChainLink(GUILocationNames.FullscreenPopup), true);
             layoutChain.SuppressLayout = true;
-            editorBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout, controller.MedicalController.MainTimer);
+            editorBorder = new BorderLayoutChainLink(GUILocationNames.EditorBorderLayout);
             layoutChain.addLink(editorBorder, true);
             layoutChain.addLink(new MDIChainLink(GUILocationNames.MDI, controller.MDILayout), true);
             layoutChain.addLink(new PopupAreaChainLink(GUILocationNames.ContentAreaPopup), true);
-            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea, controller.MedicalController.MainTimer);
+            contentArea = new BorderLayoutChainLink(GUILocationNames.ContentArea);
             layoutChain.addLink(contentArea, true);
             layoutChain.addLink(new FinalChainLink("SceneViews", controller.MDILayout.DocumentArea), true);
             layoutChain.SuppressLayout = false;
