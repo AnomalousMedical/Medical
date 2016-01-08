@@ -32,7 +32,7 @@ namespace Medical.GUI.AnomalousMvc
             this.eventController = view.createRocketEventController(context, viewHost);
 
             rmlImage = (ImageBox)widget;
-            rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent);
+            rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent, false);
             imageHeight = widget.Height;
             imageWidth = widget.Width;
 
@@ -66,7 +66,7 @@ namespace Medical.GUI.AnomalousMvc
             this.eventController = view.createRocketEventController(context, viewHost);
 
             rmlImage = (ImageBox)widget;
-            rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent);
+            rocketWidget = new RocketWidget(rmlImage, viewHost.View.Transparent, false);
             imageHeight = rmlImage.Height;
             imageWidth = rmlImage.Width;
 
@@ -397,11 +397,12 @@ namespace Medical.GUI.AnomalousMvc
                 }
             }
 
-            if (document.NumChildren == 1)
+            float height = 0.0f;
+            foreach(var child in document.Children)
             {
-                widget.Height = (int)(document.FirstChild.ScrollHeight + 0.5f);
-                rocketWidget.resized();
+                height += child.ScrollHeight;
             }
+            widget.Height = (int)(height + 0.5f);
         }
     }
 }
