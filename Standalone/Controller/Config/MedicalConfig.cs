@@ -119,13 +119,30 @@ namespace Medical
                 Log.Info("Using override file {0}", overrideFile);
                 overrideSettings = new ConfigFile(overrideFile);
                 overrideSettings.loadConfigFile();
+
+                //Look for redirect
+                ConfigSection systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
+                try {
+                    var redirectFile = systemOverride.getValue("Redirect", default(String));
+                    if (!String.IsNullOrEmpty(redirectFile) && File.Exists(redirectFile))
+                    {
+                        Log.Info("Redirecting to override file {0}", redirectFile);
+                        overrideSettings = new ConfigFile(redirectFile);
+                        overrideSettings.loadConfigFile();
+                        systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
+                    }
+                }
+                catch(Exception)
+                {
+
+                }
+
                 resources = overrideSettings.createOrRetrieveConfigSection("Resources");
 
                 ConfigSection website = overrideSettings.createOrRetrieveConfigSection("Website");
                 WebsiteHostUrl = website.getValue("Host", WebsiteHostUrl);
 
                 Cracked = false;
-                ConfigSection systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
                 Cracked = systemOverride.getValue("Cracked", Cracked);
                 BuildName = systemOverride.getValue("CustomBuildName", BuildName);
                 libRocketPlugin.RocketInterface.Instance.PixelsPerInch = systemOverride.getValue("PixelsPerInch", libRocketPlugin.RocketInterface.DefaultPixelsPerInch);
