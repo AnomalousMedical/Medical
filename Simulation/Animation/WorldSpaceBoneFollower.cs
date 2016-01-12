@@ -93,7 +93,7 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            Vector3 bonePos = targetObject.Translation + Quaternion.quatRotate(targetObject.Rotation, bone.getDerivedPosition() + offset * Owner.Scale);
+            Vector3 bonePos = targetObject.Translation + Quaternion.quatRotate(targetObject.Rotation, bone.getDerivedPosition() + offset * bone.getDerivedScale());
             if (bonePos != lastPosition)
             {
                 this.updateScale(bone.getDerivedScale());
