@@ -10,7 +10,7 @@ using Anomalous.GuiFramework;
 
 namespace Medical.GUI
 {
-    class SceneErrorWindow : MDIDialog
+    public class SceneErrorWindow : MDIDialog
     {
         ImageBox rmlImage;
         RocketWidget rocketWidget;

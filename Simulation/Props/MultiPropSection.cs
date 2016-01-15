@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Medical
 {
-    class MultiPropSection
+    public class MultiPropSection
     {
         private SceneNode node;
         private Entity entity;

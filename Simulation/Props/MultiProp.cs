@@ -12,7 +12,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    class MultiProp : BehaviorInterface
+    public class MultiProp : BehaviorInterface
     {
         [Editable]
         private String mainNodeName = "Node";

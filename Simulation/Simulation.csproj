@@ -184,6 +184,7 @@
     <Compile Include="Pose\SortedPoseableRaycastResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Properties\AssemblyInfoSource.cs" />
+    <Compile Include="Props\DynamicSplint.cs" />
     <Compile Include="Props\MultiProp.cs" />
     <Compile Include="Props\MultiPropSection.cs" />
     <Compile Include="Props\MultiPropTester.cs" />

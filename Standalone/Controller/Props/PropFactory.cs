@@ -58,6 +58,11 @@ namespace Medical
             return found;
         }
 
+        public bool hasProp(String propName)
+        {
+            return prototypes.ContainsKey(propName);
+        }
+
         public SimObjectBase createProp(String propName, Vector3 translation, Quaternion rotation)
         {
             if (subScene != null)
