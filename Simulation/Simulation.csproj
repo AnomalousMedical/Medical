@@ -186,6 +186,7 @@
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Props\DynamicSplint.cs" />
     <Compile Include="Props\MultiProp.cs" />
+    <Compile Include="Props\MultiPropJointHandler.cs" />
     <Compile Include="Props\MultiPropSection.cs" />
     <Compile Include="Props\MultiPropTester.cs" />
     <Compile Include="Props\Splint.cs" />

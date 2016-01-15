@@ -211,6 +211,8 @@ namespace Developer
 
                     def.addElement(joint);
 
+                    def.addElement(new BehaviorDefinition("JointHandler", new MultiPropJointHandler(joint.Name, multiProp.Name)));
+
                     //def.addElement(new BehaviorDefinition(Splint.SplintBehaviorName, new Splint()
                     //{
 

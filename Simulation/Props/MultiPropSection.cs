@@ -34,6 +34,7 @@ namespace Medical
             node = multiProp.OgreSceneManager.SceneManager.createSceneNode(String.Format("{0}_MultiPropNode_{1}", multiProp.Owner.Name, name));
             node.setPosition(Translation);
             node.setOrientation(Rotation);
+            node.setScale(Scale);
             multiProp.MainNode.addChild(node);
 
             entity = multiProp.OgreSceneManager.SceneManager.createEntity(String.Format("{0}_MultiPropEntity_{1}", multiProp.Owner.Name, name), mesh);

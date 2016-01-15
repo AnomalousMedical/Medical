@@ -36,6 +36,12 @@ namespace Medical
         [DoNotSave]
         private OgreSceneManager ogreSceneManager;
 
+        [DoNotCopy]
+        public event Action<MultiProp> UpdatesStarting;
+
+        [DoNotCopy]
+        public event Action<MultiProp> UpdatesCompleted;
+
         protected override void constructed()
         {
             base.constructed();
@@ -89,12 +95,22 @@ namespace Medical
 
         public void beginUpdates()
         {
+            if(UpdatesStarting != null)
+            {
+                UpdatesStarting.Invoke(this);
+            }
             rigidBody.beginUpdates();
         }
 
         public void finishUpdates()
         {
             rigidBody.finishUpdates();
+
+            if(UpdatesCompleted != null)
+            {
+                UpdatesCompleted.Invoke(this);
+            }
+
             rigidBody.forceActivationState(ActivationState.ActiveTag);
         }
 

@@ -29,6 +29,8 @@ namespace Medical
                 blacklist("Cannot find MultiProp '{0}'", multiPropName);
             }
 
+            multiProp.beginUpdates();
+
             using (var stream = VirtualFileSystem.Instance.openStream("Plugins/SplintProps/PartModels/SplintSpace.positions", Engine.Resources.FileMode.Open))
             {
                 PositionCollection positions = new PositionCollection(stream);
@@ -36,15 +38,11 @@ namespace Medical
                 for(int i = StartIndex; i < EndIndex; ++i)
                 {
                     var position = positions.getPosition(String.Format("BaseSplint{0}", i));
-                    multiProp.addSection(new MultiPropSection(String.Format("SplintSection{0}", i), String.Format("BaseSplint{0}.mesh", i), String.Format("BaseSplintCol{0}", i), position.Translation, position.Rotation, Vector3.ScaleIdentity));
+                    multiProp.addSection(new MultiPropSection(String.Format("SplintSection{0}", i), String.Format("BaseSplint{0}.mesh", i), String.Format("BaseSplintCol{0}", i), position.Translation, position.Rotation, new Vector3(1f, 0.2f, 1f)));
                 }
-                
-                //for (int i = 17; i < 33; ++i)
-                //{
-                //    var position = positions.getPosition(String.Format("BaseSplint{0}", i));
-                //    multiProp.addSection(new MultiPropSection(String.Format("SplintSection{0}", i), String.Format("BaseSplint{0}.mesh", i), String.Format("BaseSplintCol{0}", i), position.Translation, position.Rotation, Vector3.ScaleIdentity));
-                //}
             }
+
+            multiProp.finishUpdates();
 
             base.constructed();
         }
