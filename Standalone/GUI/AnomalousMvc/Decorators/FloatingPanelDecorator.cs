@@ -21,10 +21,9 @@ namespace Medical.GUI.AnomalousMvc
             }
 
             this.child = child;
-            child.Widget.attachToWidget(widget);
-            child.Widget.Align = Align.Left | Align.Top;
-            child.Widget.setPosition(int.Parse(widget.getUserString("ChildX")), int.Parse(widget.getUserString("ChildY")));
             widget.setSize(child.Widget.Right + int.Parse(widget.getUserString("ChildWidthOffset")), child.Widget.Bottom + int.Parse(widget.getUserString("ChildHeightOffset")));
+            child.Widget.attachToWidget(widget);
+            child.Widget.setPosition(int.Parse(widget.getUserString("ChildX")), int.Parse(widget.getUserString("ChildY")));
             child.Widget.Align = Align.HStretch | Align.VStretch;
         }
 
