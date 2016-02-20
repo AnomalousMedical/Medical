@@ -120,11 +120,20 @@ namespace Medical
             }
 #endif
 
-            //0 is the main plugin
-            //29 is the intro tutorial
-            if (featureCode == 0 || featureCode == 29)
+            //Switch for features always supported
+            switch (featureCode)
             {
-                return true;
+                case 0: //Main plugin
+                case 1: //Premium
+                case 2: //Dental Sim
+                case 28: //Lecture Plugin
+                case 29: //Intro tutorial
+                #if ALLOW_OVERRIDE
+                case 6: //Editor Tools
+                case 8: //Developer Tools
+                case 48: //Movement
+                #endif
+                    return true;
             }
 
             if (license != null)

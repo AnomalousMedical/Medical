@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Lecture
 {
-    class LecturePlugin : AtlasPlugin
+    public class LecturePlugin : AtlasPlugin
     {
         private SlideshowExplorer slideshowExplorer;
         private EditorController editorController;
@@ -26,7 +26,7 @@ namespace Lecture
 
         public LecturePlugin()
         {
-
+            this.AllowUninstall = true;
         }
 
         public void Dispose()
@@ -133,13 +133,7 @@ namespace Lecture
             }
         }
 
-        public bool AllowUninstall
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool AllowUninstall { get; set; }
 
         public bool AllowRuntimeUninstall
         {

@@ -1,5 +1,7 @@
 ﻿using Anomalous.OSPlatform;
 using Anomalous.OSPlatform.Win32;
+using DentalSim;
+using Lecture;
 using System;
 using System.Net;
 
@@ -28,6 +30,7 @@ namespace Medical
             try
             {
                 anomalous = new AnomalousController();
+                anomalous.AddAdditionalPlugins += HandleAddAdditionalPlugins;
                 anomalous.run();
             }
             catch (Exception e)
@@ -52,6 +55,35 @@ namespace Medical
                     anomalous.Dispose();
                 }
             }
+        }
+
+        static void HandleAddAdditionalPlugins(AnomalousController anomalousController, StandaloneController controller)
+        {
+            controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(controller)
+            {
+                AllowUninstall = false
+            });
+
+            controller.AtlasPluginManager.addPlugin(new DentalSimPlugin()
+            {
+                AllowUninstall = false
+            });
+
+            controller.AtlasPluginManager.addPlugin(new LecturePlugin()
+            {
+                AllowUninstall = false
+            });
+
+#if ALLOW_DATA_FILE
+            controller.AtlasPluginManager.addPlugin(new MovementBodyAtlasPlugin()
+            {
+            AllowUninstall = false
+            });
+            controller.AtlasPluginManager.addPlugin(new DeveloperAtlasPlugin(controller)
+            {
+            AllowUninstall = false
+            });
+#endif
         }
     }
 }
