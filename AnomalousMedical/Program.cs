@@ -74,14 +74,18 @@ namespace Medical
                 AllowUninstall = false
             });
 
-#if ALLOW_DATA_FILE
-            controller.AtlasPluginManager.addPlugin(new MovementBodyAtlasPlugin()
+#if ALLOW_OVERRIDE
+            controller.AtlasPluginManager.addPlugin(new Movement.MovementBodyAtlasPlugin()
             {
-            AllowUninstall = false
+                AllowUninstall = false
             });
-            controller.AtlasPluginManager.addPlugin(new DeveloperAtlasPlugin(controller)
+            controller.AtlasPluginManager.addPlugin(new Developer.DeveloperAtlasPlugin(controller)
             {
-            AllowUninstall = false
+                AllowUninstall = false
+            });
+            controller.AtlasPluginManager.addPlugin(new EditorPlugin()
+            {
+                AllowUninstall = false
             });
 #endif
         }

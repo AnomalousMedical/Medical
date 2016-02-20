@@ -45,7 +45,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;ALLOW_OVERRIDE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -56,7 +56,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;ALLOW_OVERRIDE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -144,6 +144,20 @@
     <ProjectReference Include="..\Standalone\Standalone.csproj">
       <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
       <Name>Standalone</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
+    <ProjectReference Include="..\Developer\Developer.csproj">
+      <Project>{75ca7304-5cc0-48b0-b40c-1e2e5e891f2b}</Project>
+      <Name>Developer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Editor\Editor.csproj">
+      <Project>{18f80be1-dd03-4f78-af02-9f61258b6720}</Project>
+      <Name>Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Movement\Movement.csproj">
+      <Project>{207f9849-ef23-4677-b825-f43d05f78c00}</Project>
+      <Name>Movement</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

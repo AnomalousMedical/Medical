@@ -37,6 +37,8 @@ namespace Medical
 
         public EditorPlugin()
         {
+            AllowUninstall = true;
+
             Log.Info("Editor GUI Loaded");
 
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
@@ -185,13 +187,7 @@ namespace Medical
             }
         }
 
-        public bool AllowUninstall
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool AllowUninstall { get; set; }
 
         public bool AllowRuntimeUninstall
         {
