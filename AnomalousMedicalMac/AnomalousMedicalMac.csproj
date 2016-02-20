@@ -31,6 +31,7 @@
         <Command type="AfterBuild" command="xbuild Bundle/AnomalousMedicalBundle.csproj /p:Configuration=Debug" />
       </CustomCommands>
     </CustomCommands>
+    <Profiling>false</Profiling>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -49,6 +50,7 @@
         <Command type="AfterBuild" command="xbuild Bundle/AnomalousMedicalBundle.csproj /p:Configuration=Release" />
       </CustomCommands>
     </CustomCommands>
+    <Profiling>false</Profiling>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PublicRelease|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -67,6 +69,7 @@
         <Command type="AfterBuild" command="xbuild Bundle/AnomalousMedicalBundle.csproj /p:Configuration=PublicRelease" />
       </CustomCommands>
     </CustomCommands>
+    <Profiling>false</Profiling>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -117,6 +120,28 @@
     <ProjectReference Include="..\..\Engine\OSPlatform.Mac\OSPlatform.Mac.csproj">
       <Project>{6660B346-FAAE-43C5-99BE-9DC8653922E7}</Project>
       <Name>OSPlatform.Mac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DentalSim\DentalSim.csproj">
+      <Project>{27EE2890-0BD9-413E-A504-EF77312B7C38}</Project>
+      <Name>DentalSim</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lecture\Lecture.csproj">
+      <Project>{E2AED95C-0FA7-4316-A7C4-BDF748099909}</Project>
+      <Name>Lecture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Premium\Premium.csproj">
+      <Project>{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}</Project>
+      <Name>Premium</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
+    <ProjectReference Include="..\Developer\Developer.csproj">
+      <Project>{75CA7304-5CC0-48B0-B40C-1E2E5E891F2B}</Project>
+      <Name>Developer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Editor\Editor.csproj">
+      <Project>{18F80BE1-DD03-4F78-AF02-9F61258B6720}</Project>
+      <Name>Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

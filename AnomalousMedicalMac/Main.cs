@@ -9,6 +9,8 @@ using Anomalous.OSPlatform;
 using System.IO;
 using System.Runtime.InteropServices;
 using Anomalous.OSPlatform.Mac;
+using DentalSim;
+using Lecture;
 
 namespace AnomalousMedicalMac
 {
@@ -29,7 +31,8 @@ namespace AnomalousMedicalMac
                 anomalous = new AnomalousController()
                     {
                         PrimaryArchive = Path.Combine(FolderFinder.ExecutableFolder, "../Resources/AnomalousMedical.dat")
-                    };
+				};
+				anomalous.AddAdditionalPlugins += HandleAddAdditionalPlugins;
                 anomalous.run();
             }
             catch (Exception e)
@@ -50,5 +53,35 @@ namespace AnomalousMedicalMac
                 }
             }
         }
+
+		static void HandleAddAdditionalPlugins(AnomalousController anomalousController, StandaloneController controller)
+		{
+			controller.AtlasPluginManager.addPlugin (new PremiumBodyAtlasPlugin (controller) {
+				AllowUninstall = false
+			});
+
+			controller.AtlasPluginManager.addPlugin (new DentalSimPlugin () {
+				AllowUninstall = false
+			});
+
+			controller.AtlasPluginManager.addPlugin (new LecturePlugin () {
+				AllowUninstall = false
+			});
+
+			#if ALLOW_OVERRIDE
+			controller.AtlasPluginManager.addPlugin(new Movement.MovementBodyAtlasPlugin()
+			{
+			AllowUninstall = false
+			});
+			controller.AtlasPluginManager.addPlugin(new Developer.DeveloperAtlasPlugin(controller)
+			{
+			AllowUninstall = false
+			});
+			controller.AtlasPluginManager.addPlugin(new EditorPlugin()
+			{
+			AllowUninstall = false
+			});
+			#endif
+		}
     }
 }
