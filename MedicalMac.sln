@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{B05D69F8-6463-4276-8077-D7F3F0C02A9E}"
 EndProject
@@ -70,6 +70,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicalBundle", "AnomalousMedicalMac\Bundle\AnomalousMedicalBundle.csproj", "{D8592C64-2FB3-422B-A7B0-F0C62E728221}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSPlatform.Mac", "..\Engine\OSPlatform.Mac\OSPlatform.Mac.csproj", "{6660B346-FAAE-43C5-99BE-9DC8653922E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DentalSim", "DentalSim\DentalSim.csproj", "{27EE2890-0BD9-413E-A504-EF77312B7C38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -270,6 +272,12 @@ Global
 		{6660B346-FAAE-43C5-99BE-9DC8653922E7}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{6660B346-FAAE-43C5-99BE-9DC8653922E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6660B346-FAAE-43C5-99BE-9DC8653922E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27EE2890-0BD9-413E-A504-EF77312B7C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27EE2890-0BD9-413E-A504-EF77312B7C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27EE2890-0BD9-413E-A504-EF77312B7C38}.PublicRelease|Any CPU.ActiveCfg = PublicRelease|Any CPU
+		{27EE2890-0BD9-413E-A504-EF77312B7C38}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
+		{27EE2890-0BD9-413E-A504-EF77312B7C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27EE2890-0BD9-413E-A504-EF77312B7C38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
