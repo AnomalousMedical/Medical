@@ -30,7 +30,7 @@ namespace Medical.GUI
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             TextBox versionText = window.findWidget("VersionText") as TextBox;
-            versionText.Caption = String.Format("Version {0} {1}", Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version, MedicalConfig.BuildName);
+            versionText.Caption = String.Format("Version {0} {1} {2}", Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version, MedicalConfig.BuildName, Environment.Is64BitProcess ? "64 bit" : "32 bit");
 
             TextBox anomalousMedicalText = window.findWidget("AnomalousMedicalLink") as TextBox;
             anomalousMedicalText.MouseButtonClick += new MyGUIEvent(anomalousMedicalText_MouseButtonClick);
