@@ -3,7 +3,7 @@
     <Widget type="Widget" skin="PanelEmpty" position="62 74 352 359" layer="Overlapped">
         <Property key="ForwardMouseWheelToParent" value="true"/>
         <Widget type="TextBox" skin="TextBox" position="4 4 343 15" align="HStretch Top">
-            <Property key="Caption" value="Adjust the sliders to match the patient&apos;s right condyle."/>
+            <Property key="Caption" value="Slide to match the patient&apos;s right condyle."/>
             <Property key="TextAlign" value="Left Top"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>

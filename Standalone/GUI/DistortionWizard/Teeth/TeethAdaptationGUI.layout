@@ -3,7 +3,7 @@
     <Widget type="Widget" skin="PanelEmpty" position="101 199 352 350" layer="Overlapped">
         <Property key="ForwardMouseWheelToParent" value="true"/>
         <Widget type="TextBox" skin="TextBox" position="4 4 291 15">
-            <Property key="Caption" value="Choose a camera angle.  Change when required."/>
+            <Property key="Caption" value="Choose a camera angle."/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
         <Widget type="Button" skin="ButtonImageBackground" position="17 23 53 53" align="LeftRelative Top" name="TeethMovementPanel/TopCameraButton">
