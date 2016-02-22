@@ -47,8 +47,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <AndroidSupportedAbis>armeabi-v7a</AndroidSupportedAbis>
     <AndroidLinkSkip>System;System.Core;System.Xml;System.Xml.Linq;mscorlib</AndroidLinkSkip>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Dependencies\ModernHttpClient\src\ModernHttpClient\ModernHttpClient.Android.csproj">
@@ -76,19 +76,19 @@
       <Name>OSPlatform</Name>
     </ProjectReference>
     <ProjectReference Include="..\DentalSim\DentalSim.csproj">
-      <Project>{27ee2890-0bd9-413e-a504-ef77312b7c38}</Project>
+      <Project>{27EE2890-0BD9-413E-A504-EF77312B7C38}</Project>
       <Name>DentalSim</Name>
     </ProjectReference>
     <ProjectReference Include="..\Developer\Developer.csproj">
-      <Project>{75ca7304-5cc0-48b0-b40c-1e2e5e891f2b}</Project>
+      <Project>{75CA7304-5CC0-48B0-B40C-1E2E5E891F2B}</Project>
       <Name>Developer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Movement\Movement.csproj">
-      <Project>{207f9849-ef23-4677-b825-f43d05f78c00}</Project>
+      <Project>{207F9849-EF23-4677-B825-F43D05F78C00}</Project>
       <Name>Movement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Premium\Premium.csproj">
-      <Project>{1f96d2f8-95a5-44b0-9631-3e0ac0669d7b}</Project>
+      <Project>{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}</Project>
       <Name>Premium</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
@@ -139,7 +139,6 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\Icon.png" />
     <AndroidResource Include="Resources\values\styles.xml" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
     <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\armeabi-v7a\libopenal.so">
@@ -173,4 +172,5 @@
       <Link>lib\armeabi-v7a\libgnustl_shared.so</Link>
     </AndroidNativeLibrary>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
