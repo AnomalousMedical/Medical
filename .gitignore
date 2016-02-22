@@ -1,5 +1,6 @@
 ##Custom ignored files
 DataFiles
+AnomalousMedicalMac/Installer/
 
 
 ## Ignore Visual Studio temporary files, build results, and
