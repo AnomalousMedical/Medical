@@ -208,31 +208,20 @@ namespace Medical
                             //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
                             loadedPluginNames.Add(dllFileName);
 
-                            Version version = assembly.GetName().Version;
-                            if (version.Major == requiredAssemblyVersion.Major && version.Minor == requiredAssemblyVersion.Minor)
+                            AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                            if (attributes.Length > 0)
                             {
-                                AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
-                                if (attributes.Length > 0)
+                                foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
                                 {
-                                    foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
-                                    {
-                                        entryPointAttribute.createPlugin(standaloneController);
-                                    }
-                                    loadedPlugin = true;
+                                    entryPointAttribute.createPlugin(standaloneController);
                                 }
-                                else
-                                {
-                                    String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
-                                    firePluginLoadError(errorMessage);
-                                    Log.Error(errorMessage);
-                                }
+                                loadedPlugin = true;
                             }
                             else
                             {
-                                String error = String.Format("The plugin '{0}' is for a different version of Anomalous Medical {1}.", dllFileName, version);
-                                firePluginLoadError(error);
-                                Log.Error(error);
-                                loadedPlugin = true; //This loaded, but we didnt inititalize it, however, return true anyway since we did load sucessfully
+                                String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
+                                firePluginLoadError(errorMessage);
+                                Log.Error(errorMessage);
                             }
                         }
                         catch (Exception e)
@@ -458,6 +447,8 @@ namespace Medical
         public void addPlugin(AtlasPlugin plugin)
         {
             addPlugin(plugin, true);
+            String dllFileName = Path.GetFileNameWithoutExtension(plugin.GetType().Assembly.Location);
+            loadedPluginNames.Add(dllFileName);
         }
 
         private void addPlugin(AtlasPlugin plugin, bool addAssemblyResources)
