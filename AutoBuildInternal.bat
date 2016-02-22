@@ -13,14 +13,7 @@ set SolutionPath=%ThisFolder%%SolutionName%
 
 %BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="Any CPU" /target:Clean,Build
 
-%SignCommand% "Premium Features" "%OutputFolder%Premium.dll"
-%SignCommand% "Dental Simulation" "%OutputFolder%DentalSim.dll"
-%SignCommand% "Developer" "%OutputFolder%Developer.dll"
-%SignCommand% "Editor Tools" "%OutputFolder%Editor.dll"
-%SignCommand% "Smart Lecture Tools" "%OutputFolder%Lecture.dll"
 %SignCommand% "Store Manager" "%OutputFolder%StoreManager.dll"
-%SignCommand% "Kinect Plugin" "%OutputFolder%KinectPlugin.dll"
-%SignCommand% "Movement Simulation" "%OutputFolder%Movement.dll"
 %SignCommand% "Anomalous Medical" "%OutputFolder%\AnomalousMedical.exe"
 
 echo f | xcopy /Y "%OutputFolder%StoreManager.dll" "%OutputFolder%Setups\StoreManager.dll"
