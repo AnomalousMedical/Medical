@@ -31,23 +31,23 @@
             <Property key="ImageResource" value="TeethMovementIcons/AdaptLeftLateral"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="3 194 344 45">
-            <Property key="Caption" value="Click the Tooth Intrusion button to automatically intrude the\nteeth to fit the mandible you have created. Click it again\nto stop the adaptation if it is suitable."/>
+        <Widget type="TextBox" skin="TextBox" position="3 79 344 15">
+            <Property key="Caption" value="Adapt the teeth automatically."/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="3 242 108 30" name="TeethMovmentPanel/AdaptButton">
-            <Property key="Caption" value="Tooth Intrusion"/>
+        <Widget type="Button" skin="Button" position="3 97 160 30" name="TeethMovmentPanel/AdaptButton">
+            <Property key="Caption" value="Auto Tooth Intrusion"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position="3 79 344 44">
-            <Property key="Caption" value="Manually move the teeth to fine tune their positions.\nOr manually move and rotate the teeth to match your\npatient exactly."/>
+        <Widget type="TextBox" skin="TextBox" position="3 160 344 15">
+            <Property key="Caption" value="Manually fine tune positions."/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="3 126 160 30" name="TeethMovmentPanel/MoveButton">
+        <Widget type="Button" skin="Button" position="3 178 160 30" name="TeethMovmentPanel/MoveButton">
             <Property key="Caption" value="Linear Movements"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="3 159 160 30" name="TeethMovmentPanel/RotateButton">
+        <Widget type="Button" skin="Button" position="3 212 160 30" name="TeethMovmentPanel/RotateButton">
             <Property key="Caption" value="Rotational Movements"/>
             <Property key="ForwardMouseWheelToParent" value="true"/>
         </Widget>
