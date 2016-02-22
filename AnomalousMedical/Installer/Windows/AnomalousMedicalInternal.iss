@@ -60,6 +60,14 @@ Source: ..\..\..\Release\GuiFramework.Debugging.dll; DestDir: {app}; Flags: igno
 Source: ..\..\..\Release\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\OSPlatform.Win32.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\Release\Newtonsoft.Json.dll; DestDir: {app}; Flags: ignoreversion
+
+Source: ..\..\..\Release\Premium.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\DentalSim.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\Developer.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\Editor.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\Lecture.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\Movement.dll; DestDir: {app}; Flags: ignoreversion
+
 Source: ..\..\..\DataFiles\Internal\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 
 ;x86 Files

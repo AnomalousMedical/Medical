@@ -11,11 +11,7 @@ set SignCommand=call "%RootBuildFolder%DRM\CodeKey\AnomalousMedicalSign.bat"
 set OutputFolder=%ThisFolder%Release\
 set SolutionPath=%ThisFolder%%SolutionName%
 
-%BuildCommand% "%SolutionPath%" /property:Configuration=Debug;Platform="Any CPU" /target:Clean
-%BuildCommand% "%SolutionPath%" /property:Configuration=Debug;Platform="Any CPU"
-
-%BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="Any CPU" /target:Clean
-%BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="Any CPU"
+%BuildCommand% "%SolutionPath%" /property:Configuration=Release;Platform="Any CPU" /target:Clean,Build
 
 %SignCommand% "Premium Features" "%OutputFolder%Premium.dll"
 %SignCommand% "Dental Simulation" "%OutputFolder%DentalSim.dll"
@@ -27,12 +23,6 @@ set SolutionPath=%ThisFolder%%SolutionName%
 %SignCommand% "Movement Simulation" "%OutputFolder%Movement.dll"
 %SignCommand% "Anomalous Medical" "%OutputFolder%\AnomalousMedical.exe"
 
-echo f | xcopy /Y "%OutputFolder%Premium.dll" "%OutputFolder%Setups\Premium.dll"
-echo f | xcopy /Y "%OutputFolder%DentalSim.dll" "%OutputFolder%Setups\DentalSim.dll"
-echo f | xcopy /Y "%OutputFolder%Developer.dll" "%OutputFolder%Setups\Developer.dll"
-echo f | xcopy /Y "%OutputFolder%Editor.dll" "%OutputFolder%Setups\Editor.dll"
-echo f | xcopy /Y "%OutputFolder%Lecture.dll" "%OutputFolder%Setups\Lecture.dll"
 echo f | xcopy /Y "%OutputFolder%StoreManager.dll" "%OutputFolder%Setups\StoreManager.dll"
-echo f | xcopy /Y "%OutputFolder%Movement.dll" "%OutputFolder%Setups\Movement.dll"
 
 %InnosetupCommand% %ThisFolder%AnomalousMedical\Installer\Windows\AnomalousMedicalInternal.iss

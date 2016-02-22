@@ -58,6 +58,11 @@ Source: ..\..\..\PublicRelease\libRocketWidget.dll; DestDir: {app}; Flags: ignor
 Source: ..\..\..\PublicRelease\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\OSPlatform.Win32.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\Newtonsoft.Json.dll; DestDir: {app}; Flags: ignoreversion
+
+Source: ..\..\..\Release\Premium.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\DentalSim.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\Lecture.dll; DestDir: {app}; Flags: ignoreversion
+
 Source: ..\..\..\DataFiles\Public\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 
 ;x86 Files
