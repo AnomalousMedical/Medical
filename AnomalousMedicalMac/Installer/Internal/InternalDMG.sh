@@ -13,7 +13,7 @@ pushd $THIS_FOLDER
 rm -rf ../../bin/Release/Anomalous\ Medical.app
 mv ../../bin/Release/AnomalousMedicalMac.app ../../bin/Release/Anomalous\ Medical.app
 
-codesign -s "Developer ID Application" ../../bin/Release/Anomalous\ Medical.app --deep
+codesign -s "Developer ID Application: ANOMALOUS MEDICAL, LLC (DVCRZEJ9QF)" ../../bin/Release/Anomalous\ Medical.app --deep
 
 sh ../MakeDMG.sh "Anomalous Medical" "../../bin/Release" "Anomalous Medical" "../Layout" "../../../AnomalousMedical/Installer/License"
 
