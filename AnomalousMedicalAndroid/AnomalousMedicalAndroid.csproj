@@ -68,7 +68,7 @@
       <Name>OgrePlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\OSPlatform.Android\OSPlatform.Android.csproj">
-      <Project>{AB582550-FEA0-4B33-88F5-7D59D0119AC2}</Project>
+      <Project>{2a62fb25-aa44-459b-95e0-ed149f31fb6e}</Project>
       <Name>OSPlatform.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
