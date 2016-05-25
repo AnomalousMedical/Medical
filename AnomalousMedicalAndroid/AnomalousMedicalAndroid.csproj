@@ -51,9 +51,21 @@
     <DebugType>full</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Dependencies\Android.Play.ExpansionLibrary\ExpansionDownloader\ExpansionDownloader.csproj">
+      <Project>{c1b3041a-48e8-42a4-95dd-00159872548c}</Project>
+      <Name>ExpansionDownloader</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\Android.Play.ExpansionLibrary\LicenseVerificationLibrary\LicenseVerificationLibrary.csproj">
+      <Project>{c95ffdb8-c066-4669-8328-aaeedba94c87}</Project>
+      <Name>LicenseVerificationLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Dependencies\ModernHttpClient\src\ModernHttpClient\ModernHttpClient.Android.csproj">
       <Project>{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}</Project>
       <Name>ModernHttpClient.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\OkHttp-Xamarin\OkHttp\OkHttp.csproj">
+      <Project>{133270e5-3a11-4a4a-a4ad-1d89fc9dbaaf}</Project>
+      <Name>OkHttp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
       <Project>{57C253F1-157F-4A6A-9FED-345A776B97D5}</Project>
@@ -98,14 +110,6 @@
     <ProjectReference Include="..\Standalone\Standalone.csproj">
       <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
       <Name>Standalone</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\Android.Play.ExpansionLibrary\ExpansionDownloader\ExpansionDownloader.csproj">
-      <Project>{C1B3041A-48E8-42A4-95DD-00159872548C}</Project>
-      <Name>ExpansionDownloader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\Android.Play.ExpansionLibrary\LicenseVerificationLibrary\LicenseVerificationLibrary.csproj">
-      <Project>{C95FFDB8-C066-4669-8328-AAEEDBA94C87}</Project>
-      <Name>LicenseVerificationLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

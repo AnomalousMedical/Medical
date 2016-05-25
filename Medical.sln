@@ -91,6 +91,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSPlatform.Android", "..\En
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicalAndroid", "AnomalousMedicalAndroid\AnomalousMedicalAndroid.csproj", "{C3CD0E46-2841-4330-9773-1E396736B7CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OkHttp", "..\Dependencies\OkHttp-Xamarin\OkHttp\OkHttp.csproj", "{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpansionDownloader", "..\Dependencies\Android.Play.ExpansionLibrary\ExpansionDownloader\ExpansionDownloader.csproj", "{C1B3041A-48E8-42A4-95DD-00159872548C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseVerificationLibrary", "..\Dependencies\Android.Play.ExpansionLibrary\LicenseVerificationLibrary\LicenseVerificationLibrary.csproj", "{C95FFDB8-C066-4669-8328-AAEEDBA94C87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -320,6 +326,24 @@ Global
 		{C3CD0E46-2841-4330-9773-1E396736B7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3CD0E46-2841-4330-9773-1E396736B7CB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3CD0E46-2841-4330-9773-1E396736B7CB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B3041A-48E8-42A4-95DD-00159872548C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B3041A-48E8-42A4-95DD-00159872548C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B3041A-48E8-42A4-95DD-00159872548C}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B3041A-48E8-42A4-95DD-00159872548C}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{C1B3041A-48E8-42A4-95DD-00159872548C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B3041A-48E8-42A4-95DD-00159872548C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -346,5 +370,8 @@ Global
 		{ACBB3920-B6D8-497B-8BAE-9350C7A85C09} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 		{959F7F85-C98B-4876-971A-9036224578E4} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 		{2A62FB25-AA44-459B-95E0-ED149F31FB6E} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
+		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
+		{C1B3041A-48E8-42A4-95DD-00159872548C} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
+		{C95FFDB8-C066-4669-8328-AAEEDBA94C87} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 	EndGlobalSection
 EndGlobal
