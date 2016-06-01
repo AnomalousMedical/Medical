@@ -122,7 +122,8 @@ namespace Medical
 
                 //Look for redirect
                 ConfigSection systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
-                try {
+                try
+                {
                     var redirectFile = systemOverride.getValue("Redirect", default(String));
                     if (!String.IsNullOrEmpty(redirectFile) && File.Exists(redirectFile))
                     {
@@ -132,7 +133,7 @@ namespace Medical
                         systemOverride = overrideSettings.createOrRetrieveConfigSection("System");
                     }
                 }
-                catch(Exception)
+                catch (Exception)
                 {
 
                 }
@@ -254,6 +255,25 @@ namespace Medical
                 }
             }
         }
+
+#if ALLOW_OVERRIDE
+        public static void saveOverride()
+        {
+            overrideSettings.writeConfigFile();
+        }
+
+        public static String OverrideBackingFile
+        {
+            get
+            {
+                return overrideSettings.BackingFile;
+            }
+            set
+            {
+                overrideSettings.BackingFile = value;
+            }
+        }
+#endif
 
         public static void setUserDirectory(String username)
         {

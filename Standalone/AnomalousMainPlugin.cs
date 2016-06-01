@@ -182,7 +182,7 @@ namespace Medical.GUI
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController, standaloneController.GUIManager, new LayoutElementName(GUILocationNames.FullscreenPopup));
             taskMenu.GroupComparison = TaskMenuCategories.Sorter;
-            
+
             guiTaskManager = new GUITaskManager(taskbar, taskMenu, standaloneController.TaskController);
 
             //Tasks Menu
@@ -266,12 +266,18 @@ namespace Medical.GUI
                 exitTaskItem.OnClicked += new CallbackTask.ClickedCallback(exitTaskItem_OnClicked);
                 taskController.addTask(exitTaskItem);
 
+#if ALLOW_OVERRIDE
+                CallbackTask createOverrideTaskItem = new CallbackTask("Medical.CreateOverride", "CreateOverride", CommonResources.NoIcon, TaskMenuCategories.System, int.MaxValue, false);
+                createOverrideTaskItem.OnClicked += CreateOverrideTaskItem_OnClicked;
+                taskController.addTask(createOverrideTaskItem);
+#endif
+
                 //Tools Section
                 MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Create);
                 taskController.addTask(renderTask);
             }
 
-            if(PlatformConfig.AllowFullscreenToggle)
+            if (PlatformConfig.AllowFullscreenToggle)
             {
                 CallbackTask toggleFullscreen = new CallbackTask("Medical.ToggleFullscreen", "Toggle Fullscreen", "AnomalousMedical/ToggleFullscreen", TaskMenuCategories.System, int.MaxValue - 2, false, (item) =>
                 {
@@ -511,7 +517,7 @@ namespace Medical.GUI
         void logoutTaskItem_OnClicked(Task item)
         {
             MessageBox.show("Logging out will delete your local license file. This will require you to log in the next time you use this program.\nYou will also not be able to use the software in offline mode until you log back in and save your password.", "Log Out", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No,
-                delegate(MessageBoxStyle result)
+                delegate (MessageBoxStyle result)
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
@@ -525,6 +531,17 @@ namespace Medical.GUI
         {
             standaloneController.exit();
         }
+
+#if ALLOW_OVERRIDE
+        private void CreateOverrideTaskItem_OnClicked(CallbackTask item)
+        {
+            MessageBox.show($"This will override the file at {MedicalConfig.OverrideBackingFile}. Are you sure you want to continue?", "Create Override?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, result =>
+            {
+                MedicalConfig.saveOverride();
+                MessageBox.show($"Created override file at {MedicalConfig.OverrideBackingFile}", "Override Created", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+            });
+        }
+#endif
 
         void updateCheckCompleted(UpdateController.UpdateCheckResult result)
         {
