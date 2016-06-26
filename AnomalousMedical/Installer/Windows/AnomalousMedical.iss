@@ -59,9 +59,9 @@ Source: ..\..\..\PublicRelease\OSPlatform.dll; DestDir: {app}; Flags: ignorevers
 Source: ..\..\..\PublicRelease\OSPlatform.Win32.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\PublicRelease\Newtonsoft.Json.dll; DestDir: {app}; Flags: ignoreversion
 
-Source: ..\..\..\Release\Premium.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\Release\DentalSim.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\Release\Lecture.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Premium.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\DentalSim.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\PublicRelease\Lecture.dll; DestDir: {app}; Flags: ignoreversion
 
 Source: ..\..\..\DataFiles\Public\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
 
