@@ -104,7 +104,7 @@
       <IsWatchApp>False</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\libRocketPlugin\libRocketPlugin.csproj">
-      <Project>{a221c2f5-2089-495b-b51a-54710507344a}</Project>
+      <Project>{A221C2F5-2089-495B-B51A-54710507344A}</Project>
       <Name>libRocketPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
@@ -235,6 +235,7 @@
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\144.png">
       <InProject>false</InProject>
     </ImageAsset>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\167.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
