@@ -8,6 +8,7 @@ using Anomalous.OSPlatform.Mac;
 using DentalSim;
 using Lecture;
 using AppKit;
+using ModernHttpClient;
 
 namespace AnomalousMedicalMac
 {
@@ -17,7 +18,7 @@ namespace AnomalousMedicalMac
 		{
 			NSApplication.Init();
 
-			//ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
+			ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
 
 			MacRuntimePlatformInfo.Initialize();
 			OgrePlugin.OgreInterface.CompressedTextureSupport = OgrePlugin.CompressedTextureSupport.None;

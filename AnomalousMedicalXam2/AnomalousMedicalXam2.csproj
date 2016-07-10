@@ -28,7 +28,7 @@
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <UseSGen>true</UseSGen>
     <UseRefCounting>true</UseRefCounting>
-    <HttpClientHandler>HttpClientHandler</HttpClientHandler>
+    <HttpClientHandler>NSUrlSessionHandler</HttpClientHandler>
     <TlsProvider>Default</TlsProvider>
     <LinkMode>None</LinkMode>
     <XamMacArch>x86_64</XamMacArch>
@@ -65,6 +65,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json" />
@@ -135,6 +136,10 @@
     <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
       <Project>{E9FD5768-32E1-42C7-8256-4D7B97C22A9B}</Project>
       <Name>OgrePlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\ModernHttpClient\src\ModernHttpClient\ModernHttpClient.OSX.csproj">
+      <Project>{6941F069-AC02-40EE-BBF3-9FE3331030EF}</Project>
+      <Name>ModernHttpClient.OSX</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
