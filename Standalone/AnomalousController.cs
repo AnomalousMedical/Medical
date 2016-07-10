@@ -88,7 +88,10 @@ namespace Medical
 
         public override void Dispose()
         {
-            controller.Dispose();
+			if (controller != null)
+			{
+				controller.Dispose();
+			}
             base.Dispose();
         }
 
