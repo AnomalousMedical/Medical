@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>AnomalousMedicalMac</RootNamespace>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-    <AssemblyName>AnomalousMedicalMac</AssemblyName>
+    <AssemblyName>Anomalous Medical</AssemblyName>
     <SuppressXamMacUpsell>True</SuppressXamMacUpsell>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -81,6 +81,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="core">
       <HintPath>..\..\Dependencies\Mono\OSXBuild\bin\core.dll</HintPath>
+    </Reference>
+    <Reference Include="FreeImageNET">
+      <HintPath>..\..\Dependencies\FreeImage.NET\Library\bin\Release\FreeImageNET.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
