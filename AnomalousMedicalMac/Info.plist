@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 	<key>CFBundleName</key>
 	<string>Anomalous Medical</string>
 	<key>CFBundleIdentifier</key>
@@ -21,12 +23,12 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>andrewpiper</string>
+	<string>Anomalous Medical</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcons.appiconset</string>
+	<key>CFBundleIconFile</key>
+	<string>Skull.icns</string>
 </dict>
 </plist>
