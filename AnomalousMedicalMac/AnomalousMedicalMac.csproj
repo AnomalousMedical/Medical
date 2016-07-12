@@ -176,5 +176,18 @@
       <SmartLink>False</SmartLink>
     </NativeReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Skull.icns" />
+  </ItemGroup>
+	  <ItemGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">
+    <BundleResource Include="..\DataFiles\Internal\AnomalousMedical.dat">
+      <Link>Resources\AnomalousMedical.dat</Link>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='PublicRelease'">
+    <BundleResource Include="..\DataFiles\Public\AnomalousMedical.dat">
+      <Link>Resources\AnomalousMedical.dat</Link>
+    </BundleResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
