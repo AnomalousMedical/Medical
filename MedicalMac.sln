@@ -71,7 +71,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movement", "Movement\Moveme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernHttpClient.OSX", "..\Dependencies\ModernHttpClient\src\ModernHttpClient\ModernHttpClient.OSX.csproj", "{6941F069-AC02-40EE-BBF3-9FE3331030EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicalMac", "AnomalousMedicalMac\AnomalousMedicalMac.csproj", "{7DA0D106-E740-414E-85E1-BBF4109194E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedical", "AnomalousMedicalMac\AnomalousMedical.csproj", "{7DA0D106-E740-414E-85E1-BBF4109194E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -274,8 +274,8 @@ Global
 		{6941F069-AC02-40EE-BBF3-9FE3331030EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7DA0D106-E740-414E-85E1-BBF4109194E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7DA0D106-E740-414E-85E1-BBF4109194E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7DA0D106-E740-414E-85E1-BBF4109194E5}.PublicRelease|Any CPU.ActiveCfg = Debug|Any CPU
-		{7DA0D106-E740-414E-85E1-BBF4109194E5}.PublicRelease|Any CPU.Build.0 = Debug|Any CPU
+		{7DA0D106-E740-414E-85E1-BBF4109194E5}.PublicRelease|Any CPU.ActiveCfg = PublicRelease|Any CPU
+		{7DA0D106-E740-414E-85E1-BBF4109194E5}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
 		{7DA0D106-E740-414E-85E1-BBF4109194E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DA0D106-E740-414E-85E1-BBF4109194E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

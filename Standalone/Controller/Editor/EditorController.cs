@@ -96,7 +96,8 @@ namespace Medical
             catch (Exception ex)
             {
                 String errorMessage = String.Format("Error creating new project {0}.", ex.Message);
-                Log.Error(errorMessage);
+				Log.Error(errorMessage);
+				Log.Default.printException(ex);
                 MessageBox.show(errorMessage, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
             }
         }
