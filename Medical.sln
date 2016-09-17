@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{B05D69F8-6463-4276-8077-D7F3F0C02A9E}"
 EndProject
@@ -91,15 +91,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSPlatform.Android", "..\En
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicalAndroid", "AnomalousMedicalAndroid\AnomalousMedicalAndroid.csproj", "{C3CD0E46-2841-4330-9773-1E396736B7CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OkHttp", "..\Dependencies\OkHttp-Xamarin\OkHttp\OkHttp.csproj", "{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpansionDownloader", "..\Dependencies\Android.Play.ExpansionLibrary\ExpansionDownloader\ExpansionDownloader.csproj", "{C1B3041A-48E8-42A4-95DD-00159872548C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LicenseVerificationLibrary", "..\Dependencies\Android.Play.ExpansionLibrary\LicenseVerificationLibrary\LicenseVerificationLibrary.csproj", "{C95FFDB8-C066-4669-8328-AAEEDBA94C87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernHttpClient.Android", "..\Dependencies\ModernHttpClient\src\ModernHttpClient\ModernHttpClient.Android.csproj", "{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeLoader", "..\Engine\ShapeLoader\ShapeLoader.csproj", "{FECE54F4-6796-486F-9617-6D706DDFD0DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Square.OkHttp3", "..\Dependencies\square-bindings\binding\Square.OkHttp3\Square.OkHttp3.csproj", "{2DA76115-A022-4275-8119-FB9847254998}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Square.OkIO", "..\Dependencies\square-bindings\binding\Square.OkIO\Square.OkIO.csproj", "{0ADBD990-1A61-4D2A-B1CD-E46AC63348BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OkHttpClient", "..\Dependencies\OkHttpClient\src\OkHttpClient\OkHttpClient.csproj", "{6627EB12-3F14-4190-8BEF-71CB90714261}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -330,12 +332,6 @@ Global
 		{C3CD0E46-2841-4330-9773-1E396736B7CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3CD0E46-2841-4330-9773-1E396736B7CB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3CD0E46-2841-4330-9773-1E396736B7CB}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
-		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C1B3041A-48E8-42A4-95DD-00159872548C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C1B3041A-48E8-42A4-95DD-00159872548C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1B3041A-48E8-42A4-95DD-00159872548C}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
@@ -348,18 +344,30 @@ Global
 		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C95FFDB8-C066-4669-8328-AAEEDBA94C87}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
-		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DA76115-A022-4275-8119-FB9847254998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DA76115-A022-4275-8119-FB9847254998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DA76115-A022-4275-8119-FB9847254998}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{2DA76115-A022-4275-8119-FB9847254998}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{2DA76115-A022-4275-8119-FB9847254998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DA76115-A022-4275-8119-FB9847254998}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ADBD990-1A61-4D2A-B1CD-E46AC63348BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ADBD990-1A61-4D2A-B1CD-E46AC63348BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ADBD990-1A61-4D2A-B1CD-E46AC63348BE}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{0ADBD990-1A61-4D2A-B1CD-E46AC63348BE}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{0ADBD990-1A61-4D2A-B1CD-E46AC63348BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ADBD990-1A61-4D2A-B1CD-E46AC63348BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6627EB12-3F14-4190-8BEF-71CB90714261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6627EB12-3F14-4190-8BEF-71CB90714261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6627EB12-3F14-4190-8BEF-71CB90714261}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{6627EB12-3F14-4190-8BEF-71CB90714261}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{6627EB12-3F14-4190-8BEF-71CB90714261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6627EB12-3F14-4190-8BEF-71CB90714261}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -386,10 +394,11 @@ Global
 		{ACBB3920-B6D8-497B-8BAE-9350C7A85C09} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 		{959F7F85-C98B-4876-971A-9036224578E4} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 		{2A62FB25-AA44-459B-95E0-ED149F31FB6E} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
-		{133270E5-3A11-4A4A-A4AD-1D89FC9DBAAF} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 		{C1B3041A-48E8-42A4-95DD-00159872548C} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 		{C95FFDB8-C066-4669-8328-AAEEDBA94C87} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
-		{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
+		{2DA76115-A022-4275-8119-FB9847254998} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
+		{0ADBD990-1A61-4D2A-B1CD-E46AC63348BE} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
+		{6627EB12-3F14-4190-8BEF-71CB90714261} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 	EndGlobalSection
 EndGlobal

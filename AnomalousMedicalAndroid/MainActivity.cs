@@ -17,7 +17,7 @@ using Medical;
 using System.IO;
 using MyGUIPlugin;
 using System.Net.Http;
-using ModernHttpClient;
+using OkHttpClient;
 using DentalSim;
 
 #if ALLOW_DATA_FILE
@@ -38,7 +38,7 @@ namespace AnomalousMedicalAndroid
             Java.Lang.JavaSystem.LoadLibrary("gnustl_shared");
             Java.Lang.JavaSystem.LoadLibrary("FreeImage");
             Java.Lang.JavaSystem.LoadLibrary("openal");
-            ServerConnection.HttpClientProvider = () => new HttpClient(new NativeMessageHandler());
+            ServerConnection.HttpClientProvider = () => new HttpClient(new OkHttpClientHandler());
         }
 
         private ObbDownloader dl;

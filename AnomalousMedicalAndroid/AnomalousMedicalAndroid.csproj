@@ -59,13 +59,9 @@
       <Project>{c95ffdb8-c066-4669-8328-aaeedba94c87}</Project>
       <Name>LicenseVerificationLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\ModernHttpClient\src\ModernHttpClient\ModernHttpClient.Android.csproj">
-      <Project>{F7290B9E-C821-4DA7-A4E5-824D9B0F70F2}</Project>
-      <Name>ModernHttpClient.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\OkHttp-Xamarin\OkHttp\OkHttp.csproj">
-      <Project>{133270e5-3a11-4a4a-a4ad-1d89fc9dbaaf}</Project>
-      <Name>OkHttp</Name>
+    <ProjectReference Include="..\..\Dependencies\OkHttpClient\src\OkHttpClient\OkHttpClient.csproj">
+      <Project>{6627eb12-3f14-4190-8bef-71cb90714261}</Project>
+      <Name>OkHttpClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
       <Project>{57C253F1-157F-4A6A-9FED-345A776B97D5}</Project>

@@ -64,7 +64,7 @@ namespace AnomalousMedicalAndroid
 			global::ExpansionDownloader.Resource.Style.NotificationTextSecondary = global::AnomalousMedicalAndroid.Resource.Style.NotificationTextSecondary;
 			global::ExpansionDownloader.Resource.Style.NotificationTextShadow = global::AnomalousMedicalAndroid.Resource.Style.NotificationTextShadow;
 			global::ExpansionDownloader.Resource.Style.NotificationTitle = global::AnomalousMedicalAndroid.Resource.Style.NotificationTitle;
-			global::ModernHttpClient.Resource.String.library_name = global::AnomalousMedicalAndroid.Resource.String.library_name;
+			global::OkHttpClient.Resource.String.library_name = global::AnomalousMedicalAndroid.Resource.String.library_name;
 		}
 		
 		public partial class Attribute
