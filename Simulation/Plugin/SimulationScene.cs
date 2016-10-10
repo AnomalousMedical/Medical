@@ -53,6 +53,11 @@ namespace Medical
             return typeof(SimulationScene);
         }
 
+        public void setScene(SimScene simScene)
+        {
+
+        }
+
         public String PresetDirectory
         {
             get
