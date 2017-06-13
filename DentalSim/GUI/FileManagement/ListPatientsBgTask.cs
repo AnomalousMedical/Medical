@@ -61,50 +61,50 @@ namespace Medical.GUI
         Close,
     }
 
-    class ListPatientsBgTask : CancelableBackgroundWorkTask<ObjectBuffer<PatientDataFile>>
+    class ListPatientsBgTask //: CancelableBackgroundWorkTask<ObjectBuffer<PatientDataFile>>
     {
         private OpenPatientDialog dialog;
-        private CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>> bgWorker;
+        //private CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>> bgWorker;
         private String currentDirectory;
 
         public ListPatientsBgTask(OpenPatientDialog dialog)
         {
             this.dialog = dialog;
-            bgWorker = new CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>>(this);
+            //bgWorker = new CancelableBackgroundWorker<ObjectBuffer<PatientDataFile>>(this);
         }
 
         public bool CanDoWork { get; private set; }
 
-        public IEnumerable<ObjectBuffer<PatientDataFile>> WorkUnits
-        {
-            get
-            {
-                String[] files = Directory.GetFiles(currentDirectory, "*.pdt");
-                int totalFiles = files.Length;
-                ObjectBuffer<PatientDataFile> buffer = new ObjectBuffer<PatientDataFile>();
+        //public IEnumerable<ObjectBuffer<PatientDataFile>> WorkUnits
+        //{
+        //    get
+        //    {
+        //        String[] files = Directory.GetFiles(currentDirectory, "*.pdt");
+        //        int totalFiles = files.Length;
+        //        ObjectBuffer<PatientDataFile> buffer = new ObjectBuffer<PatientDataFile>();
 
-                for (int i = 0; i < totalFiles; ++i)
-                {
-                    if (!bgWorker.CancellationPending)
-                    {
-                        PatientDataFile patient = new PatientDataFile(files[i]);
-                        if (patient.loadHeader())
-                        {
-                            if (buffer.addItem(patient))
-                            {
-                                Progress = (int)(((float)i / totalFiles) * 100.0f);
-                                yield return buffer;
-                            }
-                        }
-                    }
-                }
-                if(buffer.HasItems) //Make sure any extra files are also returned.
-                {
-                    Progress = 0;
-                    yield return buffer;
-                }
-            }
-        }
+        //        for (int i = 0; i < totalFiles; ++i)
+        //        {
+        //            if (!bgWorker.CancellationPending)
+        //            {
+        //                PatientDataFile patient = new PatientDataFile(files[i]);
+        //                if (patient.loadHeader())
+        //                {
+        //                    if (buffer.addItem(patient))
+        //                    {
+        //                        Progress = (int)(((float)i / totalFiles) * 100.0f);
+        //                        yield return buffer;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        if(buffer.HasItems) //Make sure any extra files are also returned.
+        //        {
+        //            Progress = 0;
+        //            yield return buffer;
+        //        }
+        //    }
+        //}
 
         public int Progress { get; private set; }
 
@@ -164,20 +164,21 @@ namespace Medical.GUI
         {
             get
             {
-                return bgWorker.IsWorking;
+                return false;
+                //return bgWorker.IsWorking;
             }
         }
 
         public void cancel()
         {
-            bgWorker.cancel();
+            //bgWorker.cancel();
         }
 
         public void listFiles(String directory)
         {
             this.currentDirectory = directory;
             CanDoWork = Directory.Exists(directory);
-            bgWorker.startWork();
+            //bgWorker.startWork();
         }
     }
 }

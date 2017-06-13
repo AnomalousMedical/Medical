@@ -29,7 +29,6 @@ namespace Medical
             this.editorResourceProvider = editorResourceProvider;
 
             fileWatcher = new FileSystemWatcher(editorResourceProvider.BackingLocation);
-            fileWatcher.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
             fileWatcher.IncludeSubdirectories = true;
             fileWatcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite;
             fileWatcher.Created += new FileSystemEventHandler(fileWatcher_Created);
@@ -39,7 +38,6 @@ namespace Medical
             fileWatcher.EnableRaisingEvents = true;
 
             directoryWatcher = new FileSystemWatcher(editorResourceProvider.BackingLocation);
-            directoryWatcher.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
             directoryWatcher.IncludeSubdirectories = true;
             directoryWatcher.NotifyFilter = NotifyFilters.DirectoryName | NotifyFilters.LastWrite;
             directoryWatcher.Created += new FileSystemEventHandler(directoryWatcher_Created);
@@ -57,70 +55,94 @@ namespace Medical
 
         void fileWatcher_Renamed(object sender, RenamedEventArgs e)
         {
-            editorResourceProvider.ResourceCache.forceCloseResourceFile(e.OldName);
-            if (FileRenamed != null)
+            ThreadManager.invoke(() =>
             {
-                FileRenamed.Invoke(e.Name, e.OldName, false);
-            }
+                editorResourceProvider.ResourceCache.forceCloseResourceFile(e.OldName);
+                if (FileRenamed != null)
+                {
+                    FileRenamed.Invoke(e.Name, e.OldName, false);
+                }
+            });
         }
 
         void fileWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            if (FileChanged != null)
+            ThreadManager.invoke(() =>
             {
-                FileChanged.Invoke(e.Name, false);
-            }
+                if (FileChanged != null)
+                {
+                    FileChanged.Invoke(e.Name, false);
+                }
+            });
         }
 
         void fileWatcher_Deleted(object sender, FileSystemEventArgs e)
         {
-            editorResourceProvider.ResourceCache.forceCloseResourceFile(e.FullPath);
-            if (FileDeleted != null)
+            ThreadManager.invoke(() =>
             {
-                FileDeleted.Invoke(e.Name);
-            }
+                editorResourceProvider.ResourceCache.forceCloseResourceFile(e.FullPath);
+                if (FileDeleted != null)
+                {
+                    FileDeleted.Invoke(e.Name);
+                }
+            });
         }
 
         void fileWatcher_Created(object sender, FileSystemEventArgs e)
         {
-            if (FileCreated != null)
+            ThreadManager.invoke(() =>
             {
-                FileCreated.Invoke(e.Name, false);
-            }
+                if (FileCreated != null)
+                {
+                    FileCreated.Invoke(e.Name, false);
+                }
+            });
         }
 
         void directoryWatcher_Renamed(object sender, RenamedEventArgs e)
         {
-            editorResourceProvider.ResourceCache.forceCloseResourcesInDirectroy(e.OldName);
-            if (FileRenamed != null)
+            ThreadManager.invoke(() =>
             {
-                FileRenamed.Invoke(e.Name, e.OldName, true);
-            }
+                editorResourceProvider.ResourceCache.forceCloseResourcesInDirectroy(e.OldName);
+                if (FileRenamed != null)
+                {
+                    FileRenamed.Invoke(e.Name, e.OldName, true);
+                }
+            });
         }
 
         void directoryWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            if (FileChanged != null)
+            ThreadManager.invoke(() =>
             {
-                FileChanged.Invoke(e.Name, true);
-            }
+                if (FileChanged != null)
+                {
+                    FileChanged.Invoke(e.Name, true);
+                }
+            });
         }
 
         void directoryWatcher_Deleted(object sender, FileSystemEventArgs e)
         {
-            editorResourceProvider.ResourceCache.forceCloseResourcesInDirectroy(e.FullPath);
-            if (FileDeleted != null)
+            ThreadManager.invoke(() =>
             {
-                FileDeleted.Invoke(e.Name);
-            }
+                editorResourceProvider.ResourceCache.forceCloseResourcesInDirectroy(e.FullPath);
+                if (FileDeleted != null)
+                {
+                    FileDeleted.Invoke(e.Name);
+                }
+            });
         }
 
         void directoryWatcher_Created(object sender, FileSystemEventArgs e)
         {
-            if (FileCreated != null)
+            ThreadManager.invoke(() =>
             {
-                FileCreated.Invoke(e.Name, true);
-            }
+                if (FileCreated != null)
+                {
+                    FileCreated.Invoke(e.Name, true);
+                }
+            });
         }
     }
 }

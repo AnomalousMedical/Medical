@@ -5,6 +5,7 @@ using Medical.Controller;
 using MyGUIPlugin;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Timers;
@@ -25,7 +26,6 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
             InputManager.Instance.setKeyFocusWidget(text);
             Text = startingText;
             keyTimer = new Timer(UPDATE_DELAY);
-            keyTimer.SynchronizingObject = new ThreadManagerSynchronizeInvoke();
             keyTimer.AutoReset = false;
             keyTimer.Elapsed += keyTimer_Elapsed;
         }
@@ -63,7 +63,10 @@ namespace Medical.GUI.RmlWysiwyg.ElementEditorComponents
 
         void keyTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            fireApplyChanges();
+            ThreadManager.invoke(() =>
+            {
+                fireApplyChanges();
+            });
         }
     }
 }
