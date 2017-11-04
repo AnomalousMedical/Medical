@@ -53,11 +53,19 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core">
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -677,6 +685,7 @@
     <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
     <EmbeddedResource Include="MvcContexts\Login\Reel.tl" />
     <EmbeddedResource Include="MvcContexts\Login\Register.rml" />
+    <None Include="packages.config" />
     <None Include="Properties\AssemblyInfoSource.cs" />
     <Compile Include="Utility\CommonResources.cs" />
     <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />

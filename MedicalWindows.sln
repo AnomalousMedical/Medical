@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{B05D69F8-6463-4276-8077-D7F3F0C02A9E}"
 EndProject
@@ -49,35 +49,35 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Anomalous.Security", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetZip", "..\Dependencies\DotNetZip\DotNetZip.csproj", "{5068F53B-8D7B-4AEE-AF54-7428B0E997A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeImageDotNet", "..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj", "{6598A7CD-8F27-4D3F-A675-5AE63113A7C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeImageDotNet", "..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj", "{6598A7CD-8F27-4D3F-A675-5AE63113A7C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Irony", "..\Dependencies\Irony\Irony\Irony.csproj", "{D81F5C91-D7DB-46E5-BC99-49488FB6814C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucene.Net", "..\Dependencies\Lucene.net\src\core\Lucene.Net.csproj", "{5D4AD9BE-1FFB-41AB-9943-25737971BF57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "..\Engine\Engine\Engine.csproj", "{57C253F1-157F-4A6A-9FED-345A776B97D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "..\Engine\Engine\Engine.csproj", "{57C253F1-157F-4A6A-9FED-345A776B97D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulletWrapperPlugin", "..\Engine\BulletWrapperPlugin\BulletWrapperPlugin.csproj", "{EBA88DC3-837D-45D8-A91A-E291C6AE444E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulletWrapperPlugin", "..\Engine\BulletWrapperPlugin\BulletWrapperPlugin.csproj", "{EBA88DC3-837D-45D8-A91A-E291C6AE444E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiFramework", "..\Engine\GuiFramework\GuiFramework.csproj", "{FC299A06-61BD-4562-A315-0F0BE454925A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuiFramework", "..\Engine\GuiFramework\GuiFramework.csproj", "{FC299A06-61BD-4562-A315-0F0BE454925A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGUIPlugin", "..\Engine\MyGUIPlugin\MyGUIPlugin.csproj", "{02D4DA85-FD6C-421F-81C3-8F58F790BC81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGUIPlugin", "..\Engine\MyGUIPlugin\MyGUIPlugin.csproj", "{02D4DA85-FD6C-421F-81C3-8F58F790BC81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OgrePlugin", "..\Engine\OgrePlugin\OgrePlugin.csproj", "{E9FD5768-32E1-42C7-8256-4D7B97C22A9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OgrePlugin", "..\Engine\OgrePlugin\OgrePlugin.csproj", "{E9FD5768-32E1-42C7-8256-4D7B97C22A9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoundPlugin", "..\Engine\SoundPlugin\SoundPlugin.csproj", "{CCAEFE0A-AD1F-42E8-88DA-5A685CC7C73D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoundPlugin", "..\Engine\SoundPlugin\SoundPlugin.csproj", "{CCAEFE0A-AD1F-42E8-88DA-5A685CC7C73D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiFramework.Cameras", "..\Engine\GuiFramework.Cameras\GuiFramework.Cameras.csproj", "{83D4BB54-FF33-4011-9819-582458329D9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuiFramework.Cameras", "..\Engine\GuiFramework.Cameras\GuiFramework.Cameras.csproj", "{83D4BB54-FF33-4011-9819-582458329D9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiFramework.Debugging", "..\Engine\GuiFramework.Debugging\GuiFramework.Debugging.csproj", "{9183C078-D330-459B-BE70-DA4CC96A361D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuiFramework.Debugging", "..\Engine\GuiFramework.Debugging\GuiFramework.Debugging.csproj", "{9183C078-D330-459B-BE70-DA4CC96A361D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuiFramework.Editor", "..\Engine\GuiFramework.Editor\GuiFramework.Editor.csproj", "{ACBBA2D0-C648-4798-9D40-CE8B797642AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuiFramework.Editor", "..\Engine\GuiFramework.Editor\GuiFramework.Editor.csproj", "{ACBBA2D0-C648-4798-9D40-CE8B797642AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libRocketPlugin", "..\Engine\libRocketPlugin\libRocketPlugin.csproj", "{A221C2F5-2089-495B-B51A-54710507344A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libRocketPlugin", "..\Engine\libRocketPlugin\libRocketPlugin.csproj", "{A221C2F5-2089-495B-B51A-54710507344A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libRocketWidget", "..\Engine\libRocketWidget\libRocketWidget.csproj", "{922F9AEC-9921-4234-89E5-14CE09625A07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libRocketWidget", "..\Engine\libRocketWidget\libRocketWidget.csproj", "{922F9AEC-9921-4234-89E5-14CE09625A07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSPlatform", "..\Engine\OSPlatform\OSPlatform.csproj", "{6E594C78-9CD8-432D-A135-11C4A72F3BCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSPlatform", "..\Engine\OSPlatform\OSPlatform.csproj", "{6E594C78-9CD8-432D-A135-11C4A72F3BCF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BEPUikPlugin", "..\Engine\BEPUikPlugin\BEPUikPlugin.csproj", "{39F1AB5F-F0B1-45FD-AD66-9C03AF1F022E}"
 EndProject
@@ -88,6 +88,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json.Portable40", "..\Dependencies\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.Portable40.csproj", "{959F7F85-C98B-4876-971A-9036224578E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeLibrariesDebug", "NativeLibraries\NativeLibrariesDebug.csproj", "{32AFB58F-B1CC-40BB-98E7-8D767807323D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapeLoader", "..\Engine\ShapeLoader\ShapeLoader.csproj", "{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -309,6 +311,12 @@ Global
 		{32AFB58F-B1CC-40BB-98E7-8D767807323D}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
 		{32AFB58F-B1CC-40BB-98E7-8D767807323D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32AFB58F-B1CC-40BB-98E7-8D767807323D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -334,5 +342,9 @@ Global
 		{39F1AB5F-F0B1-45FD-AD66-9C03AF1F022E} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 		{ACBB3920-B6D8-497B-8BAE-9350C7A85C09} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 		{959F7F85-C98B-4876-971A-9036224578E4} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
+		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A1D05A1-6499-4C0B-9EC6-BC17B3165C42}
 	EndGlobalSection
 EndGlobal
