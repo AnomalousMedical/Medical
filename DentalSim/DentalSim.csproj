@@ -1,19 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{27EE2890-0BD9-413E-A504-EF77312B7C38}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>DentalSim</RootNamespace>
     <AssemblyName>DentalSim</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,26 +36,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DentalSimAtlasPluginEntryPoint.cs" />
-    <Compile Include="DentalSimPlugin.cs" />
-    <Compile Include="Documents\PatientDocumentHandler.cs" />
-    <Compile Include="GUI\FileManagement\ListPatientsBgTask.cs" />
-    <Compile Include="GUI\FileManagement\OpenPatientDialog.cs" />
-    <Compile Include="GUI\FileManagement\SavePatientDialog.cs" />
-    <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
-    <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
-    <Compile Include="GUI\Notes\NotesDialog.cs" />
-    <Compile Include="GUI\StateList\StateListDialog.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Properties\AssemblyInfoSource.cs" />
-    <Compile Include="Tasks\ShowToothContactsTaskMenuItem.cs" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\SavePatientDialog.layout" />
     <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
@@ -307,16 +276,7 @@
     <EmbeddedResource Include="Wizards\ClinicalMRI\RightDiscMRI\Lateral9O%27Clock.png" />
     <EmbeddedResource Include="Wizards\ClinicalMRI\RightDiscMRI\Lateral9O%27ClockLocked.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="WriteGitRevisionCount" AssemblyFile="..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
-  <Target Name="BeforeBuild">
-    <WriteGitRevisionCount Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
-  </Target>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

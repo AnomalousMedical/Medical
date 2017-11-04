@@ -1,18 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E2AED95C-0FA7-4316-A7C4-BDF748099909}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Lecture</RootNamespace>
     <AssemblyName>Lecture</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,48 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Controller\LectureUICallback.cs" />
-    <Compile Include="Controller\MedicalSlideItemTemplate.cs" />
-    <Compile Include="Controller\RmlEditorViewInfo.cs" />
-    <Compile Include="Controller\SceneThumbInfo.cs" />
-    <Compile Include="Controller\ShowTypeController.cs" />
-    <Compile Include="Controller\SlideEditorContext.cs" />
-    <Compile Include="Controller\SlideSceneInfo.cs" />
-    <Compile Include="Controller\SlideshowDocumentHandler.cs" />
-    <Compile Include="Controller\SlideshowProjectTemplate.cs" />
-    <Compile Include="Controller\SlideImageManager.cs" />
-    <Compile Include="Controller\Themes\SlideshowStyle.cs" />
-    <Compile Include="Controller\Themes\SlideshowStyleManager.cs" />
-    <Compile Include="Controller\TimelineEditorContext.cs" />
-    <Compile Include="Controller\TimelineTypeController.cs" />
-    <Compile Include="GUI\PanelResizeWidget.cs" />
-    <Compile Include="GUI\SlideImageComponent\SlideImageComponent.cs" />
-    <Compile Include="GUI\SlideInputStrategy.cs" />
-    <Compile Include="GUI\SlideLayoutPicker\SlideLayoutPicker.cs" />
-    <Compile Include="GUI\SlideLayoutPicker\SlideLayoutPickerTask.cs" />
-    <Compile Include="GUI\SlideTaskbar\SlideTaskbar.cs" />
-    <Compile Include="GUI\SlideTaskbar\SlideTaskbarFactory.cs" />
-    <Compile Include="GUI\SlideTaskbar\SlideTaskbarItem.cs" />
-    <Compile Include="GUI\SlideTaskbar\SlideTaskbarView.cs" />
-    <Compile Include="GUI\SlideshowExplorer\SlideshowExplorer.cs" />
-    <Compile Include="GUI\SlideImageStrategy.cs" />
-    <Compile Include="GUI\SlideTriggerStrategy.cs" />
-    <Compile Include="LecturePlugin.cs" />
-    <Compile Include="LecturePluginEntryPoint.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controller\SlideshowEditController.cs" />
-    <Compile Include="Resources\Project\EmbeddedTemplateNames.cs" />
     <EmbeddedResource Include="Controller\MissingFile.rml" />
-    <None Include="Properties\AssemblyInfoSource.cs" />
     <EmbeddedResource Include="GUI\SlideImageComponent\SlideImageComponent.layout" />
     <EmbeddedResource Include="GUI\SlideLayoutPicker\SlideLayoutPicker.layout" />
     <EmbeddedResource Include="GUI\SlideTaskbar\SlideTaskbar.layout">
@@ -174,16 +123,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\LecturePlugin_MyGUI_Skin.xml" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="WriteGitRevisionCount" AssemblyFile="..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
-  <Target Name="BeforeBuild">
-    <WriteGitRevisionCount Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
-  </Target>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

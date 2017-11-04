@@ -1,23 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E217C194-A14F-41DE-A838-C401E60ADF15}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Medical</RootNamespace>
     <AssemblyName>Standalone</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,672 +37,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AnomalousController.cs" />
-    <Compile Include="AnomalousMainPlugin.cs" />
-    <Compile Include="Controller\Anatomy\BreakdownSearchCallbackCommand.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyAnalyzer.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyController.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyFilterEntry.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyLuceneSearch.cs" />
-    <Compile Include="Controller\Anatomy\AnatomySelection.cs" />
-    <Compile Include="Controller\Anatomy\AnatomySelectionGroup.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyFacet.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyGroupFacetManager.cs" />
-    <Compile Include="Controller\AnomalousMvc\ActiveContextManager.cs" />
-    <Compile Include="Controller\AnomalousMvc\AnomalousMvcContext.cs" />
-    <Compile Include="Controller\AnomalousMvc\AnomalousMvcCore.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\CallbackAction.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Back\GoBackAction.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Back\RecordBackAction.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Camera\MoveBlendedCameraCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\CollectFormData.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\AnalyzeFormData.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\PopulateFormData.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\DataCollection\SetData.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Layers\BlendLayersCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Layers\ChangeLayersCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\BlendMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\BlendMusclePositionCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\OpenWebsite.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateReloadCurrentCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\ChangeTeethHighlightsCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\RestoreTeethHighlightsCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\SaveTeethHighlightsCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\ChangeMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\RestoreMusclePositionCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\SaveMusclePositionCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Mvc\CallbackCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateFirstCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateLastCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateToCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateToIndexCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\TeethHighlights\TeethHighlightState.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseAllViewsCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseViewIfOpen.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\CloseViewCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\CreateMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MainInterface\HideMainInterfaceCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigateNextCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Navigation\NavigatePreviousCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Mvc\RunActionCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Camera\SaveCameraPositionCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Layers\SaveLayersCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\SaveMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Camera\RestoreCameraPositionCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Layers\RestoreLayersCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Medical State\RestoreMedicalStateCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MusclePosition\SetMusclePositionCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Mvc\ShutdownCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\RestoreViewLayoutCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\SaveViewLayoutCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\ShowViewIfNotOpenCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\RunCommandsAction.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\MainInterface\ShowMainInterfaceCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\View\ShowViewCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\ControllerActionCollection.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\ControllerAction.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Camera\MoveCameraCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Timeline\PlayTimelineCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\ActionCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\Actions\Commands\Timeline\StopTimelineCommand.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\MvcController.cs" />
-    <Compile Include="Controller\AnomalousMvc\Controller\ControllerCollection.cs" />
-    <Compile Include="Controller\AnomalousMvc\IDataProvider.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModel.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Data\DataModelItem.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Back\BackStackModel.cs" />
-    <Compile Include="Controller\AnomalousMvc\ViewHostPanelInfo.cs" />
-    <Compile Include="Controller\AnomalousMvc\QueuedAction.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\StoredViewCollection.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\MvcModel.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\ModelCollection.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\ModelMemory.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Navigation\NavigationLink.cs" />
-    <Compile Include="Controller\AnomalousMvc\Model\Models\Navigation\NavigationModel.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\ViewHostControl.cs" />
-    <Compile Include="Controller\Bookmarks\BookmarkPath.cs" />
-    <Compile Include="Controller\Bookmarks\LoadBookmarksBgTask.cs" />
-    <Compile Include="Controller\BuyScreenController.cs" />
-    <Compile Include="Controller\Config\AndroidPlatformConfig.cs" />
-    <Compile Include="Controller\Config\iOSPlatformConfig.cs" />
-    <Compile Include="Controller\ImageLicenseServer.cs" />
-    <Compile Include="Controller\Layers\LayerController.cs" />
-    <Compile Include="Controller\MusclePosition\MovementSequence.cs" />
-    <Compile Include="Controller\MusclePosition\MovementSequenceState.cs" />
-    <Compile Include="Controller\MvcLoginController.cs" />
-    <Compile Include="Controller\Plugin\Dependency\AtlasDependency.cs" />
-    <Compile Include="Controller\SceneViews\SceneViewControllerExtensions.cs" />
-    <Compile Include="Controller\Security\CertificateStoreManager.cs" />
-    <Compile Include="Controller\Config\EditorConfig.cs" />
-    <Compile Include="Controller\Plugin\Dependency\AtlasDependencyResource.cs" />
-    <Compile Include="Controller\Plugin\Dependency\AtlasDependencyResourceEditableProperty.cs" />
-    <Compile Include="Controller\Plugin\Dependency\DDAtlasDependency.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\EditablePropAttribute.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\EditableElementNameAttribute.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\ElementNameEditableProperty.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\PropBrowserEditableProperty.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\EditableModelAttribute.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\ModelBrowserEditableProperty.cs" />
-    <Compile Include="Controller\Editor\EditMenu\CopyAction.cs" />
-    <Compile Include="Controller\Editor\EditMenu\CutAction.cs" />
-    <Compile Include="Controller\Editor\EditMenu\EditMenuManager.cs" />
-    <Compile Include="Controller\Editor\EditMenu\EditMenuProvider.cs" />
-    <Compile Include="Controller\Editor\EditMenu\PasteAction.cs" />
-    <Compile Include="Controller\Editor\EditMenu\SelectAllAction.cs" />
-    <Compile Include="Controller\Editor\EditorController.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\CachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\EditorResourceProvider.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\ResourceCache.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\ResourceProviderTextCachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\SaveableCachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\SaveableObjectStream.cs" />
-    <Compile Include="Controller\Editor\EditorResourceProvider\TextCachedResource.cs" />
-    <Compile Include="Controller\Editor\EditorTypeController.cs" />
-    <Compile Include="Controller\Editor\CommonUICallback.cs" />
-    <Compile Include="Controller\Editor\ProjectItemTemplate.cs" />
-    <Compile Include="Controller\Editor\ProjectItemTemplateDelegate.cs" />
-    <Compile Include="Controller\Editor\ProjectItemTemplateFixedNameDelegate.cs" />
-    <Compile Include="Controller\Editor\ProjectSupport\FilesystemProjectType.cs" />
-    <Compile Include="Controller\Editor\ProjectSupport\ProjectType.cs" />
-    <Compile Include="Controller\Editor\ProjectSupport\ZipProjectType.cs" />
-    <Compile Include="Controller\Editor\ProjectTemplate.cs" />
-    <Compile Include="Controller\Editor\PropEditController.cs" />
-    <Compile Include="Controller\Editor\ProjectSupport\ProjectTypeManager.cs" />
-    <Compile Include="Controller\Editor\TypeControllers\SaveableTypeController.cs" />
-    <Compile Include="Controller\Editor\TypeControllers\SaveableTypeControllerCachedResource.cs" />
-    <Compile Include="Controller\Editor\TypeControllers\TextTypeController.cs" />
-    <Compile Include="Controller\Editor\TypeControllers\TextTypeControllerCachedResource.cs" />
-    <Compile Include="Controller\ImageRenderer\ImageTextWriter.cs" />
-    <Compile Include="Controller\MusclePosition\MusclePositionController.cs" />
-    <Compile Include="Controller\ImageRenderer\ImageException.cs" />
-    <Compile Include="Controller\ImageRenderer\LiveThumbnailController.cs" />
-    <Compile Include="Controller\ImageRenderer\LiveThumbnailHost.cs" />
-    <Compile Include="Controller\ImageRenderer\LiveThumbnailHostInfo.cs" />
-    <Compile Include="Controller\License\AnomalousLicenseServerException.cs" />
-    <Compile Include="Controller\Security\DataFileVerifier.cs" />
-    <Compile Include="Controller\Plugin\DataDrivenPlugin\StartAnomalousMvcTask.cs" />
-    <Compile Include="Controller\Props\Line\ChangeLinePropSettings.cs" />
-    <Compile Include="Controller\Props\Line\LineProp.cs" />
-    <Compile Include="Controller\Props\PropDefinition.cs" />
-    <Compile Include="Controller\RecordAudioController.cs" />
-    <Compile Include="Controller\Resources\ZipResourceProvider.cs" />
-    <Compile Include="Controller\SceneViews\TextureSceneViewPoolExtensions.cs" />
-    <Compile Include="Controller\Server\ServerOperationResult.cs" />
-    <Compile Include="Controller\Server\UploadFileInfo.cs" />
-    <Compile Include="Controller\SharePluginController.cs" />
-    <Compile Include="Controller\Slideshow\Actions\BlendSceneAction.cs" />
-    <Compile Include="Controller\Slideshow\Actions\PlayTimelineAction.cs" />
-    <Compile Include="Controller\Slideshow\Actions\SetupSceneAction.cs" />
-    <Compile Include="Controller\Slideshow\Actions\ShowPopupImageAction.cs" />
-    <Compile Include="Controller\Slideshow\Actions\StopTimelineAction.cs" />
-    <Compile Include="Controller\Slideshow\BaseContextProperties.cs" />
-    <Compile Include="Controller\Slideshow\BorderSlideLayoutStrategy.cs" />
-    <Compile Include="Controller\Slideshow\CleanupInfo.cs" />
-    <Compile Include="Controller\Slideshow\Actions\SlideAction.cs" />
-    <Compile Include="Controller\Slideshow\FullScreenSlideLayoutStrategy.cs" />
-    <Compile Include="Controller\Slideshow\InlineRmlUpgradeCache.cs" />
-    <Compile Include="Controller\Slideshow\SlideDisplayManager.cs" />
-    <Compile Include="Controller\Slideshow\SlideInstanceLayoutStrategy.cs" />
-    <Compile Include="Controller\Slideshow\SlideLayoutStrategy.cs" />
-    <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventController.cs" />
-    <Compile Include="Controller\Slideshow\SlideshowRmlMvcEventListener.cs" />
-    <Compile Include="Controller\Slideshow\RmlSlidePanel.cs" />
-    <Compile Include="Controller\Slideshow\SlidePanel.cs" />
-    <Compile Include="Controller\Slideshow\SlideshowRuntime.cs" />
-    <Compile Include="Controller\Slideshow\StartSlideshowTask.cs" />
-    <Compile Include="Controller\Resources\OgreResourceProviderArchive.cs" />
-    <Compile Include="Controller\Resources\OgreResourceProviderArchiveFactory.cs" />
-    <Compile Include="Controller\Resources\ResourceProviderRocketFSExtension.cs" />
-    <Compile Include="Controller\Server\CredentialServerConnection.cs" />
-    <Compile Include="Controller\Server\LicenseReadType.cs" />
-    <Compile Include="Controller\Server\ServerConnection.cs" />
-    <Compile Include="Controller\Slideshow\MedicalRmlSlide.cs" />
-    <Compile Include="Controller\Slideshow\Slide.cs" />
-    <Compile Include="Controller\Slideshow\Slideshow.cs" />
-    <Compile Include="Controller\Slideshow\RmlSlidePanelTemplate.cs" />
-    <Compile Include="Controller\Slideshow\TemplateSlide.cs" />
-    <Compile Include="Controller\TaskController\RunMvcContextActionTask.cs" />
-    <Compile Include="Controller\TaskController\StartEmbeddedMvcTask.cs" />
-    <Compile Include="Controller\TeethToolController.cs" />
-    <Compile Include="Controller\Timeline\ActionSequencer.cs" />
-    <Compile Include="Controller\Update\PluginUpdateInfo.cs" />
-    <Compile Include="Controller\Update\ServerUpdateInfo.cs" />
-    <Compile Include="Controller\Update\UpdateException.cs" />
-    <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyContextWindowLiveThumbHost.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyFilter.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyTaskManager.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
-    <Compile Include="GUI\Anatomy\ClickedAnatomyManager.cs" />
-    <Compile Include="GUI\Anatomy\CommandButton.cs" />
-    <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
-    <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
-    <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
-    <Compile Include="GUI\Anatomy\ShowTasksAnatomyCommand.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinition.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonCollection.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonDefinitionBase.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\ButtonFactory.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\CloseButtonDefinition.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\FloatingPanelDecorator.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\DecoratorComponentFactory.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\MDIDialogDecorator.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\ScrollViewDecorator.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\SidePanelDecorator.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecorator.cs" />
-    <Compile Include="GUI\AnomalousMvc\MyGUIView.cs" />
-    <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponent.cs" />
-    <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugComponentFactory.cs" />
-    <Compile Include="GUI\AnomalousMvc\NavigationBug\NavigationBugView.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\DataDisplay.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\MeasurementDisplay.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\RawRmlView.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\RmlViewHostControl.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\VolumeDisplay.cs" />
-    <Compile Include="GUI\AnomalousMvc\ViewHostComponentFactory.cs" />
-    <Compile Include="GUI\AnomalousMvc\LayoutComponent.cs" />
-    <Compile Include="GUI\AnomalousMvc\Decorators\WindowDecorator.cs" />
-    <Compile Include="GUI\AnomalousMvc\ViewHostComponent.cs" />
-    <Compile Include="GUI\AnomalousMvc\MyGUIViewHostFactory.cs" />
-    <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
-    <Compile Include="GUI\Bookmarks\BookmarksTreeNode.cs" />
-    <Compile Include="GUI\Bookmarks\BookmarksTreeWidget.cs" />
-    <Compile Include="GUI\ButtonGridLiveThumbnailController.cs" />
-    <Compile Include="GUI\BuyScreen\BuyScreen.cs" />
-    <Compile Include="GUI\CameraMovementModeChooser\CameraMovementModeChooser.cs" />
-    <Compile Include="GUI\CameraMovementModeChooser\CameraMovementModeTask.cs" />
-    <Compile Include="GUI\ChooseSceneDialog\ChooseSceneDialog.cs" />
-    <Compile Include="GUI\DistortionWizard\Disclaimer\DisclaimerView.cs" />
-    <Compile Include="GUI\DistortionWizard\DiscSpace\DiscSpaceControl.cs" />
-    <Compile Include="GUI\DistortionWizard\DiscSpace\DiscSpaceGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\DiscSpace\DiscSpaceView.cs" />
-    <Compile Include="GUI\DistortionWizard\Doppler\DopplerControl.cs" />
-    <Compile Include="GUI\DistortionWizard\Doppler\DopplerGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Doppler\DopplerView.cs" />
-    <Compile Include="GUI\DistortionWizard\Fossa\FossaGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Fossa\LeftFossaView.cs" />
-    <Compile Include="GUI\DistortionWizard\Fossa\RightFossaView.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\BoneManipulatorGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\BoneManipulatorSlider.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\LeftCondylarDegenerationGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\LeftCondylarDegenerationView.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\LeftCondylarGrowthGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\LeftCondylarGrowthView.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\RightCondylarDegenerationGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\RightCondylarDegenerationView.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\RightCondylarGrowthGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Mandible\RightCondylarGrowthView.cs" />
-    <Compile Include="GUI\DistortionWizard\Notes\NotesGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Notes\NotesThumbnail.cs" />
-    <Compile Include="GUI\DistortionWizard\Notes\NotesView.cs" />
-    <Compile Include="GUI\DistortionWizard\Notes\ThumbnailPickerGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Notes\ThumbnailPickerInfo.cs" />
-    <Compile Include="GUI\DistortionWizard\Preset\PresetStateGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Preset\PresetStateView.cs" />
-    <Compile Include="GUI\DistortionWizard\Profile\HeightComboSlider.cs" />
-    <Compile Include="GUI\DistortionWizard\Profile\HeightControl.cs" />
-    <Compile Include="GUI\DistortionWizard\Profile\ProfileDistortionGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Profile\ProfileDistortionView.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\RemoveBottomTeethView.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\RemoveTeethGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\RemoveTopTeethView.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\TeethAdaptationGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\TeethAdaptationView.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationView.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\TeethMovementGUI.cs" />
-    <Compile Include="GUI\DistortionWizard\Teeth\ToothButton.cs" />
-    <Compile Include="GUI\DistortionWizard\WizardComponent.cs" />
-    <Compile Include="GUI\DistortionWizard\WizardComponentFactory.cs" />
-    <Compile Include="GUI\DistortionWizard\WizardView.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\DownloadGUIInfo.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\DownloadingPanel.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\DownloadManagerGUI.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\DownloadManagerServer.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\InstallPanel.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\PlatformUpdateDownloadInfo.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\ServerDownloadInfo.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\ServerPluginDownloadInfo.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\UninstallInfo.cs" />
-    <Compile Include="GUI\DownloadManagerGUI\UpdateInfo.cs" />
-    <Compile Include="GUI\Editor\CommonEditorResources.cs" />
-    <Compile Include="GUI\Editor\DragAndDrop\DragAndDropTaskManager.cs" />
-    <Compile Include="GUI\Editor\ImageBrowserWindow.cs" />
-    <Compile Include="GUI\Editor\DragAndDrop\DragAndDropComponent.cs" />
-    <Compile Include="GUI\Editor\DragAndDrop\DragAndDropFactory.cs" />
-    <Compile Include="GUI\Editor\DragAndDrop\DragAndDropItem.cs" />
-    <Compile Include="GUI\Editor\DragAndDrop\DragAndDropView.cs" />
-    <Compile Include="Controller\Editor\EditInterfaceConsumer.cs" />
-    <Compile Include="Controller\Editor\EditInterfaceHandler.cs" />
-    <Compile Include="GUI\Editor\GenericEditor\ExpandingGenericEditor.cs" />
-    <Compile Include="GUI\Editor\GenericEditor\ExpandingGenericEditorView.cs" />
-    <Compile Include="GUI\Editor\GenericEditor\GenericEditorComponent.cs" />
-    <Compile Include="GUI\Editor\GenericEditor\GenericEditorComponentFactory.cs" />
-    <Compile Include="GUI\Editor\GenericEditor\GenericEditorView.cs" />
-    <Compile Include="GUI\Editor\GenericEditor\GenericPropertiesFormComponent.cs" />
-    <Compile Include="GUI\Editor\GenericEditor\GenericPropertiesFormView.cs" />
-    <Compile Include="GUI\Editor\MovementSequence\MovementKeyframeData.cs" />
-    <Compile Include="GUI\Editor\MovementSequence\MovementKeyframeProperties.cs" />
-    <Compile Include="GUI\Editor\MovementSequence\MovementSequenceClipboardContainer.cs" />
-    <Compile Include="GUI\Editor\MovementSequence\MovementSequenceEditor.cs" />
-    <Compile Include="GUI\Editor\MovementSequence\MovementSequenceEditorFactory.cs" />
-    <Compile Include="GUI\Editor\MovementSequence\MovementSequenceEditorView.cs" />
-    <Compile Include="GUI\Editor\NewProjectDialog\NewProjectDialog.cs" />
-    <Compile Include="GUI\Editor\OpenPropManager\OpenPropManager.cs" />
-    <Compile Include="GUI\Editor\OpenPropManager\OpenPropManagerView.cs" />
-    <Compile Include="GUI\Editor\PresetStateCaptureDialog\PresetStateCaptureDialog.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\PropTimeline.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\PropTimelineClipboardContainer.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\PropTimelineData.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\PropTimelineFactory.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\PropTimelineView.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\PropTimelineDataManager.cs" />
-    <Compile Include="Controller\Props\Timeline\ShowPropSubActionPrototype.cs" />
-    <Compile Include="Controller\Props\Timeline\ShowPropTrackInfo.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
-    <Compile Include="GUI\Editor\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
-    <Compile Include="GUI\Editor\QuickSoundRecorder\QuickSoundRecorder.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\Elements\DataStrategy.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\HighlightProvider.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\WysiwygCallbackDragDropItem.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\DraggingElementManager.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponent.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\CssRule.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\ElementStyleDefinition.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\ImageElementStyle.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\InlineCssParser.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\RuleCssParser.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\StyleDefinition.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAppearance\TextElementStyle.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementAttributeEditor.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\ElementTextEditor.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\RmlEditableProperty.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\Elements\DivStrategy.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\Elements\ElementStrategy.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\Elements\ElementStrategyManager.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\Elements\ImageStrategy.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\Elements\InputStrategy.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\Elements\TextElementStrategy.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\PreviewElement.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RawRmlWysiwygView.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlElementEditor.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponent.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygComponentFactory.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygView.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\RmlWysiwygViewInterface.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\SelectedElementManager.cs" />
-    <Compile Include="GUI\Editor\RmlWysiwyg\WysiwygDragDropItem.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\ActionPrototypes\ShowPropActionData.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\ActionPrototypes\ShowPropActionPrototype.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\ActionPrototypes\TimelineActionPrototype.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\TimelineActionClipboardContainer.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\TimelineActionData.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\TimelineActionDataManager.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\TimelineComponentFactory.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorComponent.cs" />
-    <Compile Include="GUI\Editor\TimelineEditor\TimelineEditorView.cs" />
-    <Compile Include="GUI\GUILocationNames.cs" />
-    <Compile Include="GUI\LicenseDisplay\LicenseDisplay.cs" />
-    <Compile Include="GUI\LicenseDisplay\LicenseDisplayManager.cs" />
-    <Compile Include="GUI\MainWindow.cs" />
-    <Compile Include="GUI\Options\OptionsDialog.cs" />
-    <Compile Include="GUI\PremiumFeaturesTaskMenuAd.cs" />
-    <Compile Include="GUI\Render\LicensePopup.cs" />
-    <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
-    <Compile Include="GUI\Render\ResolutionMenu.cs" />
-    <Compile Include="GUI\RocketTextWriter\RocketTextWriter.cs" />
-    <Compile Include="GUI\SceneErrorWindow\SceneErrorWindow.cs" />
-    <Compile Include="GUI\SelectionModeChooser\SelectionModeChooser.cs" />
-    <Compile Include="GUI\SelectionModeChooser\SelectionModeTask.cs" />
-    <Compile Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.cs" />
-    <Compile Include="GUI\SelectionOperatorChooser\SelectionOperatorTask.cs" />
-    <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
-    <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
-    <Compile Include="GUI\TaskMenuCategories.cs" />
-    <Compile Include="GUI\ViewsGui\ViewsGui.cs" />
-    <Compile Include="GUI\VolumeControl\VolumeControl.cs" />
-    <Compile Include="GUI\VolumeControl\VolumeControlTask.cs" />
-    <Compile Include="Model\MedicalStateInfoModel.cs" />
-    <Compile Include="Controller\AnomalousMvc\ViewHostManager.cs" />
-    <Compile Include="Controller\Editor\EditableItemCollection\EditableItem.cs" />
-    <Compile Include="Controller\Editor\EditableItemCollection\EditableItemCollection.cs" />
-    <Compile Include="Controller\Editor\EditableItemCollection\SaveableEditableItem.cs" />
-    <Compile Include="Controller\Editor\EditableItemCollection\SaveableEditableItemCollection.cs" />
-    <Compile Include="GUI\AnomalousMvc\NavigationView\NavigationButton.cs" />
-    <Compile Include="GUI\AnomalousMvc\NavigationView\NavigationComponent.cs" />
-    <Compile Include="GUI\AnomalousMvc\NavigationView\NavigationView.cs" />
-    <Compile Include="GUI\AnomalousMvc\NavigationView\NavigationComponentFactory.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\RmlView.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\ViewHostFactoryCompound.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\ActionBrowserEditableProperty.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\EditableActionAttribute.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\EditableFileAttribute.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\View.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\ViewCollection.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\ViewHost.cs" />
-    <Compile Include="Controller\AnomalousMvc\View\ViewHostFactory.cs" />
-    <Compile Include="Controller\Clipboard\SaveableClipboardContainer.cs" />
-    <Compile Include="Controller\Clipboard\SaveableClipboardContainerMemberFilter.cs" />
-    <Compile Include="Controller\Config\EngineConfig.cs" />
-    <Compile Include="Controller\Config\FolderFinder.cs" />
-    <Compile Include="Controller\Config\MacPlatformConfig.cs" />
-    <Compile Include="Controller\Config\MedicalConfig.cs" />
-    <Compile Include="Controller\Config\PlatformConfig.cs" />
-    <Compile Include="Controller\Config\PluginConfig.cs" />
-    <Compile Include="Controller\Config\WindowsPlatformConfig.cs" />
-    <Compile Include="Controller\Bookmarks\Bookmark.cs" />
-    <Compile Include="Controller\Bookmarks\BookmarksController.cs" />
-    <Compile Include="Controller\Download\Download.cs" />
-    <Compile Include="Controller\Download\DownloadController.cs" />
-    <Compile Include="Controller\Download\DownloadListener.cs" />
-    <Compile Include="Controller\Download\PlatformUpdateDownload.cs" />
-    <Compile Include="Controller\Download\PluginDownload.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\EditableViewAttribute.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\FileBrowserEditableProperty.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\ViewBrowserEditableProperty.cs" />
-    <Compile Include="Controller\MedicalUpdate.cs" />
-    <Compile Include="Controller\GenericEvents.cs" />
-    <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
-    <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
-    <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
-    <Compile Include="Controller\ImageRenderer\RenderPreset.cs" />
-    <Compile Include="Controller\ImageRenderer\RenderPresetCollection.cs" />
-    <Compile Include="Controller\Layers\LayerStateEditableProperty.cs" />
-    <Compile Include="Controller\MedicalStates\PatientData.cs" />
-    <Compile Include="Controller\MovementSequence\EmbeddedMovementSequenceInfo.cs" />
-    <Compile Include="Controller\MovementSequence\VirtualFSMovementSequenceInfo.cs" />
-    <Compile Include="Controller\License\AnomalousLicense.cs" />
-    <Compile Include="Controller\License\AnomalousLicenseServer.cs" />
-    <Compile Include="Controller\License\LicenseManager.cs" />
-    <Compile Include="Controller\PatientDataController.cs" />
-    <Compile Include="Controller\Plugin\AtlasPluginEntryPointAttribute.cs" />
-    <Compile Include="Controller\Plugin\DataDrivenPlugin\DDAtlasPlugin.cs" />
-    <Compile Include="Controller\Plugin\DataDrivenPlugin\DDPluginTask.cs" />
-    <Compile Include="Controller\Plugin\ManagePluginInstructions.cs" />
-    <Compile Include="Controller\Props\Caliper\Caliper.cs" />
-    <Compile Include="Controller\Props\Caliper\SetCaliperMeasurement.cs" />
-    <Compile Include="Controller\Props\CircularHighlight\CircularHighlight.cs" />
-    <Compile Include="Controller\Props\DetachableFollowerToggleAction.cs" />
-    <Compile Include="Controller\Props\ManualObjectPropFadeBehavior.cs" />
-    <Compile Include="Controller\Props\Pen\ClickPenAction.cs" />
-    <Compile Include="Controller\Props\Pen\Pen.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controller\Props\Plane\ChangePlaneSettings.cs" />
-    <Compile Include="Controller\Props\Plane\Plane.cs" />
-    <Compile Include="Controller\Props\PoseableHand\PoseableFinger.cs" />
-    <Compile Include="Controller\Props\PoseableHand\PoseableFingerSection.cs" />
-    <Compile Include="Controller\Props\PoseableHand\PoseableHand.cs" />
-    <Compile Include="Controller\Props\PoseableHand\PoseableThumb.cs" />
-    <Compile Include="Controller\Resources\FilesystemResourceProvider.cs" />
-    <Compile Include="Controller\MusclePosition\MusclePosition.cs" />
-    <Compile Include="Controller\Timeline\MusclePositionAction.cs" />
-    <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
-    <Compile Include="Controller\Props\Arrow\ChangeArrowColorAction.cs" />
-    <Compile Include="Controller\Props\Arrow\ChangeArrowShapeAction.cs" />
-    <Compile Include="Controller\Props\CircularHighlight\ChangeCircularHighlightSettings.cs" />
-    <Compile Include="Controller\Props\PoseableHand\ChangeHandPosition.cs" />
-    <Compile Include="Controller\Timeline\RunMvcAction.cs" />
-    <Compile Include="Controller\Props\PoseableHand\PoseableFingerAnimator.cs" />
-    <Compile Include="Controller\Props\PoseableHand\PoseableFingerSectionAnimator.cs" />
-    <Compile Include="Controller\Props\PoseableHand\PoseableThumbAnimator.cs" />
-    <Compile Include="Controller\Timeline\ShowPropAction\SetPropTransparencyAction.cs" />
-    <Compile Include="Controller\Timeline\ShowTextAction\ITextDisplay.cs" />
-    <Compile Include="Controller\Timeline\ShowTextAction\ITextDisplayFactory.cs" />
-    <Compile Include="Controller\Timeline\ShowTextAction\ShowTextAction.cs" />
-    <Compile Include="Controller\Timeline\SkipToPostActions.cs" />
-    <Compile Include="Controller\Timeline\TimelineEditInterface.cs" />
-    <Compile Include="Controller\Editor\BrowserAttributes\BrowseableEditableProperty.cs" />
-    <Compile Include="Controller\Layers\EditableLayerState.cs" />
-    <Compile Include="Controller\Resources\EmbeddedResourceProvider.cs" />
-    <Compile Include="Controller\Resources\ResourceProvider.cs" />
-    <Compile Include="Controller\Timeline\TimelineStaticInfo.cs" />
-    <Compile Include="Controller\Resources\VirtualFilesystemResourceProvider.cs" />
-    <Compile Include="Controller\Anatomy\AnatomyGroup.cs" />
-    <Compile Include="Controller\Update\UpdateController.cs" />
-    <Compile Include="GUI\AbstractFullscreenGUIPopup.cs" />
-    <Compile Include="GUI\AnomalousMvc\MyGUIViewHost.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\RmlComponentFactory.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\RmlMvcEventController.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\RmlMvcEventListener.cs" />
-    <Compile Include="GUI\AnomalousMvc\RmlView\RmlWidgetComponent.cs" />
-    <Compile Include="Controller\Notification\OpenImageNotification.cs" />
-    <Compile Include="Controller\Notification\RestartNotification.cs" />
-    <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
-    <Compile Include="GUI\Timeline\TextDisplay\MyGUIDynamicFontManager.cs" />
-    <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.cs" />
-    <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplayFactory.cs" />
-    <Compile Include="Controller\Props\Arrow\Arrow.cs" />
-    <Compile Include="Controller\Props\PropFadeBehavior.cs" />
-    <Compile Include="Controller\Props\PropFactory.cs" />
-    <Compile Include="Controller\Props\Syringe\Syringe.cs" />
-    <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
-    <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
-    <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplay.cs" />
-    <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplayFactory.cs" />
-    <Compile Include="Controller\Timeline\ShowImageAction\ShowImageAction.cs" />
-    <Compile Include="Controller\Timeline\ShowPropAction\MovePropAction.cs" />
-    <Compile Include="Controller\Props\Syringe\PushPlungerAction.cs" />
-    <Compile Include="Controller\Timeline\ShowPropAction\ShowPropAction.cs" />
-    <Compile Include="Controller\Timeline\ShowPropAction\ShowPropSubAction.cs" />
-    <Compile Include="Controller\Timeline\TimelineException.cs" />
-    <Compile Include="Controller\Plugin\AtlasPlugin.cs" />
-    <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
-    <Compile Include="Controller\Layers\LayerEntry.cs" />
-    <Compile Include="Controller\Layers\LayerState.cs" />
-    <Compile Include="Controller\Grid\MeasurementGrid.cs" />
-    <Compile Include="Controller\MedicalController.cs" />
-    <Compile Include="Controller\MedicalSceneController.cs" />
-    <Compile Include="Controller\MedicalStates\MedicalStateController.cs" />
-    <Compile Include="Controller\MedicalStates\PatientDataFile.cs" />
-    <Compile Include="Controller\MedicalStates\SavedMedicalStates.cs" />
-    <Compile Include="Controller\MovementSequence\MovementSequenceController.cs" />
-    <Compile Include="Controller\MovementSequence\MovementSequenceGroup.cs" />
-    <Compile Include="Controller\MovementSequence\MovementSequenceInfo.cs" />
-    <Compile Include="Controller\MovementSequence\MovementSequenceSet.cs" />
-    <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
-    <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
-    <Compile Include="Controller\Plugin\AtlasPluginManager.cs" />
-    <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.cs" />
-    <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplayFactory.cs" />
-    <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />
-    <Compile Include="Controller\Timeline\HighlightTeethAction.cs" />
-    <Compile Include="Controller\Timeline\LayerChangeAction.cs" />
-    <Compile Include="Controller\Timeline\OpenNewSceneAction.cs" />
-    <Compile Include="Controller\Timeline\MoveCameraAction.cs" />
-    <Compile Include="Controller\Timeline\PlaySequenceAction.cs" />
-    <Compile Include="Controller\Timeline\Timeline.cs" />
-    <Compile Include="Controller\Timeline\TimelineAction.cs" />
-    <Compile Include="Controller\Timeline\TimelineController.cs" />
-    <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controller\StandaloneController.cs" />
-    <Compile Include="Tasks\RunIntroTutorial.cs" />
-    <Compile Include="Utility\DirectoryExtensions.cs" />
-    <Compile Include="Utility\EmbeddedResourceHelpers.cs" />
-    <Compile Include="Utility\OtherProcessManager.cs" />
-    <Compile Include="Utility\SharedXmlSaver.cs" />
-    <Compile Include="Utility\ZipEntryExtensions.cs" />
-    <Compile Include="VirtualTexture\VirtualTextureSceneViewLink.cs" />
-    <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyFilter.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
-    <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
-    <EmbeddedResource Include="GUI\CameraMovementModeChooser\CameraMovementModeChooser.layout" />
-    <EmbeddedResource Include="GUI\ChooseSceneDialog\ChooseSceneDialog.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Disclaimer\DisclaimerGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\DiscSpace\DiscSpaceGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Doppler\DopplerGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Fossa\FossaGUILeft.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Fossa\FossaGUIRight.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\LeftCondylarDegenerationGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\LeftCondylarGrowthGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\RightCondylarDegenerationGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\RightCondylarGrowthGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Notes\NotesGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Preset\PresetStateGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Profile\ProfileDistortionGUI.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveBottomTeethGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
-    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
-    <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
-    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
-    <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
-    <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
-    <EmbeddedResource Include="GUI\Render\LicensePopup.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
-    <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
-    <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorStyles.rcss" />
-    <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorTemplate.trml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\RocketTextWriter\RocketTextWriterTemplate.trml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MvcContexts\Login\ForgotPassword.rml" />
-    <EmbeddedResource Include="MvcContexts\Login\Index.rml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MvcContexts\Login\IndexRestricted.rml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MvcContexts\Login\LogIn.rcss" />
-    <EmbeddedResource Include="MvcContexts\Login\MasterTemplate.trml" />
-    <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
-    <EmbeddedResource Include="MvcContexts\Login\Reel.tl" />
-    <EmbeddedResource Include="MvcContexts\Login\Register.rml" />
-    <None Include="packages.config" />
-    <None Include="Properties\AssemblyInfoSource.cs" />
-    <Compile Include="Utility\CommonResources.cs" />
-    <Compile Include="Controller\Clipboard\SaveableClipboard.cs" />
-    <Compile Include="Utility\PathExtensions.cs" />
-    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
-    <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
-    <EmbeddedResource Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.layout" />
-    <EmbeddedResource Include="GUI\SequencePlayer\SequenceMenu.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />
-    <EmbeddedResource Include="GUI\ViewsGui\ViewsGui.layout" />
-    <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
-    <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
-    <EmbeddedResource Include="Controller\Grid\Grid.material" />
-    <EmbeddedResource Include="Resources\Background\Background.material" />
-    <EmbeddedResource Include="Resources\Bookmarks\Bookmark.bmk" />
-    <EmbeddedResource Include="Resources\Bookmarks\Bookmark1.bmk" />
-    <EmbeddedResource Include="Resources\Bookmarks\Bookmark2.bmk" />
-    <EmbeddedResource Include="Resources\Bookmarks\Bookmark3.bmk" />
-    <EmbeddedResource Include="Resources\Bookmarks\Bookmark4.bmk" />
-    <EmbeddedResource Include="Resources\Bookmarks\Bookmark5.bmk" />
-    <EmbeddedResource Include="Resources\Rml\RmlPanelTemplate.trml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Rml\Wysiwyg.rcss" />
-    <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
-    <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
-  </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\Dependencies\DotNetZip\DotNetZip.csproj">
       <Project>{5068f53b-8d7b-4aee-af54-7428b0e997a3}</Project>
@@ -795,6 +115,96 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controller\Slideshow\BaseContext.mvc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyFilter.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
+    <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\BuyScreen\BuyScreen.layout" />
+    <EmbeddedResource Include="GUI\CameraMovementModeChooser\CameraMovementModeChooser.layout" />
+    <EmbeddedResource Include="GUI\ChooseSceneDialog\ChooseSceneDialog.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Disclaimer\DisclaimerGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\DiscSpace\DiscSpaceGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Doppler\DopplerGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Fossa\FossaGUILeft.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Fossa\FossaGUIRight.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\LeftCondylarDegenerationGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\LeftCondylarGrowthGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\RightCondylarDegenerationGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Mandible\RightCondylarGrowthGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Notes\NotesGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Preset\PresetStateGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Profile\ProfileDistortionGUI.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveBottomTeethGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
+    <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
+    <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
+    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
+    <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
+    <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
+    <EmbeddedResource Include="GUI\Render\LicensePopup.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
+    <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
+    <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorStyles.rcss" />
+    <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorTemplate.trml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RocketTextWriter\RocketTextWriterTemplate.trml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MvcContexts\Login\ForgotPassword.rml" />
+    <EmbeddedResource Include="MvcContexts\Login\Index.rml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MvcContexts\Login\IndexRestricted.rml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MvcContexts\Login\LogIn.rcss" />
+    <EmbeddedResource Include="MvcContexts\Login\MasterTemplate.trml" />
+    <EmbeddedResource Include="MvcContexts\Login\MvcContext.mvc" />
+    <EmbeddedResource Include="MvcContexts\Login\Reel.tl" />
+    <EmbeddedResource Include="MvcContexts\Login\Register.rml" />
+    <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\ElementEditorComponents\EditInterfaceEditor.layout" />
+    <EmbeddedResource Include="GUI\SelectionModeChooser\SelectionModeChooser.layout" />
+    <EmbeddedResource Include="GUI\SelectionOperatorChooser\SelectionOperatorChooser.layout" />
+    <EmbeddedResource Include="GUI\SequencePlayer\SequenceMenu.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />
+    <EmbeddedResource Include="GUI\ViewsGui\ViewsGui.layout" />
+    <EmbeddedResource Include="GUI\VolumeControl\VolumeControl.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AnomalousMedicalCertificateStore.cer" />
+    <EmbeddedResource Include="Resources\AnomalousMedicalRoot.cer" />
+    <EmbeddedResource Include="Controller\Grid\Grid.material" />
+    <EmbeddedResource Include="Resources\Background\Background.material" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark1.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark2.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark3.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark4.bmk" />
+    <EmbeddedResource Include="Resources\Bookmarks\Bookmark5.bmk" />
+    <EmbeddedResource Include="Resources\Rml\RmlPanelTemplate.trml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Rml\Wysiwyg.rcss" />
+    <EmbeddedResource Include="Resources\Slides\SlideTemplate.trml" />
+    <EmbeddedResource Include="Resources\Slides\Wysiwyg.rcss" />
     <None Include="Properties\Standalone.manifest" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\ButtonDecorator.layout" />
     <EmbeddedResource Include="GUI\AnomalousMvc\Decorators\TopBottomPanelDecoratorTransparent.layout" />
@@ -960,21 +370,4 @@
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.layout" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="WriteGitRevisionCount" AssemblyFile="..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
-  <Target Name="BeforeBuild">
-    <WriteGitRevisionCount Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
-  </Target>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
 </Project>

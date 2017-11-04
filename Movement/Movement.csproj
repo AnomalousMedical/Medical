@@ -1,17 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{207F9849-EF23-4677-B825-F43D05F78C00}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Medical.Movement</RootNamespace>
     <AssemblyName>Movement</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,23 +30,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Controller\PoseController.cs" />
-    <Compile Include="GUI\MovementDialog.cs" />
-    <Compile Include="MovementPluginEntryPoint.cs" />
-    <Compile Include="MovementBodyAtlasPlugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Properties\AssemblyInfoSource.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Engine\BEPUikPlugin\BEPUikPlugin.csproj">
       <Project>{39f1ab5f-f0b1-45fd-ad66-9c03af1f022e}</Project>
@@ -91,18 +65,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Properties\" />
     <Folder Include="Resources\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="WriteGitRevisionCount" AssemblyFile="..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
-  <Target Name="BeforeBuild">
-    <WriteGitRevisionCount Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
-  </Target>
 </Project>

@@ -1,23 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{18F80BE1-DD03-4F78-AF02-9F61258B6720}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Medical</RootNamespace>
     <AssemblyName>Editor</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,94 +33,6 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Controller\Documents\UnknownDocumentHandler.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\DependencyTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\OffsetSequenceTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\PropTypeController.cs" />
-    <Compile Include="Controller\EditorFilesystemWatcher.cs" />
-    <Compile Include="Controller\DependencyEditorContext.cs" />
-    <Compile Include="Controller\EditorUICallback.cs" />
-    <Compile Include="Controller\ItemTemplates\OffsetModifierSequenceTemplate.cs" />
-    <Compile Include="Controller\OffsetSequenceEditorContext.cs" />
-    <Compile Include="Controller\PropEditorContext.cs" />
-    <Compile Include="Controller\Project\DependencyProjectTemplate.cs" />
-    <Compile Include="Controller\XmlEditorContext.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\XmlTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\MovementSequenceTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\MvcTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\PluginTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\RcssTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\RmlTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\TimelineTypeController.cs" />
-    <Compile Include="Controller\EditorController\TypeControllers\TRmlTypeController.cs" />
-    <Compile Include="Controller\ItemTemplates\PluginBrandingResourceItemTemplate.cs" />
-    <Compile Include="Controller\ItemTemplates\ViewWithTimelineItemTemplate.cs" />
-    <Compile Include="Controller\ItemTemplates\EmptyViewItemTemplate.cs" />
-    <Compile Include="Controller\MovementSequenceEditorContext.cs" />
-    <Compile Include="Controller\Project\QuestionAppProjectTemplate.cs" />
-    <Compile Include="Controller\TRmlEditorContext.cs" />
-    <Compile Include="Controller\PluginEditorContext.cs" />
-    <Compile Include="Controller\MvcEditorContext.cs" />
-    <Compile Include="Controller\RcssEditorContext.cs" />
-    <Compile Include="Controller\Documents\ProjectDocumentHandler.cs" />
-    <Compile Include="Controller\Project\AppProjectTemplate.cs" />
-    <Compile Include="Controller\Project\EmptyProjectTemplate.cs" />
-    <Compile Include="Controller\RmlEditorContext.cs" />
-    <Compile Include="Controller\ScratchArea\ScratchAreaController.cs" />
-    <Compile Include="Controller\ScratchArea\ScratchAreaFolder.cs" />
-    <Compile Include="Controller\ScratchArea\ScratchAreaItem.cs" />
-    <Compile Include="Controller\ScratchArea\ScratchAreaRootFolder.cs" />
-    <Compile Include="Controller\TimelineEditorContext.cs" />
-    <Compile Include="Controller\TypeControllerManager.cs" />
-    <Compile Include="EditorAtlasPluginEntryPoint.cs" />
-    <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\EditorInfoBar\EditorInfoBarComponent.cs" />
-    <Compile Include="GUI\EditorInfoBar\EditorInfoBarFactory.cs" />
-    <Compile Include="GUI\EditorInfoBar\EditorInfoBarView.cs" />
-    <Compile Include="GUI\EditorInfoBar\EditorInfoBarAction.cs" />
-    <Compile Include="GUI\EditorTaskbar\EditorTaskbarFactory.cs" />
-    <Compile Include="GUI\EditorTaskbar\EditorTaskbar.cs" />
-    <Compile Include="GUI\EditorTaskbar\EditorTaskbarFileButton.cs" />
-    <Compile Include="GUI\EditorTaskbar\EditorTaskbarView.cs" />
-    <Compile Include="GUI\FileBrowserTree\FileBrowserTree.cs" />
-    <Compile Include="GUI\FileBrowserTree\FileTreeSorter.cs" />
-    <Compile Include="GUI\OffsetSequence\KeyframeMovableObject.cs" />
-    <Compile Include="GUI\OffsetSequence\OffsetKeyframeData.cs" />
-    <Compile Include="GUI\OffsetSequence\OffsetKeyframeProperties.cs" />
-    <Compile Include="GUI\OffsetSequence\OffsetSequenceClipboardContainer.cs" />
-    <Compile Include="GUI\OffsetSequence\OffsetSequenceEditor.cs" />
-    <Compile Include="GUI\OffsetSequence\OffsetSequenceEditorFactory.cs" />
-    <Compile Include="GUI\OffsetSequence\OffsetSequenceEditorView.cs" />
-    <Compile Include="GUI\ProjectExplorer\ProjectExplorer.cs" />
-    <Compile Include="GUI\FileBrowserTree\DirectoryNode.cs" />
-    <Compile Include="GUI\FileBrowserTree\FileNode.cs" />
-    <Compile Include="GUI\ScratchArea\ScratchArea.cs" />
-    <Compile Include="GUI\TextEditor\XmlTextHighlighter.cs" />
-    <Compile Include="GUI\TextEditor\CssTextHighlighter.cs" />
-    <Compile Include="GUI\TextEditor\RmlTextHighlighter.cs" />
-    <Compile Include="GUI\TextEditor\TextEditorComponent.cs" />
-    <Compile Include="GUI\TextEditor\TextEditorComponentFactory.cs" />
-    <Compile Include="GUI\TextEditor\TextEditorView.cs" />
-    <Compile Include="GUI\TextEditor\TextHighlighter.cs" />
-    <Compile Include="Irony\Grammars\CssGrammar.cs" />
-    <Compile Include="Irony\Grammars\ToTerminatorTerminal.cs" />
-    <Compile Include="Irony\Grammars\XmlGrammar.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GUI\SaveTimelineDialog\SaveTimelineDialog.cs" />
-    <Compile Include="Controller\Project\EmbeddedTemplateNames.cs" />
-    <EmbeddedResource Include="Controller\Project\SimpleMvcContext.mvc" />
-    <None Include="Properties\AssemblyInfoSource.cs" />
-    <Compile Include="Tasks\AspectRatioTask.cs" />
-    <EmbeddedResource Include="Controller\Project\MasterTemplate.trml" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Dependencies\Irony\Irony\Irony.csproj">
       <Project>{d81f5c91-d7db-46e5-bc99-49488fb6814c}</Project>
@@ -191,6 +88,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controller\Project\SimpleMvcContext.mvc" />
+    <EmbeddedResource Include="Controller\Project\MasterTemplate.trml" />
     <EmbeddedResource Include="GUI\EditorInfoBar\EditorInfoBarComponent.layout" />
     <EmbeddedResource Include="GUI\EditorTaskbar\EditorTaskbar.layout">
       <SubType>Designer</SubType>
@@ -229,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\Mvc\EditInterface\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\EditorFileIcons%402x.png" />
@@ -245,20 +145,4 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\EditorPlugin_MyGUI_Skin.xml" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="WriteGitRevisionCount" AssemblyFile="..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
-  <Target Name="BeforeBuild">
-    <WriteGitRevisionCount Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
-  </Target>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
 </Project>

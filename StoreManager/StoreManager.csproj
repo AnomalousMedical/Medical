@@ -1,18 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8D19B608-2952-4467-BC07-0A1EA473DA09}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Anomalous.Medical.StoreManager</RootNamespace>
     <AssemblyName>StoreManager</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,37 +33,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Config\StoreManagerConfig.cs" />
-    <Compile Include="Controller\CancelUploadException.cs" />
-    <Compile Include="Controller\ChooseStoreController.cs" />
-    <Compile Include="Controller\ChoosePluginController.cs" />
-    <Compile Include="Controller\EditPluginDetailsController.cs" />
-    <Compile Include="Controller\IndexController.cs" />
-    <Compile Include="Controller\TransmitFileController.cs" />
-    <Compile Include="Controller\UploadCompleteController.cs" />
-    <Compile Include="Controller\UploadPluginController.cs" />
-    <Compile Include="Models\PluginModel.cs" />
-    <Compile Include="Models\ResponseModel.cs" />
-    <Compile Include="Models\StoreModel.cs" />
-    <Compile Include="Models\StorePluginsModel.cs" />
-    <Compile Include="Models\UserStoresModel.cs" />
-    <None Include="Properties\AssemblyInfoSource.cs" />
-    <Compile Include="StoreManagerPlugin.cs" />
-    <Compile Include="StoreManagerPluginEntryPoint.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\LogoUtil.cs" />
-    <Compile Include="StoreManagerTypeFinder.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Dependencies\DotNetZip\DotNetZip.csproj">
       <Project>{5068f53b-8d7b-4aee-af54-7428b0e997a3}</Project>
@@ -143,16 +102,7 @@
     <EmbeddedResource Include="Resources\Icon%402x.png" />
     <EmbeddedResource Include="Resources\Imagesets%402x.xml" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="WriteGitRevisionCount" AssemblyFile="..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
-  <Target Name="BeforeBuild">
-    <WriteGitRevisionCount Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
-  </Target>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

@@ -1,19 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Medical</RootNamespace>
     <AssemblyName>Premium</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,22 +34,7 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
-    <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
-    <Compile Include="PremiumBodyAtlasPlugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Properties\AssemblyInfoSource.cs" />
-    <Compile Include="Tasks\ChangeBackgroundColorTask.cs" />
-    <Compile Include="Tasks\ChangeWindowLayoutTask.cs" />
-    <Compile Include="Tasks\CloneWindowTaskMenuItem.cs" />
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="GUI\CloneWindow\CloneWindowDialog.layout" />
     <EmbeddedResource Include="Resources\PremiumImagesets.xml" />
@@ -125,16 +99,7 @@
     <EmbeddedResource Include="Resources\PremiumBrandingImage%402x.xml" />
     <EmbeddedResource Include="Resources\PremiumFeaturesIcon%402x.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <UsingTask TaskName="WriteGitRevisionCount" AssemblyFile="..\..\Dependencies\MSBuild\Anomalous\bin\Release\AnomalousMSBuild.dll" />
-  <Target Name="BeforeBuild">
-    <WriteGitRevisionCount Directory="$(ProjectDir)" SourceFile="$(ProjectDir)/Properties/AssemblyInfoSource.cs" DestFile="$(ProjectDir)/Properties/AssemblyInfo.cs" />
-  </Target>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>
