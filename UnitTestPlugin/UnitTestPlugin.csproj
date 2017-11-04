@@ -1,18 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E4043002-4F98-42B0-BA3E-6C34510E16BD}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>UnitTestPlugin</RootNamespace>
     <AssemblyName>UnitTestPlugin</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,23 +25,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GUI\TestSoundRecord\TestSoundRecord.cs" />
-    <Compile Include="GUI\TestTextureSceneView\TestTextureSceneView.cs" />
-    <Compile Include="UnitTestAtlasPluginEntryPoint.cs" />
-    <Compile Include="GUI\TestImageAtlas\TestImageAtlas.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTestAtlasPlugin.cs" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj">
       <Project>{6598a7cd-8f27-4d3f-a675-5ae63113a7c3}</Project>
@@ -94,7 +67,9 @@
       <Name>Standalone</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\TestImageAtlas\TestImageAtlas.layout">
       <SubType>Designer</SubType>
@@ -106,12 +81,4 @@
     <EmbeddedResource Include="Resources\DownloadIcon.png" />
     <EmbeddedResource Include="Resources\LegacyLogoSmall.jpg" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
