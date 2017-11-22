@@ -19,33 +19,39 @@ namespace Medical
         private Vector3 clockFaceOffset;
 
         public DiscPresetState(String discName, String name, String category, String imageName)
-            :base(name, category, imageName)
+            : base(name, category, imageName)
         {
             this.discName = discName;
         }
 
         public void captureFromState(DiscStateProperties state)
         {
-            this.DiscOffset = state.DiscOffset;
-            this.HorizontalOffset = state.HorizontalOffset;
-            this.Locked = state.Locked;
-            this.PopLocation = state.PopLocation;
-            this.RdaOffset = state.RDAOffset;
-            this.DisplaceLateralPole = state.DisplaceLateralPole;
-            this.ClockFaceOffset = state.ClockFaceOffset;
+            if (state != null)
+            {
+                this.DiscOffset = state.DiscOffset;
+                this.HorizontalOffset = state.HorizontalOffset;
+                this.Locked = state.Locked;
+                this.PopLocation = state.PopLocation;
+                this.RdaOffset = state.RDAOffset;
+                this.DisplaceLateralPole = state.DisplaceLateralPole;
+                this.ClockFaceOffset = state.ClockFaceOffset;
+            }
         }
 
         public override void applyToState(MedicalState state)
         {
-            DiscStateProperties disc = new DiscStateProperties(discName);
-            disc.DiscOffset = discOffset;
-            disc.HorizontalOffset = horizontalOffset;
-            disc.Locked = locked;
-            disc.PopLocation = popLocation;
-            disc.RDAOffset = rdaOffset;
-            disc.DisplaceLateralPole = displaceLateralPole;
-            disc.ClockFaceOffset = clockFaceOffset;
-            state.Disc.addPosition(disc);
+            if (state != null)
+            {
+                DiscStateProperties disc = new DiscStateProperties(discName);
+                disc.DiscOffset = discOffset;
+                disc.HorizontalOffset = horizontalOffset;
+                disc.Locked = locked;
+                disc.PopLocation = popLocation;
+                disc.RDAOffset = rdaOffset;
+                disc.DisplaceLateralPole = displaceLateralPole;
+                disc.ClockFaceOffset = clockFaceOffset;
+                state.Disc.addPosition(disc);
+            }
         }
 
         public void changeSide(String oldName, String newName)
@@ -161,7 +167,7 @@ namespace Medical
         private const string CLOCK_FACE_OFFSET = "clockFaceOffset";
 
         protected DiscPresetState(LoadInfo info)
-            :base(info)
+            : base(info)
         {
             discOffset = info.GetVector3(DISC_OFFSET);
             rdaOffset = info.GetVector3(RDA_OFFSET);

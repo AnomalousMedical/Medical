@@ -89,6 +89,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeLibrariesDebug", "Nat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapeLoader", "..\Engine\ShapeLoader\ShapeLoader.csproj", "{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anomalous.Resources", "..\Engine\Resources\Anomalous.Resources.csproj", "{89EBD203-2E81-4412-BDB3-D01F8DFC787F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -309,6 +311,12 @@ Global
 		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -334,6 +342,7 @@ Global
 		{39F1AB5F-F0B1-45FD-AD66-9C03AF1F022E} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 		{ACBB3920-B6D8-497B-8BAE-9350C7A85C09} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A1D05A1-6499-4C0B-9EC6-BC17B3165C42}
