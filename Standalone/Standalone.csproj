@@ -70,6 +70,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj">
     </ProjectReference>
+    <ProjectReference Include="..\..\Engine\Resources\Anomalous.Resources.csproj" />
     <ProjectReference Include="..\..\Engine\SoundPlugin\SoundPlugin.csproj">
     </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
