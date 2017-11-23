@@ -8,9 +8,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>AnomalousMedical</RootNamespace>
     <AssemblyName>Anomalous Medical</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
-    <UseXamMacFullFramework>true</UseXamMacFullFramework>
+    <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -76,6 +76,7 @@
     <I18n>cjk,mideast,other,rare,west</I18n>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <AssemblyName>AnomalousMedical</AssemblyName>
+    <UseSGen>false</UseSGen>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

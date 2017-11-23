@@ -40,32 +40,18 @@
   
   <ItemGroup>
     <ProjectReference Include="..\..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj">
-      <Project>{6598a7cd-8f27-4d3f-a675-5ae63113a7c3}</Project>
-      <Name>FreeImageDotNet</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\BEPUikPlugin\BEPUikPlugin.csproj">
-      <Project>{39f1ab5f-f0b1-45fd-ad66-9c03af1f022e}</Project>
-      <Name>BEPUikPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\BulletWrapperPlugin\BulletWrapperPlugin.csproj">
-      <Project>{eba88dc3-837d-45d8-a91a-e291c6ae444e}</Project>
-      <Name>BulletWrapperPlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
-      <Project>{57c253f1-157f-4a6a-9fed-345a776b97d5}</Project>
-      <Name>Engine</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\GuiFramework\GuiFramework.csproj">
-      <Project>{fc299a06-61bd-4562-a315-0f0be454925a}</Project>
-      <Name>GuiFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\OgrePlugin\OgrePlugin.csproj">
-      <Project>{e9fd5768-32e1-42c7-8256-4d7b97c22a9b}</Project>
-      <Name>OgrePlugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\SoundPlugin\SoundPlugin.csproj">
-      <Project>{ccaefe0a-ad1f-42e8-88da-5a685cc7c73d}</Project>
-      <Name>SoundPlugin</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernHttpClient.OSX", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedical", "AnomalousMedicalMac\AnomalousMedical.csproj", "{7DA0D106-E740-414E-85E1-BBF4109194E5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anomalous.Resources", "..\Engine\Resources\Anomalous.Resources.csproj", "{89EBD203-2E81-4412-BDB3-D01F8DFC787F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -278,6 +280,12 @@ Global
 		{7DA0D106-E740-414E-85E1-BBF4109194E5}.PublicRelease|Any CPU.Build.0 = PublicRelease|Any CPU
 		{7DA0D106-E740-414E-85E1-BBF4109194E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DA0D106-E740-414E-85E1-BBF4109194E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -305,5 +313,6 @@ Global
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF} = {945EB88D-402E-479C-AB12-15DEA692C902}
 		{6660B346-FAAE-43C5-99BE-9DC8653922E7} = {945EB88D-402E-479C-AB12-15DEA692C902}
 		{6941F069-AC02-40EE-BBF3-9FE3331030EF} = {1ADF5E95-3BCF-494E-A303-2882DE3F55A5}
+		{89EBD203-2E81-4412-BDB3-D01F8DFC787F} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 	EndGlobalSection
 EndGlobal
