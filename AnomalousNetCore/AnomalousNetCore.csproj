@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\OSPlatform.Win32\OSPlatform.Win32.csproj" />
+    <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj" />
+    <ProjectReference Include="..\DentalSim\DentalSim.csproj" />
+    <ProjectReference Include="..\Lecture\Lecture.csproj" />
+    <ProjectReference Include="..\Premium\Premium.csproj" />
+    <ProjectReference Include="..\Standalone\Standalone.csproj" />
+  </ItemGroup>
+
+</Project>
