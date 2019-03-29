@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +12,133 @@
     <ProjectReference Include="..\Lecture\Lecture.csproj" />
     <ProjectReference Include="..\Premium\Premium.csproj" />
     <ProjectReference Include="..\Standalone\Standalone.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\engine\release\x64\BulletWrapper.dll">
+      <Link>x64\BulletWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\d3dcompiler_47.dll">
+      <Link>x64\d3dcompiler_47.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x64\FreeImage.dll">
+      <Link>x64\FreeImage.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\libRocketWrapper.dll">
+      <Link>x64\libRocketWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\MyGUIWrapper.dll">
+      <Link>x64\MyGUIWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\OgreCWrapper.dll">
+      <Link>x64\OgreCWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\OgreMain.dll">
+      <Link>x64\OgreMain.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\OpenAL32.dll">
+      <Link>x64\OpenAL32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\OSHelper.dll">
+      <Link>x64\OSHelper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\RenderSystem_Direct3D11.dll">
+      <Link>x64\RenderSystem_Direct3D11.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\RenderSystem_GL.dll">
+      <Link>x64\RenderSystem_GL.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\SoundWrapper.dll">
+      <Link>x64\SoundWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x64\Win32UniversalBridge.dll">
+      <Link>x64\Win32UniversalBridge.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\WinMTDriver.dll">
+      <Link>x64\WinMTDriver.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\engine\release\x64\Zip.dll">
+      <Link>x64\Zip.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\BulletWrapper.dll">
+      <Link>x86\BulletWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\FreeImage.dll">
+      <Link>x86\FreeImage.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\MyGUIWrapper.dll">
+      <Link>x86\MyGUIWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\OgreCWrapper.dll">
+      <Link>x86\OgreCWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\OgreMain.dll">
+      <Link>x86\OgreMain.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\OSHelper.dll">
+      <Link>x86\OSHelper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\RenderSystem_Direct3D11.dll">
+      <Link>x86\RenderSystem_Direct3D11.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\RenderSystem_GL.dll">
+      <Link>x86\RenderSystem_GL.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\RenderSystem_GLES2.dll">
+      <Link>x86\RenderSystem_GLES2.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\SoundWrapper.dll">
+      <Link>x86\SoundWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\Win32UniversalBridge.dll">
+      <Link>x86\Win32UniversalBridge.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\WinMTDriver.dll">
+      <Link>x86\WinMTDriver.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\Zip.dll">
+      <Link>x86\Zip.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Engine\Release\x86\libRocketWrapper.dll">
+      <Link>x86\libRocketWrapper.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Dependencies\OpenALSoft\WindowsBuild\Release\OpenAL32.dll">
+      <Link>x86\OpenAL32.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="C:\Program Files %28x86%29\Windows Kits\8.1\Redist\D3D\x86\d3dcompiler_47.dll">
+      <Link>x86\d3dcompiler_47.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
