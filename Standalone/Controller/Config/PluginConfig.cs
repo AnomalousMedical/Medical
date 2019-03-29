@@ -75,10 +75,6 @@ namespace Medical
             {
                 yield return result;
             }
-            foreach (String result in Directory.EnumerateFiles(path, "*.dll", SearchOption.TopDirectoryOnly))
-            {
-                yield return result;
-            }
         }
     }
 }

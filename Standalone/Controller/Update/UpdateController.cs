@@ -124,18 +124,7 @@ namespace Medical
         /// <returns></returns>
         public static ServerUpdateInfo getUpdateInfo(LicenseManager licenseManager)
         {
-            CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.UpdateCheckURL, licenseManager.User, licenseManager.MachinePassword);
-            serverConnection.addArgument("OsId", ((int)PlatformConfig.OsId).ToString());
-            ServerUpdateInfo updateInfo = null;
-            serverConnection.makeRequestDownloadResponse(responseStream =>
-            {
-                updateInfo = new ServerUpdateInfo(responseStream.ToArray());
-            });
-            if (updateInfo == null)
-            {
-                throw new UpdateException("No update info found");
-            }
-            return updateInfo;
+            return new ServerUpdateInfo();
         }
 
         public static void writeUpdateIndex(String updateInstallerFile, Version version)

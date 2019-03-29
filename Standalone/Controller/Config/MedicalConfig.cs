@@ -93,9 +93,9 @@ namespace Medical
         public MedicalConfig()
         {
             BuildName = null;
-#if ALLOW_OVERRIDE
-            BuildName = "Internal";
-#endif
+//#if ALLOW_OVERRIDE
+//            BuildName = "Internal";
+//#endif
             WebsiteHostUrl = "https://www.anomalousmedical.com";
 
             //Setup directories

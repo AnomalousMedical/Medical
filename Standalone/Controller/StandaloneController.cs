@@ -89,8 +89,6 @@ namespace Medical
             medicalConfig = new MedicalConfig();
             this.app = app;
 
-            CertificateStoreManager.ServerCheckedForCertificate += () => MedicalConfig.LastCertificateStoreCheckTime = DateTime.Now;
-            CertificateStoreManager.Initialize(MedicalConfig.CertificateStoreFile, MedicalConfig.CertificateStoreUrl, MedicalConfig.LastCertificateStoreCheckTime);
             guiManager = new GUIManager();
             guiManager.MainGUIShown += guiManager_MainGUIShown;
             guiManager.MainGUIHidden += guiManager_MainGUIHidden;
@@ -193,7 +191,7 @@ namespace Medical
         /// </summary>
         public void retryLoadingCertificateStore()
         {
-            CertificateStoreManager.RefreshCertificateBg();
+            
         }
 
         public void addWorkingArchive()
@@ -212,14 +210,7 @@ namespace Medical
             //Background
             this.background = background;
             this.LicenseManager = licenseManager;
-
-            var dataFileVerifier = new DataFileVerifier();
-#if ALLOW_OVERRIDE
-            dataFileVerifier.AllowUnsignedDataFiles = MedicalConfig.AllowUnsignedDataFilePlugins;
-            dataFileVerifier.AllowUnsignedDlls = MedicalConfig.AllowUnsignedDllPlugins;
-#endif
-
-            atlasPluginManager = new AtlasPluginManager(this, dataFileVerifier);
+            atlasPluginManager = new AtlasPluginManager(this);
             atlasPluginManager.PluginLoadError += new Medical.AtlasPluginManager.PluginMessageDelegate(atlasPluginManager_PluginLoadError);
             atlasPluginManager.manageInstalledPlugins();
 

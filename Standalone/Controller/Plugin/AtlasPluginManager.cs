@@ -43,14 +43,11 @@ namespace Medical
         /// </summary>
         public event Action<AtlasPlugin> RequestDependencyDownload;
 
-        private DataFileVerifier dataFileVerifier;
-
         private Engine.Resources.ResourceManager resourceManager;
 
-        public AtlasPluginManager(StandaloneController standaloneController, DataFileVerifier dataFileVerifier)
+        public AtlasPluginManager(StandaloneController standaloneController)
         {
             requiredAssemblyVersion = standaloneController.GetType().Assembly.GetName().Version;
-            this.dataFileVerifier = dataFileVerifier;
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
@@ -81,7 +78,7 @@ namespace Medical
             String fullPath = Path.GetFullPath(path);
             if (File.Exists(fullPath))
             {
-                return dataFileVerifier.isSafe(fullPath);
+                return fullPath.EndsWith(".dat", StringComparison.InvariantCultureIgnoreCase);
             }
             else //Is a directory
             {
@@ -150,16 +147,6 @@ namespace Medical
         }
 
         /// <summary>
-        /// Add a plugin from a path. Will check the signature of the file.
-        /// </summary>
-        /// <param name="pluginPath">The path to load.</param>
-        /// <returns>True if the plugin is loaded, otherwise false.</returns>
-        public bool addPlugin(String pluginPath)
-        {
-            return addPlugin(pluginPath, dataFileVerifier.isSafe(pluginPath));
-        }
-
-        /// <summary>
         /// Add a plugin from a path, you must pass if the plugin is safe to load or not, which
         /// can be determined by calling isPluginSafeToLoad, which will check signatures on the file.
         /// For performance you might want to call isPluginSafeToLoad on a background thread and then
@@ -173,88 +160,12 @@ namespace Medical
         {
             if (isSafeToLoad)
             {
-                if (pluginPath.EndsWith(".dll", true, CultureInfo.InvariantCulture))
-                {
-                    return addDllPlugin(pluginPath);
-                }
-                else
+                if (pluginPath.EndsWith(".dat", true, CultureInfo.InvariantCulture))
                 {
                     return addDataDrivenPlugin(pluginPath);
                 }
             }
             return false;
-        }
-
-        private bool addDllPlugin(String dllName)
-        {
-            bool loadedPlugin = false;
-            if (PlatformConfig.AllowDllPluginsToLoad)
-            {
-                String fullPath = Path.GetFullPath(dllName);
-                if (!File.Exists(fullPath))
-                {
-                    fullPath = Path.Combine(additionalSearchPath, dllName);
-                }
-
-                if (File.Exists(fullPath))
-                {
-                    String dllFileName = Path.GetFileNameWithoutExtension(fullPath);
-                    if (!loadedPluginNames.Contains(dllFileName))
-                    {
-                        try
-                        {
-                            Assembly assembly = Assembly.LoadFile(fullPath);
-
-                            //Always set dlls as loaded even if they are corrupted. If we get this far the dll is valid, but might not actually work.
-                            loadedPluginNames.Add(dllFileName);
-
-                            AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
-                            if (attributes.Length > 0)
-                            {
-                                foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
-                                {
-                                    entryPointAttribute.createPlugin(standaloneController);
-                                }
-                                loadedPlugin = true;
-                            }
-                            else
-                            {
-                                String errorMessage = String.Format("Cannot find AtlasPluginEntryPointAttribute in assembly '{0}'. Please add this property to the assembly.", assembly.FullName);
-                                firePluginLoadError(errorMessage);
-                                Log.Error(errorMessage);
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            firePluginLoadError(String.Format("There was an error loading the plugin '{0}'.", dllFileName));
-                            Log.Error("Cannot load dll '{0}' from '{1}' because: {2}. Deleting corrupted plugin.", dllName, fullPath, e.Message);
-                            try
-                            {
-                                File.Delete(fullPath);
-                            }
-                            catch (Exception deleteEx)
-                            {
-                                Log.Error("Error deleting dll file '{0}' from '{1}' because: {2}.", dllName, fullPath, deleteEx.Message);
-                                managePluginInstructions.addFileToDelete(fullPath);
-                                managePluginInstructions.savePersistantFile();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Log.Error("Cannot load Assembly '{0}' from '{1}' because a plugin named '{2}' is already loaded.", dllName, fullPath, dllFileName);
-                    }
-                }
-                else
-                {
-                    Log.Error("Cannot load Assembly '{0}' from '{0}' or '{1}' because it was not found.", dllName, fullPath, Path.GetFullPath(dllName));
-                }
-            }
-            else
-            {
-                Log.ImportantInfo("Attempted to load plugin {0}, but Dll Plugins are not allow to load for this platform.", dllName);
-            }
-            return loadedPlugin;
         }
 
         private bool addDataDrivenPlugin(String path)

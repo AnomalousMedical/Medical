@@ -52,18 +52,11 @@ namespace Medical
                                 int serverResponseLength = serverDataStream.ReadInt32();
                                 byte[] serverResponse = serverDataStream.ReadBytes(serverResponseLength);
 
-                                if (CertificateStoreManager.IsValidServerCommunication(serverResponse, signature))
+                                using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(serverResponse)))
                                 {
-                                    using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(serverResponse)))
-                                    {
-                                        success = binaryReader.ReadBoolean();
-                                        message = binaryReader.ReadString();
-                                        promptStoreVisit = true;
-                                    }
-                                }
-                                else
-                                {
-                                    message = "Signature mismatch from server. Image not licensed.";
+                                    success = binaryReader.ReadBoolean();
+                                    message = binaryReader.ReadString();
+                                    promptStoreVisit = true;
                                 }
                             }
                         });
