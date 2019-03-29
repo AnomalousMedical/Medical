@@ -69,14 +69,9 @@
     <EmbeddedResource Include="Resources\DeveloperImagesets.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\DataFilePublisher\DataFilePublisher.layout" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Dependencies\DotNetZip\DotNetZip.csproj">
     </ProjectReference>
     <ProjectReference Include="..\..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj">
-    </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\Mono\Mono.Security\Mono.Anomalous.Security.csproj">
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\BulletWrapperPlugin\BulletWrapperPlugin.csproj">
     </ProjectReference>

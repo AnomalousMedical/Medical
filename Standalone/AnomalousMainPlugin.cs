@@ -29,7 +29,6 @@ namespace Medical.GUI
         private GUIManager guiManager;
         private LicenseManager licenseManager;
         private AnomalousController bodyAtlasController;
-        private DownloadManagerServer downloadServer;
         private ImageLicenseServer imageLicenseServer;
         private SimObjectMover teethMover;
 
@@ -39,7 +38,6 @@ namespace Medical.GUI
         private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
-        private DownloadManagerGUI downloadManagerGUI;
         private SequencePlayer sequencePlayer = null;
         private BookmarksGUI bookmarks;
         private ViewsGui viewsGui;
@@ -59,7 +57,6 @@ namespace Medical.GUI
         private SelectionModeTask selectionModeTask;
         private SelectionOperatorTask selectionOperatorTask;
         private CameraMovementModeTask cameraMovementModeTask;
-        private Task downloadsTask;
 
         public AnomalousMainPlugin(LicenseManager licenseManager, AnomalousController bodyAtlasController)
         {
@@ -79,7 +76,6 @@ namespace Medical.GUI
             IDisposableUtil.DisposeIfNotNull(bookmarksController);
             IDisposableUtil.DisposeIfNotNull(taskMenuAd);
             IDisposableUtil.DisposeIfNotNull(viewsGui);
-            downloadServer.Dispose();
             if (selectionModeTask != null)
             {
                 selectionModeTask.Dispose();
@@ -143,7 +139,6 @@ namespace Medical.GUI
             guiManager.MainGUIHidden += guiManager_MainGUIHidden;
 
             //Controllers
-            downloadServer = new DownloadManagerServer(licenseManager);
             imageLicenseServer = new ImageLicenseServer(licenseManager);
             bookmarksController = new BookmarksController(standaloneController, ScaleHelper.Scaled(100), ScaleHelper.Scaled(100), hasPremium);
 
@@ -163,8 +158,6 @@ namespace Medical.GUI
 
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, imageLicenseServer, standaloneController.GUIManager, standaloneController.NotificationManager);
             guiManager.addManagedDialog(renderDialog);
-
-            downloadManagerGUI = new DownloadManagerGUI(standaloneController, downloadServer);
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager, standaloneController.SceneViewController);
 
@@ -203,10 +196,6 @@ namespace Medical.GUI
 
             //Patient Section
             taskController.addTask(new ShowPopupTask(chooseSceneDialog, "Medical.NewPatient", "New", "AnomalousMedical/ChangeScene", TaskMenuCategories.Explore, 0));
-
-            downloadsTask = new ShowPopupTask(downloadManagerGUI, "Medical.DownloadManagerGUI", "Downloads", "AnomalousMedical/Download", TaskMenuCategories.System, int.MaxValue - 5);
-            standaloneController.DownloadController.OpenDownloadGUITask = downloadsTask;
-            taskController.addTask(downloadsTask);
 
             taskController.addTask(new DialogOpenTask(aboutDialog, "Medical.About", "About", "AnomalousMedical/About", TaskMenuCategories.System, int.MaxValue - 2));
             taskController.addTask(new VolumeControlTask());
@@ -257,10 +246,6 @@ namespace Medical.GUI
                 taskController.addTask(helpTaskItem);
 
                 taskController.addTask(new ShowPopupTask(options, "Medical.Options", "Options", "AnomalousMedical/Options", TaskMenuCategories.System, int.MaxValue - 3));
-
-                CallbackTask logoutTaskItem = new CallbackTask("Medical.LogOut", "Log Out", "AnomalousMedical/LogOut", TaskMenuCategories.System, int.MaxValue - 1, false);
-                logoutTaskItem.OnClicked += new CallbackTask.ClickedCallback(logoutTaskItem_OnClicked);
-                taskController.addTask(logoutTaskItem);
 
                 CallbackTask exitTaskItem = new CallbackTask("Medical.Exit", "Exit", "AnomalousMedical/Exit", TaskMenuCategories.System, int.MaxValue, false);
                 exitTaskItem.OnClicked += new CallbackTask.ClickedCallback(exitTaskItem_OnClicked);
@@ -417,7 +402,6 @@ namespace Medical.GUI
             }
 
             guiTaskManager.setLoadingTasksToMissing(CommonResources.NoIcon);
-            downloadManagerGUI.activateServerDownloadChecks();
         }
 
         public long PluginId
@@ -514,19 +498,6 @@ namespace Medical.GUI
             standaloneController.openNewScene(chooseSceneDialog.SelectedFile);
         }
 
-        void logoutTaskItem_OnClicked(Task item)
-        {
-            MessageBox.show("Logging out will delete your local license file. This will require you to log in the next time you use this program.\nYou will also not be able to use the software in offline mode until you log back in and save your password.", "Log Out", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No,
-                delegate (MessageBoxStyle result)
-                {
-                    if (result == MessageBoxStyle.Yes)
-                    {
-                        standaloneController.LicenseManager.deleteLicense();
-                        standaloneController.exit();
-                    }
-                });
-        }
-
         void exitTaskItem_OnClicked(Task item)
         {
             standaloneController.exit();
@@ -545,14 +516,7 @@ namespace Medical.GUI
 
         void updateCheckCompleted(UpdateController.UpdateCheckResult result)
         {
-            if (result > 0)
-            {
-                standaloneController.NotificationManager.showTaskNotification("Update(s) Found\nClick Here to Download", downloadsTask.IconName, downloadsTask);
-            }
-            if (!standaloneController.AtlasPluginManager.allDependenciesLoaded())
-            {
-                standaloneController.NotificationManager.showTaskNotification("Additional Files Needed\nClick Here to Download", downloadsTask.IconName, downloadsTask);
-            }
+
         }
 
         void MovementSequenceController_GroupAdded(MovementSequenceController controller, MovementSequenceGroup group)
@@ -650,12 +614,7 @@ namespace Medical.GUI
 
         void AtlasPluginManager_RequestDependencyDownload(AtlasPlugin obj)
         {
-            downloadManagerGUI.addAutoDownloadItems(obj.DependencyPluginIds);
-            var downloadGUITask = standaloneController.DownloadController.OpenDownloadGUITask;
-            if (downloadGUITask != null)
-            {
-                downloadGUITask.clicked(EmptyTaskPositioner.Instance);
-            }
+
         }
 
         void blogTaskItem_OnClicked(CallbackTask item)

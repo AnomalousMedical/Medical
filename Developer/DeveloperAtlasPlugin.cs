@@ -21,7 +21,6 @@ namespace Developer
 {
     public class DeveloperAtlasPlugin : AtlasPlugin
     {
-        private DataFilePublisher dataFilePublisher;
         private DeveloperRenderPropertiesDialog developerRenderer;
         private DiscControl discControl;
         private AdvancedMandibleMovementDialog advancedMandibleMovement;
@@ -49,7 +48,6 @@ namespace Developer
             libRocketDebugger.Dispose();
             measurementGUI.Dispose();
             advancedMandibleMovement.Dispose();
-            dataFilePublisher.Dispose();
             developerRenderer.Dispose();
             discControl.Dispose();
             gridProperties.Dispose();
@@ -70,9 +68,6 @@ namespace Developer
             //UI Helpers
             gridProperties = new GridPropertiesDialog(standaloneController.MeasurementGrid);
             guiManager.addManagedDialog(gridProperties);
-
-            dataFilePublisher = new DataFilePublisher();
-            guiManager.addManagedDialog(dataFilePublisher);
 
             developerRenderer = new DeveloperRenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, guiManager, standaloneController.NotificationManager);
             guiManager.addManagedDialog(developerRenderer);
@@ -104,8 +99,6 @@ namespace Developer
 
             //Task Controller
             TaskController taskController = standaloneController.TaskController;
-
-            taskController.addTask(new MDIDialogOpenTask(dataFilePublisher, "Developer.DataFilePublisher", "Data File Publisher", "Developer.PublisherIcon", TaskMenuCategories.Developer));
 
             taskController.addTask(new MDIDialogOpenTask(developerRenderer, "Developer.DeveloperRender", "Developer Renderer", "Developer.RenderIcon", TaskMenuCategories.Developer));
             taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "Developer.DiscEditorIcon", TaskMenuCategories.Developer));

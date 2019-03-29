@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Anomalous.OSPlatform;
 using Engine;
-using System.IO;
-using System.Diagnostics;
-using System.Threading;
-using Medical.Controller;
-using System.Net;
-using System.Globalization;
-using Logging;
-using Mono.Security;
 using Engine.Threads;
-using Anomalous.OSPlatform;
+using Logging;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
 
 namespace Medical
 {

@@ -46,8 +46,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Dependencies\Lucene.net\src\core\Lucene.Net.csproj">
     </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\Mono\Mono.Security\Mono.Anomalous.Security.csproj">
-    </ProjectReference>
     <ProjectReference Include="..\..\Engine\BEPUikPlugin\BEPUikPlugin.csproj">
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\BulletWrapperPlugin\BulletWrapperPlugin.csproj">
@@ -116,7 +114,6 @@
     <EmbeddedResource Include="GUI\DistortionWizard\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethAdaptationGUI.layout" />
     <EmbeddedResource Include="GUI\DistortionWizard\Teeth\TeethHeightAdaptationGUI.layout" />
-    <EmbeddedResource Include="GUI\DownloadManagerGUI\DownloadManagerGUI.layout" />
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />

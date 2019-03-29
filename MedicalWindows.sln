@@ -45,8 +45,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{1683BD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{CCA24447-73E1-4725-8A72-BD5A8D5A5508}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Anomalous.Security", "..\Dependencies\Mono\Mono.Security\Mono.Anomalous.Security.csproj", "{A21B2895-668E-4CA9-8C28-D3FF89168E4E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetZip", "..\Dependencies\DotNetZip\DotNetZip.csproj", "{5068F53B-8D7B-4AEE-AF54-7428B0E997A3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeImageDotNet", "..\Dependencies\FreeImage.NET\Library\FreeImageDotNet.csproj", "{6598A7CD-8F27-4D3F-A675-5AE63113A7C3}"
@@ -91,7 +89,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapeLoader", "..\Engine\Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anomalous.Resources", "..\Engine\Resources\Anomalous.Resources.csproj", "{89EBD203-2E81-4412-BDB3-D01F8DFC787F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousNetCore", "AnomalousNetCore\AnomalousNetCore.csproj", "{E586C2C2-5B17-4E17-9DB4-731C9319234F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnomalousNetCore", "AnomalousNetCore\AnomalousNetCore.csproj", "{E586C2C2-5B17-4E17-9DB4-731C9319234F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,12 +179,6 @@ Global
 		{75DCDE22-7C94-400F-BCF8-8A41344EDFF0}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
 		{75DCDE22-7C94-400F-BCF8-8A41344EDFF0}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{75DCDE22-7C94-400F-BCF8-8A41344EDFF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A21B2895-668E-4CA9-8C28-D3FF89168E4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A21B2895-668E-4CA9-8C28-D3FF89168E4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A21B2895-668E-4CA9-8C28-D3FF89168E4E}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{A21B2895-668E-4CA9-8C28-D3FF89168E4E}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
-		{A21B2895-668E-4CA9-8C28-D3FF89168E4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A21B2895-668E-4CA9-8C28-D3FF89168E4E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5068F53B-8D7B-4AEE-AF54-7428B0E997A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5068F53B-8D7B-4AEE-AF54-7428B0E997A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5068F53B-8D7B-4AEE-AF54-7428B0E997A3}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
@@ -330,7 +322,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A21B2895-668E-4CA9-8C28-D3FF89168E4E} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 		{5068F53B-8D7B-4AEE-AF54-7428B0E997A3} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 		{6598A7CD-8F27-4D3F-A675-5AE63113A7C3} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
 		{D81F5C91-D7DB-46E5-BC99-49488FB6814C} = {CCA24447-73E1-4725-8A72-BD5A8D5A5508}
