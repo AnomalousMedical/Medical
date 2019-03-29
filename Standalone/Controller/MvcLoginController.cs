@@ -118,53 +118,7 @@ namespace Medical.Controller
 
             ((RunCommandsAction)context.Controllers["Register"].Actions["Register"]).addCommand(new CallbackCommand((executingContext) =>
             {
-                if (!loggingIn)
-                {
-                    loggingIn = true;
-                    DataModel model = context.getModel<DataModel>("Register");
-                    MedicalConfig.StoreCredentials = model.getValue("Remember") == "True";
-                    messageControl.Value = "Creating Account";
-                    errorControl.Value = "";
-                    ThreadPool.QueueUserWorkItem((arg) =>
-                    {
-                        try
-                        {
-                            ServerConnection serverConnection = new ServerConnection(MedicalConfig.RegisterURL);
-                            foreach (var item in model.Iterator)
-                            {
-                                serverConnection.addArgument(item.Item1, item.Item2);
-                            }
-                            ServerOperationResult result = serverConnection.makeRequestSaveableResponse(ServerOperationResult.TypeFinder) as ServerOperationResult;
-                            if (result.Success)
-                            {
-                                ThreadManager.invoke(() =>
-                                {
-                                    messageControl.Value = "Account Created, Logging In";
-                                    errorControl.Value = "";
-                                });
-                                getLicense(model.getValue("User"), model.getValue("Pass"));
-                            }
-                            else
-                            {
-                                ThreadManager.invoke(() =>
-                                {
-                                    messageControl.Value = "";
-                                    errorControl.Value = result.Message;
-                                    loggingIn = false;
-                                });
-                            }
-                        }
-                        catch(Exception ex)
-                        {
-                            ThreadManager.invoke(() =>
-                            {
-                                messageControl.Value = "";
-                                errorControl.Value = ex.Message;
-                                loggingIn = false;
-                            });
-                        }
-                    });
-                }
+                
             }));
 
             ((RunCommandsAction)context.Controllers["Register"].Actions["Opening"]).addCommand(new CallbackCommand((executingContext) =>
@@ -188,51 +142,7 @@ namespace Medical.Controller
 
             ((RunCommandsAction)context.Controllers["ForgotPassword"].Actions["Recover"]).addCommand(new CallbackCommand((executingContext) =>
             {
-                if (!loggingIn)
-                {
-                    loggingIn = true;
-                    DataModel model = context.getModel<DataModel>("ForgotPassword");
-                    messageControl.Value = "Requesting Password E-Mail";
-                    errorControl.Value = "";
-                    ThreadPool.QueueUserWorkItem((arg) =>
-                    {
-                        try
-                        {
-                            ServerConnection serverConnection = new ServerConnection(MedicalConfig.ForgotPasswordURL);
-                            foreach (var item in model.Iterator)
-                            {
-                                serverConnection.addArgument(item.Item1, item.Item2);
-                            }
-                            ServerOperationResult result = serverConnection.makeRequestSaveableResponse(ServerOperationResult.TypeFinder) as ServerOperationResult;
-                            if (result.Success)
-                            {
-                                ThreadManager.invoke(() =>
-                                {
-                                    messageControl.Value = "Recovery E-Mail Sent";
-                                    errorControl.Value = "";
-                                });
-                            }
-                            else
-                            {
-                                ThreadManager.invoke(() =>
-                                {
-                                    messageControl.Value = "";
-                                    errorControl.Value = result.Message;
-                                    loggingIn = false;
-                                });
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            ThreadManager.invoke(() =>
-                            {
-                                messageControl.Value = "";
-                                errorControl.Value = ex.Message;
-                                loggingIn = false;
-                            });
-                        }
-                    });
-                }
+                
             }));
 
             controller.MvcCore.startRunningContext(context);

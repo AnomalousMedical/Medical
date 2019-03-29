@@ -36,74 +36,10 @@ namespace Medical
             LicensingImage = true;
             ThreadPool.QueueUserWorkItem(state =>
             {
-                bool success = false;
-                bool promptStoreVisit = false;
-                String message = "Error reading data from server.";
-                try
-                {
-                    CredentialServerConnection serverConnection = new CredentialServerConnection(MedicalConfig.LicenseImageURL, licenseManager.User, licenseManager.MachinePassword);
-                    serverConnection.addArgument("LicenseType", ((int)type).ToString());
-                    serverConnection.makeRequestGetStream(responseStream =>
-                        {
-                            using (BinaryReader serverDataStream = new BinaryReader(responseStream))
-                            {
-                                int signatureLength = serverDataStream.ReadInt32();
-                                byte[] signature = serverDataStream.ReadBytes(signatureLength);
-                                int serverResponseLength = serverDataStream.ReadInt32();
-                                byte[] serverResponse = serverDataStream.ReadBytes(serverResponseLength);
-
-                                using (BinaryReader binaryReader = new BinaryReader(new MemoryStream(serverResponse)))
-                                {
-                                    success = binaryReader.ReadBoolean();
-                                    message = binaryReader.ReadString();
-                                    promptStoreVisit = true;
-                                }
-                            }
-                        });
-                }
-                catch (Exception e)
-                {
-                    message = String.Format("Could not license image from server.\nReason: {0}.", e.Message);
-                    Log.Error(message);
-                }
                 ThreadManager.invoke(new Action(delegate()
                 {
                     LicensingImage = false;
-                    callback.Invoke(success, promptStoreVisit, message);
-                }));
-            });
-        }
-
-        public void getLicenseFromServer(ImageLicenseType licenseType, LicenseTextCallback callback)
-        {
-            ReadingLicenseText = true;
-            ThreadPool.QueueUserWorkItem(state =>
-            {
-                bool success = false;
-                String message = "Error reading license from server";
-                try
-                {
-                    ServerConnection serverConnection = new ServerConnection(MedicalConfig.LicenseReaderURL);
-                    serverConnection.addArgument("Type", LicenseReadType.Image.ToString());
-                    serverConnection.addArgument("Id", ((int)licenseType).ToString());
-                    serverConnection.makeRequestGetStream(responseStream =>
-                    {
-                        using (StreamReader streamReader = new StreamReader(responseStream))
-                        {
-                            success = true;
-                            message = streamReader.ReadToEnd();
-                        }
-                    });
-                }
-                catch (Exception e)
-                {
-                    message = String.Format("Could not read license data from server.\nReason: {0}.", e.Message);
-                    Log.Error(message);
-                }
-                ThreadManager.invoke(new Action(delegate()
-                {
-                    ReadingLicenseText = false;
-                    callback.Invoke(success, message);
+                    callback.Invoke(true, false, "");
                 }));
             });
         }

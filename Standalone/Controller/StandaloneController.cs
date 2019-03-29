@@ -54,7 +54,6 @@ namespace Medical
         private TaskController taskController;
         private SaveableClipboard clipboard;
         private AnatomyController anatomyController;
-        private DownloadController downloadController;
         private PatientDataController patientDataController;
         private IdleHandler idleHandler;
         private SceneStatsDisplayManager sceneStatsDisplayManager;
@@ -147,7 +146,6 @@ namespace Medical
             medicalController.unloadSceneAndResources();
             PluginManager.Instance.RendererPlugin.destroySceneViewLightManager(lightManager);
 			IDisposableUtil.DisposeIfNotNull(mvcCore);
-			IDisposableUtil.DisposeIfNotNull(downloadController);
             IDisposableUtil.DisposeIfNotNull(anatomyController);
 			IDisposableUtil.DisposeIfNotNull(atlasPluginManager);
             IDisposableUtil.DisposeIfNotNull(virtualTextureSceneViewLink);
@@ -260,9 +258,6 @@ namespace Medical
             SceneLoaded += SleepyActorRepository.SceneLoaded;
             SceneUnloading += SleepyActorRepository.SceneUnloading;
 
-            //Download
-            downloadController = new DownloadController(licenseManager, AtlasPluginManager);
-
             //Props
             propFactory = new PropFactory(this);
 
@@ -367,10 +362,6 @@ namespace Medical
         public void restartWithWarning(String noDownloadsMessage, bool autoStartUpdate, bool asAdmin)
         {
             String message = noDownloadsMessage;
-            if (downloadController.Downloading)
-            {
-                message = "You are currently downloading some files. If you restart now you will lose your download progress.\nIt is reccomended to click no and let the downloads finish.\nAre you sure you want to restart Anomalous Medical?";
-            }
             if (message == null)
             {
                 restart(asAdmin);
@@ -551,14 +542,6 @@ namespace Medical
         }
 
         public DocumentController DocumentController { get; private set; }
-
-        public DownloadController DownloadController
-        {
-            get
-            {
-                return downloadController;
-            }
-        }
 
         public PatientDataController PatientDataController
         {
@@ -772,16 +755,7 @@ namespace Medical
 
         void atlasPluginManager_PluginLoadError(string message)
         {
-            //At this point the plugins have not actually been loaded, so we must use a callback and have the downloadController fire its gui open task.
-            //At the point where these can be clicked that task will be defined.
-            NotificationManager.showCallbackNotification(String.Format("{0}\nClick here to download a working version.", message), "MessageBoxIcon", delegate()
-            {
-                Task downloadGUITask = downloadController.OpenDownloadGUITask;
-                if (downloadGUITask != null)
-                {
-                    downloadGUITask.clicked(EmptyTaskPositioner.Instance);
-                }
-            });
+            
         }
 
         void mainWindow_Closed(OSWindow sender)

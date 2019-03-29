@@ -204,7 +204,6 @@ namespace Medical
 
             cameraTransitionTime = program.getValue("CameraTransitionTime", 0.5f);
             transparencyChangeMultiplier = program.getValue("TransparencyChangeMultiplier", 2.0f);
-            ServerConnection.DefaultTimeout = program.getValue("DefaultTimeout", ServerConnection.DefaultTimeout);
             autoOpenAnatomyFinder = program.getValue("AutoOpenAnatomyFinder", true);
 
             EngineConfig = new EngineConfig(configFile);

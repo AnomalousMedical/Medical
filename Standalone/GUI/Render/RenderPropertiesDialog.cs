@@ -265,29 +265,29 @@ namespace Medical.GUI
 
         void viewLicense_MouseButtonClick(Widget source, EventArgs e)
         {
-            source.Enabled = false;
-            ImageLicenseType type = ImageLicenseType.Personal;
-            if (licenseTypeGroup.SelectedButton == commercialButton)
-            {
-                type = ImageLicenseType.Commercial;
-            }
-            imageLicenseServer.getLicenseFromServer(type, delegate(bool success, String message)
-            {
-                source.Enabled = true;
-                if (success)
-                {
-                    if (licensePopup == null)
-                    {
-                        licensePopup = new LicensePopup(guiManager);
-                    }
-                    licensePopup.LicenseText = message;
-                    licensePopup.show(0, 0);
-                }
-                else
-                {
-                    MessageBox.show(message, "Server Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                }
-            });
+            //source.Enabled = false;
+            //ImageLicenseType type = ImageLicenseType.Personal;
+            //if (licenseTypeGroup.SelectedButton == commercialButton)
+            //{
+            //    type = ImageLicenseType.Commercial;
+            //}
+            //imageLicenseServer.getLicenseFromServer(type, delegate(bool success, String message)
+            //{
+            //    source.Enabled = true;
+            //    if (success)
+            //    {
+            //        if (licensePopup == null)
+            //        {
+            //            licensePopup = new LicensePopup(guiManager);
+            //        }
+            //        licensePopup.LicenseText = message;
+            //        licensePopup.show(0, 0);
+            //    }
+            //    else
+            //    {
+            //        MessageBox.show(message, "Server Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            //    }
+            //});
         }
 
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
