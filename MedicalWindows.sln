@@ -31,8 +31,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestPlugin", "UnitTestP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lecture", "Lecture\Lecture.csproj", "{E2AED95C-0FA7-4316-A7C4-BDF748099909}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreManager", "StoreManager\StoreManager.csproj", "{8D19B608-2952-4467-BC07-0A1EA473DA09}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movement", "Movement\Movement.csproj", "{207F9849-EF23-4677-B825-F43D05F78C00}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedical64", "AnomalousMedical64\AnomalousMedical64.csproj", "{C5B4384E-1A31-439D-966A-13DD87432942}"
@@ -146,12 +144,6 @@ Global
 		{E2AED95C-0FA7-4316-A7C4-BDF748099909}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{E2AED95C-0FA7-4316-A7C4-BDF748099909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2AED95C-0FA7-4316-A7C4-BDF748099909}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D19B608-2952-4467-BC07-0A1EA473DA09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D19B608-2952-4467-BC07-0A1EA473DA09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D19B608-2952-4467-BC07-0A1EA473DA09}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
-		{8D19B608-2952-4467-BC07-0A1EA473DA09}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
-		{8D19B608-2952-4467-BC07-0A1EA473DA09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D19B608-2952-4467-BC07-0A1EA473DA09}.Release|Any CPU.Build.0 = Release|Any CPU
 		{207F9849-EF23-4677-B825-F43D05F78C00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{207F9849-EF23-4677-B825-F43D05F78C00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{207F9849-EF23-4677-B825-F43D05F78C00}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
