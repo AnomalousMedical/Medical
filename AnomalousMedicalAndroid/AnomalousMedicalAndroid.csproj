@@ -14,7 +14,7 @@
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
     <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>AnomalousMedicalAndroid</AssemblyName>
-    <TargetFrameworkVersion>v4.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
@@ -30,6 +30,9 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <AndroidSupportedAbis>armeabi-v7a</AndroidSupportedAbis>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -51,18 +54,6 @@
     <DebugType>full</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Dependencies\Android.Play.ExpansionLibrary\ExpansionDownloader\ExpansionDownloader.csproj">
-      <Project>{c1b3041a-48e8-42a4-95dd-00159872548c}</Project>
-      <Name>ExpansionDownloader</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\Android.Play.ExpansionLibrary\LicenseVerificationLibrary\LicenseVerificationLibrary.csproj">
-      <Project>{c95ffdb8-c066-4669-8328-aaeedba94c87}</Project>
-      <Name>LicenseVerificationLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\OkHttpClient\src\OkHttpClient\OkHttpClient.csproj">
-      <Project>{6627eb12-3f14-4190-8bef-71cb90714261}</Project>
-      <Name>OkHttpClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
       <Project>{57C253F1-157F-4A6A-9FED-345A776B97D5}</Project>
       <Name>Engine</Name>
@@ -109,7 +100,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.0\lib\netstandard1.1\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\netstandard2.0\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
@@ -120,11 +121,9 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ObbDownloader\AnomalousMedicalAlarmReceiver.cs" />
-    <Compile Include="ObbDownloader\AnomalousMedicalDownloaderService.cs" />
-    <Compile Include="ObbDownloader\ObbDownloader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -144,7 +143,7 @@
     <AndroidNativeLibrary Include="..\..\Dependencies\OpenALSoft\srcAndroid\libs\armeabi-v7a\libopenal.so">
       <Link>lib\armeabi-v7a\libopenal.so</Link>
     </AndroidNativeLibrary>
-    <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libFreeImage.so">
+    <AndroidNativeLibrary Include="..\..\Dependencies\OgreDeps\AndroidInstall\lib\libFreeImage.so">
       <Link>lib\armeabi-v7a\libFreeImage.so</Link>
     </AndroidNativeLibrary>
     <AndroidNativeLibrary Include="..\..\Engine\Release\Android\libBulletWrapper.so">

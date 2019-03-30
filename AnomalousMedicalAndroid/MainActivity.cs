@@ -17,8 +17,8 @@ using Medical;
 using System.IO;
 using MyGUIPlugin;
 using System.Net.Http;
-using OkHttpClient;
 using DentalSim;
+using Android;
 
 #if ALLOW_DATA_FILE
 using Medical.Movement;
@@ -38,10 +38,8 @@ namespace AnomalousMedicalAndroid
             Java.Lang.JavaSystem.LoadLibrary("gnustl_shared");
             Java.Lang.JavaSystem.LoadLibrary("FreeImage");
             Java.Lang.JavaSystem.LoadLibrary("openal");
-            ServerConnection.HttpClientProvider = () => new HttpClient(new OkHttpClientHandler());
         }
 
-        private ObbDownloader dl;
         private AnomalousController anomalousController;
 
         #if DEBUG
@@ -58,6 +56,10 @@ namespace AnomalousMedicalAndroid
 
         protected override void createApp()
         {
+            //This works to get write permissions, but the app will crash
+            //the first time you run it on a new phone.
+            CheckAppPermissions();
+
             ActivityManager actManager = GetSystemService(ActivityService) as ActivityManager;
             var memoryInfo = new ActivityManager.MemoryInfo();
             actManager.GetMemoryInfo(memoryInfo);
@@ -78,12 +80,6 @@ namespace AnomalousMedicalAndroid
 
             OtherProcessManager.OpenUrlInBrowserOverride = openUrl;
 
-            dl = new ObbDownloader(this);
-            dl.DownloadSucceeded += Dl_DownloadSucceeded;
-            dl.DownloadFailed += Dl_DownloadFailed;
-            dl.DownloadProgressUpdated += Dl_DownloadProgressUpdated;
-            dl.NeedCellularPermission += Dl_NeedCellularPermission;
-
             String archiveName = null;
 
             #if ALLOW_DATA_FILE
@@ -96,10 +92,7 @@ namespace AnomalousMedicalAndroid
             {
             #endif
                 
-            if (dl.AreExpansionFilesDelivered(SucceedIfEmpty))
-            {
-                archiveName = findExpansionFile();
-            }
+            archiveName = findExpansionFile();
 
             #if ALLOW_DATA_FILE
             }
@@ -111,14 +104,13 @@ namespace AnomalousMedicalAndroid
                     PrimaryArchive = archiveName
             };
             anomalousController.OnInitCompleted += HandleOnInitCompleted;
-            anomalousController.DataFileMissing += HandleDataFileMissing;
+            //anomalousController.DataFileMissing += HandleDataFileMissing;
             anomalousController.AddAdditionalPlugins += HandleAddAdditionalPlugins;
             anomalousController.run();
         }
 
         protected override void OnDestroy()
         {
-            dl.cancelDownloads();
             base.OnDestroy();
             anomalousController.Dispose();
             this.killAppProcess();
@@ -126,13 +118,11 @@ namespace AnomalousMedicalAndroid
 
         protected override void OnResume()
         {
-            dl.connectDownloadService();
             base.OnResume();
         }
 
         protected override void OnStop()
         {
-            dl.disconnectDownloadService();
             base.OnStop();
         }
 
@@ -175,18 +165,10 @@ namespace AnomalousMedicalAndroid
             });
         }
 
-        void HandleDataFileMissing(AnomalousController anomalousController, StandaloneController controller)
-        {
-            dl.GetExpansionFiles();
-        }
-
-        void Dl_DownloadFailed()
-        {
-            MessageBox.show(String.Format("Error downloading resource archive.\nReason:\n{0}", dl.LastStateMessage), "Resource Archive Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok, r =>
-            {
-                anomalousController.StandaloneController.exit();
-            });
-        }
+        //void HandleDataFileMissing(AnomalousController anomalousController, StandaloneController controller)
+        //{
+            
+        //}
 
         void Dl_DownloadSucceeded()
         {
@@ -194,26 +176,6 @@ namespace AnomalousMedicalAndroid
             anomalousController.PrimaryArchive = findExpansionFile();
             //Run splash screen again.
             anomalousController.rerunSplashScreen();
-        }
-
-        void Dl_DownloadProgressUpdated(string message, int current, int total)
-        {
-            anomalousController.splashShowDownloadProgress(message, current, total);
-        }
-
-        void Dl_NeedCellularPermission()
-        {
-            MessageBox.show(String.Format("Anomalous Medical needs to download additional files.\nThese files total {0}.\nDo you wish to download these files over your cellular connection?\nAdditional carrier charges may apply.\nClick No to cancel the download and try again later over wifi.", Prettify.GetSizeReadable(dl.TotalDownloadSize)), "Resource Archive Error", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, r =>
-            {
-                if (r == MessageBoxStyle.Yes)
-                {
-                    dl.resumeOnCellData();
-                }
-                else
-                {
-                    anomalousController.StandaloneController.exit();
-                }
-            });
         }
 
         private String findExpansionFile()
@@ -249,13 +211,30 @@ namespace AnomalousMedicalAndroid
                 else
                 {
                     //Only one matching file, just return it
-                    return files.FirstOrDefault();
+                    return files.FirstOrDefault() ?? "CannotFindArchive.dat"; //Returning null here will make the program close right away, let it open with no archive
                 }
             }
             catch (Exception ex)
             {
                 Logging.Log.Error("{0} looking for resource archive. Message: {1}", ex.GetType().ToString(), ex.Message);
                 return null;
+            }
+        }
+
+        private void CheckAppPermissions()
+        {
+            if ((int)Build.VERSION.SdkInt < 23)
+            {
+                return;
+            }
+            else
+            {
+                if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted
+                    && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted)
+                {
+                    var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage };
+                    RequestPermissions(permissions, 1);
+                }
             }
         }
     }
