@@ -18,7 +18,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>none</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\</OutputPath>
+    <OutputPath>..\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\</OutputPath>
+    <OutputPath>..\Release</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,127 +48,127 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="..\..\Engine\Debug\x64\BulletWrapper.dll">
-      <Link>Debug\x64\BulletWrapper.dll</Link>
+      <Link>x64\BulletWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\d3dcompiler_47.dll">
-      <Link>Debug\x64\d3dcompiler_47.dll</Link>
+      <Link>x64\d3dcompiler_47.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\FreeImage_d.dll">
-      <Link>Debug\x64\FreeImage_d.dll</Link>
+      <Link>x64\FreeImage_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\libRocketWrapper.dll">
-      <Link>Debug\x64\libRocketWrapper.dll</Link>
+      <Link>x64\libRocketWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\MyGUIWrapper.dll">
-      <Link>Debug\x64\MyGUIWrapper.dll</Link>
+      <Link>x64\MyGUIWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\OgreCWrapper.dll">
-      <Link>Debug\x64\OgreCWrapper.dll</Link>
+      <Link>x64\OgreCWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\OgreMain_d.dll">
-      <Link>Debug\x64\OgreMain_d.dll</Link>
+      <Link>x64\OgreMain_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\OpenAL32.dll">
-      <Link>Debug\x64\OpenAL32.dll</Link>
+      <Link>x64\OpenAL32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\OSHelper.dll">
-      <Link>Debug\x64\OSHelper.dll</Link>
+      <Link>x64\OSHelper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\RenderSystem_Direct3D11_d.dll">
-      <Link>Debug\x64\RenderSystem_Direct3D11_d.dll</Link>
+      <Link>x64\RenderSystem_Direct3D11_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\RenderSystem_GL_d.dll">
-      <Link>Debug\x64\RenderSystem_GL_d.dll</Link>
+      <Link>x64\RenderSystem_GL_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\SoundWrapper.dll">
-      <Link>Debug\x64\SoundWrapper.dll</Link>
+      <Link>x64\SoundWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\Win32UniversalBridge.dll">
-      <Link>Debug\x64\Win32UniversalBridge.dll</Link>
+      <Link>x64\Win32UniversalBridge.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\WinMTDriver.dll">
-      <Link>Debug\x64\WinMTDriver.dll</Link>
+      <Link>x64\WinMTDriver.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x64\Zip.dll">
-      <Link>Debug\x64\Zip.dll</Link>
+      <Link>x64\Zip.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\BulletWrapper.dll">
-      <Link>Debug\x86\BulletWrapper.dll</Link>
+      <Link>x86\BulletWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\d3dcompiler_47.dll">
-      <Link>Debug\x86\d3dcompiler_47.dll</Link>
+      <Link>x86\d3dcompiler_47.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\FreeImage_d.dll">
-      <Link>Debug\x86\FreeImage_d.dll</Link>
+      <Link>x86\FreeImage_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\libRocketWrapper.dll">
-      <Link>Debug\x86\libRocketWrapper.dll</Link>
+      <Link>x86\libRocketWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\MyGUIWrapper.dll">
-      <Link>Debug\x86\MyGUIWrapper.dll</Link>
+      <Link>x86\MyGUIWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\OgreCWrapper.dll">
-      <Link>Debug\x86\OgreCWrapper.dll</Link>
+      <Link>x86\OgreCWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\OgreMain_d.dll">
-      <Link>Debug\x86\OgreMain_d.dll</Link>
+      <Link>x86\OgreMain_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\OpenAL32.dll">
-      <Link>Debug\x86\OpenAL32.dll</Link>
+      <Link>x86\OpenAL32.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\OSHelper.dll">
-      <Link>Debug\x86\OSHelper.dll</Link>
+      <Link>x86\OSHelper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\RenderSystem_Direct3D11_d.dll">
-      <Link>Debug\x86\RenderSystem_Direct3D11_d.dll</Link>
+      <Link>x86\RenderSystem_Direct3D11_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\RenderSystem_GLES2_d.dll">
-      <Link>Debug\x86\RenderSystem_GLES2_d.dll</Link>
+      <Link>x86\RenderSystem_GLES2_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\RenderSystem_GL_d.dll">
-      <Link>Debug\x86\RenderSystem_GL_d.dll</Link>
+      <Link>x86\RenderSystem_GL_d.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\SoundWrapper.dll">
-      <Link>Debug\x86\SoundWrapper.dll</Link>
+      <Link>x86\SoundWrapper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\Win32UniversalBridge.dll">
-      <Link>Debug\x86\Win32UniversalBridge.dll</Link>
+      <Link>x86\Win32UniversalBridge.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\WinMTDriver.dll">
-      <Link>Debug\x86\WinMTDriver.dll</Link>
+      <Link>x86\WinMTDriver.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\Engine\Debug\x86\Zip.dll">
-      <Link>Debug\x86\Zip.dll</Link>
+      <Link>x86\Zip.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
