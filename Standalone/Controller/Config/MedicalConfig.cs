@@ -294,6 +294,18 @@ namespace Medical
 
         public static String TemporaryFilesPath { get; private set; }
 
+        public static bool ShowDeveloperTools
+        {
+            get
+            {
+                return program.getValue("ShowDeveloperTools", false);
+            }
+            set
+            {
+                program.setValue("ShowDeveloperTools", value);
+            }
+        }
+
         public static String UserDocRoot
         {
             get

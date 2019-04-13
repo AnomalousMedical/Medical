@@ -97,114 +97,120 @@ namespace Developer
 
             RocketInterface.Instance.FileInterface.addExtension(new RocketAssemblyResourceLoader(this.GetType().Assembly));
 
+            changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
+            disablePhysics = new DisablePhysicsTask(int.MaxValue);
+
             //Task Controller
             TaskController taskController = standaloneController.TaskController;
 
             taskController.addTask(new MDIDialogOpenTask(developerRenderer, "Developer.DeveloperRender", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Create));
-            taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "Developer.DiscEditorIcon", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "Developer.MovementIcon", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", "Developer.StatisticsIcon", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(debugVisualizer, "Developer.DebugVisualizer", "Debug Visualizer", "Developer.DebugVisualizer", TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(advancedCameraGui, "Developer.AdvancedCameraGui", "Advanced Camera Settings", CommonResources.NoIcon, TaskMenuCategories.Developer));
-            taskController.addTask(new MDIDialogOpenTask(resolutionGui, "Developer.SetResolution", "Set Resolution", CommonResources.NoIcon, TaskMenuCategories.Developer));
-            taskController.addTask(libRocketDebugger);
-            taskController.addTask(new SaveMicrocodeCacheTask());
-            taskController.addTask(new CallbackTask("Developer.SaveToMax", "Save to 3ds Max", "Developer.MaxDumpIcon", TaskMenuCategories.Developer, (item) =>
-                {
-                    if (!item.Active)
+
+            if (MedicalConfig.ShowDeveloperTools)
+            {
+                taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "Developer.DiscEditorIcon", TaskMenuCategories.Developer));
+                taskController.addTask(new MDIDialogOpenTask(advancedMandibleMovement, "Medical.AdvancedMandibleMovement", "Advanced Mandible Movement", "Developer.MovementIcon", TaskMenuCategories.Developer));
+                taskController.addTask(new MDIDialogOpenTask(gridProperties, "Medical.GridProperties", "Grid", "Developer.GridIcon", TaskMenuCategories.Developer));
+                taskController.addTask(new MDIDialogOpenTask(performanceGui, "Medical.Performance", "Performance", "Developer.StatisticsIcon", TaskMenuCategories.Developer));
+                taskController.addTask(new MDIDialogOpenTask(measurementGUI, "Developer.Measurement", "Measurements", "Developer.Measurements", TaskMenuCategories.Developer));
+                taskController.addTask(new MDIDialogOpenTask(debugVisualizer, "Developer.DebugVisualizer", "Debug Visualizer", "Developer.DebugVisualizer", TaskMenuCategories.Developer));
+                taskController.addTask(new MDIDialogOpenTask(advancedCameraGui, "Developer.AdvancedCameraGui", "Advanced Camera Settings", CommonResources.NoIcon, TaskMenuCategories.Developer));
+                taskController.addTask(new MDIDialogOpenTask(resolutionGui, "Developer.SetResolution", "Set Resolution", CommonResources.NoIcon, TaskMenuCategories.Developer));
+                taskController.addTask(libRocketDebugger);
+                taskController.addTask(new SaveMicrocodeCacheTask());
+                taskController.addTask(new CallbackTask("Developer.SaveToMax", "Save to 3ds Max", "Developer.MaxDumpIcon", TaskMenuCategories.Developer, (item) =>
                     {
-                        item.setActive(true);
-                        MaxExport maxExport = new MaxExport(standaloneController);
-                        guiManager.addManagedDialog(maxExport);
-                        maxExport.Visible = true;
-                        maxExport.Closed += (evt, args) =>
+                        if (!item.Active)
                         {
-                            maxExport.Dispose();
-                            item.setActive(false);
-                            item.closeTask();
-                        };
+                            item.setActive(true);
+                            MaxExport maxExport = new MaxExport(standaloneController);
+                            guiManager.addManagedDialog(maxExport);
+                            maxExport.Visible = true;
+                            maxExport.Closed += (evt, args) =>
+                            {
+                                maxExport.Dispose();
+                                item.setActive(false);
+                                item.closeTask();
+                            };
+                        }
+                    }));
+
+                taskController.addTask(new CallbackTask("Developer.TogglePhysicalTextures", "Toggle Physical Textures", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
+                {
+                    if (standaloneController.VirtualTextureManager.Active)
+                    {
+                        standaloneController.VirtualTextureManager.suspend();
+                    }
+                    else
+                    {
+                        standaloneController.VirtualTextureManager.resume();
                     }
                 }));
 
-            taskController.addTask(new CallbackTask("Developer.TogglePhysicalTextures", "Toggle Physical Textures", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
-            {
-                if (standaloneController.VirtualTextureManager.Active)
+                taskController.addTask(new CallbackTask("Developer.ToggleCompactMode", "Toggle Compact Mode", CommonResources.NoIcon, TaskMenuCategories.Developer, item =>
                 {
-                    standaloneController.VirtualTextureManager.suspend();
-                }
-                else
-                {
-                    standaloneController.VirtualTextureManager.resume();
-                }
-            }));
+                    standaloneController.GUIManager.CompactMode = !standaloneController.GUIManager.CompactMode;
+                    standaloneController.GUIManager.layout();
+                }));
 
-            taskController.addTask(new CallbackTask("Developer.ToggleCompactMode", "Toggle Compact Mode", CommonResources.NoIcon, TaskMenuCategories.Developer, item =>
-            {
-                standaloneController.GUIManager.CompactMode = !standaloneController.GUIManager.CompactMode;
-                standaloneController.GUIManager.layout();
-            }));
-
-            taskController.addTask(new CallbackTask("Developer.SpawnTestSplint", "Spawn Test Splint", CommonResources.NoIcon, TaskMenuCategories.Developer, item =>
-            {
-                GenericSimObjectDefinition def = new GenericSimObjectDefinition("TestSplint" + Guid.NewGuid());
-                def.addElement(new SceneNodeDefinition("Node"));
-                var rigidBody = new ReshapeableRigidBodyDefinition("RigidBody");
-                def.addElement(rigidBody);
-                MultiProp multiProp = new MultiProp();
-                def.addElement(new BehaviorDefinition("MultiProp", multiProp));
-                DynamicSplint splint = new DynamicSplint()
+                taskController.addTask(new CallbackTask("Developer.SpawnTestSplint", "Spawn Test Splint", CommonResources.NoIcon, TaskMenuCategories.Developer, item =>
                 {
-                    MultiPropName = "MultiProp",
-                };
-                def.addElement(new BehaviorDefinition("Behavior", splint));
-
-                PositionCollection positions;
-                using (var stream = VirtualFileSystem.Instance.openStream("Plugins/SplintProps/PartModels/SplintSpace.positions", Engine.Resources.FileMode.Open))
-                {
-                    positions = new PositionCollection(stream);
-                }
-
-                Position position;
-                if (false)
-                {
-                    position = positions.getPosition("MaxillaryGroup");
-                    splint.StartIndex = 1;
-                    splint.EndIndex = 17;
-                    rigidBody.Mass = 0;
-                    rigidBody.CollisionFilterMask = -3;
-                    rigidBody.CollisionFilterGroup = 1;
-                }
-                else
-                {
-                    position = positions.getPosition("MandibularGroup");
-                    splint.StartIndex = 17;
-                    splint.EndIndex = 33;
-                    rigidBody.Mass = 1;
-                    rigidBody.CollisionFilterMask = -5;
-                    rigidBody.CollisionFilterGroup = 1;
-
-                    var joint = new Generic6DofConstraintDefinition(Splint.JointName)
+                    GenericSimObjectDefinition def = new GenericSimObjectDefinition("TestSplint" + Guid.NewGuid());
+                    def.addElement(new SceneNodeDefinition("Node"));
+                    var rigidBody = new ReshapeableRigidBodyDefinition("RigidBody");
+                    def.addElement(rigidBody);
+                    MultiProp multiProp = new MultiProp();
+                    def.addElement(new BehaviorDefinition("MultiProp", multiProp));
+                    DynamicSplint splint = new DynamicSplint()
                     {
-                        RigidBodyASimObject = "Mandible",
-                        RigidBodyAElement = "Actor",
-                        RigidBodyBSimObject = "this",
-                        RigidBodyBElement = "RigidBody",
+                        MultiPropName = "MultiProp",
                     };
+                    def.addElement(new BehaviorDefinition("Behavior", splint));
 
-                    joint.TranslationMotor.LowerLimit = Vector3.Zero;
-                    joint.TranslationMotor.UpperLimit = Vector3.Zero;
-                    joint.XRotMotor.LoLimit = 0;
-                    joint.XRotMotor.HiLimit = 0;
-                    joint.YRotMotor.LoLimit = 0;
-                    joint.YRotMotor.HiLimit = 0;
-                    joint.ZRotMotor.LoLimit = 0;
-                    joint.ZRotMotor.HiLimit = 0;
+                    PositionCollection positions;
+                    using (var stream = VirtualFileSystem.Instance.openStream("Plugins/SplintProps/PartModels/SplintSpace.positions", Engine.Resources.FileMode.Open))
+                    {
+                        positions = new PositionCollection(stream);
+                    }
 
-                    def.addElement(joint);
+                    Position position;
+                    if (false)
+                    {
+                        position = positions.getPosition("MaxillaryGroup");
+                        splint.StartIndex = 1;
+                        splint.EndIndex = 17;
+                        rigidBody.Mass = 0;
+                        rigidBody.CollisionFilterMask = -3;
+                        rigidBody.CollisionFilterGroup = 1;
+                    }
+                    else
+                    {
+                        position = positions.getPosition("MandibularGroup");
+                        splint.StartIndex = 17;
+                        splint.EndIndex = 33;
+                        rigidBody.Mass = 1;
+                        rigidBody.CollisionFilterMask = -5;
+                        rigidBody.CollisionFilterGroup = 1;
 
-                    def.addElement(new BehaviorDefinition("JointHandler", new MultiPropJointHandler(joint.Name, multiProp.Name)));
+                        var joint = new Generic6DofConstraintDefinition(Splint.JointName)
+                        {
+                            RigidBodyASimObject = "Mandible",
+                            RigidBodyAElement = "Actor",
+                            RigidBodyBSimObject = "this",
+                            RigidBodyBElement = "RigidBody",
+                        };
+
+                        joint.TranslationMotor.LowerLimit = Vector3.Zero;
+                        joint.TranslationMotor.UpperLimit = Vector3.Zero;
+                        joint.XRotMotor.LoLimit = 0;
+                        joint.XRotMotor.HiLimit = 0;
+                        joint.YRotMotor.LoLimit = 0;
+                        joint.YRotMotor.HiLimit = 0;
+                        joint.ZRotMotor.LoLimit = 0;
+                        joint.ZRotMotor.HiLimit = 0;
+
+                        def.addElement(joint);
+
+                        def.addElement(new BehaviorDefinition("JointHandler", new MultiPropJointHandler(joint.Name, multiProp.Name)));
 
                     //def.addElement(new BehaviorDefinition(Splint.SplintBehaviorName, new Splint()
                     //{
@@ -212,18 +218,18 @@ namespace Developer
                     //}));
                 }
 
-                def.Translation = position.Translation;
-                def.Rotation = position.Rotation;
+                    def.Translation = position.Translation;
+                    def.Rotation = position.Rotation;
 
-                PropDefinition propDef = new PropDefinition(def);
-                standaloneController.PropFactory.addDefinition(propDef);
+                    PropDefinition propDef = new PropDefinition(def);
+                    standaloneController.PropFactory.addDefinition(propDef);
 
-                Vector3 translationOffset = Quaternion.quatRotate(MandibleController.StartRotation.inverse(), position.Translation - MandibleController.StartTranslation);
-                SimObject mandibleObject = MandibleController.Mandible.Owner;
-                Vector3 trans = mandibleObject.Translation + Quaternion.quatRotate(mandibleObject.Rotation, translationOffset);
-                Quaternion rotation = mandibleObject.Rotation;
+                    Vector3 translationOffset = Quaternion.quatRotate(MandibleController.StartRotation.inverse(), position.Translation - MandibleController.StartTranslation);
+                    SimObject mandibleObject = MandibleController.Mandible.Owner;
+                    Vector3 trans = mandibleObject.Translation + Quaternion.quatRotate(mandibleObject.Rotation, translationOffset);
+                    Quaternion rotation = mandibleObject.Rotation;
 
-                standaloneController.PropFactory.createProp(def.Name, trans, rotation);
+                    standaloneController.PropFactory.createProp(def.Name, trans, rotation);
 
                 //SimObjectBase instance = def.register(standaloneController.MedicalController.CurrentScene.getDefaultSubScene());
                 //standaloneController.MedicalController.addSimObject(instance);
@@ -239,23 +245,20 @@ namespace Developer
                 //}
             }));
 
-
-            changeRenderingMode = new ChangeRenderingMode(standaloneController.SceneViewController);
-            taskController.addTask(changeRenderingMode);
-
-            disablePhysics = new DisablePhysicsTask(int.MaxValue);
-            taskController.addTask(disablePhysics);
+                taskController.addTask(disablePhysics);
+                taskController.addTask(changeRenderingMode);
 
 #if ALLOW_CRASH_PROGRAM
-            taskController.addTask(new CallbackTask("Developer.Crash", "Crash The Program", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
-            {
-                throw new Exception("Manually crashed program");
-            }));
+                taskController.addTask(new CallbackTask("Developer.Crash", "Crash The Program", CommonResources.NoIcon, TaskMenuCategories.Developer, (item) =>
+                {
+                    throw new Exception("Manually crashed program");
+                }));
 #endif
+            }
 
             standaloneController.ViewHostFactory.addFactory(new WizardComponentViews());
 
-            if (PlatformConfig.AllowFullscreenToggle)
+            if (PlatformConfig.AllowFullscreenToggle && MedicalConfig.ShowDeveloperTools)
             {
                 CallbackTask toggleBorderless = new CallbackTask("Developer.ToggleBorderless", "Toggle Borderless", "AnomalousMedical/ToggleFullscreen", TaskMenuCategories.Developer, int.MaxValue, false, (item) =>
                 {
@@ -264,10 +267,11 @@ namespace Developer
                 taskController.addTask(toggleBorderless);
             }
 
-            if (standaloneController.VirtualTextureManager != null)
+            if (standaloneController.VirtualTextureManager != null && MedicalConfig.ShowDeveloperTools)
             {
                 virtualTextureDebugger = new VirtualTextureDebugger(standaloneController.VirtualTextureManager);
                 guiManager.addManagedDialog(virtualTextureDebugger);
+
                 taskController.addTask(new MDIDialogOpenTask(virtualTextureDebugger, "Developer.VirtualTextureDebugger", "Virtual Texture Debugger", CommonResources.NoIcon, TaskMenuCategories.Developer));
             }
 

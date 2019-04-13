@@ -239,9 +239,12 @@ namespace Medical.GUI
                 taskController.addTask(exitTaskItem);
 
 #if ALLOW_OVERRIDE
-                CallbackTask createOverrideTaskItem = new CallbackTask("Medical.CreateOverride", "CreateOverride", CommonResources.NoIcon, TaskMenuCategories.System, int.MaxValue, false);
-                createOverrideTaskItem.OnClicked += CreateOverrideTaskItem_OnClicked;
-                taskController.addTask(createOverrideTaskItem);
+                if (MedicalConfig.ShowDeveloperTools)
+                {
+                    CallbackTask createOverrideTaskItem = new CallbackTask("Medical.CreateOverride", "CreateOverride", CommonResources.NoIcon, TaskMenuCategories.Developer, int.MaxValue, false);
+                    createOverrideTaskItem.OnClicked += CreateOverrideTaskItem_OnClicked;
+                    taskController.addTask(createOverrideTaskItem);
+                }
 #endif
             }
 
