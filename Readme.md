@@ -10,7 +10,7 @@ After building the native dependency and engine libraries open the solution for 
 To build the installer get the vc redist files for your version of visual studio and put them in the Dependencies repo under vcredist. Then build the AnomalousMedical/Installer/Windows/AnomalousMedical.iss file with [Innosetup](http://www.jrsoftware.org/isinfo.php).
 
 ## Distribution of Derived Works
-Threax Software, LLC reserves all rights to the AnomalousMedical.dat file and its contents This file and its contents are only allowed to be downloaded from our official repositories. You are free to modify and distribute the source code and binaries under the terms of the MIT license.
+Threax Software, LLC reserves all rights to the AnomalousMedical.dat file and its contents. This file and its contents are only allowed to be downloaded from our official repositories. The icons and images and logos that appear in our software are similarly all rights reserved. You are free to modify and distribute only the source code and compiled binaries under the terms of the MIT license.
 
 ## Unsupported Configurations
 The iOS and Mac OS versions are deprecated. With Apple's decision to [deprecate OpenGL](https://developer.apple.com/macos/whats-new/) this project deprecated the Apple platforms. The files are left for posterity or for the adventerous. Anomalous Medical is a volunteer effort and the decision was made to focus on platforms that offer both openness and stability. The last sucessful Apple platform builds were in 2016.
