@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Anomalous Medical"
-#define MyAppVersion GetFileVersion("..\..\..\PublicRelease\Standalone.dll")
+#define MyAppVersion GetFileVersion("..\..\..\Release\Standalone.dll")
 #define MyAppPublisher "Anomalous Medical"
 #define MyAppURL "http://www.anomalousmedical.com"
 #define MyAppExeName "AnomalousMedical.exe"
@@ -22,7 +22,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\Anomalous Medical\Platform
 DefaultGroupName=Anomalous Medical
 LicenseFile=..\..\..\AnomalousMedical\Installer\License\en.rtf
-OutputDir=..\..\..\PublicRelease\Setups
+OutputDir=..\..\..\Release\Setups
 OutputBaseFilename=AnomalousMedicalSetup
 Compression=lzma
 SolidCompression=yes
@@ -36,68 +36,170 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: ..\..\..\PublicRelease\AnomalousMedical.exe; DestDir: {app}; Flags: ignoreversion 
-Source: ..\..\..\PublicRelease\BEPUikPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\BulletPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\Engine.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\MyGUIPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\libRocketPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\Simulation.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\SoundPlugin.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\Standalone.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\DotNetZip.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\Mono.Anomalous.Security.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\FreeImageNET.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\Lucene.Net.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\GuiFramework.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\GuiFramework.Cameras.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\GuiFramework.Editor.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\OSPlatform.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\OSPlatform.Win32.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\Newtonsoft.Json.dll; DestDir: {app}; Flags: ignoreversion
-
-Source: ..\..\..\PublicRelease\Premium.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\DentalSim.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\Lecture.dll; DestDir: {app}; Flags: ignoreversion
-
-Source: ..\..\..\DataFiles\Public\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\Release\Anomalous.BEPUikPlugin.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.BulletPlugin.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.DotNetZip.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.Engine.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.GuiFramework.Cameras.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.GuiFramework.Debugging.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.GuiFramework.Editor.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.libRocketPlugin.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.libRocketWidget.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.MyGUIPlugin.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.OgrePlugin.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.OSPlatform.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.OSPlatform.Win32.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.Resources.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.ShapeLoader.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Anomalous.SoundPlugin.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\AnomalousMedical.dat; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\AnomalousMedical.exe; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\AnomalousMedical64.exe; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Autofac.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\DentalSim.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Developer.dll; DestDir: {app}; Flags: ignoreversion              
+Source: ..\..\..\Release\Editor.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\FreeImageDotNet.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\GuiFramework.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Irony.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Lecture.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Lucene.Net.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Microsoft.Win32.Primitives.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Movement.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\netstandard.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Newtonsoft.Json.Bson.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Newtonsoft.Json.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Premium.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Simulation.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\Standalone.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.AppContext.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Collections.Concurrent.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Collections.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Collections.NonGeneric.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Collections.Specialized.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.ComponentModel.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.ComponentModel.EventBasedAsync.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.ComponentModel.Primitives.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.ComponentModel.TypeConverter.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Console.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Data.Common.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.Contracts.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.Debug.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.FileVersionInfo.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.Process.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.StackTrace.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.TextWriterTraceListener.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.Tools.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.TraceSource.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Diagnostics.Tracing.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Drawing.Primitives.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Dynamic.Runtime.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Globalization.Calendars.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Globalization.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Globalization.Extensions.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.Compression.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.Compression.ZipFile.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.FileSystem.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.FileSystem.DriveInfo.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.FileSystem.Primitives.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.FileSystem.Watcher.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.IsolatedStorage.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.MemoryMappedFiles.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.Pipes.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.IO.UnmanagedMemoryStream.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Linq.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Linq.Expressions.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Linq.Parallel.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Linq.Queryable.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.Http.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.NameResolution.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.NetworkInformation.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.Ping.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.Primitives.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.Requests.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.Security.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.Sockets.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.WebHeaderCollection.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.WebSockets.Client.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Net.WebSockets.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.ObjectModel.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Reflection.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Reflection.Extensions.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Reflection.Primitives.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Resources.Reader.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Resources.ResourceManager.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Resources.Writer.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.CompilerServices.VisualC.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.Extensions.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.Handles.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.InteropServices.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.InteropServices.RuntimeInformation.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.Numerics.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.Serialization.Formatters.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.Serialization.Json.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.Serialization.Primitives.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Runtime.Serialization.Xml.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Security.Claims.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Security.Cryptography.Algorithms.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Security.Cryptography.Csp.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Security.Cryptography.Encoding.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Security.Cryptography.Primitives.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Security.Cryptography.X509Certificates.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Security.Principal.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Security.SecureString.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Text.Encoding.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Text.Encoding.Extensions.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Text.RegularExpressions.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Threading.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Threading.Overlapped.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Threading.Tasks.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Threading.Tasks.Parallel.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Threading.Thread.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Threading.ThreadPool.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Threading.Timer.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.ValueTuple.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Xml.ReaderWriter.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Xml.XDocument.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Xml.XmlDocument.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Xml.XmlSerializer.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Xml.XPath.dll; DestDir: {app}; Flags: ignoreversion 
+Source: ..\..\..\Release\System.Xml.XPath.XDocument.dll; DestDir: {app}; Flags: ignoreversion 
 
 ;x86 Files
-Source: ..\..\..\PublicRelease\x86\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\d3dcompiler_47.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\FreeImage.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\libRocketWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\MyGUIWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\OgreCWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\OgreMain.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\OpenAL32.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\OSHelper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\RenderSystem_Direct3D11.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\RenderSystem_GL.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\SoundWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\Win32UniversalBridge.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x86\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\BulletWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\d3dcompiler_47.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\FreeImage.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\libRocketWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\MyGUIWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\OgreCWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\OgreMain.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\OpenAL32.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\OSHelper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\RenderSystem_Direct3D11.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\RenderSystem_GL.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\SoundWrapper.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\Win32UniversalBridge.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\WinMTDriver.dll; DestDir: {app}\x86; Flags: ignoreversion
+Source: ..\..\..\Release\x86\Zip.dll; DestDir: {app}\x86; Flags: ignoreversion
 
 ;x64 Files
-Source: ..\..\..\PublicRelease\x64\BulletWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\d3dcompiler_47.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\FreeImage.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\libRocketWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\MyGUIWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\OgreCWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\OgreMain.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\OpenAL32.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\OSHelper.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\RenderSystem_Direct3D11.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\RenderSystem_GL.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\SoundWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\Win32UniversalBridge.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\WinMTDriver.dll; DestDir: {app}\x64; Flags: ignoreversion
-Source: ..\..\..\PublicRelease\x64\Zip.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\BulletWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\d3dcompiler_47.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\FreeImage.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\libRocketWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\MyGUIWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\OgreCWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\OgreMain.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\OpenAL32.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\OSHelper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\RenderSystem_Direct3D11.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\RenderSystem_GL.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\SoundWrapper.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\Win32UniversalBridge.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\WinMTDriver.dll; DestDir: {app}\x64; Flags: ignoreversion
+Source: ..\..\..\Release\x64\Zip.dll; DestDir: {app}\x64; Flags: ignoreversion
 
 ;VS 2013 Redistributable
 Source: "..\..\..\..\Dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
