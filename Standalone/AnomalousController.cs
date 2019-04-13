@@ -378,7 +378,6 @@ namespace Medical
             MedicalConfig.setUserDirectory(controller.LicenseManager.User);
 
             controller.GUIManager.setMainInterfaceEnabled(true);
-            licenseDisplay.setLicenseText(String.Format("Licensed to: {0}", controller.LicenseManager.LicenseeName));
 
             mainPlugin = new AnomalousMainPlugin(controller.LicenseManager, this);
             controller.AtlasPluginManager.addPlugin(mainPlugin);

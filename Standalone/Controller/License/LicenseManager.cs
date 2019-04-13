@@ -75,14 +75,6 @@ namespace Medical
             }
         }
 
-        public String LicenseeName
-        {
-            get
-            {
-                return "Anomalous Medical";
-            }
-        }
-
         public string User
         {
             get

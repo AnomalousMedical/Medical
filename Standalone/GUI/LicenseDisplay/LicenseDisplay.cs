@@ -12,14 +12,12 @@ namespace Medical.GUI
         private EventLayoutContainer layoutContainer = new EventLayoutContainer();
 
         private ImageBox logoImage;
-        private TextBox licenseText;
 
         public LicenseDisplay()
             :base("Medical.GUI.LicenseDisplay.LicenseDisplay.layout")
         {
             logoImage = (ImageBox)widget.findWidget("LogoWatermark");
             logoImage.setItemResource("AnomalousMedical/CornerLogo");
-            licenseText = (TextBox)widget.findWidget("LicenseText");
 
             layoutContainer.LayoutChanged += layoutContainer_LayoutChanged;
         }
@@ -42,18 +40,6 @@ namespace Medical.GUI
             get
             {
                 return layoutContainer;
-            }
-        }
-
-        public string LicenseText
-        {
-            get
-            {
-                return licenseText.Caption;
-            }
-            set
-            {
-                licenseText.Caption = value;
             }
         }
     }

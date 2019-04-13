@@ -44,14 +44,6 @@ namespace Medical
             });
         }
 
-        public String LicenseeName
-        {
-            get
-            {
-                return licenseManager.LicenseeName;
-            }
-        }
-
         public bool LicensingImage { get; private set; }
 
         public bool ReadingLicenseText { get; private set; }
