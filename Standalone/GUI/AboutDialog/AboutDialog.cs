@@ -75,7 +75,7 @@ namespace Medical.GUI
             bepuPhysicsLink.MouseButtonClick += bepuPhysicsLink_MouseButtonClick;
 
             TextBox copyrightText = window.findWidget("CopyrightText") as TextBox;
-            copyrightText.Caption = String.Format("Copyright 2009-{0} Anomalous Medical, LLC", DateTime.Now.Year);
+            copyrightText.Caption = String.Format("Copyright 2009-{0} Threax Software, LLC", DateTime.Now.Year);
 
         }
 
