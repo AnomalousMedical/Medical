@@ -81,7 +81,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.RenderIcon">
+  <Resource type="ResourceImageSet" name="Developer.RenderingMode">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="320 0"/>
@@ -89,7 +89,7 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.RenderingMode">
+  <Resource type="ResourceImageSet" name="Developer.SaveMicrocodeCache">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
         <Frame point="384 0"/>
@@ -97,18 +97,10 @@
     </Group>
   </Resource>
 
-  <Resource type="ResourceImageSet" name="Developer.SaveMicrocodeCache">
-    <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
-      <Index name="Icon">
-        <Frame point="320 64"/>
-      </Index>
-    </Group>
-  </Resource>
-
   <Resource type="ResourceImageSet" name="Developer.StatisticsIcon">
     <Group name="Icons" texture="Developer.Resources.DeveloperIcons@2x.png" size="64 64">
       <Index name="Icon">
-        <Frame point="384 64"/>
+        <Frame point="320 64"/>
       </Index>
     </Group>
   </Resource>

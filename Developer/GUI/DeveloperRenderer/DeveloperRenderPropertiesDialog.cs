@@ -325,11 +325,6 @@ namespace Developer.GUI
             }
         }
 
-        private void writeCopyrightText(FreeImageBitmap bitmap)
-        {
-            imageRenderer.addLicenseText(bitmap, String.Format("Copyright Anomalous Medical {0}", DateTime.Now.Year.ToString()));
-        }
-
         private void saveImage()
         {
             String outputDirectory = outputFolder.OnlyText;
