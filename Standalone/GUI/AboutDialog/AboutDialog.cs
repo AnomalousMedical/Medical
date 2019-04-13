@@ -74,9 +74,17 @@ namespace Medical.GUI
             TextBox bepuPhysicsLink = window.findWidget("BEPUPhysicsLink") as TextBox;
             bepuPhysicsLink.MouseButtonClick += bepuPhysicsLink_MouseButtonClick;
 
+            TextBox newtonsoftJsonLink = window.findWidget("NewtonSoftJsonLink") as TextBox;
+            newtonsoftJsonLink.MouseButtonClick += NewtonsoftJsonLink_MouseButtonClick;
+
             TextBox copyrightText = window.findWidget("CopyrightText") as TextBox;
             copyrightText.Caption = String.Format("Copyright 2009-{0} Threax Software, LLC", DateTime.Now.Year);
 
+        }
+
+        private void NewtonsoftJsonLink_MouseButtonClick(Widget source, EventArgs e)
+        {
+            openUrl("https://www.newtonsoft.com/json");
         }
 
         void monoText_MouseButtonClick(Widget source, EventArgs e)
