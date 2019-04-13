@@ -35,7 +35,6 @@ namespace Medical.GUI
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
         private OptionsDialog options;
-        private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
         private AnatomyFinder anatomyFinder;
         private SequencePlayer sequencePlayer = null;
@@ -88,7 +87,6 @@ namespace Medical.GUI
             {
                 cameraMovementModeTask.Dispose();
             }
-            renderDialog.Dispose();
             options.Dispose();
             anatomyFinder.Dispose();
             chooseSceneDialog.Dispose();
@@ -155,9 +153,6 @@ namespace Medical.GUI
             options = new OptionsDialog(guiManager);
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
             options.RequestRestart += new EventHandler(options_RequestRestart);
-
-            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer, imageLicenseServer, standaloneController.GUIManager, standaloneController.NotificationManager);
-            guiManager.addManagedDialog(renderDialog);
 
             bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager, standaloneController.SceneViewController);
 
@@ -233,14 +228,6 @@ namespace Medical.GUI
             if (PlatformConfig.UnrestrictedEnvironment)
             {
                 //System
-                CallbackTask shopTaskItem = new CallbackTask("Medical.Shop", "Store", "AnomalousMedical/Store", TaskMenuCategories.System, int.MaxValue - 6, false);
-                shopTaskItem.OnClicked += new CallbackTask.ClickedCallback(shopTaskItem_OnClicked);
-                taskController.addTask(shopTaskItem);
-
-                CallbackTask blogTaskItem = new CallbackTask("Medical.Blog", "Blog", "AnomalousMedical/Blog", TaskMenuCategories.System, int.MaxValue - 7, false);
-                blogTaskItem.OnClicked += new CallbackTask.ClickedCallback(blogTaskItem_OnClicked);
-                taskController.addTask(blogTaskItem);
-
                 CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "AnomalousMedical/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
                 helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
                 taskController.addTask(helpTaskItem);
@@ -256,10 +243,6 @@ namespace Medical.GUI
                 createOverrideTaskItem.OnClicked += CreateOverrideTaskItem_OnClicked;
                 taskController.addTask(createOverrideTaskItem);
 #endif
-
-                //Tools Section
-                MDIDialogOpenTask renderTask = new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "AnomalousMedical/RenderIcon", TaskMenuCategories.Create);
-                taskController.addTask(renderTask);
             }
 
             if (PlatformConfig.AllowFullscreenToggle)
@@ -615,16 +598,6 @@ namespace Medical.GUI
         void AtlasPluginManager_RequestDependencyDownload(AtlasPlugin obj)
         {
 
-        }
-
-        void blogTaskItem_OnClicked(CallbackTask item)
-        {
-            OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalBlogURL);
-        }
-
-        void shopTaskItem_OnClicked(CallbackTask item)
-        {
-            OtherProcessManager.openUrlInBrowser(MedicalConfig.AnomalousMedicalStoreURL);
         }
 
         void helpTaskItem_OnClicked(Task item)

@@ -143,15 +143,9 @@ namespace Medical
                 ConfigSection website = overrideSettings.createOrRetrieveConfigSection("Website");
                 WebsiteHostUrl = website.getValue("Host", WebsiteHostUrl);
 
-                Cracked = false;
-                Cracked = systemOverride.getValue("Cracked", Cracked);
                 BuildName = systemOverride.getValue("CustomBuildName", BuildName);
                 libRocketPlugin.RocketInterface.Instance.PixelsPerInch = systemOverride.getValue("PixelsPerInch", libRocketPlugin.RocketInterface.DefaultPixelsPerInch);
                 PixelScaleOverride = systemOverride.getValue("PixelScaleOverride", -1.0f);
-                AllowUnsignedDllPlugins = systemOverride.getValue("AllowUnsignedDllPlugins", false);
-                AllowUnsignedDataFilePlugins = systemOverride.getValue("AllowUnsignedDataFilePlugins", false);
-                CertificateStoreTrustedRoot = systemOverride.getValue("CertificateStoreTrustedRoot", (String)null);
-                CertificateStoreTrustedSignature = systemOverride.getValue("CertificateStoreTrustedSignature", (String)null);
                 UnrestrictedEnvironmentOverride = systemOverride.getValue("UnrestrictedEnvironmentOverride", UnrestrictedEnvironmentOverride);
                 ThemeFileOverride = systemOverride.getValue("ThemeFileOverride", ThemeFileOverride);
                 TrackMemoryLeaks = systemOverride.getValue("TrackMemoryLeaks", TrackMemoryLeaks);
@@ -214,26 +208,8 @@ namespace Medical
                 Directory.CreateDirectory(SafeDownloadFolder);
             }
 
-            //Certificate store
-            MedicalConfig.CertificateStoreFile = Path.Combine(FolderFinder.LocalPrivateDataFolder, "CertificateStore.cst");
-
             //Configure website urls
-            MedicalConfig.HelpURL = String.Format("{0}/Help", WebsiteHostUrl);
-            MedicalConfig.ForgotPasswordURL = String.Format("{0}/RecoverPassword/FromSoftware", WebsiteHostUrl);
-            MedicalConfig.RegisterURL = String.Format("{0}/Login/RegisterFromSoftware", WebsiteHostUrl);
-            MedicalConfig.LicenseServerURL = String.Format("{0}/DRM4/License", WebsiteHostUrl);
-            MedicalConfig.AnomalousMedicalStoreURL = String.Format("{0}/Store", WebsiteHostUrl);
-            MedicalConfig.AnomalousMedicalBlogURL = String.Format("{0}/Blog", WebsiteHostUrl);
-            MedicalConfig.ProductPageBaseURL = String.Format("{0}/Product/Plugin/{{0}}", WebsiteHostUrl);
-            MedicalConfig.LicenseReaderURL = String.Format("{0}/DRM4/LicenseReader", WebsiteHostUrl);
-            MedicalConfig.LicenseImageURL = String.Format("{0}/DRM4/LicenseImage", WebsiteHostUrl);
-            MedicalConfig.ImageStoreURL = String.Format("{0}/Store/Image_Licensing", WebsiteHostUrl);
-            MedicalConfig.CertificateStoreUrl = String.Format("{0}/DRM4/CertificateStore", WebsiteHostUrl);
-            MedicalConfig.SubscriberAgreementUrl = String.Format("{0}/SubscriberAgreementNoFrame", WebsiteHostUrl);
-
-            MedicalConfig.UpdateCheckURL = String.Format("{0}/DRM4/Update{1}", WebsiteHostUrl, buildUrlExtraPath);
-            MedicalConfig.PluginInfoURL = String.Format("{0}/DRM4/DownloadInfo{1}", WebsiteHostUrl, buildUrlExtraPath);
-            MedicalConfig.PluginDownloadURL = String.Format("{0}/DRM4/FileDownload{1}", WebsiteHostUrl, buildUrlExtraPath);
+            MedicalConfig.HelpURL = String.Format("{0}/LearningCenter", WebsiteHostUrl);
 
             //Read command line
             String[] commandLine = Environment.GetCommandLineArgs();
@@ -441,8 +417,6 @@ namespace Medical
             }
         }
 
-        public static String LicenseServerURL { get; private set; }
-
         public static String HelpURL { get; private set; }
 
         public static String BuildName { get; private set; }
@@ -460,25 +434,7 @@ namespace Medical
             }
         }
 
-        public static bool Cracked { get; private set; }
-
-        public static bool AllowUnsignedDllPlugins { get; private set; }
-
-        public static bool AllowUnsignedDataFilePlugins { get; private set; }
-
-        public static String CertificateStoreTrustedRoot { get; private set; }
-
-        public static String CertificateStoreTrustedSignature { get; private set; }
-
         public static float PixelScaleOverride { get; private set; }
-
-        public static bool OverrideCertificateStore
-        {
-            get
-            {
-                return !String.IsNullOrEmpty(CertificateStoreTrustedRoot) && !String.IsNullOrEmpty(CertificateStoreTrustedSignature);
-            }
-        }
 
         /// <summary>
         /// This will allow an override to simulate a restricted environment. This will only work if the platform
@@ -620,52 +576,12 @@ namespace Medical
             }
         }
 
-        public static String ForgotPasswordURL { get; private set; }
-
-        public static String RegisterURL { get; private set; }
-
-        public static String PluginInfoURL { get; private set; }
-
-        public static String PluginDownloadURL { get; private set; }
-
-        public static String AnomalousMedicalStoreURL { get; private set; }
-
-        public static String ProductPageBaseURL { get; private set; }
-
-        public static String UpdateCheckURL { get; private set; }
-
-        public static String LicenseReaderURL { get; private set; }
-
         public static String ImageOutputFolder { get; private set; }
 
-        public static String LicenseImageURL { get; private set; }
-
-        public static String ImageStoreURL { get; private set; }
-
-        public static String AnomalousMedicalBlogURL { get; private set; }
-
         public static String StartupTask { get; private set; }
-
-        public static String CertificateStoreFile { get; private set; }
-
-        public static String CertificateStoreUrl { get; private set; }
-
-        public static String SubscriberAgreementUrl { get; set; }
 
         public static String WebsiteHostUrl { get; private set; }
 
         public static bool TrackMemoryLeaks { get; private set; }
-
-        public static DateTime LastCertificateStoreCheckTime
-        {
-            get
-            {
-                return program.getValue("LastCertificateStoreCheckTime", DateTime.MinValue);
-            }
-            set
-            {
-                program.setValue("LastCertificateStoreCheckTime", value);
-            }
-        }
     }
 }

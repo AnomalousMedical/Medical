@@ -368,26 +368,9 @@ namespace Medical
                 }
                 else
                 {
-                    showKeyDialog();
+                    throw new InvalidOperationException("This should not happen, no licensing anymore.");
                 }
             }
-        }
-
-        void showKeyDialog()
-        {
-            MvcLoginController mvcLogin = new MvcLoginController(controller, controller.LicenseManager);
-            mvcLogin.LoginSucessful += () =>
-                {
-                    Root.getSingleton()._updateAllRenderTargets();
-                    keyValid();
-                    mvcLogin.close();
-                    //Let plugins know to setup the user's bookmarks, since the license dialog had to be opened.
-                    mainPlugin.setupUserBookmarks(false);
-                };
-            mvcLogin.showContext();
-
-            splashScreen.updateStatus(FinishedPosition, "");
-            splashScreen.hide();
         }
 
         void keyValid()

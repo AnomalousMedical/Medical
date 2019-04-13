@@ -161,7 +161,6 @@ namespace Medical.GUI
             }
 
             //Graphics Options
-            aaCombo.SelectedIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
             fullscreenCheck.Checked = MedicalConfig.EngineConfig.Fullscreen;
             vsyncCheck.Checked = OgreConfig.VSync;
             showStatsCheck.Checked = MedicalConfig.EngineConfig.ShowStatistics;

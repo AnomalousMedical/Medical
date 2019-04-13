@@ -117,11 +117,6 @@
     <EmbeddedResource Include="GUI\Editor\RmlWysiwyg\MissingFile.rml" />
     <EmbeddedResource Include="GUI\LicenseDisplay\LicenseDisplay.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
-    <EmbeddedResource Include="GUI\Render\LicensePopup.layout">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
-    <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorStyles.rcss" />
     <EmbeddedResource Include="GUI\SceneErrorWindow\ErrorTemplate.trml">
       <SubType>Designer</SubType>
