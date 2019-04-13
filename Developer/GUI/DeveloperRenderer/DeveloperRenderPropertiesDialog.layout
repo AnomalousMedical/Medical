@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Window" skin="WindowCX" position="117 49 221 600" layer="Overlapped">
-        <Property key="Caption" value="Developer Renderer"/>
+        <Property key="Caption" value="Renderer"/>
         <UserString key="CurrentDockLocation" value="Floating"/>
         <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
         <Widget type="Button" skin="ButtonFlat" position="140 276 66 22" name="RenderingTab/SizeButton">
@@ -83,9 +83,6 @@
         </Widget>
         <Widget type="Button" skin="CheckBox" position="0 499 131 21" name="Transparent">
             <Property key="Caption" value="Transparent"/>
-        </Widget>
-        <Widget type="Button" skin="CheckBox" position="0 520 100 21" name="Copyright">
-            <Property key="Caption" value="Copyright"/>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
