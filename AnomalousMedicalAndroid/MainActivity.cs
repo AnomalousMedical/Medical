@@ -27,7 +27,7 @@ using Developer;
 
 namespace AnomalousMedicalAndroid
 {
-    [Activity(Label = "Anomalous Medical", MainLauncher = true, Icon = "@drawable/icon", Theme = "@style/AnomalousMedicalTheme", 
+    [Activity(Label = "Anomalous Medical", MainLauncher = false, Icon = "@drawable/icon", Theme = "@style/AnomalousMedicalTheme", 
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize | ConfigChanges.ScreenLayout,
         WindowSoftInputMode = SoftInput.StateAlwaysHidden, LaunchMode = LaunchMode.SingleTop)]
     [MetaData("android.app.lib_name", Value = AndroidPlatformPlugin.LibraryName)]
@@ -51,15 +51,11 @@ namespace AnomalousMedicalAndroid
         public MainActivity()
             : base(AnomalousMedicalAndroid.Resource.Layout.Main, AnomalousMedicalAndroid.Resource.Id.editText1)
         {
-
+            
         }
 
         protected override void createApp()
         {
-            //This works to get write permissions, but the app will crash
-            //the first time you run it on a new phone.
-            CheckAppPermissions();
-
             ActivityManager actManager = GetSystemService(ActivityService) as ActivityManager;
             var memoryInfo = new ActivityManager.MemoryInfo();
             actManager.GetMemoryInfo(memoryInfo);
@@ -218,23 +214,6 @@ namespace AnomalousMedicalAndroid
             {
                 Logging.Log.Error("{0} looking for resource archive. Message: {1}", ex.GetType().ToString(), ex.Message);
                 return null;
-            }
-        }
-
-        private void CheckAppPermissions()
-        {
-            if ((int)Build.VERSION.SdkInt < 23)
-            {
-                return;
-            }
-            else
-            {
-                if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted
-                    && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted)
-                {
-                    var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage };
-                    RequestPermissions(permissions, 1);
-                }
             }
         }
     }
