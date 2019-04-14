@@ -178,6 +178,12 @@ namespace AnomalousMedicalAndroid
         {
             try
             {
+                var datArchive = Path.Combine(Application.Context.ObbDir.AbsolutePath, "AnomalousMedical.dat");
+                if (File.Exists(datArchive))
+                {
+                    return datArchive;
+                }
+
                 String obbWildcard = String.Format("main.*.{0}.obb", BaseContext.ApplicationInfo.PackageName.ToString());
                 var files = Directory.EnumerateFiles(Application.Context.ObbDir.AbsolutePath, obbWildcard, SearchOption.AllDirectories);
                 if (files.Count() > 1)
