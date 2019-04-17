@@ -82,24 +82,24 @@ namespace DentalSim
             anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.Dentition", "Dentition", "DentalSimIcons/Dentition", "Dental Simulation", GetType(), "DentalSim.Wizards.", "Dentition.mvc", standaloneController.TimelineController, standaloneController.MvcCore), TeethNames);
             anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.DiscClockFace", "Disc Clock Face", "DentalSimIcons/DiscClockFace", "Dental Simulation", GetType(), "DentalSim.Wizards.DiscClock.", "DiscClockFace.mvc", standaloneController.TimelineController, standaloneController.MvcCore, true), new String[] { "Left TMJ Disc", "Right TMJ Disc" });
             anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.Mandible", "Mandible", "DentalSimIcons/Mandible", "Dental Simulation", GetType(), "DentalSim.Wizards.", "Mandible.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Mandible" });
-            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalDoppler", "Clinical Doppler", "DentalSimIcons/ClinicalDoppler", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalDoppler.", "ClinicalDoppler.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
-            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalCT", "Clinical CT", "DentalSimIcons/ClinicalCT", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalCT.", "ClinicalCT.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
-            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalMRI", "Clinical MRI", "DentalSimIcons/ClinicalMRI", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalMRI.", "ClinicalMRI.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
-            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalOrthoAndSkeletal", "Clinical Orthodontic and Skeletal", "DentalSimIcons/ClinicalOrthodonticAndSkeletal", "Dental Simulation", GetType(), "DentalSim.Wizards.", "ClinicalOrthoAndSkeletal.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalDoppler", "Doppler", "DentalSimIcons/ClinicalDoppler", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalDoppler.", "ClinicalDoppler.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalCT", "CT", "DentalSimIcons/ClinicalCT", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalCT.", "ClinicalCT.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalMRI", "MRI", "DentalSimIcons/ClinicalMRI", "Dental Simulation", GetType(), "DentalSim.Wizards.ClinicalMRI.", "ClinicalMRI.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
+            anatomyTasks.addTask(new StartEmbeddedMvcTask("DentalSim.ClinicalOrthoAndSkeletal", "Orthodontic and Skeletal", "DentalSimIcons/ClinicalOrthodonticAndSkeletal", "Dental Simulation", GetType(), "DentalSim.Wizards.", "ClinicalOrthoAndSkeletal.mvc", standaloneController.TimelineController, standaloneController.MvcCore), new String[] { "Left TMJ Disc", "Right TMJ Disc", "Mandible" });
 
-            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "DentalSimIcons/Open", TaskMenuCategories.Patient, 1));
+            taskController.addTask(new ShowPopupTask(openPatientDialog, "Medical.OpenPatient", "Open", "DentalSimIcons/Open", TaskMenuCategories.Scene, 1));
 
-            PinableMDIDialogOpenTask statesTask = new PinableMDIDialogOpenTask(stateList, "Medical.StateList", "States", "DentalSimIcons/StatesIcon", TaskMenuCategories.Patient);
+            PinableMDIDialogOpenTask statesTask = new PinableMDIDialogOpenTask(stateList, "Medical.StateList", "States", "DentalSimIcons/StatesIcon", TaskMenuCategories.Scene);
             taskController.addTask(statesTask);
 
-            PinableMDIDialogOpenTask notesTask = new PinableMDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "DentalSimIcons/NotesIcon", TaskMenuCategories.Patient);
+            PinableMDIDialogOpenTask notesTask = new PinableMDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "DentalSimIcons/NotesIcon", TaskMenuCategories.Scene);
             taskController.addTask(notesTask);
 
-            CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "CommonToolstrip/Save", TaskMenuCategories.Patient, 2, false);
+            CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "CommonToolstrip/Save", TaskMenuCategories.Scene, 2, false);
             saveTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveTaskItem_OnClicked);
             taskController.addTask(saveTaskItem);
 
-            CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "CommonToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
+            CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "CommonToolstrip/SaveAs", TaskMenuCategories.Scene, 3, false);
             saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
             taskController.addTask(saveAsTaskItem);
 

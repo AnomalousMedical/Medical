@@ -11,7 +11,7 @@ namespace Anomalous.GuiFramework
         const int DynamicGroupBase = 10;
 
         public const String Explore = "Explore";
-        public const String Patient = "Patient";
+        public const String Scene = "Scene";
         public const String System = "System";
         public const String Create = "Create";
         public const String Developer = "Developer";
@@ -28,7 +28,7 @@ namespace Anomalous.GuiFramework
                 //1 is the highlight group
                 groupOrder.Add(Explore, 2);
                 groupOrder.Add(Create, 3);
-                groupOrder.Add(Patient, 4);
+                groupOrder.Add(Scene, 4);
                 groupOrder.Add(Developer, int.MaxValue - 1);
                 groupOrder.Add(System, int.MaxValue);
             }
