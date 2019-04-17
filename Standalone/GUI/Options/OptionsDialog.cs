@@ -32,6 +32,7 @@ namespace Medical.GUI
         private CheckButton vsyncCheck;
         private CheckButton showStatsCheck;
         private CheckButton enableMultitouchCheck;
+        private CheckButton enableDeveloper;
         private static readonly char[] seps = { 'x' };
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
         private NumericEdit maxFPS;
@@ -44,6 +45,7 @@ namespace Medical.GUI
 
             cameraSpeedCombo = widget.findWidget("CameraSpeedCombo") as ComboBox;
             enableMultitouchCheck = new CheckButton(widget.findWidget("EnableMultitouch") as Button);
+            enableDeveloper = new CheckButton(widget.findWidget("EnableDeveloper") as Button);
 
             aaCombo = widget.findWidget("AACombo") as ComboBox;
             resolutionCombo = widget.findWidget("ResolutionCombo") as ComboBox;
@@ -128,6 +130,7 @@ namespace Medical.GUI
             }
 
             enableMultitouchCheck.Checked = MedicalConfig.EnableMultitouch;
+            enableDeveloper.Checked = MedicalConfig.ShowDeveloperTools;
 
             MouseButtonCode cameraButtonCode = MedicalConfig.CameraMouseButton;
             cameraButtonCombo.SelectedIndex = (uint)cameraButtonCode;
@@ -216,6 +219,7 @@ namespace Medical.GUI
                     break;
             }
             MedicalConfig.EnableMultitouch = enableMultitouchCheck.Checked;
+            MedicalConfig.ShowDeveloperTools = enableDeveloper.Checked;
             MedicalConfig.EngineConfig.ShowStatistics = showStatsCheck.Checked;
             MouseButtonCode cameraButtonCode = (MouseButtonCode)cameraButtonCombo.SelectedIndex;
             MedicalConfig.CameraMouseButton = cameraButtonCode;
