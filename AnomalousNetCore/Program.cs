@@ -4,17 +4,27 @@ using DentalSim;
 using Lecture;
 using System;
 using System.Net;
+using System.Runtime.InteropServices;
 
 namespace Medical
 {
     public static class Program
     {
         /// <summary>
+        /// Calling this function will set the dpi awareness. It should be done first.
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool SetProcessDPIAware();
+
+        /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         public static void Main()
         {
+            SetProcessDPIAware();
+
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12; //Enable TLS 1.1 and 1.2
 
             var osVersion = Environment.OSVersion.Version;
