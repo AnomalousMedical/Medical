@@ -7,7 +7,10 @@ In addition to viewing anatomy you can build Smart Lectures, which combine a pow
 After building the native dependency and engine libraries open the solution for your chosen platform and build the project.
 
 ## Building Installer
-To build the installer get the vc redist files for your version of visual studio and put them in the Dependencies repo under vcredist. Then build the AnomalousMedical/Installer/Windows/AnomalousMedical.iss file with [Innosetup](http://www.jrsoftware.org/isinfo.php).
+Publish the app as a single file executable.
+```
+dotnet publish .\AnomalousMedical\AnomalousMedical.csproj -c Release -o ../Publish /p:PublishSingleFile=true -r win-x64
+```
 
 ## Distribution of Derived Works
 Threax Software, LLC reserves all rights to the AnomalousMedical.dat file and its contents. This file and its contents are only allowed to be downloaded from our official repositories. The icons and images and logos that appear in our software are similarly all rights reserved. You are free to modify and distribute only the source code and compiled binaries under the terms of the MIT license.
