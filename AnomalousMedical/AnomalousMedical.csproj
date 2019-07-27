@@ -6,11 +6,18 @@
     <ApplicationIcon>skull.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;ALLOW_OVERRIDE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Engine\OSPlatform.Win32\OSPlatform.Win32.csproj" />
     <ProjectReference Include="..\..\Engine\OSPlatform\OSPlatform.csproj" />
     <ProjectReference Include="..\DentalSim\DentalSim.csproj" />
+    <ProjectReference Include="..\Developer\Developer.csproj" />
+    <ProjectReference Include="..\Editor\Editor.csproj" />
     <ProjectReference Include="..\Lecture\Lecture.csproj" />
+    <ProjectReference Include="..\Movement\Movement.csproj" />
     <ProjectReference Include="..\Premium\Premium.csproj" />
     <ProjectReference Include="..\Standalone\Standalone.csproj" />
   </ItemGroup>
