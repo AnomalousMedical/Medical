@@ -73,6 +73,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anomalous.Resources", "..\E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnomalousMedical", "AnomalousMedical\AnomalousMedical.csproj", "{4FE9347C-1A9F-46D9-B9E0-F2A94BA0B6C5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeLibraries", "..\Engine\NativeLibraries\NativeLibraries.csproj", "{031E3852-1EA1-4547-B456-391A368F88E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeLibraries64", "..\Engine\NativeLibraries64\NativeLibraries64.csproj", "{A6153BFE-FB98-49A0-A743-E2EBAB8D1548}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -260,6 +264,18 @@ Global
 		{4FE9347C-1A9F-46D9-B9E0-F2A94BA0B6C5}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{4FE9347C-1A9F-46D9-B9E0-F2A94BA0B6C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FE9347C-1A9F-46D9-B9E0-F2A94BA0B6C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{031E3852-1EA1-4547-B456-391A368F88E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{031E3852-1EA1-4547-B456-391A368F88E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{031E3852-1EA1-4547-B456-391A368F88E5}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{031E3852-1EA1-4547-B456-391A368F88E5}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{031E3852-1EA1-4547-B456-391A368F88E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{031E3852-1EA1-4547-B456-391A368F88E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6153BFE-FB98-49A0-A743-E2EBAB8D1548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6153BFE-FB98-49A0-A743-E2EBAB8D1548}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6153BFE-FB98-49A0-A743-E2EBAB8D1548}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{A6153BFE-FB98-49A0-A743-E2EBAB8D1548}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{A6153BFE-FB98-49A0-A743-E2EBAB8D1548}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6153BFE-FB98-49A0-A743-E2EBAB8D1548}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -285,6 +301,8 @@ Global
 		{ACBB3920-B6D8-497B-8BAE-9350C7A85C09} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 		{611A8CD3-9B2C-48D8-9EB9-15E6B07CC336} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 		{89EBD203-2E81-4412-BDB3-D01F8DFC787F} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
+		{031E3852-1EA1-4547-B456-391A368F88E5} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
+		{A6153BFE-FB98-49A0-A743-E2EBAB8D1548} = {1683BD0B-A460-405C-B39F-6AC334FF6F79}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A1D05A1-6499-4C0B-9EC6-BC17B3165C42}
