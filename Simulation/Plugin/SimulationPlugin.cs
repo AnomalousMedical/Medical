@@ -7,7 +7,7 @@ using Engine.Platform;
 using Engine.Command;
 using Engine.Behaviors.Animation;
 using Medical.Animation.Proxy;
-using Autofac;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Medical
 {
@@ -26,7 +26,7 @@ namespace Medical
             }
         }
 
-        public void initialize(PluginManager pluginManager, ContainerBuilder builder)
+        public void initialize(PluginManager pluginManager, IServiceCollection services)
         {
             pluginManager.addCreateSimElementManagerCommand(new AddSimElementManagerCommand("Create Simulation Scene Definition", SimulationSceneDefinition.Create));
         }

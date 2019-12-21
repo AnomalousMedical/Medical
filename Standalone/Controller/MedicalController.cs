@@ -27,6 +27,7 @@ using Anomalous.GuiFramework;
 using Anomalous.GuiFramework.Cameras;
 using Anomalous.GuiFramework.Editor;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 #if ALLOW_OVERRIDE
 using Anomalous.GuiFramework.Debugging;
 #endif
@@ -48,6 +49,7 @@ namespace Medical
         private NativeInputHandler inputHandler;
         private EventUpdateListener eventUpdate;
         private MedicalUpdate medicalUpdate;
+        private IServiceCollection services = new ServiceCollection();
 
         //Performance
         private NativeSystemTimer performanceMetricTimer;
@@ -74,7 +76,7 @@ namespace Medical
             Log.ImportantInfo("Running from directory {0}", FolderFinder.ExecutableFolder);
 
             //Create pluginmanager
-            pluginManager = new PluginManager(MedicalConfig.ConfigFile);
+            pluginManager = new PluginManager(MedicalConfig.ConfigFile, services);
 
             //Configure the filesystem
             VirtualFileSystem archive = VirtualFileSystem.Instance;
