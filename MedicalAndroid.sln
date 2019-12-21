@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnomalousMedicalAndroid", "AnomalousMedicalAndroid\AnomalousMedicalAndroid.csproj", "{C3CD0E46-2841-4330-9773-1E396736B7CB}"
 EndProject
@@ -58,6 +58,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Premium", "Premium\Premium.csproj", "{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Anomalous.Resources", "..\Engine\Resources\Anomalous.Resources.csproj", "{8A835B6B-D3F1-4F90-826C-FA320D3EC284}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeLibrariesAndroid", "..\Engine\NativeLibrariesAndroid\NativeLibrariesAndroid.csproj", "{D60EDD52-E2EF-42E1-8800-B50128D67483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -225,6 +227,12 @@ Global
 		{8A835B6B-D3F1-4F90-826C-FA320D3EC284}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
 		{8A835B6B-D3F1-4F90-826C-FA320D3EC284}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A835B6B-D3F1-4F90-826C-FA320D3EC284}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D60EDD52-E2EF-42E1-8800-B50128D67483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D60EDD52-E2EF-42E1-8800-B50128D67483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D60EDD52-E2EF-42E1-8800-B50128D67483}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{D60EDD52-E2EF-42E1-8800-B50128D67483}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{D60EDD52-E2EF-42E1-8800-B50128D67483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D60EDD52-E2EF-42E1-8800-B50128D67483}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,6 +257,7 @@ Global
 		{FECE54F4-6796-486F-9617-6D706DDFD0DF} = {6830647C-7CC4-46B9-99DE-3496607C8D7C}
 		{2A62FB25-AA44-459B-95E0-ED149F31FB6E} = {6830647C-7CC4-46B9-99DE-3496607C8D7C}
 		{8A835B6B-D3F1-4F90-826C-FA320D3EC284} = {6830647C-7CC4-46B9-99DE-3496607C8D7C}
+		{D60EDD52-E2EF-42E1-8800-B50128D67483} = {6830647C-7CC4-46B9-99DE-3496607C8D7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97B17311-DC18-427B-9183-70161782BCFC}
