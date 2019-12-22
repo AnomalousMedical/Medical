@@ -109,12 +109,10 @@ namespace Medical
             //Setup DPI
             float pixelScale = mainWindow.WindowScaling;
 
-#if ALLOW_OVERRIDE
             if (MedicalConfig.PixelScaleOverride > 0.5f)
             {
                 pixelScale = MedicalConfig.PixelScaleOverride;
             }
-#endif
 
             float scaleFactor = pixelScale;
             pixelScale += MedicalConfig.PlatformExtraScaling * scaleFactor;
@@ -194,13 +192,11 @@ namespace Medical
 
         public void addWorkingArchive()
         {
-#if ALLOW_OVERRIDE
             //Add working archive
             if (!String.IsNullOrEmpty(MedicalConfig.WorkingResourceDirectory))
             {
                 VirtualFileSystem.Instance.addArchive(MedicalConfig.WorkingResourceDirectory);
             }
-#endif
         }
 
         public void initializeControllers(BackgroundScene background, LicenseManager licenseManager)
@@ -673,10 +669,8 @@ namespace Medical
 
         internal IEnumerable<SceneBuildStatus> changeSceneStatus(String file, ResourceProvider resourceProvider)
         {
-#if ALLOW_OVERRIDE
             Stopwatch sw = new Stopwatch();
             sw.Start();
-#endif
             sceneViewController.resetAllCameraPositions();
             unloadScene();
             SimObjectErrorManager.Clear();
@@ -714,10 +708,8 @@ namespace Medical
                 NotificationManager.showCallbackNotification("Errors loading the scene.\nClick for details.", MessageBoxIcons.Error, showLoadErrorGui);
             }
 
-#if ALLOW_OVERRIDE
             sw.Stop();
             Logging.Log.Debug("Scene '{0}' loaded in {1} ms", file, sw.ElapsedMilliseconds);
-#endif
         }
 
         /// <summary>

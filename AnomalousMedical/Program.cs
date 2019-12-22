@@ -67,7 +67,6 @@ namespace Medical
                 AllowUninstall = false
             });
 
-#if ALLOW_OVERRIDE
             controller.AtlasPluginManager.addPlugin(new Movement.MovementBodyAtlasPlugin()
             {
                 AllowUninstall = false
@@ -80,7 +79,6 @@ namespace Medical
             {
                 AllowUninstall = false
             });
-#endif
         }
     }
 }

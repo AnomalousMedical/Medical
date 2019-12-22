@@ -238,14 +238,12 @@ namespace Medical.GUI
                 exitTaskItem.OnClicked += new CallbackTask.ClickedCallback(exitTaskItem_OnClicked);
                 taskController.addTask(exitTaskItem);
 
-#if ALLOW_OVERRIDE
                 if (MedicalConfig.ShowDeveloperTools)
                 {
                     CallbackTask createOverrideTaskItem = new CallbackTask("Medical.CreateOverride", "CreateOverride", CommonResources.NoIcon, TaskMenuCategories.Developer, int.MaxValue, false);
                     createOverrideTaskItem.OnClicked += CreateOverrideTaskItem_OnClicked;
                     taskController.addTask(createOverrideTaskItem);
                 }
-#endif
             }
 
             if (PlatformConfig.AllowFullscreenToggle)
@@ -489,7 +487,6 @@ namespace Medical.GUI
             standaloneController.exit();
         }
 
-#if ALLOW_OVERRIDE
         private void CreateOverrideTaskItem_OnClicked(CallbackTask item)
         {
             MessageBox.show($"This will override the file at {MedicalConfig.OverrideBackingFile}. Are you sure you want to continue?", "Create Override?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, result =>
@@ -498,7 +495,6 @@ namespace Medical.GUI
                 MessageBox.show($"Created override file at {MedicalConfig.OverrideBackingFile}", "Override Created", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
             });
         }
-#endif
 
         void updateCheckCompleted(UpdateController.UpdateCheckResult result)
         {

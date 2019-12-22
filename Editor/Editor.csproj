@@ -3,7 +3,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Medical</RootNamespace>
     <AssemblyName>Editor</AssemblyName>
-    <DefineConstants>ALLOW_OVERRIDE</DefineConstants>
     <Configurations>Debug;Release;RelMDeb</Configurations>
   </PropertyGroup>
 

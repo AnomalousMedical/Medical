@@ -60,7 +60,6 @@ namespace Medical
         {
             get
             {
-#if ALLOW_OVERRIDE
                 if (MedicalConfig.HasThemeFileOverride)
                 {
                     return MedicalConfig.ThemeFileOverride;
@@ -69,9 +68,6 @@ namespace Medical
                 {
                     return currentConfig.ThemeFileImpl;
                 }
-#else
-                return currentConfig.ThemeFileImpl;
-#endif
             }
         }
 
@@ -164,13 +160,9 @@ namespace Medical
         {
             get
             {
-#if ALLOW_OVERRIDE
                 //Override the unrestricted environement setting if overwritten in the medical config, since thie is anded
                 //if the platform is already restricted it will stay restricted.
                 return currentConfig.UnrestrictedEnvironmentImpl && MedicalConfig.UnrestrictedEnvironmentOverride;
-#else
-                return currentConfig.UnrestrictedEnvironmentImpl;
-#endif
             }
         }
 

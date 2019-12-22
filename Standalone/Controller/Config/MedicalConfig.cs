@@ -39,10 +39,8 @@ namespace Medical
 
         private static PluginConfig pluginConfig;
 
-#if ALLOW_OVERRIDE
         private static ConfigFile overrideSettings = null;
         private static ConfigSection resources = null;
-#endif
 
         static MedicalConfig()
         {
@@ -93,9 +91,6 @@ namespace Medical
         public MedicalConfig()
         {
             BuildName = null;
-//#if ALLOW_OVERRIDE
-//            BuildName = "Internal";
-//#endif
             WebsiteHostUrl = "https://www.anomalousmedical.com";
 
             //Setup directories
@@ -105,7 +100,6 @@ namespace Medical
                 Directory.CreateDirectory(userAnomalousFolder);
             }
 
-#if ALLOW_OVERRIDE
             UnrestrictedEnvironmentOverride = true;
 
             //Override settings
@@ -151,7 +145,7 @@ namespace Medical
                 TrackMemoryLeaks = systemOverride.getValue("TrackMemoryLeaks", TrackMemoryLeaks);
                 OpenGLESEmulatorPath = systemOverride.getValue("OpenGLESEmulatorPath", OpenGLESEmulatorPath);
             }
-#endif
+
             //Fix up paths based on the build name
             String buildUrlExtraPath = "";
             String localDataFileFolder = FolderFinder.LocalDataFolder;
@@ -182,12 +176,10 @@ namespace Medical
             //Configure plugins
             pluginConfig = new PluginConfig(Path.Combine(localDataFileFolder, "Plugins"));
 
-#if ALLOW_OVERRIDE
             if (overrideSettings != null)
             {
                 pluginConfig.findConfiguredPlugins(overrideSettings);
             }
-#endif
 
             //User configuration settings
             configFile = new ConfigFile(ConfigFilePath);
@@ -231,7 +223,6 @@ namespace Medical
             }
         }
 
-#if ALLOW_OVERRIDE
         public static void saveOverride()
         {
             overrideSettings.writeConfigFile();
@@ -248,7 +239,6 @@ namespace Medical
                 overrideSettings.BackingFile = value;
             }
         }
-#endif
 
         public static void setUserDirectory(String username)
         {
@@ -433,7 +423,6 @@ namespace Medical
 
         public static String BuildName { get; private set; }
 
-#if ALLOW_OVERRIDE
         public static String WorkingResourceDirectory
         {
             get
@@ -465,7 +454,6 @@ namespace Medical
         public static String ThemeFileOverride { get; private set; }
 
         public static String OpenGLESEmulatorPath { get; private set; }
-#endif
 
         /// <summary>
         /// Set the number of virtual texture staging buffer uploads per frame. Can reduce

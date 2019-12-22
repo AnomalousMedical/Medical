@@ -28,9 +28,7 @@ using Anomalous.GuiFramework.Cameras;
 using Anomalous.GuiFramework.Editor;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-#if ALLOW_OVERRIDE
 using Anomalous.GuiFramework.Debugging;
-#endif
 
 namespace Medical
 {
@@ -91,9 +89,7 @@ namespace Medical
             MyGUIInterface.CreateGuiGestures = MedicalConfig.EnableMultitouch && PlatformConfig.TouchType == TouchType.Screen;
             MyGUIInterface.TrackMemoryLeaks = MedicalConfig.TrackMemoryLeaks;
 
-#if ALLOW_OVERRIDE
             RuntimePlatformInfo.addPath(MedicalConfig.OpenGLESEmulatorPath);
-#endif
 
             //Configure plugins
             pluginManager.OnConfigureDefaultWindow = delegate (out WindowInfo defaultWindow)
@@ -139,9 +135,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(RocketWidgetInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkCamerasInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(GuiFrameworkEditorInterface).Assembly);
-#if ALLOW_OVERRIDE
             pluginManager.addPluginAssembly(typeof(GuiFrameworkDebuggingInterface).Assembly);
-#endif
             pluginManager.initializePlugins();
 
             performanceMetricTimer = new NativeSystemTimer();

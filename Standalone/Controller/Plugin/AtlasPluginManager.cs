@@ -80,13 +80,9 @@ namespace Medical
             {
                 return fullPath.EndsWith(".dat", StringComparison.InvariantCultureIgnoreCase);
             }
-            else //Is a directory
+            else
             {
-#if ALLOW_OVERRIDE
-                return true; //Allow directories only in internal builds
-#else
-                return false;
-#endif
+                return true;
             }
         }
 
@@ -367,9 +363,7 @@ namespace Medical
             bool initialize = false;
             if (standaloneController.LicenseManager.allowFeature(plugin.PluginId) && !usedPluginIds.Contains(plugin.PluginId))
             {
-#if ALLOW_OVERRIDE
                 if (plugin.PluginId != -1)
-#endif
                 {
                     usedPluginIds.Add(plugin.PluginId);
                 }

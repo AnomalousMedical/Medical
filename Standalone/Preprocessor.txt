@@ -1,3 +1,0 @@
-﻿This file defines what the various preprocessor definitions are for Anomalous Medical.
-
-ALLOW_OVERRIDE - Allow the override.ini file to be processed and used.

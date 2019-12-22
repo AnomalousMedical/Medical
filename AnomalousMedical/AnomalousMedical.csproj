@@ -4,7 +4,6 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <ApplicationIcon>skull.ico</ApplicationIcon>
-    <DefineConstants>ALLOW_OVERRIDE</DefineConstants>
     <Configurations>Debug;Release;RelMDeb</Configurations>
   </PropertyGroup>
 
