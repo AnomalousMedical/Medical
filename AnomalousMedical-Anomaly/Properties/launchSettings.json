@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AnomalousMedical-Anomaly": {
+      "commandName": "Project",
+      "commandLineArgs": "../../../../../Export/Scenes/AnomalyProject/Medical.ano"
+    }
+  }
+}

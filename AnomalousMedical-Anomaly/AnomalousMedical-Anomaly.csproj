@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>netcoreapp3.0</TargetFrameworks>
+    <Configurations>Debug;Release;RelMDeb</Configurations>
+    <ApplicationIcon>Anomaly.ico</ApplicationIcon>
+    <RootNamespace>AnomalousMedical.Anomaly</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='RelMDeb'">
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Engine\Anomaly\Anomaly.csproj" />
+    <ProjectReference Include="..\Standalone\Standalone.csproj" />
+  </ItemGroup>
+
+</Project>
