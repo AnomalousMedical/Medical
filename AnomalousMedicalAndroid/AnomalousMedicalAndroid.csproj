@@ -59,21 +59,6 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PublicRelease|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\PublicRelease</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <AndroidLinkSkip>System;System.Core;System.Xml;System.Xml.Linq;mscorlib</AndroidLinkSkip>
-    <DebugType>full</DebugType>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-    <BundleAssemblies>false</BundleAssemblies>
-    <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
-    <AndroidSupportedAbis>armeabi-v7a</AndroidSupportedAbis>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
       <Project>{57C253F1-157F-4A6A-9FED-345A776B97D5}</Project>
