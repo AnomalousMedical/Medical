@@ -4,10 +4,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <ApplicationIcon>skull.ico</ApplicationIcon>
+    <DefineConstants>ALLOW_OVERRIDE</DefineConstants>
+    <Configurations>Debug;Release;RelMDeb</Configurations>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;ALLOW_OVERRIDE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)'=='RelMDeb'">
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
