@@ -53,6 +53,7 @@ namespace Medical
 
         public AnomalousController()
         {
+            Engine.Saving.Saver.DefaultOutputType = Engine.Saving.SaverOutputType.Xml; //Keeping Anomalous Medical on XML for now
             Title = "Anomalous Medical";
 			PrimaryArchive = Path.Combine(FolderFinder.ExecutableFolder, "AnomalousMedical.dat");
         }
