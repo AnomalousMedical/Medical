@@ -138,19 +138,26 @@ namespace Medical.GUI
             //Default Scene
             uint count = defaultSceneCombo.ItemCount;
             String defaultScene = MedicalConfig.DefaultScene;
-            bool defaultSceneNotFound = true;
-            for (uint i = 0; i < defaultSceneCombo.ItemCount; ++i)
+            if (defaultSceneCombo.ItemCount > 0)
             {
-                if (defaultSceneCombo.getItemDataAt(i).ToString() == defaultScene)
+                bool defaultSceneNotFound = true;
+                for (uint i = 0; i < defaultSceneCombo.ItemCount; ++i)
                 {
-                    defaultSceneCombo.SelectedIndex = i;
-                    defaultSceneNotFound = false;
-                    break;
+                    if (defaultSceneCombo.getItemDataAt(i).ToString() == defaultScene)
+                    {
+                        defaultSceneCombo.SelectedIndex = i;
+                        defaultSceneNotFound = false;
+                        break;
+                    }
+                }
+                if (defaultSceneNotFound)
+                {
+                    defaultSceneCombo.SelectedIndex = 0;
                 }
             }
-            if (defaultSceneNotFound)
+            else
             {
-                defaultSceneCombo.SelectedIndex = 0;
+                defaultSceneCombo.Enabled = false;
             }
 
             uint scalingIndex = uiSize.findItemIndexWithData(MedicalConfig.ExtraScaling);
