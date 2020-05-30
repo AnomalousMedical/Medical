@@ -231,7 +231,7 @@ namespace Medical.GUI
             MouseButtonCode cameraButtonCode = (MouseButtonCode)cameraButtonCombo.SelectedIndex;
             MedicalConfig.CameraMouseButton = cameraButtonCode;
             CameraInputController.changeMouseButton(cameraButtonCode);
-            MedicalConfig.DefaultScene = defaultSceneCombo.SelectedItemData.ToString();
+            MedicalConfig.DefaultScene = defaultSceneCombo.SelectedItemData?.ToString() ?? MedicalConfig.DefaultScene;
 
             bool videoOptionsChanged = false;
 
