@@ -14,14 +14,14 @@ function Test-Error([string] $msg, [int] $code = 0){
 }
 
 $scriptPath = Split-Path $script:MyInvocation.MyCommand.Path
-$publishDir = "$scriptPath\Publish"
 try{
     Push-Location $scriptPath
 
     try{
         Push-Location $appFolder -ErrorAction Stop
         dotnet restore $csproj; Test-Error "Could not dotnet restore $csproj."
-        dotnet publish -r win-x64 -c Release; Test-Error "Error publishing app to $publishDir"
+        dotnet publish -r win-x64 -c Release -p:PublishSingleFile=false; Test-Error "Error publishing app"
+        Remove-Item "bin/Release/net5.0/win-x64/" -recurse -Include *.pdb -ErrorAction Stop
 
         try {
             Push-Location $installerFolder -ErrorAction Stop
