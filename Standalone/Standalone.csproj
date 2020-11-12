@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Medical</RootNamespace>
     <AssemblyName>Standalone</AssemblyName>
-    <Version>7.0.2</Version>
+    <Version>7.1.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Configurations>Debug;Release;RelMDeb</Configurations>
   </PropertyGroup>

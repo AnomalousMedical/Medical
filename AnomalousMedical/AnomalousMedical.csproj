@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <ApplicationIcon>skull.ico</ApplicationIcon>
     <Configurations>Debug;Release;RelMDeb</Configurations>
     <PublishTrimmed>false</PublishTrimmed>
