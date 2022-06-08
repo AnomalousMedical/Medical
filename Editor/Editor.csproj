@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Medical</RootNamespace>
     <AssemblyName>Editor</AssemblyName>
     <Configurations>Debug;Release;RelMDeb</Configurations>
@@ -11,8 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Dependencies\Irony\Irony\Irony.csproj">
-    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\Irony\Irony\Irony.csproj" />
     <ProjectReference Include="..\..\Engine\BulletWrapperPlugin\BulletWrapperPlugin.csproj">
     </ProjectReference>
     <ProjectReference Include="..\..\Engine\Engine\Engine.csproj">
@@ -71,11 +70,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\MvcContextIcons.png" />
     <EmbeddedResource Include="Resources\MvcContextIcons.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\..\Dependencies\Irony\Irony\bin\Release\Irony.dll">
-      <Link>Resources\Irony.dll</Link>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controller\Mvc\EditInterface\" />

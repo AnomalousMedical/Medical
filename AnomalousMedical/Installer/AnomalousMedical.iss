@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Anomalous Medical Open Source"
-#define MyAppVersion GetFileVersion("..\bin\Release\net5.0\win-x64\Standalone.dll")
+#define MyAppVersion GetFileVersion("..\bin\Release\net6.0\win-x64\Standalone.dll")
 #define MyAppPublisher "Threax Software, LLC"
 #define MyAppURL "https://www.anomalousmedical.com"
 #define MyAppExeName "AnomalousMedical.exe"
@@ -35,7 +35,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: ..\bin\Release\net5.0\win-x64\publish\*; DestDir: {app}; Flags: ignoreversion recursesubdirs
+Source: ..\bin\Release\net6.0\win-x64\publish\*; DestDir: {app}; Flags: ignoreversion recursesubdirs
 
 ;VS Redistributable
 Source: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.28.29325\vc_redist.x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
